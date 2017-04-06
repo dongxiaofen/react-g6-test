@@ -43,19 +43,13 @@ export default class Html extends Component {
           <meta name="viewport" content="width=device-width, initial-scale=1" />
           <meta httpEquiv="content-type" content="text/html;charset=utf-8" />
           {/* styles (will be present only in production with webpack extract text plugin) */}
-          <link href="../vendors/fonts/material-icons.css"
-            rel="stylesheet" type="text/css" charSet="UTF-8"/>
+
           <link href="../vendors/css/font-awesome.css"
-            rel="stylesheet" type="text/css" charSet="UTF-8"/>
-          <link href="../vendors/css/reset.css"
             rel="stylesheet" type="text/css" charSet="UTF-8"/>
           <link href="../vendors/css/antd.css"
             rel="stylesheet" type="text/css" charSet="UTF-8"/>
-          <link href="../vendors/css/bootstrap.css"
+          <link href="../vendors/css/preload.css"
             rel="stylesheet" type="text/css" charSet="UTF-8"/>
-          <link href="../vendors/css/common.css"
-            rel="stylesheet" type="text/css" charSet="UTF-8"/>
-
           {
             Object.keys(assets.styles).map((style, key) =>
             <link href={assets.styles[style]} key={key}
