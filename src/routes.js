@@ -4,6 +4,7 @@ import {
     App,
     Home,
     Relation,
+    Account,
 // first append here from plop
   } from 'containers';
 
@@ -13,6 +14,7 @@ export default () => {
       <IndexRoute component={ Home } />
       <Route path="/pdfDown" component={ Home } />
       <Route path="/relation" component={ Relation } />
+      <Route path="/account" component={ Account } />
 {/* second append here from plop */}
     </Route>
   );
