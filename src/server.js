@@ -144,13 +144,13 @@ app.use((req, res) => {
       } else {
         // writeDataToFile('renderProps', renderProps.components);
         // allStores.homeStore.isLogin = true;// 服务端初始化数据
-        axios.get(config.backendApi + '/api/user/info')
-          .then(() => {
-            // console.log(resp);
-          })
-          .catch((err) => {
-            console.log('err', err);
-          });
+        // axios.get(config.backendApi + '/api/user/info')
+        //   .then((resp) => {
+        //     console.log(resp);
+        //   })
+        //   .catch((err) => {
+        //     console.log('err', err);
+        //   });
         // agent.get(config.backendApi + '/api/user/info')
         //     .set('Content-Type', 'application/json')
         //     .set('scm-source', config.target === 'dianxin_prod' ? 'TEL_WEB' : 'SC_WEB')
