@@ -13,10 +13,6 @@ import { Provider } from 'mobx-react';
 import { useStrict } from 'mobx';
 import combineServerData from 'helpers/combineServerData';
 import * as allStore from 'stores';
-import injectTapEventPlugin from 'react-tap-event-plugin';
-import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
-import getMuiTheme from 'material-ui/styles/getMuiTheme';
-import { green400 } from 'material-ui/styles/colors';
 // import ReactUpdates from 'react-dom/lib/ReactUpdates';
 // import ReactDefaultBatchingStrategy from 'react-dom/lib/ReactDefaultBatchingStrategy';
 // let isHandlingError = false;
@@ -47,7 +43,6 @@ import { green400 } from 'material-ui/styles/colors';
 // };
 // ReactUpdates.injection.injectBatchingStrategy(ReactTryCatchBatchingStrategy);
 // Needed for onTouchTap
-injectTapEventPlugin();
 combineServerData(allStore, window.__data);
 const history = useScroll(() => browserHistory)();
 const dest = document.getElementById('content');
@@ -80,18 +75,11 @@ axios.interceptors.response.use((response) => {
   }
   return Promise.reject(error);
 });
-const muiTheme = getMuiTheme({
-  userAgent: false,
-  raisedButton: {
-    secondaryTextColor: green400,
-  },
-});
+
 ReactDOM.render(
-  <MuiThemeProvider muiTheme={getMuiTheme(muiTheme)}>
-    <Provider { ...allStore }>
-      <Router routes={getRoutes()} history={history} />
-    </Provider>
-  </MuiThemeProvider>,
+  <Provider { ...allStore }>
+    <Router routes={getRoutes()} history={history} />
+  </Provider>,
   dest
 );
 if (process.env.NODE_ENV !== 'production') {

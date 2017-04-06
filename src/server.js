@@ -17,12 +17,6 @@ import { match, RouterContext } from 'react-router';
 import { Provider } from 'mobx-react';
 import getRoutes from './routes';
 import * as allStores from 'stores';
-import injectTapEventPlugin from 'react-tap-event-plugin';
-import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
-import getMuiTheme from 'material-ui/styles/getMuiTheme';
-injectTapEventPlugin();
-// import {useStrict} from 'mobx';
-// useStrict(true);
 const agent = require('superagent-defaults')();
 
 const BASE_DIRNAME = process.cwd();
@@ -127,11 +121,9 @@ app.use((req, res) => {
             // writeDataToFile('resp', resp.body);
             allStores.searchStore.searchRes = resp.body.data;
             const component = (
-              <MuiThemeProvider muiTheme={getMuiTheme()}>
-                <Provider { ...allStores }>
-                  <RouterContext {...renderProps} />
-                </Provider>
-              </MuiThemeProvider>
+              <Provider { ...allStores }>
+                <RouterContext {...renderProps} />
+              </Provider>
             );
             const reportHtml = ReactDOM.renderToString(<Html pdfDown="1" assets={webpackIsomorphicTools.assets()} component={component} {...allStores} />);
             const companyName = '吴亚东';
@@ -168,15 +160,10 @@ app.use((req, res) => {
         //     })
         allStores.searchStore.searchKey = '誉存科技';
         // console.log('homeStore', homeStore);
-        const muiTheme = getMuiTheme({
-          userAgent: false,
-        });
         const component = (
-          <MuiThemeProvider muiTheme={muiTheme}>
-            <Provider { ...allStores }>
-              <RouterContext {...renderProps} />
-            </Provider>
-          </MuiThemeProvider>
+          <Provider { ...allStores }>
+            <RouterContext {...renderProps} />
+          </Provider>
         );
         res.status(200);
         global.navigator = { userAgent: req.headers['user-agent'] };
