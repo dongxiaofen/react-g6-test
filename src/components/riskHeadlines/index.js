@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
 import { observer } from 'mobx-react';
-import RiskMain from 'components/riskHeadlines';
+import RiskFilter from './RiskFilter';
 @observer
-export default class RiskHeadlines extends Component {
+export default class RiskMain extends Component {
   render() {
     return (
       <div>
-        <RiskMain />
+        <RiskFilter />
       </div>
     );
   }

@@ -8,3 +8,8 @@ export const getCompanyList = (params) => {
 export const getRelation = (monitorId) => {
   return axios.get(`/api/monitor/${monitorId}/network`);
 };
+// riskHeadlines
+
+export const getRiskCompanyList = (dimGroupTypeStr, params) => {
+  return axios.get(`/api/headline/xx/companyList?${dimGroupTypeStr}`, {params});
+};
