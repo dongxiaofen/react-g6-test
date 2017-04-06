@@ -30,9 +30,16 @@
   <Header>
     <Navigation> ... </Navigation>
   </Header>
-  <FetchDataHoc>
-    <List></List>
-  </FetchDataHoc>
+  <CompanyHome>
+    <Banner>
+    </Banner>
+    <Report>
+      <LeftBar>
+      </LeftBar>
+      <TabContent>
+      </TabContent>
+    </Report>
+  </CompanyHome>
 </App>
 ```
 
@@ -57,3 +64,4 @@ fetch().then(action(product => {
 runInAction必须声明名称
 
 10. axios cancel token 解决竞态
+11. UiStore存储页面交互状态(翻页, 展开, 高亮...)

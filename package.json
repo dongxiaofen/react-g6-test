@@ -184,6 +184,7 @@
     "morgan": "1.8.1",
     "node-uuid": "1.4.7",
     "object-assign": "4.1.1",
+    "pathval": "^1.1.0",
     "plop": "1.7.4",
     "pretty-error": "1.2.0",
     "react": "15.4.2",
