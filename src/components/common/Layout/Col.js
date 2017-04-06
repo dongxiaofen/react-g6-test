@@ -1,67 +1,26 @@
-import React, { Component, PropTypes} from 'react';
-import styles from './col.less';
-export default class Col extends Component {
-  static propTypes = {
-    offset: PropTypes.number,
-    className: PropTypes.string,
-    children: PropTypes.node,
-    width: PropTypes.string,
-    bTop: PropTypes.string,
-    bBottom: PropTypes.string,
-    bLeft: PropTypes.string,
-    bRight: PropTypes.string,
-    bTopNone: PropTypes.string,
-    bBottomNone: PropTypes.string,
-    bLeftNone: PropTypes.string,
-    bRightNone: PropTypes.string,
-  }
-  render() {
-    let top = '';
-    if (this.props.bTop !== '') {
-      top = styles.borderTop;
-    }
-    let bottom = '';
-    if (this.props.bBottom !== '') {
-      bottom = styles.borderBottom;
-    }
-    let left = '';
-    if (this.props.bLeft !== '') {
-      left = styles.borderLeft;
-    }
-    let right = '';
-    if (this.props.bRight !== '') {
-      right = styles.borderRight;
-    }
-    // none
-    let topNone = '';
-    if (this.props.bTopNone !== '') {
-      topNone = styles.borderTopNone;
-    }
-    let bottomNone = '';
-    if (this.props.bBottomNone !== '') {
-      bottomNone = styles.borderBottomNone;
-    }
-    let leftNone = '';
-    if (this.props.bLeftNone !== '') {
-      leftNone = styles.borderLeftNone;
-    }
-    let rightNone = '';
-    if (this.props.bRightNone !== '') {
-      rightNone = styles.borderRightNone;
-    }
-    return <div className={'col-md-' + this.props.width + ' ' + 'col-md-offset-' + this.props.offset + ' ' + this.props.className + ' ' + top + ' ' + bottom + ' ' + left + ' ' + right + ' ' + topNone + ' ' + bottomNone + ' ' + leftNone + ' ' + rightNone}>{this.props.children}</div>;
-  }
-}
+import React, { PropTypes} from 'react';
 
-Col.defaultProps = {
-  offset: 0,
-  className: '',
-  bTop: '',
-  bBottom: '',
-  bLeft: '',
-  bRight: '',
-  bTopNone: '',
-  bBottomNone: '',
-  bLeftNone: '',
-  bRightNone: '',
+function Col({width, offset, className, children}) {
+  const cssName = className ?
+    `col-md-${width} col-md-offset-${offset} ${className}` :
+    `col-md-${width} col-md-offset-${offset}`;
+  return (
+    <div
+      className={cssName}>
+      {children}
+    </div>
+  );
+}
+Col.propTypes = {
+  width: PropTypes.string,
+  offset: PropTypes.string,
+  className: PropTypes.string,
+  children: PropTypes.node,
 };
+Col.defaultProps = {
+  width: '12',
+  offset: '0',
+  className: '',
+  children: null,
+};
+export default Col;

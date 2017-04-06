@@ -1,10 +1,13 @@
 import React, { PropTypes } from 'react';
 
 function Container({id, className, children}) {
+  const cssName = className ?
+  'container ' + className :
+  'container';
   return (
     <div
       id={id}
-      className={className}
+      className={cssName}
       >
       {children}
     </div>
@@ -17,7 +20,7 @@ Container.propTypes = {
 };
 Container.defaultProps = {
   id: '',
-  className: 'container',
+  className: '',
   children: null,
 };
 export default Container;
