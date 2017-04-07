@@ -1,3 +1,58 @@
-.box {
-
+@import "../../../helpers/color.less";
+.title {
+  font-size: 20px;
+  margin-bottom: 25px;
+  color: @mdc-blue-grey-800;
+}
+.label {
+  font-size: 14px;
+  float: left;
+  color: @mdc-blue-grey-200;
+}
+.row {
+  margin-top: 25px;
+}
+.item {
+  float: right;
+  width: 80%;
+}
+.date {
+  composes: item;
+  border-bottom: 1px solid @black12;
+}
+.date span span {
+  border-bottom: none !important;
+}
+.searchInput {
+  padding: 0;
+  height: 20px;
+  line-height: 20px;
+  border: none;
+  border-bottom: 1px solid @black12;
+  background: transparent;
+  border-radius: 0;
+  color: @mdc-blue-grey-400;
+  font-size: 14px;
+}
+.searchInput:hover {
+  border: none;
+  border-bottom: 1px solid @black12;
+  background: transparent;
+  border-radius: 0 !important;
+}
+.searchInput:focus {
+  border: none;
+  border-bottom: 1px solid @black12;
+  box-shadow: none;
+}
+.checkBox {
+  float: left;
+  margin-right: 14px;
+}
+.checkBox:nth-last-child(1) {
+  margin-right: 0;
+}
+.text {
+  font-size: 14px;
+  color: @mdc-blue-grey-400 !important;
 }

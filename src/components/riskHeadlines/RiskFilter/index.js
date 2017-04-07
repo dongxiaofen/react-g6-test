@@ -1,9 +1,10 @@
 import React from 'react';
+import { observer } from 'mobx-react';
 import DatePicker from 'antd/lib/date-picker';
 const RangePicker = DatePicker.RangePicker;
 import styles from './index.less';
-import moment from 'moment';
 // import {Checkbox, Input} from 'components/lib';
+import Input from 'components/lib/input';
 function RiskFilter({riskHeadlinesStore}) {
   const disabledDate = (current)=> {
     return current && current.valueOf() > Date.now();
@@ -17,30 +18,23 @@ function RiskFilter({riskHeadlinesStore}) {
   //   });
   //   return dimGroupType;
   // };
-  // const getCompanyList = (params, newFilterCig) => {
-  //   const filterCig = newFilterCig || filterConfig.toJS();
-  //   params.dimGroupType = getDimGroupType(filterCig);
-  //   commonBoundAC.updateValue(['filterParams', 'dimGroupType'], params.dimGroupType, 'RISK_UPDATE_VALUE');
-  //   riskheadlinesBoundAC.getCompanyList(params);
-  // };
+  const getCompanyList = () => {
+    riskHeadlinesStore.getCompanyList(riskHeadlinesStore.dimGroupTypeStr, riskHeadlinesStore.filterParams);
+  };
   const changeDate = (dateString, dateTime)=> {
     riskHeadlinesStore.riskUpdateValue('filterParams', 'from', dateTime[0]);
     riskHeadlinesStore.riskUpdateValue('filterParams', 'to', dateTime[1]);
-    // const params = filterParams.toJS();
-    // params.from = dateTime[0];
-    // params.to = dateTime[1];
-    // getCompanyList(params);
+    getCompanyList();
   };
-  // const updateCompanyName = (evt) => {
-  //   commonBoundAC.updateValue(['filterParams', 'companyName'], evt.target.value, 'RISK_UPDATE_VALUE');
-  // };
-  // const filterByComName = (evt) => {
-  //   if (evt.keyCode !== 13) {
-  //     return false;
-  //   }
-  //   const params = filterParams.toJS();
-  //   getCompanyList(params);
-  // };
+  const updateCompanyName = (evt) => {
+    riskHeadlinesStore.riskUpdateValue('filterParams', 'companyName', evt.target.value);
+  };
+  const filterByComName = (evt) => {
+    if (evt.keyCode !== 13) {
+      return false;
+    }
+    getCompanyList();
+  };
   // const checkFilter = (idx, evt)=> {
   //   const checked = evt.target.checked ? 1 : 0;
   //   commonBoundAC.updateValue(['filterConfig', idx, 'checked'], checked, 'RISK_UPDATE_VALUE');
@@ -77,6 +71,7 @@ function RiskFilter({riskHeadlinesStore}) {
     return riskFilter;
   };
   console.log(riskHeadlinesStore, '====');
+  const filterParams = riskHeadlinesStore.filterParams;
   return (
     <div className={styles.wrap}>
       <h2 className={styles.title}>每日监控</h2>
@@ -84,23 +79,25 @@ function RiskFilter({riskHeadlinesStore}) {
         <span className={styles.label}>时间筛选</span>
         <div className={styles.date} id="riskRangePicker">
            <RangePicker
-            style={{width: 205}}
-            defaultValue={[riskHeadlinesStore.filterParams.from, riskHeadlinesStore.filterParams.to]}
+            style={{width: 205, border: 'none'}}
+            defaultValue={[filterParams.from, filterParams.to]}
             disabledDate={disabledDate}
             format="YYYY-MM-DD"
             onChange={changeDate.bind(this)}
-            getCalendarContainer={getRangePicker}/>
+            getCalendarContainer={getRangePicker}
+            allowClear={false}/>
         </div>
       </div>
       <div className={`${styles.row} clearfix`}>
         <span className={styles.label}>公司搜索</span>
         <div className={styles.item}>
-          {/* <Input
+           <Input
             placeholder="输入企业名称，回车搜索"
-            cssName={styles.searchInput}
-            value={filterParams.get('companyName')}
+            inputType="singleline"
+            value={filterParams.companyName}
             onChange={updateCompanyName}
-            onKeyUp={filterByComName}/>*/}
+            onKeyUp={filterByComName}
+            className={styles.searchInput}/>
         </div>
       </div>
       <div className={`${styles.row} clearfix`}>
@@ -112,4 +109,4 @@ function RiskFilter({riskHeadlinesStore}) {
     </div>
   );
 }
-export default RiskFilter;
+export default observer(RiskFilter);
