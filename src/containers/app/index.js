@@ -26,7 +26,7 @@ export default class App extends Component {
     }
     return (
       <div className={styles.wrap}>
-        {true && <DevTools />}
+        {false && <DevTools />}
         {/* <Login {...this.props} /> */}
         {/* <BackTop /> */}
         {/* <MenuBar {...this.props} /> */}
