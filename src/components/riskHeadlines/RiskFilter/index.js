@@ -2,10 +2,11 @@ import React from 'react';
 import DatePicker from 'antd/lib/date-picker';
 const RangePicker = DatePicker.RangePicker;
 import styles from './index.less';
+import moment from 'moment';
 // import {Checkbox, Input} from 'components/lib';
 function RiskFilter({riskHeadlinesStore}) {
   const disabledDate = (current)=> {
-    return current && current.getTime() > Date.now();
+    return current && current.valueOf() > Date.now();
   };
   // const getDimGroupType = (list) => {
   //   const dimGroupType = [];
@@ -75,6 +76,7 @@ function RiskFilter({riskHeadlinesStore}) {
     }
     return riskFilter;
   };
+  console.log(riskHeadlinesStore, '====');
   return (
     <div className={styles.wrap}>
       <h2 className={styles.title}>每日监控</h2>
@@ -85,7 +87,7 @@ function RiskFilter({riskHeadlinesStore}) {
             style={{width: 205}}
             defaultValue={[riskHeadlinesStore.filterParams.from, riskHeadlinesStore.filterParams.to]}
             disabledDate={disabledDate}
-            format="yyyy-MM-dd"
+            format="YYYY-MM-DD"
             onChange={changeDate.bind(this)}
             getCalendarContainer={getRangePicker}/>
         </div>
