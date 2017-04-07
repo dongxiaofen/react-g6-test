@@ -2,7 +2,7 @@ import { observable, action, computed} from 'mobx';
 import {riskHeadlinesApi} from 'api';
 import pathval from 'pathval';
 import moment from 'moment';
-const currentdate = moment();
+const currentdate = moment().format('YYYY-MM-DD');
 class RiskHeadlinesStore {
   @observable filterParams = {
     from: currentdate,

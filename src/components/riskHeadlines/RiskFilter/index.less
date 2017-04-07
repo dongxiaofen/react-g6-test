@@ -23,6 +23,12 @@
 .date span span {
   border-bottom: none !important;
 }
+.date span span input:nth-of-type(1) {
+  text-align: left;
+}
+.date span span input:nth-of-type(2) {
+  text-align: right;
+}
 .searchInput {
   padding: 0;
   height: 20px;
@@ -39,11 +45,13 @@
   border-bottom: 1px solid @black12;
   background: transparent;
   border-radius: 0 !important;
+  color: @mdc-blue-grey-400;
 }
 .searchInput:focus {
   border: none;
   border-bottom: 1px solid @black12;
   box-shadow: none;
+  color: @mdc-blue-grey-400;
 }
 .checkBox {
   float: left;

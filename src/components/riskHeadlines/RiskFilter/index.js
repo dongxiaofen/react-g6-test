@@ -5,6 +5,7 @@ const RangePicker = DatePicker.RangePicker;
 import styles from './index.less';
 // import {Checkbox, Input} from 'components/lib';
 import Input from 'components/lib/input';
+import moment from 'moment';
 function RiskFilter({riskHeadlinesStore}) {
   const disabledDate = (current)=> {
     return current && current.valueOf() > Date.now();
@@ -80,7 +81,7 @@ function RiskFilter({riskHeadlinesStore}) {
         <div className={styles.date} id="riskRangePicker">
            <RangePicker
             style={{width: 205, border: 'none'}}
-            defaultValue={[filterParams.from, filterParams.to]}
+            defaultValue={[moment(filterParams.from, 'YYYY-MM-DD'), moment(filterParams.to, 'YYYY-MM-DD')]}
             disabledDate={disabledDate}
             format="YYYY-MM-DD"
             onChange={changeDate.bind(this)}
