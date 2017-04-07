@@ -1,21 +1,40 @@
 import React, {Component, PropTypes} from 'react';
 import { observer } from 'mobx-react';
 import DevTools from 'mobx-react-devtools';
-import MyAlert from 'components/common/MyAlert';
-import Modal from 'components/common/Modal';
+import styles from './index.less';
+// import MyAlert from 'components/common/MyAlert';
+// import Modal from 'components/common/Modal';
 
 @observer
 export default class App extends Component {
   static propTypes = {
-    children: PropTypes.object.isRequired
+    children: PropTypes.object.isRequired,
+    location: PropTypes.object
   };
   render() {
+    const pathname = this.props.location.pathname;
+    if (pathname === '/' || pathname === '/pdfDown' || pathname === '/solution' || pathname === '/about') {
+      return (
+        <div className={styles.container}>
+          {/* {
+            pathname === '/pdfDown' ? '' :
+            <Login {...this.props} />
+          } */}
+          {React.cloneElement(this.props.children, this.props)}
+        </div>
+      );
+    }
     return (
-      <div>
+      <div className={styles.wrap}>
         {true && <DevTools />}
-        <MyAlert />
-        <Modal />
-        {this.props.children}
+        {/* <Login {...this.props} /> */}
+        {/* <BackTop /> */}
+        {/* <MenuBar {...this.props} /> */}
+        <div className={styles.box}>
+          <div className={styles.content}>
+            {React.cloneElement(this.props.children, this.props)}
+          </div>
+        </div>
       </div>
     );
   }
