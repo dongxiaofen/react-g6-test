@@ -1,0 +1,39 @@
+@import "../../../helpers/color.less";
+.wrapper {
+  display: inline-block;
+  color: @mdc-grey-600;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  user-select: none;
+}
+.btn {
+  display: inline-block;
+  width: 25px;
+  height: 25px;
+  line-height: 23px;
+  color: @mdc-white-darker;
+  text-align: center;
+  background: @mdc-blue-400;
+  cursor: pointer;
+}
+.btnDisable {
+  composes: btn;
+  cursor: default;
+}
+.center {
+  display: inline-block;
+  padding: 0 20px;
+  font-weight: 600;
+}
+.quickPage {
+  padding: 0 10px;
+  height: 25px;
+  margin: 0 5px;
+  text-align: center;
+  line-height: 23px;
+  border: 1px solid @mdc-light-blue-50;
+  border-radius: 2px;
+}
+.quickPage:focus {
+  border: 1px solid @mdc-blue-400;
+}

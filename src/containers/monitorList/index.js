@@ -4,20 +4,12 @@ import { Container } from 'components/common/Layout';
 import Title from 'components/monitorList/Title';
 import Button from 'components/lib/button';
 import Input from 'components/lib/input';
+import Pagination from 'components/lib/pagination';
 // import styles from './index.less';
 @observer
 export default class MonitorList extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      value: '',
-    };
-  }
   test = (evt) => {
-    console.log(evt.target);
-    this.setState({
-      value: evt.target.value,
-    });
+    console.log(evt);
   }
   render() {
     return (
@@ -25,6 +17,7 @@ export default class MonitorList extends Component {
         <Title>监控列表</Title>
         <Button btnType="primary" onClick={this.test}>test</Button>
         <Input inputType="singleline" onChange={this.test} placeholder="test" />
+        <Pagination current={1} total={20} onChange={this.test} />
       </Container>
     );
   }
