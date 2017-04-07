@@ -1,50 +1,34 @@
 import React from 'react';
 import { observer, inject } from 'mobx-react';
-import Dialog from 'material-ui/Dialog';
-import RaisedButton from 'material-ui/RaisedButton';
+import Modal from 'components/lib/Modal';
 
-function Modal({modalStore}) {
-  const handleClose = () => {
+function _Modal({modalStore}) {
+  const _closeModal = () => {
     modalStore.closeModal();
     if (modalStore.closeFunc) {
       modalStore.closeFunc();
     }
   };
   let output = null;
-  const {type, open} = modalStore;
+  const {type, visible} = modalStore;
   if (type === 'text') {
     const {title, message} = modalStore;
-    const actions = [
-      <RaisedButton
-        label="确定"
-        primary
-        onTouchTap={handleClose}
-        />
-    ];
     output = (
-      <Dialog
-        modal
+      <Modal
+        type={type}
         title={title}
-        actions={actions}
-        open={open}
-        >
-        {message}
-      </Dialog>
+        visible={visible}
+        closeModal={_closeModal}/>
     );
   } else if (type === 'async') {
     const {asyncComp} = modalStore;
-    console.log(asyncComp);
-    // const Test = asyncComp;
     output = (
-      <Dialog
-        modal
-        open={open}
-        >
+      <div>
         <modalStore.asyncComp />
-      </Dialog>
+      </div>
     );
   }
   return output;
 }
-export default inject('modalStore')(observer(Modal));
+export default inject('modalStore')(observer(_Modal));
 
