@@ -1,30 +1,30 @@
 import React, { PropTypes } from 'react';
 import styles from './index.less';
-/***
-* btnType 按钮类型
-***/
-function Button({ btnType, className, loading, disabled, children, onClick }) {
+
+function Button({ btnType, className, loading, disabled, children, onClick, ...props }) {
   const clickHandle = (evt) => {
     if (loading || disabled) {
       return false;
     }
     onClick(evt);
-  }
+  };
   let cssName = styles[btnType];
   if (disabled) {
     cssName = styles.disabled;
   } else if (loading) {
-    cssName = styles.loading;
+    cssName += ` ${styles.loading}`;
   }
   if (className) {
     cssName += ` ${className}`;
   }
   return (
     <button
+      {...props}
       className={cssName}
       onClick={clickHandle}
       >
       {children}
+      {loading && <i style={{marginLeft: '5px'}} className="fa fa-spin fa-spinner"></i>}
     </button>
   );
 }
