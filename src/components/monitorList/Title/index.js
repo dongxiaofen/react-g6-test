@@ -12,7 +12,4 @@ function Title({children}) {
 Title.propTypes = {
   children: PropTypes.node,
 };
-Title.defaultProps = {
-  children: null,
-};
 export default Title;
