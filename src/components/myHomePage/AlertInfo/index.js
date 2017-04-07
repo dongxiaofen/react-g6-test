@@ -4,7 +4,7 @@ import AlertTittle from './AlertTittle';
 import AlertList from './AlertList';
 import styles from './index.less';
 
-function AlertInfo({}) {
+function AlertInfo() {
   return (
     <div className={styles.Alert}>
       <AlertTittle />
