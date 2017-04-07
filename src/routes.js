@@ -6,6 +6,7 @@ import {
     Relation,
     RiskHeadlines,
     Account,
+    MonitorList,
 // first append here from plop
   } from 'containers';
 
@@ -17,6 +18,7 @@ export default () => {
       <Route path="/relation" component={ Relation } />
       <Route path="/riskHeadlines" component={ RiskHeadlines } />
       <Route path="/account" component={ Account } />
+      <Route path="/monitorList" component={ MonitorList } />
 {/* second append here from plop */}
     </Route>
   );
