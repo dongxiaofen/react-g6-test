@@ -1,7 +1,7 @@
 import React, { PropTypes } from 'react';
 import styles from './index.less';
 
-function Button({ btnType, className, loading, disabled, children, onClick }) {
+function Button({ btnType, className, loading, disabled, children, onClick, ...props }) {
   const clickHandle = (evt) => {
     if (loading || disabled) {
       return false;
@@ -19,6 +19,7 @@ function Button({ btnType, className, loading, disabled, children, onClick }) {
   }
   return (
     <button
+      {...props}
       className={cssName}
       onClick={clickHandle}
       >
