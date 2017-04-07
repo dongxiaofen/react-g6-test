@@ -1,5 +1,6 @@
 import { observable, action } from 'mobx';
-import * as apis from 'helpers/api';
+import {riskHeadlinesApi} from 'api';
+import pathval from 'pathval';
 const getCurrDate = ()=> {
   const date = new Date();
   const seperator = '-';
@@ -50,18 +51,19 @@ const initState = {
   },
 };
 class RiskHeadlinesStore {
-  @observable initState = initState;
-  @action.bound getRiskCompanyList(dimGroupTypeStr, params) {
-    apis.getRiskCompanyList(dimGroupTypeStr, params)
-    .then(action('getRiskCompanyList'), (resp)=> {
+  @observable filterParams = initState.filterParams;
+
+  @action.bound getCompanyList(dimGroupTypeStr, params) {
+    riskHeadlinesApi.getCompanyList(dimGroupTypeStr, params)
+    .then(action('getCompanyList'), (resp)=> {
       this.initState.companyList.data = resp.data;
     })
     .catch((err) => {
-      console.log('getRiskCompanyList', err.response);
+      console.log('getCompanyList', err.response);
     });
   }
-  // @action.bound riskUpdateValue(keyPath, value) {
-  //
-  // }
+  @action.bound riskUpdateValue(objName, keyPath, value) {
+    pathval.setPathValue(this[objName], keyPath, value);
+  }
 }
 export default new RiskHeadlinesStore();

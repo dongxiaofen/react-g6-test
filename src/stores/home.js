@@ -1,6 +1,6 @@
 /* @flow */
 import { observable, action } from 'mobx';
-import * as apis from 'helpers/api';
+import {loginApi} from 'api';
 class HomeStore {
   @observable isLogin = false;
   @action.bound postLogin() {
@@ -8,7 +8,7 @@ class HomeStore {
       email: 'yadong.wu@sc.cn',
       password: '25f9e794323b453885f5181f1b624d0b'
     };
-    apis.postLogin(params)
+    loginApi.postLogin(params)
       .then(action('login...', (response) => {
         if (response.status === 200) {
           this.isLogin = true;

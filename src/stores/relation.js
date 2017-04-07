@@ -2,13 +2,13 @@ import { observable, action } from 'mobx';
 import { browserHistory } from 'react-router';
 // import {showAlert} from './alert';
 import {openTextModal} from './modal';
-import * as apis from 'helpers/api';
+import {searchApi} from 'api';
 class RelationStore {
   @observable monitorId = '';
   @observable mainCompany = '';
   @observable relationData = {};
   @action.bound getRelation() {
-    apis.getRelation(this.monitorId)
+    searchApi.getRelation(this.monitorId)
       .then(action('get relation...', (resp) => {
         console.log('关系网络图', resp);
         this.relationData = this.handleNetworkData(resp.data);

@@ -14,6 +14,7 @@ module.exports = function (plop) {
     store: 'plop-templates/store.js',
     containerIndex: 'plop-templates/containerIndex.js',
     containerComp: 'plop-templates/containerComp.js',
+    api: 'plop-templates/api.js',
   }
   var createContainerIndex = {
     type: 'add',
@@ -47,6 +48,11 @@ module.exports = function (plop) {
     type: 'add',
     path: 'src/components/hoc/{{pascalCase name}}/index.js',
     templateFile: files.sfhoc
+  };
+  var createApi = {
+    type: 'add',
+    path: 'src/api/{{name}}.js',
+    templateFile: files.api
   };
   var createES6Hoc = {
     type: 'add',
@@ -82,6 +88,12 @@ module.exports = function (plop) {
     pattern: /(\/\/ append here from plop)/gi,
     template: 'export {{camelCase name}} from \'./{{pascalCase name}}\';\n// append here from plop'
   };
+  var modifyApiIndex = {
+    type: 'modify',
+    path: 'src/api/index.js',
+    pattern: /(\/\/ append here from plop)/gi,
+    template: 'export * as {{name}}Api from \'./{{name}}\';\n// append here from plop'
+  };
   var modifyContainerIndex = {
     type: 'modify',
     path: 'src/containers/index.js',
@@ -110,6 +122,17 @@ module.exports = function (plop) {
         return true;
       }
       return 'directory is required';
+    }
+  };
+  var getApiName = {
+    type: 'input',
+    name: 'name',
+    message: 'What is the api name? eg: login',
+    validate: function (value) {
+      if ((/.+/).test(value)) {
+        return true;
+      }
+      return 'name is required';
     }
   };
   var getComponentName = {
@@ -175,6 +198,11 @@ module.exports = function (plop) {
     description: 'es6类型高阶组件',
     prompts: [getComponentName],
     actions: [createES6Hoc, modifyHocIndex]
+  });
+  plop.setGenerator('api', {
+    description: 'api接口',
+    prompts: [getApiName],
+    actions: [createApi, modifyApiIndex]
   });
 };
 
