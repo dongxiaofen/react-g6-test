@@ -5,6 +5,7 @@ const RangePicker = DatePicker.RangePicker;
 import styles from './index.less';
 // import {Checkbox, Input} from 'components/lib';
 import Input from 'components/lib/input';
+import Checkbox from 'components/lib/check/Checkbox';
 import moment from 'moment';
 function RiskFilter({riskHeadlinesStore}) {
   const disabledDate = (current)=> {
@@ -36,34 +37,34 @@ function RiskFilter({riskHeadlinesStore}) {
     }
     getCompanyList();
   };
-  // const checkFilter = (idx, evt)=> {
-  //   const checked = evt.target.checked ? 1 : 0;
-  //   commonBoundAC.updateValue(['filterConfig', idx, 'checked'], checked, 'RISK_UPDATE_VALUE');
-  //   const filterCig = filterConfig.toJS();
-  //   filterCig[idx].checked = checked;
-  //   const params = filterParams.toJS();
-  //   getCompanyList(params, filterCig);
-  // };
-  // const createCheckBox = (filterCig)=> {
-  //   const output = [];
-  //   filterCig.toArray().forEach((item, idx)=>{
-  //     const disabled = filterParams.getIn(['dimGroupType']).size <= 1 && item.get('checked') === 1 ? -1 : 0;
-  //     output.push(
-  //       <div key={item.get('enumKey')} className={styles.checkBox}>
-  //         <Checkbox
-  //           defaultChecked={item.get('checked')}
-  //           id={`messageFilter${idx}`}
-  //           checked={item.get('checked')}
-  //           disabled={disabled}
-  //           onChange={checkFilter.bind(null, idx)}
-  //           label={`${item.get('name')}`}
-  //           textCss={styles.text}
-  //           title={disabled === -1 ? '维度类型至少保留一个' : ''}/>
-  //       </div>
-  //     );
-  //   });
-  //   return output;
-  // };
+  const checkFilter = (idx, evt)=> {
+    console.log('====');
+    const checked = evt.target.checked ? 1 : 0;
+    riskHeadlinesStore.riskUpdateValue('filterConfig', `${idx}.checked`, checked);
+    getCompanyList();
+  };
+  const createCheckBox = ()=> {
+    const filterCig = riskHeadlinesStore.filterConfig;
+    const dimGroupType = riskHeadlinesStore.dimGroupType;
+    const output = [];
+    filterCig.forEach((item, idx)=>{
+      const disabled = dimGroupType.length <= 1 && item.checked === 1 ? -1 : 0;
+      output.push(
+        <div key={item.enumKey} className={styles.checkBox} key={`checkBox${idx}`}>
+          <Checkbox
+            defaultChecked={item.checked}
+            id={`messageFilter${idx}`}
+            checked={item.checked}
+            disabled={disabled}
+            onChange={checkFilter.bind(null, idx)}
+            label={`${item.name}`}
+            textCss={styles.text}
+            title={disabled === -1 ? '维度类型至少保留一个' : ''}/>
+        </div>
+      );
+    });
+    return output;
+  };
   let riskFilter;
   const getRangePicker = ()=> {
     if (!riskFilter) {
@@ -103,9 +104,9 @@ function RiskFilter({riskHeadlinesStore}) {
       </div>
       <div className={`${styles.row} clearfix`}>
         <span className={styles.label} id="type">维度类型</span>
-        {/* <div className={styles.item}>
-          {createCheckBox(filterConfig)}
-        </div>*/}
+         <div className={styles.item}>
+          {createCheckBox()}
+        </div>
       </div>
     </div>
   );

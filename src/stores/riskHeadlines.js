@@ -35,14 +35,17 @@ class RiskHeadlinesStore {
     },
     loading: {},
   };
-  @computed get dimGroupTypeStr() {
+  @computed get dimGroupType() {
     const output = [];
     this.filterConfig.forEach((fiterItem)=>{
       if (fiterItem.checked === 1) {
         output.push(fiterItem.enumKey);
       }
     });
-    return 'dimGroupType=' + output.join('&dimGroupType=');
+    return output;
+  }
+  @computed get dimGroupTypeStr() {
+    return 'dimGroupType=' + this.dimGroupType.join('&dimGroupType=');
   }
   @action.bound getCompanyList(dimGroupTypeStr, params) {
     riskHeadlinesApi.getCompanyList(dimGroupTypeStr, params)
