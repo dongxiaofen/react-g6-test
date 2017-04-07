@@ -1,0 +1,57 @@
+@import "../../../helpers/color.less";
+.switchBox {
+  position: relative;
+  display: inline-block;
+  height: 14px;
+  width: 34px;
+  border-radius: 9px;
+  cursor: pointer;
+  vertical-align: middle;
+}
+.spinBox {
+  display: inline-block;
+  height: 18px;
+  line-height: 18px;
+  width: 36px;
+  text-align: center;
+}
+.switchIcon {
+  position: absolute;
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  top: -3px;
+  z-index: 10;
+  box-shadow:0 0 1px 0 rgba(32,32,32,0.12), 0 1px 1px 0 rgba(32,32,32,0.24);
+  transition: all .3s;
+}
+.openIcon {
+  composes: switchIcon;
+  background: @mdc-blue-400;
+}
+.closeIcon {
+  composes: switchIcon;
+  background: @mdc-grey-400;
+}
+.disableIcon {
+  composes: switchIcon;
+  background: @mdc-grey-400;
+  cursor: not-allowed;
+}
+.openBox {
+  composes: switchBox;
+  background: @mdc-blue-400-opacity-50;
+}
+.closeBox {
+  composes: switchBox;
+  background: @mdc-grey-400-opacity-50;
+}
+.disableBox {
+  composes: switchBox;
+  background: @mdc-grey-400-opacity-50;
+  cursor: not-allowed;
+}
+.loading {
+  color: @mdc-grey-400;
+}
