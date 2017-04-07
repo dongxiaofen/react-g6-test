@@ -1,18 +1,41 @@
 .button {
   position: relative;
+  height: 35px;
+  padding: 0 15px;
+  line-height: 35px;
   font-size: 14px;
   text-align: center;
   border-radius: 4px;
+  outline: none;
   -webkit-user-select: none;
   user-select: none;
-  transition: all .3s cubic-bezier(.645,.045,.355,1);
+  transition: all .3s;
 }
 .default {
-
+  composes: button;
+  color: #78909C;
+  background-color: #FFFFFF;
+  border: 1px solid #CFD8DC;
 }
 .primary {
-
+  composes: button;
+  color: #FFFFFF;
+  background-color: #42A5F5;
+  border: 1px solid #42A5F5;
 }
 .secondary {
-
+  composes: button;
+  color: #42A5F5;
+  background-color: #FFFFFF;
+  border: 1px solid #42A5F5;
+}
+.loading {
+  cursor: default;
+}
+.disabled {
+  composes: button;
+  color: rgba(0,0,0,.25);
+  background-color: #f7f7f7;
+  border: 1px solid #d9d9d9;
+  cursor: not-allowed;
 }
