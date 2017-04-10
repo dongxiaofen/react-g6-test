@@ -8,6 +8,8 @@ import {
     Account,
     HomePage,
     MonitorList,
+    Solution,
+    About,
 // first append here from plop
   } from 'containers';
 
@@ -21,6 +23,8 @@ export default () => {
       <Route path="/account" component={ Account } />
       <Route path="/homePage" component={ HomePage } />
       <Route path="/monitorList" component={ MonitorList } />
+      <Route path="/solution" component={ Solution } />
+      <Route path="/about" component={ About } />
 {/* second append here from plop */}
     </Route>
   );
