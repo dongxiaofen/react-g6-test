@@ -1,3 +1,17 @@
+.transitionAll(@secend) {
+  -webkit-transform: translateZ(0);
+     -moz-transform: translateZ(0);
+       -ms-transform: translateZ(0);
+       -o-transform: translateZ(0);
+          transform: translateZ(0);
+
+  -webkit-transition: all @secend ease-in-out;
+     -moz-transition: all @secend ease-in-out;
+      -ms-transition: all @secend ease-in-out;
+       -o-transition: all @secend ease-in-out;
+          transition: all @secend ease-in-out;
+}
+
 .modal {
   position: fixed;
   top: 0;
@@ -5,18 +19,38 @@
   right: 0;
   bottom: 0;
 
-  background: transparent;
   overflow: auto;
   z-index: 1500;
+  background-color: rgba(0, 0, 0, 0.6);
 
+  opacity: 0;
   visibility: hidden;
 
-  transition: all 0.3s cubic-bezier(0.68, -0.55, 0.27, 1.55)
+  .transitionAll(.3s);
+}
+.modalVisible {
+  opacity: 1;
+  visibility: visible;
 }
 
-.modalShow {
+.contentLayer {
+  position: relative;
+  top: 30%;
+  padding-top: 50px;
+  padding-bottom: 50px;
+  margin-left: auto;
+  margin-right: auto;
+
+  background-color: #ffffff;
+  visibility: hidden;
+  opacity: 0;
+
+  .transitionAll(.3s);
+}
+
+.visible {
+  opacity: 1;
   visibility: visible;
-  background-color: rgba(0, 0, 0, 0.6);
 }
 
 .title {
@@ -29,20 +63,6 @@
   text-align: center;
 }
 
-.contentLayer {
-  position: absolute;
-  left: 50%;
-  top: 50%;
-  padding-top: 50px;
-  padding-bottom: 50px;
-
-  background-color: #ffffff;
-  border-radius: 2px;
-
-  transition: all 0.5s cubic-bezier(0.68, -0.55, 0.27, 1.55);
-  transform: translateY(-50%);
-}
-
 .closeBtn {
   position: absolute;
   top: 15px;
@@ -52,13 +72,10 @@
 
   color: #999999;
   
-  background-image: url('imgs/modal_close.png');
+  background-image: url('imgs/modal/modal_close.png');
   cursor: pointer;
 
-  -webkit-transition: all .3s ease-in-out;
-     -moz-transition: all .3s ease-in-out;
-       -o-transition: all .3s ease-in-out;
-          transition: all .3s ease-in-out;
+  .transitionAll(.3s);
 
   &:hover {
     -webkit-transform: rotateZ(180deg);
@@ -66,4 +83,38 @@
          -o-transform: rotateZ(180deg);
             transform: rotateZ(180deg);
   }
+}
+
+.iconBox {
+  text-align: center;
+}
+.baseIcon{
+  display: inline-block;
+  width: 50px;
+  height: 50px;
+}
+.infoIcon {
+  .baseIcon;
+  background-image: url('imgs/modal/info.png');
+}
+.successIcon {
+  .baseIcon;
+  background-image: url('imgs/modal/success.png');
+}
+
+.buttonBox {
+  text-align: center;
+}
+
+.button {
+  width: 160px;
+}
+
+.cancelBtn {
+  .button;
+}
+
+.confirmButton {
+  .button;
+  margin-left: 20px;
 }
