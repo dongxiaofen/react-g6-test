@@ -1,6 +1,7 @@
 import React from 'react';
+import { observer } from 'mobx-react';
 import styles from './index.less';
-function TypeFilter() {
+function TypeFilter({monitorListStore}) {
   const filterConfig = [
     {name: '全部监控', status: ''},
     {name: '监控中', status: 'MONITOR'},
@@ -9,12 +10,14 @@ function TypeFilter() {
     {name: '监控到期', status: 'EXPIRED'},
   ];
   const changeFilter = (status) => {
-    console.log(status);
+    monitorListStore.changeParams({
+      monitorStatus: status,
+    });
   };
   const createFilter = () => {
     const output = [];
     filterConfig.forEach(item => {
-      const monitorStatus = '';
+      const monitorStatus = monitorListStore.searchParams.monitorStatus;
       const cssName = monitorStatus === item.status ? styles.activeFilterItem : styles.filterItem;
       output.push(
         <div key={item.name} className={cssName} onClick={changeFilter.bind(this, item.status)}>
@@ -31,4 +34,4 @@ function TypeFilter() {
   );
 }
 
-export default TypeFilter;
+export default observer(TypeFilter);

@@ -1,13 +1,17 @@
 import React from 'react';
+import { observer } from 'mobx-react';
 import styles from './index.less';
-function TypeFilter() {
+function TypeFilter({monitorListStore}) {
   const sortConfig = [
     {name: '最近更新', property: 'latestTs'},
     {name: '截止日期', property: 'expire_dt'},
     {name: '首次监控', property: 'start_tm'},
   ];
   const sortHandle = (property, sortType) => {
-    console.log(property, sortType);
+    console.log(sortType);
+    monitorListStore.changeParams({
+      sort: `${property},${sortType}`,
+    });
   };
   const createSort = () => {
     const output = [];
@@ -15,8 +19,8 @@ function TypeFilter() {
       ASC: 'DESC',
       DESC: 'ASC'
     };
-    const properties = 'latestTs';
-    const sort = 'ASC';
+    const [properties, sort] = monitorListStore.searchParams.sort.split(',');
+    console.log(properties, sort);
     let itemCss;
     let actStr;
     let directionStr;
@@ -27,7 +31,7 @@ function TypeFilter() {
       actStr = sort === 'DESC' ? 'down' : 'up';
       directionStr = properties === item.property ? 'Act' : '';
       iconCss = styles[actStr + directionStr];
-      sortType = properties === item.property ? reverseDict[properties] : properties;
+      sortType = properties === item.property ? reverseDict[sort] : sort;
       output.push(
         <div key={item.name} className={itemCss} onClick={sortHandle.bind(this, item.property, sortType)}>
           <span>{item.name}</span>
@@ -44,4 +48,4 @@ function TypeFilter() {
   );
 }
 
-export default TypeFilter;
+export default observer(TypeFilter);
