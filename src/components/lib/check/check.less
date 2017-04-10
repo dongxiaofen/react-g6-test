@@ -1,0 +1,137 @@
+.box {
+  display: inline-block;
+  vertical-align: middle;
+}
+
+@keyframes hoverColor {
+  from {
+    border-color: #c0c0c0; }
+  to {
+    border-color: #42A5F5; } }
+
+.magicRadio,
+.magicCheckbox {
+  position: absolute;
+  display: none; }
+
+.magicRadio[disabled],
+.magicCheckbox[disabled] {
+  cursor: not-allowed; }
+
+.magicRadio + label{
+  position: relative;
+  display: block;
+  padding-left: 25px;
+  height: 20px;
+  line-height: 20px;
+  cursor: pointer;
+  vertical-align: middle; }
+
+.magicCheckbox + label {
+  color: #999;
+  position: relative;
+  display: block;
+  padding-left: 20px;
+  padding-top: 1px;
+  height: 14px;
+  line-height: 13px;
+  cursor: pointer;
+  vertical-align: middle; }
+  .magicRadio + label:hover:before,
+  .magicCheckbox + label:hover:before {
+    animation-duration: 0.4s;
+    animation-fill-mode: both;
+    animation-name: hoverColor; }
+  .magicRadio + label:before{
+    position: absolute;
+    top: 4px;
+    left: 2px;
+    display: inline-block;
+    width: 13px;
+    height: 13px;
+    content: '';
+    border: 1px solid #c0c0c0; }
+  .magicCheckbox + label:before {
+    position: absolute;
+    top: 1px;
+    left: 0;
+    display: inline-block;
+    width: 13px;
+    height: 13px;
+    content: '';
+    border: 1px solid #c0c0c0; }
+  .magicRadio + label:after,
+  .magicCheckbox + label:after {
+    position: absolute;
+    display: none;
+    content: ''; }
+
+.magicRadio[disabled] + label,
+.magicCheckbox[disabled] + label {
+  cursor: not-allowed;
+  color: #c0c0c0; }
+  .magicRadio[disabled] + label:hover, .magicRadio[disabled] + label:before, .magicRadio[disabled] + label:after,
+  .magicCheckbox[disabled] + label:hover,
+  .magicCheckbox[disabled] + label:before,
+  .magicCheckbox[disabled] + label:after {
+    cursor: not-allowed; }
+  .magicRadio[disabled] + label:hover:before,
+  .magicCheckbox[disabled] + label:hover:before {
+    border: 1px solid #c0c0c0;
+    animation-name: none; }
+  .magicRadio[disabled] + label:before,
+  .magicCheckbox[disabled] + label:before {
+    border-color: #c0c0c0; }
+
+.magicRadio:checked + label:before,
+.magicCheckbox:checked + label:before {
+  animation-name: none; }
+
+.magicRadio:checked + label:after,
+.magicCheckbox:checked + label:after {
+  display: block; }
+
+.magicRadio + label:before {
+  border-radius: 50%; }
+
+.magicRadio + label:after {
+  top: 6px;
+  left: 6px;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #42A5F5; }
+
+.magicRadio:checked + label:before {
+  border: 1px solid #42A5F5; }
+
+.magicRadio:checked[disabled] + label:before {
+  border: 1px solid #c9e2f9; }
+
+.magicRadio:checked[disabled] + label:after {
+  background: #c9e2f9; }
+
+.magicCheckbox + label:before {
+  // border-radius: 3px;
+}
+
+.magicCheckbox + label:after {
+  top: 1px;
+  left: 4px;
+  box-sizing: border-box;
+  width: 5px;
+  height: 10px;
+  transform: rotate(45deg);
+  border-width: 2px;
+  border-style: solid;
+  border-color: #fff;
+  border-top: 0;
+  border-left: 0; }
+
+.magicCheckbox:checked + label:before {
+  border: #42A5F5;
+  background: #42A5F5; }
+
+.magicCheckbox:checked[disabled] + label:before {
+  border: #c9e2f9;
+  background: #c9e2f9; }
