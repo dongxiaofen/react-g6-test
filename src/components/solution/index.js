@@ -2,8 +2,8 @@ import React, {PropTypes} from 'react';
 import { observer } from 'mobx-react';
 import CfcaSolutionBody from './CfcaSolutionBody';
 import SolutionBody from './SolutionBody';
-import { CfcaFooter } from 'components';
-import { Footer } from 'components';
+import CfcaFooter from 'components/common/CfcaFooter';
+import Footer from 'components/common/Footer';
 import { DownLoadApp } from 'components/downLoadApp';
 
 function SolutionPage({props}) {

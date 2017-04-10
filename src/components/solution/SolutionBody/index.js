@@ -1,6 +1,6 @@
 import React, { Component, PropTypes } from 'react';
 import styles from './index.less';
-import {HeaderNavBar} from 'components/index.js';
+import HeaderNavBar from 'components/common/HeaderNavBar';
 import solutionTop from 'imgs/solution/top.jpg';
 import solution1 from 'imgs/solution/solution-1.png';
 import solution2 from 'imgs/solution/solution-2.png';

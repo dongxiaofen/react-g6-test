@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-import { HeaderNavBar, Footer } from 'components';
+import HeaderNavBar from 'components/common/HeaderNavBar';
+import Footer from 'components/common/Footer';
 import styles from './index.less';
 
 import bannerShape1 from 'imgs/homePage/banner_shape1.png';

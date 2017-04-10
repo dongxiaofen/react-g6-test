@@ -1,7 +1,8 @@
 import { observer } from 'mobx-react';
 import styles from './index.less';
 import React, { Component, PropTypes} from 'react';
-import { HeaderNavBar, Footer } from 'components';
+import HeaderNavBar from 'components/common/HeaderNavBar';
+import Footer from 'components/common/Footer';
 
 import img1 from 'imgs/about/1.png';
 import img2 from 'imgs/about/2.png';

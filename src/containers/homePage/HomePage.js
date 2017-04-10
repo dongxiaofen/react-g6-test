@@ -6,9 +6,7 @@ import HomeBody from 'components/HomePage';
 export default class HomePage extends Component {
   render() {
     return (
-      <div>
         <HomeBody />
-      </div>
     );
   }
 }
