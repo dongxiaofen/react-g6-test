@@ -45,11 +45,13 @@ class SearchCompanyStore {
   };
   // loading状态
   @observable loading = false;
-
+  // 获取搜索公司列表
   @action.bound getCompanyList() {
     const params = {
-      keyWord: this.searchKey,
-      type: 'COMPANY_NAME'
+      params: {
+        keyWord: this.searchKey,
+        type: 'COMPANY_NAME'
+      },
     };
     searchApi.getCompanyList(params)
       .then(action('searchCompany list', (resp) => {
@@ -59,6 +61,14 @@ class SearchCompanyStore {
       .catch((err) => {
         console.log(err.response, '=====searchCompany error');
       });
+  }
+  // 切换tab
+  @action.bound searchTabClick(key) {
+    this.searchType = key;
+  }
+  // 搜索的searchKey
+  @action.bound searchChange(evt) {
+    this.searchKey = evt.target.value;
   }
 }
 export default new SearchCompanyStore();

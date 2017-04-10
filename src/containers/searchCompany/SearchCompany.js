@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { observer } from 'mobx-react';
-import SearchList from 'components/home/SearchList';
+import SearchBar from 'components/searchCompany/SearchBar';
+// import SearchList from 'components/searchCompany/SearchList';
 
 @observer
 export default class SearchCompany extends Component {
@@ -8,12 +9,11 @@ export default class SearchCompany extends Component {
     super(props);
   }
   render() {
-    // const {searchResult} = {searchCompanyStore};
-    // console.log(searchResult);
+    console.log('container');
     return (
       <div>
-        <SearchList />
-        SearchCompany test
+        <SearchBar />
+        {/* <SearchList /> */}
       </div>
     );
   }
