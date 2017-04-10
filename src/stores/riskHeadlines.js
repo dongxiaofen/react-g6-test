@@ -49,11 +49,11 @@ class RiskHeadlinesStore {
   }
   @action.bound getCompanyList(dimGroupTypeStr, params) {
     riskHeadlinesApi.getCompanyList(dimGroupTypeStr, params)
-    .then(action('getCompanyList'), (resp)=> {
-      this.initState.companyList.data = resp.data;
-    })
+    .then(action('getCompanyList', (resp)=> {
+      this.companyList.data = resp.data;
+    }))
     .catch((err) => {
-      console.log('getCompanyList', err.response);
+      console.log('getCompanyList', err);
     });
   }
   @action.bound riskUpdateValue(objName, keyPath, value) {
