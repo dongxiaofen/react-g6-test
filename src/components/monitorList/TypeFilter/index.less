@@ -1,0 +1,24 @@
+@import "../../../helpers/color.less";
+.wrapper {
+  border-bottom: 1px solid @mdc-blue-grey-100;
+  width: 100%;
+}
+.wrapper:after {
+  content: '';
+  display: block;
+  clear: both;
+}
+.filterItem {
+  float: left;
+  padding: 0px 35px;
+  padding-bottom: 13px;
+  font-size: 14px;
+  line-height: 1;
+  color: @mdc-blue-grey-400;
+  cursor: pointer;
+}
+.activeFilterItem {
+  composes: filterItem;
+  color: @mdc-blue-400;
+  border-bottom: 4px solid @mdc-blue-400;
+}
