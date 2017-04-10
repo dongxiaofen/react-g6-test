@@ -5,6 +5,7 @@ import {
     Home,
     Relation,
     MyHomePage,
+    RiskHeadlines,
     Account,
     HomePage,
     MonitorList,
@@ -20,6 +21,7 @@ export default () => {
       <Route path="/pdfDown" component={ Home } />
       <Route path="/relation" component={ Relation } />
       <Route path="/myHomePage" component={ MyHomePage } />
+      <Route path="/riskHeadlines" component={ RiskHeadlines } />
       <Route path="/account" component={ Account } />
       <Route path="/homePage" component={ HomePage } />
       <Route path="/monitorList" component={ MonitorList } />
