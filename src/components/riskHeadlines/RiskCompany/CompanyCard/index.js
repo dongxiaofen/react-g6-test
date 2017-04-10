@@ -1,10 +1,11 @@
 import React from 'react';
 import styles from './index.less';
-// import SubCompany from './SubCompany';
+import SubCompany from './SubCompany';
 // import AnimateLoading from 'components/common/Hoc/ajaxIntercept/AnimateLoading';
 import {observer} from 'mobx-react';
 function CompanyCard({riskHeadlinesStore, companyData}) {
   const companyList = riskHeadlinesStore.companyList;
+  const subCompanyList = riskHeadlinesStore.subCompanyList;
   const config = [
     {key: 'corpCount', value: '工商'},
     {key: 'legalCount', value: '法务'},
@@ -29,19 +30,20 @@ function CompanyCard({riskHeadlinesStore, companyData}) {
     // riskheadlinesBoundAC.getCompanyInfo(monitorId, filterParams.toJS());
   };
   const extendSubCompany = ()=> {
-    const data = companyList.subCompany[companyData.monitorId] || [];
+    const data = subCompanyList.get(companyData.monitorId) || [];
     if (data.length < 1) {
-      // riskheadlinesBoundAC.getSubCompanyList(monitorId, filterParams.toJS());
+      riskHeadlinesStore.getSubCompanyList(monitorId, riskHeadlinesStore.filterParams);
     } else {
-      riskHeadlinesStore.riskUpdateValue('companyList', `subCompany.${companyData.monitorId}`, []);
+      riskHeadlinesStore.setMapValue('subCompanyList', `${companyData.monitorId}`, []);
     }
   };
   const cssComName = companyList.active === companyData.monitorId ? styles.companyNameAct : styles.companyName;
-  const subCompanyData = companyList.subCompany[companyData.monitorId] || [];
+  const subCompanyData = subCompanyList.get(companyData.monitorId) || [];
   const cssName = subCompanyData.length > 0 ? styles.up : styles.extend;
   const viewText = () => {
     if (subCompanyData.length < 1) {
-      const extendStatus = companyList.extend[monitorId];
+      // const extendStatus = riskHeadlinesStore.subCompany.extend[monitorId];
+      const extendStatus = false;
       return extendStatus ? <div className={styles.loading}></div> : <span><i className="fa fa-angle-down" aria-hidden="true"></i>展开</span>;
     }
     return <span><i className="fa fa-angle-down" aria-hidden="true"></i>收起</span>;
@@ -67,13 +69,11 @@ function CompanyCard({riskHeadlinesStore, companyData}) {
       {
         subCompanyData.length > 0 ?
         <div className={styles.subCompany}>
-          {/* <SubCompany
+           <SubCompany
             data={subCompanyData}
-            filterParams={filterParams}
-            commonBoundAC={commonBoundAC}
-            riskheadlinesBoundAC={riskheadlinesBoundAC}
-            activeComMonId ={companyList.get('active')}
-            />*/}
+            riskHeadlinesStore={riskHeadlinesStore}
+            activeComMonId ={companyList.active}
+            />
         </div> : ''
       }
     </div>
