@@ -12,7 +12,7 @@ class HomeStore {
       .then(action('login...', (response) => {
         if (response.status === 200) {
           this.isLogin = true;
-          location.reload();
+          // location.reload();
         }
       }))
       .catch((err)=>{
