@@ -3,31 +3,30 @@ import { observer, inject } from 'mobx-react';
 import Modal from 'components/lib/Modal';
 
 function _Modal({modalStore}) {
-  const _closeAction = () => {
-    modalStore.closeAction();
-    if (modalStore.closeFunc) {
-      modalStore.closeFunc();
-    }
-  };
   let output = null;
-  const { type, title, visible } = modalStore;
-  if (type === 'text') {
+  const { type, title, visible, closeAction } = modalStore;
+  if (type === 'info') {
     output = (
       <Modal
         type={type}
         title={title}
         visible={visible}
-        closeAction={_closeAction}/>
+        closeAction={closeAction}/>
     );
-  } else if (type === 'async') {
-    const {asyncComp} = modalStore;
+  } else if (type === 'comp') {
+    const {
+      confirmAction,
+      cancelAction
+    } = modalStore;
     output = (
       <Modal
         type={type}
         title={title}
         visible={visible}
-        closeAction={_closeAction}>
-        <modalStore.asyncComp />
+        confirmAction={confirmAction}
+        cancelAction={cancelAction}
+        closeAction={closeAction}>
+        { modalStore.compComponent ? <modalStore.compComponent /> : null }
       </Modal>
     );
   }
