@@ -1,13 +1,13 @@
 import React, {PropTypes} from 'react';
-import { observer } from 'mobx-react';
+import { observer, inject } from 'mobx-react';
 import styles from './index.less';
+import downloadColse from 'imgs/login/loginColse.png';
 import getPermissionMeta from 'helpers/getPermissionMeta';
+import pathval from 'pathval';
 
-function DownLoadApp() {
+function DownLoadApp({clientStore}) {
   const text = '扫描二维码 下载APP';
-  // const envConfig = this.props.client.get('envConfig');
-  const envConfig = 'cfca_prod';
-  const downloadColse = 'cfca_prod';
+  const envConfig = pathval.getPathValue(clientStore, 'envConfig');
   return (
     <div
       id="download-box"
@@ -30,6 +30,6 @@ function DownLoadApp() {
 }
 
 DownLoadApp.propTypes = {
-  getPermissionMeta: PropTypes.func,
+  clientStore: PropTypes.object,
 };
-export default observer(DownLoadApp);
+export default inject('clientStore')(observer(DownLoadApp));

@@ -1,12 +1,11 @@
 import React, {PropTypes} from 'react';
-import { observer } from 'mobx-react';
+import { observer, inject } from 'mobx-react';
 import styles from './index.less';
+import pathval from 'pathval';
 import { Link } from 'react-router';
 
-function HeaderNavBar() {
-  // const envConfig = this.props.client.get('envConfig');
-  const envConfig = 'cfca_prod';
-
+function HeaderNavBar({clientStore}) {
+  const envConfig = pathval.getPathValue(clientStore, 'envConfig');
   const showLoginOnClick = () => {
     this.props.commonBoundAC.updateValue(
       ['isShowLogin'],
@@ -69,4 +68,4 @@ function HeaderNavBar() {
 HeaderNavBar.propTypes = {
   foo: PropTypes.string,
 };
-export default observer(HeaderNavBar);
+export default inject('clientStore')(observer(HeaderNavBar));
