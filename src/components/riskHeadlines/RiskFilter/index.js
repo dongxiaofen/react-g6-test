@@ -38,7 +38,6 @@ function RiskFilter({riskHeadlinesStore}) {
     getCompanyList();
   };
   const checkFilter = (idx, evt)=> {
-    console.log('====');
     const checked = evt.target.checked ? 1 : 0;
     riskHeadlinesStore.riskUpdateValue('filterConfig', `${idx}.checked`, checked);
     getCompanyList();
