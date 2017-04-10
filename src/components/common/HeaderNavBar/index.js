@@ -3,15 +3,15 @@ import { observer, inject } from 'mobx-react';
 import styles from './index.less';
 import pathval from 'pathval';
 import { Link } from 'react-router';
+import { runInAction } from 'mobx';
 
-function HeaderNavBar({clientStore}) {
+function HeaderNavBar({clientStore, loginStore}) {
   const envConfig = pathval.getPathValue(clientStore, 'envConfig');
   const showLoginOnClick = () => {
-    this.props.commonBoundAC.updateValue(
-      ['isShowLogin'],
-      true,
-      'LOGIN_UPDATE_VALUE'
-    );
+    console.log(5222);
+    runInAction('显示登录框', () => {
+      pathval.setPathValue(loginStore, 'isShowLogin', true);
+    });
   };
 
   const showDownloadOnClick = () => {
@@ -66,6 +66,7 @@ function HeaderNavBar({clientStore}) {
 }
 
 HeaderNavBar.propTypes = {
-  foo: PropTypes.string,
+  clientStore: PropTypes.object,
+  logintStore: PropTypes.object,
 };
-export default inject('clientStore')(observer(HeaderNavBar));
+export default inject('clientStore', 'loginStore')(observer(HeaderNavBar));

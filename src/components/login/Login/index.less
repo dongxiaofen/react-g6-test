@@ -1,0 +1,158 @@
+@import "../../../helpers/color.less";
+
+.loginBg {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  min-width: 1190px;
+  background-color: rgba(0, 0, 0, 0.8);
+  z-index: 2000;
+}
+
+.login {
+  position: absolute;
+  top:50%;
+  left:50%;
+
+  width: 640px;
+  height: 252px;
+  margin-left: -320px;
+  margin-top: -126px;
+
+  background-color: @white1;
+
+  border-radius: 4px;
+}
+
+.loginClose {
+  position: absolute;
+  top: 15px;
+  right: 15px;
+
+  cursor: pointer;
+}
+
+.loginColseImg:hover {
+  -webkit-transform: rotateZ(180deg);
+  -moz-transform: rotateZ(180deg);
+  -ms-transform: rotateZ(180deg);
+  -o-transform: rotateZ(180deg);
+  transform: rotateZ(180deg);
+}
+
+.loginColseImg {
+  float: left;
+
+  -webkit-transition: all ease-in-out .3s;
+  -moz-transition: all ease-in-out .3s;
+  -ms-transition: all ease-in-out .3s;
+  -o-transition: all ease-in-out .3s;
+  transition: all ease-in-out .3s;
+}
+
+.loginLogo {
+  float: left;
+  width: 270px;
+  height: 252px;
+
+  background-color: @mdc-blue-400;
+}
+
+.loginLogoImg {
+  margin-top: 68px;
+  text-align: center;
+}
+.dxLoginLogoImg {
+  margin-top: 98px;
+  text-align: center;
+}
+
+.loginForm {
+  float: left;
+  margin-left: 50px;
+  margin-top: 40px;
+}
+
+.loginLogoText {
+  color: @black5;
+}
+
+.input {
+  width: 260px;
+  height: 44px;
+  margin-bottom: 10px;
+  padding-left: 45px;
+
+  color: @black4;
+
+  border-radius: 5px;
+}
+
+.submit {
+  width: 260px;
+  height: 44px;
+
+  border-radius: 5px;
+  background-color: @mdc-blue-400;
+  &:hover{
+    background-color: @mdc-blue-400;
+  }
+}
+
+.psInput {
+  position: relative;
+}
+
+.inputIconUser,
+.inputIconLock {
+  position: absolute;
+  color: @black9;
+}
+
+.inputIconUser {
+  top: 10px;
+  left: 12px;
+}
+
+.inputIconLock {
+  top: 10px;
+  left: 14px;
+}
+
+.errMessage {
+  display: none;
+  position: absolute;
+  top: -19px;
+  left: 0;
+  width: 260px;
+
+  color: @red1;
+  text-align: center;
+}
+
+.isVisible {
+  display: block;
+}
+
+.loginBrowser{
+  display: none;
+  margin-left: 4px;
+  margin-top: 3px;
+}
+
+.loginBrowserErr {
+  float: left;
+  margin-left: 6px;
+  margin-top: 1px;
+  color: @black7;
+}
+
+.browerText {
+  color: @blue2;
+}
+.loginBrowserErrImg {
+  float: left;
+}
