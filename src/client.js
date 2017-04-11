@@ -10,9 +10,20 @@ import getRoutes from './routes';
 import axios from 'axios';
 import Uuid from 'node-uuid';
 import { Provider } from 'mobx-react';
-import { useStrict } from 'mobx';
 import combineServerData from 'helpers/combineServerData';
 import * as allStore from 'stores';
+import { useStrict } from 'mobx';
+// import { useStrict, spy } from 'mobx';
+// // 全局监听action
+// spy((event) => {
+//   if (event.type === 'action') {
+//     console.log(`event.name ${event.name} with args: ${event.arguments}`, event);
+//   }
+// });
+// if (module.hot) {
+//   module.hot.accept();
+// }
+
 // import ReactUpdates from 'react-dom/lib/ReactUpdates';
 // import ReactDefaultBatchingStrategy from 'react-dom/lib/ReactDefaultBatchingStrategy';
 // let isHandlingError = false;
@@ -89,12 +100,3 @@ if (process.env.NODE_ENV !== 'production') {
     console.error('Server-side React render was discarded. Make sure that your initial render does not contain any client-side code.');
   }
 }
-// 全局监听action
-// spy((event) => {
-//   if (event.type === 'action') {
-//     console.log(`event.name ${event.name} with args: ${event.arguments}`, event);
-//   }
-// });
-// if (module.hot) {
-//   module.hot.accept();
-// }

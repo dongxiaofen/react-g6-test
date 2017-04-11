@@ -1,17 +1,22 @@
 import { observable, action } from 'mobx';
 import {companyHomeApi} from 'api';
 class CompanyHomeStore {
+  // banner
   @observable companyName = '';
   @observable hisNameVis = false;
   @observable contactVis = false;
   @observable historyName = [];
   @observable riskInfo = [];
   @observable industryNames = [];
+  @observable stockCode = '';
   @observable bannerData = {};
   @observable contactExtended = '';
   @observable monitorStatus = '';
   @observable lastModifiedTs = '获取中...';
   @observable refreshStatus = 'complete';
+  // leftbar
+  @observable activeMenu = ['report'];
+  @observable activeItem = 'corpDetail';
 
   closeHisNamePopoverAlias = this.closeHisNamePopover;
   openHisNamePopoverAlias = this.openHisNamePopover;
@@ -46,6 +51,7 @@ class CompanyHomeStore {
         this.monitorStatus = resp.data.monitorStatus;
         this.lastModifiedTs = resp.data.lastModifiedTs ? resp.data.lastModifiedTs : '无';
         this.refreshStatus = 'complete';
+        this.stockCode = resp.data.stockCode;
       }))
       .catch((err) => {
         console.log('banner出错', err.response);
