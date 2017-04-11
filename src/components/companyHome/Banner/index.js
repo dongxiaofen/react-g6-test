@@ -20,7 +20,7 @@ export default class Banner extends Component {
         <Container>
           <Row>
             <Col width="8">
-              <CompanyInfo />
+              <CompanyInfo {...this.props.location.query} />
             </Col>
             <Col width="4">
               actions
