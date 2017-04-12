@@ -2,7 +2,6 @@ import React, { Component, PropTypes } from 'react';
 import { observer } from 'mobx-react';
 import Button from 'components/lib/button';
 import styles from './index.less';
-
 @observer
 export default class Modal extends Component {
   static propTypes = {
@@ -87,7 +86,7 @@ export default class Modal extends Component {
 
   /**
    * modal类别
-   * 一共有三种
+   * 现目前三种
    * 1. info icon，title，一个操作按钮
    * 2. 有title，内容是自己定义的组件， 有两个操作按钮
    * 3. 异步加载组件，现目前就只有详情
@@ -143,6 +142,26 @@ export default class Modal extends Component {
     );
   }
 
+  detailModal() {
+    return (
+      <div id="details-modal" className={styles.detailModal}>
+        <div id="details-modal-title" className="clearfix">
+          <div className={`clearfix ${styles.title}`} onClick={this.closeAction}>
+            点击关闭查看
+            <div className={styles.closeIcon}></div>
+          </div>
+          <div className="clearfix">
+          </div>
+          <div className={styles.line}></div>
+        </div>
+        <div id="details-modal-content" className={`clearfix ${styles.content}`}>
+        </div>
+        <div id="details-modal-source" className={`clearfix ${styles.source}`}>
+        </div>
+      </div>
+    );
+  }
+
   render() {
     let output = null;
     // 背景是否显示
@@ -160,7 +179,7 @@ export default class Modal extends Component {
       case 'comp':
         output = this.compModal();
         break;
-      case 'async':
+      case 'detail':
         output = null;
         break;
       default:

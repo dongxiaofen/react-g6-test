@@ -5,30 +5,44 @@ import Modal from 'components/lib/Modal';
 function _Modal({modalStore}) {
   let output = null;
   const { type, title, visible, closeAction } = modalStore;
-  if (type === 'info') {
-    output = (
-      <Modal
-        type={type}
-        title={title}
-        visible={visible}
-        closeAction={closeAction}/>
-    );
-  } else if (type === 'comp') {
-    const {
-      confirmAction,
-      cancelAction
-    } = modalStore;
-    output = (
-      <Modal
-        type={type}
-        title={title}
-        visible={visible}
-        confirmAction={confirmAction}
-        cancelAction={cancelAction}
-        closeAction={closeAction}>
-        { modalStore.compComponent ? <modalStore.compComponent /> : null }
-      </Modal>
-    );
+  switch (type) {
+    case 'info':
+      output = (
+        <Modal
+          type={type}
+          title={title}
+          visible={visible}
+          closeAction={closeAction} />
+      );
+      break;
+    case 'comp':
+      const {
+        confirmAction,
+        cancelAction
+      } = modalStore;
+      output = (
+        <Modal
+          type={type}
+          title={title}
+          visible={visible}
+          confirmAction={confirmAction}
+          cancelAction={cancelAction}
+          closeAction={closeAction}>
+          { modalStore.compComponent ? <modalStore.compComponent /> : null }
+        </Modal>
+      );
+      break;
+    case 'detail':
+      output = (
+        <Modal
+          type={type}
+          title={title}
+          visible={visible}
+          closeAction={closeAction} />
+      );
+      break;
+    default:
+      return null;
   }
   return output;
 }

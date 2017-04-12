@@ -8,8 +8,7 @@ class ModalStore {
   @observable cancelAction;
   @observable closeAction;
   @observable compComponent = null;
-  // 异步组件的路径
-  @observable asyncComp = null;
+  @observable detailComp = null;
 
   @action.bound closeDefalutAction() {
     this.visible = false;
@@ -37,14 +36,14 @@ class ModalStore {
     });
   }
 
-  @action.bound openAsyncModal(title, _closeAction, loader) {
+  @action.bound openDetailModal(title, _closeAction, loader) {
     this.visible = true;
-    this.type = 'async';
+    this.type = 'detail';
     this.title = title;
     this.closeAction = _closeAction;
     loader((comp) => {
       runInAction(()=>{
-        this.asyncComp = comp;
+        this.detailComp = comp;
       });
     });
   }
