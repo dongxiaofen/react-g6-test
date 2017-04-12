@@ -11,4 +11,5 @@ export Solution from './solution';
 export About from './about';
 export CorpDetail from './report/corpDetail';
 export Risk from './report/risk';
+export Internet from './report/internet';
 // append here from plop

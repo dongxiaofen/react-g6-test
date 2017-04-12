@@ -26,7 +26,16 @@ module.exports = function (plop) {
     path: 'src/containers/{{directory}}/{{pascalCase directory}}.js',
     templateFile: files.containerComp
   };
-
+  var createContainer2Index = {
+    type: 'add',
+    path: 'src/containers/report/{{directory}}/index.js',
+    templateFile: files.containerIndex
+  };
+  var createContainer2Comp = {
+    type: 'add',
+    path: 'src/containers/report/{{directory}}/{{pascalCase directory}}.js',
+    templateFile: files.containerComp
+  };
   var createLess = {
     type: 'add',
     path: 'src/components/{{directory}}/{{pascalCase name}}/index.less',
@@ -100,6 +109,12 @@ module.exports = function (plop) {
     pattern: /(\/\/ append here from plop)/gi,
     template: 'export {{pascalCase directory}} from \'./{{directory}}\';\n// append here from plop'
   };
+  var modifyContainer2Index = {
+    type: 'modify',
+    path: 'src/containers/index.js',
+    pattern: /(\/\/ append here from plop)/gi,
+    template: 'export {{pascalCase directory}} from \'./report/{{directory}}\';\n// append here from plop'
+  };
   var modifyRoute1 = {
     type: 'modify',
     path: 'src/routes.js',
@@ -110,7 +125,13 @@ module.exports = function (plop) {
     type: 'modify',
     path: 'src/routes.js',
     pattern: /({\/\* second append here from plop \*\/})/gi,
-    template: '      <Route path="/{{directory}}" component={ {{pascalCase directory}} } />\n{/* second append here from plop */}'
+    template: '      <Route path="{{directory}}" component={ {{pascalCase directory}} } />\n{/* second append here from plop */}'
+  };
+  var modifyRoute3 = {
+    type: 'modify',
+    path: 'src/routes.js',
+    pattern: /({\/\* third append here from plop \*\/})/gi,
+    template: '        <Route path="{{directory}}" component={ {{pascalCase directory}} } />\n{/* third append here from plop */}'
   };
   /* Questions */
   var getDirectory = {
@@ -179,10 +200,15 @@ module.exports = function (plop) {
     prompts: [getDirectory, getComponentName],
     actions: [createES6Comp]
   });
-  plop.setGenerator('Container', {
-    description: 'Container',
+  plop.setGenerator('Container default', {
+    description: '一级路由Container',
     prompts: [getDirectory],
     actions: [createContainerIndex, createContainerComp, modifyContainerIndex, modifyRoute1, modifyRoute2]
+  });
+  plop.setGenerator('Container for report module', {
+    description: '二级路由Container',
+    prompts: [getDirectory],
+    actions: [createContainer2Index, createContainer2Comp, modifyContainer2Index, modifyRoute1, modifyRoute3]
   });
   plop.setGenerator('Store', {
     description: 'Store',
