@@ -70,7 +70,7 @@ module.exports = function (plop) {
   };
   var createStore = {
     type: 'add',
-    path: 'src/stores/{{name}}.js',
+    path: 'src/stores{{directory}}/{{name}}.js',
     templateFile: files.store
   };
   var modifySfCompLess = {
@@ -89,7 +89,7 @@ module.exports = function (plop) {
     type: 'modify',
     path: 'src/stores/index.js',
     pattern: /(\/\/ append here from plop)/gi,
-    template: 'export {{name}}Store from \'./{{name}}\';\n// append here from plop'
+    template: 'export {{name}}Store from \'.{{directory}}{{name}}\';\n// append here from plop'
   };
   var modifyHocIndex = {
     type: 'modify',
@@ -138,6 +138,17 @@ module.exports = function (plop) {
     type: 'input',
     name: 'directory',
     message: 'What is the directory?',
+    validate: function (value) {
+      if ((/.+/).test(value)) {
+        return true;
+      }
+      return 'directory is required';
+    }
+  };
+  var getStoreDirectory = {
+    type: 'input',
+    name: 'directory',
+    message: 'What is the directory? eg: / or /report',
     validate: function (value) {
       if ((/.+/).test(value)) {
         return true;
@@ -212,7 +223,7 @@ module.exports = function (plop) {
   });
   plop.setGenerator('Store', {
     description: 'Store',
-    prompts: [getStoreName],
+    prompts: [getStoreDirectory, getStoreName],
     actions: [createStore, modifyStoreIndex]
   });
   plop.setGenerator('hoc sf', {
