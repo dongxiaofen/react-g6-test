@@ -1,9 +1,10 @@
 import React from 'react';
+import { observer } from 'mobx-react';
 import styles from './index.less';
-function Counter() {
-  const data = {};
+function Counter({monitorListStore}) {
+  const data = monitorListStore.monitorCount;
   const returnLoading = (values) => {
-    if (data.error) {
+    if (data.errorCode) {
       return 0;
     }
     return values === undefined ? <i className="fa fa-spin fa-spinner"></i> : values;
@@ -15,4 +16,4 @@ function Counter() {
     </div>
   );
 }
-export default Counter;
+export default observer(Counter);

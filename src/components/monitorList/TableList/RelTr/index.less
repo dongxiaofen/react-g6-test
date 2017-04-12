@@ -1,0 +1,33 @@
+@import "../../../../helpers/color.less";
+.rTr {
+  position: relative;
+  padding: 20px;
+  height: 61px;
+  border-bottom: 1px dashed @mdc-grey-200;
+}
+.rTr:after {
+  display: block;
+  content: '';
+  clear: both;
+}
+.rTr:nth-child(2) {
+  border-top: 1px solid @mdc-grey-200;
+}
+.rTr:last-child {
+  border-bottom: none;
+}
+.companyWrap {
+  position: relative;
+  float: left;
+  width: 49%;
+}
+.timeWrap {
+  float: left;
+  width: 35%;
+}
+.relActionWrap {
+  position: relative;
+  float: right;
+  height: 20px;
+  width: 16%;
+}

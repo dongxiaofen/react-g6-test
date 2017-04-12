@@ -8,7 +8,6 @@ function TypeFilter({monitorListStore}) {
     {name: '首次监控', property: 'start_tm'},
   ];
   const sortHandle = (property, sortType) => {
-    console.log(sortType);
     monitorListStore.changeParams({
       sort: `${property},${sortType}`,
     });
@@ -20,7 +19,6 @@ function TypeFilter({monitorListStore}) {
       DESC: 'ASC'
     };
     const [properties, sort] = monitorListStore.searchParams.sort.split(',');
-    console.log(properties, sort);
     let itemCss;
     let actStr;
     let directionStr;

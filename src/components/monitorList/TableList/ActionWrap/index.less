@@ -1,0 +1,39 @@
+@import "../../../../helpers/color.less";
+.wrapper {
+  position: relative;
+  float: right;
+  height: 49px;
+  width: 16%;
+}
+.actionBox {
+  position: absolute;
+  right: 0;
+  width: 110px;
+}
+.switchBox {
+  text-align: center;
+}
+.statusTextBox {
+  margin-top: 17px;
+  overflow: auto;
+}
+.statusText {
+  float: left;
+  font-size: 13px;
+  line-height: 1;
+  color: @mdc-blue-grey-300;
+}
+.rechargeBtn {
+  float: right;
+  padding-left: 15px;
+  font-size: 13px;
+  line-height: 1;
+  color: @mdc-blue-grey-500;
+  text-decoration: underline;
+  border-left: 1px solid @mdc-blue-grey-100;
+  cursor: pointer;
+}
+.rechargeBtnBlue {
+  composes: rechargeBtn;
+  color: @mdc-blue-400;
+}
