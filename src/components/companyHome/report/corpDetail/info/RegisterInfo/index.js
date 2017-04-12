@@ -2,15 +2,16 @@ import React, {PropTypes} from 'react';
 import { observer } from 'mobx-react';
 // import styles from './index.less';
 
-function Info({}) {
+function RegisterInfo({registerInfo}) {
+  console.log('registerInfo', registerInfo);
   return (
     <div>
-      Info
+      RegisterInfo
     </div>
   );
 }
 
-Info.propTypes = {
+RegisterInfo.propTypes = {
   foo: PropTypes.string,
 };
-export default observer(Info);
+export default observer(RegisterInfo);
