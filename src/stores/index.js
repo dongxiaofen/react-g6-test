@@ -9,4 +9,5 @@ export clientStore from './client';
 export riskHeadlinesStore from './riskHeadlines';
 export leftBarStore from './leftBar';
 export corpDetailStore from './report/corpDetail';
+export riskStore from './report/risk';
 // append here from plop
