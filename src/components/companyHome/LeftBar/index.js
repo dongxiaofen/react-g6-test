@@ -1,5 +1,5 @@
 import React, { PropTypes } from 'react';
-import { observer } from 'mobx-react';
+import { observer, inject } from 'mobx-react';
 import { runInAction } from 'mobx';
 import styles from './index.less';
 import Tooltip from 'antd/lib/tooltip';
@@ -49,8 +49,9 @@ const barConf = [
     contain: ['main'],
   },
 ];
-function LeftBar({ companyHomeStore, monitorId, reportId, companyName, companyType }) {
-  const {activeMenu, stockCode} = companyHomeStore;
+function LeftBar({ leftBarStore, routing }) {
+  const { monitorId, reportId, companyName, companyType } = routing.location.query;
+  const { activeMenu, stockCode } = leftBarStore;
   const getReportType = () => {
     // 一共四种报告 free, report, main, relation
     let reportType;
@@ -87,7 +88,11 @@ function LeftBar({ companyHomeStore, monitorId, reportId, companyName, companyTy
       if (!activeMenu.includes(menuKey)) {
         activeMenu.push(menuKey);
       }
-      companyHomeStore.activeItem = itemKey;
+      leftBarStore.activeItem = itemKey;
+    });
+    routing.push({
+      pathname: `/companyHome/${itemKey}`,
+      query: routing.location.query,
     });
   };
   const geneBar = () => {
@@ -111,7 +116,7 @@ function LeftBar({ companyHomeStore, monitorId, reportId, companyName, companyTy
       );
       menuObj.children.forEach((itemObj, itemIdx) => {
         const accessItem = itemObj.contain.includes(reportType);
-        let itemCss = companyHomeStore.activeItem === itemObj.menuKey ? styles.itemActCss : styles.itemCss;
+        let itemCss = leftBarStore.activeItem === itemObj.menuKey ? styles.itemActCss : styles.itemCss;
         itemCss = accessItem ? itemCss : styles.itemDisCss;
         itemCss = activeMenu.includes(menuObj.menuKey) ? itemCss : styles.hide;
         if (itemObj.menuKey !== 'stock' || stockCode) {
@@ -141,4 +146,4 @@ function LeftBar({ companyHomeStore, monitorId, reportId, companyName, companyTy
 LeftBar.propTypes = {
   foo: PropTypes.string,
 };
-export default observer(LeftBar);
+export default inject('leftBarStore', 'routing')(observer(LeftBar));

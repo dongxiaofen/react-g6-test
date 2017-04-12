@@ -1,5 +1,5 @@
 import React from 'react';
-import {Route, IndexRoute} from 'react-router';
+import {Route, IndexRoute, IndexRedirect} from 'react-router';
 import {
     App,
     Home,
@@ -13,6 +13,7 @@ import {
     Solution,
     About,
     CorpDetail,
+    Risk,
 // first append here from plop
   } from 'containers';
 
@@ -28,7 +29,9 @@ export default () => {
       <Route path="homePage" component={ HomePage } />
       <Route path="monitorList" component={ MonitorList } />
       <Route path="companyHome" component={ CompanyHome }>
+        <IndexRedirect to="corpDetail" />
         <Route path="corpDetail" component={CorpDetail} />
+        <Route path="risk" component={Risk} />
       </Route>
       <Route path="solution" component={ Solution } />
       <Route path="about" component={ About } />

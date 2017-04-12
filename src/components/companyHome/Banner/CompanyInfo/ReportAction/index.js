@@ -1,14 +1,15 @@
 import React, { PropTypes } from 'react';
-import { observer } from 'mobx-react';
+import { observer, inject } from 'mobx-react';
 import styles from './index.less';
 
-function ReportAction({ companyHomeStore, monitorId, reportId, companyType }) {
+function ReportAction({ bannerStore, routing }) {
+  const {monitorId, reportId, companyType} = routing.location.query;
   const operatMonitor = () => {
-    if (companyHomeStore.monitorStatus === 'PAUSE' || companyHomeStore.monitorStatus === 'MONITOR') {
-      if (companyHomeStore.monitorStatus === 'PAUSE') {
-        const newStatus = companyHomeStore.monitorStatus === 'MONITOR' ? 'PAUSE' : 'MONITOR';
+    if (bannerStore.monitorStatus === 'PAUSE' || bannerStore.monitorStatus === 'MONITOR') {
+      if (bannerStore.monitorStatus === 'PAUSE') {
+        const newStatus = bannerStore.monitorStatus === 'MONITOR' ? 'PAUSE' : 'MONITOR';
         // this.props.commonBoundAC.updateValue(['actionStatus', 'monitorStatus'], true, 'REPORT_UPDATE_VALUE');
-        companyHomeStore.toggleMonitorStatus(monitorId, newStatus);
+        bannerStore.toggleMonitorStatus(monitorId, newStatus);
       } else {
         // this.props.commonBoundAC.updateValue(['changeMonitorStatus', 'visible'], true, 'REPORT_UPDATE_VALUE');
       }
@@ -24,18 +25,18 @@ function ReportAction({ companyHomeStore, monitorId, reportId, companyType }) {
   let refreshCss = styles.enable;
   let refreshText = '刷新报告';
   let leftTypeBtn = '';
-  if (companyHomeStore.monitorStatus === 'MONITOR') {
+  if (bannerStore.monitorStatus === 'MONITOR') {
     monitorText = companyType === 'ASSOCIATE' ? '暂停监控' : '暂停监控';
-  } else if (companyHomeStore.monitorStatus === 'PAUSE') {
+  } else if (bannerStore.monitorStatus === 'PAUSE') {
     monitorText = '恢复监控';
-  } else if (companyHomeStore.monitorStatus === false) {
+  } else if (bannerStore.monitorStatus === false) {
     monitorText = '获取中';
     monitorCss = styles.disable;
-  } else if (companyHomeStore.monitorStatus === true) {
+  } else if (bannerStore.monitorStatus === true) {
     monitorText = '修改中';
     monitorCss = styles.disable;
   }
-  if (companyHomeStore.refreshStatus === 'loading') {
+  if (bannerStore.refreshStatus === 'loading') {
     refreshCss = styles.disable;
     refreshText = '请稍后';
   }
@@ -62,7 +63,7 @@ function ReportAction({ companyHomeStore, monitorId, reportId, companyType }) {
   return (
     <div>
       {leftTypeBtn}
-      {monitorId && companyType === 'MAIN' && companyHomeStore.monitorStatus !== 'EXPIRED' ? <div className={styles.bannerLines}></div> : ''}
+      {monitorId && companyType === 'MAIN' && bannerStore.monitorStatus !== 'EXPIRED' ? <div className={styles.bannerLines}></div> : ''}
       {monitorId && companyType === 'MAIN' ? <div className={styles.bannerBtnLeft} onClick={openPayModal.bind(this, 'recharge', 'continueMonitor', 'monitorModalStatus')}>续期</div> : ''}
     </div>
   );
@@ -71,4 +72,4 @@ function ReportAction({ companyHomeStore, monitorId, reportId, companyType }) {
 ReportAction.propTypes = {
   foo: PropTypes.string,
 };
-export default observer(ReportAction);
+export default inject('routing')(observer(ReportAction));

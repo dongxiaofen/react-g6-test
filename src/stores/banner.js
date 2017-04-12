@@ -1,6 +1,6 @@
 import { observable, action } from 'mobx';
 import {companyHomeApi} from 'api';
-class CompanyHomeStore {
+class BannerStore {
   // banner
   @observable companyName = '';
   @observable hisNameVis = false;
@@ -14,9 +14,7 @@ class CompanyHomeStore {
   @observable monitorStatus = '';
   @observable lastModifiedTs = '获取中...';
   @observable refreshStatus = 'complete';
-  // leftbar
-  @observable activeMenu = ['report'];
-  @observable activeItem = 'corpDetail';
+
 
   closeHisNamePopoverAlias = this.closeHisNamePopover;
   openHisNamePopoverAlias = this.openHisNamePopover;
@@ -67,4 +65,4 @@ class CompanyHomeStore {
       });
   }
 }
-export default new CompanyHomeStore();
+export default new BannerStore();

@@ -20,7 +20,7 @@ export default class App extends Component {
             pathname === '/pdfDown' ? '' :
             <Login {...this.props} />
           } */}
-          {React.cloneElement(this.props.children, this.props)}
+          {this.props.children}
         </div>
       );
     }

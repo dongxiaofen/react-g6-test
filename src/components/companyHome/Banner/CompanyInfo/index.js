@@ -9,22 +9,22 @@ import Contact from './Contact';
 import Status from './Status';
 import ReportAction from './ReportAction';
 
-function CompanyInfo({ companyHomeStore, ...queryParams }) {
+function CompanyInfo({ bannerStore }) {
   return (
     <div className={styles.bannerInfoLeft}>
       <div className={`clearfix ${styles.companyBox}`}>
         <div className={styles.bannerInfoContent}>
-          <CompanyName companyName={companyHomeStore.companyName} />
-          <HistoryName {...companyHomeStore} />
-          <RiskLabel riskInfo={companyHomeStore.riskInfo} />
+          <CompanyName companyName={bannerStore.companyName} />
+          <HistoryName {...bannerStore} />
+          <RiskLabel riskInfo={bannerStore.riskInfo} />
         </div>
         <div className={styles.bannerInfoContent}>
-          <Industry industryNames={companyHomeStore.industryNames} />
-          <Contact {...companyHomeStore} />
+          <Industry industryNames={bannerStore.industryNames} />
+          <Contact {...bannerStore} />
         </div>
         <div id="bannerLeftContent2" className={styles.bannerInfoContent}>
-          <Status companyHomeStore={companyHomeStore} {...queryParams} />
-          <ReportAction companyHomeStore={companyHomeStore} {...queryParams} />
+          <Status bannerStore={bannerStore} />
+          <ReportAction bannerStore={bannerStore} />
         </div>
       </div>
     </div>
@@ -34,4 +34,4 @@ function CompanyInfo({ companyHomeStore, ...queryParams }) {
 CompanyInfo.propTypes = {
   foo: PropTypes.string,
 };
-export default inject('companyHomeStore')(observer(CompanyInfo));
+export default inject('bannerStore')(observer(CompanyInfo));

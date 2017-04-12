@@ -3,16 +3,17 @@ import { observer, inject } from 'mobx-react';
 import styles from './index.less';
 import { Container, Row, Col } from 'components/common/Layout';
 import CompanyInfo from './CompanyInfo';
-@inject('companyHomeStore')
+
+@inject('bannerStore', 'routing')
 @observer
 export default class Banner extends Component {
   static propTypes = {
-    location: PropTypes.object,
-    companyHomeStore: PropTypes.object,
+    routing: PropTypes.object,
+    bannerStore: PropTypes.object,
   };
   componentDidMount() {
-    const {monitorId, reportId, companyName, companyType} = this.props.location.query;
-    this.props.companyHomeStore.getBannerInfo(monitorId, reportId, companyName, companyType);
+    const {monitorId, reportId, companyName, companyType} = this.props.routing.location.query;
+    this.props.bannerStore.getBannerInfo(monitorId, reportId, companyName, companyType);
   }
   render() {
     return (
@@ -20,7 +21,7 @@ export default class Banner extends Component {
         <Container>
           <Row>
             <Col width="8">
-              <CompanyInfo {...this.props.location.query} />
+              <CompanyInfo />
             </Col>
             <Col width="4">
               actions

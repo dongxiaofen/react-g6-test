@@ -2,15 +2,15 @@ import React, {PropTypes} from 'react';
 import { observer } from 'mobx-react';
 // import styles from './index.less';
 
-function CorpDetail({}) {
+function Info({}) {
   return (
     <div>
-      CorpDetail
+      Info
     </div>
   );
 }
 
-CorpDetail.propTypes = {
+Info.propTypes = {
   foo: PropTypes.string,
 };
-export default observer(CorpDetail);
+export default observer(Info);
