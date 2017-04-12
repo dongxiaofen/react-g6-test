@@ -65,7 +65,7 @@ export default class Html extends Component {
 
         </head>
         <body>
-          <div id="content" dangerouslySetInnerHTML={{__html: content}}/>
+          <div id="content" style={{height: '100%'}} dangerouslySetInnerHTML={{__html: content}}/>
           {this.props.pdfDown === '1' ? '' :
             <script dangerouslySetInnerHTML={{__html: `window.__data=${serialize(stores)};`}} charSet="UTF-8"/>
           }

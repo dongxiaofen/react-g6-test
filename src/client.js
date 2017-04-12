@@ -4,15 +4,27 @@
 import 'babel-polyfill';
 import React from 'react';
 import ReactDOM from 'react-dom';
-import useScroll from 'scroll-behavior/lib/useStandardScroll';
+// import useScroll from 'scroll-behavior/lib/useStandardScroll';
 import { Router, browserHistory } from 'react-router';
 import getRoutes from './routes';
 import axios from 'axios';
 import Uuid from 'node-uuid';
 import { Provider } from 'mobx-react';
-import { useStrict } from 'mobx';
 import combineServerData from 'helpers/combineServerData';
 import * as allStore from 'stores';
+import { useStrict } from 'mobx';
+import { RouterStore, syncHistoryWithStore } from 'mobx-react-router';
+// import { useStrict, spy } from 'mobx';
+// // 全局监听action
+// spy((event) => {
+//   if (event.type === 'action') {
+//     console.log(`event.name ${event.name} with args: ${event.arguments}`, event);
+//   }
+// });
+// if (module.hot) {
+//   module.hot.accept();
+// }
+
 // import ReactUpdates from 'react-dom/lib/ReactUpdates';
 // import ReactDefaultBatchingStrategy from 'react-dom/lib/ReactDefaultBatchingStrategy';
 // let isHandlingError = false;
@@ -43,8 +55,10 @@ import * as allStore from 'stores';
 // };
 // ReactUpdates.injection.injectBatchingStrategy(ReactTryCatchBatchingStrategy);
 // Needed for onTouchTap
+const routingStore = new RouterStore();
 combineServerData(allStore, window.__data);
-const history = useScroll(() => browserHistory)();
+// const history = useScroll(() => browserHistory)();
+const history = syncHistoryWithStore(browserHistory, routingStore);
 const dest = document.getElementById('content');
 useStrict(true);
 axios.interceptors.request.use((axiosConfig) => {
@@ -75,7 +89,7 @@ axios.interceptors.response.use((response) => {
   }
   return Promise.reject(error);
 });
-
+allStore.routing = routingStore;
 ReactDOM.render(
   <Provider { ...allStore }>
     <Router routes={getRoutes()} history={history} />
@@ -89,12 +103,3 @@ if (process.env.NODE_ENV !== 'production') {
     console.error('Server-side React render was discarded. Make sure that your initial render does not contain any client-side code.');
   }
 }
-// 全局监听action
-// spy((event) => {
-//   if (event.type === 'action') {
-//     console.log(`event.name ${event.name} with args: ${event.arguments}`, event);
-//   }
-// });
-// if (module.hot) {
-//   module.hot.accept();
-// }
