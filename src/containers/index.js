@@ -9,4 +9,5 @@ export MonitorList from './monitorList';
 export CompanyHome from './companyHome';
 export Solution from './solution';
 export About from './about';
+export CorpDetail from './corpDetail';
 // append here from plop

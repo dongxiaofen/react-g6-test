@@ -32,7 +32,8 @@ export default class App extends Component {
         {/* <MenuBar {...this.props} /> */}
         <div className={styles.box}>
           <div className={styles.content}>
-            {React.cloneElement(this.props.children, this.props)}
+            {this.props.children}
+            {/* {React.cloneElement(this.props.children, this.props)} */}
           </div>
         </div>
       </div>

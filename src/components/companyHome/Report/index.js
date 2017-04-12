@@ -15,7 +15,7 @@ function Report({companyHomeStore}) {
           </Col>
           <Col width="10">
             <div id="tabContentWrap" className={styles.tabContentWrap}>
-              TabContent
+              111
             </div>
           </Col>
         </Row>
