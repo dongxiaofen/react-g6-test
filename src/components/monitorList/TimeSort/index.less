@@ -1,7 +1,8 @@
 @import "../../../helpers/color.less";
 .wrapper {
   float: right;
-  margin-top: -30px;
+  display: table;
+  margin-top: -36px;
 }
 .wrapper:after {
   content: '';
@@ -9,34 +10,32 @@
   clear: both;
 }
 .sortItem {
-  float: right;
-  width: 80px;
-  height: 30px;
-  margin-top: -10px;
-  line-height: 30px;
+  display: table-cell;
+  width: 97px;
+  height: 26px;
+  line-height: 14px;
+  font-size: 14px;
   text-align: center;
-  color: @mdc-grey-700;
-  border: 1px solid @mdc-grey-300;
+  vertical-align: middle;
+  color: @mdc-blue-grey-500;
+  border: 1px solid @mdc-blue-grey-100;
   border-left: none;
   cursor: pointer;
-  span {
-    font-size: 12px;
-    line-height: 1;
-  }
 }
 .sortItemAct {
   composes: sortItem;
   background: @mdc-white-darker;
-  box-shadow: 0 0 5px @mdc-black-lighter;
+  box-shadow:0 2px 4px 0 rgba(176,190,197,0.50);
 }
-.sortItem:last-child {
-  border-left: 1px solid @mdc-grey-300;
+.sortItem:first-child {
+  border-left: 1px solid @mdc-blue-grey-100;
 }
 .icon {
   display: inline-block;
-  width: 8px;
-  height: 9px;
+  width: 10px;
+  height: 12px;
   margin-left: 5px;
+  vertical-align: middle;
   background-repeat: no-repeat;
   background-size: 100% 100%;
 }

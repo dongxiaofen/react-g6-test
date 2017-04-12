@@ -15,7 +15,7 @@ function SearchBar({monitorListStore}) {
       className={styles.inputCss}
       onChange={handleSearch}
       value={companyName}
-      placeholder="dddd"
+      placeholder="输入主体/关联企业名"
       />
   );
 }

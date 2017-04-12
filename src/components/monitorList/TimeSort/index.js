@@ -3,9 +3,9 @@ import { observer } from 'mobx-react';
 import styles from './index.less';
 function TypeFilter({monitorListStore}) {
   const sortConfig = [
-    {name: '最近更新', property: 'latestTs'},
-    {name: '截止日期', property: 'expire_dt'},
     {name: '首次监控', property: 'start_tm'},
+    {name: '截止日期', property: 'expire_dt'},
+    {name: '最近更新', property: 'latestTs'},
   ];
   const sortHandle = (property, sortType) => {
     monitorListStore.changeParams({
@@ -32,7 +32,7 @@ function TypeFilter({monitorListStore}) {
       sortType = properties === item.property ? reverseDict[sort] : sort;
       output.push(
         <div key={item.name} className={itemCss} onClick={sortHandle.bind(this, item.property, sortType)}>
-          <span>{item.name}</span>
+          {item.name}
           <i className={iconCss}></i>
         </div>
       );
