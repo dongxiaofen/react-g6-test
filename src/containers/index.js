@@ -6,6 +6,9 @@ export RiskHeadlines from './riskHeadlines';
 export Account from './account';
 export HomePage from './homePage';
 export MonitorList from './monitorList';
+export CompanyHome from './companyHome';
 export Solution from './solution';
 export About from './about';
+export CorpDetail from './report/corpDetail';
+export Risk from './report/risk';
 // append here from plop

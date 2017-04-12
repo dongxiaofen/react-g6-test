@@ -20,19 +20,20 @@ export default class App extends Component {
             pathname === '/pdfDown' ? '' :
             <Login {...this.props} />
           } */}
-          {React.cloneElement(this.props.children, this.props)}
+          {this.props.children}
         </div>
       );
     }
     return (
       <div className={styles.wrap}>
-        {true && <DevTools />}
+        {false && <DevTools />}
         {/* <Login {...this.props} /> */}
         {/* <BackTop /> */}
         {/* <MenuBar {...this.props} /> */}
         <div className={styles.box}>
           <div className={styles.content}>
-            {React.cloneElement(this.props.children, this.props)}
+            {this.props.children}
+            {/* {React.cloneElement(this.props.children, this.props)} */}
           </div>
         </div>
       </div>
