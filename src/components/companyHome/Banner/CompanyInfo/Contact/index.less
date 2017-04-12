@@ -1,0 +1,89 @@
+@import "../../../../../helpers/color.less";
+.infoText {
+  font-size: 13px;
+  color: @black6;
+  margin-bottom: 15px;
+  border-top: 1px dashed @black11;
+  padding-top: 10px;
+  &:nth-of-type(1) {
+    border-top: none;
+    padding-top: 0;
+  }
+}
+.arrow {
+  position: absolute;
+  right: 10px;
+  font-size: 15px;
+  transition: all .5s;
+  color: @mdc-grey-400;
+  &:hover {
+    cursor: pointer;
+  }
+}
+.arrowUp {
+  composes: arrow;
+  transform: rotate(180deg);
+}
+.rowWrap:nth-last-child(1) {
+  .row {
+    border: none;
+  }
+}
+.infoTitle {
+  font-size: 13px;
+  color: @black8;
+  margin: 0 0 10px;
+}
+.row {
+  border-bottom: 1px solid @black11;
+  margin-bottom: 10px;
+}
+.infoWrap {
+  width: 350px;
+  padding: 20px;
+  position: relative;
+  max-height: 333px;
+  overflow-y: auto;
+}
+.close {
+  display: inline-block;
+  width: 9px;
+  height: 9px;
+  position: absolute;
+  top: 20px;
+  right: 10px;
+  background-image: url('imgs/companyHome/close.png');
+  &:hover {
+    cursor: pointer;
+  }
+}
+.contactIcon {
+  display: inline-block;
+  width: 15px;
+  height: 15px;
+  margin-right: 5px;
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+  vertical-align: text-top;
+  background-image: url('imgs/companyHome/downBanner2.png');
+  transition: all 0.1s;
+}
+.contactIconUp {
+  composes: contactIcon;
+  transform: rotate(180deg);
+}
+.contactInfo {
+  float: left;
+  margin: 19px 0 0 0;
+}
+.messageStyle {
+  float: left;
+  font-size:14px;
+  color:@mdc-grey-700;
+  cursor: pointer;
+}
+.messageStyle i{
+  margin: 6px 0 0 3px;
+  width: 10px;
+  height: 5px;
+}
