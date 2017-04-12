@@ -8,7 +8,6 @@ class ModalStore {
   @observable cancelAction;
   @observable closeAction;
   @observable compComponent = null;
-  @observable detailComp = null;
 
   @action.bound closeDefalutAction() {
     this.visible = false;
@@ -32,18 +31,6 @@ class ModalStore {
     loader((comp) => {
       runInAction(() => {
         this.compComponent = comp;
-      });
-    });
-  }
-
-  @action.bound openDetailModal(title, _closeAction, loader) {
-    this.visible = true;
-    this.type = 'detail';
-    this.title = title;
-    this.closeAction = _closeAction;
-    loader((comp) => {
-      runInAction(()=>{
-        this.detailComp = comp;
       });
     });
   }

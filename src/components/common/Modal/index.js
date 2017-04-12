@@ -32,15 +32,6 @@ function _Modal({modalStore}) {
         </Modal>
       );
       break;
-    case 'detail':
-      output = (
-        <Modal
-          type={type}
-          title={title}
-          visible={visible}
-          closeAction={closeAction} />
-      );
-      break;
     default:
       return null;
   }

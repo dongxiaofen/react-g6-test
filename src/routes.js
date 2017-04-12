@@ -35,6 +35,7 @@ export default () => {
       </Route>
       <Route path="solution" component={ Solution } />
       <Route path="about" component={ About } />
+      <Route path="home" component={ Home } />
 {/* second append here from plop */}
     </Route>
   );
