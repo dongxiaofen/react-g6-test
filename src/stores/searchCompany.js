@@ -23,6 +23,7 @@ class SearchCompanyStore {
   @observable searchKey = '';
   // 搜索返回结果
   @observable searchResult = [];
+  // 返回结果 searchParameter
   // 数据条数
   @observable totalElements = 0;
   // 分页相关
@@ -55,7 +56,7 @@ class SearchCompanyStore {
     };
     searchApi.getCompanyList(params)
       .then(action('searchCompany list', (resp) => {
-        console.log(resp, '======searchCompany result');
+        // console.log(resp, '======searchCompany result');
         this.searchResult = resp.data.data;
       }))
       .catch((err) => {
@@ -69,6 +70,12 @@ class SearchCompanyStore {
   // 搜索的searchKey
   @action.bound searchChange(evt) {
     this.searchKey = evt.target.value;
+  }
+  // 搜索handleEnter
+  @action.bound handleEnter(evt) {
+    if (evt.keyCode === 13) {
+      this.getCompanyList();
+    }
   }
 }
 export default new SearchCompanyStore();

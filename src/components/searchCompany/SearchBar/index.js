@@ -12,8 +12,10 @@ function SearchBar({searchCompanyStore}) {
     searchTabClick,
     searchChange,
     searchKey,
+    handleEnter,
     getCompanyList,
   } = searchCompanyStore;
+  // SearchTab 为搜索选择类型  SearchInput 为搜索框和按钮
   return (
     <div className={styles.bar}>
       <SearchTab
@@ -25,6 +27,7 @@ function SearchBar({searchCompanyStore}) {
         searchType={searchType}
         searchKey={searchKey}
         searchChange={searchChange}
+        handleEnter={handleEnter}
         getCompanyList={getCompanyList} />
     </div>
   );
