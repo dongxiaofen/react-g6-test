@@ -3,18 +3,26 @@ import { observer } from 'mobx-react';
 import Input from 'components/lib/input';
 import styles from './index.less';
 function SearchBar({monitorListStore}) {
-  const companyName = monitorListStore.searchParams.companyName;
+  const searchInput = monitorListStore.searchInput;
+  const inputChange = (evt) => {
+    monitorListStore.changeValue('searchInput', evt.target.value);
+  };
   const handleSearch = (evt) => {
-    monitorListStore.changeParams({
-      companyName: evt.target.value,
-    });
+    if (evt.keyCode === 13) {
+      monitorListStore.changeParams({
+        companyName: evt.target.value,
+        index: 1,
+      });
+      monitorListStore.getMainList();
+    }
   };
   return (
     <Input
       inputType="singleline"
       className={styles.inputCss}
-      onChange={handleSearch}
-      value={companyName}
+      onChange={inputChange}
+      onKeyUp={handleSearch}
+      value={searchInput}
       placeholder="输入主体/关联企业名"
       />
   );

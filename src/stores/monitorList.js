@@ -3,6 +3,7 @@ import { observable, action } from 'mobx';
 import { monitorListApi } from 'api';
 
 class MonitorListStore {
+  @observable searchInput = '';
   @observable searchParams = {
     companyName: '',
     sort: 'start_tm,DESC',
@@ -15,6 +16,10 @@ class MonitorListStore {
   relationList = observable.map({});
   @observable relationShow = {};
   @observable relationLoading = {};
+  @action.bound changeValue(key, value) {
+    console.log(key, value);
+    this[key] = value;
+  }
   @action.bound changeParams(params) {
     Object.assign(this.searchParams, params);
   }
