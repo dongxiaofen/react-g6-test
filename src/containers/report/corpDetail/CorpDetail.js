@@ -17,10 +17,11 @@ export default class CorpDetail extends Component {
   };
   render() {
     const corpDetailStore = this.props.corpDetailStore;
+    const isLoading = corpDetailStore.isLoading;
     return (
       <Tabs>
         <TabPane tab="工商基本信息">
-          <RegisterInfo registerInfo={corpDetailStore.registerInfo} />
+          <RegisterInfo registerInfo={corpDetailStore.registerInfo} isLoading={isLoading} />
           <ShareHolder />
         </TabPane>
         <TabPane tab="对外投资任职">
