@@ -14,6 +14,7 @@ import {
     About,
     CorpDetail,
     Risk,
+    TestModal,
     Internet,
 // first append here from plop
   } from 'containers';
@@ -34,11 +35,13 @@ export default () => {
         <Route path="corpDetail" component={CorpDetail} />
         <Route path="risk" component={Risk} />
         <Route path="internet" component={ Internet } />
-{/* third append here from plop */}
+      {/* third append here from plop */}
       </Route>
       <Route path="solution" component={ Solution } />
       <Route path="about" component={ About } />
-{/* second append here from plop */}
+      {/* 测试modal用 */}
+      <Route path="testModal" component={TestModal } />
+      {/* second append here from plop */}
     </Route>
   );
 };
