@@ -28,9 +28,8 @@ class MonitorListStore {
   @action.bound changeParams(params) {
     Object.assign(this.searchParams, params);
   }
-  @action.bound getMainList() {
-    const mainParams = this.searchParams;
-    const {monitorStatus, companyName} = mainParams;
+  @action.bound getMainCount() {
+    const {monitorStatus, companyName} = this.searchParams;
     monitorListApi.getMonitorCount({monitorStatus, companyName})
     .then(action('getCount_success', resp => {
       this.monitorCount = resp.data;
@@ -38,6 +37,9 @@ class MonitorListStore {
     .catch(action('getCount_error', err => {
       this.monitorCount = err.response.data;
     }));
+  }
+  @action.bound getMainList() {
+    const mainParams = this.searchParams;
     monitorListApi.getMainList(mainParams)
     .then(action('getMainList_success', resp => {
       this.mainList = resp.data;

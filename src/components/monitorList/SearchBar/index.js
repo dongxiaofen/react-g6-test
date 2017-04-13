@@ -13,6 +13,7 @@ function SearchBar({monitorListStore}) {
         companyName: evt.target.value,
         index: 1,
       });
+      monitorListStore.getMainCount();
       monitorListStore.getMainList();
     }
   };

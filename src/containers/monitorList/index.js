@@ -14,6 +14,7 @@ export default class MonitorList extends Component {
     monitorListStore: PropTypes.object,
   };
   componentDidMount() {
+    this.props.monitorListStore.getMainCount();
     this.props.monitorListStore.getMainList();
   }
   render() {

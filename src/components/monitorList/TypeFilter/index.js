@@ -14,6 +14,7 @@ function TypeFilter({monitorListStore}) {
       monitorStatus: status,
       index: 1,
     });
+    monitorListStore.getMainCount();
     monitorListStore.getMainList();
   };
   const createFilter = () => {
