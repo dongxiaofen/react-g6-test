@@ -6,37 +6,20 @@ import styles from './index.less';
 export default class Modal extends Component {
   static propTypes = {
     visible: PropTypes.bool.isRequired,
-    type: PropTypes.string,
-    iconType: PropTypes.string,
     width: PropTypes.string,
     title: PropTypes.string,
     children: PropTypes.node,
     // text
-    infoText: PropTypes.string,
     cancelText: PropTypes.string,
     confirmText: PropTypes.string,
     // action
-    infoAction: PropTypes.func,
     cancelAction: PropTypes.func,
     confirmAction: PropTypes.func,
-    closeAction: PropTypes.func.isRequired,
+    closeAction: PropTypes.func,
     // loading
-    infoLoading: PropTypes.bool,
     cancelLoading: PropTypes.bool,
     confirmLoading: PropTypes.bool,
   }
-
-  static defaultProps = {
-    width: '440px',
-    type: 'base',
-    iconType: 'info',
-    infoText: '知道了',
-    cancelText: '取消',
-    confirmText: '确定',
-    infoLoading: false,
-    confirmLoading: false,
-    cancelLoading: false,
-  };
 
   componentDidMount() {
     this.bodyStyle();
@@ -77,72 +60,7 @@ export default class Modal extends Component {
     }
   };
 
-  // infoModal的action事件
-  infoAction = () => {
-    if (this.props.infoAction) {
-      this.props.infoAction();
-    }
-  }
-
-  /**
-   * modal类别
-   * 现目前两种
-   * 1. info icon，title，一个操作按钮
-   * 2. 有title，内容是自己定义的组件， 有两个操作按钮
-   */
-  infoModal() {
-    // info icon的类别
-    const iconCssClass = styles[`${this.props.iconType}Icon`];
-    return (
-      <div>
-        <div className={styles.closeBtn} onClick={this.closeAction}></div>
-        <div className={styles.iconBox}>
-          <div className={iconCssClass}></div>
-        </div>
-        <div className={styles.title}>
-          {this.props.title}
-        </div>
-        <div className={styles.buttonBox}>
-          <Button className={styles.button} loading={this.props.infoLoading} onClick={this.infoAction}>
-            {this.props.infoText}
-          </Button>
-        </div>
-      </div>
-    );
-  }
-
-  compModal() {
-    const children = this.props.children
-      ? <div className="clearfix">{this.props.children}</div>
-      : null;
-    return (
-      <div>
-        <div className={styles.closeBtn} onClick={this.closeAction}></div>
-        <div className={styles.title}>
-          {this.props.title}
-        </div>
-        {children}
-        <div className={styles.buttonBox}>
-          <Button
-            className={styles.cancelBtn}
-            loading={this.props.cancelLoading}
-            onClick={this.cancelAction}>
-            {this.props.cancelText}
-          </Button>
-          <Button
-            className={styles.confirmButton}
-            btnType="primary"
-            loading={this.props.confirmLoading}
-            onClick={this.confirmAction}>
-            {this.props.confirmText}
-          </Button>
-        </div>
-      </div>
-    );
-  }
-
   render() {
-    let output = null;
     // 背景是否显示
     const modalBoxClassName = this.props.visible
       ? `${styles.modal} ${styles.modalVisible}`
@@ -151,20 +69,29 @@ export default class Modal extends Component {
     const contentBoxClassName = this.props.visible
       ? `${styles.contentLayer} ${styles.visible}`
       : `${styles.contentLayer}`;
-    switch (this.props.type) {
-      case 'info':
-        output = this.infoModal();
-        break;
-      case 'comp':
-        output = this.compModal();
-        break;
-      default:
-        return null;
-    }
     return (
       <div className={modalBoxClassName}>
         <div className={contentBoxClassName} style={{ width: this.props.width }}>
-          {output}
+          <div className={styles.closeBtn} onClick={this.closeAction}></div>
+          <div className={styles.title}>
+            {this.props.title}
+          </div>
+          <div className="clearfix">{this.props.children}</div>
+          <div className={styles.buttonBox}>
+            <Button
+              className={styles.cancelBtn}
+              loading={this.props.cancelLoading}
+              onClick={this.cancelAction}>
+              {this.props.cancelText}
+            </Button>
+            <Button
+              className={styles.confirmButton}
+              btnType="primary"
+              loading={this.props.confirmLoading}
+              onClick={this.confirmAction}>
+              {this.props.confirmText}
+            </Button>
+          </div>
         </div>
       </div>
     );

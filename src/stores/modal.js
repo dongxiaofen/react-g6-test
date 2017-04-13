@@ -1,33 +1,50 @@
 import { observable, action, runInAction } from 'mobx';
 class ModalStore {
   @observable visible = false;
-  @observable type = '';
   @observable title;
-  @observable infoAction;
+  @observable width = '440px';
+  // action
   @observable confirmAction;
   @observable cancelAction;
-  @observable closeAction;
-  @observable compComponent = null;
-
-  @action.bound closeDefalutAction() {
+  @action.bound closeAction() {
     this.visible = false;
   }
 
-  @action.bound openInfoModal(title, _infoAction, _closeAction) {
-    this.visible = true;
-    this.type = 'info';
-    this.title = title;
-    this.infoAction = _infoAction;
-    this.closeAction = _closeAction;
-  }
+  // button text
+  @observable cancelText = '取消';
+  @observable confirmText = '确认';
 
-  @action.bound openCompModal(title, _confirmAction, _cancelAction, _closeAction, loader) {
+  // loading
+  @observable cancelLoading = false;
+  @observable confirmLoading = false;
+
+  @observable compComponent = null;
+
+  @action.bound openCompModal({
+    title,
+    width,
+    cancelText,
+    confirmText,
+    confirmAction,
+    cancelAction,
+    closeAction,
+    cancelLoading,
+    confirmLoading,
+    loader
+  }) {
     this.visible = true;
-    this.type = 'comp';
     this.title = title;
-    this.confirmAction = _confirmAction;
-    this.cancelAction = _cancelAction;
-    this.closeAction = _closeAction;
+    if (width) { this.width = width; }
+    // action
+    this.confirmAction = confirmAction;
+    this.cancelAction = cancelAction;
+    if (closeAction) { this.closeAction = closeAction; }
+    // button text
+    if (cancelText) { this.cancelText = cancelText; }
+    if (confirmText) { this.confirmText = confirmText; }
+    // loading
+    if (cancelLoading !== undefined) { this.cancelLoading = cancelLoading; }
+    if (confirmLoading !== undefined) { this.confirmLoading = confirmLoading; }
     loader((comp) => {
       runInAction(() => {
         this.compComponent = comp;

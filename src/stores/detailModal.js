@@ -1,16 +1,15 @@
 import { observable, action, runInAction } from 'mobx';
 class DetailModalStore {
   @observable visible = false;
-  @observable closeAction;
   @observable titleComp;
   @observable contentComp;
   @observable sourceComp;
 
-  @action.bound closeDefalutAction() {
+  @action.bound closeAction() {
     this.visible = false;
   }
 
-  @action.bound openDetailModal(_closeAction, loader) {
+  @action.bound openDetailModal(loader, closeAction) {
     loader((_titleComp, _contentComp, _sourceComp) => {
       runInAction(() => {
         this.titleComp = _titleComp;
@@ -19,7 +18,7 @@ class DetailModalStore {
       });
     });
     this.visible = true;
-    this.closeAction = _closeAction;
+    if (closeAction) { this.closeAction = closeAction; }
   }
 }
 export default new DetailModalStore();

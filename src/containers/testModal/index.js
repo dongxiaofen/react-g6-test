@@ -1,36 +1,33 @@
 import React, { Component, PropTypes } from 'react';
 import { observer, inject } from 'mobx-react';
-import Modal from 'components/common/Modal';
-import DetailModal from 'components/common/DetailModal';
 
-const test = () => console.log('this is test action');
+const confirmAction = () => console.log('this is test confirmAction');
+const cancelAction = () => console.log('this is test cancelAction');
 @inject('modalStore', 'detailModalStore') @observer
 export default class TestModal extends Component {
   static propTypes = {
     modalStore: PropTypes.object,
     detailModalStore: PropTypes.object,
   }
-  openInfoModal = () => {
-    const modalStore = this.props.modalStore;
-    modalStore.openInfoModal('测试看info modal有没有出来', test, modalStore.closeDefalutAction);
-  }
+  // comp modal
   openCompModal = () => {
     const modalStore = this.props.modalStore;
-    modalStore.openCompModal(
-      '测试看comp modal有没有出来',
-      test,
-      test,
-      modalStore.closeDefalutAction, (cb) => {
+    const args = {
+      title: '测试看comp modal有没有出来',
+      confirmAction: confirmAction,
+      cancelAction: cancelAction,
+      loader: (cb) => {
         require.ensure([], (require) => {
           cb(require('./test'));
         });
       }
-    );
+    };
+    modalStore.openCompModal({ ...args });
   }
+  // detail modal
   openDetailModal = () => {
     const detailModalStore = this.props.detailModalStore;
     detailModalStore.openDetailModal(
-      detailModalStore.closeDefalutAction,
       (cb) => {
         require.ensure([], (require) => {
           cb(
@@ -45,11 +42,8 @@ export default class TestModal extends Component {
   render() {
     return (
       <div style={{ height: 1000 }}>
-        <button onClick={this.openInfoModal}>info modal</button>
         <button onClick={this.openCompModal}>comp modal</button>
         <button onClick={this.openDetailModal}>detail modal</button>
-        <Modal modalStore={this.props.modalStore} />
-        <DetailModal modalStore={this.props.detailModalStore} />
       </div>
     );
   }
