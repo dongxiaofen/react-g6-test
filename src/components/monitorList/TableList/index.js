@@ -9,21 +9,25 @@ import styles from './index.less';
 function TableList({monitorListStore}) {
   const mainData = monitorListStore.mainList.content;
   const relData = monitorListStore.relationList;
+  const relDataStatus = monitorListStore.relationListStatus;
   const createList = () => {
     const output = [];
     let item;
+    let monitorId;
     mainData.forEach((mainItem) => {
       item = [];
-      const relDataItem = relData.get(mainItem.monitorId);
+      monitorId = mainItem.monitorId;
+      const relDataItem = relData.get(monitorId);
+      const relDataItemStatus = relDataStatus.get(monitorId);
       item.push(
         <MainTr
-          key={'mTr' + mainItem.monitorId}
+          key={'mTr' + monitorId}
           data={mainItem}
           relation="main"
           monitorListStore={monitorListStore}
           />
       );
-      if (relDataItem) {
+      if (relDataItemStatus === 'show') {
         relDataItem.forEach((relItem) => {
           item.push(
             <RelTr
@@ -36,14 +40,18 @@ function TableList({monitorListStore}) {
         });
         item.push(
           <AddTr
-            key={'addTr' + mainItem.monitorId}
+            key={'addTr' + monitorId}
             data={mainItem}
             monitorListStore={monitorListStore}
             />
         );
       }
       output.push(
-        <ItemTr key={'item' + mainItem.monitorId}>
+        <ItemTr
+          key={'item' + monitorId}
+          data={mainItem}
+          monitorListStore={monitorListStore}
+          >
           {item}
         </ItemTr>
       );

@@ -1,9 +1,14 @@
 import React from 'react';
 import { observer } from 'mobx-react';
 import { browserHistory } from 'react-router';
+import AnimateLoading from 'components/hoc/LoadingComp/AnimateLoading';
 import styles from './index.less';
 function CompanyWrap({data, monitorListStore}) {
-  const viewReport = (monitorId) => {
+  const monitorId = data.monitorId;
+  const relStatus = monitorListStore.relationListStatus.get(monitorId);
+  const angle = relStatus === 'show' ? 'up' : 'down';
+  const btnText = relStatus === 'show' ? '收起' : '展开';
+  const viewReport = () => {
     browserHistory.push(`/companyHome?monitorId=${monitorId}&companyType=MAIN`);
   };
   const stockTableType = (stockType) => {
@@ -15,25 +20,20 @@ function CompanyWrap({data, monitorListStore}) {
     }
     return str;
   };
-  const viewRelation = (monitorId, angle) => {
-    if (angle === 'down') {
+  const viewRelation = () => {
+    if (!relStatus || relStatus === 'hide') {
       monitorListStore.getRelationList(monitorId);
-      console.log(monitorId);
     } else {
       monitorListStore.delRelationList(monitorId);
-      console.log(monitorId);
     }
   };
-  const showRel = monitorListStore.relationShow['key_' + data.monitorId];
-  const angle = showRel ? 'up' : 'down';
-  const btnText = showRel ? '收起' : '展开';
   return (
     <div className={styles.wrapper}>
       <div className={styles.nameWrap}>
         <span
           className={styles.name}
           title={data.companyName}
-          onClick={viewReport.bind(this, data.monitorId)}
+          onClick={viewReport}
           >
           {data.companyName}
         </span>
@@ -43,15 +43,15 @@ function CompanyWrap({data, monitorListStore}) {
       </div>
       <div className={styles.viewWrap}>
         {
-          monitorListStore.relationLoading[data.monitorId]
+          relStatus === 'loading'
           ?
           <div className={styles.actionBox}>
             <div className={styles.loadingBox}>
-              loading
+              <AnimateLoading animateCategory />
             </div>
           </div>
           :
-          <div className={styles.actionBox} onClick={viewRelation.bind(this, data.monitorId, angle)}>
+          <div className={styles.actionBox} onClick={viewRelation}>
             <i className={styles[angle]}></i>
             <span className={styles.btnText}>{btnText}</span>
           </div>

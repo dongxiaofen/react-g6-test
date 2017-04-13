@@ -21,8 +21,7 @@ class MonitorListStore {
   @observable monitorCount = {};
   @observable mainList = {};
   relationList = observable.map({});
-  @observable relationShow = {};
-  @observable relationLoading = {};
+  relationListStatus = observable.map({});
   @action.bound changeValue(key, value) {
     pathval.setPathValue(this, key, value);
   }
@@ -60,16 +59,20 @@ class MonitorListStore {
       }));
   }
   @action.bound getRelationList(monitorId) {
+    this.relationListStatus.set(monitorId, 'loading');
     monitorListApi.getRelList(monitorId)
       .then(action('getRelList_success', resp => {
+        this.relationListStatus.set(monitorId, 'show');
         this.relationList.set(monitorId, resp.data);
       }))
       .catch(action('getRelList_success', err => {
+        this.relationListStatus.set(monitorId, 'hide');
         this.relationList.set(monitorId, err.response.data);
       }));
   }
   @action.bound delRelationList(monitorId) {
-    this.relationList[monitorId] = null;
+    this.relationListStatus.set(monitorId, 'hide');
+    this.relationList.set(monitorId, null);
   }
 }
 

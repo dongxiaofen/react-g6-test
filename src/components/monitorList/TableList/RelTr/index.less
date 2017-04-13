@@ -1,8 +1,7 @@
 @import "../../../../helpers/color.less";
 .rTr {
   position: relative;
-  padding: 20px;
-  height: 61px;
+  padding: 16px;
   border-bottom: 1px dashed @mdc-grey-200;
 }
 .rTr:after {
@@ -20,6 +19,13 @@
   position: relative;
   float: left;
   width: 49%;
+  font-size: 14px;
+  line-height: 1;
+}
+.relationship {
+  line-height: 20px;
+  margin-right: 3px;
+  color: @mdc-grey-900;
 }
 .timeWrap {
   float: left;
@@ -30,4 +36,14 @@
   float: right;
   height: 20px;
   width: 16%;
+}
+.relName {
+  display: inline-block;
+  font-size: 14px;
+  vertical-align: middle;
+  color: @mdc-grey-700;
+  cursor: pointer;
+}
+.relName:hover {
+  color: @mdc-blue-400;
 }
