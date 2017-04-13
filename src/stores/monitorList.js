@@ -46,15 +46,17 @@ class MonitorListStore {
     const source = CancelToken.source();
     const mainParams = this.searchParams;
     this.axiosCancel.push(source.cancel);
+    this.mainList = {};
     monitorListApi.getMainList(mainParams, source)
       .then(action('getMainList_success', resp => {
         this.axiosCancel.pop();
-        this.mainList = resp.data;
+        const data = resp.data.content && resp.data.content.length > 0 ? resp.data : {error: {message: '未查询到相关监控信息'}, content: []};
+        this.mainList = data;
       }))
       .catch(action('getMainList_error', err => {
         if (!axios.isCancel(err)) {
           this.axiosCancel.pop();
-          this.mainList = err.response.data;
+          this.mainList = {error: err.response.data, content: []};
         }
       }));
   }

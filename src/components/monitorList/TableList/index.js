@@ -1,5 +1,6 @@
 import React from 'react';
 import { observer } from 'mobx-react';
+import { loadingComp } from 'components/hoc';
 import ItemTr from './ItemTr';
 import MainTr from './MainTr';
 import RelTr from './RelTr';
@@ -69,4 +70,12 @@ function TableList({monitorListStore}) {
   );
 }
 
-export default observer(TableList);
+export default loadingComp({
+  mapDataToProps: props => ({
+    loading: props.monitorListStore.mainList.content === undefined ? true : false,
+    error: props.monitorListStore.mainList.error,
+    imgCategory: 13,
+    category: 2,
+    module: '监控列表',
+  }),
+})(observer(TableList));

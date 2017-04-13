@@ -47,7 +47,7 @@ function CompanyWrap({data, monitorListStore}) {
           ?
           <div className={styles.actionBox}>
             <div className={styles.loadingBox}>
-              <AnimateLoading animateCategory />
+              <AnimateLoading animateCategory={1} />
             </div>
           </div>
           :

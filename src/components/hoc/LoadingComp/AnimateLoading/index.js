@@ -28,6 +28,6 @@ function AnimateLoading({ animateCategory}) {
 }
 
 AnimateLoading.propTypes = {
-  animateCategory: PropTypes.bool,
+  animateCategory: PropTypes.number,
 };
 export default observer(AnimateLoading);
