@@ -1,11 +1,12 @@
 import React, {PropTypes} from 'react';
 import { observer } from 'mobx-react';
+import {ModuleTitle} from 'components/common/report';
 // import styles from './index.less';
 
 function ShareHolder({}) {
   return (
     <div>
-      ShareHolder
+      <ModuleTitle module="股东信息" />
     </div>
   );
 }
