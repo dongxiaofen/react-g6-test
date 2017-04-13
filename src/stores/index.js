@@ -9,4 +9,5 @@ export myHomePageStore from './myHomePage';
 export clientStore from './client';
 export riskHeadlinesStore from './riskHeadlines';
 export leftBarStore from './leftBar';
+export detailModalStore from './detailModal';
 // append here from plop

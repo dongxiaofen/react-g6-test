@@ -19,7 +19,7 @@ export default class Modal extends Component {
     infoAction: PropTypes.func,
     cancelAction: PropTypes.func,
     confirmAction: PropTypes.func,
-    closeAction: PropTypes.func,
+    closeAction: PropTypes.func.isRequired,
     // loading
     infoLoading: PropTypes.bool,
     cancelLoading: PropTypes.bool,

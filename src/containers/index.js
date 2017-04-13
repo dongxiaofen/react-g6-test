@@ -11,4 +11,6 @@ export Solution from './solution';
 export About from './about';
 export CorpDetail from './report/corpDetail';
 export Risk from './report/risk';
+// 测试modal用
+export TestModal from './testModal';
 // append here from plop
