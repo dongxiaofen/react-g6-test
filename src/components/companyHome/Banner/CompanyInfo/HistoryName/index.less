@@ -1,0 +1,80 @@
+@import "../../../../../helpers/color.less";
+.close {
+  display: inline-block;
+  width: 9px;
+  height: 9px;
+  position: absolute;
+  top: 20px;
+  right: 10px;
+  background-image: url('imgs/companyHome/close.png');
+  &:hover {
+    cursor: pointer;
+  }
+}
+.time {
+  font-size: 13px;
+  color: @black8;
+}
+.name {
+  font-size: 13px;
+  color: @black6;
+  margin: 5px 0 10px;
+}
+.line {
+  margin: 0 5px;
+}
+.historyName {
+  width: 300px;
+  padding: 20px;
+  position: relative;
+  max-height: 333px;
+  overflow: auto;
+}
+.hisNameIcon {
+  display: inline-block;
+  width: 15px;
+  height: 15px;
+  margin-right: 5px;
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+  vertical-align: text-top;
+  background-image: url('imgs/companyHome/downBanner.png');
+  transition: all 0.1s;
+}
+.hisNameIconUp {
+  composes: hisNameIcon;
+  transform: rotate(180deg);
+}
+.hisNameIcon {
+  display: inline-block;
+  width: 15px;
+  height: 15px;
+  margin-right: 5px;
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+  vertical-align: text-top;
+  background-image: url('imgs/companyHome/downBanner.png');
+  transition: all 0.1s;
+}
+.contactInfoHistory {
+  float: left;
+}
+.historyNameBtn {
+  float: left;
+  margin: 4px 0 0 19px;
+  display: block;
+  border:1px solid @mdc-blue-400;
+  color: @mdc-blue-400;
+  border-radius:100px;
+  width:88px;
+  height:24px;
+  text-align: center;
+  line-height: 24px;
+  text-indent: 6px;
+  cursor: pointer;
+}
+.historyNameBtn i{
+  margin: 5px 0 0 3px;
+  width: 10px;
+  height: 5px;
+}

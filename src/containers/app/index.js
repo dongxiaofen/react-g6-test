@@ -1,15 +1,18 @@
 import React, {Component, PropTypes} from 'react';
-import { observer } from 'mobx-react';
+import { observer, inject } from 'mobx-react';
 import DevTools from 'mobx-react-devtools';
 import styles from './index.less';
 // import MyAlert from 'components/common/MyAlert';
-// import Modal from 'components/common/Modal';
+import Modal from 'components/common/Modal';
+import DetailModal from 'components/common/DetailModal';
 
-@observer
+@inject('modalStore', 'detailModalStore')@observer
 export default class App extends Component {
   static propTypes = {
     children: PropTypes.object.isRequired,
-    location: PropTypes.object
+    location: PropTypes.object,
+    modalStore: PropTypes.object,
+    detailModalStore: PropTypes.object,
   };
   render() {
     const pathname = this.props.location.pathname;
@@ -20,19 +23,22 @@ export default class App extends Component {
             pathname === '/pdfDown' ? '' :
             <Login {...this.props} />
           } */}
-          {React.cloneElement(this.props.children, this.props)}
+          {this.props.children}
         </div>
       );
     }
     return (
       <div className={styles.wrap}>
-        {true && <DevTools />}
+        {false && <DevTools />}
         {/* <Login {...this.props} /> */}
         {/* <BackTop /> */}
         {/* <MenuBar {...this.props} /> */}
+        <Modal modalStore={this.props.modalStore} />
+        <DetailModal detailModalStore={this.props.detailModalStore} />
         <div className={styles.box}>
           <div className={styles.content}>
-            {React.cloneElement(this.props.children, this.props)}
+            {this.props.children}
+            {/* {React.cloneElement(this.props.children, this.props)} */}
           </div>
         </div>
       </div>
