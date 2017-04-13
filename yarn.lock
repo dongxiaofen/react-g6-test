@@ -2644,7 +2644,7 @@ hawk@~3.1.3:
     hoek "2.x.x"
     sntp "1.x.x"
 
-history@^3.0.0, history@3.2.1:
+history@3.2.1, history@^3.0.0:
   version "3.2.1"
   resolved "http://registry.npm.taobao.org/history/download/history-3.2.1.tgz#71c7497f4e6090363d19a6713bb52a1bfcdd99aa"
   dependencies:
@@ -5466,10 +5466,6 @@ superagent@2.1.0:
     mime "^1.3.4"
     qs "^6.1.0"
     readable-stream "^2.0.5"
-
-supervisor@^0.12.0:
-  version "0.12.0"
-  resolved "http://registry.npm.taobao.org/supervisor/download/supervisor-0.12.0.tgz#de7e6337015b291851c10f3538c4a7f04917ecc1"
 
 supports-color@^0.2.0:
   version "0.2.0"

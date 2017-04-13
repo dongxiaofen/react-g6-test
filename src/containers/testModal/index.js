@@ -1,9 +1,20 @@
 import React, { Component, PropTypes } from 'react';
 import { observer, inject } from 'mobx-react';
+import { loadingComp } from 'components/hoc';
 
 const confirmAction = () => console.log('this is test confirmAction');
 const cancelAction = () => console.log('this is test cancelAction');
-@inject('modalStore', 'detailModalStore') @observer
+
+@loadingComp({
+  mapDataToProps: () => ({
+    loading: false,
+    category: 0,
+    error: false,
+    errCategory: 1
+  })
+})
+@inject('modalStore', 'detailModalStore')
+@observer
 export default class TestModal extends Component {
   static propTypes = {
     modalStore: PropTypes.object,
