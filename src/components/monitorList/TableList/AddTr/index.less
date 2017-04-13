@@ -1,0 +1,27 @@
+@import "../../../../helpers/color.less";
+.wrapper {
+  position: relative;
+  padding: 20px;
+}
+.newCreateBtn {
+  display: inline-block;
+  width: 118px;
+  height: 26px;
+  margin-left: 4px;
+  line-height: 26px;
+  color: @mdc-white-darker;
+  font-size: 13px;
+  text-align: center;
+  background: @mdc-blue-400;
+  border-radius: 2px;
+  cursor: pointer;
+}
+.newCreateBtn i {
+  margin-right: 5px;
+}
+.disableBtn {
+  composes: newCreateBtn;
+  background: @mdc-grey-400;
+  color: @mdc-white-darker;
+  cursor: not-allowed;
+}
