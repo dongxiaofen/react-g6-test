@@ -1,9 +1,15 @@
 import { observable, action } from 'mobx';
 // import axios from 'axios';
+import pathval from 'pathval';
 import { monitorListApi } from 'api';
 
 class MonitorListStore {
   @observable searchInput = '';
+  @observable sortDirection = {
+    start_tm: 'DESC',
+    expire_dt: 'DESC',
+    latestTs: 'DESC',
+  };
   @observable searchParams = {
     companyName: '',
     sort: 'start_tm,DESC',
@@ -17,8 +23,7 @@ class MonitorListStore {
   @observable relationShow = {};
   @observable relationLoading = {};
   @action.bound changeValue(key, value) {
-    console.log(key, value);
-    this[key] = value;
+    pathval.setPathValue(this, key, value);
   }
   @action.bound changeParams(params) {
     Object.assign(this.searchParams, params);

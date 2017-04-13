@@ -7,10 +7,14 @@ function TypeFilter({monitorListStore}) {
     {name: '截止日期', property: 'expire_dt'},
     {name: '最近更新', property: 'latestTs'},
   ];
-  const sortHandle = (property, sortType) => {
+  const sortDirection = monitorListStore.sortDirection;
+  const sortHandle = (property, newSortValue) => {
+    monitorListStore.changeValue(`sortDirection.${property}`, newSortValue);
     monitorListStore.changeParams({
-      sort: `${property},${sortType}`,
+      sort: `${property},${newSortValue}`,
+      index: 1,
     });
+    monitorListStore.getMainList();
   };
   const createSort = () => {
     const output = [];
@@ -18,20 +22,26 @@ function TypeFilter({monitorListStore}) {
       ASC: 'DESC',
       DESC: 'ASC'
     };
-    const [properties, sort] = monitorListStore.searchParams.sort.split(',');
+    const properties = monitorListStore.searchParams.sort.split(',')[0];
     let itemCss;
     let actStr;
     let directionStr;
     let iconCss;
-    let sortType;
+    let sortValue;
+    let newSortValue;
     sortConfig.forEach(item => {
+      sortValue = sortDirection[item.property];
       itemCss = properties === item.property ? styles.sortItemAct : styles.sortItem;
-      actStr = sort === 'DESC' ? 'down' : 'up';
+      actStr = sortValue === 'DESC' ? 'down' : 'up';
       directionStr = properties === item.property ? 'Act' : '';
       iconCss = styles[actStr + directionStr];
-      sortType = properties === item.property ? reverseDict[sort] : sort;
+      newSortValue = properties === item.property ? reverseDict[sortValue] : sortValue;
       output.push(
-        <div key={item.name} className={itemCss} onClick={sortHandle.bind(this, item.property, sortType)}>
+        <div
+          key={item.name}
+          className={itemCss}
+          onClick={sortHandle.bind(this, item.property, newSortValue)}
+          >
           {item.name}
           <i className={iconCss}></i>
         </div>
