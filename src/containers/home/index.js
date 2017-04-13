@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 import { observer } from 'mobx-react';
 // import SearchBar from 'components/home/SearchBar';
 // import SearchList from 'components/home/SearchList';
