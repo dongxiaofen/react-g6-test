@@ -12,7 +12,9 @@ function TypeFilter({monitorListStore}) {
   const changeFilter = (status) => {
     monitorListStore.changeParams({
       monitorStatus: status,
+      index: 1,
     });
+    monitorListStore.getMainList();
   };
   const createFilter = () => {
     const output = [];
@@ -20,7 +22,11 @@ function TypeFilter({monitorListStore}) {
       const monitorStatus = monitorListStore.searchParams.monitorStatus;
       const cssName = monitorStatus === item.status ? styles.activeFilterItem : styles.filterItem;
       output.push(
-        <div key={item.name} className={cssName} onClick={changeFilter.bind(this, item.status)}>
+        <div
+          key={item.name}
+          className={cssName}
+          onClick={changeFilter.bind(this, item.status)}
+          >
           {item.name}
         </div>
       );
