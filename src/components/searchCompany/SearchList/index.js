@@ -5,13 +5,15 @@ import SearchItem from './SearchItem';
 // import { Container, Row, Col } from 'components/common/Layout';
 
 function SearchList({searchCompanyStore}) {
-  const {searchResult} = searchCompanyStore;
-  console.log(searchResult.toJS(), '======searchResult');
+  const {searchResult, searchParameter} = searchCompanyStore;
+  console.log(searchResult.toJS(), searchParameter, '======searchResult');
   const listData = [];
-  searchResult.forEach((itemData) => {
+  searchResult.map((itemData, idx) => {
     listData.push(
-      <div>
-        <SearchItem itemData={itemData} />
+      <div key={`${itemData.regDate}${idx}`}>
+        <SearchItem
+          itemData={itemData}
+          searchParameter={searchParameter} />
       </div>
     );
   });
@@ -25,7 +27,7 @@ function SearchList({searchCompanyStore}) {
 }
 
 SearchList.propTypes = {
-  searchCompanyStore: PropTypes.string,
+  searchCompanyStore: PropTypes.object,
 };
 // export default observer(SearchList);
 export default inject('searchCompanyStore')(observer(SearchList));

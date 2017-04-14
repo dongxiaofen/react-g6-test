@@ -1,0 +1,46 @@
+import React, {Component, PropTypes} from 'react';
+import styles from './index.less';
+export default class History extends Component {
+  static propTypes = {
+    getHistory: PropTypes.func,
+    historyResult: PropTypes.object,
+  }
+  componentDidMount() {
+    this.props.getHistory();
+  }
+
+  getHistory = ()=>{
+    const output = [];
+    const searchHistoryList = this.props.historyResult;
+    console.log(searchHistoryList.length, '===size');
+    if (searchHistoryList.length === 0) {
+      output.push(
+        <span className={styles.historyText}>无</span>
+      );
+    } else {
+      searchHistoryList.map((obj, idx)=>{
+        output.push(
+          <span
+            key={`${obj.type}${idx}`} onClick={this.handleHistoryClick.bind(this, obj)} className={styles.item}>{obj.keyword}</span>
+        );
+      });
+    }
+    return output;
+  }
+
+  handleHistoryClick = ()=> {}
+
+  render() {
+    console.log(this.props.historyResult, '===History render');
+    return (
+      <div className={`${styles.historyWrap}`}>
+        <div className={styles.start}>
+          <span className={styles.historyText}>历史记录</span>
+        </div>
+        <div className={styles.tip}>
+          {this.getHistory()}
+        </div>
+      </div>
+    );
+  }
+}

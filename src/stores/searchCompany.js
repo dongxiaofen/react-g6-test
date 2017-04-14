@@ -24,6 +24,9 @@ class SearchCompanyStore {
   // 搜索返回结果
   @observable searchResult = [];
   // 返回结果 searchParameter
+  @observable searchParameter = '';
+  // 历史记录
+  @observable historyResult = [];
   // 数据条数
   @observable totalElements = 0;
   // 分页相关
@@ -51,16 +54,28 @@ class SearchCompanyStore {
     const params = {
       params: {
         keyWord: this.searchKey,
-        type: 'COMPANY_NAME'
+        type: this.searchType
       },
     };
     searchApi.getCompanyList(params)
       .then(action('searchCompany list', (resp) => {
-        // console.log(resp, '======searchCompany result');
+        console.log(resp, '======searchCompany result');
         this.searchResult = resp.data.data;
+        this.searchParameter = resp.data.searchParameter;
       }))
       .catch((err) => {
         console.log(err.response, '=====searchCompany error');
+      });
+  }
+  // 获取历史记录
+  @action.bound getHistory() {
+    searchApi.getHistory()
+      .then(action('searchCompany history', (resp) => {
+        console.log(resp, '======searchCompany history');
+        this.historyResult = resp.data.content;
+      }))
+      .catch((err) => {
+        console.log(err.response, '=====history error');
       });
   }
   // 切换tab

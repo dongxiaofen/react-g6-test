@@ -3,6 +3,7 @@ import { observer, inject } from 'mobx-react';
 import styles from './index.less';
 import SearchTab from './SearchTab';
 import SearchInput from './SearchInput';
+import History from './History';
 
 function SearchBar({searchCompanyStore}) {
   const {
@@ -14,8 +15,10 @@ function SearchBar({searchCompanyStore}) {
     searchKey,
     handleEnter,
     getCompanyList,
+    getHistory,
+    historyResult,
   } = searchCompanyStore;
-  // SearchTab 为搜索选择类型  SearchInput 为搜索框和按钮
+  // SearchTab 为搜索选择类型  SearchInput 为搜索框和按钮  History 为历史记录
   return (
     <div className={styles.bar}>
       <SearchTab
@@ -29,6 +32,9 @@ function SearchBar({searchCompanyStore}) {
         searchChange={searchChange}
         handleEnter={handleEnter}
         getCompanyList={getCompanyList} />
+      <History
+        getHistory={getHistory}
+        historyResult={historyResult} />
     </div>
   );
 }
