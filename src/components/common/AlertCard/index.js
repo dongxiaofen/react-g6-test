@@ -2,7 +2,7 @@ import React from 'react';
 import { observer } from 'mobx-react';
 import styles from './index.less';
 import Popover from 'antd/lib/popover';
-import config from '../../../config/Dict/alertCard';
+import config from '../../../config/Dict/alertCard.js';
 import {
   ScopeAlter,
   ErrorInfo,
@@ -22,13 +22,13 @@ import {
   RecLocation,
   Stock
 } from './Module';
-function AlterCard({index, data, module, commonBoundAC, reducerData, reducerAction}) {
+function AlertCard({index, data, module, reducerData, store}) {
   const dict = config.cardsConfig;
   const viewReport = (mainMonitorId, type)=>{
     if (type === 'MAIN') {
       location.href = `/companyHome?monitorId=${mainMonitorId}&companyType=${type}`;
     }else {
-      commonBoundAC.getMonitorMap(mainMonitorId, this.props.history);
+      store.getMonitorMap(mainMonitorId);
     }
   };
   const typeNameMap = (pattern, firstType, secondType, thirdType, newsType, bidType, altItem, price, caseReason)=>{
@@ -83,13 +83,13 @@ function AlterCard({index, data, module, commonBoundAC, reducerData, reducerActi
         output = <DishonestInfo data={moduleData} />;
         break;
       case 'JUDGMENT':
-        output = <JudgeDoc data={moduleData} commonBoundAC={commonBoundAC} reducerData={reducerData} reducerAction={reducerAction}/>;
+        output = <JudgeDoc data={moduleData} reducerData={reducerData} store={store}/>;
         break;
       case 'NEWS':
-        output = <News data={moduleData} commonBoundAC={commonBoundAC} reducerData={reducerData} reducerAction={reducerAction}/>;
+        output = <News data={moduleData} reducerData={reducerData} store={store}/>;
         break;
       case 'BIDDING':
-        output = <Bidding data={moduleData} commonBoundAC={commonBoundAC} reducerData={reducerData} reducerAction={reducerAction}/>;
+        output = <Bidding data={moduleData} reducerData={reducerData} store={store}/>;
         break;
       case 'COURT_LITIGATION':
         output = <LitigationAssets data={moduleData} />;
@@ -165,12 +165,12 @@ function AlterCard({index, data, module, commonBoundAC, reducerData, reducerActi
   };
   const createCardList = ()=>{
     const output = [];
-    data.toArray().forEach((item, idx) => {
-      const pattern = item.get('pattern') || 'BIDDING';
-      const firstType = item.get('dimGroupName');
-      const secondType = dict[item.get('pattern')];
-      const thirdType = item.get('dimName');
-      const caseReason = item.getIn(['content', 'caseReason']);
+    data.forEach((item, idx) => {
+      const pattern = item.pattern || 'BIDDING';
+      const firstType = item.dimGroupName;
+      const secondType = dict[item.pattern];
+      const thirdType = item.dimName;
+      const caseReason = item.content.caseReason;
       const newsType = item.get('dimensionGroup') ? item.get('dimensionGroup').split(',')[0] : '';
       const bidType = item.getIn(['content', 'type']);
       const altItem = item.getIn(['content', 'altItem']);

@@ -11,3 +11,6 @@ export const getCompanyInfo = (monitorId, params)=> {
 export const getSubCompanyList = (dimGroupTypeStr, monitorId, params)=> {
   return axios.get(`/api/headline/xx/${monitorId}/companyList?${dimGroupTypeStr}`, {params});
 };
+export const getMonitorMap = (id) => {
+  return axios.get(`/api/monitor/map?monitorId=${id}`);
+};

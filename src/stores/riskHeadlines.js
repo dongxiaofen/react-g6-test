@@ -10,12 +10,12 @@ const initState = {
     companyName: '',
   },
   filterConfig: [
-      {name: '工商', enumKey: 'CORP', checked: 1},
-      {name: '法务', enumKey: 'LEGAL', checked: 1},
-      {name: '新闻', enumKey: 'NEWS', checked: 1},
-      {name: '经营', enumKey: 'OPERATION', checked: 1},
-      {name: '团队', enumKey: 'TEAM', checked: 1},
-      {name: '上市', enumKey: 'STOCK', checked: 1},
+    {name: '工商', enumKey: 'CORP', checked: 1},
+    {name: '法务', enumKey: 'LEGAL', checked: 1},
+    {name: '新闻', enumKey: 'NEWS', checked: 1},
+    {name: '经营', enumKey: 'OPERATION', checked: 1},
+    {name: '团队', enumKey: 'TEAM', checked: 1},
+    {name: '上市', enumKey: 'STOCK', checked: 1},
   ],
   events: {
     info: {},
@@ -46,6 +46,7 @@ class RiskHeadlinesStore {
   @observable companyList = Object.assign({}, initState.companyList);
   @observable events = Object.assign({}, initState.events);
   subCompanyList = observable.map({});
+
   @computed get dimGroupType() {
     const output = [];
     this.filterConfig.forEach((fiterItem)=>{
@@ -58,6 +59,7 @@ class RiskHeadlinesStore {
   @computed get dimGroupTypeStr() {
     return 'dimGroupType=' + this.dimGroupType.join('&dimGroupType=');
   }
+
   getDefulComInfo(params, data) {
     const monitorId = data.monitorId;
     const newParams = {};
@@ -118,6 +120,15 @@ class RiskHeadlinesStore {
       this.setCompanyEvents(resp.data);
     }))
     .catch(()=>{
+    });
+  }
+  @action.bound getMonitorMap(id) {
+    riskHeadlinesApi.getMonitorMap(id)
+    .then((resp)=>{
+      location.href = `/companyHome?monitorId=${resp.data.monitorId}&companyType=${resp.data.companyType}`;
+    })
+    .catch((error)=> {
+      console.log(error, 'risk getMonitorMap');
     });
   }
   @action.bound riskUpdateValue(objName, keyPath, value) {

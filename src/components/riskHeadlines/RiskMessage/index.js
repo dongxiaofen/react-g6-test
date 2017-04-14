@@ -13,7 +13,8 @@ function RiskMessage({riskHeadlinesStore, contentHeight, history}) {
       </div>
       <div>
         <MessageContent
-          contentHeight={contentHeight}/>
+          contentHeight={contentHeight}
+          riskHeadlinesStore={riskHeadlinesStore}/>
       </div>
     </div>
   );

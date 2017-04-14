@@ -1,6 +1,6 @@
 import React, {Component, PropTypes} from 'react';
 import BaseModule from '../BaseModule';
-import JobCard from '../JobCard';
+import JobCard from './JobCard';
 export default class RecLocation extends Component {
   static propTypes = {
     data: PropTypes.object,
