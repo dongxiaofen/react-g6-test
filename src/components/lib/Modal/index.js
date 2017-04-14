@@ -6,6 +6,7 @@ import styles from './index.less';
 export default class Modal extends Component {
   static propTypes = {
     visible: PropTypes.bool.isRequired,
+    isCustomize: PropTypes.bool,
     width: PropTypes.string,
     title: PropTypes.string,
     children: PropTypes.node,
@@ -69,6 +70,16 @@ export default class Modal extends Component {
     const contentBoxClassName = this.props.visible
       ? `${styles.contentLayer} ${styles.visible}`
       : `${styles.contentLayer}`;
+    if (this.props.isCustomize) {
+      return (
+        <div className={modalBoxClassName}>
+          <div className={contentBoxClassName} style={{ width: this.props.width }}>
+            <div className={styles.closeBtn} onClick={this.closeAction}></div>
+            <div className="clearfix">{this.props.children}</div>
+          </div>
+        </div>
+      );
+    }
     return (
       <div className={modalBoxClassName}>
         <div className={contentBoxClassName} style={{ width: this.props.width }}>

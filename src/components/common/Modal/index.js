@@ -6,6 +6,7 @@ function _Modal({modalStore}) {
   const {
     visible,
     title,
+    isCustomize,
     width,
     cancelText,
     confirmText,
@@ -19,6 +20,7 @@ function _Modal({modalStore}) {
     <Modal
       title={title}
       visible={visible}
+      isCustomize={isCustomize}
       width={width}
       cancelText={cancelText}
       confirmText={confirmText}
