@@ -67,7 +67,6 @@ class LoginStore {
     loginApi.postLogin(params)
         .then(action((response)=> {
           const respData = response.data;
-          console.log(pathname, '============');
           pathval.setPathValue(this, 'loading', false);
           if (respData.email) {
             pathval.setPathValue(this, 'isShowLogin', false);
@@ -78,7 +77,6 @@ class LoginStore {
               location.reload();
             }
           }
-
           //  返回登录数据
           pathval.setPathValue(this, 'loginResult', response.data);
           //  修改client的值

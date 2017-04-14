@@ -8,6 +8,7 @@ import pathval from 'pathval';
 import moment from 'moment';
 
 function BaseInfo({ clientStore }) {
+  console.log(pathval.getPathValue(clientStore, 'userInfo'));
   const isMain = true;
   const nowHour = moment().hour();
   let helloText = '';
