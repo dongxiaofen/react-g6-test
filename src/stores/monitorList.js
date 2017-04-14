@@ -22,6 +22,7 @@ class MonitorListStore {
   @observable mainList = {};
   relationList = observable.map({});
   relationListStatus = observable.map({});
+  switchLoading = observable.map({});
   @action.bound changeValue(key, value) {
     pathval.setPathValue(this, key, value);
   }
@@ -30,6 +31,7 @@ class MonitorListStore {
   }
   @action.bound getMainCount() {
     const {monitorStatus, companyName} = this.searchParams;
+    this.monitorCount = {};
     monitorListApi.getMonitorCount({monitorStatus, companyName})
       .then(action('getCount_success', resp => {
         this.monitorCount = resp.data;
@@ -75,6 +77,24 @@ class MonitorListStore {
   @action.bound delRelationList(monitorId) {
     this.relationListStatus.set(monitorId, 'hide');
     this.relationList.set(monitorId, null);
+  }
+  @action.bound changeStatus(params) {
+    const {monitorId, status, index, relation, mMonitorId} = params;
+    this.switchLoading.set(monitorId, true);
+    monitorListApi.changeMonitorStatus({monitorId, status})
+      .then(action('changeStatus_success', resp => {
+        if (relation === 'main') {
+          this.mainList.content[index] = resp.data.slice(-1)[0];
+          this.relationList.set(monitorId, resp.data.slice(0, -1));
+        } else {
+          this.relationList.get(mMonitorId)[index] = resp.data[0];
+        }
+        this.switchLoading.set(monitorId, false);
+      }))
+      .catch(action('changeStatus_error', err => {
+        this.switchLoading.set(monitorId, false);
+        console.log(err);
+      }));
   }
 }
 

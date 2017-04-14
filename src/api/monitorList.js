@@ -14,7 +14,8 @@ export const getRelList = (monitorId) => {
   return axios.get(`/api/monitor/${monitorId}/companyList`);
 };
 export const changeMonitorStatus = (params) => {
-  return axios.put(`/api/monitor/${params.monitorId}/status`, {status: params.newStatus});
+  const {monitorId, status} = params;
+  return axios.put(`/api/monitor/${monitorId}/status`, {status});
 };
 export const recharge = (params) => {
   return axios.put(`/api/monitor/${params.rechargeId}/renewal`, {time: params.monitorTime});

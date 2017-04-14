@@ -15,7 +15,7 @@ function TableList({monitorListStore}) {
     const output = [];
     let item;
     let monitorId;
-    mainData.forEach((mainItem) => {
+    mainData.forEach((mainItem, mainIdx) => {
       item = [];
       monitorId = mainItem.monitorId;
       const relDataItem = relData.get(monitorId);
@@ -24,16 +24,19 @@ function TableList({monitorListStore}) {
         <MainTr
           key={'mTr' + monitorId}
           data={mainItem}
+          index={mainIdx}
           relation="main"
           monitorListStore={monitorListStore}
           />
       );
       if (relDataItemStatus === 'show') {
-        relDataItem.forEach((relItem) => {
+        relDataItem.forEach((relItem, relIdx) => {
           item.push(
             <RelTr
               key={'rTr' + relItem.monitorId}
+              mainData={mainItem}
               data={relItem}
+              index={relIdx}
               relation="relation"
               monitorListStore={monitorListStore}
               />

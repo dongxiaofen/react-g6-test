@@ -4,7 +4,7 @@ import { browserHistory } from 'react-router';
 import RelTime from './RelTime';
 import ActionWrap from '../ActionWrap';
 import styles from './index.less';
-function RelTr({data, monitorListStore}) {
+function RelTr({data, mainData, index, monitorListStore}) {
   const viewReport = () => {
     const {monitorId, companyType} = data.monitorCompanyType;
     browserHistory.push(`/companyHome?monitorId=${monitorId}&companyType=${companyType}`);
@@ -54,7 +54,12 @@ function RelTr({data, monitorListStore}) {
         <RelTime values={data.stopTm} />
         <RelTime values={data.latestTs} />
       </div>
-      <ActionWrap data={data} relation="relation" />
+      <ActionWrap
+        data={data}
+        mainData={mainData}
+        index={index}
+        monitorListStore={monitorListStore}
+        relation="relation" />
     </div>
   );
 }
