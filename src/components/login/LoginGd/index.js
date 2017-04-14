@@ -28,7 +28,6 @@ function LoginGd({loginStore}) {
     }
   };
 
-
   return (
     <div className={styles.wrap}>
       <div className={styles.header}>
@@ -48,7 +47,7 @@ function LoginGd({loginStore}) {
               <FormItem
                 labelCol="0"
                 wrapperCol="1"
-                cssName={styles.formItem}>
+                className={styles.formItem}>
                 <div className={styles.psInput}>
                   <div className={styles.inputIconUser}>
                     <img src={loginUser} alt=""/>
@@ -58,11 +57,9 @@ function LoginGd({loginStore}) {
                     type="text"
                     placeholder="请输入用户名"
                     value={pathval.getPathValue(loginStore, 'form.username.value')}
-                    validateStatus={pathval.getPathValue(loginStore, 'form.username.validateStatus')}
-                    help={pathval.getPathValue(loginStore, 'form.username.validateMsg')}
                     onChange={changeValue}
                     onFocus={loginStore.resetVlidateStatus('username')}
-                    cssName={styles.input}
+                    className={styles.input}
                     autoComplete={false}
                   />
                 </div>
@@ -70,7 +67,7 @@ function LoginGd({loginStore}) {
               <FormItem
                 labelCol="0"
                 wrapperCol="1"
-                cssName={styles.formItem}>
+                className={styles.formItem}>
                 <div className={styles.psInput}>
                   <div className={styles.inputIconLock}>
                     <img src={loginPwd} alt=""/>
@@ -80,12 +77,10 @@ function LoginGd({loginStore}) {
                     type="password"
                     placeholder="请输入密码"
                     value={pathval.getPathValue(loginStore, 'form.password.value')}
-                    validateStatus={pathval.getPathValue(loginStore, 'from.password.validateStatus')}
-                    help={pathval.getPathValue(loginStore, 'from.password.validateMsg')}
                     onChange={changeValue}
                     onFocus={loginStore.resetVlidateStatus('password')}
                     onKeyUp={handleSubmitOnKeyUp}
-                    cssName={styles.input}
+                    className={styles.input}
                     autoComplete={false}
                   />
                 </div>
@@ -104,7 +99,7 @@ function LoginGd({loginStore}) {
                 </div>
                 <Button
                   onClick={loginStore.handleSubmit}
-                  cssName={`fs5 ${styles.submit}`}
+                  className={`fs5 ${styles.submit}`}
                   loading={pathval.getPathValue(loginStore, 'loading')}>
                   登 录
                 </Button>
