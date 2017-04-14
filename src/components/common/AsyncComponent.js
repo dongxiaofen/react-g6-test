@@ -10,7 +10,7 @@ export default class AsyncComponent extends Component {
   }
   componentDidMount() {
     this.props.loader((componentModule) => {
-      console.log('componentModule', componentModule);
+      // console.log('componentModule', componentModule);
       this.setState({
         component: componentModule
       });

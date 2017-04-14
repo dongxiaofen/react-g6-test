@@ -18,7 +18,6 @@ import { Provider } from 'mobx-react';
 import getRoutes from './routes';
 import * as allStores from 'stores';
 const agent = require('superagent-defaults')();
-
 const BASE_DIRNAME = process.cwd();
 const PDF_DIRNAME = path.join(BASE_DIRNAME, '/static/pdf/');
 const bodyParser = require('body-parser');
