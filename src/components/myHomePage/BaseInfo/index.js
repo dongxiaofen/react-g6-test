@@ -1,14 +1,34 @@
 import React, {PropTypes} from 'react';
-import { observer } from 'mobx-react';
+import { observer, inject } from 'mobx-react';
 import styles from './index.less';
 import { Link } from 'react-router';
 import catgory from 'imgs/myHomePage/catgory.png';
 import headImg from 'imgs/myHomePage/headImg.png';
+import pathval from 'pathval';
+import moment from 'moment';
 
-function BaseInfo() {
+function BaseInfo({ clientStore }) {
   const isMain = true;
-  const helloText = '你好';
-  // const userInfo = '';
+  const nowHour = moment().hour();
+  let helloText = '';
+  if (nowHour >= 0 && nowHour < 5) {
+    helloText = '凌晨好';
+  } else if (nowHour >= 5 && nowHour < 7) {
+    helloText = '清晨好';
+  } else if (nowHour >= 7 && nowHour < 9) {
+    helloText = '早上好';
+  } else if (nowHour >= 9 && nowHour < 11) {
+    helloText = '上午好';
+  } else if (nowHour >= 11 && nowHour < 13) {
+    helloText = '中午好';
+  } else if (nowHour >= 13 && nowHour < 17) {
+    helloText = '下午好';
+  } else if (nowHour >= 17 && nowHour < 19) {
+    helloText = '傍晚好';
+  } else if (nowHour >= 19 && nowHour < 24) {
+    helloText = '晚上好';
+  }
+  const userInfo = pathval.getPathValue(clientStore, 'userInfo');
   return (
     <div className={`clearfix ${styles['base-info']}`}>
       <div className={`clearfix ${styles['base-info-item']}`}>
@@ -16,7 +36,7 @@ function BaseInfo() {
           <img src={headImg} alt=""/>
         </div>
         <div className={styles['user-info1']}>
-          <div className={styles['user-info1-name']}>{helloText}， '--'</div>
+          <div className={styles['user-info1-name']}>{helloText}，{userInfo.contact ? userInfo.contact : '--'}</div>
           <div className={`${isMain ? styles['user-info1-option'] : styles['user-info1-sub']}`}>
             <div className={`${styles['user-info1-catgory']}`}>
               <div className={styles['user-catgory-img']}>
@@ -85,4 +105,4 @@ function BaseInfo() {
 BaseInfo.propTypes = {
   foo: PropTypes.string,
 };
-export default observer(BaseInfo);
+export default inject('clientStore')(observer(BaseInfo));

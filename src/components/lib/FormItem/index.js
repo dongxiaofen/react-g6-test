@@ -6,7 +6,7 @@ function FormItem({validateStatus = 'init',
                     isInline = true,
                     labelCol = 0.25,
                     wrapperCol = 0.7,
-                    cssName = ''}) {
+                    className = ''}) {
   const statusConfig = {
     init: styles.formItem,
     success: styles.formItem,
@@ -20,7 +20,7 @@ function FormItem({validateStatus = 'init',
     <div className={
       `clearfix
         fs6
-        ${statusConfig[validateStatus]} ${cssName}`
+        ${statusConfig[validateStatus]} ${className}`
     }>
       <label
         style={{width: `${labelCol * 100}%`}}

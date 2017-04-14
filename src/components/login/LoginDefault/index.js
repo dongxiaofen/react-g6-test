@@ -14,7 +14,7 @@ import loginPwd from 'imgs/login/loginPwd.png';
 import loginErr from 'imgs/login/loginErr.png';
 import loginBrowserErr from 'imgs/login/loginBrowserErr.png';
 
-function LoginDefault({loginStore, clientStore}) {
+function LoginDefault({loginStore, clientStore, pathname}) {
   // const isIE = (ver) => {
   //   const bTag = document.createElement('b');
   //   bTag.innerHTML = '<!--[if IE ' + ver + ']><i></i><![endif]-->';
@@ -22,7 +22,7 @@ function LoginDefault({loginStore, clientStore}) {
   // }
   const handleSubmitOnKeyUp = (evt) => {
     if (evt.keyCode === 13) {
-      loginStore.handleSubmit();
+      loginStore.handleSubmit(pathname);
     }
   };
   const changeValue = (event) => {
@@ -34,7 +34,7 @@ function LoginDefault({loginStore, clientStore}) {
   const resetVlidateStatus = (id) => {
     const validateStatus = pathval.getPathValue(loginStore, `form.${id}.validateStatus`);
     if (validateStatus !== 'success' || validateStatus !== 'init') {
-      this.props.loginBoundAC.resetVlidateStatus(id);
+      loginStore.resetVlidateStatus(id);
     }
   };
   const closeLoginOnClick = () => {
@@ -67,9 +67,6 @@ function LoginDefault({loginStore, clientStore}) {
           <FormItem
             labelCol="0"
             wrapperCol="1"
-            // help={login.getIn(['form', 'username', 'validateMsg'])}
-            // validateStatus={login.getIn(['form', 'username', 'validateStatus'])}
-            // cssName={styles.formItem}
           >
             <div className={styles.psInput}>
               <div className={styles.inputIconUser}>
@@ -80,22 +77,15 @@ function LoginDefault({loginStore, clientStore}) {
                 type="text"
                 placeholder="请输入用户名"
                 value={pathval.getPathValue(loginStore, 'form.username.value')}
-                validateStatus={
-                  pathval.getPathValue(loginStore, 'form.username.validateStatus')
-                }
-                help={pathval.getPathValue(loginStore, 'form.username.validateMsg')}
                 onChange={changeValue}
                 onFocus={resetVlidateStatus.bind(this, 'username')}
-                cssName={styles.input}
+                className={styles.input}
                 autoComplete={false}/>
             </div>
           </FormItem>
           <FormItem
             labelCol="0"
             wrapperCol="1"
-            // help={login.getIn(['form', 'password', 'validateMsg'])}
-            // validateStatus={login.getIn(['form', 'password', 'validateStatus'])}
-            // cssName={styles.formItem}
           >
             <div className={styles.psInput}>
               <div className={styles.inputIconLock}>
@@ -106,12 +96,10 @@ function LoginDefault({loginStore, clientStore}) {
                 type="password"
                 placeholder="请输入密码"
                 value={pathval.getPathValue(loginStore, 'form.password.value')}
-                validateStatus={pathval.getPathValue(loginStore, 'form.password.validateStatus')}
-                help={pathval.getPathValue(loginStore, 'form.password.validateMsg')}
                 onChange={changeValue}
                 onFocus={resetVlidateStatus.bind(this, 'password')}
                 onKeyUp={handleSubmitOnKeyUp}
-                cssName={styles.input}
+                className={styles.input}
                 autoComplete={false}
               />
             </div>
@@ -129,8 +117,8 @@ function LoginDefault({loginStore, clientStore}) {
                 </span>
             </div>
             <Button
-              onClick={loginStore.handleSubmit}
-              cssName={`fs5 ${styles.submit}`}
+              onClick={loginStore.handleSubmit.bind(this, pathname)}
+              className={`fs5 ${styles.submit}`}
               loading={pathval.getPathValue(loginStore, 'loading')}>
               登 录
             </Button>

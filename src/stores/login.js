@@ -3,6 +3,7 @@ import pathval from 'pathval';
 import md5 from 'crypto-js/md5';
 import encHex from 'crypto-js/enc-hex';
 import { loginApi } from 'api';
+import clientStore from './client';
 
 class LoginStore {
   @observable form = {
@@ -64,8 +65,9 @@ class LoginStore {
   @action.bound checkLogin(params, pathname) {
     pathval.setPathValue(this, 'loading', true);
     loginApi.postLogin(params)
-        .then((response)=> {
+        .then(action((response)=> {
           const respData = response.data;
+          console.log(pathname, '============');
           pathval.setPathValue(this, 'loading', false);
           if (respData.email) {
             pathval.setPathValue(this, 'isShowLogin', false);
@@ -77,17 +79,13 @@ class LoginStore {
             }
           }
 
-  //  返回登录数据
+          //  返回登录数据
           pathval.setPathValue(this, 'loginResult', response.data);
-  //  修改client的值
-          // pathval.setPathValue(this, 'loginResult', response.data);
-          // dispatch({
-          //   type: ActionTypes.GET_USER_INFO,
-          //   data: response.data
-          // });
-        })
-        .catch((error)=> {
-          const errorData = error.data;
+          //  修改client的值
+          pathval.setPathValue(clientStore, 'userInfo', response.data);
+        }))
+        .catch(action((error) => {
+          const errorData = error.response.data;
           pathval.setPathValue(this, 'loading', false);
           let errText = '用户名或者密码错误';
           if (errorData.errorCode === 401200 || errorData.errorCode === 401201) {
@@ -98,7 +96,7 @@ class LoginStore {
           pathval.setPathValue(this, 'isHasEorr', true);
           pathval.setPathValue(this, 'errText', errText);
           pathval.setPathValue(this, 'loginResult', {});
-        });
+        }));
   }
 
 }

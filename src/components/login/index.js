@@ -14,8 +14,8 @@ export default class Login extends Component {
   };
   render() {
     if (pathval.getPathValue(this.props.clientStore, 'envConfig') === 'gd_dianxin_prod') {
-      return <LoginGd pathname={ this.props.location } />;
+      return <LoginGd />;
     }
-    return <LoginDefault />;
+    return <LoginDefault pathname={ this.props.location.pathname } />;
   }
 }
