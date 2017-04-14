@@ -6,6 +6,7 @@ function _Modal({modalStore}) {
   const {
     visible,
     title,
+    isCustomize,
     width,
     cancelText,
     confirmText,
@@ -13,13 +14,13 @@ function _Modal({modalStore}) {
     confirmLoading,
     closeAction,
     confirmAction,
-    isNeedBtn,
     cancelAction
   } = modalStore;
   return (
     <Modal
       title={title}
       visible={visible}
+      isCustomize={isCustomize}
       width={width}
       cancelText={cancelText}
       confirmText={confirmText}
@@ -27,8 +28,7 @@ function _Modal({modalStore}) {
       confirmLoading={confirmLoading}
       confirmAction={confirmAction}
       cancelAction={cancelAction}
-      closeAction={closeAction}
-      isNeedBtn={isNeedBtn}>
+      closeAction={closeAction}>
       {modalStore.compComponent ? <modalStore.compComponent /> : null}
     </Modal>
   );

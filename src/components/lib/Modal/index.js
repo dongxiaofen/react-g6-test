@@ -6,6 +6,7 @@ import styles from './index.less';
 export default class Modal extends Component {
   static propTypes = {
     visible: PropTypes.bool.isRequired,
+    isCustomize: PropTypes.bool,
     width: PropTypes.string,
     title: PropTypes.string,
     children: PropTypes.node,
@@ -19,8 +20,6 @@ export default class Modal extends Component {
     // loading
     cancelLoading: PropTypes.bool,
     confirmLoading: PropTypes.bool,
-    // 是否需要按钮
-    isNeedBtn: PropTypes.bool,
   }
 
   componentDidMount() {
@@ -71,6 +70,16 @@ export default class Modal extends Component {
     const contentBoxClassName = this.props.visible
       ? `${styles.contentLayer} ${styles.visible}`
       : `${styles.contentLayer}`;
+    if (this.props.isCustomize) {
+      return (
+        <div className={modalBoxClassName}>
+          <div className={contentBoxClassName} style={{ width: this.props.width }}>
+            <div className={styles.closeBtn} onClick={this.closeAction}></div>
+            <div className="clearfix">{this.props.children}</div>
+          </div>
+        </div>
+      );
+    }
     return (
       <div className={modalBoxClassName}>
         <div className={contentBoxClassName} style={{ width: this.props.width }}>
@@ -79,26 +88,21 @@ export default class Modal extends Component {
             {this.props.title}
           </div>
           <div className="clearfix">{this.props.children}</div>
-          {
-            this.props.isNeedBtn
-            ?
-            <div className={styles.buttonBox}>
-              <Button
-                className={styles.cancelBtn}
-                loading={this.props.cancelLoading}
-                onClick={this.cancelAction}>
-                {this.props.cancelText}
-              </Button>
-              <Button
-                className={styles.confirmButton}
-                btnType="primary"
-                loading={this.props.confirmLoading}
-                onClick={this.confirmAction}>
-                {this.props.confirmText}
-              </Button>
-            </div>
-            : null
-          }
+          <div className={styles.buttonBox}>
+            <Button
+              className={styles.cancelBtn}
+              loading={this.props.cancelLoading}
+              onClick={this.cancelAction}>
+              {this.props.cancelText}
+            </Button>
+            <Button
+              className={styles.confirmButton}
+              btnType="primary"
+              loading={this.props.confirmLoading}
+              onClick={this.confirmAction}>
+              {this.props.confirmText}
+            </Button>
+          </div>
         </div>
       </div>
     );

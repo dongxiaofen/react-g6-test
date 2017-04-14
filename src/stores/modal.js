@@ -2,6 +2,7 @@ import { observable, action, runInAction } from 'mobx';
 class ModalStore {
   @observable visible = false;
   @observable title;
+  @observable isCustomize = false;
   @observable width = '440px';
   // action
   @observable confirmAction;
@@ -25,6 +26,7 @@ class ModalStore {
 
   @action.bound openCompModal({
     title,
+    isCustomize,
     width,
     cancelText,
     confirmText,
@@ -33,12 +35,12 @@ class ModalStore {
     closeAction,
     cancelLoading,
     confirmLoading,
-    isNeedBtn,
     loader
   }) {
     this.visible = true;
     this.title = title;
     if (width) { this.width = width; }
+    if (isCustomize !== undefined) { this.isCustomize = isCustomize; }
     // action
     this.confirmAction = confirmAction;
     this.cancelAction = cancelAction;
@@ -49,7 +51,6 @@ class ModalStore {
     // loading
     if (cancelLoading !== undefined) { this.cancelLoading = cancelLoading; }
     if (confirmLoading !== undefined) { this.confirmLoading = confirmLoading; }
-    if (isNeedBtn !== undefined) { this.isNeedBtn = isNeedBtn; }
     loader((comp) => {
       runInAction(() => {
         this.compComponent = comp;

@@ -27,7 +27,7 @@ export default class TestModal extends Component {
       title: '测试看comp modal有没有出来',
       confirmAction: confirmAction,
       cancelAction: cancelAction,
-      isNeedBtn: true,
+      isCustomize: true,
       loader: (cb) => {
         require.ensure([], (require) => {
           cb(require('./test'));
