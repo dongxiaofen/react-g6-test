@@ -1,8 +1,14 @@
 # modal
 
 ## 介绍
+有两种`modal`  
+
+一种是默认的  
 该`modal`调用的是异步组件  
-有`title`、`comp`、确定按钮、取消按钮
+有`title`、`comp`、确定按钮、取消按钮  
+
+另一种是`isCustomize`自定义`modal`  
+就只有一个关闭的叉叉
 
 ## `store`方法
 ```
@@ -23,6 +29,7 @@
 openCompModal({
   title,
   width,
+  isCustomize,
   cancelText,
   confirmText,
   confirmAction,
@@ -40,6 +47,7 @@ openCompModal = () => {
     title: '测试看comp modal有没有出来',
     confirmAction: confirmAction,
     cancelAction: cancelAction,
+    isCustomize: true,
     loader: (cb) => {
       require.ensure([], (require) => {
         cb(require('./test'));
