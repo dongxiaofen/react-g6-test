@@ -18,6 +18,9 @@ class ModalStore {
   @observable cancelLoading = false;
   @observable confirmLoading = false;
 
+  // 是否需要按钮
+  @observable isNeedBtn = true;
+
   @observable compComponent = null;
 
   @action.bound openCompModal({
@@ -30,6 +33,7 @@ class ModalStore {
     closeAction,
     cancelLoading,
     confirmLoading,
+    isNeedBtn,
     loader
   }) {
     this.visible = true;
@@ -45,6 +49,7 @@ class ModalStore {
     // loading
     if (cancelLoading !== undefined) { this.cancelLoading = cancelLoading; }
     if (confirmLoading !== undefined) { this.confirmLoading = confirmLoading; }
+    if (isNeedBtn !== undefined) { this.isNeedBtn = isNeedBtn; }
     loader((comp) => {
       runInAction(() => {
         this.compComponent = comp;
