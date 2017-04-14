@@ -8,6 +8,10 @@ import pathval from 'pathval';
 function DownLoadApp({clientStore}) {
   const text = '扫描二维码 下载APP';
   const envConfig = pathval.getPathValue(clientStore, 'envConfig');
+  const closeDownloadOnClick = () => {
+    document.getElementById('download-box').style.display = 'none';
+  };
+
   return (
     <div
       id="download-box"
@@ -17,7 +21,7 @@ function DownLoadApp({clientStore}) {
       <div id="download-app" className={`clearfix ${styles.download}`}>
         <div
           className={`clearfix ${styles.downloadClose}`}
-          onClick={this.closeDownloadOnClick}>
+          onClick={closeDownloadOnClick}>
           <img className={styles.downloadColseImg} src={downloadColse} alt=""/>
         </div>
         <div className={styles.downloadText}>{text}</div>

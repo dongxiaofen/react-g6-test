@@ -2,6 +2,7 @@ import React, {PropTypes} from 'react';
 import { observer, inject } from 'mobx-react';
 import styles from './index.less';
 import pathval from 'pathval';
+import { runInAction } from 'mobx';
 
 import fhtLogo from 'imgs/main/fht_logo.png';
 import dxLogo from 'imgs/main/dx_logo.png';
@@ -14,9 +15,20 @@ import banner4Icon3 from 'imgs/main/icon3.png';
 import banner4Icon4 from 'imgs/main/icon4.png';
 import getPermissionMeta from 'helpers/getPermissionMeta';
 
-function MainBody({clientStore}) {
+function MainBody({clientStore, loginStore}) {
   const envConfig = pathval.getPathValue(clientStore, 'envConfig');
   const logoOutput = [];
+
+  const showLoginOnClick = () => {
+    runInAction('显示登录框', () => {
+      pathval.setPathValue(loginStore, 'isShowLogin', true);
+    });
+  };
+
+  const showDownloadOnClick = () => {
+    document.getElementById('download-box').style.display = 'block';
+  };
+
   if (envConfig === 'dianxin_prod') {
     logoOutput.push(
       <div className={`clearfix ${styles['header-logo']}`}>
@@ -47,12 +59,12 @@ function MainBody({clientStore}) {
           <div className={styles['header-btn']}>
             <button
               className={`fs5 ${styles['header-btn-style']} ${styles['header-download-btn']}`}
-              onClick={this.showDownloadOnClick}>
+              onClick={showDownloadOnClick}>
               下载APP
             </button>
             <button
               className={`fs5 ${styles['header-btn-style']}`}
-              onClick={this.showLoginOnClick}>
+              onClick={showLoginOnClick}>
               快速登录
             </button>
           </div>
@@ -220,4 +232,4 @@ function MainBody({clientStore}) {
 MainBody.propTypes = {
   clientStore: PropTypes.object,
 };
-export default inject('clientStore')(observer(MainBody));
+export default inject('clientStore', 'loginStore')(observer(MainBody));

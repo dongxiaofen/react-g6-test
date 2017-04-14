@@ -2,7 +2,7 @@ import React, {Component, PropTypes} from 'react';
 import { observer, inject } from 'mobx-react';
 import DevTools from 'mobx-react-devtools';
 import styles from './index.less';
-import Login from 'components/login';
+import Login from 'components/Login';
 // import MyAlert from 'components/common/MyAlert';
 import Modal from 'components/common/Modal';
 import DetailModal from 'components/common/DetailModal';

@@ -8,7 +8,7 @@ class ClientStore {
     id: 105,
     message: ''
   };
-  @observable envConfig = 'dianxin_prod';
+  @observable envConfig = 'local';
 
   @action.bound getUserInfo() {
     clientApi.getUserInfo()

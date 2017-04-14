@@ -14,7 +14,7 @@ import loginPwd from 'imgs/login/loginPwd.png';
 import loginErr from 'imgs/login/loginErr.png';
 import loginBrowserErr from 'imgs/login/loginBrowserErr.png';
 
-function LoginDefault({loginStore, clientStore, pathname}) {
+function Login({loginStore, clientStore, pathname}) {
   // const isIE = (ver) => {
   //   const bTag = document.createElement('b');
   //   bTag.innerHTML = '<!--[if IE ' + ver + ']><i></i><![endif]-->';
@@ -144,8 +144,8 @@ function LoginDefault({loginStore, clientStore, pathname}) {
   );
 }
 
-LoginDefault.propTypes = {
+Login.propTypes = {
   foo: PropTypes.string,
 };
-export default inject('loginStore', 'clientStore')(observer(LoginDefault));
+export default inject('loginStore', 'clientStore')(observer(Login));
 
