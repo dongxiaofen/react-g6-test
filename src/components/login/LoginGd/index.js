@@ -8,16 +8,16 @@ import loginUser from 'imgs/login/loginUser.png';
 import loginPwd from 'imgs/login/loginPwd.png';
 import loginErr from 'imgs/login/loginErr.png';
 import loginBrowserErr from 'imgs/login/loginBrowserErr.png';
-import panthval from 'pathval';
+import pathval from 'pathval';
 import { runInAction } from 'mobx';
 
 function LoginGd({loginStore}) {
-  const errText = panthval.getPathValue(loginStore, 'errText');
-  const isIE = panthval.getPathValue(loginStore, 'isIE');
+  const errText = pathval.getPathValue(loginStore, 'errText');
+  const isIE = pathval.getPathValue(loginStore, 'isIE');
 
   const changeValue = (event) => {
     runInAction('输入数据', () => {
-      panthval.setPathValue(loginStore, `form.${event.target.id}.value`, event.target.value);
+      pathval.setPathValue(loginStore, `form.${event.target.id}.value`, event.target.value);
     });
     loginStore.resetVlidateStatus(event.target.id);
   };
@@ -57,9 +57,9 @@ function LoginGd({loginStore}) {
                     id="username"
                     type="text"
                     placeholder="请输入用户名"
-                    value={panthval.getPathValue(loginStore, 'form.username.value')}
-                    validateStatus={panthval.getPathValue(loginStore, 'form.username.validateStatus')}
-                    help={panthval.getPathValue(loginStore, 'form.username.validateMsg')}
+                    value={pathval.getPathValue(loginStore, 'form.username.value')}
+                    validateStatus={pathval.getPathValue(loginStore, 'form.username.validateStatus')}
+                    help={pathval.getPathValue(loginStore, 'form.username.validateMsg')}
                     onChange={changeValue}
                     onFocus={loginStore.resetVlidateStatus('username')}
                     cssName={styles.input}
@@ -79,9 +79,9 @@ function LoginGd({loginStore}) {
                     id="password"
                     type="password"
                     placeholder="请输入密码"
-                    value={panthval.getPathValue(loginStore, 'form.password.value')}
-                    validateStatus={panthval.getPathValue(loginStore, 'from.password.validateStatus')}
-                    help={panthval.getPathValue(loginStore, 'from.password.validateMsg')}
+                    value={pathval.getPathValue(loginStore, 'form.password.value')}
+                    validateStatus={pathval.getPathValue(loginStore, 'from.password.validateStatus')}
+                    help={pathval.getPathValue(loginStore, 'from.password.validateMsg')}
                     onChange={changeValue}
                     onFocus={loginStore.resetVlidateStatus('password')}
                     onKeyUp={handleSubmitOnKeyUp}
@@ -93,7 +93,7 @@ function LoginGd({loginStore}) {
               <div style={{ position: 'relative' }}>
                 <div
                   className={
-                    panthval.getPathValue(loginStore, 'isHasEorr') ?
+                    pathval.getPathValue(loginStore, 'isHasEorr') ?
                       `fs7 ${styles.errMessage} ${styles.isVisible}` :
                       `fs7 ${styles.errMessage}`
                   }>
@@ -105,7 +105,7 @@ function LoginGd({loginStore}) {
                 <Button
                   onClick={loginStore.handleSubmit}
                   cssName={`fs5 ${styles.submit}`}
-                  loading={panthval.getPathValue(loginStore, 'loading')}>
+                  loading={pathval.getPathValue(loginStore, 'loading')}>
                   登 录
                 </Button>
                 <div

@@ -17,13 +17,14 @@ export default class App extends Component {
   };
   render() {
     const pathname = this.props.location.pathname;
+    console.log(pathname, '======================');
     if (pathname === '/' || pathname === '/pdfDown' || pathname === '/solution' || pathname === '/about') {
       return (
         <div className={styles.container}>
-          {/* {
+          {
             pathname === '/pdfDown' ? '' :
             <Login {...this.props} />
-          } */}
+          }
           {this.props.children}
         </div>
       );

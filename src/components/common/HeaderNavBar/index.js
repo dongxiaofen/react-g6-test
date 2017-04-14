@@ -8,7 +8,6 @@ import { runInAction } from 'mobx';
 function HeaderNavBar({clientStore, loginStore}) {
   const envConfig = pathval.getPathValue(clientStore, 'envConfig');
   const showLoginOnClick = () => {
-    console.log(5222);
     runInAction('显示登录框', () => {
       pathval.setPathValue(loginStore, 'isShowLogin', true);
     });

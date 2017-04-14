@@ -7,7 +7,7 @@ class ClientStore {
   //   envConfig: 'local'
   // };
   @observable userInfo = {};
-  @observable envConfig = 'gd_dianxin_prod';
+  @observable envConfig = 'local';
 
   @action.bound getUserInfo() {
     clientApi.getUserInfo()
