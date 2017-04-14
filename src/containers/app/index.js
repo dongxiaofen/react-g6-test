@@ -22,7 +22,7 @@ export default class App extends Component {
         <div className={styles.container}>
           {
             pathname === '/pdfDown' ? '' :
-            <Login {...this.props} />
+            <Login pathname={pathname} />
           }
           {this.props.children}
         </div>
@@ -31,7 +31,7 @@ export default class App extends Component {
     return (
       <div className={styles.wrap}>
         {false && <DevTools />}
-         <Login {...this.props} />
+         <Login pathname={pathname} />
         {/* <BackTop /> */}
         {/* <MenuBar {...this.props} /> */}
         <Modal modalStore={this.props.modalStore} />
