@@ -1,0 +1,109 @@
+@import "../../../helpers/color.less";
+.singleWrap {
+  position: relative;
+  background: @white1;
+  padding: 50px 0;
+  border-bottom: 1px dashed #eee;
+}
+.singleWrap:nth-child(1) {
+  padding-top: 0;
+}
+.top{
+  padding-bottom: 15px;
+  background: @white1;
+}
+.firstTitle {
+  font-size: 14px;
+  .grades {
+    display: inline-block;
+    padding: 0;
+    width: 118px;
+    text-align: center;
+    line-height: 20px;
+    font-size: 14px;
+    cursor: pointer;
+    border-radius: 100px;
+    float: right;
+  }
+}
+.typeName {
+  border-left: 2px solid @mdc-blue-400;
+  padding-left: 4px;
+  line-height: 14px;
+  display: inline-block;
+}
+.titleMark {
+  display: inline-block;
+}
+.mainTitle {
+  composes: firstTitle;
+  color: @mdc-grey-800;
+  padding-left: 2px;
+  .big {
+    color: @red1;
+    border: 1px solid @red1;
+  }
+  .middle {
+    color: @yellow1;
+    border: 1px solid @yellow1;
+  }
+  .small {
+    color: @green1;
+    border: 1px solid @green1;
+  }
+}
+.relationTitle {
+  composes: firstTitle;
+  color: @green1;
+  span {
+    display: inline-block;
+    font-weight: normal;
+    margin-left: 10px;
+    padding: 3px 8px;
+    color: @white1;
+    background: @green1;
+    border-radius: 8px;
+  }
+}
+.companys {
+  line-height: 1;
+  float: left;
+}
+.companyWrap {
+  margin-right: 4px
+}
+.companyType {
+  position: relative;
+  top: 1px;
+  margin: 0 3px;
+}
+.mainType{
+  composes: companyWrap;
+  color: @blue2;
+}
+.relatedType{
+  composes: companyWrap;
+  color: @green1;
+}
+.nameAndTimeWrap{
+  overflow: hidden;
+  height: 16px;
+  line-height: 1;
+}
+.companyName {
+  vertical-align: middle;
+  font-size: 14px;
+  line-height: 1;
+  color: @black5;
+  cursor: pointer;
+}
+.date {
+  float: right;
+	text-align: right;
+	font-size: 14px;
+	color: @black6;
+}
+.content{
+  min-height: 0;
+  transition: all .3s;
+}

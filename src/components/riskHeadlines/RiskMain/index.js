@@ -2,16 +2,12 @@ import React, { Component, PropTypes} from 'react';
 import { observer, inject} from 'mobx-react';
 import RiskFilter from '../RiskFilter';
 import RiskCompany from '../RiskCompany';
-// import RiskMessage from './RiskMessage';
+import RiskMessage from '../RiskMessage';
 import styles from './index.less';
 import {Container, Row, Col} from 'components/common/Layout';
 @inject('riskHeadlinesStore', 'homeStore')
 @observer
 export default class RiskMain extends Component {
-  static propTypes = {
-    riskHeadlinesStore: PropTypes.object,
-    homeStore: PropTypes.object,
-  }
   componentDidMount() {
     // const params = this.props.riskHeadlines.getIn(['filterParams']).toJS();
     // this.props.riskheadlinesBoundAC.getCompanyList(params);
@@ -54,13 +50,10 @@ export default class RiskMain extends Component {
           </Col>
           <Col width="8">
             <div id="riskCompany" style={{height: this.riskMessHeight}} className={styles.riskMessage}>
-              {/* <RiskMessage
-                events={riskHeadlines.get('events')}
-                commonBoundAC={this.props.commonBoundAC}
-                riskheadlinesBoundAC={this.props.riskheadlinesBoundAC}
-                filterParams={riskHeadlines.get('filterParams')}
+               <RiskMessage
+                riskHeadlinesStore={riskHeadlinesStore}
                 contentHeight={this.containerH}
-                history={this.props.history}/>*/}
+                history={this.props.history}/>
             </div>
           </Col>
         </Row>
@@ -68,3 +61,8 @@ export default class RiskMain extends Component {
     );
   }
 }
+RiskMain.propTypes = {
+  riskHeadlinesStore: PropTypes.object,
+  homeStore: PropTypes.object,
+  history: PropTypes.object,
+};

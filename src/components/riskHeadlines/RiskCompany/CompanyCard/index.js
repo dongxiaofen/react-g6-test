@@ -6,6 +6,7 @@ import {observer} from 'mobx-react';
 function CompanyCard({riskHeadlinesStore, companyData}) {
   const companyList = riskHeadlinesStore.companyList;
   const subCompanyList = riskHeadlinesStore.subCompanyList;
+  const filterParams = riskHeadlinesStore.filterParams;
   const config = [
     {key: 'corpCount', value: '工商'},
     {key: 'legalCount', value: '法务'},
@@ -27,7 +28,7 @@ function CompanyCard({riskHeadlinesStore, companyData}) {
   const clickCompany = ()=> {
     riskHeadlinesStore.riskUpdateValue('companyList', 'active', monitorId);
     riskHeadlinesStore.riskUpdateValue('events', 'companyType', 'MAIN');
-    // riskheadlinesBoundAC.getCompanyInfo(monitorId, filterParams.toJS());
+    riskHeadlinesStore.getCompanyInfo(monitorId, filterParams.toJS());
   };
   const extendSubCompany = ()=> {
     const data = subCompanyList.get(companyData.monitorId) || [];
