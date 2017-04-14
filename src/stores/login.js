@@ -1,4 +1,9 @@
-import { observable } from 'mobx';
+import { observable, action} from 'mobx';
+import pathval from 'pathval';
+import md5 from 'crypto-js/md5';
+import encHex from 'crypto-js/enc-hex';
+import { loginApi } from 'api';
+
 class LoginStore {
   @observable form = {
     username: {
@@ -20,5 +25,81 @@ class LoginStore {
   @observable isShowLogin = false; // 是否显示login
   @observable errText = ''; // 错误提示信息
   @observable isIE = false; // 判断是否是ie浏览器，只能判断10版本一下
+
+  @action.bound resetVlidateStatus(id) {
+    const validateStatus = pathval.getPathValue(this.form, `${id}.validateStatus`);
+    if (validateStatus !== 'success' || validateStatus !== 'init') {
+      pathval.setPathValue(this.form, `${id}.validateStatus`, 'init');
+    }
+  }
+
+  @action.bound handleSubmit(pathname) {
+    const keys = ['username', 'password'];
+    let isSumbit = true;
+    pathval.setPathValue(this.form, 'isHasEorr', false);
+    keys.map((key)=>{
+      if (pathval.getPathValue(this.form, `${key}.value`).length < 1) {
+        isSumbit = false;
+        pathval.setPathValue(this.form, `${key}.validateStatus`, 'error');
+      } else {
+        pathval.setPathValue(this.form, `${key}.validateStatus`, 'success');
+      }
+    });
+    if (isSumbit) {
+      const password = pathval.getPathValue(this.form, 'password.value');
+      this.checkLogin(
+        {
+          email: pathval.getPathValue(this.form, 'username.value'),
+          password: encHex.stringify(md5(password))
+        },
+        pathname,
+        // this.props.history
+      );
+    } else {
+      pathval.setPathValue(this, 'isHasEorr', true);
+      pathval.setPathValue(this, 'errText', '请输入用户名和密码');
+    }
+  }
+
+  @action.bound checkLogin(params, pathname) {
+    pathval.setPathValue(this, 'loading', true);
+    loginApi.postLogin(params)
+        .then((response)=> {
+          const respData = response.data;
+          pathval.setPathValue(this, 'loading', false);
+          if (respData.email) {
+            pathval.setPathValue(this, 'isShowLogin', false);
+            const redirectRoute = ['/', '/about', '/solution'];
+            if (redirectRoute.indexOf(pathname) !== -1) {
+              location.href = '/myHomePage';
+            } else {
+              location.reload();
+            }
+          }
+
+  //  返回登录数据
+          pathval.setPathValue(this, 'loginResult', response.data);
+  //  修改client的值
+          // pathval.setPathValue(this, 'loginResult', response.data);
+          // dispatch({
+          //   type: ActionTypes.GET_USER_INFO,
+          //   data: response.data
+          // });
+        })
+        .catch((error)=> {
+          const errorData = error.data;
+          pathval.setPathValue(this, 'loading', false);
+          let errText = '用户名或者密码错误';
+          if (errorData.errorCode === 401200 || errorData.errorCode === 401201) {
+            errText = errorData.message;
+          } else if (errorData.errorCode === 401001) {
+            errText = '该用户不存在';
+          }
+          pathval.setPathValue(this, 'isHasEorr', true);
+          pathval.setPathValue(this, 'errText', errText);
+          pathval.setPathValue(this, 'loginResult', {});
+        });
+  }
+
 }
 export default new LoginStore();

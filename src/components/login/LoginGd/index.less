@@ -1,0 +1,279 @@
+@import "../../../helpers/color.less";
+html,body{padding:0; margin:0;}
+.wrap {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: auto;
+  max-height: 800px;
+  overflow: hidden;
+}
+.header {
+  width: 100%;
+  height: 80px;
+}
+.headerContent {
+  margin: 0;
+  padding: 0;
+  height: 80px;
+  width: 1200px;
+  margin: 0 auto;
+}
+.headerImg {
+  // float: left;
+  margin: 20px 0 0 0;
+  padding: 0;
+  width: 382px;
+  height: 40px;
+  background-image: url('imgs/loginGd/logo.png');
+  background-repeat: no-repeat;
+  background-size: auto;
+}
+.main {
+  height: 436px;
+  width: 100%;
+  background-image: url('imgs/loginGd/bg.png');
+  background-repeat: no-repeat;
+  background-size: auto;
+  background-position: center center;
+  background-color: #14376D;
+}
+.title {
+  width: 100%;
+  height: 25px;
+  line-height: 25px;
+}
+// .title i {
+// 	float: left;
+// 	margin-top: 4px;
+// 	display: block;
+// 	width: 3px;
+// 	height: 18px;
+// 	background-color: @blue2;
+// }
+.title span{
+  font-size: 22px;
+  // margin-left: 12px;
+  color: @white1;
+}
+.loginBg {
+  top: 0;
+  left: 0;
+  width: 1200px;
+  height: 436px;
+  margin: 0 auto;
+}
+
+.login {
+  float: right;
+  margin: 50px 80px 0 0;
+  width: 400px;
+  height: 340px;
+  // background-color: @white1;
+  background-color:rgba(0,0,0,0.7);
+}
+
+
+.loginColseImg:hover {
+  -webkit-transform: rotateZ(180deg);
+  -moz-transform: rotateZ(180deg);
+  -ms-transform: rotateZ(180deg);
+  -o-transform: rotateZ(180deg);
+  transform: rotateZ(180deg);
+}
+
+.loginColseImg {
+  float: left;
+
+  -webkit-transition: all ease-in-out .3s;
+  -moz-transition: all ease-in-out .3s;
+  -ms-transition: all ease-in-out .3s;
+  -o-transition: all ease-in-out .3s;
+  transition: all ease-in-out .3s;
+}
+
+.loginLogo {
+  float: left;
+  width: 270px;
+  height: 252px;
+  padding-left: 60px;
+
+  background-color: @blue2;
+}
+
+.loginForm {
+  float: left;
+  margin-left: 36px;
+  margin-top: 48px;
+}
+
+.loginLogoText {
+  color: @black5;
+}
+
+.loginLogoImg {
+  margin-top: 98px;
+}
+.formItem {
+  margin-top: 15px;
+}
+.input {
+  width: 328px;
+  height: 44px;
+  margin-bottom: 10px;
+  padding-left: 35px;
+  color: @black4;
+  border: none;
+  border-radius: 3px;
+  outline: none;
+  background-color: #ffffff!important;
+  // border-bottom: 1px solid @blue2;
+  &:hover {
+    border: none;
+    outline: none;
+    // border-bottom: 1px solid @blue2;
+  }
+  &:focus {
+    border: none;
+    outline: none;
+    // border-bottom: 1px solid @blue2;
+    box-shadow: none;
+  }
+}
+
+.submit {
+  width: 328px;
+  height: 49px;
+  padding: 0;
+  border-radius: 0px;
+  margin-top: 20px;
+  border-radius: 3px;
+}
+.isVisible {
+  top: -11px!important;
+}
+
+.psInput {
+  position: relative;
+}
+
+.inputIconUser,
+.inputIconLock {
+  position: absolute;
+  color: @black9;
+}
+
+.inputIconUser {
+  top: 10px;
+  left: 12px;
+}
+
+.inputIconLock {
+  top: 10px;
+  left: 14px;
+}
+
+.errMessage {
+  display: none;
+  position: absolute;
+  top: -19px;
+  left: 0;
+  width: 260px;
+
+  color: @red1;
+  text-align: center;
+}
+
+.isVisible {
+  display: block;
+}
+
+.loginBrowser{
+  display: none;
+  margin-left: 4px;
+  margin-top: 3px;
+}
+
+.loginBrowserErr {
+  float: left;
+  margin-left: 6px;
+  margin-top: 1px;
+  color: @black7;
+}
+
+.browerText {
+  color: @blue2;
+}
+.loginBrowserErrImg {
+  float: left;
+}
+.bottom {
+  width: 100%;
+  height: auto;
+  margin: 0;
+  padding: 0;
+}
+.bottomContent {
+  width: 1200px;
+  margin: 0 auto;
+  height: 150px;
+}
+.bottomSingle {
+  float: left;
+  padding-top: 30px;
+  width: 240px;
+  height: 150px;
+  text-align: center;
+}
+.bottomImg1 {
+  margin: 0 auto;
+  width: 88px;
+  height: 88px;
+  background-image: url('imgs/loginGd/loginBot1.png');
+  background-repeat: no-repeat;
+  background-size: auto;
+}
+.bottomImg2 {
+  margin: 0 auto;
+  width: 88px;
+  height: 88px;
+  background-image: url('imgs/loginGd/loginBot2.png');
+  background-repeat: no-repeat;
+  background-size: auto;
+}
+.bottomImg3 {
+  margin: 0 auto;
+  width: 88px;
+  height: 88px;
+  background-image: url('imgs/loginGd/loginBot3.png');
+  background-repeat: no-repeat;
+  background-size: auto;
+}
+.bottomImg4 {
+  margin: 0 auto;
+  width: 88px;
+  height: 88px;
+  background-image: url('imgs/loginGd/loginBot4.png');
+  background-repeat: no-repeat;
+  background-size: auto;
+}
+.bottomImg5 {
+  margin: 0 auto;
+  width: 88px;
+  height: 88px;
+  background-image: url('imgs/loginGd/loginBot5.png');
+  background-repeat: no-repeat;
+  background-size: auto;
+}
+.bottomSingle span {
+  position: relative;
+  top: 10px;
+  font-size: 16px;
+  color: @black4;
+}
+.bottomText {
+  text-align: center;
+  font-size: 18px;
+  color: @black4;
+  margin: 40px 0 0 0;
+}

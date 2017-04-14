@@ -3,7 +3,7 @@ import { DownLoadApp } from 'components/downLoadApp';
 import HomeMain from './HomeMain';
 import CfcaMain from './CfcaMain';
 import MainBody from './MainBody';
-// import GdMain from  './GdMain';
+import GdMain from './GdMain';
 import { observer, inject } from 'mobx-react';
 import pathval from 'pathval';
 
@@ -223,7 +223,7 @@ export default class HomeBody extends Component {
     let output;
     const envConfig = pathval.getPathValue(this.props.clientStore, 'envConfig');
     if (envConfig === 'gd_dianxin_prod') {
-      // output = <GdMain arrowOnClick={this.arrowOnClick} isHeaderScroll={this.state.isHeaderScroll} />;
+      output = <GdMain arrowOnClick={this.arrowOnClick} isHeaderScroll={this.state.isHeaderScroll} />;
     }else if (envConfig === 'dianxin_prod') {
       output = <MainBody arrowOnClick={this.arrowOnClick} isHeaderScroll={this.state.isHeaderScroll} />;
     }else if (envConfig === 'cfca_prod') {

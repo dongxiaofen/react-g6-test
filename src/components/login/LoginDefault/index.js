@@ -1,6 +1,8 @@
 import React, {PropTypes} from 'react';
 import { Button } from 'components/lib/button';
 import { observer, inject } from 'mobx-react';
+import Input from 'components/lib/input';
+import FormItem from 'components/lib/FormItem';
 import styles from './index.less';
 import pathval from 'pathval';
 import md5 from 'crypto-js/md5';
@@ -12,17 +14,17 @@ import loginPwd from 'imgs/login/loginPwd.png';
 import loginErr from 'imgs/login/loginErr.png';
 import loginBrowserErr from 'imgs/login/loginBrowserErr.png';
 
-function Login({loginStore, clientStore}) {
-  const isIE = (ver) => {
-    const bTag = document.createElement('b');
-    bTag.innerHTML = '<!--[if IE ' + ver + ']><i></i><![endif]-->';
-    return bTag.getElementsByTagName('i').length === 1;
-  }
+function LoginDefault({loginStore, clientStore}) {
+  // const isIE = (ver) => {
+  //   const bTag = document.createElement('b');
+  //   bTag.innerHTML = '<!--[if IE ' + ver + ']><i></i><![endif]-->';
+  //   return bTag.getElementsByTagName('i').length === 1;
+  // }
   const handleSubmitOnKeyUp = (evt) => {
     if (evt.keyCode === 13) {
       this.handleSubmit();
     }
-  }
+  };
   const handleSubmit = () => {
     const login = this.props.login;
     const keys = ['username', 'password'];
@@ -58,32 +60,32 @@ function Login({loginStore, clientStore}) {
         'LOGIN_UPDATE_VALUE'
       );
     }
-  }
+  };
   const changeValue = (evt) => {
     this.props.commonBoundAC.updateValue(['form', evt.target.id, 'value'], evt.target.value, 'LOGIN_UPDATE_VALUE');
     this.resetVlidateStatus(evt.target.id);
-  }
+  };
   const resetVlidateStatus = (id) => {
     const login = this.props.login;
     const validateStatus = login.getIn(['form', id, 'validateStatus']);
     if (validateStatus !== 'success' || validateStatus !== 'init') {
       this.props.loginBoundAC.resetVlidateStatus(id);
     }
-  }
+  };
   const closeLoginOnClick = () => {
     this.props.commonBoundAC.updateValue(
       ['isShowLogin'],
       false,
       'LOGIN_UPDATE_VALUE'
     );
-  }
-  const errText = pathval.getPathValue(loginStore,'errText');
-  const isIE = pathval.getPathValue(loginStore,'isIE');
-  const envConfig = pathval.getPathValue(clientStore,'envConfig');
+  };
+  const errText = pathval.getPathValue(loginStore, 'errText');
+  const isIE = pathval.getPathValue(loginStore, 'isIE');
+  const envConfig = pathval.getPathValue(clientStore, 'envConfig');
   return (
     <div
       className={
-        pathval.getPathValue(loginStore,'isShowLogin') ?
+        pathval.getPathValue(loginStore, 'isShowLogin') ?
           `clearfix ${styles.loginBg} ${styles.isVisible}` :
           `clearfix ${styles.loginBg}`
       }>
@@ -113,11 +115,11 @@ function Login({loginStore, clientStore}) {
                 id="username"
                 type="text"
                 placeholder="请输入用户名"
-                value={login.getIn(['form', 'username', 'value'])}
+                value={pathval(loginStore, 'form.username.value')}
                 validateStatus={
-                  login.getIn(['form', 'username', 'validateStatus'])
+                  pathval(loginStore, 'form.username.validateStatus')
                 }
-                help={login.getIn(['form', 'username', 'validateMsg'])}
+                help={pathval(loginStore, 'form.username.validateMsg')}
                 onChange={changeValue}
                 onFocus={resetVlidateStatus.bind(this, 'username')}
                 cssName={styles.input}
@@ -138,11 +140,9 @@ function Login({loginStore, clientStore}) {
                 id="password"
                 type="password"
                 placeholder="请输入密码"
-                value={login.getIn(['form', 'password', 'value'])}
-                validateStatus={
-                  login.getIn(['form', 'password', 'validateStatus'])
-                }
-                help={login.getIn(['form', 'password', 'validateMsg'])}
+                value={pathval(loginStore, 'form.password.value')}
+                validateStatus={pathval(loginStore, 'form.password.validateStatus')}
+                help={pathval(loginStore, 'form.password.validateMsg')}
                 onChange={changeValue}
                 onFocus={resetVlidateStatus.bind(this, 'password')}
                 onKeyUp={handleSubmitOnKeyUp}
@@ -153,7 +153,7 @@ function Login({loginStore, clientStore}) {
           <div style={{ position: 'relative' }}>
             <div
               className={
-                login.get('isHasEorr') ?
+                pathval(loginStore, 'isHasEorr') ?
                   `fs7 ${styles.errMessage} ${styles.isVisible}` :
                   `fs7 ${styles.errMessage}`
               }>
@@ -165,7 +165,7 @@ function Login({loginStore, clientStore}) {
             <Button
               onClick={handleSubmit}
               cssName={`fs5 ${styles.submit}`}
-              loading={login.get('loading')}>
+              loading={pathval(loginStore, 'loading')}>
               登 录
             </Button>
             <div
@@ -190,7 +190,8 @@ function Login({loginStore, clientStore}) {
   );
 }
 
-Login.propTypes = {
+LoginDefault.propTypes = {
   foo: PropTypes.string,
 };
-export default inject('loginStore','clientStore')(observer(Login));
+export default inject('loginStore', 'clientStore')(observer(LoginDefault));
+
