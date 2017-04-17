@@ -170,6 +170,8 @@
     "file-loader": "0.8.5",
     "flow-bin": "^0.43.0",
     "fs": "0.0.1-security",
+    "fundebug-javascript": "^0.0.6",
+    "fundebug-nodejs": "^0.0.6",
     "graceful-fs": "4.1.11",
     "gsap": "1.19.0",
     "history": "3.2.1",
