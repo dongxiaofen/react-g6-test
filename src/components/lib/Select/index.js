@@ -27,7 +27,8 @@ export default class Select extends Component {
       });
     }
   }
-  clickHandel(value, labelValue) {
+
+  optionOnChangeHandel(value, labelValue) {
     this.setState({
       value: value,
       isExtend: false,
@@ -54,9 +55,8 @@ export default class Select extends Component {
         output.push(
           React.cloneElement(child, {
             initValueConfig: this.initValueConfig.bind(this),
-            idx: idx,
             key: `option${idx}`,
-            changeAct: this.clickHandel.bind(this),
+            changeAct: this.optionOnChangeHandel.bind(this),
             selectValue: this.state.value,
           })
         );
@@ -65,7 +65,7 @@ export default class Select extends Component {
     }
     return React.cloneElement(children, {
       initValueConfig: this.initValueConfig.bind(this),
-      changeAct: this.clickHandel.bind(this),
+      changeAct: this.optionOnChangeHandel.bind(this),
       selectValue: this.state.value,
     });
   }
@@ -79,12 +79,12 @@ export default class Select extends Component {
   render() {
     const cssName = this.state.isExtend ? `${styles.select} ${styles.selectExtend}` : styles.select;
     return (
-      <div
-        className={cssName}
-        style={{ width: this.props.width }}
-        onClick={this.toggleSelect}
-        onBlur={this.blurHandle}>
-        <div className={styles.selectInput}>
+      <div className={cssName} style={{ width: this.props.width }}>
+        <div
+          className={styles.selectInput}
+          tabIndex="0"
+          onMouseDown={this.toggleSelect}
+          onBlur={this.blurHandle}>
           <span>
             {this.state.valueConfig[this.state.value]}
           </span>
@@ -115,9 +115,9 @@ export class Option extends Component {
   render() {
     let output;
     if (this.props.selectValue === this.props.value) {
-      output = <li className={styles.selectMenuActive} onClick={this.changeAct}>{this.props.children}</li>;
+      output = <li className={styles.selectMenuActive} onMouseDown={this.changeAct}>{this.props.children}</li>;
     } else {
-      output = <li onClick={this.changeAct}>{this.props.children}</li>;
+      output = <li onMouseDown={this.changeAct}>{this.props.children}</li>;
     }
     return output;
   }
