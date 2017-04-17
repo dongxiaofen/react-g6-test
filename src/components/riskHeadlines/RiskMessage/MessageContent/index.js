@@ -2,22 +2,22 @@ import React, {PropTypes} from 'react';
 import { observer } from 'mobx-react';
 import AlterCard from 'components/common/AlertCard';
 import styles from './index.less';
-// import {Pagination} from 'components/lib/pagination';
+import Pagination from 'components/lib/pagination';
 
 function MessageContent({riskHeadlinesStore, contentHeight}) {
-  // const filterParams = riskHeadlinesStore.filterParams;
+  const filterParams = riskHeadlinesStore.filterParams;
   const events = riskHeadlinesStore.events;
-  // const pageChange = (index) => {
-  //   riskHeadlinesStore.riskUpdateValue('events', 'params.index', index);
-  //   const {from, to} = filterParams;
-  //   const params = events.params;
-  //   params.from = from;
-  //   params.to = to;
-  //   const monitorId = events.info.monitorId;
-  //   riskHeadlinesStore.getCompanyEvents(monitorId, params);
-  // };
+  const pageChange = (index) => {
+    riskHeadlinesStore.riskUpdateValue('events', 'params.index', index);
+    const {from, to} = filterParams;
+    const params = events.params;
+    params.from = from;
+    params.to = to;
+    const monitorId = events.info.monitorId;
+    riskHeadlinesStore.getCompanyEvents(monitorId, params);
+  };
   const moduleData = events.data.content;
-  // const totalElements = events.data.totalElements;
+  const totalElements = events.data.totalElements;
   const params = events.params;
   const height = contentHeight - 270;
   return (
@@ -34,7 +34,7 @@ function MessageContent({riskHeadlinesStore, contentHeight}) {
           : ''
         }
       </div>
-      {/* <div className={totalElements > 10 ? styles.page : styles.none}>
+       <div className={totalElements > 10 ? styles.page : styles.none}>
         <div className={styles.page}>
           <Pagination
             current={params.index}
@@ -43,7 +43,7 @@ function MessageContent({riskHeadlinesStore, contentHeight}) {
             onChange={pageChange}
             showTotal={total => `共 ${total} 条`} />
         </div>
-      </div>*/}
+      </div>
     </div>
   );
 }

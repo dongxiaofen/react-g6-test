@@ -51,7 +51,6 @@ function Bidding({data, module, reducerData, store}) {
     'items': data,
   };
   return (<BaseModule
-            type="bidding"
             data={moduleData}
             viewDetCallback={viewDetail}
             type="double"
