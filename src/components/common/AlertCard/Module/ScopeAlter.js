@@ -13,18 +13,16 @@ export default class ScopeAlter extends Component {
   render() {
     const data = {
       'hideConfig': [
-        {'key': 'altAf', 'width': '12', 'handle': this.formatBr, 'backgroundClass': 'ellipsis', 'needHtmlParse': true},
+        {'key': 'altAf', 'width': '12', 'handle': this.formatBr},
       ],
       'viewConfig': [
-        {'key': 'altAf', 'width': '12', 'needHtmlParse': true},
-        {'key': 'altBe', 'width': '12', 'needHtmlParse': true},
+        {'key': 'altAf', 'width': '12'},
+        {'key': 'altBe', 'width': '12'},
       ],
       date: {
         label: '变更日期',
-        value: this.props.data.getIn(['content', 'altDate'])
+        value: this.props.data.content.altDate
       },
-      'handleBlock': true,
-      'ellipsis': true,
       'items': this.props.data,
       'dict': 'alterList'
     };

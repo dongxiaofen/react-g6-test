@@ -28,7 +28,7 @@ function CompanyCard({riskHeadlinesStore, companyData}) {
   const clickCompany = ()=> {
     riskHeadlinesStore.riskUpdateValue('companyList', 'active', monitorId);
     riskHeadlinesStore.riskUpdateValue('events', 'companyType', 'MAIN');
-    riskHeadlinesStore.getCompanyInfo(monitorId, filterParams.toJS());
+    riskHeadlinesStore.getCompanyInfo(monitorId, filterParams);
   };
   const extendSubCompany = ()=> {
     const data = subCompanyList.get(companyData.monitorId) || [];

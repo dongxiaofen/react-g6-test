@@ -41,7 +41,7 @@ export default class Stock extends Component {
       'items': this.props.data,
     };
     return (
-      <BaseModule type="stock" {...this.props} module="detail" data={data} btnText="查看" viewDetCallback={this.viewDetail}/>
+      <BaseModule type="stock" {...this.props} type="detail" data={data} btnText="查看" viewDetCallback={this.viewDetail}/>
     );
   }
 }

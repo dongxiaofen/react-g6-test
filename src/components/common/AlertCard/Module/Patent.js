@@ -6,12 +6,12 @@ export default class Patent extends Component {
   };
   getValue(value) {
     if (value) {
-      return value.getIn(['cname']);
+      return value.cname;
     }
   }
   getValue_(value) {
     if (value) {
-      return value.getIn(['number']);
+      return value.number;
     }
   }
   render() {
@@ -32,7 +32,7 @@ export default class Patent extends Component {
       ],
       date: {
         label: '授权日期',
-        value: this.props.data.getIn(['content', 'authPubDate'])
+        value: this.props.data.content.authPubDate
       },
       'handleBlock': true,
       'dict': 'Patent',

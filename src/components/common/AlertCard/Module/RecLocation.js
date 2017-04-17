@@ -13,7 +13,7 @@ export default class RecLocation extends Component {
       firstKey: 'address',
       config: ['position', 'salary', 'requireNum'],
       dict: 'recLocation',
-      items: this.props.data.getIn(['content', 'recruitmentDataList'])
+      items: this.props.data.content.recruitmentDataList
     };
     return <JobCard {...this.props} data={data} />;
   }

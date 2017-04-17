@@ -26,7 +26,7 @@ export default class KTAnnouncement extends Component {
       ],
       date: {
         label: '开庭日期',
-        value: this.props.data.getIn(['content', 'judgeTime'])
+        value: this.props.data.content.judgeTime
       },
       'handleBlock': true,
       'dict': 'courtNotice',

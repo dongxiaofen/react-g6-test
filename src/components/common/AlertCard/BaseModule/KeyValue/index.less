@@ -1,3 +1,30 @@
-.box {
+@import "../../../../../helpers/color.less";
+.key{
+  line-height: 25px;
+  color:@black7;
+  font-size: 14px;
+}
+.value{
+  font-size: 14px;
+  color:@black5;
+  word-break: break-all;
+}
+.ellipsis{
+  height: 25px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
 
+.toolTipValue {
+  color: @black5;
+}
+.value i {
+  margin-left: 10px;
+}
+.value a {
+  text-decoration: underline;
+}
+.value a:hover {
+  color: @blue2;
 }

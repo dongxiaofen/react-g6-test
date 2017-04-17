@@ -20,12 +20,12 @@ export default class Dimission extends Component {
       ],
       date: {
         label: '日期',
-        value: this.props.data.getIn(['alterDt'])
+        value: this.props.data.alterDt
       },
       'handleBlock': true,
       'dict': 'dimissions',
       'items': this.props.data,
     };
-    return <BaseModule {...this.props} data={data} module="none"/>;
+    return <BaseModule {...this.props} data={data} type="none"/>;
   }
 }

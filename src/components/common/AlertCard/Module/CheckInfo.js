@@ -16,11 +16,11 @@ export default class CheckInfo extends Component {
       ],
       date: {
         label: '日期',
-        value: this.props.data.getIn(['content', 'checkDate'])
+        value: this.props.data.content.checkDate
       },
       'dict': 'checkMessageList',
       'items': this.props.data,
     };
-    return <BaseModule {...this.props} data={data} />;
+    return <BaseModule {...this.props} data={data}/>;
   }
 }

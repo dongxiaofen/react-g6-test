@@ -51,20 +51,20 @@ export default class JudgeDoc extends Component {
     return '无';
   }
   viewDetail=(obj)=>{
-    const docId = obj.getIn(['content', 'docId']);
-    const trailDate = obj.getIn(['content', 'trailDate']);
-    const url = obj.getIn(['url']);
+    const docId = obj.content.docId;
+    const trailDate = obj.content.trailDate;
+    const url = obj.url;
     let monitorCompanyId = '';
     const actionId = Date.now();
     const reducerData = this.matchReducerByModule();
     if (this.props.module === 'laneGraph') {
-      if (obj.get('relatedMonitorId')) {
-        monitorCompanyId = obj.get('relatedMonitorId');
+      if (obj.relatedMonitorId) {
+        monitorCompanyId = obj.relatedMonitorId;
       } else {
-        monitorCompanyId = obj.get('mainMonitorId');
+        monitorCompanyId = obj.mainMonitorId;
       }
     } else {
-      monitorCompanyId = reducerData.getIn(['info', 'monitorId']);
+      monitorCompanyId = reducerData.info.monitorId;
     }
     const getUrl = `/api/monitor/${monitorCompanyId}/risk/judgeDoc?docId=${docId}&trailDate=${trailDate}`;
     this.props.commonBoundAC.getDetail(
@@ -78,15 +78,14 @@ export default class JudgeDoc extends Component {
       './judgeDoc/judgeDocContent',
       '',
       'RISK_UPDATE_VALUE',
-      ['events', 'loading', this.props.data.getIn(['eventId'])]
+      ['events', 'loading', this.props.data.eventId]
     );
   }
   modifyTitle = (obj)=>{
-    return <a onClick={this.viewDetail.bind(this, obj)}>{obj.getIn(['content', 'title'])}</a>;
+    return <a onClick={this.viewDetail.bind(this, obj)}>{obj.content.title}</a>;
   }
   render() {
-    const eventId = this.props.data.getIn(['eventId']);
-    console.log(this.props.reducerData.toJS());
+    const eventId = this.props.data.eventId;
     const data = {
       'hideConfig': [
         {'key': 'title', 'width': '12'},
@@ -102,17 +101,17 @@ export default class JudgeDoc extends Component {
       ],
       date: {
         label: '裁判日期',
-        value: this.props.data.getIn(['content', 'trailDate'])
+        value: this.props.data.content.trailDate
       },
       'handleBlock': true,
       'dict': 'judgeDoc',
       'items': this.props.data,
     };
     return (<BaseModule type="judgeDoc"
-          {...this.props}
+            {...this.props}
             data={data}
             viewDetCallback={this.viewDetail}
-            module="double"
-            loading={this.props.reducerData.getIn(['loading', eventId])}/>);
+            type="double"
+            loading={this.props.reducerData.loading[eventId]}/>);
   }
 }

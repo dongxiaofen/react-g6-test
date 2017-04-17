@@ -30,7 +30,7 @@ export default class ExcuteInfo extends Component {
       ],
       date: {
         label: '立案日期',
-        value: this.props.data.getIn(['content', 'caseCreateTime'])
+        value: this.props.data.content.caseCreateTime
       },
       'dict': 'courtExecution',
       'items': this.props.data,

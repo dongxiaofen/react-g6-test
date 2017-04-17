@@ -1,3 +1,98 @@
-.box {
-
+@import "../../../../helpers/color.less";
+.wrap{
+  position: relative;
+}
+.content{
+  padding-top: 0;
+  overflow: hidden;
+}
+.date {
+  float: left;
+  color: @mdc-grey-500;
+}
+.viewBtn{
+  float: right;
+  width: 50px;
+  line-height: 26px;
+  height: 26px;
+  color: @mdc-blue-grey-300;
+  text-align: center;
+  background-color: @black14;
+  cursor: pointer;
+  z-index: 1;
+  span {
+    border-bottom: 1px solid @mdc-blue-grey-300;
+    line-height: 14px;
+    display: inline-block;
+  }
+  .icon {
+    margin-right: 7px;
+  }
+}
+.row {
+  margin: 0;
+}
+.col {
+  padding: 0 15px 0 0;
+  margin-bottom: 10px;
+}
+.footer {
+  margin-top: 10px;
+  font-size: 14px;
+}
+.detail {
+  margin-right: 10px;
+}
+.loading {
+  height: 15px;
+}
+.firstTitle {
+  font-size: 14px;
+  .grades {
+    display: inline-block;
+    padding: 0;
+    width: 118px;
+    text-align: center;
+    line-height: 20px;
+    font-size: 14px;
+    cursor: pointer;
+    border-radius: 100px;
+    float: right;
+  }
+}
+.mainTitle {
+  composes: firstTitle;
+  color: @mdc-grey-800;
+  padding-left: 2px;
+  .big {
+    color: @red1;
+    border: 1px solid @red1;
+  }
+  .middle {
+    color: @yellow1;
+    border: 1px solid @yellow1;
+  }
+  .small {
+    color: @green1;
+    border: 1px solid @green1;
+  }
+}
+.relationTitle {
+  composes: firstTitle;
+  color: @green1;
+  span {
+    display: inline-block;
+    font-weight: normal;
+    margin-left: 10px;
+    padding: 3px 8px;
+    color: @white1;
+    background: @green1;
+    border-radius: 8px;
+  }
+}
+.typeName {
+  border-left: 2px solid @mdc-blue-400;
+  padding-left: 4px;
+  line-height: 14px;
+  display: inline-block;
 }

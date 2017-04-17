@@ -5,7 +5,7 @@ export default class Bidding extends Component {
     data: PropTypes.object,
     commonBoundAC: PropTypes.object,
     module: PropTypes.string,
-    reducerData: PropTypes.string,
+    reducerData: PropTypes.object,
   };
   viewDetail = () => {
     let companyId = '';
@@ -17,9 +17,9 @@ export default class Bidding extends Component {
         companyId = this.props.data.get('mainMonitorId');
       }
     } else {
-      companyId = this.props.reducerData.getIn(['info', 'monitorId']);
+      companyId = this.props.reducerData.info.monitorId;
     }
-    const announceId = this.props.data.getIn(['content', 'announceID']);
+    const announceId = this.props.data.content.announceID;
     const getUrl = `/api/monitor/${companyId}/operation/bidding/detail?announceId=${announceId}`;
     this.props.commonBoundAC.getDetail(
       getUrl,
@@ -27,16 +27,16 @@ export default class Bidding extends Component {
       'DETAILS_MODAL_UPDATE',
       this.props.data,
       actionId,
-      this.props.data.getIn(['content', 'url']),
+      this.props.data.content.url,
       './bidMarket/bidMarketTitle',
       './bidMarket/bidMarketContent',
       './bidMarket/bidMarketSource',
       'RISK_UPDATE_VALUE',
-      ['events', 'loading', this.props.data.getIn(['eventId'])]
+      ['events', 'loading', this.props.data.eventId]
     );
   }
   render() {
-    const eventId = this.props.data.getIn(['eventId']);
+    const eventId = this.props.data.eventId;
     const data = {
       'hideConfig': [
         {'key': 'title', 'width': '12'},
@@ -48,7 +48,7 @@ export default class Bidding extends Component {
       ],
       date: {
         label: '成交日期',
-        value: this.props.data.getIn(['content', 'date'])
+        value: this.props.data.content.date
       },
       'handleBlock': true,
       'actionToUrl': true,
@@ -60,7 +60,8 @@ export default class Bidding extends Component {
               {...this.props}
               data={data}
               viewDetCallback={this.viewDetail}
-              module="double"
-              loading={this.props.reducerData.getIn(['loading', eventId])}/>);
+              type="double"
+              module={this.props.module}
+              loading={this.props.reducerData.loading[eventId]}/>);
   }
 }

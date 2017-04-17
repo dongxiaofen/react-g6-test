@@ -13,7 +13,7 @@ export default class Job extends Component {
       firstKey: 'position',
       config: ['salary', 'requireNum'],
       dict: 'job',
-      items: this.props.data.getIn(['content', 'recruitmentDataList'])
+      items: this.props.data.content.recruitmentDataList
     };
     return <JobCard {...this.props} data={data} />;
   }
@@ -27,7 +27,7 @@ export default class Job extends Component {
       ],
       date: {
         label: '日期',
-        value: this.props.data.getIn(['alterDt'])
+        value: this.props.data.alterDt
       },
       'handleBlock': true,
       'dict': 'job',

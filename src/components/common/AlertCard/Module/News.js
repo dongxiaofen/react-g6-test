@@ -6,7 +6,7 @@ export default class News extends Component {
   static propTypes = {
     data: PropTypes.object,
     commonBoundAC: PropTypes.object,
-    module: PropTypes.object,
+    module: PropTypes.string,
     reducerData: PropTypes.object,
   };
   constructor(props) {
@@ -14,22 +14,22 @@ export default class News extends Component {
   }
   viewDetail = () => {
     this.actionId = Date.now();
-    let url = this.props.data.getIn(['content', 'url']);
+    let url = this.props.data.content.url;
     if (!url) {
-      url = dealWithDate(this.props.data.getIn(['content', 'title']));
+      url = dealWithDate(this.props.data.content.title);
     }
     let companyId = '';
     if (this.props.module === 'laneGraph') {
-      if (this.props.data.get('relatedMonitorId')) {
-        companyId = this.props.data.get('relatedMonitorId');
+      if (this.props.data.relatedMonitorId) {
+        companyId = this.props.data.relatedMonitorId;
       } else {
-        companyId = this.props.data.get('mainMonitorId');
+        companyId = this.props.data.mainMonitorId;
       }
     } else {
-      companyId = this.props.reducerData.getIn(['info', 'monitorId']);
+      companyId = this.props.reducerData.info.monitorId;
     }
 
-    const createdAt = this.props.data.getIn(['content', 'createdAt']);
+    const createdAt = this.props.data.content.createdAt;
     const enUrl = encodeURIComponent(url);
     const getUrl = `/api/monitor/${companyId}/internet/detail?createdAt=${createdAt}&url=${enUrl}`;
     this.props.commonBoundAC.getDetail(
@@ -42,11 +42,10 @@ export default class News extends Component {
       './news/newsContent',
       './news/newsSource',
       'RISK_UPDATE_VALUE',
-      ['events', 'loading', this.props.data.getIn(['eventId'])]
+      ['events', 'loading', this.props.data.eventId]
     );
   }
   render() {
-    const eventId = this.props.data.getIn(['eventId']);
     const data = {
       'hideConfig': [
         {'key': 'title', 'width': '12'},
@@ -56,7 +55,7 @@ export default class News extends Component {
       ],
       date: {
         label: '发布日期',
-        value: this.props.data.getIn(['content', 'date'])
+        value: this.props.data.content.date
       },
       'handleBlock': true,
       'actionToUrl': true,
@@ -66,12 +65,11 @@ export default class News extends Component {
     return (
       <BaseModule
         type="news"
-        {...this.props}
         data={data}
         btnText="查看"
-        module="detail"
+        type="detail"
         viewDetCallback={this.viewDetail}
-        loading={this.props.reducerData.getIn(['loading', eventId])}/>
+        loading={this.props.reducerData.loading.eventId}/>
     );
   }
 }

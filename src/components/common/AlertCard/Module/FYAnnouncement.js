@@ -45,7 +45,7 @@ export default class FYAnnouncement extends Component {
       ],
       date: {
         label: '公告日期',
-        value: this.props.data.getIn(['content', 'publishTime'])
+        value: this.props.data.content.publishTime
       },
       'handleBlock': true,
       'dict': 'courtAnnouncement',

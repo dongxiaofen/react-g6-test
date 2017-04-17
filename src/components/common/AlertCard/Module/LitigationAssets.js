@@ -19,7 +19,7 @@ export default class LitigationAssets extends Component {
       ],
       date: {
         label: '公告日期',
-        value: this.props.data.getIn(['content', 'releaseTime'])
+        value: this.props.data.content.releaseTime
       },
       'items': this.props.data,
       'handleBlock': true,

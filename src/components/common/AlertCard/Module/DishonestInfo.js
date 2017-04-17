@@ -30,7 +30,7 @@ export default class DishonestInfo extends Component {
       ],
       date: {
         label: '立案日期',
-        value: this.props.data.getIn(['content', 'regDate'])
+        value: this.props.data.content.regDate
       },
       'handleBlock': true,
       'dict': 'dishonestyList',

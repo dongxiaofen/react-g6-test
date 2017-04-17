@@ -1,16 +1,15 @@
-import React, {PropTypes} from 'react';
+import React from 'react';
 import { observer } from 'mobx-react';
-// import styles from './index.less';
+import styles from './index.less';
 
-function KeyValue({}) {
+function KeyValue({theKey, theValue}) {
   return (
     <div>
-
+      <span className={styles.key}>{theKey}：</span>
+      <span className={styles.value}>
+        {theValue || '无'}
+      </span>
     </div>
   );
 }
-
-KeyValue.propTypes = {
-  foo: PropTypes.string,
-};
 export default observer(KeyValue);

@@ -9,11 +9,10 @@ function RiskTab({riskHeadlinesStore}) {
     if (count > 0) {
       riskHeadlinesStore.riskUpdateValue('events', 'params.dimGroupType', dimGroupType);
       const monitorId = events.info.monitorId;
-      const params = events.params;
-      params.from = filterParams.get('from');
-      params.to = filterParams.get('to');
-      params.dimGroupType = dimGroupType;
-      riskHeadlinesStore.getCompanyEvents(monitorId, params);
+      const index = events.params.index;
+      const from = filterParams.from;
+      const to = filterParams.to;
+      riskHeadlinesStore.getCompanyEvents(monitorId, {index, from, to, dimGroupType});
     }
   };
   const tabConf = [

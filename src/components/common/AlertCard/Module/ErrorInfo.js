@@ -18,7 +18,7 @@ export default class ErrorInfo extends Component {
       ],
       date: {
         label: '列入日期',
-        value: this.props.data.getIn(['content', 'abntime'])
+        value: this.props.data.content.abntime
       },
       'handleBlock': true,
       'dict': 'jyErrorData',
