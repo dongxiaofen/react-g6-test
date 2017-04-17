@@ -10,23 +10,42 @@ const { RangePicker } = DatePicker;
 function disabledDate(current) {
   return current && current.valueOf() > Date.now();
 }
+
 function SwitchData({ msStore, params }) {
-  console.log(msStore);
+  const companyTypeOnchange = (val) => {
+    const msStoreParams = msStore.params;
+    msStore.getChangeData({
+      begin: msStoreParams.begin,
+      end: msStoreParams.end,
+      type: val
+    });
+  };
+
+  const dateOnChange = (dateString, dateTime) => {
+    const msStoreParams = msStore.params;
+    msStore.getChangeData({
+      begin: dateTime[0],
+      end: dateTime[1],
+      type: msStoreParams.type
+    });
+  };
+
   return (
     <div className={`clearfix ${ styles.swichData }`}>
       <div className={`clearfix ${ styles.swichDataItem }`}>
         <div className={styles.swichDataTile}>时段：</div>
         <div className={styles.swichDataDateRange}>
           <RangePicker
-            disabledDate={disabledDate}
             defaultValue={[moment(params.begin), moment(params.end)]}
-            format={'YYYY-MM-DD'} />
+            format={'YYYY-MM-DD'}
+            disabledDate={disabledDate}
+            onChange={dateOnChange} />
         </div>
       </div>
       <div className={`clearfix ${ styles.swichDataItem }`}>
         <div className={styles.swichDataTile}>范围：</div>
         <div className={styles.swichDataSelect}>
-          <Select>
+          <Select onChange={companyTypeOnchange}>
             <Option value="">
               所有企业
             </Option>

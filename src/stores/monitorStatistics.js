@@ -1183,6 +1183,11 @@ class MonitorStatisticsStore {
     this.params = params;
   }
 
+  // 选择指定时间和类别请求数据
+  @action.bound getChangeData(params) {
+    this.getStatistic(params);
+  }
+
   // 设置loading
   @action.bound setLoading(key, status = false) {
     this.loadingGroup[key] = status;
