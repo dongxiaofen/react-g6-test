@@ -233,7 +233,7 @@ export default class HomeBody extends Component {
     }else if (envConfig === 'cfca_prod') {
       output = <CfcaMain />;
     } else {
-      output = <HomeMain arrowOnClick={this.arrowOnClick} />;
+      output = <HomeMain isHeaderScroll={this.state.isHeaderScroll} arrowOnClick={this.arrowOnClick} />;
     }
     return (
       <div>
