@@ -1,10 +1,13 @@
 import React from 'react';
+import { observer, inject } from 'mobx-react';
 import styles from './index.less';
-function AddTr({data}) {
-  const cssName = data.status ? styles.newCreateBtn : styles.disableBtn;
-  const title = data.status ? '' : '只有监控中的企业才能新增关联监控';
+function AddTr({data, addRelationStore}) {
+  const cssName = data.status === 'MONITOR' ? styles.newCreateBtn : styles.disableBtn;
+  const title = data.status === 'MONITOR' ? '' : '只有监控中的企业才能新增关联监控';
   const addRelation = () => {
-    console.log('---');
+    if (data.status === 'MONITOR') {
+      addRelationStore.changeParams({monitorId: data.monitorId});
+    }
   };
   return (
     <div className={styles.wrapper}>
@@ -18,4 +21,4 @@ function AddTr({data}) {
     </div>
   );
 }
-export default AddTr;
+export default inject('addRelationStore')(observer(AddTr));
