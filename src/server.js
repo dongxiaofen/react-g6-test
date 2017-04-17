@@ -98,7 +98,7 @@ app.use((req, res) => {
   axios.defaults.headers.common['Content-Type'] = 'application/json';
   axios.defaults.headers.common['scm-source'] = config.target === 'dianxin_prod' ? 'TEL_WEB' : 'SC_WEB';
   axios.defaults.headers.common['scm-token'] = req.cookies['scm-token'] || {};
-  match({ routes: getRoutes(), location: req.originalUrl }, (error, redirectLocation, renderProps) => {
+  match({ routes: getRoutes('server'), location: req.originalUrl }, (error, redirectLocation, renderProps) => {
     if (redirectLocation) {
       res.redirect(redirectLocation.pathname + redirectLocation.search);
     } else if (error) {

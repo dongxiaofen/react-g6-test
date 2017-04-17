@@ -92,7 +92,7 @@ axios.interceptors.response.use((response) => {
 allStore.routing = routingStore;
 ReactDOM.render(
   <Provider { ...allStore }>
-    <Router routes={getRoutes()} history={history} />
+    <Router routes={getRoutes(allStore)} history={history} />
   </Provider>,
   dest
 );

@@ -19,7 +19,17 @@ import {
 // first append here from plop
   } from 'containers';
 
-export default () => {
+function requireAuth(allStore, nextState, replace) {
+  console.log(allStore, nextState, replace, '------requireAuth');
+  // if (allStore !== 'server') {
+  //   const { reportId } = allStore.routing.location.query;
+  //   if (!reportId) {
+  //     replace('/');
+  //   }
+  // }
+}
+
+export default (allStore) => {
   return (
     <Route path="/" component={ App }>
       <IndexRoute component={ HomePage } />
@@ -30,7 +40,7 @@ export default () => {
       <Route path="account" component={ Account } />
       <Route path="homePage" component={ HomePage } />
       <Route path="monitorList" component={ MonitorList } />
-      <Route path="companyHome" component={ CompanyHome }>
+      <Route path="companyHome" component={ CompanyHome } onEnter={requireAuth.bind(null, allStore)} >
         <IndexRedirect to="corpDetail" />
         <Route path="corpDetail" component={CorpDetail} />
         <Route path="risk" component={Risk} />
