@@ -1,8 +1,8 @@
 import React, {PropTypes} from 'react';
-import { observer } from 'mobx-react';
+import { observer, inject } from 'mobx-react';
 import styles from './index.less';
 
-function BasicList(props) {
+function BasicList({ routing, alertData }) {
   const degreeHandle = (type, degree) => {
     if (!degree) {
       return '';
@@ -13,11 +13,12 @@ function BasicList(props) {
   };
 
   const turnToMonitor = (monitorId, risk, blackCompanyName) => {
+    const { push } = routing;
     if (!monitorId) return;
     if (risk === 'risk') {
-      props.history.push(`/companyHome?monitorId=${monitorId}&companyType=MAIN&module=network&secondModule=blacklistNetwork&blackCompanyName=${blackCompanyName}`);
+      push(`/companyHome?monitorId=${monitorId}&companyType=MAIN&module=network&secondModule=blacklistNetwork&blackCompanyName=${blackCompanyName}`);
     } else {
-      props.history.push(`/companyHome?monitorId=${monitorId}&companyType=MAIN`);
+      push(`/companyHome?monitorId=${monitorId}&companyType=MAIN`);
     }
   };
 
@@ -48,4 +49,4 @@ function BasicList(props) {
 BasicList.propTypes = {
   props: PropTypes.object,
 };
-export default observer(BasicList);
+export default inject('routing')(observer(BasicList));

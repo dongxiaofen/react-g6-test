@@ -1,9 +1,9 @@
 import axios from 'axios';
 
-export const setMyHomePageStatistic = () => {
+export const getMyHomePageStatistic = () => {
   return axios.get('/api/user/index/statistic');
 };
-export const setMyHomePageAlert = (params) => {
+export const getMyHomePageAlert = (params) => {
   return axios.get('/api/user/index/alert', {params: params});
 };
 

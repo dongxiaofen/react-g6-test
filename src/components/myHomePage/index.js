@@ -3,11 +3,21 @@ import BaseInfo from './BaseInfo';
 import Statistic from './Statistic';
 import AlertInfo from './AlertInfo';
 import {Col, Row, Container} from 'components/common/Layout';
+import { inject, observer} from 'mobx-react';
 
+@inject('myHomePageStore')
+@observer
 export default class MyHomePageBody extends Component {
   static propTypes = {
-    foo: PropTypes.string
+    myHomePageStore: PropTypes.object,
   };
+  componentWillMount() {
+    const pageParams = {
+      index: 1,
+      size: 10,
+    };
+    this.props.myHomePageStore.getAlert(pageParams);
+  }
   render() {
     return (
       <Container>
