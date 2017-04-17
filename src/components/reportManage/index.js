@@ -7,6 +7,8 @@ import Filter from './Filter';
 import styles from './index.less';
 import { runInAction } from 'mobx';
 import NoData from './NoData';
+import Modal from 'components/lib/Modal';
+import PayModal from 'components/common/PayModal';
 
 
 @inject('reportManageStore', 'routing', 'payModalStore')
@@ -60,6 +62,24 @@ export default class ReportMain extends Component {
               <div className={styles.listArea}>
                 {pathval.getPathValue(this.props.reportManageStore, 'list.data.content') && pathval.getPathValue(this.props.reportManageStore, 'list.data.content').length < 1 ? <NoData /> : <TableList />}
               </div>
+              <PayModal
+                {...this.props}
+                module="monitorModalStatus"
+                onOk={this.onOk}/>
+              <Modal
+                type="info"
+                visible={pathval.getPathValue(this.props.reportManageStore, 'msgModal.show')}
+                iconType={pathval.getPathValue(this.props.reportManageStore, 'msgModal.iconType')}
+                title={pathval.getPathValue(this.props.reportManageStore, 'msgModal.msg')}
+                action={this.knowMsg}
+                actionText="知道了"
+                hideModal={this.knowMsg} />
+              <Modal type="info"
+                     title={pathval.getPathValue(this.props.payModalStore, 'value.secondText')}
+                     visible={pathval.getPathValue(this.props.payModalStore, 'value.secondVisible')}
+                     actionText="知道了"
+                     action={this.success}
+                     hideModal={this.success} />
             </div>
           </Col>
         </Row>
