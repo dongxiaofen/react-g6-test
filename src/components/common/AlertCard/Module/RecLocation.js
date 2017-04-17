@@ -1,38 +1,35 @@
-import React, {Component, PropTypes} from 'react';
+import React from 'react';
 import BaseModule from '../BaseModule';
 import JobCard from './JobCard';
-export default class RecLocation extends Component {
-  static propTypes = {
-    data: PropTypes.object,
+import {observer} from 'mobx-react';
+function RecLocation({data, module}) {
+  const modifyLocations = (value) => {
+    return value.join(',');
   };
-  modifyLocations = (data) => {
-    return data.join(',');
-  }
-  createContent = ()=>{
-    const data = {
+  const createContent = ()=>{
+    const teamData = {
       firstKey: 'address',
       config: ['position', 'salary', 'requireNum'],
       dict: 'recLocation',
-      items: this.props.data.content.recruitmentDataList
+      items: data.content.recruitmentDataList
     };
-    return <JobCard {...this.props} data={data} />;
-  }
-  render() {
-    const data = {
-      'hideConfig': [
-        {'key': 'locations', 'width': '12', handle: this.modifyLocations},
-      ],
-      'viewConfig': [
-        {'key': 'locations', 'width': '12', handle: this.modifyLocations},
-      ],
-      date: {
-        label: '日期',
-        value: this.props.data.getIn(['alterDt'])
-      },
-      'handleBlock': true,
-      'dict': 'recLocation',
-      'items': this.props.data,
-    };
-    return <BaseModule {...this.props} data={data} contentHtml={this.createContent}/>;
-  }
+    return <JobCard data={teamData} />;
+  };
+  const moduleData = {
+    'hideConfig': [
+      {'key': 'locations', 'width': '12', handle: modifyLocations},
+    ],
+    'viewConfig': [
+      {'key': 'locations', 'width': '12', handle: modifyLocations},
+    ],
+    date: {
+      label: '日期',
+      value: data.alterDt
+    },
+    'handleBlock': true,
+    'dict': 'recLocation',
+    'items': data,
+  };
+  return <BaseModule module={module} data={moduleData} contentHtml={createContent}/>;
 }
+export default observer(RecLocation);

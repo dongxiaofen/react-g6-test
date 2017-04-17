@@ -15,8 +15,8 @@ export default class JobCard extends Component {
   createItem= (origData, itemData) => {
     const output = [];
     origData.config.map((key)=>{
-      if (itemData.get(key) !== '') {
-        output.push(`${DICT[origData.dict][key]}（${this.handleValue(key, itemData.get(key))}）`);
+      if (itemData[key] !== '') {
+        output.push(`${DICT[origData.dict][key]}（${this.handleValue(key, itemData[key])}）`);
       }
     });
     return <span className={styles.text}>{output.join('；')}</span>;
@@ -24,14 +24,14 @@ export default class JobCard extends Component {
   createCard = (origData) => {
     const output = [];
     const firstKey = origData.firstKey;
-    origData.items.toArray().map((itemData)=>{
+    origData.items.map((itemData)=>{
       output.push(
         <Col width="4">
           <div className={styles.itemWrap}>
             <div className={styles.firstItem}>
-              <a href={itemData.get('url')} target="_blank">
+              <a href={itemData.url} target="_blank">
                 <span>{DICT[origData.dict][firstKey]}:</span>
-                <span>{itemData.get(firstKey) ? itemData.get(firstKey) : '无'}</span>
+                <span>{itemData[firstKey] ? itemData[firstKey] : '无'}</span>
               </a>
             </div>
             {this.createItem(origData, itemData)}
