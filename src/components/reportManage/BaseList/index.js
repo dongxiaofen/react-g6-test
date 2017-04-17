@@ -1,16 +1,18 @@
 import React, {PropTypes} from 'react';
-import { observer } from 'mobx-react';
+import { observer, inject } from 'mobx-react';
 import styles from './index.less';
 
-function BaseList({listData}) {
+function BaseList({listData, routing}) {
   const turnToMonitor = (reportId) => {
-    props.commonBoundAC.updateValue(['agreeModal', 'reportId'], reportId, 'REPORTMANAGE_UPDATE_VALUE');
-    props.commonBoundAC.updateValue(['monitorModalStatus'], true, 'PAY_MODAL_UPDATE_VALUE');
-    props.commonBoundAC.updateValue(['modalType'], 'turnMonitor', 'PAY_MODAL_UPDATE_VALUE');
+    console.log(reportId);
+    // props.commonBoundAC.updateValue(['agreeModal', 'reportId'], reportId, 'REPORTMANAGE_UPDATE_VALUE');
+    // props.commonBoundAC.updateValue(['monitorModalStatus'], true, 'PAY_MODAL_UPDATE_VALUE');
+    // props.commonBoundAC.updateValue(['modalType'], 'turnMonitor', 'PAY_MODAL_UPDATE_VALUE');
   };
 
   const viewReport = (reportId) => {
-    props.history.push(`/companyHome?reportId=${reportId}&companyType=MAIN`);
+    const { push } = routing;
+    push(`/companyHome?reportId=${reportId}&companyType=MAIN`);
   };
 
   const stockTableType = (stockType) => {
@@ -23,7 +25,7 @@ function BaseList({listData}) {
     return str;
   };
   return (
-    <div key={idx} className={styles.item}>
+    <div className={styles.item}>
       <div className={styles.companyInfo}>
         <div className={styles.nameWrap}>
           <span onClick={viewReport.bind(this, listData.reportId)} className={styles.name}>{listData.companyName}</span>
@@ -62,4 +64,4 @@ function BaseList({listData}) {
 BaseList.propTypes = {
   item: PropTypes.object,
 };
-export default observer(BaseList);
+export default inject('routing')(observer(BaseList));

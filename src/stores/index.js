@@ -13,4 +13,6 @@ export leftBarStore from './leftBar';
 export detailModalStore from './detailModal';
 export corpDetailStore from './report/corpDetail';
 export riskStore from './report/risk';
+export reportManageStore from './reportManage';
+export payModalStore from './payModal';
 // append here from plop

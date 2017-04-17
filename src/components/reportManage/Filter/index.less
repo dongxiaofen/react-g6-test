@@ -1,3 +1,46 @@
-.box {
+@import "../../../helpers/color.less";
+.wrap{
+  position: relative;
+  transition: all .3s;
+  &:hover{
+    .searchIcon{
+      color: @mdc-blue-200;
+    }
+  }
+}
+.searchInput{
+  &:hover{
+    border: none;
+    border-bottom: 1px solid @mdc-blue-200;
+  }
+  &:focus{
+    border: none;
+    color: @mdc-blue-grey-200;
+  }
+  float: left;
+  width: 260px;
+  height: 35px;
+  color: @mdc-blue-grey-400;
+  border: none;
+  border-bottom: 1px solid @mdc-blue-grey-100 ;
+  padding-left: 20px;
+  background: none;
+  font-size: 14px;
+}
 
+
+.searchIcon{
+  position: absolute;
+  left: 0;
+  top: 10px;
+  font-size: 16px;
+  color: @mdc-blue-grey-200;
+}
+.Active{
+  .searchIcon{
+    color: @mdc-blue-200;
+  }
+  .searchInput{
+    border-bottom: 1px solid @mdc-blue-200 ;
+  }
 }
