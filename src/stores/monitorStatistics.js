@@ -1,8 +1,10 @@
 import { observable, action } from 'mobx';
 import moment from 'moment';
 import 'moment-range';
+// import pathval from 'pathval';
+import { monitorStatisticsApi } from 'api';
 class MonitorStatisticsStore {
-  @observable loadingGroup: {
+  @observable loadingGroup = {
     statistic: false,
     changeTrend: false,
     province: false,
@@ -10,6 +12,15 @@ class MonitorStatisticsStore {
     industryTrend: false,
     industryStatistics: false,
     source: false,
+  };
+  @observable errorBody = {
+    statistic: {},
+    changeTrend: {},
+    province: {},
+    provinceAll: {},
+    industryTrend: {},
+    industryStatistics: {},
+    source: {},
   };
   @observable params = {};
 
@@ -1167,8 +1178,64 @@ class MonitorStatisticsStore {
     return analysisData;
   }
 
-  @action.bound setValue() {
-    console.log(this);
+  // 设置数据
+  @action.bound setParams(params) {
+    this.params = params;
   }
+
+  // 设置loading
+  @action.bound setLoading(key, status = false) {
+    this.loadingGroup[key] = status;
+  }
+
+  // 设置errorBody
+  @action.bound setErrorBody(key, body = {}) {
+    this.errorBody[key] = body;
+  }
+
+  // 头顶的四个板块
+  @action.bound getStatistic(params) {
+    this.setLoading('statistic', true);
+    monitorStatisticsApi.getStatistic(params)
+      .then(action('get statistic', (resp) => {
+        this.statistic = resp.data;
+        this.setLoading('statistic');
+      }))
+      .catch((err) => {
+        this.setErrorBody('statistic', err.response.data);
+        this.setLoading('statistic');
+      });
+  }
+
+  // 变化趋势
+  @action.bound getChangeTrend(params) {
+    this.setLoading('changeTrend', true);
+    monitorStatisticsApi.getChangeTrend(params)
+      .then(action('get change trend', (resp) => {
+        this.changeTrend = resp.data;
+        this.setLoading('changeTrend');
+      }))
+      .catch((err) => {
+        this.setErrorBody('changeTrend', err.response.data);
+        this.setLoading('changeTrend');
+      });
+  }
+
+  // 获取所有地区分布
+  // @action.bound getProvinceAll(params) {
+  //   this.setLoading('provinceAll', true);
+  //   monitorStatisticsApi.getProvinceAll(params)
+  //     .then(action('get province all'), (resp) => {
+  //       this.provinceAll = resp.data;
+  //       this.setLoading('provinceAll');
+  //       const newParams = getState().getIn(['headTrend', 'params']).toJS();
+  //       const provinceName = getState().getIn(['headTrend', 'province', 'provinceName']);
+  //       getProvince(newParams, provinceName)(dispatch);
+  //     })
+  //     .catch((err) => {
+  //       this.setErrorBody('provinceAll', err.response.data);
+  //       this.setLoading('provinceAll');
+  //     });
+  // }
 }
 export default new MonitorStatisticsStore();
