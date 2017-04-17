@@ -17,6 +17,7 @@ import {
     TestModal,
     Internet,
     MonitorStatistics,
+    AccountSetting,
 // first append here from plop
   } from 'containers';
 
@@ -43,6 +44,7 @@ export default () => {
       {/* 测试modal用 */}
       <Route path="testModal" component={TestModal } />
       <Route path="monitorStatistics" component={ MonitorStatistics } />
+      <Route path="accountSetting" component={ AccountSetting } />
 {/* second append here from plop */}
     </Route>
   );

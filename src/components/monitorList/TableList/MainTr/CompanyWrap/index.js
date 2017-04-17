@@ -56,7 +56,7 @@ function CompanyWrap({data, monitorListStore}) {
             <span className={styles.btnText}>{btnText}</span>
           </div>
         }
-        <div className={styles.relCount}>共<span>{data.relatedCount}</span>家关联公司，正在监控</div>
+        <div className={styles.relCount}>共<span>{data.relatedCount}</span>家关联公司</div>
       </div>
     </div>
   );
