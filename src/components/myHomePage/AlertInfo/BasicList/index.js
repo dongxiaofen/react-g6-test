@@ -4,14 +4,14 @@ import styles from './index.less';
 import pathval from 'pathval';
 
 function BasicList({ routing, alertData }) {
-  const degreeHandle = (type, degree) => {
-    if (!degree) {
-      return '';
-    }
-    if (type === 'border') {
-      return styles[`AlertEachBorder${degree}`];
-    }
-  };
+  // const degreeHandle = (type, degree) => {
+  //   if (!degree) {
+  //     return '';
+  //   }
+  //   if (type === 'border') {
+  //     return styles[`AlertEachBorder${degree}`];
+  //   }
+  // };
 
   const turnToMonitor = (monitorId, risk, blackCompanyName) => {
     const { push } = routing;
@@ -23,7 +23,7 @@ function BasicList({ routing, alertData }) {
     }
   };
 
-  const borderStyle = degreeHandle('border', 'LOW');
+  // const borderStyle = degreeHandle('border', 'LOW');
   return (
     <li className={styles.AlertEach}>
       <div className={styles.AlertEachDiv + ' ' + styles.AlertEachBorderHIGH}>
