@@ -1,32 +1,29 @@
-import React, {Component, PropTypes} from 'react';
+import React from 'react';
 import BaseModule from '../BaseModule';
-export default class ScopeAlter extends Component {
-  static propTypes = {
-    data: PropTypes.object,
-  };
-  formatBr = (value) => {
+import {observer} from 'mobx-react';
+function ScopeAlter({data, module}) {
+  const formatBr = (value) => {
     if (value) {
       return value.replace(/<br>/g, '');
     }
     return value;
-  }
-  render() {
-    const data = {
-      'hideConfig': [
-        {'key': 'altAf', 'width': '12', 'handle': this.formatBr},
-      ],
-      'viewConfig': [
-        {'key': 'altAf', 'width': '12'},
-        {'key': 'altBe', 'width': '12'},
-      ],
-      date: {
-        label: '变更日期',
-        value: this.props.data.content.altDate
-      },
-      'items': this.props.data,
-      'dict': 'alterList',
-      typeName: this.props.data.content.altItem,
-    };
-    return <BaseModule {...this.props} data={data} hasSecondType= {false}/>;
-  }
+  };
+  const moduleData = {
+    'hideConfig': [
+      {'key': 'altAf', 'width': '12', 'handle': formatBr},
+    ],
+    'viewConfig': [
+      {'key': 'altAf', 'width': '12'},
+      {'key': 'altBe', 'width': '12'},
+    ],
+    date: {
+      label: '变更日期',
+      value: data.content.altDate
+    },
+    'items': data,
+    'dict': 'alterList',
+    typeName: data.content.altItem,
+  };
+  return <BaseModule module={module} data={moduleData} hasSecondType= {false}/>;
 }
+export default observer(ScopeAlter);

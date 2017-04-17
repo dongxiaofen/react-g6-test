@@ -1,6 +1,7 @@
 import React from 'react';
 import BaseModule from '../BaseModule';
 import {observer} from 'mobx-react';
+// 经营招投标
 function Bidding({data, module, reducerData, store}) {
   const viewDetail = () => {
     // let companyId = '';

@@ -1,26 +1,24 @@
-import React, {Component, PropTypes} from 'react';
+import React from 'react';
 import BaseModule from '../BaseModule';
-export default class CheckInfo extends Component {
-  static propTypes = {
-    data: PropTypes.object,
+import {observer} from 'mobx-react';
+// 工商－工商检查
+function CheckInfo({data, module}) {
+  const moduleData = {
+    'hideConfig': [
+      {'key': 'institution', 'width': '6'},
+    ],
+    'viewConfig': [
+      {'key': 'institution', 'width': '6'},
+      {'key': 'checkType', 'width': '6'},
+      {'key': 'checkResult', 'width': '12'}
+    ],
+    date: {
+      label: '日期',
+      value: data.content.checkDate
+    },
+    'dict': 'checkMessageList',
+    'items': data,
   };
-  render() {
-    const data = {
-      'hideConfig': [
-        {'key': 'institution', 'width': '6'},
-      ],
-      'viewConfig': [
-        {'key': 'institution', 'width': '6'},
-        {'key': 'checkType', 'width': '6'},
-        {'key': 'checkResult', 'width': '12'}
-      ],
-      date: {
-        label: '日期',
-        value: this.props.data.content.checkDate
-      },
-      'dict': 'checkMessageList',
-      'items': this.props.data,
-    };
-    return <BaseModule {...this.props} data={data}/>;
-  }
+  return <BaseModule data={moduleData} module={module}/>;
 }
+export default observer(CheckInfo);
