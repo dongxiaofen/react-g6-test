@@ -23,7 +23,8 @@ export default class LitigationAssets extends Component {
       },
       'items': this.props.data,
       'handleBlock': true,
-      'dict': 'litigationAssets'
+      'dict': 'litigationAssets',
+      typeName: `参考价（${this.props.data.content.price}万元）`
     };
     return <BaseModule {...this.props} data={data} />;
   }

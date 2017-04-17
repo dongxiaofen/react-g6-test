@@ -84,11 +84,18 @@ export default class BaseModule extends Component {
       this.props.store.getMonitorMap(mainMonitorId);
     }
   };
+  createTypeName = (itemData) => {
+    const data = this.props.data;
+    if (this.props.hasSecondType) {
+      return data.typeName ? `${ALERT_CONFIG.cardsConfig[itemData.pattern]}-${data.typeName}` : ALERT_CONFIG.cardsConfig[itemData.pattern];
+    }
+    return data.typeName;
+  }
   render() {
     const itemData = this.props.data.items;
     const rCompanyName = itemData.relatedMonitorCompanyName;
     const relation = rCompanyName && rCompanyName.length > 0 ? '关联' : '主体';
-    const typeName = itemData.typeName || ALERT_CONFIG.cardsConfig[itemData.pattern];
+    const typeName = this.createTypeName(itemData);
     const companyType = relation === '关联' ? styles.relatedType : styles.mainType;
     const companyName = rCompanyName && rCompanyName.length > 0 ? rCompanyName : itemData.mainMonitorCompanyName;
     return (
@@ -142,9 +149,11 @@ BaseModule.propTypes = {
   loading: PropTypes.bool,
   store: PropTypes.object,
   module: PropTypes.string,
+  hasSecondType: PropTypes.bool,
 };
 BaseModule.defaultProps = {
   btnText: '全文',
   type: 'default',
-  module: 'headLine'
+  module: 'headLine',
+  hasSecondType: true,
 };

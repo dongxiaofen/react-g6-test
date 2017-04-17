@@ -81,9 +81,6 @@ export default class JudgeDoc extends Component {
       ['events', 'loading', this.props.data.eventId]
     );
   }
-  modifyTitle = (obj)=>{
-    return <a onClick={this.viewDetail.bind(this, obj)}>{obj.content.title}</a>;
-  }
   render() {
     const eventId = this.props.data.eventId;
     const data = {
@@ -106,6 +103,7 @@ export default class JudgeDoc extends Component {
       'handleBlock': true,
       'dict': 'judgeDoc',
       'items': this.props.data,
+      'typeName': this.props.data.dimName
     };
     return (<BaseModule type="judgeDoc"
             {...this.props}

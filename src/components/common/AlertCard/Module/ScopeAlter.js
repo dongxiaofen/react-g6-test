@@ -24,8 +24,9 @@ export default class ScopeAlter extends Component {
         value: this.props.data.content.altDate
       },
       'items': this.props.data,
-      'dict': 'alterList'
+      'dict': 'alterList',
+      typeName: this.props.data.content.altItem,
     };
-    return <BaseModule {...this.props} data={data} />;
+    return <BaseModule {...this.props} data={data} hasSecondType= {false}/>;
   }
 }

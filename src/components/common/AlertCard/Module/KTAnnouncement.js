@@ -31,6 +31,7 @@ export default class KTAnnouncement extends Component {
       'handleBlock': true,
       'dict': 'courtNotice',
       'items': this.props.data,
+      typeName: this.props.data.content.caseReason ? '-' + this.props.data.content.caseReason : ''
     };
     return <BaseModule {...this.props} data={data} />;
   }

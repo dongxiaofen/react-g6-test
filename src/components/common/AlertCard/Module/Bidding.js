@@ -45,10 +45,9 @@ function Bidding({data, module, reducerData, store}) {
       label: '成交日期',
       value: data.content.date
     },
-    'handleBlock': true,
-    'actionToUrl': true,
     'dict': 'bidding',
     'items': data,
+    typeName: data.content.type
   };
   return (<BaseModule
             data={moduleData}

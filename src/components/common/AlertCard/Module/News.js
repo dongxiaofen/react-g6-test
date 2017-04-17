@@ -61,15 +61,16 @@ export default class News extends Component {
       'actionToUrl': true,
       'dict': 'news',
       'items': this.props.data,
+      typeName: this.props.data.dimensionGroup ? this.props.data.dimensionGroup.split(',')[0] : ''
     };
     return (
       <BaseModule
-        type="news"
         data={data}
         btnText="查看"
         type="detail"
         viewDetCallback={this.viewDetail}
-        loading={this.props.reducerData.loading.eventId}/>
+        loading={this.props.reducerData.loading.eventId}
+        hasSecondType= {false}/>
     );
   }
 }
