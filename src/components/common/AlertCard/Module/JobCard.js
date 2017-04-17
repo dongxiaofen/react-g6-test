@@ -1,27 +1,25 @@
-import React, {Component, PropTypes} from 'react';
+import React from 'react';
 import DICT from '../../../../config/Dict/reportModule';
 import {Col} from 'components/common/Layout';
 import styles from './jobCard.less';
-export default class JobCard extends Component {
-  static propTypes = {
-    data: PropTypes.object
-  };
-  handleValue(key, value) {
+import {observer} from 'mobx-react';
+function JobCard({data}) {
+  const handleValue = (key, value)=>{
     if (key === 'salary' && Number(value) === 0) {
       return '面议';
     }
     return value;
-  }
-  createItem= (origData, itemData) => {
+  };
+  const createItem = (origData, itemData) => {
     const output = [];
     origData.config.map((key)=>{
       if (itemData[key] !== '') {
-        output.push(`${DICT[origData.dict][key]}（${this.handleValue(key, itemData[key])}）`);
+        output.push(`${DICT[origData.dict][key]}（${handleValue(key, itemData[key])}）`);
       }
     });
     return <span className={styles.text}>{output.join('；')}</span>;
-  }
-  createCard = (origData) => {
+  };
+  const createCard = (origData) => {
     const output = [];
     const firstKey = origData.firstKey;
     origData.items.map((itemData)=>{
@@ -34,21 +32,19 @@ export default class JobCard extends Component {
                 <span>{itemData[firstKey] ? itemData[firstKey] : '无'}</span>
               </a>
             </div>
-            {this.createItem(origData, itemData)}
+            {createItem(origData, itemData)}
           </div>
         </Col>
       );
     });
     return output;
-  }
-  render() {
-    const data = this.props.data;
-    return (
-      <div>
-        <div className={styles.content}>
-          {this.createCard(data)}
-        </div>
+  };
+  return (
+    <div>
+      <div className={styles.content}>
+        {createCard(data)}
       </div>
-    );
-  }
+    </div>
+  );
 }
+export default observer(JobCard);
