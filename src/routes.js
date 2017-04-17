@@ -16,6 +16,7 @@ import {
     Risk,
     TestModal,
     Internet,
+    MonitorStatistics,
 // first append here from plop
   } from 'containers';
 
@@ -51,7 +52,8 @@ export default (allStore) => {
       <Route path="about" component={ About } />
       {/* 测试modal用 */}
       <Route path="testModal" component={TestModal } />
-      {/* second append here from plop */}
+      <Route path="monitorStatistics" component={ MonitorStatistics } />
+{/* second append here from plop */}
     </Route>
   );
 };
