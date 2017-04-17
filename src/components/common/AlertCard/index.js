@@ -89,8 +89,6 @@ function AlertCard({index, data, module, reducerData, store}) {
       output.push(
         <div key={uniqueKey} className={styles.singleWrap}>
           <div className={styles.singlePadding}>
-            <div className={styles.top}>
-            </div>
             <div className={styles.componentWrap}>
               {componentMap(pattern, item)}
             </div>
