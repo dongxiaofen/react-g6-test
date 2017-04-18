@@ -7,7 +7,7 @@ import { runInAction } from 'mobx';
 import Modal from 'components/lib/Modal';
 import Checkbox from 'components/lib/check/Checkbox';
 
-function PayModal({onOk, payModalStore, module}) {
+function PayModal({onOk, payModalStore, module, pointText, pactUrl, pactName}) {
   // 生成报告或转为监控
   const payClick = () => {
     if (onOk) {
@@ -186,22 +186,23 @@ function PayModal({onOk, payModalStore, module}) {
   // modal宽度设置
   let width = 450;
   if (this.props.module === 'monitorModalStatus' || this.props.module === 'monitorListPayModal') {
-    width = 550;
+    width = 560;
   }
   let output = '';
   output = (
     <div>
-      <Modal loading={pathval.getPathValue(payModalStore, 'value.btnLoading')}
-             confirmText="确定"
+      <Modal confirmText="确定"
              cancelText="取消"
              width={width}
-             type="other"
              closeAction={closeModal}
              cancelAction={closeModal}
              confirmAction={payClick}
              confirmLoading={pathval.getPathValue(payModalStore, 'value.btnLoading')}
-             close
-             visible={pathval.getPathValue(payModalStore, `value.${module}`)}>
+             visible={pathval.getPathValue(payModalStore, `value.${module}`)}
+             pointText={pointText}
+             pactUrl={pactUrl}
+             pactName={pactName}
+      >
         <div className={styles.contentWrap}>
           {modalContent}
         </div>
@@ -215,13 +216,10 @@ function PayModal({onOk, payModalStore, module}) {
 PayModal.propTypes = {
   payModal: PropTypes.object,
   payModalStore: PropTypes.object,
-  // 生成报告 createReport
-  // 刷新报告 updateReport
-  // 创建监控 createMonitor
-  // 转为监控 turnMonitor
-  // 监控续费 continueMonitor
   onOk: PropTypes.func,
   module: PropTypes.string,
   secondCallback: PropTypes.func,
+  pointText: PropTypes.string,
+  pactName: PropTypes.string
 };
 export default inject('payModalStore')(observer(PayModal));
