@@ -1,8 +1,7 @@
-import React, {PropTypes} from 'react';
+import React from 'react';
 import { observer } from 'mobx-react';
-// import styles from './index.less';
 import CompanyCard from './CompanyCard';
-
+import loadingComp from 'components/hoc/LoadingComp';
 function RiskCompany({riskHeadlinesStore}) {
   const createCompanyCards = ()=> {
     const output = [];
@@ -22,7 +21,12 @@ function RiskCompany({riskHeadlinesStore}) {
     </div>
   );
 }
-RiskCompany.propTypes = {
-  foo: PropTypes.string,
-};
-export default observer(RiskCompany);
+export default loadingComp({
+  mapDataToProps: props => ({
+    loading: props.riskHeadlinesStore.companyList.data.length < 1,
+    error: props.riskHeadlinesStore.companyList.data.error,
+    category: 2,
+    imgCategory: 6,
+    errCategory: false,
+  }),
+})(observer(RiskCompany));
