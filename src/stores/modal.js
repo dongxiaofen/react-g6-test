@@ -2,8 +2,15 @@ import { observable, action, runInAction } from 'mobx';
 class ModalStore {
   @observable visible = false;
   @observable title;
+  // 是否是自定义modal
   @observable isCustomize = false;
+  // 是否是单个确认按钮
+  @observable isSingleBtn = false;
   @observable width = '440px';
+  // 是否有提示文本
+  @observable pointText = '';
+  @observable pactUrl = '';
+  @observable pactName = '';
   // action
   @observable confirmAction;
   @observable cancelAction;
@@ -25,9 +32,13 @@ class ModalStore {
   @observable compComponent = null;
 
   @action.bound openCompModal({
-    title,
-    isCustomize,
     width,
+    title,
+    pointText,
+    pactUrl,
+    pactName,
+    isCustomize,
+    isSingleBtn,
     cancelText,
     confirmText,
     confirmAction,
@@ -40,7 +51,11 @@ class ModalStore {
     this.visible = true;
     this.title = title;
     if (width) { this.width = width; }
+    if (pointText !== undefined) { this.pointText = pointText; }
+    if (pactUrl !== undefined) { this.pactUrl = pactUrl; }
+    if (pactName !== undefined) { this.pactName = pactName; }
     if (isCustomize !== undefined) { this.isCustomize = isCustomize; }
+    if (isSingleBtn !== undefined) { this.isSingleBtn = isSingleBtn; }
     // action
     this.confirmAction = confirmAction;
     this.cancelAction = cancelAction;

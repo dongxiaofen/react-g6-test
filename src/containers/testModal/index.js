@@ -27,7 +27,10 @@ export default class TestModal extends Component {
       title: '测试看comp modal有没有出来',
       confirmAction: confirmAction,
       cancelAction: cancelAction,
-      isCustomize: true,
+      isSingleBtn: true,
+      pointText: '惺惺惜惺惺',
+      pactUrl: 'xxxxxx',
+      pactName: '惺惺惜惺惺',
       loader: (cb) => {
         require.ensure([], (require) => {
           cb(require('./test'));
