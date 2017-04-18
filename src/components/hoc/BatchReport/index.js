@@ -9,8 +9,10 @@ function hoc(module) {
         [`${module}Store`]: PropTypes.object,
       };
       componentDidMount() {
-        const { monitorId, reportId, companyName, companyType } = this.props.routing.location.query;
-        this.props[`${module}Store`].getReportModule(module, monitorId, reportId, companyName, companyType);
+        if (!this.props[`${module}Store`].isMount) {
+          const { monitorId, reportId, companyName, companyType } = this.props.routing.location.query;
+          this.props[`${module}Store`].getReportModule(module, monitorId, reportId, companyName, companyType);
+        }
       }
       render() {
         return (
