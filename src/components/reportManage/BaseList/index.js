@@ -1,13 +1,16 @@
 import React, {PropTypes} from 'react';
 import { observer, inject } from 'mobx-react';
 import styles from './index.less';
+import pathval from 'pathval';
+import { runInAction } from 'mobx';
 
-function BaseList({listData, routing}) {
+function BaseList({listData, routing, reportManageStore, payModalStore}) {
   const turnToMonitor = (reportId) => {
-    console.log(reportId);
-    // props.commonBoundAC.updateValue(['agreeModal', 'reportId'], reportId, 'REPORTMANAGE_UPDATE_VALUE');
-    // props.commonBoundAC.updateValue(['monitorModalStatus'], true, 'PAY_MODAL_UPDATE_VALUE');
-    // props.commonBoundAC.updateValue(['modalType'], 'turnMonitor', 'PAY_MODAL_UPDATE_VALUE');
+    runInAction('显示弹窗', () => {
+      pathval.setPathValue(reportManageStore, 'agreeModal.reportId', reportId);
+      pathval.setPathValue(payModalStore, 'value.monitorModalStatus', true);
+      pathval.setPathValue(payModalStore, 'value.modalType', 'turnMonitor');
+    });
   };
 
   const viewReport = (reportId) => {
@@ -64,4 +67,4 @@ function BaseList({listData, routing}) {
 BaseList.propTypes = {
   item: PropTypes.object,
 };
-export default inject('routing')(observer(BaseList));
+export default inject('routing', 'reportManageStore', 'payModalStore')(observer(BaseList));

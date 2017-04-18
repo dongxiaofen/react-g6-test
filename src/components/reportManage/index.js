@@ -63,7 +63,6 @@ export default class ReportMain extends Component {
                 {pathval.getPathValue(this.props.reportManageStore, 'list.data.content') && pathval.getPathValue(this.props.reportManageStore, 'list.data.content').length < 1 ? <NoData /> : <TableList />}
               </div>
               <PayModal
-                {...this.props}
                 module="monitorModalStatus"
                 onOk={this.onOk}/>
               <Modal

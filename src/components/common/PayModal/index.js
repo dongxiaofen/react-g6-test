@@ -101,10 +101,10 @@ function PayModal({onOk, payModalStore, module}) {
           {agreement}
         </div>
         <div className={styles.submit}>
-          <Button cssName={styles.closeBtn} onClick={closeModal}>取消</Button>
+          <Button className={styles.closeBtn} onClick={closeModal}>取消</Button>
           <Button
             loading={pathval.getPathValue(payModalStore, 'value.btnLoading')}
-            disabled={checked === 1 ? false : true} cssName={checked === 1 ? styles.createBtn : styles.disabledBtn} onClick={payClick}>确认</Button>
+            disabled={checked === 1 ? false : true} className={checked === 1 ? styles.createBtn : styles.disabledBtn} onClick={payClick}>确认</Button>
         </div>
       </div>
     );
@@ -184,10 +184,10 @@ function PayModal({onOk, payModalStore, module}) {
           {agreement}
         </div>
         <div className={styles.submit}>
-          <Button cssName={styles.closeBtn} onClick={closeModal}>取消</Button>
+          <Button className={styles.closeBtn} onClick={closeModal}>取消</Button>
           <Button
             loading={pathval.getPathValue(payModalStore, 'value.btnLoading')}
-            disabled={checked === 1 ? false : true} cssName={checked === 1 ? styles.createBtn : styles.disabledBtn} onClick={payClick}>确认</Button>
+            disabled={checked === 1 ? false : true} className={checked === 1 ? styles.createBtn : styles.disabledBtn} onClick={payClick}>确认</Button>
         </div>
       </div>
     );
@@ -214,6 +214,15 @@ function PayModal({onOk, payModalStore, module}) {
 }
 
 PayModal.propTypes = {
-  foo: PropTypes.string,
+  payModal: PropTypes.object,
+  payModalStore: PropTypes.object,
+  // 生成报告 createReport
+  // 刷新报告 updateReport
+  // 创建监控 createMonitor
+  // 转为监控 turnMonitor
+  // 监控续费 continueMonitor
+  onOk: PropTypes.func,
+  module: PropTypes.string,
+  secondCallback: PropTypes.func,
 };
 export default inject('payModalStore')(observer(PayModal));
