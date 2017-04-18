@@ -1,7 +1,7 @@
 import React, { Component, PropTypes } from 'react';
 import { observer, inject } from 'mobx-react';
 import styles from './index.less';
-import { Container, Row, Col } from 'components/common/Layout';
+import { Container, Row, Col } from 'components/common/layout';
 import CompanyInfo from './CompanyInfo';
 
 @inject('bannerStore', 'routing')

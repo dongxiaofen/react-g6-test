@@ -56,7 +56,7 @@ class AccountSettingStore {
       }))
       .catch(action('getUserInfo_error', err => {
         console.log(err);
-        this.base = {error: err.response.data};
+        this.base = {data: {}};
       }));
   }
   @action.bound getReportAndMonitor(uId) {

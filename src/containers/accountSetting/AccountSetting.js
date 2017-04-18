@@ -1,6 +1,6 @@
 import React, { Component, PropTypes } from 'react';
 import { observer, inject } from 'mobx-react';
-import { Container, Row, Col } from 'components/common/Layout';
+import { Container, Row, Col } from 'components/common/layout';
 import Title from 'components/accountSetting/Title';
 import AccountTree from 'components/accountSetting/AccountTree';
 import AccountBase from 'components/accountSetting/AccountBase';

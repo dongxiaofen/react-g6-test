@@ -1,6 +1,6 @@
 import React, { Component, PropTypes } from 'react';
 import { observer, inject } from 'mobx-react';
-import { Container } from 'components/common/Layout';
+import { Container } from 'components/common/layout';
 import Title from 'components/monitorList/Title';
 import SearchBar from 'components/monitorList/SearchBar';
 import TypeFilter from 'components/monitorList/TypeFilter';
