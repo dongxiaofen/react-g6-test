@@ -1,10 +1,19 @@
-import React, { Component } from 'react';
+import React, { Component, PropTypes } from 'react';
+import { observer, inject } from 'mobx-react';
 import { Container, Row, Col } from 'components/common/Layout';
 import Title from 'components/accountSetting/Title';
 import AccountTree from 'components/accountSetting/AccountTree';
 import AccountBase from 'components/accountSetting/AccountBase';
 import AccountTabs from 'components/accountSetting/AccountTabs';
+@inject('accountSettingStore')
+@observer
 export default class AccountSetting extends Component {
+  static propTypes = {
+    accountSettingStore: PropTypes.object,
+  }
+  componentDidMount() {
+    this.props.accountSettingStore.getTreeList();
+  }
   render() {
     return (
       <Container>

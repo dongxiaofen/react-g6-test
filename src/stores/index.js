@@ -14,4 +14,5 @@ export detailModalStore from './detailModal';
 export corpDetailStore from './report/corpDetail';
 export riskStore from './report/risk';
 export addRelationStore from './addRelation';
+export accountSettingStore from './accountSetting';
 // append here from plop
