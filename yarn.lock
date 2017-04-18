@@ -2452,6 +2452,14 @@ function-bind@^1.0.2:
   version "1.1.0"
   resolved "http://registry.npm.taobao.org/function-bind/download/function-bind-1.1.0.tgz#16176714c801798e4e8f2cf7f7529467bb4a5771"
 
+fundebug-javascript:
+  version "0.0.6"
+  resolved "http://registry.npm.taobao.org/fundebug-javascript/download/fundebug-javascript-0.0.6.tgz#6a4bb2f79cfa5175869d4ca433aaa75b9e497c4e"
+
+fundebug-nodejs:
+  version "0.0.6"
+  resolved "http://registry.npm.taobao.org/fundebug-nodejs/download/fundebug-nodejs-0.0.6.tgz#0ccef15eeb5cfe11681e082d5b93e7b2a130b714"
+
 gauge@~2.6.0:
   version "2.6.0"
   resolved "http://registry.npm.taobao.org/gauge/download/gauge-2.6.0.tgz#d35301ad18e96902b4751dcbbe40f4218b942a46"
@@ -5154,6 +5162,10 @@ samsam@~1.1, samsam@1.1.2:
 sax@~1.2.1:
   version "1.2.1"
   resolved "http://registry.npm.taobao.org/sax/download/sax-1.2.1.tgz#7b8e656190b228e81a66aea748480d828cd2d37a"
+
+sc-colors:
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/sc-colors/-/sc-colors-1.0.0.tgz#96e995dc0290fad7d37f86a4f8a9a470ecc30d62"
 
 scroll-behavior@0.3.2:
   version "0.3.2"
