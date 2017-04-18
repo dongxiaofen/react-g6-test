@@ -52,21 +52,26 @@ class SearchCompanyStore {
       scale: [],
       province: [],
       companyStatus: [],
-      stockMarket: []
+      stockMarket: [],
     },
     filterStatus: {
+      industryTypeAll: false;
       industryType: [],
+      scaleAll: false,
       scale: [],
+      provinceAll: false,
       province: [],
+      companyStatusAll: false,
       companyStatus: [],
-      stockMarket: []
+      stockMarketAll: false,
+      stockMarket: [],
     },
     filterResult: {
       industryType: [],
       scale: [],
       province: [],
       companyStatus: [],
-      stockMarket: []
+      stockMarket: [],
     },
   };
   // 是否收起filter模块
@@ -90,8 +95,15 @@ class SearchCompanyStore {
         // filterSheet相关
         if (resp.data.aggregations) {
           resp.data.aggregations.map((obj)=>{
-            
-          })
+            if (obj.value.length > 0) {
+              // 放入初始数据
+              this.filterSheet.data[obj.key] = obj.value;
+              // 放入初始数据状态
+              obj.value.map(()=> {
+                this.filterSheet.filterStatus[obj.key].push(false);
+              });
+            }
+          });
         }
         // const filterSheetData = {};
         // const filterStatus = {};
