@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { observer } from 'mobx-react';
 import SearchBar from 'components/searchCompany/SearchBar';
 import SearchList from 'components/searchCompany/SearchList';
-import { Container, Row, Col } from 'components/common/Layout';
+import { Container, Row, Col } from 'components/common/layout';
 import styles from './index.less';
 
 @observer

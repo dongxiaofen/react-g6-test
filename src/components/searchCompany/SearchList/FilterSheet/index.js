@@ -5,7 +5,14 @@ import FilterTotal from './FilterTotal';
 import FilterContent from './FilterContent';
 import FilterToggle from './FilterToggle';
 
-function FilterSheet({filterSheet, page, searchKeyFilter}) {
+function FilterSheet({
+    filterSheet,
+    filterArray,
+    filterArrayStatus,
+    page,
+    searchKeyFilter,
+    filterSingleShow
+  }) {
   return (
     <div className={styles.wrap}>
       <FilterTotal
@@ -13,7 +20,10 @@ function FilterSheet({filterSheet, page, searchKeyFilter}) {
         page={page}
         searchKeyFilter={searchKeyFilter} />
       <FilterContent
-        filterSheet={filterSheet} />
+        filterSheet={filterSheet}
+        filterArray={filterArray}
+        filterArrayStatus={filterArrayStatus}
+        filterSingleShow={filterSingleShow} />
       <FilterToggle />
     </div>
   );
@@ -21,7 +31,10 @@ function FilterSheet({filterSheet, page, searchKeyFilter}) {
 
 FilterSheet.propTypes = {
   filterSheet: PropTypes.object,
+  filterArray: PropTypes.object,
+  filterArrayStatus: PropTypes.object,
   page: PropTypes.object,
   searchKeyFilter: PropTypes.string,
+  filterSingleShow: PropTypes.func,
 };
 export default observer(FilterSheet);

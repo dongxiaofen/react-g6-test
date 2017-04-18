@@ -11,10 +11,12 @@ function SearchList({searchCompanyStore}) {
     searchParameter,
     isShowResult,
     filterSheet,
+    filterArray,
+    filterArrayStatus,
     page,
     searchKeyFilter,
+    filterSingleShow,
   } = searchCompanyStore;
-  console.log(searchResult.toJS(), searchParameter, '======searchResult');
   const listData = [];
   searchResult.map((itemData, idx) => {
     listData.push(
@@ -32,6 +34,9 @@ function SearchList({searchCompanyStore}) {
         <div className={`${styles.wrapList}`}>
           <FilterSheet
             filterSheet={filterSheet}
+            filterArray={filterArray}
+            filterArrayStatus={filterArrayStatus}
+            filterSingleShow={filterSingleShow}
             page={page}
             searchKeyFilter={searchKeyFilter} />
           <div className={`${styles.listDataWrap}`}>

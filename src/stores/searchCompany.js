@@ -40,6 +40,7 @@ class SearchCompanyStore {
   };
   // 筛选
   @observable filterSheet = {
+    // 配置
     config: {
       industryType: '行业类型',
       scale: '公司规模',
@@ -47,25 +48,25 @@ class SearchCompanyStore {
       companyStatus: '经营状态',
       stockMarket: '上市类型'
     },
-    data: {
-      industryType: [],
-      scale: [],
-      province: [],
-      companyStatus: [],
-      stockMarket: [],
-    },
+    // 基础数据
+    data: [],
+    // 选中结果状态
     filterStatus: {
-      industryTypeAll: false;
       industryType: [],
-      scaleAll: false,
       scale: [],
-      provinceAll: false,
       province: [],
-      companyStatusAll: false,
       companyStatus: [],
-      stockMarketAll: false,
       stockMarket: [],
     },
+    // 是否全选
+    filterStatusAll: {
+      industryType: false,
+      scale: false,
+      province: false,
+      companyStatus: false,
+      stockMarket: false,
+    },
+    // 选中结果
     filterResult: {
       industryType: [],
       scale: [],
@@ -74,6 +75,9 @@ class SearchCompanyStore {
       stockMarket: [],
     },
   };
+  // 根据筛选模块高度决定是否显示收起展开
+  @observable filterArray = {};
+  @observable filterArrayStatus = {};
   // 是否收起filter模块
   @observable filterToggle = false;
   // loading状态
@@ -94,38 +98,19 @@ class SearchCompanyStore {
         this.searchResult = resp.data.data;
         // filterSheet相关
         if (resp.data.aggregations) {
+          // 放入初始数据
+          this.filterSheet.data = resp.data.aggregations;
           resp.data.aggregations.map((obj)=>{
             if (obj.value.length > 0) {
-              // 放入初始数据
-              this.filterSheet.data[obj.key] = obj.value;
               // 放入初始数据状态
+              const statusArray = [];
               obj.value.map(()=> {
-                this.filterSheet.filterStatus[obj.key].push(false);
+                statusArray.push(false);
               });
+              this.filterSheet.filterStatus[obj.key] = statusArray;
             }
           });
         }
-        // const filterSheetData = {};
-        // const filterStatus = {};
-        // const filterResult = {};
-        // if (resp.data.aggregations) {
-        //   resp.data.aggregations.map((obj)=>{
-        //     if (obj.value.length > 0) {
-        //       filterSheetData[obj.key] = obj.value;
-        //     }
-        //   });
-        //   for (const key of Object.keys(filterSheetData)) {
-        //     filterStatus[key] = {
-        //       all: false,
-        //       isExtend: false,
-        //       filterStatus: new Array(filterSheetData[key].length).fill(false),
-        //     };
-        //     filterResult[key] = [];
-        //   }
-        //   this.filterSheet.data = filterSheetData;
-        //   this.filterSheet.filterStatus = filterStatus;
-        //   this.filterSheet.filterResult = filterResult;
-        // }
         this.searchParameter = resp.data.searchParameter;
         this.page = resp.data.page;
         this.isShowResult = true;
@@ -133,6 +118,15 @@ class SearchCompanyStore {
       .catch(action('searchCompany error', (err) => {
         console.log(err.response, '=====searchCompany error');
         this.isShowResult = true;
+        // 重置数据
+        this.filterSheet.data = [];
+        this.filterSheet.filterStatus = {
+          industryType: [],
+          scale: [],
+          province: [],
+          companyStatus: [],
+          stockMarket: []
+        };
       }));
   }
   // 获取历史记录
@@ -165,6 +159,34 @@ class SearchCompanyStore {
     if (evt.keyCode === 13) {
       this.getCompanyList();
     }
+  }
+  // 根据筛选模块高度决定是否显示收起展开
+  @action.bound filterSingleShow(type, obj, obj2) {
+    if (type === 'value') {
+      this.filterArray = obj;
+      this.filterArrayStatus = obj2;
+    }
+    if (type === 'show') {
+      this.filterArrayStatus[obj] = !this.filterArrayStatus[obj];
+    }
+  }
+  // 点击filterItem
+  @action.bound filterItemClick(key, idx, type) {
+    if (type === 'ok') {
+      this.filterSheet.data.map((obj)=>{
+        if (obj.key === key) {
+          if (idx === 'all') {
+            this.filterSheet.filterResult[key] = obj.value;
+            this.filterSheet.filterStatus[key].map((status)=>{
+              status = true;
+            })
+          } else {
+          }
+        }
+      })
+    } else {
+    }
+    console.log(key, idx);
   }
 }
 export default new SearchCompanyStore();

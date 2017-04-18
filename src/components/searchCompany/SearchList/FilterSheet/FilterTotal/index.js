@@ -22,7 +22,7 @@ function FilterTotal({filterSheet, page, searchKeyFilter}) {
   }
   // search
   let searchKey = '';
-  if (page.totalElements > 0 && Object.keys(filterSheet.data).length > 0) {
+  if (page.totalElements > 0 && filterSheet.data.length > 0) {
     searchKey = (
       <div className={styles.searchKeyFilter}>
         <span>{searchKeyFilter}</span>

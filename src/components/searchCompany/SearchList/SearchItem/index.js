@@ -3,7 +3,7 @@ import { observer } from 'mobx-react';
 import styles from './index.less';
 import SearchItemLeft from './SearchItemLeft';
 import SearchItemRight from './SearchItemRight';
-import { Row, Col } from 'components/common/Layout';
+import { Row, Col } from 'components/common/layout';
 
 function SearchItem({itemData, searchParameter}) {
   return (

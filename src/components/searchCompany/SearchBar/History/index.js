@@ -1,11 +1,14 @@
 import React, {Component, PropTypes} from 'react';
+import { observer } from 'mobx-react';
 import styles from './index.less';
+@observer
 export default class History extends Component {
   static propTypes = {
     getHistory: PropTypes.func,
     historyResult: PropTypes.object,
     historyClick: PropTypes.func,
   }
+
   componentDidMount() {
     this.props.getHistory();
   }
