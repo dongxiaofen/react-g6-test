@@ -6,8 +6,17 @@ function TreeList({accountSettingStore}) {
   const data = accountSettingStore.tree.data.content;
   const searchInput = accountSettingStore.tree.searchInput.trim();
   const activeIndex = accountSettingStore.tree.activeIndex;
-  const getUserData = (uId) => {
-    console.log(uId);
+  const getUserData = (uId, level) => {
+    accountSettingStore.getUserInfo(uId);
+    accountSettingStore.getReportAndMonitor(uId);
+    accountSettingStore.getProvince(uId);
+    accountSettingStore.getIndustry(uId);
+    accountSettingStore.getScale(uId);
+    accountSettingStore.getConsume(uId);
+    if (level === 0) {
+      accountSettingStore.getRecharge(uId);
+      accountSettingStore.getSummary(uId);
+    }
   };
   const extend = (idx, level, uId) => {
     const extendVal = accountSettingStore.tree.data.content[idx].extend;
@@ -16,12 +25,12 @@ function TreeList({accountSettingStore}) {
     }
     if (activeIndex !== idx) {
       accountSettingStore.changeValue(`tree.activeIndex`, idx);
-      getUserData(uId);
+      getUserData(uId, level);
     }
   };
-  const showNodeDetail = (idx, uId) => {
+  const showNodeDetail = (idx, level, uId) => {
     accountSettingStore.changeValue(`tree.activeIndex`, idx);
-    getUserData(uId);
+    getUserData(uId, level);
   };
   const judgeByPId = (pId) => {
     if (!pId) {
@@ -61,7 +70,7 @@ function TreeList({accountSettingStore}) {
         <div
           key={idx}
           className={itemCss}
-          onClick={showNodeDetail.bind(null, idx, item.id)}
+          onClick={showNodeDetail.bind(null, idx, item.level, item.id)}
           >
           <i className={styles.icon}></i>
           <span className={styles.treeName}>{item.contact}</span>
