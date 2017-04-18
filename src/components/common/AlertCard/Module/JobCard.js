@@ -1,6 +1,6 @@
 import React from 'react';
 import DICT from '../../../../config/Dict/reportModule';
-import {Col} from 'components/common/Layout';
+import {Col} from 'components/common/layout';
 import styles from './jobCard.less';
 import {observer} from 'mobx-react';
 function JobCard({data}) {

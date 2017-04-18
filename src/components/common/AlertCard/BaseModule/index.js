@@ -1,7 +1,7 @@
 import React, {PropTypes, Component} from 'react';
 import { observer } from 'mobx-react';
 import KeyValue from './KeyValue';
-import {Col, Row} from 'components/common/Layout';
+import {Col, Row} from 'components/common/layout';
 import DICT from 'config/Dict/reportModule';
 import styles from './index.less';
 import ALERT_CONFIG from 'config/Dict/alertCard';
