@@ -5,7 +5,7 @@ class HomeStore {
   @observable isLogin = false;
   @action.bound postLogin() {
     const params = {
-      email: 'yadong.wu@sc.cn',
+      email: 'cy@sc.cn',
       password: '25f9e794323b453885f5181f1b624d0b'
     };
     loginApi.postLogin(params)

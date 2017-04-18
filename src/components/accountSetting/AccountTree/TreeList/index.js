@@ -47,7 +47,12 @@ function TreeList({accountSettingStore}) {
         }
       }
       output.push(
-        <div key={idx} style={{display: display, paddingLeft: padding}} className={itemCss} onClick={extend.bind(this, idx, level, item.id)}>
+        <div
+          key={idx}
+          style={{display: display, paddingLeft: padding}}
+          className={itemCss}
+          onClick={extend.bind(this, idx, level, item.id)}
+          >
           {icon}
           <span className={styles.treeName}>{item.contact}</span>
           <span className={styles.treeEmail}>{`（${item.email}）`}</span>
