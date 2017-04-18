@@ -4,12 +4,8 @@ import { loadingComp } from 'components/hoc';
 import styles from './index.less';
 function TreeList({accountSettingStore}) {
   const data = accountSettingStore.tree.data.content;
-  const searchInput = accountSettingStore.tree.searchInput;
+  const searchInput = accountSettingStore.tree.searchInput.trim();
   const activeIndex = accountSettingStore.tree.activeIndex;
-  const createTreeWithFilter = () => {
-    console.log(data);
-    return 'createTreeWithFilter';
-  };
   const getUserData = (uId) => {
     console.log(uId);
   };
@@ -18,10 +14,14 @@ function TreeList({accountSettingStore}) {
     if (level !== 0) {
       accountSettingStore.changeValue(`tree.data.content[${idx}].extend`, !extendVal);
     }
-    if (!extendVal) {
+    if (activeIndex !== idx) {
+      accountSettingStore.changeValue(`tree.activeIndex`, idx);
       getUserData(uId);
     }
+  };
+  const showNodeDetail = (idx, uId) => {
     accountSettingStore.changeValue(`tree.activeIndex`, idx);
+    getUserData(uId);
   };
   const judgeByPId = (pId) => {
     if (!pId) {
@@ -38,6 +38,38 @@ function TreeList({accountSettingStore}) {
       }
     }
     return true;
+  };
+  const createTreeWithFilter = () => {
+    const output = [];
+    const pattern = new RegExp(searchInput);
+    const filterData = data.filter(item => {
+      return pattern.test(item.contact) || pattern.test(item.email);
+    });
+    if (filterData.length === 0) {
+      output.push(
+        <div
+          key="noResult"
+          className={styles.noResultInfo}
+          >
+          未搜索到相关用户
+        </div>
+      );
+    }
+    filterData.forEach((item, idx) => {
+      const itemCss = idx === activeIndex ? styles.itemActive : styles.item;
+      output.push(
+        <div
+          key={idx}
+          className={itemCss}
+          onClick={showNodeDetail.bind(null, idx, item.id)}
+          >
+          <i className={styles.icon}></i>
+          <span className={styles.treeName}>{item.contact}</span>
+          <span className={styles.treeEmail}>{`(${item.email})`}</span>
+        </div>
+      );
+    });
+    return output;
   };
   const createTree = () => {
     const output = [];
@@ -74,7 +106,7 @@ function TreeList({accountSettingStore}) {
   return (
     <div className={styles.wrapper}>
       {
-        searchInput.trim() !== ''
+        searchInput !== ''
         ?
         createTreeWithFilter()
         :

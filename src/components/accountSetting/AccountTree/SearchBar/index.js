@@ -5,6 +5,7 @@ import styles from './index.less';
 function SearchBar({accountSettingStore}) {
   const inputChange = (evt) => {
     accountSettingStore.changeValue('tree.searchInput', evt.target.value);
+    accountSettingStore.changeValue('tree.activeIndex', -1);
   };
   return (
     <Input
