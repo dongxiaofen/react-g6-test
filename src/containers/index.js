@@ -11,4 +11,9 @@ export Solution from './solution';
 export About from './about';
 export CorpDetail from './report/corpDetail';
 export Risk from './report/risk';
+// 测试modal用----------------------
+export TestModal from './testModal';
+// ---------------------------------
+export Internet from './report/internet';
+export MonitorStatistics from './monitorStatistics';
 // append here from plop

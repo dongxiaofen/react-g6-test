@@ -2,7 +2,7 @@ import React, { Component, PropTypes } from 'react';
 import { observer } from 'mobx-react';
 import Banner from 'components/companyHome/Banner';
 import LeftBar from 'components/companyHome/LeftBar';
-import { Container, Row, Col } from 'components/common/Layout';
+import { Container, Row, Col } from 'components/common/layout';
 import styles from './index.less';
 
 @observer

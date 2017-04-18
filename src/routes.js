@@ -15,10 +15,23 @@ import {
     About,
     CorpDetail,
     Risk,
+    TestModal,
+    Internet,
+    MonitorStatistics,
 // first append here from plop
   } from 'containers';
 
-export default () => {
+function requireAuth(allStore, nextState, replace) {
+  console.log(allStore, nextState, replace, '------requireAuth');
+  // if (allStore !== 'server') {
+  //   const { reportId } = allStore.routing.location.query;
+  //   if (!reportId) {
+  //     replace('/');
+  //   }
+  // }
+}
+
+export default (allStore) => {
   return (
     <Route path="/" component={ App }>
       <IndexRoute component={ HomePage } />
@@ -30,13 +43,18 @@ export default () => {
       <Route path="account" component={ Account } />
       <Route path="homePage" component={ HomePage } />
       <Route path="monitorList" component={ MonitorList } />
-      <Route path="companyHome" component={ CompanyHome }>
+      <Route path="companyHome" component={ CompanyHome } onEnter={requireAuth.bind(null, allStore)} >
         <IndexRedirect to="corpDetail" />
         <Route path="corpDetail" component={CorpDetail} />
         <Route path="risk" component={Risk} />
+        <Route path="internet" component={ Internet } />
+      {/* third append here from plop */}
       </Route>
       <Route path="solution" component={ Solution } />
       <Route path="about" component={ About } />
+      {/* 测试modal用 */}
+      <Route path="testModal" component={TestModal } />
+      <Route path="monitorStatistics" component={ MonitorStatistics } />
 {/* second append here from plop */}
     </Route>
   );
