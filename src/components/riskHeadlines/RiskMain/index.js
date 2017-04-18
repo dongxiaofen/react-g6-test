@@ -4,7 +4,9 @@ import RiskFilter from '../RiskFilter';
 import RiskCompany from '../RiskCompany';
 import RiskMessage from '../RiskMessage';
 import styles from './index.less';
-import {Container, Row, Col} from 'components/common/Layout';
+import Container from 'components/common/Layout/Container';
+import Row from 'components/common/Layout/Row';
+import Col from 'components/common/Layout/Col';
 @inject('riskHeadlinesStore', 'homeStore')
 @observer
 export default class RiskMain extends Component {

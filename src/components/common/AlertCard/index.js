@@ -26,10 +26,10 @@ function AlertCard({index, data, module, reducerData, store}) {
     let output;
     switch (moduleKey) {
       case 'CORP_ALTER':
-        output = <ScopeAlter data={moduleData} module={module} store={store}/>;
+        output = <ScopeAlter data={moduleData} module={module}/>;
         break;
       case 'CORP_ABNORMAL':
-        output = <ErrorInfo data={moduleData} module={module} store={store}/>;
+        output = <ErrorInfo data={moduleData} module={module} />;
         break;
       case 'CORP_CHECK':
         output = <CheckInfo data={moduleData} module={module} store={store}/>;
