@@ -54,11 +54,11 @@ class ReportManageStore {
     reportManageApi.upGradeToMonitor(reportId, selectValue)
       .then(action( (response) => {
         if (response.status === 200) {
-          pathval.setPathValue(payModalStore, 'value.isSuccessful', true);
           pathval.setPathValue(payModalStore, 'value.monitorModalStatus', false);
 // 显示成功的弹窗
           pathval.setPathValue(payModalStore, 'value.secondVisible', true);
           pathval.setPathValue(payModalStore, 'value.secondText', '加入监控成功');
+          pathval.setPathValue(payModalStore, 'value.btnLoading', false);
 
           pathval.setPathValue(this, 'monitorId', response.data.monitorId);
           pathval.setPathValue(this, 'list', {});
@@ -66,7 +66,9 @@ class ReportManageStore {
         }
       }))
       .catch(action( (err) => {
-        pathval.setPathValue(payModalStore, 'value.isSuccessful', false);
+        console.log(err.response.data.message);
+        pathval.setPathValue(payModalStore, 'value.btnLoading', false);
+        pathval.setPathValue(payModalStore, 'value.secondVisible', true);
         pathval.setPathValue(payModalStore, 'value.monitorModalStatus', false);
         pathval.setPathValue(payModalStore, 'value.secondText', err.response.data.message);
       }));

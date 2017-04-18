@@ -13,8 +13,6 @@ class PayModalStore {
     monitorListPayModal: false, // 监控列表弹窗控制字段
     // 报告转监控是否显示
     reportToMonitorStatus: false,
-
-    isSuccessful: true,
     // 弹窗类型
     // 生成报告 createReport
     // 刷新报告 updateReport
