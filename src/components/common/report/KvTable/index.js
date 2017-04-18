@@ -6,14 +6,23 @@ import config from 'dict/reportModule';
 import { loadingComp } from 'components/hoc';
 
 function KvTable({ meta, items, dict }) {
-  if (!items) {
-    return null;
-  }
+  const getValue = (cell, value) => {
+    let output = '';
+    if (cell.modifyText) {
+      output = cell.modifyText();
+    } else if (cell.modifyBlock) {
+      output = cell.modifyBlock(value);
+    } else {
+      output = value ? value : '--';
+    }
+    return output;
+  };
+
   return (
     <div className={styles.box}>
       {
         meta.map((cell) => {
-          return <Cell key={cell.key} type={cell.type} theKey={config[dict][cell.key]} theValue={items[cell.key]} />;
+          return <Cell key={cell.key} type={cell.type} theKey={config[dict][cell.key]} theValue={getValue(cell, items[cell.key])} />;
         })
       }
     </div>
