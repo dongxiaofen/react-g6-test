@@ -15,4 +15,5 @@ export Risk from './report/risk';
 export TestModal from './testModal';
 // ---------------------------------
 export Internet from './report/internet';
+export MonitorStatistics from './monitorStatistics';
 // append here from plop
