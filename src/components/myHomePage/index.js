@@ -2,7 +2,7 @@ import React, { Component, PropTypes } from 'react';
 import BaseInfo from './BaseInfo';
 import Statistic from './Statistic';
 import AlertInfo from './AlertInfo';
-import {Col, Row, Container} from 'components/common/Layout';
+import {Col, Row, Container} from 'components/common/layout';
 
 export default class MyHomePageBody extends Component {
   static propTypes = {

@@ -12,11 +12,13 @@ import http from 'http';
 import fs from 'fs';
 import axios from 'axios';
 import url from 'url';
+import fundebug from 'fundebug-nodejs';
 import logger from 'morgan';
 import { match, RouterContext } from 'react-router';
 import { Provider } from 'mobx-react';
 import getRoutes from './routes';
 import * as allStores from 'stores';
+fundebug.apikey = '45f943a4862476f1895ca38d28def3231ea03ca1e4c94320476f52019f29560f';
 const agent = require('superagent-defaults')();
 const BASE_DIRNAME = process.cwd();
 const PDF_DIRNAME = path.join(BASE_DIRNAME, '/static/pdf/');
@@ -98,7 +100,7 @@ app.use((req, res) => {
   axios.defaults.headers.common['Content-Type'] = 'application/json';
   axios.defaults.headers.common['scm-source'] = config.target === 'dianxin_prod' ? 'TEL_WEB' : 'SC_WEB';
   axios.defaults.headers.common['scm-token'] = req.cookies['scm-token'] || {};
-  match({ routes: getRoutes(), location: req.originalUrl }, (error, redirectLocation, renderProps) => {
+  match({ routes: getRoutes('server'), location: req.originalUrl }, (error, redirectLocation, renderProps) => {
     if (redirectLocation) {
       res.redirect(redirectLocation.pathname + redirectLocation.search);
     } else if (error) {
