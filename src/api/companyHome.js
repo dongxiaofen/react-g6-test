@@ -17,5 +17,32 @@ export const getBannerInfo = (monitorId, reportId, companyName, companyType) => 
   return axios.get(url);
 };
 export const toggleMonitorStatus = (monitorId, status) => {
-  return axios.put(`/api/monitor/${monitorId}/status`, {status: status});
+  return axios.put(`/api/monitor/${monitorId}/status`, { status: status });
+};
+export const getReportModule = (module, monitorId, reportId, companyName, companyType) => {
+  let url;
+  if (companyType === 'MAIN') {
+    if (monitorId) {
+      if (module === 'trademark' || module === 'patent' || module === 'bidding') {
+        url = `/api/monitor/${monitorId}/operation/${module}${module === 'bidding' ? '' : '?index=1&limit=10'}`;
+      } else if (module === 'person/page') {
+        url = `/api/monitor/${monitorId}/person/page?index=1&size=10`;
+      } else {
+        url = `/api/monitor/${monitorId}/${module}`;
+      }
+    } else if (reportId) {
+      if (module === 'trademark' || module === 'patent' || module === 'bidding') {
+        url = `/api/report/operation/${module}?reportId=${reportId}${module === 'bidding' ? '' : '?index=1&limit=10'}`;
+      } else if (module === 'person/page') {
+        url = `/api/report/${reportId}/person/page?index=1&size=10`;
+      } else {
+        url = `/api/report/${module}?reportId=${reportId}`;
+      }
+    }
+  } else if (companyType === 'ASSOCIATE') {
+    url = `/api/monitor/${monitorId}/${module}`;
+  } else if (companyType === 'FREE') {
+    url = `/api/free/${module}?companyName=${encodeURI(companyName)}`;
+  }
+  return axios.get(url);
 };

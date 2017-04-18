@@ -1,29 +1,59 @@
 import { observable, action, runInAction } from 'mobx';
 class ModalStore {
-  @observable open = false;
-  @observable type = '';
+  @observable visible = false;
   @observable title;
-  @observable message;
-  @observable closeFunc;
-  @observable asyncComp;
+  @observable isCustomize = false;
+  @observable width = '440px';
+  // action
+  @observable confirmAction;
+  @observable cancelAction;
+  @action.bound closeAction() {
+    this.visible = false;
+  }
 
-  @action.bound closeModal() {
-    this.open = false;
-    // this.asyncComp = '';
-  }
-  @action.bound openTextModal(title, message, closeFunc) {
-    this.open = true;
-    this.type = 'text';
+  // button text
+  @observable cancelText = '取消';
+  @observable confirmText = '确认';
+
+  // loading
+  @observable cancelLoading = false;
+  @observable confirmLoading = false;
+
+  // 是否需要按钮
+  @observable isNeedBtn = true;
+
+  @observable compComponent = null;
+
+  @action.bound openCompModal({
+    title,
+    isCustomize,
+    width,
+    cancelText,
+    confirmText,
+    confirmAction,
+    cancelAction,
+    closeAction,
+    cancelLoading,
+    confirmLoading,
+    loader
+  }) {
+    this.visible = true;
     this.title = title;
-    this.message = message;
-    this.closeFunc = closeFunc;
-  }
-  @action.bound openAsyncModal(loader) {
-    this.open = true;
-    this.type = 'async';
+    if (width) { this.width = width; }
+    if (isCustomize !== undefined) { this.isCustomize = isCustomize; }
+    // action
+    this.confirmAction = confirmAction;
+    this.cancelAction = cancelAction;
+    if (closeAction) { this.closeAction = closeAction; }
+    // button text
+    if (cancelText) { this.cancelText = cancelText; }
+    if (confirmText) { this.confirmText = confirmText; }
+    // loading
+    if (cancelLoading !== undefined) { this.cancelLoading = cancelLoading; }
+    if (confirmLoading !== undefined) { this.confirmLoading = confirmLoading; }
     loader((comp) => {
-      runInAction(()=>{
-        this.asyncComp = comp;
+      runInAction(() => {
+        this.compComponent = comp;
       });
     });
   }

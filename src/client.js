@@ -7,6 +7,7 @@ import ReactDOM from 'react-dom';
 // import useScroll from 'scroll-behavior/lib/useStandardScroll';
 import { Router, browserHistory } from 'react-router';
 import getRoutes from './routes';
+import fundebug from 'fundebug-javascript';
 import axios from 'axios';
 import Uuid from 'node-uuid';
 import { Provider } from 'mobx-react';
@@ -55,6 +56,8 @@ import { RouterStore, syncHistoryWithStore } from 'mobx-react-router';
 // };
 // ReactUpdates.injection.injectBatchingStrategy(ReactTryCatchBatchingStrategy);
 // Needed for onTouchTap
+fundebug.apikey = '45f943a4862476f1895ca38d28def3231ea03ca1e4c94320476f52019f29560f';
+// fundebug.notify('Test', 'Hello xx Fundebug!');
 const routingStore = new RouterStore();
 combineServerData(allStore, window.__data);
 // const history = useScroll(() => browserHistory)();
@@ -92,7 +95,7 @@ axios.interceptors.response.use((response) => {
 allStore.routing = routingStore;
 ReactDOM.render(
   <Provider { ...allStore }>
-    <Router routes={getRoutes()} history={history} />
+    <Router routes={getRoutes(allStore)} history={history} />
   </Provider>,
   dest
 );

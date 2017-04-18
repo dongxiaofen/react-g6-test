@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { observer } from 'mobx-react';
-import { Container } from 'components/common/Layout';
+import { Container } from 'components/common/layout';
 import Title from 'components/monitorList/Title';
 import Button from 'components/lib/button';
 import Input from 'components/lib/input';
