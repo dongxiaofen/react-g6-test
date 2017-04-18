@@ -3,7 +3,7 @@ import { observer, inject } from 'mobx-react';
 import styles from './index.less';
 import pathval from 'pathval';
 import { runInAction } from 'mobx';
-import Button from 'components/lib/button';
+// import Button from 'components/lib/button';
 import Modal from 'components/lib/Modal';
 import Checkbox from 'components/lib/check/Checkbox';
 
@@ -100,12 +100,7 @@ function PayModal({onOk, payModalStore, module}) {
         <div className={styles.message3}>
           {agreement}
         </div>
-        <div className={styles.submit}>
-          <Button className={styles.closeBtn} onClick={closeModal}>取消</Button>
-          <Button
-            loading={pathval.getPathValue(payModalStore, 'value.btnLoading')}
-            disabled={checked === 1 ? false : true} className={checked === 1 ? styles.createBtn : styles.disabledBtn} onClick={payClick}>确认</Button>
-        </div>
+
       </div>
     );
   }
@@ -183,12 +178,6 @@ function PayModal({onOk, payModalStore, module}) {
         <div className={styles.message3}>
           {agreement}
         </div>
-        <div className={styles.submit}>
-          <Button className={styles.closeBtn} onClick={closeModal}>取消</Button>
-          <Button
-            loading={pathval.getPathValue(payModalStore, 'value.btnLoading')}
-            disabled={checked === 1 ? false : true} className={checked === 1 ? styles.createBtn : styles.disabledBtn} onClick={payClick}>确认</Button>
-        </div>
       </div>
     );
   }
@@ -202,7 +191,17 @@ function PayModal({onOk, payModalStore, module}) {
   let output = '';
   output = (
     <div>
-      <Modal width={width} type="other" hideModal={closeModal} close visible={pathval.getPathValue(payModalStore, `${module}`)}>
+      <Modal loading={pathval.getPathValue(payModalStore, 'value.btnLoading')}
+             confirmText="确定"
+             cancelText="取消"
+             width={width}
+             type="other"
+             closeAction={closeModal}
+             cancelAction={closeModal}
+             confirmAction={payClick}
+             confirmLoading={pathval.getPathValue(payModalStore, 'value.btnLoading')}
+             close
+             visible={pathval.getPathValue(payModalStore, `value.${module}`)}>
         <div className={styles.contentWrap}>
           {modalContent}
         </div>

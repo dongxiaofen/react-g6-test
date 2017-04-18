@@ -1,5 +1,7 @@
 import { observable, action } from 'mobx';
 import { reportManageApi } from 'api';
+import payModalStore from './payModal';
+import pathval from 'pathval';
 
 class ReportManageStore {
   @observable config = [
@@ -51,11 +53,23 @@ class ReportManageStore {
   @action.bound upGradeToMonitor(reportId, params, selectValue) {
     reportManageApi.upGradeToMonitor(reportId, selectValue)
       .then(action( (response) => {
-        console.log(response, params);
+        if (response.status === 200) {
+          pathval.setPathValue(payModalStore, 'value.isSuccessful', true);
+          pathval.setPathValue(payModalStore, 'value.monitorModalStatus', false);
+// 显示成功的弹窗
+          pathval.setPathValue(payModalStore, 'value.secondVisible', true);
+          pathval.setPathValue(payModalStore, 'value.secondText', '加入监控成功');
+
+          pathval.setPathValue(this, 'monitorId', response.data.monitorId);
+          pathval.setPathValue(this, 'list', {});
+          this.getReportList(0, params);
+        }
       }))
-      .catch((error) => {
-        console.log(error.response);
-      });
+      .catch(action( (err) => {
+        pathval.setPathValue(payModalStore, 'value.isSuccessful', false);
+        pathval.setPathValue(payModalStore, 'value.monitorModalStatus', false);
+        pathval.setPathValue(payModalStore, 'value.secondText', err.response.data.message);
+      }));
   }
 }
 export default new ReportManageStore();

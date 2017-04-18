@@ -24,10 +24,10 @@ export default class ReportMain extends Component {
   }
   onOk = () => {
     runInAction('btnLoading', () => {
-      pathval.setPathValue(this.props.payModalStore, 'value.btnLoading');
+      pathval.setPathValue(this.props.payModalStore, 'value.btnLoading', true);
     });
-    const reportId = pathval.getPathValue(this.props.payModalStore, 'agreeModal.reportId');
-    const params = pathval.getPathValue(this.props.payModalStore, 'params');
+    const reportId = pathval.getPathValue(this.props.reportManageStore, 'agreeModal.reportId');
+    const params = pathval.getPathValue(this.props.reportManageStore, 'params');
     this.props.reportManageStore.upGradeToMonitor(reportId, params, pathval.getPathValue(this.props.payModalStore, 'value.selectValue'));
   }
   success = () => {
@@ -65,14 +65,13 @@ export default class ReportMain extends Component {
               <PayModal
                 module="monitorModalStatus"
                 onOk={this.onOk}/>
-              <Modal
-                type="info"
-                visible={pathval.getPathValue(this.props.reportManageStore, 'msgModal.show')}
-                iconType={pathval.getPathValue(this.props.reportManageStore, 'msgModal.iconType')}
-                title={pathval.getPathValue(this.props.reportManageStore, 'msgModal.msg')}
-                action={this.knowMsg}
-                actionText="知道了"
-                hideModal={this.knowMsg} />
+              <Modal type="info"
+                     visible={pathval.getPathValue(this.props.reportManageStore, 'msgModal.show')}
+                     iconType={pathval.getPathValue(this.props.reportManageStore, 'msgModal.iconType')}
+                     title={pathval.getPathValue(this.props.reportManageStore, 'msgModal.msg')}
+                     action={this.knowMsg}
+                     actionText="知道了"
+                     hideModal={this.knowMsg} />
               <Modal type="info"
                      title={pathval.getPathValue(this.props.payModalStore, 'value.secondText')}
                      visible={pathval.getPathValue(this.props.payModalStore, 'value.secondVisible')}
