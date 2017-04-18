@@ -7,6 +7,7 @@ import styles from './index.less';
 import ALERT_CONFIG from 'config/Dict/alertCard';
 import Grade from './Grade';
 import CompanyName from './CompanyName'; // 报告时间轴才会有的组件，待测试
+import AnimateLoading from 'components/hoc/LoadingComp/AnimateLoading';
 @observer
 export default class BaseModule extends Component {
   constructor(props) {
@@ -15,9 +16,9 @@ export default class BaseModule extends Component {
       show: false,
     };
   }
-  // createLoading = () => {
-  //   return this.props.loading ? <div className={styles.loading}><AnimateLoading animateCategory="1"/></div> : <span>{this.props.btnText}</span>;
-  // }
+  createLoading = () => {
+    return this.props.loading ? <div className={styles.loading}><AnimateLoading animateCategory={1}/></div> : <span>{this.props.btnText}</span>;
+  }
   createViewBtn = ()=> {
     const viewText = this.state.show ? '收起' : '展开';
     switch (this.props.type) {
@@ -30,7 +31,7 @@ export default class BaseModule extends Component {
             {
               this.state.show ?
               <div className={`${styles.viewBtn} ${styles.detail}`} onClick={this.props.viewDetCallback.bind(this, this.props.data.items)}>
-                {/* {this.createLoading()}*/}
+                 {this.createLoading()}
               </div>
               : ''
             }
@@ -38,9 +39,9 @@ export default class BaseModule extends Component {
       case 'detail':
         return (
           <div className={`${styles.viewBtn} ${styles.detail}`} onClick={this.props.viewDetCallback.bind(this, this.props.data.items)}>
-            {/* {
-              this.props.loading ? <div className={styles.loading}><AnimateLoading animateCategory="1"/></div> : <span>{this.props.btnText}</span>
-            }*/}
+            {
+              this.props.loading ? <div className={styles.loading}><AnimateLoading animateCategory={1}/></div> : <span>{this.props.btnText}</span>
+            }
           </div>);
       case 'none':
         return <span></span>;
@@ -91,6 +92,12 @@ export default class BaseModule extends Component {
     }
     return data.typeName;
   }
+  modifyDate = (date) => {
+    if (!date) {
+      return '无';
+    }
+    return date.split(' ')[0];
+  }
   render() {
     const itemData = this.props.data.items;
     const rCompanyName = itemData.relatedMonitorCompanyName;
@@ -130,7 +137,7 @@ export default class BaseModule extends Component {
         </div>
         <div className={`${styles.footer} clearfix`}>
           <div className={styles.date}>
-            <span>{this.props.data.date.label}：</span>{this.props.data.date.value || '无'}
+            <span>{this.props.data.date.label}：</span>{this.modifyDate(this.props.data.date.value)}
           </div>
           {this.createViewBtn()}
         </div>

@@ -1,4 +1,4 @@
-import React, {PropTypes} from 'react';
+import React from 'react';
 import { observer } from 'mobx-react';
 import AlterCard from 'components/common/AlertCard';
 import styles from './index.less';
@@ -47,8 +47,4 @@ function MessageContent({riskHeadlinesStore, contentHeight}) {
     </div>
   );
 }
-
-MessageContent.propTypes = {
-  foo: PropTypes.string,
-};
 export default observer(MessageContent);

@@ -2,6 +2,7 @@ import { observable, action, computed} from 'mobx';
 import {riskHeadlinesApi} from 'api';
 import pathval from 'pathval';
 import moment from 'moment';
+import detailModalStore from './detailModal';
 const currentdate = moment().format('YYYY-MM-DD');
 const initState = {
   filterParams: {
@@ -38,7 +39,14 @@ const initState = {
   subCompany: {
     extend: {},
     subCompanyList: {},
-  }
+  },
+  detailModalData: {
+    info: {},
+    content: {},
+    source: '',
+    url: '',
+  },
+  detailLoading: {},
 };
 class RiskHeadlinesStore {
   @observable filterParams = Object.assign({}, initState.filterParams);
@@ -46,6 +54,8 @@ class RiskHeadlinesStore {
   @observable companyList = Object.assign({}, initState.companyList);
   @observable events = Object.assign({}, initState.events);
   subCompanyList = observable.map({});
+  @observable detailModalData = Object.assign({}, initState.detailModalData);
+  detailLoading = observable.map({});
 
   @computed get dimGroupType() {
     const output = [];
@@ -130,6 +140,45 @@ class RiskHeadlinesStore {
     .catch((error)=> {
       console.log(error, 'risk getMonitorMap');
     });
+  }
+  @action.bound getDetail(api, monitorId, params, info, type = 'other') {
+    this.detailLoading.set(info.eventId, true);
+    riskHeadlinesApi[api](monitorId, params)
+    .then(action('detail', (resp)=>{
+      this.detailModalData.info = info;
+      if (type === 'bidding') {
+        this.detailModalData.content = resp.data.result;
+        this.detailModalData.source = info.content.website;
+        this.detailModalData.url = info.content.url;
+      }else if (type === 'news') {
+        this.detailModalData.content = resp.data.html;
+        this.detailModalData.source = info.content.source;
+        this.detailModalData.url = info.content.url;
+      } else {
+        this.detailModalData.content = resp.data.detail;
+      }
+      this.detailLoading.set(info.eventId, false);
+      detailModalStore.openDetailModal((cp)=>{
+        require.ensure([], (require)=>{
+          if (type === 'news' || type === 'bidding') {
+            cp(
+              require('components/riskHeadlines/RiskMessage/DetailCom/Info'),
+              require('components/riskHeadlines/RiskMessage/DetailCom/Content'),
+              require('components/riskHeadlines/RiskMessage/DetailCom/Footer')
+            );
+          } else {
+            cp(
+              require('components/riskHeadlines/RiskMessage/DetailCom/Info'),
+              require('components/riskHeadlines/RiskMessage/DetailCom/Content')
+            );
+          }
+        });
+      });
+    }))
+    .catch(action('detail error', (error)=> {
+      console.log(error, 'risk Detail');
+      this.detailLoading.set(info.eventId, false);
+    }));
   }
   @action.bound riskUpdateValue(objName, keyPath, value) {
     pathval.setPathValue(this[objName], keyPath, value);

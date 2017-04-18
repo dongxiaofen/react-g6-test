@@ -2,35 +2,18 @@ import React from 'react';
 import BaseModule from '../BaseModule';
 import {observer} from 'mobx-react';
 // 经营招投标
-function Bidding({data, module, reducerData, store}) {
+function Bidding({data, module, store}) {
   const viewDetail = () => {
-    // let companyId = '';
-    // const actionId = Date.now();
-    // if (module === 'laneGraph') {
-    //   if (data.relatedMonitorId) {
-    //     companyId = data.relatedMonitorId;
-    //   } else {
-    //     companyId = data.mainMonitorId;
-    //   }
-    // } else {
-    //   companyId = reducerData.info.monitorId;
-    // }
-    // const announceId = data.content.announceID;
-    // const getUrl = `/api/monitor/${companyId}/operation/bidding/detail?announceId=${announceId}`;
-    console.log(store);
-    // commonBoundAC.getDetail(
-    //   getUrl,
-    //   ['bidMarkertDetailData', 'result'],
-    //   'DETAILS_MODAL_UPDATE',
-    //   data,
-    //   actionId,
-    //   data.content.url,
-    //   './bidMarket/bidMarketTitle',
-    //   './bidMarket/bidMarketContent',
-    //   './bidMarket/bidMarketSource',
-    //   'RISK_UPDATE_VALUE',
-    //   ['events', 'loading', data.eventId]
-    // );
+    let companyId = '';
+    if (module === 'laneGraph') {
+      companyId = data.relatedMonitorId || data.mainMonitorId;
+    } else {
+      companyId = store.events.info.monitorId;
+    }
+    const announceId = data.content.announceID;
+    const params = {};
+    params.announceId = announceId;
+    store.getDetail('getBiddingDetail', companyId, params, data, 'bidding');
   };
   const eventId = data.eventId;
   const moduleData = {
@@ -55,6 +38,6 @@ function Bidding({data, module, reducerData, store}) {
             viewDetCallback={viewDetail}
             type="double"
             module={module}
-            loading={reducerData.loading[eventId]}/>);
+            loading={store.detailLoading.get(eventId)}/>);
 }
 export default observer(Bidding);

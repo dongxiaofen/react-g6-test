@@ -21,7 +21,7 @@ import {
   RecLocation,
   Stock
 } from './Module';
-function AlertCard({index, data, module, reducerData, store}) {
+function AlertCard({index, data, module, store}) {
   const componentMap = (moduleKey, moduleData)=>{
     let output;
     switch (moduleKey) {
@@ -47,13 +47,13 @@ function AlertCard({index, data, module, reducerData, store}) {
         output = <DishonestInfo data={moduleData} module={module} store={store}/>;
         break;
       case 'JUDGMENT':
-        output = <JudgeDoc data={moduleData} reducerData={reducerData} store={store} module={module}/>;
+        output = <JudgeDoc data={moduleData} store={store} module={module}/>;
         break;
       case 'NEWS':
-        output = <News data={moduleData} reducerData={reducerData} store={store} module={module}/>;
+        output = <News data={moduleData} store={store} module={module}/>;
         break;
       case 'BIDDING':
-        output = <Bidding data={moduleData} reducerData={reducerData} store={store} module={module}/>;
+        output = <Bidding data={moduleData} store={store} module={module}/>;
         break;
       case 'COURT_LITIGATION':
         output = <LitigationAssets data={moduleData} module={module}/>;
@@ -77,7 +77,7 @@ function AlertCard({index, data, module, reducerData, store}) {
         output = [];
     }
     if (moduleKey.indexOf('STOCK') === 0) {
-      output = <Stock data={moduleData} />;
+      output = <Stock data={moduleData} module={module}/>;
     }
     return output;
   };

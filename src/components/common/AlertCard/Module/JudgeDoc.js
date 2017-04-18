@@ -2,7 +2,7 @@ import React from 'react';
 import BaseModule from '../BaseModule';
 // import Loading from 'components/common/Loading';
 import {observer} from 'mobx-react';
-function JudgeDoc({module, data}) {
+function JudgeDoc({data, store, module}) {
   const regTime = (value)=>{
     let time;
     if (value) {
@@ -11,22 +11,6 @@ function JudgeDoc({module, data}) {
       time = value;
     }
     return time;
-  };
-  // const matchActionByModule = ()=>{
-  //   switch (module) {
-  //     case 'laneGraph':
-  //       return this.props.laneGraphBoundAC;
-  //     default:
-  //       return this.props.reducerAction;
-  //   }
-  // };
-  const matchReducerByModule = ()=>{
-    switch (module) {
-      case 'laneGraph':
-        return this.props.laneGraph;
-      default:
-        return this.props.reducerData;
-    }
   };
   const modifyLitiganti = (value)=>{
     if (value) {
@@ -41,33 +25,14 @@ function JudgeDoc({module, data}) {
   const viewDetail = (obj)=>{
     const docId = obj.content.docId;
     const trailDate = obj.content.trailDate;
-    const url = obj.url;
-    let monitorCompanyId = '';
-    const actionId = Date.now();
-    const reducerData = matchReducerByModule();
+    let companyId = '';
     if (this.props.module === 'laneGraph') {
-      if (obj.relatedMonitorId) {
-        monitorCompanyId = obj.relatedMonitorId;
-      } else {
-        monitorCompanyId = obj.mainMonitorId;
-      }
+      companyId = obj.relatedMonitorId || obj.mainMonitorId;
     } else {
-      monitorCompanyId = reducerData.info.monitorId;
+      companyId = store.events.info.monitorId;
     }
-    const getUrl = `/api/monitor/${monitorCompanyId}/risk/judgeDoc?docId=${docId}&trailDate=${trailDate}`;
-    this.props.commonBoundAC.getDetail(
-      getUrl,
-      ['judgeDocData', 'data'],
-      'DETAILS_MODAL_UPDATE',
-      obj,
-      actionId,
-      url,
-      './judgeDoc/judgeDocTitle',
-      './judgeDoc/judgeDocContent',
-      '',
-      'RISK_UPDATE_VALUE',
-      ['events', 'loading', data.eventId]
-    );
+    const params = {docId, trailDate};
+    store.getDetail('getJudgeDocDetail', companyId, params, data);
   };
   const eventId = data.eventId;
   const moduleData = {
@@ -92,11 +57,12 @@ function JudgeDoc({module, data}) {
     'items': this.props.data,
     'typeName': this.props.data.dimName
   };
-  return (<BaseModule type="judgeDoc"
-          {...this.props}
+  return (<BaseModule
+          type="judgeDoc"
+          module={module}
           data={moduleData}
           viewDetCallback={viewDetail}
           type="double"
-          loading={this.props.reducerData.loading[eventId]}/>);
+          loading={store.detailLoading.get(eventId)}/>);
 }
 export default observer(JudgeDoc);
