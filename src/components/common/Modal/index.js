@@ -6,7 +6,11 @@ function _Modal({modalStore}) {
   const {
     visible,
     title,
+    pointText,
+    pactUrl,
+    pactName,
     isCustomize,
+    isSingleBtn,
     width,
     cancelText,
     confirmText,
@@ -18,10 +22,14 @@ function _Modal({modalStore}) {
   } = modalStore;
   return (
     <Modal
-      title={title}
       visible={visible}
-      isCustomize={isCustomize}
       width={width}
+      isCustomize={isCustomize}
+      isSingleBtn={isSingleBtn}
+      title={title}
+      pointText={pointText}
+      pactUrl={pactUrl}
+      pactName={pactName}
       cancelText={cancelText}
       confirmText={confirmText}
       cancelLoading={cancelLoading}
