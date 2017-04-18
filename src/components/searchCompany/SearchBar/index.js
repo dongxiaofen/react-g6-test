@@ -17,6 +17,7 @@ function SearchBar({searchCompanyStore}) {
     getCompanyList,
     getHistory,
     historyResult,
+    historyClick,
   } = searchCompanyStore;
   // SearchTab 为搜索选择类型  SearchInput 为搜索框和按钮  History 为历史记录
   return (
@@ -34,6 +35,7 @@ function SearchBar({searchCompanyStore}) {
         getCompanyList={getCompanyList} />
       <History
         getHistory={getHistory}
+        historyClick={historyClick}
         historyResult={historyResult} />
     </div>
   );

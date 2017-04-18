@@ -4,6 +4,7 @@ export default class History extends Component {
   static propTypes = {
     getHistory: PropTypes.func,
     historyResult: PropTypes.object,
+    historyClick: PropTypes.func,
   }
   componentDidMount() {
     this.props.getHistory();
@@ -15,29 +16,31 @@ export default class History extends Component {
     console.log(searchHistoryList.length, '===size');
     if (searchHistoryList.length === 0) {
       output.push(
-        <span className={styles.historyText}>无</span>
+        <span className={`${styles.historyText}`}>无</span>
       );
     } else {
       searchHistoryList.map((obj, idx)=>{
         output.push(
           <span
-            key={`${obj.type}${idx}`} onClick={this.handleHistoryClick.bind(this, obj)} className={styles.item}>{obj.keyword}</span>
+            key={`${obj.type}${idx}`}
+            onClick={this.handleHistoryClick.bind(this, obj)} className={`${styles.item}`}>{obj.keyword}</span>
         );
       });
     }
     return output;
   }
 
-  handleHistoryClick = ()=> {}
+  handleHistoryClick = (obj)=> {
+    this.props.historyClick(obj);
+  }
 
   render() {
-    console.log(this.props.historyResult, '===History render');
     return (
       <div className={`${styles.historyWrap}`}>
-        <div className={styles.start}>
-          <span className={styles.historyText}>历史记录</span>
+        <div className={`${styles.start}`}>
+          <span className={`${styles.historyText}`}>历史记录</span>
         </div>
-        <div className={styles.tip}>
+        <div className={`${styles.tip}`}>
           {this.getHistory()}
         </div>
       </div>

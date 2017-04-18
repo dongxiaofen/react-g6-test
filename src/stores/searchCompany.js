@@ -21,14 +21,18 @@ class SearchCompanyStore {
   @observable searchHistory = [];
   // 点击搜索后公司名
   @observable searchKey = '';
+  // 显示到filter的公司名
+  @observable searchKeyFilter = '';
+  // 是否已搜索
+  @observable isShowResult = false;
   // 搜索返回结果
   @observable searchResult = [];
-  // 返回结果 searchParameter
+  // 搜索返回结果 searchParameter
   @observable searchParameter = '';
   // 历史记录
   @observable historyResult = [];
   // 数据条数
-  @observable totalElements = 0;
+  @observable page = {};
   // 分页相关
   @observable pageParams = {
     index: 1,
@@ -36,7 +40,6 @@ class SearchCompanyStore {
   };
   // 筛选
   @observable filterSheet = {
-    data: {},
     config: {
       industryType: '行业类型',
       scale: '公司规模',
@@ -44,9 +47,30 @@ class SearchCompanyStore {
       companyStatus: '经营状态',
       stockMarket: '上市类型'
     },
-    filterStatus: {},
-    filterResult: {},
+    data: {
+      industryType: [],
+      scale: [],
+      province: [],
+      companyStatus: [],
+      stockMarket: []
+    },
+    filterStatus: {
+      industryType: [],
+      scale: [],
+      province: [],
+      companyStatus: [],
+      stockMarket: []
+    },
+    filterResult: {
+      industryType: [],
+      scale: [],
+      province: [],
+      companyStatus: [],
+      stockMarket: []
+    },
   };
+  // 是否收起filter模块
+  @observable filterToggle = false;
   // loading状态
   @observable loading = false;
   // 获取搜索公司列表
@@ -57,15 +81,47 @@ class SearchCompanyStore {
         type: this.searchType
       },
     };
+    // 赋值显示到filter的公司名
+    this.searchKeyFilter = this.searchKey;
     searchApi.getCompanyList(params)
       .then(action('searchCompany list', (resp) => {
         console.log(resp, '======searchCompany result');
         this.searchResult = resp.data.data;
+        // filterSheet相关
+        if (resp.data.aggregations) {
+          resp.data.aggregations.map((obj)=>{
+            
+          })
+        }
+        // const filterSheetData = {};
+        // const filterStatus = {};
+        // const filterResult = {};
+        // if (resp.data.aggregations) {
+        //   resp.data.aggregations.map((obj)=>{
+        //     if (obj.value.length > 0) {
+        //       filterSheetData[obj.key] = obj.value;
+        //     }
+        //   });
+        //   for (const key of Object.keys(filterSheetData)) {
+        //     filterStatus[key] = {
+        //       all: false,
+        //       isExtend: false,
+        //       filterStatus: new Array(filterSheetData[key].length).fill(false),
+        //     };
+        //     filterResult[key] = [];
+        //   }
+        //   this.filterSheet.data = filterSheetData;
+        //   this.filterSheet.filterStatus = filterStatus;
+        //   this.filterSheet.filterResult = filterResult;
+        // }
         this.searchParameter = resp.data.searchParameter;
+        this.page = resp.data.page;
+        this.isShowResult = true;
       }))
-      .catch((err) => {
+      .catch(action('searchCompany error', (err) => {
         console.log(err.response, '=====searchCompany error');
-      });
+        this.isShowResult = true;
+      }));
   }
   // 获取历史记录
   @action.bound getHistory() {
@@ -77,6 +133,12 @@ class SearchCompanyStore {
       .catch((err) => {
         console.log(err.response, '=====history error');
       });
+  }
+  // 点击历史记录
+  @action.bound historyClick(obj) {
+    this.searchType = obj.type;
+    this.searchKey = obj.keyword;
+    this.getCompanyList();
   }
   // 切换tab
   @action.bound searchTabClick(key) {
