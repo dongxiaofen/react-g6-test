@@ -17,6 +17,7 @@ export default class MyHomePageBody extends Component {
       size: 10,
     };
     this.props.myHomePageStore.getAlert(pageParams);
+    this.props.myHomePageStore.getStatistic();
   }
   render() {
     return (
