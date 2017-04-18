@@ -10,19 +10,29 @@ function TreeList({accountSettingStore}) {
     console.log(data);
     return 'createTreeWithFilter';
   };
-  const extend = () => {
-    console.log(data);
+  const getUserData = (uId) => {
+    console.log(uId);
+  };
+  const extend = (idx, level, uId) => {
+    const extendVal = accountSettingStore.tree.data.content[idx].extend;
+    if (level !== 0) {
+      accountSettingStore.changeValue(`tree.data.content[${idx}].extend`, !extendVal);
+    }
+    if (!extendVal) {
+      getUserData(uId);
+    }
+    accountSettingStore.changeValue(`tree.activeIndex`, idx);
   };
   const judgeByPId = (pId) => {
     if (!pId) {
       return true;
     }
-    for (let idx = 0; idx < data.size; idx++) {
+    for (let idx = 0; idx < data.length; idx++) {
       if (data[idx].id === pId) {
         const nextPId = data[idx].parentUserId;
         const nextExtend = data[idx].extend;
         if (nextPId && nextExtend) {
-          return this.judgeByPId(data, nextPId);
+          return judgeByPId(nextPId);
         }
         return nextExtend;
       }
@@ -33,7 +43,7 @@ function TreeList({accountSettingStore}) {
     const output = [];
     data.forEach((item, idx) => {
       const level = item.level;
-      const padding = level > 1 ? (level - 1) * 22 : 0;
+      const padding = level > 1 ? (level - 1) * 23 : 0;
       const display = level < 2 || judgeByPId(item.parentUserId) ? 'block' : 'none';
       const itemCss = idx === activeIndex ? styles.itemActive : styles.item;
       let icon;
@@ -51,7 +61,7 @@ function TreeList({accountSettingStore}) {
           key={idx}
           style={{display: display, paddingLeft: padding}}
           className={itemCss}
-          onClick={extend.bind(this, idx, level, item.id)}
+          onClick={extend.bind(null, idx, level, item.id)}
           >
           {icon}
           <span className={styles.treeName}>{item.contact}</span>
@@ -61,7 +71,6 @@ function TreeList({accountSettingStore}) {
     });
     return output;
   };
-  console.log(searchInput, '--');
   return (
     <div className={styles.wrapper}>
       {

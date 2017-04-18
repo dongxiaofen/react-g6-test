@@ -25,12 +25,12 @@ class AccountSettingStore {
     accountSettingApi.getTreeList()
       .then(action('getTreeList_success', resp => {
         const treeData = new Formater(resp);
-        treeData.formatData(null, null, 'yadong.wu@sc.cn');
+        treeData.formatData(null, null, 'cy@sc.cn');
         this.tree.data = {content: treeData.formatResult};
       }))
       .catch(action('getTreeList_error', err => {
-        this.tree.data = {error: err.response.data, content: []};
         console.log(err);
+        this.tree.data = {error: err.response.data, content: []};
       }));
   }
 }

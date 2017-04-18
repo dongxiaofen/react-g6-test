@@ -38,7 +38,6 @@ function formatData() {
         level: pLevel,
         extend: pLevel === 0 ? true : false,
       }));
-      console.log(this.formatResult, '--');
       this.pushCount++;
       if (childUserIdArr.length > 0) {
         nextLevel = pLevel + 1;
