@@ -61,7 +61,6 @@ class ReportManageStore {
           pathval.setPathValue(payModalStore, 'value.btnLoading', false);
 
           pathval.setPathValue(this, 'monitorId', response.data.monitorId);
-          pathval.setPathValue(this, 'list', {});
           this.getReportList(0, params);
         }
       }))

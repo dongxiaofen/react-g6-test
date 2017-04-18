@@ -56,7 +56,7 @@ export default class ReportMain extends Component {
               <div className={styles.filter + ' clearfix'}>
                 <h1 className={styles.title}>报告列表</h1>
                 <div className={styles.filterWrap}>
-                  {pathval.getPathValue(this.props.reportManageStore, 'list.data.content') && pathval.getPathValue(this.props.reportManageStore, 'list.data.content').length < 1 ? '' : <Filter />}
+                  <Filter />
                 </div>
               </div>
               <div className={styles.listArea}>
@@ -68,15 +68,6 @@ export default class ReportMain extends Component {
                 pointText="创建报告即视为同意"
                 pactUrl=""
                 pactName="用户服务协议"
-              />
-              <Modal type="info"
-                     visible={pathval.getPathValue(this.props.reportManageStore, 'msgModal.show')}
-                     iconType={pathval.getPathValue(this.props.reportManageStore, 'msgModal.iconType')}
-                     title={pathval.getPathValue(this.props.reportManageStore, 'msgModal.msg')}
-                     action={this.knowMsg}
-                     confirmText="知道了"
-                     hideModal={this.knowMsg}
-                     width={440}
               />
               <Modal type="info"
                      isSingleBtn

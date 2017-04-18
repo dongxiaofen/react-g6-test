@@ -5,13 +5,16 @@ import pathval from 'pathval';
 import Pagination from 'components/lib/pagination';
 import { runInAction } from 'mobx';
 import styles from './index.less';
+import { loadingComp } from 'components/hoc';
+
 
 function TableList({ reportManageStore }) {
   const changePages = (newPage) => {
     runInAction('newPage...', () => {
       pathval.setPathValue(reportManageStore, 'params.index', newPage);
+      pathval.setPathValue(reportManageStore, 'list', {});
     });
-    reportManageStore.getReportList(pathval.getPathValue(this.props, 'reportManageStore.params'));
+    reportManageStore.getReportList(pathval.getPathValue(reportManageStore, 'params'));
   };
   return (
   <div>
@@ -36,4 +39,10 @@ function TableList({ reportManageStore }) {
 TableList.propTypes = {
   foo: PropTypes.string,
 };
-export default inject('reportManageStore')(observer(TableList));
+export default inject('reportManageStore')(loadingComp(
+  {mapDataToProps: props=> ({
+    loading: pathval.getPathValue(props.reportManageStore, 'list.data.content') === null ? true : false,
+    imgCategory: 14,
+    category: 2,
+  })}
+)(observer(TableList)));
