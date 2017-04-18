@@ -2,12 +2,22 @@ import React, { Component, PropTypes } from 'react';
 import BaseInfo from './BaseInfo';
 import Statistic from './Statistic';
 import AlertInfo from './AlertInfo';
+import { inject, observer} from 'mobx-react';
 import {Col, Row, Container} from 'components/common/layout';
 
+@inject('myHomePageStore')
+@observer
 export default class MyHomePageBody extends Component {
   static propTypes = {
-    foo: PropTypes.string
+    myHomePageStore: PropTypes.object,
   };
+  componentWillMount() {
+    const pageParams = {
+      index: 1,
+      size: 10,
+    };
+    this.props.myHomePageStore.getAlert(pageParams);
+  }
   render() {
     return (
       <Container>

@@ -2,6 +2,7 @@ import React, {Component, PropTypes} from 'react';
 import { observer, inject } from 'mobx-react';
 import DevTools from 'mobx-react-devtools';
 import styles from './index.less';
+import Login from 'components/Login';
 // import MyAlert from 'components/common/MyAlert';
 import Modal from 'components/common/Modal';
 import DetailModal from 'components/common/DetailModal';
@@ -19,10 +20,10 @@ export default class App extends Component {
     if (pathname === '/' || pathname === '/pdfDown' || pathname === '/solution' || pathname === '/about') {
       return (
         <div className={styles.container}>
-          {/* {
+          {
             pathname === '/pdfDown' ? '' :
-            <Login {...this.props} />
-          } */}
+            <Login pathname={pathname} />
+          }
           {this.props.children}
         </div>
       );
@@ -30,7 +31,7 @@ export default class App extends Component {
     return (
       <div className={styles.wrap}>
         {false && <DevTools />}
-        {/* <Login {...this.props} /> */}
+         <Login pathname={pathname} />
         {/* <BackTop /> */}
         {/* <MenuBar {...this.props} /> */}
         <Modal modalStore={this.props.modalStore} />
