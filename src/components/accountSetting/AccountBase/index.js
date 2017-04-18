@@ -1,9 +1,13 @@
 import React from 'react';
 import { observer } from 'mobx-react';
-function AccountBase() {
+import BaseInfo from './BaseInfo';
+import OperateInfo from './OperateInfo';
+import styles from './index.less';
+function AccountBase(props) {
   return (
-    <div>
-      AccountBase
+    <div className={styles.wrapper}>
+      <BaseInfo {...props} />
+      <OperateInfo {...props} />
     </div>
   );
 }
