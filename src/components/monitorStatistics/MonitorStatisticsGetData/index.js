@@ -1,10 +1,21 @@
 import React, { Component, PropTypes } from 'react';
 import { observer, inject } from 'mobx-react';
 import axios from 'axios';
-import Select from 'components/lib/Select';
+import moment from 'moment';
+
+import Container from 'components/common/layout/Container';
+import Row from 'components/common/layout/Row';
+import Col from 'components/common/layout/Col';
 import styles from './index.less';
 
-const Option = Select.Option;
+import SwitchData from './SwitchData';
+import StatisticInfo from './StatisticInfo';
+
+const params = {
+  begin: moment().subtract(29, 'day').format('YYYY-MM-DD'),
+  end: moment().format('YYYY-MM-DD'),
+  type: '',
+};
 @inject('monitorStatisticsStore')@observer
 export default class MonitorStatisticsGetData extends Component {
   static propTypes = {
@@ -15,6 +26,10 @@ export default class MonitorStatisticsGetData extends Component {
       email: 'cy@sc.cn',
       password: '25f9e794323b453885f5181f1b624d0b'
     });
+    const msStore = this.props.monitorStatisticsStore;
+    msStore.getStatistic(params);
+    msStore.getChangeTrend(params);
+    msStore.setParams(params);
   }
 
   testOnChange = () => {
@@ -22,23 +37,24 @@ export default class MonitorStatisticsGetData extends Component {
   }
 
   render() {
+    const msStore = this.props.monitorStatisticsStore;
     return (
-      <div className={styles.wrap}>
-        this is MonitorStatisticsGetData
-        <div style={{ marginLeft: 20 }}>
-          <Select onChange={this.testOnChange}>
-            <Option value="">
-              所有企业
-            </Option>
-            <Option value="MAIN">
-              主体企业
-            </Option>
-            <Option value="ASSOCIATE">
-              关联企业
-            </Option>
-          </Select>
-        </div>
-      </div>
+      <Container>
+        <Row>
+          <Col width="12">
+            <div className={`clearfix ${ styles.wrap }`}>
+              <div className={styles.title}>监控统计</div>
+            </div>
+          </Col>
+        </Row>
+        <SwitchData
+          msStore={msStore}
+          params={params} />
+        <StatisticInfo
+          statistic={msStore.statistic}
+          params={msStore.params}
+          loading={msStore.loadingGroup.statistic} />
+      </Container>
     );
   }
 }
