@@ -1,5 +1,9 @@
 .message {
   position: fixed;
+  top: 0;
+  width: 100%;
+
+  z-index: 990;
   visibility: hidden;
   opacity: 0;
 
@@ -10,7 +14,32 @@
           transition: all .3s ease-in-out;
 }
 
+.messageBox {
+  margin-left: auto;
+  margin-right: auto;
+  width: 300px;
+  height: 36px;
+
+  font-size: 13px;
+  line-height: 36px;
+  text-align: center;
+  color: #ffffff;
+
+  box-shadow:0 6px 6px 0 rgba(0,0,0,0.20);
+}
+
+.messageBoxInfo {
+  .messageBox;
+  background-color: #42a5f5;
+}
+
+.messageBoxWarning {
+  .messageBox;
+  background-color: #e53935;
+}
+
 .visible {
+  top: 10%;
   visibility: visible;
   opacity: 1;
 }

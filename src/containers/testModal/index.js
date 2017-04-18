@@ -13,12 +13,13 @@ const cancelAction = () => console.log('this is test cancelAction');
     errCategory: 1
   })
 })
-@inject('modalStore', 'detailModalStore')
+@inject('modalStore', 'detailModalStore', 'messageStore')
 @observer
 export default class TestModal extends Component {
   static propTypes = {
     modalStore: PropTypes.object,
     detailModalStore: PropTypes.object,
+    messageStore: PropTypes.object,
   }
   // comp modal
   openCompModal = () => {
@@ -55,11 +56,22 @@ export default class TestModal extends Component {
       }
     );
   }
+  // message
+  openInfoMessage = () => {
+    const messageStore = this.props.messageStore;
+    messageStore.openInfoMessage('test info message');
+  }
+  openWarningMessage = () => {
+    const messageStore = this.props.messageStore;
+    messageStore.openWarningMessage('test warning message');
+  }
   render() {
     return (
-      <div style={{ height: 1000 }}>
+      <div style={{ height: 1000, marginTop: 100 }}>
         <button onClick={this.openCompModal}>comp modal</button>
         <button onClick={this.openDetailModal}>detail modal</button>
+        <button onClick={this.openInfoMessage}>info message</button>
+        <button onClick={this.openWarningMessage}>warning message</button>
       </div>
     );
   }

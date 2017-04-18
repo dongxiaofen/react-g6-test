@@ -1,22 +1,33 @@
-import React, {PropTypes} from 'react';
+import React, { Component, PropTypes } from 'react';
 import { observer } from 'mobx-react';
 import styles from './index.less';
 
-function Message({ visible, type, contant }) {
-  const messageClass = visible ? `${styles.message} ${styles.visible}` : `${styles.message}`;
-  const messageBoxClass = type ? 
-  return (
-    <div className={messageClass}>
-      <div className={styles.messageBox}>
-        {contant}
-      </div>
-    </div>
-  );
-}
+@observer
+export default class componentName extends Component {
+  static propTypes = {
+    visible: PropTypes.bool,
+    type: PropTypes.string,
+    content: PropTypes.string,
+    closeAction: PropTypes.func,
+    clearTimer: PropTypes.func,
+  }
 
-Message.propTypes = {
-  visible: PropTypes.bool,
-  type: PropTypes.string,
-  contant: PropTypes.string,
-};
-export default observer(Message);
+  componentDidUpdate() {
+    if (this.props.visible) {
+      this.props.clearTimer();
+      this.props.closeAction();
+    }
+  }
+
+  render() {
+    const messageClass = this.props.visible ? `${styles.message} ${styles.visible}` : `${styles.message}`;
+    const messageBoxClass = this.props.type === 'info' ? styles.messageBoxInfo : styles.messageBoxWarning;
+    return (
+      <div className={messageClass}>
+        <div className={messageBoxClass}>
+          {this.props.content}
+        </div>
+      </div>
+    );
+  }
+}

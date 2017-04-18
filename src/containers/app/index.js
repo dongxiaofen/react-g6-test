@@ -5,14 +5,16 @@ import styles from './index.less';
 // import MyAlert from 'components/common/MyAlert';
 import Modal from 'components/common/Modal';
 import DetailModal from 'components/common/DetailModal';
+import Message from 'components/common/Message';
 
-@inject('modalStore', 'detailModalStore')@observer
+@inject('modalStore', 'detailModalStore', 'messageStore')@observer
 export default class App extends Component {
   static propTypes = {
     children: PropTypes.object.isRequired,
     location: PropTypes.object,
     modalStore: PropTypes.object,
     detailModalStore: PropTypes.object,
+    messageStore: PropTypes.object,
   };
   render() {
     const pathname = this.props.location.pathname;
@@ -35,6 +37,7 @@ export default class App extends Component {
         {/* <MenuBar {...this.props} /> */}
         <Modal modalStore={this.props.modalStore} />
         <DetailModal detailModalStore={this.props.detailModalStore} />
+        <Message messageStore={this.props.messageStore} />
         <div className={styles.box}>
           <div className={styles.content}>
             {this.props.children}
