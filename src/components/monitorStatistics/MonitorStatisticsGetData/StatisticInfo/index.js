@@ -1,7 +1,7 @@
 import React, {PropTypes} from 'react';
 import { observer } from 'mobx-react';
 
-import Row from 'components/common/Layout/Row';
+import Row from 'components/common/layout/Row';
 import StatisticInfoItem from './StatisticInfoItem';
 
 function StatisticInfo({ statistic, params, loading }) {

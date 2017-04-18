@@ -5,8 +5,8 @@ import moment from 'moment';
 import styles from './index.less';
 
 import Select from 'components/lib/Select';
-import Row from 'components/common/Layout/Row';
-import Col from 'components/common/Layout/Col';
+import Row from 'components/common/layout/Row';
+import Col from 'components/common/layout/Col';
 
 const Option = Select.Option;
 const { RangePicker } = DatePicker;

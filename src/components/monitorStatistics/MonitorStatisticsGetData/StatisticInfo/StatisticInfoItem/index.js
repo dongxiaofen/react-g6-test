@@ -1,6 +1,6 @@
 import React, {PropTypes} from 'react';
 import { observer } from 'mobx-react';
-import Col from 'components/common/Layout/Col';
+import Col from 'components/common/layout/Col';
 import styles from './index.less';
 
 import AnimateLoading from 'components/hoc/LoadingComp/AnimateLoading';

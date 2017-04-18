@@ -3,9 +3,9 @@ import { observer, inject } from 'mobx-react';
 import axios from 'axios';
 import moment from 'moment';
 
-import Container from 'components/common/Layout/Container';
-import Row from 'components/common/Layout/Row';
-import Col from 'components/common/Layout/Col';
+import Container from 'components/common/layout/Container';
+import Row from 'components/common/layout/Row';
+import Col from 'components/common/layout/Col';
 import styles from './index.less';
 
 import SwitchData from './SwitchData';
