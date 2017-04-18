@@ -28,6 +28,7 @@ export default class TestModal extends Component {
       confirmAction: confirmAction,
       cancelAction: cancelAction,
       isSingleBtn: true,
+      confirmLoading: true,
       pointText: '惺惺惜惺惺',
       pactUrl: 'xxxxxx',
       pactName: '惺惺惜惺惺',
