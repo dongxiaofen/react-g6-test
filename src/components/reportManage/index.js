@@ -1,5 +1,5 @@
 import React, { Component, PropTypes } from 'react';
-import {Container, Row, Col} from 'components/common/Layout';
+import {Container, Row, Col} from 'components/common/layout';
 import TableList from './TableList';
 import { inject, observer } from 'mobx-react';
 import pathval from 'pathval';
