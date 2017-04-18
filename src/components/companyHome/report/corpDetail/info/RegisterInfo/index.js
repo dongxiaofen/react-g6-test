@@ -4,7 +4,7 @@ import { ModuleTitle, KvTable } from 'components/common/report';
 // import styles from './index.less';
 
 function RegisterInfo({ registerInfo, isLoading }) {
-  console.log('registerInfo', registerInfo);
+  // console.log('registerInfo', registerInfo);
   const data = {
     meta: [
       { 'key': 'enterpriseName', 'type': 'half'},

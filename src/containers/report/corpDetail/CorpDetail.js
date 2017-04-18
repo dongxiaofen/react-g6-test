@@ -22,7 +22,7 @@ export default class CorpDetail extends Component {
       <Tabs>
         <TabPane tab="工商基本信息">
           <RegisterInfo registerInfo={corpDetailStore.registerInfo} isLoading={isLoading} />
-          <ShareHolder />
+          <ShareHolder shareHolderList={corpDetailStore.shareHolderList} isLoading={isLoading} />
         </TabPane>
         <TabPane tab="对外投资任职">
           <Enterprise />
