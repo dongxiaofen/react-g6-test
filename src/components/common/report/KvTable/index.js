@@ -36,8 +36,9 @@ export default loadingComp({
   mapDataToProps: props => ({
     loading: props.isLoading,
     category: 0,
-    error: false,
-    errCategory: 1
+    error: props.error,
+    errCategory: 1,
+    module: props.module
   })
 })(observer(KvTable));
 

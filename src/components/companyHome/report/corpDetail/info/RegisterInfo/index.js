@@ -29,7 +29,9 @@ function RegisterInfo({ registerInfo, isLoading }) {
     ],
     items: registerInfo[0],
     dict: 'RegisterInfo',
-    isLoading: isLoading
+    isLoading: isLoading,
+    module: '注册信息',
+    error: registerInfo.length === 0
   };
   return (
     <div>

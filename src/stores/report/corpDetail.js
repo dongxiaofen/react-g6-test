@@ -3,6 +3,8 @@ import { companyHomeApi } from 'api';
 class CorpDetailStore {
   @observable registerInfo = [];
   @observable shareHolderList = [];
+  @observable personList = [];
+  @observable filiationList = [];
   @observable isLoading = true;
   @observable isMount = false;
 
@@ -13,6 +15,8 @@ class CorpDetailStore {
         this.isLoading = false;
         this.registerInfo = resp.data.corpDetail.basicList;
         this.shareHolderList = resp.data.corpDetail.shareHolderList;
+        this.personList = resp.data.corpDetail.personListForPortal;
+        this.filiationList = resp.data.corpDetail.filiationList;
       }));
   }
 }

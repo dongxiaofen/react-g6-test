@@ -14,7 +14,9 @@ function ShareHolder({ shareHolderList, isLoading }) {
     ],
     tData: shareHolderList,
     dict: 'shareholder',
-    isLoading: isLoading
+    isLoading: isLoading,
+    module: '股东信息',
+    error: shareHolderList.length === 0
   };
   return (
     <div>
