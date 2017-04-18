@@ -44,18 +44,16 @@ export default class MonitorStatisticsGetData extends Component {
           <Col width="12">
             <div className={`clearfix ${ styles.wrap }`}>
               <div className={styles.title}>监控统计</div>
-              <SwitchData
-                msStore={msStore}
-                params={params}/>
             </div>
           </Col>
         </Row>
-        <Row>
-          <StatisticInfo
-            statistic={msStore.statistic}
-            params={msStore.params}
-            loading={msStore.loadingGroup.statistic}/>
-        </Row>
+        <SwitchData
+          msStore={msStore}
+          params={params} />
+        <StatisticInfo
+          statistic={msStore.statistic}
+          params={msStore.params}
+          loading={msStore.loadingGroup.statistic} />
       </Container>
     );
   }

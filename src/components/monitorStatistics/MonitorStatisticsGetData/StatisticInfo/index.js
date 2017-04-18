@@ -1,6 +1,7 @@
 import React, {PropTypes} from 'react';
 import { observer } from 'mobx-react';
 
+import Row from 'components/common/Layout/Row';
 import StatisticInfoItem from './StatisticInfoItem';
 
 function StatisticInfo({ statistic, params, loading }) {
@@ -59,13 +60,13 @@ function StatisticInfo({ statistic, params, loading }) {
     },
   ];
   return (
-    <div className="clearfix">
+    <Row>
       {
         config.map((item, idx) => {
           return <StatisticInfoItem key={idx} data={item} loading={loading} />;
         })
       }
-    </div>
+    </Row>
   );
 }
 

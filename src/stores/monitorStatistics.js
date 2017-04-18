@@ -1217,10 +1217,39 @@ class MonitorStatisticsStore {
     this.setLoading('changeTrend', true);
     monitorStatisticsApi.getChangeTrend(params)
       .then(action('get change trend', (resp) => {
-        this.changeTrend = resp.data;
+        const xAxisDate = [];
+        const companyData = [];
+        const eventData = [];
+        let changeTrendData = [];
+        if (resp.data && resp.data.length > 0) {
+          changeTrendData = resp.data;
+          for (let idx = 1; idx < changeTrendData.length; idx++) {
+            xAxisDate.push(moment(changeTrendData[idx].date).format('YYYY年MM月DD日'));
+            companyData.push({
+              value: changeTrendData[idx].companyCount,
+              companyChange: changeTrendData[idx].companyChange,
+              nowData: changeTrendData[idx],
+              beforeData: changeTrendData[idx - 1],
+            });
+            eventData.push({
+              value: changeTrendData[idx].eventCount,
+              eventChange: changeTrendData[idx].eventChange,
+              nowData: changeTrendData[idx],
+              beforeData: changeTrendData[idx - 1],
+            });
+          }
+        }
+        this.changeTrend.chartOption.xAxis.data = xAxisDate;
+        this.changeTrend.chartOption.series[0].data = companyData;
+        this.changeTrend.chartOption.series[1].data = eventData;
+        // 设置右边table框的数据，默认是今天和今天的昨天，反正就是最后的两个
+        this.changeTrend.mutual.nowData = changeTrendData[changeTrendData.length - 1];
+        this.changeTrend.mutual.beforeData = changeTrendData[changeTrendData.length - 2];
+        this.changeTrend.result = changeTrendData;
         this.setLoading('changeTrend');
       }))
       .catch((err) => {
+        console.log(err);
         this.setErrorBody('changeTrend', err.response.data);
         this.setLoading('changeTrend');
       });
