@@ -89,7 +89,7 @@ function ErrorText({ module, error, errCategory = 0 }) {
             <img src={noDataChart} />
           </div>
           <div className={styles.noDataText}>
-            {dict[module] || error.get('message') || '暂无信息'}
+            {dict[module] || error.message || '暂无信息'}
           </div>
         </div>
       </div>
@@ -97,7 +97,7 @@ function ErrorText({ module, error, errCategory = 0 }) {
   }
   return (
     <div className={styles.box}>
-      {dict[module] || error.get('message') || '暂无信息'}
+      {dict[module] || error.message || '暂无信息'}
     </div>
   );
 }

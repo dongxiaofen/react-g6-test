@@ -1,4 +1,4 @@
-import React, {PropTypes} from 'react';
+import React from 'react';
 import { observer } from 'mobx-react';
 import styles from './index.less';
 
@@ -52,8 +52,4 @@ function RiskTab({riskHeadlinesStore}) {
     </div>
   );
 }
-
-RiskTab.propTypes = {
-  foo: PropTypes.string,
-};
 export default observer(RiskTab);

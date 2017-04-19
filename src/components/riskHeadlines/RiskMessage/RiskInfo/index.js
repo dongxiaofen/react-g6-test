@@ -23,10 +23,9 @@ function RiskInfo({riskHeadlinesStore, history}) {
 }
 export default loadingComp({
   mapDataToProps: props => ({
-    loading: props.riskHeadlinesStore.events.info.companyName ? false : true,
+    loading: Object.keys(props.riskHeadlinesStore.events.info).length > 0 ? false : true,
     error: props.riskHeadlinesStore.events.info.error,
     category: 1,
     imgCategory: 8,
-    errCategory: false,
   }),
 })(observer(RiskInfo));

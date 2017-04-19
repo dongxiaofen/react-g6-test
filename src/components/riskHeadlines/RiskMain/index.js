@@ -9,8 +9,9 @@ import {Container, Row, Col} from 'components/common/layout';
 @observer
 export default class RiskMain extends Component {
   componentDidMount() {
-    // const params = this.props.riskHeadlines.getIn(['filterParams']).toJS();
-    // this.props.riskheadlinesBoundAC.getCompanyList(params);
+    const dimGroupTypeStr = this.props.riskHeadlinesStore.dimGroupTypeStr;
+    const params = this.props.riskHeadlinesStore.filterParams;
+    this.props.riskHeadlinesStore.getCompanyList(dimGroupTypeStr, params);
     this.caculateHeight();
     this.props.homeStore.postLogin();
   }
@@ -32,13 +33,6 @@ export default class RiskMain extends Component {
     const comListCss = riskHeadlinesStore.companyList.data.error ? styles.riskCompanyNoData : styles.riskCompany; // 没有数据的时候背景为白色
     return (
       <Container>
-        {/* <DetailsModal
-          {...this.props}
-          visible={detailsModalConfig.get('visible')}
-          titlePath={detailsModalConfig.get('titlePath')}
-          contentPath={detailsModalConfig.get('contentPath')}
-          sourcePath={detailsModalConfig.get('sourcePath')}
-          onCancel={this.detailsModalOnCancel} />*/}
         <Row className={styles.riskHeadlines}>
           <Col width="4">
             <div className={styles.wrap} id="riskFilter">

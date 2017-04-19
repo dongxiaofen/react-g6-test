@@ -49,10 +49,9 @@ function MessageContent({riskHeadlinesStore, contentHeight}) {
 }
 export default loadingComp({
   mapDataToProps: props => ({
-    loading: props.riskHeadlinesStore.events.data.content ? false : true,
+    loading: Object.keys(props.riskHeadlinesStore.events.data).length > 0 ? false : true,
     error: props.riskHeadlinesStore.events.data.error,
     category: 2,
     imgCategory: 7,
-    errCategory: false,
   }),
 })(observer(MessageContent));

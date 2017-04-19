@@ -27,6 +27,5 @@ export default loadingComp({
     error: props.riskHeadlinesStore.companyList.data.error,
     category: 2,
     imgCategory: 6,
-    errCategory: false,
   }),
 })(observer(RiskCompany));

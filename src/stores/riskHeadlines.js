@@ -88,6 +88,8 @@ class RiskHeadlinesStore {
     }))
     .catch(() => {
       this.setErrorMsg('setCompanyList', '未发现符合条件企业');
+      this.setErrorMsg('setCompanyInfo', ' ');
+      this.setErrorMsg('setCompanyEvents', '暂无信息');
     });
   }
   @action.bound getSubCompanyList(monitorId, params) {
@@ -107,6 +109,7 @@ class RiskHeadlinesStore {
       this.getDefultEvent(params, resp.data);
     }))
     .catch((error)=>{
+      this.setErrorMsg('setCompanyInfo', '');
       console.log('getCompanyInfo', error);
     });
   }
@@ -130,6 +133,7 @@ class RiskHeadlinesStore {
       this.setCompanyEvents(resp.data);
     }))
     .catch(()=>{
+      this.setErrorMsg('setCompanyEvents', '暂无信息');
     });
   }
   @action.bound getMonitorMap(id) {
@@ -196,7 +200,7 @@ class RiskHeadlinesStore {
     this.riskUpdateValue('events', 'data', data);
   }
   @action.bound setErrorMsg(handle, errMessage) {
-    this[handle]({error: errMessage});
+    this[handle]({error: {message: errMessage}});
   }
   @action.bound resetModuleData(objName) {
     this[objName] = initState[objName];
