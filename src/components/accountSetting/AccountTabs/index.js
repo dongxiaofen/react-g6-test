@@ -7,6 +7,8 @@ import Consume from './Consume';
 import Recharge from './Recharge';
 import Summary from './Summary';
 function AccountTabs(props) {
+  const baseInfo = props.accountSettingStore.base.data;
+  const access = !baseInfo || baseInfo.parentUserId;
   return (
     <Tabs>
       <TabPane tab="业务统计">
@@ -15,10 +17,10 @@ function AccountTabs(props) {
       <TabPane tab="消费记录">
         <Consume {...props} />
       </TabPane>
-      <TabPane tab="充值记录">
+      <TabPane tab="充值记录" none={access}>
         <Recharge {...props} />
       </TabPane>
-      <TabPane tab="消费汇总">
+      <TabPane tab="消费汇总" none={access}>
         <Summary {...props} />
       </TabPane>
     </Tabs>
