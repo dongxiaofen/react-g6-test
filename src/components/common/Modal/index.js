@@ -6,6 +6,7 @@ function _Modal({modalStore}) {
   const {
     visible,
     title,
+    isNeedBtn,
     pointText,
     pactUrl,
     pactName,
@@ -24,6 +25,7 @@ function _Modal({modalStore}) {
     <Modal
       visible={visible}
       width={width}
+      isNeedBtn={isNeedBtn}
       isCustomize={isCustomize}
       isSingleBtn={isSingleBtn}
       title={title}

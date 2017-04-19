@@ -34,6 +34,7 @@ class ModalStore {
   @action.bound openCompModal({
     width,
     title,
+    isNeedBtn,
     pointText,
     pactUrl,
     pactName,
@@ -51,6 +52,7 @@ class ModalStore {
     this.visible = true;
     this.title = title;
     if (width) { this.width = width; }
+    if (isNeedBtn !== undefined) { this.isNeedBtn = isNeedBtn; }
     if (pointText !== undefined) { this.pointText = pointText; }
     if (pactUrl !== undefined) { this.pactUrl = pactUrl; }
     if (pactName !== undefined) { this.pactName = pactName; }
