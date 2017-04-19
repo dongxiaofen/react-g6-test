@@ -8,8 +8,9 @@ function RiskTab({riskHeadlinesStore}) {
   const changeModule = (dimGroupType, count) => {
     if (count > 0) {
       riskHeadlinesStore.riskUpdateValue('events', 'params.dimGroupType', dimGroupType);
+      riskHeadlinesStore.riskUpdateValue('events', 'params.index', 1);
       const monitorId = events.info.monitorId;
-      const index = events.params.index;
+      const index = 1;
       const from = filterParams.from;
       const to = filterParams.to;
       riskHeadlinesStore.getCompanyEvents(monitorId, {index, from, to, dimGroupType});

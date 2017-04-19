@@ -3,7 +3,9 @@ import {riskHeadlinesApi} from 'api';
 import pathval from 'pathval';
 import moment from 'moment';
 import detailModalStore from './detailModal';
+const axiosCancel = {};
 const currentdate = moment().format('YYYY-MM-DD');
+import axios from 'axios';
 const initState = {
   filterParams: {
     from: currentdate,
@@ -31,14 +33,8 @@ const initState = {
   },
   companyList: {
     loading: true,
-    // extend: {},
     data: [],
-    // subCompany: {},
     active: '',
-  },
-  subCompany: {
-    extend: {},
-    subCompanyList: {},
   },
   detailModalData: {
     info: {},
@@ -69,48 +65,116 @@ class RiskHeadlinesStore {
   @computed get dimGroupTypeStr() {
     return 'dimGroupType=' + this.dimGroupType.join('&dimGroupType=');
   }
-
+  cancelRiskApi() {
+    console.log(axiosCancel);
+    if (axiosCancel.companyListCancel) {
+      axiosCancel.companyListCancel();
+    }
+    if (axiosCancel.companySubListCancel) {
+      axiosCancel.companySubListCancel();
+    }
+    if (axiosCancel.companyInfoCancel) {
+      axiosCancel.companyInfoCancel();
+    }
+    if (axiosCancel.companyEventsCancel) {
+      axiosCancel.companyEventsCancel();
+    }
+  }
   getDefulComInfo(params, data) {
+    const keys = ['corpCount', 'legalCount', 'newsCount', 'operationCount', 'teamCount', 'stockCount'];
+    let hasEvents = false;
+    for (const key of keys) {
+      if (data[key] > 0) {
+        hasEvents = true;
+        break;
+      }
+    }
     const monitorId = data.monitorId;
     const newParams = {};
     newParams.to = params.to;
     newParams.from = params.from;
-    this.getCompanyInfo(monitorId, newParams);
+    if (hasEvents) {
+      this.riskUpdateValue('companyList', 'active', monitorId);
+      this.getCompanyInfo(monitorId, newParams);
+    } else {
+      this.riskUpdateValue('events', 'companyType', 'SUB');
+      this.getSubCompanyList(monitorId, newParams, 'default');
+    }
   }
-  @action.bound getCompanyList(dimGroupTypeStr, params) {
-    riskHeadlinesApi.getCompanyList(dimGroupTypeStr, params)
+  @action.bound getCompanyList(dimGroupTypeStr, params, flag = 'other') {
+    this.resetModuleData('events');
+    this.resetModuleData('companyList');
+
+    this.cancelRiskApi('list');
+    const CancelToken = axios.CancelToken;
+    const source = CancelToken.source();
+    axiosCancel.companyListCancel = source.cancel;
+
+    riskHeadlinesApi.getCompanyList(dimGroupTypeStr, params, source)
     .then(action('getCompanyList', (resp)=> {
-      this.resetModuleData('companyList');
-      this.resetModuleData('events');
       this.setCompanyList(resp.data);
-      this.riskUpdateValue('companyList', 'active', resp.data[0].monitorId);
       this.getDefulComInfo(params, resp.data[0]);
+      axiosCancel.companyListCancel = null;
     }))
-    .catch(() => {
-      this.setErrorMsg('setCompanyList', '未发现符合条件企业');
-      this.setErrorMsg('setCompanyInfo', ' ');
-      this.setErrorMsg('setCompanyEvents', '暂无信息');
+    .catch((error) => {
+      console.log('companyList', error);
+      console.log(axios.isCancel(error), error);
+      if (!axios.isCancel(error)) {
+        if (flag === 'today') {
+          this.setCompanyList({errorToday: '今日监控企业未发现信息，您可以选择其他时间段监控信息'});
+        } else {
+          this.setErrorMsg('setCompanyList', '未发现符合条件企业');
+        }
+        this.setErrorMsg('setCompanyInfo', ' ');
+        this.setErrorMsg('setCompanyEvents', '暂无信息');
+        axiosCancel.companyListCancel = null;
+      }
     });
   }
-  @action.bound getSubCompanyList(monitorId, params) {
+  @action.bound getSubCompanyList(monitorId, params, type = 'normal') {
     const dimGroupTypeStr = this.dimGroupTypeStr;
-    riskHeadlinesApi.getSubCompanyList(dimGroupTypeStr, monitorId, params)
+
+    this.cancelRiskApi('subList');
+    const CancelToken = axios.CancelToken;
+    const source = CancelToken.source();
+    axiosCancel.companySubListCancel = source.cancel;
+
+    riskHeadlinesApi.getSubCompanyList(dimGroupTypeStr, monitorId, params, source)
     .then(action('getSubCompanyList', (resp)=> {
       this.subCompanyList.set(monitorId, resp.data);
+      axiosCancel.companySubListCancel = null;
+      if (type === 'default') { // 默认获取第一个关联公司的事件
+        this.getCompanyInfo(resp.data[0].monitorId, params);
+      }
     }))
     .catch((error)=>{
       console.log('getSubCompanyList', error);
+      if (!axios.isCancel(error)) {
+        axiosCancel.companySubListCancel = null;
+      }
     });
   }
   @action.bound getCompanyInfo(monitorId, params) {
-    riskHeadlinesApi.getCompanyInfo(monitorId, params)
+    this.resetCompanyInfo();
+    this.resetCompanyEvents();
+
+    this.cancelRiskApi('info');
+    const CancelToken = axios.CancelToken;
+    const source = CancelToken.source();
+    axiosCancel.companyInfoCancel = source.cancel;
+
+    riskHeadlinesApi.getCompanyInfo(monitorId, params, source)
     .then(action('companyInfo', (resp)=>{
       this.setCompanyInfo(resp.data);
       this.getDefultEvent(params, resp.data);
+      axiosCancel.companyInfoCancel = null;
     }))
     .catch((error)=>{
-      this.setErrorMsg('setCompanyInfo', '');
       console.log('getCompanyInfo', error);
+      if (!axios.isCancel(error)) {
+        this.setErrorMsg('setCompanyInfo', '');
+        axiosCancel.companyInfoCancel = null;
+      }
     });
   }
   @action.bound getDefultEvent(params, data) {
@@ -128,12 +192,23 @@ class RiskHeadlinesStore {
     this.getCompanyEvents(monitorId, params);
   }
   @action.bound getCompanyEvents(monitorId, params) {
-    riskHeadlinesApi.getCompanyEvents(monitorId, params)
+    this.resetCompanyEvents();
+
+    this.cancelRiskApi('events');
+    const CancelToken = axios.CancelToken;
+    const source = CancelToken.source();
+    axiosCancel.companyEventsCancel = source.cancel;
+
+    riskHeadlinesApi.getCompanyEvents(monitorId, params, source)
     .then(action('companyEvents', (resp)=>{
       this.setCompanyEvents(resp.data);
+      axiosCancel.companyEventsCancel = null;
     }))
-    .catch(()=>{
-      this.setErrorMsg('setCompanyEvents', '暂无信息');
+    .catch((error)=>{
+      if (!axios.isCancel(error)) {
+        axiosCancel.companyEventsCancel = null;
+        this.setErrorMsg('setCompanyEvents', '暂无信息');
+      }
     });
   }
   @action.bound getMonitorMap(id) {
@@ -204,6 +279,12 @@ class RiskHeadlinesStore {
   }
   @action.bound resetModuleData(objName) {
     this[objName] = initState[objName];
+  }
+  @action.bound resetCompanyInfo() {
+    this.setCompanyInfo({});
+  }
+  @action.bound resetCompanyEvents() {
+    this.setCompanyEvents([]);
   }
 }
 export default new RiskHeadlinesStore();

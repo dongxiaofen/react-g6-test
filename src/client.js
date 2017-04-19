@@ -78,6 +78,9 @@ axios.interceptors.response.use((response) => {
 }, (error) => {
   // Do something with request error
   console.log('error', error);
+  if (axios.isCancel(error)) {
+    return Promise.reject(error);
+  }
   if (error.response.data.errorCode === 401006 || error.response.data.errorCode === 401007) {
     allStore.modalStore.openTextModal('登录超时', '请重新登录', ()=>{
       allStore.homeStore.postLogin();

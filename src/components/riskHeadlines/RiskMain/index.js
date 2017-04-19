@@ -16,10 +16,10 @@ export default class RiskMain extends Component {
     this.props.homeStore.postLogin();
   }
   componentWillUnmount() {
-    // this.props.riskheadlinesBoundAC.resetRiskData('filterParams');
-    // this.props.riskheadlinesBoundAC.resetRiskData('companyList');
-    // this.props.riskheadlinesBoundAC.resetRiskData('events');
-    // this.props.riskheadlinesBoundAC.resetRiskData('filterConfig');
+    this.props.riskHeadlinesStore.resetModuleData('filterParams');
+    this.props.riskHeadlinesStore.resetModuleData('filterConfig');
+    this.props.riskHeadlinesStore.resetModuleData('companyList');
+    this.props.riskHeadlinesStore.resetModuleData('events');
   }
   caculateHeight = ()=> {
     const bodyH = document.body.clientHeight > 800 ? document.body.clientHeight : 800;
