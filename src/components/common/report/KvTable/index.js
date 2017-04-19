@@ -1,36 +1,21 @@
 import React, { PropTypes } from 'react';
 import { observer } from 'mobx-react';
-import Cell from './Cell';
+import Tbody from './Tbody';
 import styles from './index.less';
-import config from 'dict/reportModule';
 import { loadingComp } from 'components/hoc';
 
 function KvTable({ meta, items, dict }) {
-  const getValue = (cell, value) => {
-    let output = '';
-    if (cell.modifyText) {
-      output = cell.modifyText();
-    } else if (cell.modifyBlock) {
-      output = cell.modifyBlock(value);
-    } else {
-      output = value ? value : '--';
-    }
-    return output;
-  };
-
   return (
-    <div className={styles.box}>
-      {
-        meta.map((cell) => {
-          return <Cell key={cell.key} type={cell.type} theKey={config[dict][cell.key]} theValue={getValue(cell, items[cell.key])} />;
-        })
-      }
-    </div>
+    <table className={styles.table}>
+      <Tbody meta={meta} items={items} dict={dict} />
+    </table>
   );
 }
 
 KvTable.propTypes = {
-  foo: PropTypes.string,
+  meta: PropTypes.array.isRequired,
+  items: PropTypes.object.isRequired,
+  dict: PropTypes.string.isRequired
 };
 export default loadingComp({
   mapDataToProps: props => ({
@@ -41,10 +26,3 @@ export default loadingComp({
     module: props.module
   })
 })(observer(KvTable));
-
-// {/* <Cell type="half" theKey="theKey1" theValue="theValue11111" />
-//       <Cell type="half" theKey="theKey2" theValue="theValue2" />
-//       <Cell type="half" theKey="theKey3" theValue="theValue3" />
-//       <Cell type="half" theKey="theKey4" theValue="theValue4" />
-//       <Cell type="full" theKey="theKey5" theValue="theValue5" />
-//        */}
