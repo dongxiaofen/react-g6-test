@@ -18,7 +18,11 @@ export default class Html extends Component {
     component: PropTypes.node,
     pdfDown: PropTypes.string,
     isDev: PropTypes.bool,
+    reqPathName: PropTypes.string,
   };
+  isFirstLoad() {
+    return this.props.pdfDown === '1' || this.props.reqPathName === '/';
+  }
   prepareStore(allStore) {
     const keyArr = Object.keys(allStore);
     const output = {};
