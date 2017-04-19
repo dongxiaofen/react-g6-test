@@ -84,6 +84,7 @@ function PayModal({
              pointText={pointText}
              pactUrl={pactUrl}
              pactName={pactName}
+             isNeedBtn
       >
         <div className={styles.contentWrap}>
           {modalContent}
