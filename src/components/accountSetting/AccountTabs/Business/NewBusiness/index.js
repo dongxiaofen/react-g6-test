@@ -1,9 +1,29 @@
 import React from 'react';
 import { observer } from 'mobx-react';
+import { loadingComp } from 'components/hoc';
 import Chart from 'components/common/echarts/ResizeChart';
 import styles from './index.less';
-function NewBusiness() {
-  const options = {
+function NewBusiness({accountSettingStore}) {
+  const data = accountSettingStore.tabs.business.reportAndMonitor.data;
+  const reportData = data.reportStatisic;
+  const monitorData = data.monitorSatisic;
+  const reportDate = reportData.map(item => item.date);
+  const monitorDate = monitorData.map(item => item.date);
+  const allDate = Array.from(new Set(reportDate.concat(monitorDate)));
+  const allReportData = allDate.map(date => {
+    const matchData = reportData.find(item => {
+      return item.date === date;
+    });
+    return (matchData && matchData.count) || 0;
+  });
+  const allMonitorData = allDate.map(date => {
+    const matchData = monitorData.find(item => {
+      return item.date === date;
+    });
+    return (matchData && matchData.count) || 0;
+  });
+  console.log(allMonitorData, allReportData);
+  const createOption = () => ({
     dataZoom: [
       {
         type: 'slider',
@@ -55,9 +75,10 @@ function NewBusiness() {
       },
     },
     grid: {
-      left: '20',
-      right: '100',
-      bottom: '45',
+      top: '60',
+      right: '80',
+      bottom: '40',
+      left: '50',
       containLabel: true
     },
     xAxis: {
@@ -82,7 +103,7 @@ function NewBusiness() {
           color: '#999999',
         },
       },
-      data: []
+      data: allDate
     },
     yAxis: {
       type: 'value',
@@ -117,7 +138,7 @@ function NewBusiness() {
             color: '#3483e9',
           }
         },
-        data: [],
+        data: allReportData,
       },
       {
         name: '新增监控企业',
@@ -134,17 +155,23 @@ function NewBusiness() {
             color: '#43bf77'
           }
         },
-        data: []
+        data: allMonitorData
       },
     ]
-  };
+  });
   return (
     <div className={styles.wrapper}>
       <Chart
         chartId="areaRanking"
         height="500"
-        option={options} />
+        option={createOption()} />
     </div>
   );
 }
-export default observer(NewBusiness);
+export default loadingComp({
+  mapDataToProps: props => ({
+    loading: props.accountSettingStore.tabs.business.reportAndMonitor.data === undefined ? true : false,
+    error: props.accountSettingStore.tabs.business.reportAndMonitor.error,
+    category: 0,
+  }),
+})(observer(NewBusiness));
