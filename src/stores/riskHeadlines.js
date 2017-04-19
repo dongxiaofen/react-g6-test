@@ -145,6 +145,7 @@ class RiskHeadlinesStore {
       axiosCancel.companySubListCancel = null;
       if (type === 'default') { // 默认获取第一个关联公司的事件
         this.getCompanyInfo(resp.data[0].monitorId, params);
+        this.riskUpdateValue('companyList', 'active', resp.data[0].monitorId);
       }
     }))
     .catch((error)=>{
