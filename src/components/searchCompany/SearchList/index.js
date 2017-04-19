@@ -5,7 +5,7 @@ import SearchItem from './SearchItem';
 import FilterSheet from './FilterSheet';
 // import { Container, Row, Col } from 'components/common/Layout';
 
-function SearchList({searchCompanyStore}) {
+function SearchList({searchCompanyStore, modalStore}) {
   const {
     searchResult,
     searchParameter,
@@ -18,14 +18,17 @@ function SearchList({searchCompanyStore}) {
     filterSingleShow,
     filterItemClick,
     updateValue,
+    singleData,
   } = searchCompanyStore;
   const listData = [];
   searchResult.map((itemData, idx) => {
     listData.push(
       <div key={`${itemData.regDate}${idx}`}>
         <SearchItem
+          modalStore={modalStore}
           itemData={itemData}
-          searchParameter={searchParameter} />
+          searchParameter={searchParameter}
+          singleData={singleData} />
       </div>
     );
   });
@@ -61,5 +64,6 @@ function SearchList({searchCompanyStore}) {
 
 SearchList.propTypes = {
   searchCompanyStore: PropTypes.object,
+  modalStore: PropTypes.object,
 };
-export default inject('searchCompanyStore')(observer(SearchList));
+export default inject('searchCompanyStore', 'modalStore')(observer(SearchList));

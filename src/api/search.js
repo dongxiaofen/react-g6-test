@@ -11,3 +11,6 @@ export const getFilterSearch = (params) => {
 export const getRelation = (monitorId) => {
   return axios.get(`/api/monitor/${monitorId}/network`);
 };
+export const createReport = (params) => {
+  return axios.post(`/api/report`, {companyName: params});
+};

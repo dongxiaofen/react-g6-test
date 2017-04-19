@@ -4,11 +4,14 @@ import styles from './index.less';
 import FreeButton from './FreeButton';
 import ReportButton from './ReportButton';
 
-function SearchItemRight({itemData}) {
+function SearchItemRight({itemData, modalStore, singleData}) {
   let output = '';
   if (itemData.monitorStatus !== 'MONITOR' && itemData.monitorStatus !== 'PAUSE' && itemData.monitorStatus !== 'EXPIRED' && itemData.reportStatus !== 'REPORT') {
     output = (
-      <FreeButton itemData={itemData} />
+      <FreeButton
+        modalStore={modalStore}
+        itemData={itemData}
+        singleData={singleData} />
     );
   }
   if (itemData.reportStatus === 'REPORT') {
@@ -25,5 +28,7 @@ function SearchItemRight({itemData}) {
 
 SearchItemRight.propTypes = {
   itemData: PropTypes.object,
+  modalStore: PropTypes.object,
+  singleData: PropTypes.func,
 };
 export default observer(SearchItemRight);

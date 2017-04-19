@@ -1,5 +1,9 @@
 import { observable, action } from 'mobx';
+import { browserHistory } from 'react-router';
 import {searchApi} from 'api';
+import modalStore from './modal';
+import messageStore from './message';
+// import routing from '../routes';
 class SearchCompanyStore {
   // 搜索类型
   @observable searchTypeConfig = {
@@ -84,6 +88,8 @@ class SearchCompanyStore {
   @observable filterToggle = false;
   // loading状态
   @observable loading = false;
+  // 点击某条数据相关信息
+  @observable singleItemData = {};
   // 获取搜索公司列表
   @action.bound getCompanyList() {
     const params = {
@@ -257,6 +263,27 @@ class SearchCompanyStore {
   // 收起打开筛选
   @action.bound updateValue(oldValue, newValue) {
     this.filterSheet[oldValue] = newValue;
+  }
+  // singleData
+  @action.bound singleData(data) {
+    this.singleItemData = data;
+  }
+  // 创建报告
+  @action.bound createReport() {
+    const companyName = this.singleItemData.company;
+    searchApi.createReport(companyName)
+      .then(action('createReport', (resp) => {
+        console.log(resp, '======createReport result');
+        modalStore.closeAction();
+        const obj = {
+          content: '已创建报告'
+        };
+        messageStore.openMessage({ ...obj });
+        browserHistory.push(`/companyHome?reportId=${resp.data.reportId}&companyType=MAIN`);
+      }))
+      .catch(action('createReport error', (err) => {
+        console.log(err.response, '=====createReport error');
+      }));
   }
 }
 export default new SearchCompanyStore();
