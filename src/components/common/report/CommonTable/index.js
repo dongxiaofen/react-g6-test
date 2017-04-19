@@ -21,7 +21,9 @@ function CommonTable({meta, tData, dict }) {
 }
 
 CommonTable.propTypes = {
-  foo: PropTypes.string,
+  meta: PropTypes.array.isRequired,
+  tData: PropTypes.object.isRequired,
+  dict: PropTypes.string.isRequired
 };
 export default loadingComp({
   mapDataToProps: props => ({

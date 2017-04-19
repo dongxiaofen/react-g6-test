@@ -23,6 +23,7 @@ function Thead({meta, dict}) {
 }
 
 Thead.propTypes = {
-  foo: PropTypes.string,
+  meta: PropTypes.array.isRequired,
+  dict: PropTypes.string.isRequired
 };
 export default observer(Thead);

@@ -30,7 +30,9 @@ function KvTable({ meta, items, dict }) {
 }
 
 KvTable.propTypes = {
-  foo: PropTypes.string,
+  meta: PropTypes.array.isRequired,
+  items: PropTypes.object.isRequired,
+  dict: PropTypes.string.isRequired
 };
 export default loadingComp({
   mapDataToProps: props => ({
