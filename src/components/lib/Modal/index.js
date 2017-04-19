@@ -1,15 +1,21 @@
 import React, { Component, PropTypes } from 'react';
 import { observer } from 'mobx-react';
+import { Link } from 'react-router';
 import Button from 'components/lib/button';
 import styles from './index.less';
 @observer
 export default class Modal extends Component {
   static propTypes = {
     visible: PropTypes.bool.isRequired,
-    isCustomize: PropTypes.bool,
-    width: PropTypes.string,
+    isNeedBtn: PropTypes.bool,
     title: PropTypes.string,
+    width: PropTypes.string,
+    isCustomize: PropTypes.bool,
+    pointText: PropTypes.string,
+    pactName: PropTypes.string,
+    pactUrl: PropTypes.string,
     children: PropTypes.node,
+    isSingleBtn: PropTypes.bool,
     // text
     cancelText: PropTypes.string,
     confirmText: PropTypes.string,
@@ -70,6 +76,56 @@ export default class Modal extends Component {
     const contentBoxClassName = this.props.visible
       ? `${styles.contentLayer} ${styles.visible}`
       : `${styles.contentLayer}`;
+    // 是否只有一个确定按钮
+    let btnComp = (
+      <div className="clearfix">
+        <Button
+          className={styles.cancelBtn}
+          btnType="secondary"
+          loading={this.props.cancelLoading}
+          onClick={this.cancelAction}>
+          {this.props.cancelText}
+        </Button>
+        <Button
+          className={styles.confirmButton}
+          btnType="primary"
+          loading={this.props.confirmLoading}
+          onClick={this.confirmAction}>
+          {this.props.confirmText}
+        </Button>
+      </div>
+    );
+    if (this.props.isSingleBtn) {
+      btnComp = (
+        <Button
+          className={styles.confirmSingleButton}
+          btnType="primary"
+          loading={this.props.confirmLoading}
+          onClick={this.confirmAction}>
+          {this.props.confirmText}
+        </Button>
+      );
+    }
+    // 是否不要按钮
+    let isNeedBtn = (
+      <div className={styles.buttonBox}>
+        {btnComp}
+      </div>
+    );
+    if (!this.props.isNeedBtn) {
+      isNeedBtn = null;
+    }
+    // 是否有提示文字
+    let pointTextComp = null;
+    if (this.props.pointText) {
+      pointTextComp = (
+        <div className={styles.pointText}>
+          {this.props.pointText}
+          《<Link to={this.props.pactUrl}>{this.props.pactName}</Link>》
+        </div>
+      );
+    }
+    // 是否是自定义弹框
     if (this.props.isCustomize) {
       return (
         <div className={modalBoxClassName}>
@@ -88,21 +144,8 @@ export default class Modal extends Component {
             {this.props.title}
           </div>
           <div className="clearfix">{this.props.children}</div>
-          <div className={styles.buttonBox}>
-            <Button
-              className={styles.cancelBtn}
-              loading={this.props.cancelLoading}
-              onClick={this.cancelAction}>
-              {this.props.cancelText}
-            </Button>
-            <Button
-              className={styles.confirmButton}
-              btnType="primary"
-              loading={this.props.confirmLoading}
-              onClick={this.confirmAction}>
-              {this.props.confirmText}
-            </Button>
-          </div>
+          {isNeedBtn}
+          {pointTextComp}
         </div>
       </div>
     );

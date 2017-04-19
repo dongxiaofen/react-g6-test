@@ -2,10 +2,10 @@ import logoImgDx from '../../static/images/1.6/Header/logo.png';
 import logoImgGd from '../../static/images/loginGd/logo2.png';
 import logoImgSc from '../../static/images/homePage/header_logo_1.png';
 
-import loginLogo from 'imgs/loginLogo.png';
+import loginLogo from 'imgs/login/loginLogo.png';
 import dxLoginLogo from '../../static/images/1.6/login/dx_loginLogo.png';
 import appCodeImg from '../../static/images/1.6/Header/appCode.png';
-import appCodeImgSc from '../../static/images/downloadApp2.png';
+import appCodeImgSc from 'imgs/homePage/downloadApp2.png';
 export default function getPermissionMeta(env) {
   let obj;
   if (env === 'dianxin_prod') {

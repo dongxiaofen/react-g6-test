@@ -1,18 +1,16 @@
 import React, {PropTypes} from 'react';
-import { observer } from 'mobx-react';
+import { observer, inject } from 'mobx-react';
 import styles from './index.less';
+import pathval from 'pathval';
 import { Link } from 'react-router';
+import { runInAction } from 'mobx';
 
-function HeaderNavBar() {
-  // const envConfig = this.props.client.get('envConfig');
-  const envConfig = 'cfca_prod';
-
+function HeaderNavBar({clientStore, loginStore}) {
+  const envConfig = pathval.getPathValue(clientStore, 'envConfig');
   const showLoginOnClick = () => {
-    this.props.commonBoundAC.updateValue(
-      ['isShowLogin'],
-      true,
-      'LOGIN_UPDATE_VALUE'
-    );
+    runInAction('显示登录框', () => {
+      pathval.setPathValue(loginStore, 'isShowLogin', true);
+    });
   };
 
   const showDownloadOnClick = () => {
@@ -67,6 +65,7 @@ function HeaderNavBar() {
 }
 
 HeaderNavBar.propTypes = {
-  foo: PropTypes.string,
+  clientStore: PropTypes.object,
+  logintStore: PropTypes.object,
 };
-export default observer(HeaderNavBar);
+export default inject('clientStore', 'loginStore')(observer(HeaderNavBar));

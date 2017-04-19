@@ -20,7 +20,7 @@
   bottom: 0;
 
   overflow: auto;
-  z-index: 1500;
+  z-index: 1000;
   background-color: rgba(0, 0, 0, 0.6);
 
   opacity: 0;
@@ -36,13 +36,13 @@
 .contentLayer {
   position: relative;
   top: 30%;
-  padding-top: 50px;
-  padding-bottom: 50px;
+  padding: 40px 70px;
   margin-left: auto;
   margin-right: auto;
 
   background-color: #ffffff;
   visibility: hidden;
+  box-shadow: 0 2px 13px 3px rgba(0,0,0,0.20);
   opacity: 0;
 
   .transitionAll(.3s);
@@ -57,9 +57,9 @@
   margin-top: 15px;
   margin-bottom: 25px;
 
-  font-size: 22px;
-  line-height: 22px;
-  color: #333333;
+  font-size: 20px;
+  line-height: 20px;
+  color: #424242;
   text-align: center;
 }
 
@@ -107,21 +107,38 @@
 }
 
 .button {
-  width: 160px;
+  width: 46.42%;
+  height: 46px;
+  line-height: 46px;
 }
 
 .cancelBtn {
+  float: left;
   .button;
 }
 
 .confirmButton {
+  float: right;
   .button;
-  margin-left: 20px;
 }
 
-.detailModal {
-  width: 980px;
-  height: 100%;
+.confirmSingleButton {
+  .button;
+  width: 100%;
+}
 
-  background-color: #ffffff;
+.pointText {
+  margin-top: 15px;
+
+  font-size: 14px;
+  line-height: 14px;
+  color: #b0bec5;
+  text-align: center;
+
+  a {
+    font-size: 14px;
+    line-height: 14px;
+    color: #548fc2;
+    text-decoration: underline;
+  }
 }

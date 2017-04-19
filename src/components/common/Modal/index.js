@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { PropTypes } from 'react';
 import { observer, inject } from 'mobx-react';
 import Modal from 'components/lib/Modal';
 
@@ -6,7 +6,12 @@ function _Modal({modalStore}) {
   const {
     visible,
     title,
+    isNeedBtn,
+    pointText,
+    pactUrl,
+    pactName,
     isCustomize,
+    isSingleBtn,
     width,
     cancelText,
     confirmText,
@@ -18,10 +23,15 @@ function _Modal({modalStore}) {
   } = modalStore;
   return (
     <Modal
-      title={title}
       visible={visible}
-      isCustomize={isCustomize}
       width={width}
+      isNeedBtn={isNeedBtn}
+      isCustomize={isCustomize}
+      isSingleBtn={isSingleBtn}
+      title={title}
+      pointText={pointText}
+      pactUrl={pactUrl}
+      pactName={pactName}
       cancelText={cancelText}
       confirmText={confirmText}
       cancelLoading={cancelLoading}
@@ -33,5 +43,10 @@ function _Modal({modalStore}) {
     </Modal>
   );
 }
+
+_Modal.propTypes = {
+  modalStore: PropTypes.object,
+};
+
 export default inject('modalStore')(observer(_Modal));
 

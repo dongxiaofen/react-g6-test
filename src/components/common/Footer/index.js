@@ -6,9 +6,9 @@ import footerIcon1 from 'imgs/footer/footer_icon_1.png';
 import footerIcon2 from 'imgs/footer/footer_icon_2.png';
 import footerIcon3 from 'imgs/footer/footer_icon_3.png';
 import footerIcon4 from 'imgs/footer/footer_icon_4.png';
-import footerTwoCode1 from 'imgs/downloadApp2.png';
+import footerTwoCode1 from 'imgs/homePage/downloadApp2.png';
 import footerTwoCode2 from 'imgs/footer/footer_two_2.png';
-import iconPolice from 'imgs/icon-police.png';
+import iconPolice from 'imgs/footer/icon-police.png';
 
 function Footer() {
   return (
