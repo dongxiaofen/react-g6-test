@@ -23,7 +23,7 @@ export default class HomeBody extends Component {
   }
 
   componentDidMount() {
-    if (this.props.clientStore.envConfig === 'local') {
+    if (this.props.clientStore.envConfig === 'local' || this.props.clientStore.envConfig === 'cfca_prod') {
       (function initFram() {
         const vendors = ['webkit', 'moz'];
         for (let idx = 0; idx < vendors.length && !window.requestAnimationFrame; ++idx) {
@@ -231,7 +231,7 @@ export default class HomeBody extends Component {
     if (envConfig === 'dianxin_prod') {
       output = <MainBody />;
     }else if (envConfig === 'cfca_prod') {
-      output = <CfcaMain />;
+      output = <CfcaMain isHeaderScroll={this.state.isHeaderScroll} arrowOnClick={this.arrowOnClick} />;
     } else {
       output = <HomeMain isHeaderScroll={this.state.isHeaderScroll} arrowOnClick={this.arrowOnClick} />;
     }

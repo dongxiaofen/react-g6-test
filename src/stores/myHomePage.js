@@ -5,7 +5,14 @@ class MyHomePageStore {
   @observable statistic = {};
   @observable alert = {};
   @action.bound getStatistic() {
-    console.log(4);
+    myHomePageApi.getMyHomePageStatistic()
+      .then(action( (response) => {
+        this.statistic = response.data;
+      })
+      )
+      .catch( (error) => {
+        console.log(error);
+      });
   }
   @action.bound getAlert(params) {
     myHomePageApi.getMyHomePageAlert(params)

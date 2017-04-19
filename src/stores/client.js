@@ -2,12 +2,7 @@ import { observable, action } from 'mobx';
 import { clientApi } from 'api';
 
 class ClientStore {
-  @observable userInfo = {
-    contact: '叶静静',
-    email: 'jing.ye@socialcredits.cn',
-    id: 105,
-    message: ''
-  };
+  @observable userInfo = {};
   @observable envConfig = 'local';
 
   @action.bound getUserInfo() {

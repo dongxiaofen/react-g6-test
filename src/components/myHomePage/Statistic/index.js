@@ -1,9 +1,10 @@
 import React, {PropTypes} from 'react';
-import { observer } from 'mobx-react';
+import { observer, inject } from 'mobx-react';
 import styles from './index.less';
 import { Link } from 'react-router';
+import pathval from 'pathval';
 
-function Statistic() {
+function Statistic({ myHomePageStore }) {
   return (
     <div className={styles.statistic}>
       <h2 className={styles.mouldeTittle}>版块统计</h2>
@@ -15,7 +16,7 @@ function Statistic() {
               <span className={styles['statistic-content-text']}>
                 监控企业
               </span>
-            <span className={styles['statistic-content-num']}>{25}</span>
+            <span className={styles['statistic-content-num']}>{pathval.getPathValue(myHomePageStore, 'statistic.monitorCount')}</span>
           </div>
         </Link>
         <Link to="/monitorList?type=ABOUT_TO_EXPIRE" className={`clearfix ${styles['statistic-right1']}` + ' ' + styles.icon2}>
@@ -25,7 +26,7 @@ function Statistic() {
               <span className={styles['statistic-content-text']}>
                 即将到期
               </span>
-            <span className={styles['statistic-content-numRed']}>{75}</span>
+            <span className={styles['statistic-content-numRed']}>{pathval.getPathValue(myHomePageStore, 'statistic.expireIn7Days')}</span>
           </div>
         </Link>
       </div>
@@ -38,7 +39,7 @@ function Statistic() {
                 每日企业
               </span>
             <span className={styles['statistic-content-num']}>
-                {58}</span>
+                {pathval.getPathValue(myHomePageStore, 'statistic.headlineCompanyCount')}</span>
           </div>
         </Link>
         <Link to="/riskHeadlines" className={`clearfix ${styles['statistic-right1']}` + ' ' + styles.icon4}>
@@ -49,7 +50,7 @@ function Statistic() {
                 每日信息
               </span>
             <span className={styles['statistic-content-num']}>
-                {74}
+                {pathval.getPathValue(myHomePageStore, 'statistic.headlineEventCount')}
               </span>
           </div>
         </Link>
@@ -63,7 +64,7 @@ function Statistic() {
                 报告数量
               </span>
             <span className={styles['statistic-content-num']}>
-                {36}
+                {pathval.getPathValue(myHomePageStore, 'statistic.reportCount')}
               </span>
           </div>
         </Link>
@@ -75,7 +76,7 @@ function Statistic() {
                 子账号
               </span>
             <span className={styles['statistic-content-num']}>
-                {85}
+                {pathval.getPathValue(myHomePageStore, 'statistic.subUserCount')}
               </span>
           </div>
         </Link>
@@ -87,4 +88,4 @@ function Statistic() {
 Statistic.propTypes = {
   foo: PropTypes.string,
 };
-export default observer(Statistic);
+export default inject('myHomePageStore')(observer(Statistic));
