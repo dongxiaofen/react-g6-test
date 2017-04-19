@@ -9,7 +9,7 @@ import moment from 'moment';
 
 function BaseInfo({ clientStore }) {
   console.log(pathval.getPathValue(clientStore, 'userInfo'));
-  const isMain = true;
+  const isMain = pathval.getPathValue(clientStore, 'userInfo.root');
   const nowHour = moment().hour();
   let helloText = '';
   if (nowHour >= 0 && nowHour < 5) {
@@ -54,7 +54,7 @@ function BaseInfo({ clientStore }) {
               ?
               <div className={styles['remain-point']}>
                 <span>剩余点数：</span>
-                <span>0</span>
+                <span>{pathval.getPathValue(clientStore, 'userInfo.point') ? pathval.getPathValue(clientStore, 'userInfo.point') : 0}</span>
               </div>
               :
               <div style={{visibility: 'hidden'}}>--</div>
@@ -67,36 +67,36 @@ function BaseInfo({ clientStore }) {
         <div className={styles['user-info-mb20']}>
           <span className={styles['user-info-title']}>账号</span>
           <span
-            title={'--'}
+            title={pathval.getPathValue(clientStore, 'userInfo.email') ? pathval.getPathValue(clientStore, 'userInfo.email') : '--'}
             className={`${styles['user-info-text']} ${styles['user-info-textSmall']}`}>
-              --
+            {pathval.getPathValue(clientStore, 'userInfo.email') ? pathval.getPathValue(clientStore, 'userInfo.email') : '--'}
             </span>
         </div>
         <div className={styles['user-info-mb20']}>
           <span className={styles['user-info-title']}>邮箱</span>
           <span
-            title={'--'}
+            title={pathval.getPathValue(clientStore, 'userInfo.contactEmail') ? pathval.getPathValue(clientStore, 'userInfo.contactEmail') : '--'}
             className={`${styles['user-info-text']} ${styles['user-info-textSmall']}`}>
-              --
+            {pathval.getPathValue(clientStore, 'userInfo.contactEmail') ? pathval.getPathValue(clientStore, 'userInfo.contactEmail') : '--'}
             </span>
         </div>
         <div>
           <span className={styles['user-info-title']}>手机</span>
-          <span className={styles['user-info-text']}>--</span>
+          <span className={styles['user-info-text']}>{pathval.getPathValue(clientStore, 'userInfo.phone') ? pathval.getPathValue(clientStore, 'userInfo.phone') : '--'}</span>
         </div>
       </div>
       <div className={`clearfix ${styles['base-info-item']}`}>
         <div className={styles['user-info-mb20']}>
           <span className={styles['user-info-title']}>公司</span>
-          <span className={styles['user-info-text']}>--</span>
+          <span className={styles['user-info-text']}>{pathval.getPathValue(clientStore, 'userInfo.companyName') ? pathval.getPathValue(clientStore, 'userInfo.companyName') : '--'}</span>
         </div>
         <div className={styles['user-info-mb20']}>
           <span className={styles['user-info-title']}>部门</span>
-          <span className={styles['user-info-text']}>--</span>
+          <span className={styles['user-info-text']}>{pathval.getPathValue(clientStore, 'userInfo.department') ? pathval.getPathValue(clientStore, 'userInfo.department') : '--'}</span>
         </div>
         <div>
           <span className={styles['user-info-title']}>职位</span>
-          <span className={styles['user-info-text']}>--</span>
+          <span className={styles['user-info-text']}>{pathval.getPathValue(clientStore, 'userInfo.contactPosition') ? pathval.getPathValue(clientStore, 'userInfo.contactPosition') : '--'}</span>
         </div>
       </div>
     </div>
