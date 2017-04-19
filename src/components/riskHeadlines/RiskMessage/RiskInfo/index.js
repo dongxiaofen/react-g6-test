@@ -2,7 +2,7 @@ import React from 'react';
 import { observer } from 'mobx-react';
 import styles from '../index.less';
 import RiskTab from './RiskTab';
-
+import loadingComp from 'components/hoc/LoadingComp';
 function RiskInfo({riskHeadlinesStore, history}) {
   const events = riskHeadlinesStore.events;
   const isSubCom = events.companyType === 'SUB';
@@ -21,5 +21,12 @@ function RiskInfo({riskHeadlinesStore, history}) {
     </div>
   );
 }
-
-export default observer(RiskInfo);
+export default loadingComp({
+  mapDataToProps: props => ({
+    loading: props.riskHeadlinesStore.events.info.companyName ? false : true,
+    error: props.riskHeadlinesStore.events.info.error,
+    category: 1,
+    imgCategory: 8,
+    errCategory: false,
+  }),
+})(observer(RiskInfo));

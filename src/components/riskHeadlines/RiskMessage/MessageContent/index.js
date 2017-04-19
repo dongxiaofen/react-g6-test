@@ -3,7 +3,7 @@ import { observer } from 'mobx-react';
 import AlterCard from 'components/common/AlertCard';
 import styles from './index.less';
 import Pagination from 'components/lib/pagination';
-
+import loadingComp from 'components/hoc/LoadingComp';
 function MessageContent({riskHeadlinesStore, contentHeight}) {
   const filterParams = riskHeadlinesStore.filterParams;
   const events = riskHeadlinesStore.events;
@@ -47,4 +47,12 @@ function MessageContent({riskHeadlinesStore, contentHeight}) {
     </div>
   );
 }
-export default observer(MessageContent);
+export default loadingComp({
+  mapDataToProps: props => ({
+    loading: props.riskHeadlinesStore.events.data.content ? false : true,
+    error: props.riskHeadlinesStore.events.data.error,
+    category: 2,
+    imgCategory: 7,
+    errCategory: false,
+  }),
+})(observer(MessageContent));
