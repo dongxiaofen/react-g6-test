@@ -1,7 +1,7 @@
 import React, {PropTypes} from 'react';
 import { observer } from 'mobx-react';
 
-import styles from './index.less';
+import styles from '../index.less';
 import StatisticTitle from '../../StatisticTitle';
 import ChangeTrendBody from './ChangeTrendBody';
 

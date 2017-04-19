@@ -14,7 +14,8 @@ function ChangeTrendBody({ msStore }) {
     <Row>
       <Col width="9">
         <ChangeTrendChart
-          chartOption={changeTrend.chartOption} />
+          chartOption={changeTrend.chartOption}
+          setChangeTable={msStore.setChangeTable} />
       </Col>
       <Col width="3">
         <ChangeTrendTable mutual={changeTrend.mutual} />

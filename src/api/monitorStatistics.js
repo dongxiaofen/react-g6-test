@@ -10,6 +10,11 @@ export function getChangeTrend(params) {
   return axios.get('/api/riskBoard/changeTrend', { params: params });
 }
 
+// 获取所有地区分布
+export function getProvinceAll(params) {
+  return axios.get('/api/riskBoard/distribution/province/all', { params: params });
+}
+
 // // 获取选定区域的数据
 // export function getProvince(params, province) {
 //   const newParams = params;
@@ -43,33 +48,6 @@ export function getChangeTrend(params) {
 //           err.response.data
 //         );
 //         setLoading(dispatch, 'province');
-//       });
-//   };
-// }
-
-// // 获取所有地区分布
-// export function getProvinceAll(params) {
-//   return (dispatch, getState) => {
-//     setLoading(dispatch, 'provinceAll', true);
-//     axios.get('/api/riskBoard/distribution/province/all', { params: params })
-//       .then((resp) => {
-//         dispatch({
-//           type: ActionTypes.SET_HEAD_TREND_PROVINCE_ALL,
-//           data: resp.data,
-//         });
-//         setLoading(dispatch, 'provinceAll');
-//         const newParams = getState().getIn(['headTrend', 'params']).toJS();
-//         const provinceName = getState().getIn(['headTrend', 'province', 'provinceName']);
-//         getProvince(newParams, provinceName)(dispatch);
-//       })
-//       .catch((err) => {
-//         console.log(err);
-//         setErrorBody(
-//           dispatch,
-//           ['province', 'provinceAll', 'result', 'errorBody'],
-//           err.response.data
-//         );
-//         setLoading(dispatch, 'provinceAll');
 //       });
 //   };
 // }

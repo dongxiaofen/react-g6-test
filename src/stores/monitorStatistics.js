@@ -3,6 +3,7 @@ import { getPathValue } from 'pathval';
 import moment from 'moment';
 import 'moment-range';
 // import pathval from 'pathval';
+import geoCoordMap from 'helpers/geoCoordMap';
 import { monitorStatisticsApi } from 'api';
 class MonitorStatisticsStore {
   isEmptyObject(obj, key) {
@@ -15,6 +16,138 @@ class MonitorStatisticsStore {
     return true;
   }
 
+  // area颜色
+  dealWithAreaColor(value) {
+    let obj = {};
+    if (value >= 1 && value <= 10) {
+      obj = {
+        normal: {
+          color: '#c4ebad',
+          borderColor: '#c4ebad',
+          borderWidth: 1,
+          opacity: 0.5,
+        },
+        emphasis: {
+          color: '#c4ebad',
+          borderColor: '#c4ebad',
+          borderWidth: 1,
+          opacity: 0.7,
+        }
+      };
+    } else if (value >= 11 && value <= 20) {
+      obj = {
+        normal: {
+          color: '#3fb1e3',
+          borderColor: '#3fb1e3',
+          borderWidth: 1,
+          opacity: 0.5,
+        },
+        emphasis: {
+          color: '#3fb1e3',
+          borderColor: '#3fb1e3',
+          borderWidth: 1,
+          opacity: 0.7,
+        }
+      };
+    } else if (value >= 21 && value <= 50) {
+      obj = {
+        normal: {
+          color: '#a0a7e6',
+          borderColor: '#a0a7e6',
+          borderWidth: 1,
+          opacity: 0.5,
+        },
+        emphasis: {
+          color: '#a0a7e6',
+          borderColor: '#a0a7e6',
+          borderWidth: 1,
+          opacity: 0.7,
+        }
+      };
+    } else if (value > 50) {
+      obj = {
+        normal: {
+          color: '#626c91',
+          borderColor: '#626c91',
+          borderWidth: 1,
+          opacity: 0.5,
+        },
+        emphasis: {
+          color: '#626c91',
+          borderColor: '#626c91',
+          borderWidth: 1,
+          opacity: 0.7,
+        }
+      };
+    }
+    return obj;
+  }
+
+  // 补全时间
+  dealWithDate(begin, end, result) {
+    const compliteDate = [];
+    const rangeMomentDate = moment.range(moment(begin), moment(end)).toArray('days');
+    // 默认封装所有数据为0
+    rangeMomentDate.forEach((item) => {
+      compliteDate.push({
+        eventCount: 0,
+        companyCount: 0,
+        date: item.format('YYYY-MM-DD'),
+      });
+    });
+    // 匹配有的数据，然后赋值进去
+    compliteDate.forEach((item) => {
+      result.forEach((detail) => {
+        if (detail.date === item.date) {
+          item.eventCount = detail.eventCount;
+          item.companyCount = detail.companyCount;
+        }
+      });
+      item.date = moment(item.date).format('YYYY年MM月DD日');
+    });
+    return compliteDate;
+  }
+
+  // 补全头条趋势分析时间
+  dealWithDate2(begin, end, result) {
+    const analysisData = [];
+    let pointer;
+    const beginDate = moment(begin, 'YYYY-MM-DD');
+    result.forEach((item, idx) => {
+      const nowData = moment(item.date, 'YYYY-MM-DD');
+      if (idx === 0 && begin !== item.date) {
+        const startDay = Number(nowData.from(beginDate).split(' ')[1]);
+        analysisData.push({ date: beginDate.format('YYYY年MM月DD日') });
+        if (!isNaN(startDay)) {
+          for (let num = 0; num < startDay - 1; num++) {
+            analysisData.push({ date: beginDate.add(1, 'days').format('YYYY年MM月DD日') });
+          }
+        }
+      }
+      if (pointer) {
+        const fromDay = Number(nowData.from(pointer).split(' ')[1]);
+        if (!isNaN(fromDay)) {
+          for (let num = 0; num < fromDay - 1; num++) {
+            analysisData.push({ date: pointer.add(1, 'days').format('YYYY年MM月DD日') });
+          }
+        }
+      }
+      pointer = nowData;
+      const analysisItem = { date: nowData.format('YYYY年MM月DD日') };
+      Object.keys(item.countMap).forEach((key) => {
+        analysisItem[key.toLowerCase()] = item.countMap[key] || 0;
+      });
+      analysisData.push(analysisItem);
+      if (idx === result.length - 1 && analysisData.length < 30) {
+        const days = 30 - analysisData.length;
+        for (let num = 0; num < days; num++) {
+          analysisData.push({ date: pointer.add(1, 'days').format('YYYY年MM月DD日') });
+        }
+      }
+    });
+    return analysisData;
+  }
+
   @observable loadingGroup = {
     statistic: false,
     changeTrend: false,
@@ -24,6 +157,7 @@ class MonitorStatisticsStore {
     industryStatistics: false,
     source: false,
   };
+
   @observable errorBody = {
     changeTrend: {},
     province: {},
@@ -189,9 +323,10 @@ class MonitorStatisticsStore {
    * 地区相关store
    */
   @observable provinceName = '';
+  @observable provinceAllSize;
   // 地区分布store
   @observable provinceAll = {
-    result: {},
+    result: [],
     chartOption: {
       tooltip: {
         backgroundColor: '#ffffff',
@@ -268,7 +403,7 @@ class MonitorStatisticsStore {
   };
   // 地区排行store
   @observable provinceBar = {
-    result: {},
+    result: [],
     chartOption: {
       tooltip: {
         backgroundColor: '#ffffff',
@@ -1057,138 +1192,6 @@ class MonitorStatisticsStore {
     }
   };
 
-  // area颜色
-  dealWithAreaColor(value) {
-    let obj = {};
-    if (value >= 1 && value <= 10) {
-      obj = {
-        normal: {
-          color: '#c4ebad',
-          borderColor: '#c4ebad',
-          borderWidth: 1,
-          opacity: 0.5,
-        },
-        emphasis: {
-          color: '#c4ebad',
-          borderColor: '#c4ebad',
-          borderWidth: 1,
-          opacity: 0.7,
-        }
-      };
-    } else if (value >= 11 && value <= 20) {
-      obj = {
-        normal: {
-          color: '#3fb1e3',
-          borderColor: '#3fb1e3',
-          borderWidth: 1,
-          opacity: 0.5,
-        },
-        emphasis: {
-          color: '#3fb1e3',
-          borderColor: '#3fb1e3',
-          borderWidth: 1,
-          opacity: 0.7,
-        }
-      };
-    } else if (value >= 21 && value <= 50) {
-      obj = {
-        normal: {
-          color: '#a0a7e6',
-          borderColor: '#a0a7e6',
-          borderWidth: 1,
-          opacity: 0.5,
-        },
-        emphasis: {
-          color: '#a0a7e6',
-          borderColor: '#a0a7e6',
-          borderWidth: 1,
-          opacity: 0.7,
-        }
-      };
-    } else if (value > 50) {
-      obj = {
-        normal: {
-          color: '#626c91',
-          borderColor: '#626c91',
-          borderWidth: 1,
-          opacity: 0.5,
-        },
-        emphasis: {
-          color: '#626c91',
-          borderColor: '#626c91',
-          borderWidth: 1,
-          opacity: 0.7,
-        }
-      };
-    }
-    return obj;
-  }
-
-  // 补全时间
-  dealWithDate(begin, end, result) {
-    const compliteDate = [];
-    const rangeMomentDate = moment.range(moment(begin), moment(end)).toArray('days');
-    // 默认封装所有数据为0
-    rangeMomentDate.forEach((item) => {
-      compliteDate.push({
-        eventCount: 0,
-        companyCount: 0,
-        date: item.format('YYYY-MM-DD'),
-      });
-    });
-    // 匹配有的数据，然后赋值进去
-    compliteDate.forEach((item) => {
-      result.forEach((detail) => {
-        if (detail.date === item.date) {
-          item.eventCount = detail.eventCount;
-          item.companyCount = detail.companyCount;
-        }
-      });
-      item.date = moment(item.date).format('YYYY年MM月DD日');
-    });
-    return compliteDate;
-  }
-
-  // 补全头条趋势分析时间
-  dealWithDate2(begin, end, result) {
-    const analysisData = [];
-    let pointer;
-    const beginDate = moment(begin, 'YYYY-MM-DD');
-    result.forEach((item, idx) => {
-      const nowData = moment(item.date, 'YYYY-MM-DD');
-      if (idx === 0 && begin !== item.date) {
-        const startDay = Number(nowData.from(beginDate).split(' ')[1]);
-        analysisData.push({ date: beginDate.format('YYYY年MM月DD日') });
-        if (!isNaN(startDay)) {
-          for (let num = 0; num < startDay - 1; num++) {
-            analysisData.push({ date: beginDate.add(1, 'days').format('YYYY年MM月DD日') });
-          }
-        }
-      }
-      if (pointer) {
-        const fromDay = Number(nowData.from(pointer).split(' ')[1]);
-        if (!isNaN(fromDay)) {
-          for (let num = 0; num < fromDay - 1; num++) {
-            analysisData.push({ date: pointer.add(1, 'days').format('YYYY年MM月DD日') });
-          }
-        }
-      }
-      pointer = nowData;
-      const analysisItem = { date: nowData.format('YYYY年MM月DD日') };
-      Object.keys(item.countMap).forEach((key) => {
-        analysisItem[key.toLowerCase()] = item.countMap[key] || 0;
-      });
-      analysisData.push(analysisItem);
-      if (idx === result.length - 1 && analysisData.length < 30) {
-        const days = 30 - analysisData.length;
-        for (let num = 0; num < days; num++) {
-          analysisData.push({ date: pointer.add(1, 'days').format('YYYY年MM月DD日') });
-        }
-      }
-    });
-    return analysisData;
-  }
-
   // 设置数据
   @action.bound setParams(params) {
     this.params = params;
@@ -1266,25 +1269,82 @@ class MonitorStatisticsStore {
       });
   }
 
-  @action.boudn setChangeTable(params) {
+  @action.bound setChangeTable(params) {
     this.changeTrend.mutual = params;
   }
 
   // 获取所有地区分布
-  // @action.bound getProvinceAll(params) {
-  //   this.setLoading('provinceAll', true);
-  //   monitorStatisticsApi.getProvinceAll(params)
-  //     .then(action('get province all'), (resp) => {
-  //       this.provinceAll = resp.data;
-  //       this.setLoading('provinceAll');
-  //       const newParams = getState().getIn(['headTrend', 'params']).toJS();
-  //       const provinceName = getState().getIn(['headTrend', 'province', 'provinceName']);
-  //       getProvince(newParams, provinceName)(dispatch);
-  //     })
-  //     .catch((err) => {
-  //       this.setErrorBody('provinceAll', err.response.data);
-  //       this.setLoading('provinceAll');
-  //     });
-  // }
+  @action.bound getProvinceAll(params) {
+    this.setLoading('provinceAll', true);
+    monitorStatisticsApi.getProvinceAll(params)
+      .then(action('get province all', (resp) => {
+        const provinceAllMapData = [];
+        const provinceBarSeriesData = [];
+        const provinceBarYAxisData = [];
+        let provinceAllData = resp.data;
+        let provinceName = '';
+        if (provinceAllData.length) {
+          provinceAllData = provinceAllData.sort((prev, next) => {
+            return prev.companyCount - next.companyCount;
+          });
+          if (provinceAllData.length <= 2) {
+            provinceAllData.map((item) => {
+              if (item.area !== '未知' && item.area !== '其他') {
+                provinceName = item.area;
+              }
+            });
+          } else {
+            provinceName = provinceAllData[provinceAllData.length - 1].area;
+            if (provinceName === '未知'
+              || provinceName === '其他') {
+              provinceName = provinceAllData[provinceAllData.length - 2].area;
+              if (provinceName === '未知'
+                || provinceName === '其他') {
+                provinceName = provinceAllData[provinceAllData.length - 3].area;
+              }
+            }
+          }
+          provinceAllData.forEach((item, idx) => {
+            // 地图数据
+            if (item.area !== '未知' && item.area !== '其他') {
+              provinceAllMapData.push({
+                name: item.area,
+                value: [
+                  geoCoordMap[item.area][0],
+                  geoCoordMap[item.area][1],
+                  item.companyCount
+                ],
+                itemStyle: this.dealWithAreaColor(item.companyCount)
+              });
+            } else {
+              provinceAllMapData.push({
+                name: item.area,
+                value: item.companyCount,
+                itemStyle: this.dealWithAreaColor(item.companyCount)
+              });
+            }
+
+            // 右边柱状图数据
+            provinceBarYAxisData.push(`${provinceAllData.length - idx}.${item.area}`);
+            provinceBarSeriesData.push(item.companyCount);
+          });
+        }
+        // const newParams = getState().getIn(['headTrend', 'params']).toJS();
+        // const provinceName = getState().getIn(['headTrend', 'province', 'provinceName']);
+        // getProvince(newParams, provinceName)(dispatch);
+        this.provinceAll.chartOption.series[0].data = provinceAllMapData;
+        this.provinceAllSize = provinceAllData.length;
+        this.provinceBar.chartOption.yAxis.data = provinceBarYAxisData;
+        this.provinceBar.chartOption.series[0].data = provinceBarSeriesData;
+        this.provinceName = provinceName;
+        this.provinceAll.result = provinceAllData;
+        this.provinceBar.result = provinceAllData;
+        this.setLoading('provinceAll');
+      }))
+      .catch((err) => {
+        this.setErrorBody('provinceAll', err.response.data);
+        this.setLoading('provinceAll');
+      });
+  }
 }
 export default new MonitorStatisticsStore();
