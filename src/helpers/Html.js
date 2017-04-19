@@ -20,6 +20,9 @@ export default class Html extends Component {
     isDev: PropTypes.bool,
     reqPathName: PropTypes.string,
   };
+  isFirstLoad() {
+    return this.props.pdfDown === '1' || this.props.reqPathName === '/';
+  }
   prepareStore(allStore) {
     const keyArr = Object.keys(allStore);
     const output = {};

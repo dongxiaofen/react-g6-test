@@ -14,6 +14,10 @@ function hoc(module) {
           this.props[`${module}Store`].getReportModule(module, monitorId, reportId, companyName, companyType);
         }
       }
+      componentWillUnmount() {
+        console.log('batch report hoc componentWillUnmount');
+        // cancel pending api call
+      }
       render() {
         return (
           <WrappedComponent {...this.props} />
