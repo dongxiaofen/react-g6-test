@@ -129,13 +129,14 @@ class AccountSettingStore {
   }
   @action.bound getRecharge(uId) {
     this.tabs.recharge = {};
-    accountSettingApi.getRecharge(uId)
+    const params = this.tabs.rechargePager;
+    accountSettingApi.getRecharge(uId, params)
       .then(action('getRecharge_success', resp => {
         this.tabs.recharge = resp.data;
       }))
       .catch(action('getRecharge_error', err => {
         console.log(err);
-        this.tabs.recharge = {error: err.response.data};
+        this.tabs.recharge = {error: err.response.data, content: []};
       }));
   }
   @action.bound getSummary(uId) {

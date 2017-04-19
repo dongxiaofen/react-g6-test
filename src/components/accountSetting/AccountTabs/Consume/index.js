@@ -1,6 +1,5 @@
 import React from 'react';
 import { observer } from 'mobx-react';
-import Pagination from 'components/lib/pagination';
 import { loadingComp } from 'components/hoc';
 import AccountTable from '../AccountTable';
 import styles from './index.less';
@@ -54,14 +53,10 @@ function Consume({accountSettingStore}) {
     <div className={styles.wrapper}>
       <AccountTable
         headData={head}
-        bodyData={data.content} />
-      <div className={styles.pagination}>
-        <Pagination
-          current={params.index}
-          pageSize={params.size}
-          total={data.totalElements}
-          onChange={changePage}/>
-      </div>
+        bodyData={data.content}
+        pageParams={params}
+        pageChange={changePage}
+        totalElements={data.totalElements} />
     </div>
   );
 }

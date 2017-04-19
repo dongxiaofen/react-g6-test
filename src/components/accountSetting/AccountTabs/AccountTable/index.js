@@ -1,7 +1,8 @@
 import React from 'react';
 import { observer } from 'mobx-react';
+import Pagination from 'components/lib/pagination';
 import styles from './index.less';
-function AccountTable({headData, bodyData}) {
+function AccountTable({headData, bodyData, pageParams, totalElements, pageChange}) {
   const createHead = () => {
     const head = [];
     headData.forEach(item => {
@@ -29,14 +30,23 @@ function AccountTable({headData, bodyData}) {
     return body;
   };
   return (
-    <table className={styles.accountTable}>
-      <thead>
-        {createHead()}
-      </thead>
-      <tbody>
-        {createBody()}
-      </tbody>
-    </table>
+    <div>
+      <table className={styles.accountTable}>
+        <thead>
+          {createHead()}
+        </thead>
+        <tbody>
+          {createBody()}
+        </tbody>
+      </table>
+      <div className={styles.pagination}>
+        <Pagination
+          current={pageParams.index}
+          pageSize={pageParams.size}
+          total={totalElements}
+          onChange={pageChange}/>
+      </div>
+    </div>
   );
 }
 export default observer(AccountTable);
