@@ -29,7 +29,7 @@ class MonitorStatisticsStore {
 
   // 变化趋势store
   @observable changeTrend = {
-    result: {},
+    result: [],
     mutual: {
       nowData: {},
       beforeData: {},
@@ -1245,7 +1245,7 @@ class MonitorStatisticsStore {
         // 设置右边table框的数据，默认是今天和今天的昨天，反正就是最后的两个
         this.changeTrend.mutual.nowData = changeTrendData[changeTrendData.length - 1];
         this.changeTrend.mutual.beforeData = changeTrendData[changeTrendData.length - 2];
-        this.changeTrend.result = changeTrendData;
+        this.changeTrend.result = resp.data;
         this.setLoading('changeTrend');
       }))
       .catch((err) => {

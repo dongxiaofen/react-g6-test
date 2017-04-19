@@ -8,7 +8,7 @@ function Cell({theKey, theValue, type}) {
   return (
     <div className={cssName}>
       <span className={styles.key}>{theKey}:</span>
-      <span className={styles.value}>{theValue ? theValue : '无'}</span>
+      <span className={styles.value}>{theValue}</span>
     </div>
   );
 }

@@ -2,10 +2,6 @@ import { observable, action } from 'mobx';
 import { clientApi } from 'api';
 
 class ClientStore {
-  // @observable obj = {
-  //   userInfo: {},
-  //   envConfig: 'local'
-  // };
   @observable userInfo = {};
   @observable envConfig = 'local';
 

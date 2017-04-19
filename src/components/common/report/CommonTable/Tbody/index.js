@@ -8,7 +8,7 @@ function Tbody({meta, tData}) {
     <tbody className={styles.tbody}>
       {
         tData.map((rData, idx) => {
-          return <Trow key={rData.shareholderName + idx} rData={rData} meta={meta} />;
+          return <Trow key={rData[meta[0].key] + idx} rData={rData} meta={meta} />;
         })
       }
     </tbody>

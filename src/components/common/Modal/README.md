@@ -15,13 +15,23 @@
 /*
 @param title // 标题
 @param width // 宽度，默认440
+@param isSingleBtn // 是否是一个确定按钮
+@param isNeedBtn // 是否需要按钮
+
+@param pointText // 提示文案
+@param pactUrl // 跳转协议的链接
+@param pactName // 跳转协议的名称
+
 @param confirmText // 确定按钮文本，默认确定
 @param cancelText // 取消按钮文本，默认取消
+
 @param confirmAction // 确定按钮事件
 @param cancelAction // 取消按钮事件
 @param closeAction // 关闭按钮事件，默认是隐藏modal
+
 @param confirmLoading // 确定按钮loading，默认false
 @param cancelLoading // 取消按钮loading，默认false
+
 @param loader // 异步组件
 */
 
@@ -30,6 +40,10 @@ openCompModal({
   title,
   width,
   isCustomize,
+  isNeedBtn,
+  pointText,
+  pactUrl,
+  pactName,
   cancelText,
   confirmText,
   confirmAction,

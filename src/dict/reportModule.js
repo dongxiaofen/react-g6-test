@@ -36,7 +36,7 @@ const config = {
     'fundedRatio': '出资比例',
     'conDate': '出资日期',
   },
-  personListData: {
+  personList: {
     'name': '姓名',
     'position': '职位',
   },
