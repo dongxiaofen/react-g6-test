@@ -13,7 +13,7 @@ import Uuid from 'node-uuid';
 import { Provider } from 'mobx-react';
 import combineServerData from 'helpers/combineServerData';
 import * as allStore from 'stores';
-import { useStrict } from 'mobx';
+import { useStrict, runInAction } from 'mobx';
 import { RouterStore, syncHistoryWithStore } from 'mobx-react-router';
 // import { useStrict, spy } from 'mobx';
 // // 全局监听action
@@ -79,8 +79,8 @@ axios.interceptors.response.use((response) => {
   // Do something with request error
   console.log('error', error);
   if (error.response.data.errorCode === 401006 || error.response.data.errorCode === 401007) {
-    allStore.modalStore.openTextModal('登录超时', '请重新登录', ()=>{
-      allStore.homeStore.postLogin();
+    runInAction('显示登录框', () => {
+      allStore.loginStore.isShowLogin = true;
     });
     // allStore.modalStore.openAsyncModal((callback) => {
     //   require.ensure([], (require) => {

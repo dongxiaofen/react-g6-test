@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { PropTypes } from 'react';
 import { observer, inject } from 'mobx-react';
 import Modal from 'components/lib/Modal';
 
@@ -41,5 +41,10 @@ function _Modal({modalStore}) {
     </Modal>
   );
 }
+
+_Modal.propTypes = {
+  modalStore: PropTypes.object,
+};
+
 export default inject('modalStore')(observer(_Modal));
 

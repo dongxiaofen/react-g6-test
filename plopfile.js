@@ -82,8 +82,8 @@ module.exports = function (plop) {
   var modifyES6CompLess = {
     type: 'modify',
     path: 'src/components/{{directory}}/{{pascalCase name}}/index.js',
-    pattern: /(import React, { Component, PropTypes } from 'react';)/gi,
-    template: 'import React, { Component, PropTypes } from \'react\';\r\nimport styles from \'./index.less\';'
+    pattern: /(import { observer } from 'mobx-react';)/gi,
+    template: 'import { observer } from \'mobx-react\';\r\nimport styles from \'./index.less\';'
   };
   var modifyStoreIndex = {
     type: 'modify',
