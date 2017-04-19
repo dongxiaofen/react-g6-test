@@ -21,8 +21,20 @@ class AccountSettingStore {
       scale: {},
     },
     consume: {},
+    consumePager: {
+      index: 1,
+      size: 10,
+    },
     recharge: {},
+    rechargePager: {
+      index: 1,
+      size: 10,
+    },
     summary: {},
+    summaryPager: {
+      index: 1,
+      size: 10,
+    },
   };
   @action.bound changeValue(key, value) {
     pathval.setPathValue(this, key, value);
@@ -105,13 +117,14 @@ class AccountSettingStore {
   }
   @action.bound getConsume(uId) {
     this.tabs.consume = {};
-    accountSettingApi.getConsume(uId)
+    const params = this.tabs.consumePager;
+    accountSettingApi.getConsume(uId, params)
       .then(action('getConsume_success', resp => {
         this.tabs.consume = resp.data;
       }))
       .catch(action('getConsume_error', err => {
         console.log(err);
-        this.tabs.consume = {error: err.response.data};
+        this.tabs.consume = {error: err.response.data, page: []};
       }));
   }
   @action.bound getRecharge(uId) {
