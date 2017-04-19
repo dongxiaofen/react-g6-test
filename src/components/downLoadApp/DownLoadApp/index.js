@@ -1,13 +1,17 @@
 import React, {PropTypes} from 'react';
-import { observer } from 'mobx-react';
+import { observer, inject } from 'mobx-react';
 import styles from './index.less';
+import downloadColse from 'imgs/login/loginColse.png';
 import getPermissionMeta from 'helpers/getPermissionMeta';
+import pathval from 'pathval';
 
-function DownLoadApp() {
+function DownLoadApp({clientStore}) {
   const text = '扫描二维码 下载APP';
-  // const envConfig = this.props.client.get('envConfig');
-  const envConfig = 'cfca_prod';
-  const downloadColse = 'cfca_prod';
+  const envConfig = pathval.getPathValue(clientStore, 'envConfig');
+  const closeDownloadOnClick = () => {
+    document.getElementById('download-box').style.display = 'none';
+  };
+
   return (
     <div
       id="download-box"
@@ -17,7 +21,7 @@ function DownLoadApp() {
       <div id="download-app" className={`clearfix ${styles.download}`}>
         <div
           className={`clearfix ${styles.downloadClose}`}
-          onClick={this.closeDownloadOnClick}>
+          onClick={closeDownloadOnClick}>
           <img className={styles.downloadColseImg} src={downloadColse} alt=""/>
         </div>
         <div className={styles.downloadText}>{text}</div>
@@ -30,6 +34,6 @@ function DownLoadApp() {
 }
 
 DownLoadApp.propTypes = {
-  getPermissionMeta: PropTypes.func,
+  clientStore: PropTypes.object,
 };
-export default observer(DownLoadApp);
+export default inject('clientStore')(observer(DownLoadApp));

@@ -6,7 +6,7 @@ import footerIcon1 from 'imgs/footer/footer_icon_1.png';
 import footerIcon2 from 'imgs/footer/footer_icon_2.png';
 import footerIcon3 from 'imgs/footer/footer_icon_3.png';
 import footerIcon4 from 'imgs/footer/footer_icon_4.png';
-import iconPolice from 'imgs/icon-police.png';
+import iconPolice from 'imgs/footer/icon-police.png';
 
 function CfcaFooter() {
   return (
