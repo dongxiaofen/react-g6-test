@@ -16,6 +16,7 @@
 @param title // 标题
 @param width // 宽度，默认440
 @param isSingleBtn // 是否是一个确定按钮
+@param isNeedBtn // 是否需要按钮
 
 @param pointText // 提示文案
 @param pactUrl // 跳转协议的链接
@@ -39,6 +40,7 @@ openCompModal({
   title,
   width,
   isCustomize,
+  isNeedBtn,
   pointText,
   pactUrl,
   pactName,

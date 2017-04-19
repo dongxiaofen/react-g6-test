@@ -7,14 +7,15 @@ import styles from './index.less';
 export default class Modal extends Component {
   static propTypes = {
     visible: PropTypes.bool.isRequired,
+    isNeedBtn: PropTypes.bool,
+    title: PropTypes.string,
+    width: PropTypes.string,
     isCustomize: PropTypes.bool,
-    isSingleBtn: PropTypes.bool,
     pointText: PropTypes.string,
     pactName: PropTypes.string,
     pactUrl: PropTypes.string,
-    width: PropTypes.string,
-    title: PropTypes.string,
     children: PropTypes.node,
+    isSingleBtn: PropTypes.bool,
     // text
     cancelText: PropTypes.string,
     confirmText: PropTypes.string,
@@ -105,6 +106,15 @@ export default class Modal extends Component {
         </Button>
       );
     }
+    // 是否不要按钮
+    let isNeedBtn = (
+      <div className={styles.buttonBox}>
+        {btnComp}
+      </div>
+    );
+    if (!this.props.isNeedBtn) {
+      isNeedBtn = null;
+    }
     // 是否有提示文字
     let pointTextComp = null;
     if (this.props.pointText) {
@@ -134,9 +144,7 @@ export default class Modal extends Component {
             {this.props.title}
           </div>
           <div className="clearfix">{this.props.children}</div>
-          <div className={styles.buttonBox}>
-            {btnComp}
-          </div>
+          {isNeedBtn}
           {pointTextComp}
         </div>
       </div>

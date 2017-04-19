@@ -10,6 +10,7 @@ import styles from './index.less';
 
 import SwitchData from './SwitchData';
 import StatisticInfo from './StatisticInfo';
+import ChangeTrend from './ChangeTrend';
 
 const params = {
   begin: moment().subtract(29, 'day').format('YYYY-MM-DD'),
@@ -41,7 +42,7 @@ export default class MonitorStatisticsGetData extends Component {
     return (
       <Container>
         <Row>
-          <Col width="12">
+          <Col>
             <div className={`clearfix ${ styles.wrap }`}>
               <div className={styles.title}>监控统计</div>
             </div>
@@ -54,6 +55,7 @@ export default class MonitorStatisticsGetData extends Component {
           statistic={msStore.statistic}
           params={msStore.params}
           loading={msStore.loadingGroup.statistic} />
+        <ChangeTrend changeTrend={msStore.changeTrend} />
       </Container>
     );
   }
