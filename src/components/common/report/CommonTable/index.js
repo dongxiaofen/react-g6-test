@@ -3,6 +3,7 @@ import { observer } from 'mobx-react';
 import Thead from './Thead';
 import Tbody from './Tbody';
 import styles from './index.less';
+import { loadingComp } from 'components/hoc';
 
 function CommonTable({meta, tData, dict }) {
   // let pageComp = <Pager {...this.props} reducerName={this.props.reducerName} />;
@@ -22,4 +23,12 @@ function CommonTable({meta, tData, dict }) {
 CommonTable.propTypes = {
   foo: PropTypes.string,
 };
-export default observer(CommonTable);
+export default loadingComp({
+  mapDataToProps: props => ({
+    loading: props.isLoading,
+    category: 0,
+    error: props.error,
+    errCategory: 1,
+    module: props.module
+  })
+})(observer(CommonTable));

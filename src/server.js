@@ -177,7 +177,7 @@ app.use((req, res) => {
           '<!--[if lte IE 11]>\n' +
           '<script src="https://as.alipayobjects.com/g/component/??es6-shim/0.35.1/es6-sham.min.js,es6-shim/0.35.1/es6-shim.min.js"></script>\n' +
           '<![endif]-->\n' +
-          ReactDOM.renderToString(<Html isDev={__DEVELOPMENT__} assets={webpackIsomorphicTools.assets()} component={component} {...allStores} />));
+          ReactDOM.renderToString(<Html reqPathName={reqPathName} isDev={__DEVELOPMENT__} assets={webpackIsomorphicTools.assets()} component={component} {...allStores} />));
       }
 
     } else {
