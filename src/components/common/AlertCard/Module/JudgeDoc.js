@@ -2,7 +2,7 @@ import React from 'react';
 import BaseModule from '../BaseModule';
 // import Loading from 'components/common/Loading';
 import {observer} from 'mobx-react';
-function JudgeDoc({data, store, module}) {
+function JudgeDoc({data, store, module, cardType}) {
   const regTime = (value)=>{
     let time;
     if (value) {
@@ -63,6 +63,7 @@ function JudgeDoc({data, store, module}) {
           data={moduleData}
           viewDetCallback={viewDetail}
           type="double"
-          loading={store.detailLoading.get(eventId)}/>);
+          loading={store.detailLoading.get(eventId)}
+          cardType={cardType}/>);
 }
 export default observer(JudgeDoc);

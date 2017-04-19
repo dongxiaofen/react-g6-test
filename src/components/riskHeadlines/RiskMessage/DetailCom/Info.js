@@ -1,7 +1,8 @@
 import React from 'react';
-import {observer} from 'mobx-react';
+import {observer, inject} from 'mobx-react';
 import InfoBody from 'components/common/AlertCard/DetailCom/Info';
-function Info({}) {
-  return <InfoBody />;
+function Info({riskHeadlinesStore}) {
+  const info = riskHeadlinesStore.detailModalData.info;
+  return <InfoBody store={riskHeadlinesStore} data={info} cardType="modal"/>;
 }
-export default observer(Info);
+export default inject('riskHeadlinesStore')(observer(Info));

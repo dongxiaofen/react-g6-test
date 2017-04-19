@@ -2,7 +2,7 @@ import React from 'react';
 import BaseModule from '../BaseModule';
 import {observer} from 'mobx-react';
 // 经营招投标
-function Bidding({data, module, store}) {
+function Bidding({data, module, store, cardType}) {
   const viewDetail = () => {
     let companyId = '';
     if (module === 'laneGraph') {
@@ -38,6 +38,7 @@ function Bidding({data, module, store}) {
             viewDetCallback={viewDetail}
             type="double"
             module={module}
-            loading={store.detailLoading.get(eventId)}/>);
+            loading={store.detailLoading.get(eventId)}
+            cardType={cardType}/>);
 }
 export default observer(Bidding);

@@ -1,13 +1,9 @@
 import React, {PropTypes, Component} from 'react';
 import { observer } from 'mobx-react';
-import KeyValue from './KeyValue';
-import {Col, Row} from 'components/common/layout';
-import DICT from 'config/Dict/reportModule';
 import styles from './index.less';
-import ALERT_CONFIG from 'config/Dict/alertCard';
-import Grade from './Grade';
-import CompanyName from './CompanyName'; // 报告时间轴才会有的组件，待测试
-import AnimateLoading from 'components/hoc/LoadingComp/AnimateLoading';
+import CardHeader from './CardHeader';
+import CardContent from './CardContent';
+import CardFooter from './CardFooter';
 @observer
 export default class BaseModule extends Component {
   constructor(props) {
@@ -16,67 +12,10 @@ export default class BaseModule extends Component {
       show: false,
     };
   }
-  createLoading = () => {
-    return this.props.loading ? <div className={styles.loading}><AnimateLoading animateCategory={1}/></div> : <span>{this.props.btnText}</span>;
-  }
-  createViewBtn = ()=> {
-    const viewText = this.state.show ? '收起' : '展开';
-    switch (this.props.type) {
-      case 'double':
-        return (
-          <div>
-            <div className={styles.viewBtn} onClick={this.viewFunc.bind(this)}>
-              <span>{viewText}</span>
-            </div>
-            {
-              this.state.show ?
-              <div className={`${styles.viewBtn} ${styles.detail}`} onClick={this.props.viewDetCallback.bind(this, this.props.data.items)}>
-                 {this.createLoading()}
-              </div>
-              : ''
-            }
-          </div>);
-      case 'detail':
-        return (
-          <div className={`${styles.viewBtn} ${styles.detail}`} onClick={this.props.viewDetCallback.bind(this, this.props.data.items)}>
-            {
-              this.props.loading ? <div className={styles.loading}><AnimateLoading animateCategory={1}/></div> : <span>{this.props.btnText}</span>
-            }
-          </div>);
-      case 'none':
-        return <span></span>;
-      default:
-        return (
-          <div className={styles.viewBtn} onClick={this.viewFunc.bind(this)}>
-            <span>{viewText}</span>
-          </div>
-        );
-    }
-  }
   viewFunc = () => {
     this.setState({
       show: !this.state.show,
     });
-  }
-  content(data) {
-    const output = [];
-    const config = this.state.show ? data.viewConfig : data.hideConfig;
-    config.forEach((item, idx) => {
-      let value = data.items.content[item.key];
-      if (item.handleBlock) {
-        value = item.handleBlock(data.items);
-      } else if (item.handle) {
-        value = item.handle(data.items.content[item.key]);
-      }
-      output.push(
-        <Col key={idx} width={item.width} className={styles.col}>
-          <KeyValue
-            theKey={DICT[data.dict][item.key]}
-            theValue={value} />
-        </Col>
-      );
-    });
-    return output;
   }
   viewReport = (mainMonitorId, type)=>{
     if (type === 'MAIN') {
@@ -85,13 +24,6 @@ export default class BaseModule extends Component {
       this.props.store.getMonitorMap(mainMonitorId);
     }
   };
-  createTypeName = (itemData) => {
-    const data = this.props.data;
-    if (this.props.hasSecondType) {
-      return data.typeName ? `${ALERT_CONFIG.cardsConfig[itemData.pattern]}-${data.typeName}` : ALERT_CONFIG.cardsConfig[itemData.pattern];
-    }
-    return data.typeName;
-  }
   modifyDate = (date) => {
     if (!date) {
       return '无';
@@ -99,53 +31,41 @@ export default class BaseModule extends Component {
     return date.split(' ')[0];
   }
   render() {
-    const itemData = this.props.data.items;
-    const rCompanyName = itemData.relatedMonitorCompanyName;
-    const relation = rCompanyName && rCompanyName.length > 0 ? '关联' : '主体';
-    const typeName = this.createTypeName(itemData);
-    const companyType = relation === '关联' ? styles.relatedType : styles.mainType;
-    const companyName = rCompanyName && rCompanyName.length > 0 ? rCompanyName : itemData.mainMonitorCompanyName;
+    const isModal = this.props.cardType === 'modal';
+    const cssWrap = isModal ? styles.modalWrap : styles.wrap;
+    const data = this.props.data;
     return (
-      <div id={this.props.animateId} className={styles.wrap}>
-        <div className={styles.top}>
-          <div className={relation === '主体' ? styles.mainTitle : styles.relationTitle}>
-            <span className={styles.typeName}>{typeName}</span>
-            {relation === '主体' ? <Grade itemData={itemData} /> : ''}
-          </div>
-          {
-            this.props.module === 'headLine' ? ''
-            :
-            <div className={styles.nameAndTimeWrap}>
-              <div className={styles.companys}>
-                <span className={companyType}>
-                  <span>[</span>
-                  <span className={styles.companyType}>{relation}</span>
-                  <span>]</span>
-                </span>
-                <CompanyName item={itemData} companyName={companyName} />
-              </div>
-            </div>
-          }
-        </div>
-        <div className={styles.content}>
-          <Row className={styles.row}>
-            {this.content(this.props.data)}
-          </Row>
-          <Row>
-            {this.state.show && this.props.contentHtml && this.props.contentHtml()}
-          </Row>
-        </div>
-        <div className={`${styles.footer} clearfix`}>
-          <div className={styles.date}>
-            <span>{this.props.data.date.label}：</span>{this.modifyDate(this.props.data.date.value)}
-          </div>
-          {this.createViewBtn()}
-        </div>
+      <div id={this.props.animateId} className={cssWrap}>
+        <CardHeader
+          data={this.props.data}
+          module={this.props.module}
+          hasSecondType={this.props.hasSecondType}
+          cardType={this.props.cardType}
+          modifyDate={this.modifyDate}/>
+        {
+          isModal && data.items.pattern === 'NEWS' ? '' : // 新闻弹窗不展示具体字段
+          <CardContent
+            data={this.props.data}
+            show={this.state.show}
+            contentHtml={this.props.contentHtml}
+            isModal={isModal}/>
+        }
+        {
+          isModal ? '' :
+          <CardFooter
+            data={data}
+            show={this.state.show}
+            loading={this.props.loading}
+            type={this.props.type}
+            viewFunc={this.viewFunc.bind(this)}
+            viewDetCallback={this.props.viewDetCallback}
+            btnText={this.props.btnText}
+            modifyDate={this.modifyDate}/>
+        }
       </div>
     );
   }
 }
-
 BaseModule.propTypes = {
   data: PropTypes.object,
   animateId: PropTypes.string,
@@ -155,12 +75,14 @@ BaseModule.propTypes = {
   type: PropTypes.string, // default 一个展开按钮 double 查看按钮和展开按钮 detail 一个全文按钮 none 没哟按钮
   loading: PropTypes.bool,
   store: PropTypes.object,
-  module: PropTypes.string,
+  module: PropTypes.string, // 用于区分头条和时间轴
   hasSecondType: PropTypes.bool,
+  cardType: PropTypes.string, // 用于区分是弹框还是网页
 };
 BaseModule.defaultProps = {
   btnText: '全文',
   type: 'default',
   module: 'headLine',
   hasSecondType: true,
+  cardType: 'website'
 };
