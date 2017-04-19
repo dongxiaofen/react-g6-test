@@ -2,6 +2,8 @@ import React from 'react';
 import { observer } from 'mobx-react';
 import CompanyCard from './CompanyCard';
 import loadingComp from 'components/hoc/LoadingComp';
+import noDataImg from 'imgs/riskHeadlines/noData.png';
+import styles from './index.less';
 function RiskCompany({riskHeadlinesStore}) {
   const createCompanyCards = ()=> {
     const output = [];
@@ -15,6 +17,14 @@ function RiskCompany({riskHeadlinesStore}) {
     });
     return output;
   };
+  if (riskHeadlinesStore.companyList.data.errorToday) {
+    return (
+      <div className={styles.noDataText}>
+        <img alt="" src={noDataImg}/>
+        <p>{riskHeadlinesStore.companyList.data.errorToday}</p>
+      </div>
+    );
+  }
   return (
     <div>
       {createCompanyCards()}

@@ -73,8 +73,7 @@ function CompanyCard({riskHeadlinesStore, companyData}) {
            <SubCompany
             data={subCompanyData}
             riskHeadlinesStore={riskHeadlinesStore}
-            activeComMonId ={companyList.active}
-            />
+            activeComMonId ={companyList.active} />
         </div> : ''
       }
     </div>

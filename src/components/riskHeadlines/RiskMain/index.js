@@ -11,7 +11,7 @@ export default class RiskMain extends Component {
   componentDidMount() {
     const dimGroupTypeStr = this.props.riskHeadlinesStore.dimGroupTypeStr;
     const params = this.props.riskHeadlinesStore.filterParams;
-    this.props.riskHeadlinesStore.getCompanyList(dimGroupTypeStr, params);
+    this.props.riskHeadlinesStore.getCompanyList(dimGroupTypeStr, params, 'today');
     this.caculateHeight();
     this.props.homeStore.postLogin();
   }
@@ -30,7 +30,8 @@ export default class RiskMain extends Component {
   }
   render() {
     const riskHeadlinesStore = this.props.riskHeadlinesStore;
-    const comListCss = riskHeadlinesStore.companyList.data.error ? styles.riskCompanyNoData : styles.riskCompany; // 没有数据的时候背景为白色
+    const comListCss = riskHeadlinesStore.companyList.data.error || riskHeadlinesStore.companyList.data.errorToday ? styles.riskCompanyNoData : styles.riskCompany; // 没有数据的时候背景为白色
+    const messCss = riskHeadlinesStore.events.data.error ? styles.riskMessageNoData : styles.riskMessage;
     return (
       <Container>
         <Row className={styles.riskHeadlines}>
@@ -43,7 +44,7 @@ export default class RiskMain extends Component {
             </div>
           </Col>
           <Col width="8">
-            <div id="riskCompany" style={{height: this.riskMessHeight}} className={styles.riskMessage}>
+            <div id="riskCompany" style={{height: this.riskMessHeight}} className={messCss}>
                <RiskMessage
                 riskHeadlinesStore={riskHeadlinesStore}
                 contentHeight={this.containerH}
