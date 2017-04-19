@@ -58,12 +58,20 @@ export default class TestModal extends Component {
   }
   // message
   openInfoMessage = () => {
+    const obj = {
+      content: 'this is info message'
+    };
     const messageStore = this.props.messageStore;
-    messageStore.openInfoMessage('test info message');
+    messageStore.openMessage({ ...obj });
   }
   openWarningMessage = () => {
     const messageStore = this.props.messageStore;
-    messageStore.openWarningMessage('test warning message');
+    const obj = {
+      type: 'warning',
+      content: 'this is warning message',
+      duration: 3000
+    };
+    messageStore.openMessage({ ...obj });
   }
   render() {
     return (

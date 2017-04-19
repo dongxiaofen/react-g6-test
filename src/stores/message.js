@@ -4,27 +4,23 @@ class MessageStore {
   @observable type = 'info';
   @observable content = '';
   @observable timeOut;
+  @observable duration = 1500;
 
   @action.bound closeMessage() {
     this.timeOut = setTimeout(() => {
       runInAction('set visible false', () => {
         this.visible = false;
       });
-    }, 2000);
+    }, this.duration);
   }
 
   @action.bound clearTimer() {
     clearTimeout(this.timeOut);
   }
 
-  @action.bound openInfoMessage(content) {
-    this.type = 'info';
-    this.visible = true;
-    this.content = content;
-  }
-
-  @action.bound openWarningMessage(content) {
-    this.type = 'warning';
+  @action.bound openMessage({ type, content, duration }) {
+    this.type = type ? type : 'info';
+    if (duration) { this.duration = duration; }
     this.visible = true;
     this.content = content;
   }
