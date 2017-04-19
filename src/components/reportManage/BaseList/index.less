@@ -1,0 +1,120 @@
+@import '~sc-colors/index.less';
+
+.actionBtn{
+  color: @bg;
+  cursor: pointer;
+}
+.tableWrap{
+  position: relative;
+  font-size: 13px;
+}
+.item{
+  padding: 20px 20px 20px 20px;
+  margin-bottom: 20px;
+  color: @black7;
+  width: 100%;
+  background: @white1;
+  transition: all .3s;
+  .box-shadow-block;
+
+  &:hover {
+    .box-shadow-block-click;
+  }
+}
+.item:last-child{
+  margin-bottom: 0;
+}
+.item:after{
+  content: '';
+  display: block;
+  clear: both;
+}
+.companyInfo{
+  float: left;
+  width: 55%;
+}
+.mainLabel{
+  display: inline-block;
+  margin-left: 14px;
+  border:1px solid @mdc-blue-400;
+  border-radius:100px;
+  width: 56px;
+  height:25px;
+  line-height: 25px;
+  max-width: 58px;
+  overflow: hidden;
+  vertical-align: middle;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-size: 14px;
+  color: @mdc-blue-400;
+  text-align: center;
+}
+.infoDetail{
+  margin-top: 10px;
+  line-height: 14px;
+  font-size: 14px;
+}
+.detailItem{
+  margin-right: 40px;
+}
+.lastModifiedTs{
+  float: left;
+  width: 12%;
+  text-align: center;
+}
+.createdTs{
+  float: left;
+  width: 12%;
+  text-align: center;
+}
+.anTime{
+  float: left;
+  width: 6%;
+  text-align: center;
+}
+.timeKey{
+  line-height: 13px;
+  font-size: 13px;
+  margin-top: 14px;
+  color: @black7;
+}
+.timeValue{
+  line-height: 16px;
+  font-size: 16px;
+  color: @mdc-blue-grey-500;
+}
+.actionWrap{
+  float: left;
+  width: 15%;
+  overflow: hidden;
+}
+.deleteBtn{
+  display: none;
+  float: right;
+  padding-right: 40px;
+  line-height: 40px;
+}
+.turnBtn{
+  float: right;
+  text-align: center;
+  line-height: 34px;
+  width: 115px;
+  height: 35px;
+  margin-top: 5px;
+  color: #fff;
+  background-color: @mdc-blue-400;
+  cursor: pointer;
+}
+.name{
+  font-family:MicrosoftYaHei;
+  font-size:16px;
+  color: @mdc-grey-900;
+  letter-spacing:0;
+  line-height:18px;
+  text-align:left;
+  cursor: pointer;
+}
+.name:hover{
+  color: @mdc-blue-400;
+}
