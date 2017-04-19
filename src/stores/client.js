@@ -3,7 +3,7 @@ import { clientApi } from 'api';
 
 class ClientStore {
   @observable userInfo = {};
-  @observable envConfig = 'cfca_prod';
+  @observable envConfig = 'local';
 
   @action.bound getUserInfo() {
     clientApi.getUserInfo()
