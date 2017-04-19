@@ -16,6 +16,7 @@ function ReportAction({ bannerStore, routing }) {
     }
   };
   const openPayModal = () => {
+    routing.push('/myHomepage');
     // this.props.commonBoundAC.updateValue(['operation'], operation, 'REPORT_UPDATE_VALUE');
     // this.props.commonBoundAC.updateValue([statusType], true, 'PAY_MODAL_UPDATE_VALUE');
     // this.props.commonBoundAC.updateValue(['modalType'], modalType, 'PAY_MODAL_UPDATE_VALUE');

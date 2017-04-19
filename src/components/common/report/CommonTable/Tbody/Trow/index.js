@@ -15,6 +15,7 @@ function Trow({ meta, rData }) {
 }
 
 Trow.propTypes = {
-  foo: PropTypes.string,
+  meta: PropTypes.array.isRequired,
+  rData: PropTypes.object.isRequired
 };
 export default observer(Trow);
