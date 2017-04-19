@@ -11,7 +11,9 @@ function FilterSheet({
     filterArrayStatus,
     page,
     searchKeyFilter,
-    filterSingleShow
+    filterSingleShow,
+    filterItemClick,
+    updateValue,
   }) {
   return (
     <div className={styles.wrap}>
@@ -23,8 +25,11 @@ function FilterSheet({
         filterSheet={filterSheet}
         filterArray={filterArray}
         filterArrayStatus={filterArrayStatus}
-        filterSingleShow={filterSingleShow} />
-      <FilterToggle />
+        filterSingleShow={filterSingleShow}
+        filterItemClick={filterItemClick} />
+      <FilterToggle
+        filterSheet={filterSheet}
+        updateValue={updateValue} />
     </div>
   );
 }
@@ -36,5 +41,7 @@ FilterSheet.propTypes = {
   page: PropTypes.object,
   searchKeyFilter: PropTypes.string,
   filterSingleShow: PropTypes.func,
+  filterItemClick: PropTypes.func,
+  updateValue: PropTypes.func,
 };
 export default observer(FilterSheet);

@@ -50,12 +50,12 @@ export default class FilterContent extends Component {
     this.props.filterSingleShow('value', arrayList, arrayListStatus);
   }
 
-  // 选择筛选项
+  // 选择筛选项 key:类型 idx:序号
   itemCheck = (key, idx) => {
     this.props.filterItemClick(key, idx, 'ok');
   }
 
-  // 取消筛选项
+  // 取消筛选项 key:类型 idx:序号
   itemCancelCheck = (key, idx) => {
     this.props.filterItemClick(key, idx, 'cancel');
   }
@@ -85,13 +85,13 @@ export default class FilterContent extends Component {
         const itemStatus = filterStatus[obj.key][idx];
         if (itemStatus) {
           itemSingle.push(
-            <span onClick={this.itemCheck.bind(this, obj.key, idx)} key={`item${idx}`} className={`${styles.activeItem}`}>{item}</span>
+            <span onClick={this.itemCancelCheck.bind(this, obj.key, idx)} key={`item${idx}`} className={`${styles.activeItem}`}>{item}</span>
           );
         } else {
           allStatus = false;
           itemSingle.push(
             <span
-              onClick={this.itemCancelCheck.bind(this, obj.key, idx)}
+              onClick={this.itemCheck.bind(this, obj.key, idx)}
               key={`item${idx}`} className={`${styles.item}`}>{item}</span>
           );
         }
@@ -101,7 +101,7 @@ export default class FilterContent extends Component {
       // 是否全选
       let allItem = (
         <span
-          onClick={this.itemCheck.bind(this, obj.key, 'all')}
+          onClick={this.itemCancelCheck.bind(this, obj.key, 'all')}
           className={`${styles.activeAllItem}`}>
           全选
         </span>
@@ -109,7 +109,7 @@ export default class FilterContent extends Component {
       if (allStatus === false) {
         allItem = (
           <span
-            onClick={this.itemCancelCheck.bind(this, obj.key, 'all')}
+            onClick={this.itemCheck.bind(this, obj.key, 'all')}
             className={`${styles.allItem}`}>
             全选
           </span>
@@ -153,7 +153,7 @@ export default class FilterContent extends Component {
   render() {
     const filterSheet = this.props.filterSheet;
     return (
-      <div className={`${styles.filterWrap}`}>
+      <div className={`${filterSheet.filterSheetStatus ? styles.none : styles.filterWrap}`}>
         {this.createFilter(filterSheet)}
       </div>
     );

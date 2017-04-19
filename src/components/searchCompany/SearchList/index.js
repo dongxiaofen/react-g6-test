@@ -16,6 +16,8 @@ function SearchList({searchCompanyStore}) {
     page,
     searchKeyFilter,
     filterSingleShow,
+    filterItemClick,
+    updateValue,
   } = searchCompanyStore;
   const listData = [];
   searchResult.map((itemData, idx) => {
@@ -37,8 +39,10 @@ function SearchList({searchCompanyStore}) {
             filterArray={filterArray}
             filterArrayStatus={filterArrayStatus}
             filterSingleShow={filterSingleShow}
+            filterItemClick={filterItemClick}
             page={page}
-            searchKeyFilter={searchKeyFilter} />
+            searchKeyFilter={searchKeyFilter}
+            updateValue={updateValue} />
           <div className={`${styles.listDataWrap}`}>
             {listData}
           </div>

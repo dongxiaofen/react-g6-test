@@ -5,6 +5,9 @@ export const getCompanyList = (params) => {
 export const getHistory = () => {
   return axios.get(`/api/company/search/history`);
 };
+export const getFilterSearch = (params) => {
+  return axios.post(`/api/company/search/filter`, params);
+};
 export const getRelation = (monitorId) => {
   return axios.get(`/api/monitor/${monitorId}/network`);
 };

@@ -40,6 +40,8 @@ class SearchCompanyStore {
   };
   // 筛选
   @observable filterSheet = {
+    // filterSheet status
+    filterSheetStatus: false,
     // 配置
     config: {
       industryType: '行业类型',
@@ -119,14 +121,14 @@ class SearchCompanyStore {
         console.log(err.response, '=====searchCompany error');
         this.isShowResult = true;
         // 重置数据
-        this.filterSheet.data = [];
-        this.filterSheet.filterStatus = {
-          industryType: [],
-          scale: [],
-          province: [],
-          companyStatus: [],
-          stockMarket: []
-        };
+        // this.filterSheet.data = [];
+        // this.filterSheet.filterStatus = {
+        //   industryType: [],
+        //   scale: [],
+        //   province: [],
+        //   companyStatus: [],
+        //   stockMarket: []
+        // };
       }));
   }
   // 获取历史记录
@@ -170,23 +172,91 @@ class SearchCompanyStore {
       this.filterArrayStatus[obj] = !this.filterArrayStatus[obj];
     }
   }
-  // 点击filterItem
+  // filter发送请求
+  @action.bound filterSearchCompany() {
+    const params = {
+      // scrollId: searchCompanyState.getIn(['searchResult', 'scrollId']),
+      index: this.pageParams.index,
+      size: this.pageParams.size,
+      filters: this.filterSheet.filterResult,
+      params: this.searchParameter,
+    };
+    // 赋值显示到filter的公司名
+    this.searchKeyFilter = this.searchKey;
+    searchApi.getFilterSearch(params)
+      .then(action('filterSearchCompany list', (resp) => {
+        console.log(resp, '======filterSearchCompany result');
+        this.searchResult = resp.data.data;
+        this.page = resp.data.page;
+      }))
+      .catch(action('filterSearchCompany error', (err) => {
+        console.log(err.response, '=====filterSearchCompany error');
+        this.searchResult = [];
+        this.page = {};
+      }));
+  }
+  // 点击filterItem  key:类型 idx:序号 type:选择或取消
   @action.bound filterItemClick(key, idx, type) {
-    if (type === 'ok') {
-      this.filterSheet.data.map((obj)=>{
-        if (obj.key === key) {
+    this.filterSheet.data.map((obj)=>{
+      // 匹配类型
+      if (obj.key === key) {
+        // 选择和取消
+        if (type === 'ok') {
+          // 全选和单选
           if (idx === 'all') {
             this.filterSheet.filterResult[key] = obj.value;
-            this.filterSheet.filterStatus[key].map((status)=>{
-              status = true;
-            })
+            const status = [];
+            this.filterSheet.filterStatus[key].map(()=>{
+              status.push(true);
+            });
+            this.filterSheet.filterStatus[key] = status;
+            this.filterSheet.filterStatusAll[key] = true;
           } else {
+            // 是否是公司规模 公司规模只能单选和全选
+            if (key === 'scale') {
+              const value = obj.value[idx];
+              this.filterSheet.filterResult[key] = [];
+              this.filterSheet.filterResult[key].push(value);
+              const status = [];
+              this.filterSheet.filterStatus[key].map((val, num)=>{
+                if (num === idx) {
+                  status.push(!val);
+                } else {
+                  status.push(false);
+                }
+              });
+              this.filterSheet.filterStatus[key] = status;
+            } else {
+              const value = obj.value[idx];
+              this.filterSheet.filterResult[key].push(value);
+              this.filterSheet.filterStatus[key][idx] = true;
+            }
+          }
+        } else {
+          if (idx === 'all') {
+            this.filterSheet.filterResult[key] = [];
+            const status = [];
+            this.filterSheet.filterStatus[key].map(()=>{
+              status.push(false);
+            });
+            this.filterSheet.filterStatus[key] = status;
+            this.filterSheet.filterStatusAll[key] = false;
+          } else {
+            const value = obj.value[idx];
+            const valIdx = this.filterSheet.filterResult[key].indexOf(value);
+            this.filterSheet.filterResult[key].splice(valIdx, 1);
+            this.filterSheet.filterStatus[key][idx] = false;
           }
         }
-      })
-    } else {
-    }
-    console.log(key, idx);
+      }
+    });
+    // 发送请求
+    this.filterSearchCompany();
+    console.log(this.filterSheet.filterResult, '=======filterResult');
+  }
+  // 收起打开筛选
+  @action.bound updateValue(oldValue, newValue) {
+    this.filterSheet[oldValue] = newValue;
   }
 }
 export default new SearchCompanyStore();
