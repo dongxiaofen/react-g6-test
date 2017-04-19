@@ -141,13 +141,14 @@ class AccountSettingStore {
   }
   @action.bound getSummary(uId) {
     this.tabs.summary = {};
-    accountSettingApi.getSummary(uId)
+    const params = this.tabs.summaryPager;
+    accountSettingApi.getSummary(uId, params)
       .then(action('getSummary_success', resp => {
         this.tabs.summary = resp.data;
       }))
       .catch(action('getSummary_error', err => {
         console.log(err);
-        this.tabs.summary = {error: err.response.data};
+        this.tabs.summary = {error: err.response.data, page: []};
       }));
   }
 }
