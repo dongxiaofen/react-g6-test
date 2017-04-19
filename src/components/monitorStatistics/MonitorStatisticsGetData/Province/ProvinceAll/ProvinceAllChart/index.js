@@ -6,17 +6,14 @@ import MapChart from 'components/common/Charts/MapChart';
 import { loadingComp } from 'components/hoc';
 
 function ProvinceAllChart({ msStore }) {
-  // const dateOnClick = (chartData) => {
-  //   if (chartData.componentSubType === 'scatter') {
-  //     const params = msStore.params;
-  //     this.props.headTrendBoundAC.getProvince(params, chartData.name);
-  //     this.props.commonBoundAC.updateValue(
-  //       ['province', 'provinceName'],
-  //       chartData.name,
-  //       'SET_HEAD_TREND_VALUE'
-  //     );
-  //   }
-  // };
+  const dateOnClick = (chartData) => {
+    if (chartData.componentSubType === 'scatter') {
+      const params = msStore.params;
+      params.province = chartData.name;
+      msStore.getProvince(params);
+      msStore.setProvinceName(chartData.name);
+    }
+  };
 
   return (
     <div style={{ position: 'relative' }}>
@@ -42,6 +39,7 @@ function ProvinceAllChart({ msStore }) {
         chartId="ProvinceAllChart"
         option={msStore.provinceAll.chartOption}
         height="400px"
+        clickAction={dateOnClick}
         />
     </div>
   );

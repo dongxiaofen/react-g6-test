@@ -4,6 +4,7 @@ import moment from 'moment';
 import 'moment-range';
 // import pathval from 'pathval';
 import geoCoordMap from 'helpers/geoCoordMap';
+import provinceCityName from 'helpers/provinceCityName';
 import { monitorStatisticsApi } from 'api';
 class MonitorStatisticsStore {
   isEmptyObject(obj, key) {
@@ -511,7 +512,7 @@ class MonitorStatisticsStore {
   };
   // 地区变化趋势store
   @observable provinceLine = {
-    result: {},
+    result: [],
     chartOption: {
       dataZoom: [
         {
@@ -651,7 +652,7 @@ class MonitorStatisticsStore {
   };
   // 企业地区分布store
   @observable provinceMap = {
-    result: {},
+    result: [],
     provinceRank: [],
     chartOption: {
       tooltip: {
@@ -1200,6 +1201,8 @@ class MonitorStatisticsStore {
   // 选择指定时间和类别请求数据
   @action.bound getChangeData(params) {
     this.getStatistic(params);
+    this.getChangeTrend(params);
+    this.getProvinceAll(params);
   }
 
   // 设置loading
@@ -1340,11 +1343,121 @@ class MonitorStatisticsStore {
         this.provinceAll.result = provinceAllData;
         this.provinceBar.result = provinceAllData;
         this.setLoading('provinceAll');
+        this.getProvince({
+          ...params,
+          province: provinceName
+        });
       }))
       .catch((err) => {
         this.setErrorBody('provinceAll', err.response.data);
         this.setLoading('provinceAll');
       });
+  }
+
+  // 获取选定区域
+  @action.bound getProvince(params) {
+    this.setLoading('province', true);
+    monitorStatisticsApi.getProvince(params)
+      .then(action('get province', (resp) => {
+        const provinceDate = [];
+        const provinceEvent = [];
+        const provinceCompany = [];
+        const provinceMapData = [];
+        let provinceAreaName = '';
+        const paramsDate = params;
+        let provinceData = resp.data;
+        let provinceTrendData = provinceData.trend;
+        let provinceRank = provinceData.rank;
+        if (provinceTrendData.length && provinceRank.length) {
+          let isRealm = false;
+          const compliteDate2 = this.dealWithDate(paramsDate.begin, paramsDate.end, provinceTrendData);
+          provinceAreaName = paramsDate.province;
+          compliteDate2.map((item) => {
+            provinceDate.push(item.date);
+            provinceEvent.push(item.eventCount);
+            provinceCompany.push(item.companyCount);
+          });
+          provinceRank = provinceRank.sort((prev, next) => {
+            return next.companyCount - prev.companyCount;
+          });
+          for (let idx = 0; idx < provinceCityName.length; idx++) {
+            if (provinceCityName[idx].indexOf(paramsDate.province) !== -1) {
+              isRealm = true;
+              break;
+            }
+          }
+          if (isRealm) {
+            provinceRank.forEach((item) => {
+              if (item.area.indexOf('市') === -1
+                && item.area.indexOf('区') === -1
+                && item.area.indexOf('县') === -1
+                && item.area.indexOf('自治州') === -1) {
+                provinceMapData.push({
+                  name: item.area + '市',
+                  value: item.companyCount,
+                  itemStyle: {
+                    normal: {
+                      areaColor: '#a5d6a7'
+                    },
+                    emphasis: {
+                      areaColor: '#a5d6a7'
+                    },
+                  }
+                });
+              } else {
+                provinceMapData.push({
+                  name: item.area,
+                  value: item.companyCount,
+                  itemStyle: {
+                    normal: {
+                      areaColor: '#a5d6a7'
+                    },
+                    emphasis: {
+                      areaColor: '#a5d6a7'
+                    },
+                  }
+                });
+              }
+            });
+          } else {
+            provinceRank.forEach((item) => {
+              provinceMapData.push({
+                name: item.area,
+                value: item.companyCount,
+                itemStyle: {
+                  normal: {
+                    areaColor: '#a5d6a7'
+                  },
+                  emphasis: {
+                    areaColor: '#a5d6a7'
+                  },
+                }
+              });
+            });
+          }
+        } else {
+          provinceData = provinceTrendData = provinceRank = [];
+        }
+        this.provinceLine.chartOption.xAxis.data = provinceDate;
+        this.provinceLine.chartOption.series[0].data = provinceEvent;
+        this.provinceLine.chartOption.series[1].data = provinceCompany;
+        this.provinceMap.chartOption.series[0].data = provinceMapData;
+        this.provinceMap.chartOption.series[0].mapType = provinceAreaName;
+        this.provinceLine.result = provinceTrendData;
+        this.provinceMap.provinceRank = provinceRank;
+        this.provinceMap.result = provinceRank;
+        this.setLoading('province');
+      }))
+      .catch((err) => {
+        console.log(err);
+        this.setErrorBody('province', err.response.data);
+        this.setLoading('province');
+      });
+  }
+
+  // 设置选定区域名称
+  @action.bound setProvinceName(provinceName) {
+    this.provinceName = provinceName;
   }
 }
 export default new MonitorStatisticsStore();

@@ -15,42 +15,10 @@ export function getProvinceAll(params) {
   return axios.get('/api/riskBoard/distribution/province/all', { params: params });
 }
 
-// // 获取选定区域的数据
-// export function getProvince(params, province) {
-//   const newParams = params;
-//   newParams.province = province;
-//   return dispatch => {
-//     setLoading(dispatch, 'province', true);
-//     axios.get('/api/riskBoard/distribution/province', { params: newParams })
-//       .then((resp) => {
-//         dispatch({
-//           type: ActionTypes.SET_HEAD_TREND_PROVINCE,
-//           data: resp.data,
-//           params: newParams,
-//         });
-//         setLoading(dispatch, 'province');
-//       })
-//       .catch((err) => {
-//         console.log(err);
-//         setErrorBody(
-//           dispatch,
-//           ['province', 'provinceBar', 'result', 'errorBody'],
-//           err.response.data
-//         );
-//         setErrorBody(
-//           dispatch,
-//           ['province', 'provinceLine', 'result', 'errorBody'],
-//           err.response.data
-//         );
-//         setErrorBody(
-//           dispatch,
-//           ['province', 'provinceMap', 'result', 'errorBody'],
-//           err.response.data
-//         );
-//         setLoading(dispatch, 'province');
-//       });
-//   };
-// }
+// 获取选定区域的数据
+export function getProvince(params) {
+  return axios.get('/api/riskBoard/distribution/province', { params: params });
+}
 
 // // 行业趋势
 // export function getStatisticTrend(params, industryId) {

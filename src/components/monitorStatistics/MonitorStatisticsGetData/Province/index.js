@@ -4,8 +4,11 @@ import { observer } from 'mobx-react';
 import styles from '../index.less';
 import Row from 'components/common/layout/Row';
 
+import StatisticHoverBox from 'components/monitorStatistics/StatisticHoverBox';
 import ProvinceAll from './ProvinceAll';
 import ProvinceBar from './ProvinceBar';
+import ProvinceLine from './ProvinceLine';
+import ProvinceMap from './ProvinceMap';
 
 function Province({ msStore }) {
   return (
@@ -14,6 +17,12 @@ function Province({ msStore }) {
         <ProvinceAll msStore={msStore} />
         <ProvinceBar msStore={msStore} />
       </Row>
+      <StatisticHoverBox topArrow="1">
+        <Row>
+          <ProvinceLine msStore={msStore} />
+          <ProvinceMap msStore={msStore} />
+        </Row>
+      </StatisticHoverBox>
     </div>
   );
 }
