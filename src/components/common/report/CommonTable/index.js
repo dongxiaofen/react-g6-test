@@ -11,12 +11,10 @@ function CommonTable({meta, tData, dict }) {
   //   pageComp = null;
   // }
   return (
-    <div>
-      <table className={styles.table}>
-        <Thead meta={meta} dict={dict} />
-        <Tbody meta={meta} tData={tData} />
-      </table>
-    </div>
+    <table className={styles.table}>
+      <Thead meta={meta} dict={dict} />
+      <Tbody meta={meta} tData={tData} />
+    </table>
   );
 }
 
