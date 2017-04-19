@@ -1,6 +1,8 @@
 import React, { Component, PropTypes } from 'react';
+import { observer } from 'mobx-react';
 
-export default class ClickChart extends Component {
+@observer
+export default class MapChart extends Component {
   static propTypes = {
     foo: PropTypes.string
   };

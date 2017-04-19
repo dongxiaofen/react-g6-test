@@ -1,0 +1,98 @@
+@import '~sc-colors/index.less';
+
+@tableItemHeight: 58px;
+
+.tableTip{
+  margin-top: 7px;
+  & > div:last-child {
+    margin-top: 10px;
+  }
+}
+
+.wdt {
+  float: left;
+  width: 8px;
+  height: 4px;
+  margin-top: 4px;
+  margin-right: 8px;
+}
+
+.wdt1{
+  .wdt;
+  background-color: @blue2;
+}
+.wdt2 {
+  .wdt;
+  background-color: @yellow1;
+}
+.tableText {
+  float: left;
+  color: @black7;
+  line-height: 1em;
+}
+
+.table-tip-content {
+  margin-top: 30px;
+  text-align: center;
+}
+
+.tableItemLi {
+  border-left: none;
+  border-bottom: none;
+}
+
+.tableItem {
+  float: left;
+
+  &:nth-of-type(1) {
+    width: 24%;
+
+    li {
+      color: @black7;
+      border-bottom: none;
+    }
+  }
+
+  &:nth-of-type(2) {
+    width: 38%;
+    background-color: @blue6;
+
+    li {
+      .tableItemLi;
+
+      &:first-child {
+        color: @black7;
+      }
+    }
+  }
+
+  &:nth-of-type(3) {
+    width: 38%;
+
+    li {
+      .tableItemLi;
+
+      &:first-child {
+        color: @black7;
+      }
+    }
+  }
+  
+  li {
+    height: @tableItemHeight;
+    line-height: @tableItemHeight;
+    color: @black4;
+    border: 1px solid @black12;
+
+    &:last-child {
+      border-bottom: 1px solid @black12;
+    }
+  }
+}
+
+.textGreen {
+  color: @green1 !important;
+}
+.textRed {
+  color: @red1 !important;
+}

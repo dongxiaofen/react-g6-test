@@ -55,7 +55,7 @@ export default class MonitorStatisticsGetData extends Component {
           statistic={msStore.statistic}
           params={msStore.params}
           loading={msStore.loadingGroup.statistic} />
-        <ChangeTrend changeTrend={msStore.changeTrend} />
+        <ChangeTrend msStore={msStore} />
       </Container>
     );
   }

@@ -1,9 +1,20 @@
 import { observable, action } from 'mobx';
+import { getPathValue } from 'pathval';
 import moment from 'moment';
 import 'moment-range';
 // import pathval from 'pathval';
 import { monitorStatisticsApi } from 'api';
 class MonitorStatisticsStore {
+  isEmptyObject(obj, key) {
+    const result = getPathValue(this[obj], key);
+    for (const name in result) {
+      if (obj.hasOwnProperty(name)) {
+        return false;
+      }
+    }
+    return true;
+  }
+
   @observable loadingGroup = {
     statistic: false,
     changeTrend: false,
@@ -14,7 +25,6 @@ class MonitorStatisticsStore {
     source: false,
   };
   @observable errorBody = {
-    statistic: {},
     changeTrend: {},
     province: {},
     provinceAll: {},
@@ -22,6 +32,7 @@ class MonitorStatisticsStore {
     industryStatistics: {},
     source: {},
   };
+
   @observable params = {};
 
   // 顶部四个板块store
@@ -1253,6 +1264,10 @@ class MonitorStatisticsStore {
         this.setErrorBody('changeTrend', err.response.data);
         this.setLoading('changeTrend');
       });
+  }
+
+  @action.boudn setChangeTable(params) {
+    this.changeTrend.mutual = params;
   }
 
   // 获取所有地区分布
