@@ -14,3 +14,6 @@ export const getRelation = (monitorId) => {
 export const createReport = (params) => {
   return axios.post(`/api/report`, {companyName: params});
 };
+export const createMonitor = (params) => {
+  return axios.post(`/api/monitor`, params);
+};

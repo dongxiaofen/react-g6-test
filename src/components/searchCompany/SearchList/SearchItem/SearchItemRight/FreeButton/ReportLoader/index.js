@@ -1,8 +1,9 @@
 import React, {PropTypes} from 'react';
 import { observer, inject } from 'mobx-react';
 import styles from './index.less';
+import { browserHistory } from 'react-router';
 
-function ReportLoader({modalStore, searchCompanyStore, routing, messageStore}) {
+function ReportLoader({modalStore, searchCompanyStore, messageStore}) {
   // 设置loading
   // 调用/api/report
   const freeReport = () => {
@@ -13,7 +14,7 @@ function ReportLoader({modalStore, searchCompanyStore, routing, messageStore}) {
     };
     messageStore.openMessage({ ...obj });
     const companyName = searchCompanyStore.singleItemData.company;
-    routing.push('/companyHome?companyName=' + companyName + '&companyType=FREE');
+    browserHistory.push('/companyHome?companyName=' + companyName + '&companyType=FREE');
   };
   const createReport = () => {
     searchCompanyStore.createReport();
@@ -39,6 +40,5 @@ function ReportLoader({modalStore, searchCompanyStore, routing, messageStore}) {
 ReportLoader.propTypes = {
   searchCompanyStore: PropTypes.object,
   modalStore: PropTypes.object,
-  routing: PropTypes.object
 };
-export default inject('searchCompanyStore', 'routing', 'modalStore', 'messageStore')(observer(ReportLoader));
+export default inject('searchCompanyStore', 'modalStore', 'messageStore')(observer(ReportLoader));

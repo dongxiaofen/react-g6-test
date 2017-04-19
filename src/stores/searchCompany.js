@@ -2,6 +2,7 @@ import { observable, action } from 'mobx';
 import { browserHistory } from 'react-router';
 import {searchApi} from 'api';
 import modalStore from './modal';
+import payModalStore from './payModal';
 import messageStore from './message';
 // import routing from '../routes';
 class SearchCompanyStore {
@@ -283,6 +284,23 @@ class SearchCompanyStore {
       }))
       .catch(action('createReport error', (err) => {
         console.log(err.response, '=====createReport error');
+      }));
+  }
+  // 创建监控
+  @action.bound createMonitor(obj) {
+    searchApi.createMonitor(obj)
+      .then(action('createMonitor', (resp) => {
+        console.log(resp, '======createMonitor result');
+        payModalStore.closeAction();
+        const text = {
+          content: '已创建监控'
+        };
+        messageStore.openMessage({ ...text });
+        // /companyHome?monitorId=184832&companyType=MAIN
+        browserHistory.push(`/companyHome?monitorId=${resp.data.monitorId}&companyType=MAIN`);
+      }))
+      .catch(action('createMonitor error', (err) => {
+        console.log(err.response, '=====createMonitor error');
       }));
   }
 }

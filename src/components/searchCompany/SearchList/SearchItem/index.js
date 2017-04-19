@@ -5,7 +5,7 @@ import SearchItemLeft from './SearchItemLeft';
 import SearchItemRight from './SearchItemRight';
 import { Row, Col } from 'components/common/layout';
 
-function SearchItem({itemData, searchParameter, modalStore, singleData}) {
+function SearchItem({itemData, searchParameter, modalStore, payModalStore, singleData, createMonitor}) {
   return (
     <div className={`${styles.searchItemWrap}`}>
       <Row>
@@ -16,9 +16,11 @@ function SearchItem({itemData, searchParameter, modalStore, singleData}) {
         </Col>
         <Col width="4">
           <SearchItemRight
+            payModalStore={payModalStore}
             modalStore={modalStore}
             itemData={itemData}
-            singleData={singleData} />
+            singleData={singleData}
+            createMonitor={createMonitor} />
         </Col>
       </Row>
     </div>
@@ -29,6 +31,8 @@ SearchItem.propTypes = {
   itemData: PropTypes.object,
   searchParameter: PropTypes.object,
   modalStore: PropTypes.object,
+  payModalStore: PropTypes.object,
   singleData: PropTypes.func,
+  createMonitor: PropTypes.func,
 };
 export default observer(SearchItem);

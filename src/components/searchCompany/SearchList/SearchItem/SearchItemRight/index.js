@@ -4,17 +4,19 @@ import styles from './index.less';
 import FreeButton from './FreeButton';
 import ReportButton from './ReportButton';
 
-function SearchItemRight({itemData, modalStore, singleData}) {
+function SearchItemRight({itemData, modalStore, payModalStore, singleData, createMonitor}) {
   let output = '';
   if (itemData.monitorStatus !== 'MONITOR' && itemData.monitorStatus !== 'PAUSE' && itemData.monitorStatus !== 'EXPIRED' && itemData.reportStatus !== 'REPORT') {
     output = (
       <FreeButton
+        payModalStore={payModalStore}
         modalStore={modalStore}
         itemData={itemData}
-        singleData={singleData} />
+        singleData={singleData}
+        createMonitor={createMonitor} />
     );
   }
-  if (itemData.reportStatus === 'REPORT') {
+  if (itemData.reportStatus === 'REPORT' || itemData.monitorStatus === 'MONITOR') {
     output = (
       <ReportButton itemData={itemData} />
     );
@@ -29,6 +31,8 @@ function SearchItemRight({itemData, modalStore, singleData}) {
 SearchItemRight.propTypes = {
   itemData: PropTypes.object,
   modalStore: PropTypes.object,
+  payModalStore: PropTypes.object,
   singleData: PropTypes.func,
+  createMonitor: PropTypes.func,
 };
 export default observer(SearchItemRight);
