@@ -16,7 +16,7 @@ function FiliationList({filiationList, isLoading}) {
   };
   return (
     <div>
-      <ModuleTitle module="分支机构" />
+      <ModuleTitle module="分支机构" count={filiationList.length} />
       <CommonTable {...data} />
     </div>
   );
