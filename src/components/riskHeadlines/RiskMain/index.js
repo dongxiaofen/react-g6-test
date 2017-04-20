@@ -5,7 +5,7 @@ import RiskCompany from '../RiskCompany';
 import RiskMessage from '../RiskMessage';
 import styles from './index.less';
 import {Container, Row, Col} from 'components/common/layout';
-@inject('riskHeadlinesStore', 'homeStore')
+@inject('riskHeadlinesStore')
 @observer
 export default class RiskMain extends Component {
   componentDidMount() {
@@ -13,7 +13,6 @@ export default class RiskMain extends Component {
     const params = this.props.riskHeadlinesStore.filterParams;
     this.props.riskHeadlinesStore.getCompanyList(dimGroupTypeStr, params, 'today');
     this.caculateHeight();
-    this.props.homeStore.postLogin();
   }
   componentWillUnmount() {
     this.props.riskHeadlinesStore.resetRiskStore();
