@@ -10,7 +10,7 @@ function IndustryTrendChart({ msStore }) {
       <BaseChart
         chartId="IndustryTrendChart"
         option={msStore.industryTrend.chartOption}
-        height="363px"/>
+        height="300px"/>
     </div>
   );
 }
