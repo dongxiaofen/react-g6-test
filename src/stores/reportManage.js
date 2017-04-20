@@ -1,6 +1,7 @@
 import { observable, action } from 'mobx';
 import { reportManageApi } from 'api';
 import payModalStore from './payModal';
+import messageStore from './message';
 import pathval from 'pathval';
 
 class ReportManageStore {
@@ -54,22 +55,17 @@ class ReportManageStore {
     reportManageApi.upGradeToMonitor(reportId, selectValue)
       .then(action( (response) => {
         if (response.status === 200) {
-          pathval.setPathValue(payModalStore, 'value.monitorModalStatus', false);
-// 显示成功的弹窗
-          pathval.setPathValue(payModalStore, 'value.secondVisible', true);
-          pathval.setPathValue(payModalStore, 'value.secondText', '加入监控成功');
-          pathval.setPathValue(payModalStore, 'value.btnLoading', false);
+          payModalStore.closeAction();
+          messageStore.openMessage({type: 'info', content: '加入监控成功', duration: '1500'});
+
 
           pathval.setPathValue(this, 'monitorId', response.data.monitorId);
           this.getReportList(0, params);
         }
       }))
       .catch(action( (err) => {
-        console.log(err.response.data.message);
-        pathval.setPathValue(payModalStore, 'value.btnLoading', false);
-        pathval.setPathValue(payModalStore, 'value.secondVisible', true);
-        pathval.setPathValue(payModalStore, 'value.monitorModalStatus', false);
-        pathval.setPathValue(payModalStore, 'value.secondText', err.response.data.message);
+        payModalStore.closeAction();
+        messageStore.openMessage({type: 'warning', content: err.response.data.message, duration: '1500'});
       }));
   }
 }

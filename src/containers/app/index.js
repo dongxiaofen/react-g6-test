@@ -7,8 +7,9 @@ import Login from 'components/Login';
 import Modal from 'components/common/Modal';
 import DetailModal from 'components/common/DetailModal';
 import Message from 'components/common/Message';
+import PayModal from 'components/common/PayModal';
 
-@inject('modalStore', 'detailModalStore', 'messageStore', 'homeStore')@observer
+@inject('modalStore', 'detailModalStore', 'messageStore', 'homeStore', 'payModalStore')@observer
 export default class App extends Component {
   static propTypes = {
     children: PropTypes.object.isRequired,
@@ -17,6 +18,7 @@ export default class App extends Component {
     modalStore: PropTypes.object,
     detailModalStore: PropTypes.object,
     messageStore: PropTypes.object,
+    payModalStore: PropTypes.object,
   };
   componentDidMount() {
     this.props.homeStore.postLogin();
@@ -43,6 +45,7 @@ export default class App extends Component {
         <Modal modalStore={this.props.modalStore} />
         <DetailModal detailModalStore={this.props.detailModalStore} />
         <Message messageStore={this.props.messageStore} />
+        <PayModal payModalStore={this.props.payModalStore} />
         <div className={styles.box}>
           <div className={styles.content}>
             {this.props.children}

@@ -1,54 +1,93 @@
-import { observable } from 'mobx';
+import { observable, action } from 'mobx';
+
 class PayModalStore {
-  @observable value = {
     // 对应报告的监控id
-    monitorId: '',
+    @observable monitorId ='';
     // 对应报告的报告id
-    reportId: '',
+    @observable reportId = '';
     // 主弹窗相关
     // 报告弹窗是否显示
-    reportModalStatus: false,
+    @observable reportModalStatus = false;
     // 监控弹窗是否显示
-    monitorModalStatus: false,
-    monitorListPayModal: false, // 监控列表弹窗控制字段
+    @observable monitorModalStatus = false;
+    @observable monitorListPayModal = false; // 监控列表弹窗控制字段
     // 报告转监控是否显示
-    reportToMonitorStatus: false,
+    @observable reportToMonitorStatus = false;
     // 弹窗类型
     // 生成报告 createReport
     // 刷新报告 updateReport
     // 创建监控 createMonitor
     // 转为监控 turnMonitor
     // 监控续费 continueMonitor
-    modalType: '',
+    @observable modalType = '';
     // 弹窗标题
-    title1: '创建报告',
-    title2: '刷新报告',
-    title3: '加入监控',
-    title4: '加入监控',
-    title5: '监控续期',
-    // 弹窗内容１
-    message1: 1500,
-    // 弹窗内容２
-    message2: '',
-    // 弹窗内容３
-    message3: '持续监控 将使用 150 点',
-    // 协议是否勾选
-    checkValue: 0,
+    @observable tittle ='';
     // loading
-    btnLoading: false,
+    @observable btnLoading = false;
     // 下拉框值
-    selectValue: 'ONE_YEAR',
+    @observable selectValue = 'ONE_YEAR';
     // 二次弹框相关
     // 二次弹框是否显示
-    secondVisible: false,
+    @observable secondVisible = false;
     // 需要显示的内容
-    secondText: '',
+    @observable secondText = '';
     // 二次弹框标题
-    secondTitle: '',
+    @observable secondTitle = '';
     // 重复创建id
-    repeatReportId: '',
-    repeatMonitorId: '',
-    isRepeat: false,
-  };
+    @observable repeatReportId = '';
+    @observable repeatMonitorId = '';
+    @observable isRepeat = false;
+
+    @observable visible = false;
+    @observable pointText = '';
+    @observable pactUrl = '';
+    @observable pactName ='';
+    @observable width = '560';
+
+    @observable callBack = null;
+
+    @action.bound closeAction() {
+      this.visible = false;
+      this.btnLoading = false;
+      this.selectValue = 'ONE_YEAR';
+    }
+
+    @action.bound openCompModal({ modalType, width, pactName, pactUrl, pointText, callBack }) {
+      this.visible = true;
+      this.pactName = pactName;
+      this.pactUrl = pactUrl;
+      this.pointText = pointText;
+      this.modalType = modalType;
+      this.callBack = callBack;
+      switch (modalType) {
+        case 'createReport':
+          this.tittle = '创建报告';
+          break;
+        case 'continueMonitor':
+          this.tittle = '监控续期';
+          break;
+        case 'createMonitor':
+          this.tittle = '加入监控';
+          break;
+        case 'turnMonitor':
+          this.tittle = '转为监控';
+          break;
+        default:
+          break;
+      }
+      if (width !== undefined) { this.width = width; }
+    }
+
+    @action.bound choiceClick(value) {
+      this.selectValue = value;
+    }
+
+    @action.bound confirmAction() {
+      this.btnLoading = true;
+      if (this.callBack) {
+        this.callBack.call(this);
+      }
+    }
+
 }
 export default new PayModalStore();

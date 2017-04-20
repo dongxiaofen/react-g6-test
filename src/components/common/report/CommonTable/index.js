@@ -11,17 +11,17 @@ function CommonTable({meta, tData, dict }) {
   //   pageComp = null;
   // }
   return (
-    <div>
-      <table className={styles.table}>
-        <Thead meta={meta} dict={dict} />
-        <Tbody meta={meta} tData={tData} />
-      </table>
-    </div>
+    <table className={styles.table}>
+      <Thead meta={meta} dict={dict} />
+      <Tbody meta={meta} tData={tData} />
+    </table>
   );
 }
 
 CommonTable.propTypes = {
-  foo: PropTypes.string,
+  meta: PropTypes.array.isRequired,
+  tData: PropTypes.object.isRequired,
+  dict: PropTypes.string.isRequired
 };
 export default loadingComp({
   mapDataToProps: props => ({
