@@ -1,0 +1,79 @@
+.filterWrap {
+  margin: 0;
+  padding: 0;
+}
+.singleWrap {
+  border-bottom: 1px solid #eceff1;
+  height: 50px;
+  line-height: 50px;
+  overflow: hidden;
+}
+.show {
+  height: auto;
+}
+.title {
+  float: left;
+  width: 70px;
+  font-size: 14px;
+  color: #90a4ae;
+}
+.itemWrap {
+  float: left;
+  width: 90%;
+  padding-bottom: 12px;
+}
+.toggleItem {
+  float: left;
+}
+.toggleItem a {
+  font-size: 14px;
+  color: #546e7a;
+  padding-right: 3px;
+  text-decoration: none;
+  outline: none;
+}
+.toggleItem i {
+  float: right;
+  margin: 15px 0 0;
+  display: block;
+  width: 20px;
+  height: 20px;
+  transition: all .2s;
+  background-image: url('../../../../../imgs/searchCompany/filtersheetDown.png');
+  background-size: auto;
+  background-repeat: no-repeat;
+  cursor: pointer;
+}
+.activeAllItem, .activeItem {
+  float: left;
+  color: #42a5f5;
+  padding: 0 5px;
+  margin-left: 20px;
+  min-width: 40px;
+  margin-top: 12.5px;
+  line-height: 25px;
+  text-align: center;
+  height: 25px;
+  font-size: 14px;
+  cursor: pointer;
+}
+.allItem, .item {
+  float: left;
+  color: #546e7a;
+  padding: 0 5px;
+  margin-left: 20px;
+  min-width: 40px;
+  margin-top: 12.5px;
+  line-height: 25px;
+  text-align: center;
+  height: 25px;
+  font-size: 14px;
+  cursor: pointer;
+  &:hover {
+    color: #42a5f5;
+  }
+}
+.none {
+  overflow: hidden;
+  height: 0;
+}

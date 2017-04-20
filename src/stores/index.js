@@ -4,6 +4,7 @@ export relationStore from './relation';
 export alertStore from './alert';
 export modalStore from './modal';
 export monitorListStore from './monitorList';
+export searchCompanyStore from './searchCompany';
 export monitorStatisticsStore from './monitorStatistics';
 export bannerStore from './banner';
 export myHomePageStore from './myHomePage';
