@@ -1,6 +1,5 @@
 import React, { Component, PropTypes } from 'react';
 import { observer, inject } from 'mobx-react';
-import axios from 'axios';
 import moment from 'moment';
 
 import Container from 'components/common/layout/Container';
@@ -26,10 +25,6 @@ export default class MonitorStatisticsGetData extends Component {
     monitorStatisticsStore: PropTypes.object
   };
   componentDidMount() {
-    axios.post('/api/user/login', {
-      email: 'cy@sc.cn',
-      password: '25f9e794323b453885f5181f1b624d0b'
-    });
     const msStore = this.props.monitorStatisticsStore;
     msStore.getStatistic(params);
     msStore.getChangeTrend(params);

@@ -7,7 +7,17 @@ import { loadingComp } from 'components/hoc';
 
 function ProvinceLineChart({ msStore }) {
   return (
-    <div className={styles}>
+    <div style={{ position: 'relative' }}>
+      <div className={styles.tip}>
+        <div className={`clearfix ${styles.mb10}`}>
+          <div className={styles.wdt1}></div>
+          <div className={styles.tipText}>头条更新信息</div>
+        </div>
+        <div className={`clearfix`}>
+          <div className={styles.wdt2}></div>
+          <div className={styles.tipText}>头条更新企业</div>
+        </div>
+      </div>
       <BaseChart
         chartId= "ProvinceLineChart"
         height="330px"
