@@ -1,20 +1,21 @@
 import React, { PropTypes } from 'react';
-import { observer } from 'mobx-react';
+import { observer, inject } from 'mobx-react';
 import Thead from './Thead';
 import Tbody from './Tbody';
 import styles from './index.less';
 import { loadingComp } from 'components/hoc';
+import Pager from '../Pager';
 
-function CommonTable({meta, tData, dict }) {
-  // let pageComp = <Pager {...this.props} reducerName={this.props.reducerName} />;
-  // if (this.props.isNeedPager !== '1' || this.props.data.tData.size < tableSize) {
-  //   pageComp = null;
-  // }
+function CommonTable({meta, tData, dict, uiStore}) {
+  const {index, size} = uiStore.uiState[dict];
   return (
-    <table className={styles.table}>
-      <Thead meta={meta} dict={dict} />
-      <Tbody meta={meta} tData={tData} />
-    </table>
+    <div>
+      <table className={styles.table}>
+        <Thead meta={meta} dict={dict} />
+        <Tbody meta={meta} tData={tData.slice((index - 1) * size, index * size)} />
+      </table>
+      <Pager dict={dict} tData={tData} />
+    </div>
   );
 }
 
@@ -31,4 +32,4 @@ export default loadingComp({
     errCategory: 1,
     module: props.module
   })
-})(observer(CommonTable));
+})(inject('uiStore')(observer(CommonTable)));

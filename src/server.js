@@ -159,8 +159,15 @@ app.use((req, res) => {
         //     .end(function (err, resp) {
         //       console.log(resp.body);
         //     })
-        allStores.searchStore.searchKey = '誉存科技';
-        // console.log('homeStore', homeStore);
+
+        /*获取报告leftBar高亮*/
+        let reportActiveItem = '';
+        if (reqPathName.indexOf('companyHome')) {
+          const arr = reqPathName.split('/');
+          reportActiveItem = arr[arr.length - 1];
+        }
+        allStores.leftBarStore.activeItem = reportActiveItem;
+        /*获取报告leftBar高亮*/
         const component = (
           <Provider { ...allStores }>
             <RouterContext {...renderProps} />

@@ -12,12 +12,28 @@ export default class Banner extends Component {
     bannerStore: PropTypes.object,
   };
   componentDidMount() {
-    const {monitorId, reportId, companyName, companyType} = this.props.routing.location.query;
+    const { monitorId, reportId, companyName, companyType } = this.props.routing.location.query;
     this.props.bannerStore.getBannerInfo(monitorId, reportId, companyName, companyType);
+    window.addEventListener('scroll', this.scrollReport);
+  }
+  componentWillUnmount() {
+    window.removeEventListener('scroll', this.scrollReport);
+  }
+  scrollReport = () => {
+    const bannerContentElement = this.refs.bannerContent;
+    if (document.body.scrollTop > 100) {
+      // 缩短banner
+      bannerContentElement.className = styles.info + ' ' + styles.infosmall;
+    } else {
+      // 恢复banner
+      if (bannerContentElement) {
+        bannerContentElement.className = styles.info;
+      }
+    }
   }
   render() {
     return (
-      <div id="bannerWrap" className={`${styles.bannerInfoWrap} clearfix`}>
+      <div id="bannerWrap" ref="bannerContent" className={`${styles.bannerInfoWrap} clearfix`}>
         <Container>
           <Row>
             <Col width="8">
