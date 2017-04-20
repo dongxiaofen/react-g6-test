@@ -88,7 +88,7 @@ axios.interceptors.response.use((response) => {
     //   });
     // });
   } else if (error.response.status === 502) {
-    allStore.modalStore.openTextModal('后端正在部署', '请稍后');
+    allStore.messageStore.openMessage({type: 'warning', content: '后端正在部署', duration: 5000});
   }
   return Promise.reject(error);
 });
