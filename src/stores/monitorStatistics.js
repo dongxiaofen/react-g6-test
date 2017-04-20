@@ -1,12 +1,16 @@
 import { observable, action } from 'mobx';
 import { getPathValue } from 'pathval';
+import axios from 'axios';
 import moment from 'moment';
 import 'moment-range';
-// import pathval from 'pathval';
 import geoCoordMap from 'helpers/geoCoordMap';
 import provinceCityName from 'helpers/provinceCityName';
 import { monitorStatisticsApi } from 'api';
 class MonitorStatisticsStore {
+  constructor() {
+    this.cancel = [];
+  }
+
   isEmptyObject(obj, key) {
     const result = getPathValue(this[obj], key);
     for (const name in result) {
@@ -1227,21 +1231,26 @@ class MonitorStatisticsStore {
   // 头顶的四个板块
   @action.bound getStatistic(params) {
     this.setLoading('statistic', true);
-    monitorStatisticsApi.getStatistic(params)
+    const source = axios.CancelToken.source();
+    monitorStatisticsApi.getStatistic({ params: params, cancelToken: source.token})
       .then(action('get statistic', (resp) => {
         this.statistic = resp.data;
         this.setLoading('statistic');
       }))
       .catch((err) => {
-        this.setErrorBody('statistic', err.response.data);
-        this.setLoading('statistic');
+        if (!axios.isCancel(err)) {
+          this.setErrorBody('statistic', err.response.data);
+          this.setLoading('statistic');
+        }
       });
+    this.cancel.push(source.cancel);
   }
 
   // 变化趋势
   @action.bound getChangeTrend(params) {
     this.setLoading('changeTrend', true);
-    monitorStatisticsApi.getChangeTrend(params)
+    const source = axios.CancelToken.source();
+    monitorStatisticsApi.getChangeTrend({ params: params, cancelToken: source.token })
       .then(action('get change trend', (resp) => {
         const xAxisDate = [];
         const companyData = [];
@@ -1276,9 +1285,12 @@ class MonitorStatisticsStore {
       }))
       .catch((err) => {
         console.log(err);
-        this.setErrorBody('changeTrend', err.response.data);
-        this.setLoading('changeTrend');
+        if (!axios.isCancel(err)) {
+          this.setErrorBody('changeTrend', err.response.data);
+          this.setLoading('changeTrend');
+        }
       });
+    this.cancel.push(source.cancel);
   }
 
   @action.bound setChangeTable(params) {
@@ -1288,7 +1300,8 @@ class MonitorStatisticsStore {
   // 获取所有地区分布
   @action.bound getProvinceAll(params) {
     this.setLoading('provinceAll', true);
-    monitorStatisticsApi.getProvinceAll(params)
+    const source = axios.CancelToken.source();
+    monitorStatisticsApi.getProvinceAll({ params: params, cancelToken: source.token })
       .then(action('get province all', (resp) => {
         const provinceAllMapData = [];
         const provinceBarSeriesData = [];
@@ -1341,9 +1354,6 @@ class MonitorStatisticsStore {
             provinceBarSeriesData.push(item.companyCount);
           });
         }
-        // const newParams = getState().getIn(['headTrend', 'params']).toJS();
-        // const provinceName = getState().getIn(['headTrend', 'province', 'provinceName']);
-        // getProvince(newParams, provinceName)(dispatch);
         this.provinceAll.chartOption.series[0].data = provinceAllMapData;
         this.provinceAllSize = provinceAllData.length;
         this.provinceBar.chartOption.yAxis.data = provinceBarYAxisData;
@@ -1352,21 +1362,23 @@ class MonitorStatisticsStore {
         this.provinceAll.result = provinceAllData;
         this.provinceBar.result = provinceAllData;
         this.setLoading('provinceAll');
-        this.getProvince({
-          ...params,
-          province: provinceName
-        });
+        this.getProvince({ params: { ...params, province: provinceName } });
       }))
       .catch((err) => {
-        this.setErrorBody('provinceAll', err.response.data);
-        this.setLoading('provinceAll');
+        console.log(err);
+        if (!axios.isCancel(err)) {
+          this.setErrorBody('provinceAll', err.response.data);
+          this.setLoading('provinceAll');
+        }
       });
+    this.cancel.push(source.cancel);
   }
 
   // 获取选定区域
-  @action.bound getProvince(params) {
+  @action.bound getProvince({params}) {
     this.setLoading('province', true);
-    monitorStatisticsApi.getProvince(params)
+    const source = axios.CancelToken.source();
+    monitorStatisticsApi.getProvince({ params, cancelToken: source.token })
       .then(action('get province', (resp) => {
         const provinceDate = [];
         const provinceEvent = [];
@@ -1459,9 +1471,12 @@ class MonitorStatisticsStore {
       }))
       .catch((err) => {
         console.log(err);
-        this.setErrorBody('province', err.response.data);
-        this.setLoading('province');
+        if (!axios.isCancel(err)) {
+          this.setErrorBody('province', err.response.data);
+          this.setLoading('province');
+        }
       });
+    this.cancel.push(source.cancel);
   }
 
   // 设置选定区域名称
@@ -1472,7 +1487,8 @@ class MonitorStatisticsStore {
   // 获取行业统计
   @action.bound getIndustryStatistics(params) {
     this.setLoading('industryStatistics', true);
-    monitorStatisticsApi.getIndustryStatistics(params)
+    const source = axios.CancelToken.source();
+    monitorStatisticsApi.getIndustryStatistics({ params: params, cancelToken: source.token})
       .then(action('get industry statistics', (resp) => {
         const statisticSeriesData = [];
         let industryId = '';
@@ -1537,22 +1553,23 @@ class MonitorStatisticsStore {
         this.industryRankLength = statisticData.length;
         this.industryStatistics.result = statisticData;
         this.setLoading('industryStatistics');
-        this.getIndustryTrend({
-          ...params,
-          industryId: industryId
-        });
+        this.getIndustryTrend({ params: { ...params, industryId: industryId } });
       }))
       .catch((err) => {
         console.log(err);
-        this.setErrorBody('industryStatistics', err.response.data);
-        this.setLoading('industryStatistics');
+        if (!axios.isCancel(err)) {
+          this.setErrorBody('industryStatistics', err.response.data);
+          this.setLoading('industryStatistics');
+        }
       });
+    this.cancel.push(source.cancel);
   }
 
-  // 行业趋势
-  @action.bound getIndustryTrend(params) {
+  // 行业变化趋势
+  @action.bound getIndustryTrend({params}) {
     this.setLoading('industryTrend', true);
-    monitorStatisticsApi.getIndustryTrend(params)
+    const source = axios.CancelToken.source();
+    monitorStatisticsApi.getIndustryTrend({ params, cancelToken: source.token })
       .then(action('get industry trend', (resp) => {
         const statisticTrendDate = [];
         const statisticTrendEvent = [];
@@ -1575,9 +1592,12 @@ class MonitorStatisticsStore {
       }))
       .catch((err) => {
         console.log(err);
-        this.setErrorBody('industryTrend', err.response.data);
-        this.setLoading('industryTrend');
+        if (!axios.isCancel(err)) {
+          this.setErrorBody('industryTrend', err.response.data);
+          this.setLoading('industryTrend');
+        }
       });
+    this.cancel.push(source.cancel);
   }
 
   // 设置选定行业名称
@@ -1588,7 +1608,8 @@ class MonitorStatisticsStore {
   // 获取头条数据
   @action.bound getHeadlines(params) {
     this.setLoading('headlines', true);
-    monitorStatisticsApi.getHeadlines(params)
+    const source = axios.CancelToken.source();
+    monitorStatisticsApi.getHeadlines({ params: params, cancelToken: source.token })
       .then(action('get headlines', (resp) => {
         const sourceTrendDate = [];
         const sourceTrendAll = [];
@@ -1695,9 +1716,12 @@ class MonitorStatisticsStore {
       }))
       .catch((err) => {
         console.log(err);
-        this.setErrorBody('headlines', err.response.data);
-        this.setLoading('headlines');
+        if (!axios.isCancel(err)) {
+          this.setErrorBody('headlines', err.response.data);
+          this.setLoading('headlines');
+        }
       });
+    this.cancel.push(source.cancel);
   }
 }
 export default new MonitorStatisticsStore();

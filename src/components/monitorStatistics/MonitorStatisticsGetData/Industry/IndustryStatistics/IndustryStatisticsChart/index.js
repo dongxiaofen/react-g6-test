@@ -6,10 +6,8 @@ import { loadingComp } from 'components/hoc';
 function IndustryStatisticsChart({ msStore }) {
   const dateOnClick = (chartData) => {
     const params = msStore.params;
-    msStore.getIndustryTrend({
-      ...params,
-      industryId: chartData.data.industryId
-    });
+    params.industryId = chartData.data.industryId;
+    msStore.getIndustryTrend({ params });
     msStore.setIndustryName(chartData.name);
   };
 

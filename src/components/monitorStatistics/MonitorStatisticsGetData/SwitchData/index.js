@@ -17,6 +17,11 @@ function disabledDate(current) {
 function SwitchData({ msStore, params }) {
   const companyTypeOnchange = (val) => {
     const msStoreParams = msStore.params;
+    msStore.cancel.forEach((cancel) => {
+      if (cancel) {
+        cancel();
+      }
+    });
     msStore.getChangeData({
       begin: msStoreParams.begin,
       end: msStoreParams.end,
@@ -32,7 +37,6 @@ function SwitchData({ msStore, params }) {
       type: msStoreParams.type
     });
   };
-
   return (
     <Row>
       <Col width="12">

@@ -10,7 +10,7 @@ function ProvinceAllChart({ msStore }) {
     if (chartData.componentSubType === 'scatter') {
       const params = msStore.params;
       params.province = chartData.name;
-      msStore.getProvince(params);
+      msStore.getProvince({params});
       msStore.setProvinceName(chartData.name);
     }
   };
