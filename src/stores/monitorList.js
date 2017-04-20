@@ -96,6 +96,17 @@ class MonitorListStore {
         console.log(err);
       }));
   }
+  @action.bound renewalAction(params) {
+    const {monitorId, time, index, successCb, errorCb} = params;
+    monitorListApi.renewal({monitorId, time})
+      .then(action('renewal_success', resp => {
+        this.mainList.content[index] = resp.data;
+        successCb(resp);
+      }))
+      .catch(action('renewal_error', err => {
+        errorCb(err);
+      }));
+  }
 }
 
 export default new MonitorListStore();

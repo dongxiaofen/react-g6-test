@@ -17,6 +17,6 @@ export const changeMonitorStatus = (params) => {
   const {monitorId, status} = params;
   return axios.put(`/api/monitor/${monitorId}/status`, {status});
 };
-export const recharge = (params) => {
-  return axios.put(`/api/monitor/${params.rechargeId}/renewal`, {time: params.monitorTime});
+export const renewal = (params) => {
+  return axios.put(`/api/monitor/${params.monitorId}/renewal`, {time: params.time});
 };

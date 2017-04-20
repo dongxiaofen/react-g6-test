@@ -1,9 +1,9 @@
 import React from 'react';
-import { observer } from 'mobx-react';
+import { observer, inject } from 'mobx-react';
 import Switch from 'components/lib/switch';
 import Modal from 'components/lib/Modal';
 import styles from './index.less';
-function ActionWrap({data, mainData, index, relation, monitorListStore}) {
+function ActionWrap({data, mainData, index, relation, monitorListStore, payModalStore, messageStore}) {
   const monitorId = relation === 'main' ? data.monitorId : data.monitorCompanyType.monitorId;
   const status = data.status;
   const switchLoading = monitorListStore.switchLoading.get(monitorId);
@@ -27,8 +27,38 @@ function ActionWrap({data, mainData, index, relation, monitorListStore}) {
       mMonitorId: relation === 'relation' ? mainData.monitorId : monitorId,
     });
   };
+  const successCb = () => {
+    payModalStore.closeAction();
+    messageStore.openMessage({
+      type: 'info',
+      content: '续费成功',
+    });
+  };
+  const errorCb = (err) => {
+    payModalStore.closeAction();
+    messageStore.openMessage({
+      type: 'error',
+      content: err.response && err.response.data && err.response.data.message || '续费失败',
+    });
+  };
+  const choiceOk = () => {
+    monitorListStore.renewalAction({
+      monitorId,
+      index,
+      time: payModalStore.selectValue,
+      successCb,
+      errorCb,
+    });
+  };
   const recharge = () => {
-    console.log('---');
+    payModalStore.openCompModal({
+      'modalType': 'createMonitor',
+      'width': '560',
+      'pactName': '用户服务协议',
+      'pactUrl': '/',
+      'pointText': '创建报告即视为同意',
+      'callBack': choiceOk
+    });
   };
   return (
     <div className={styles.wrapper}>
@@ -53,4 +83,4 @@ function ActionWrap({data, mainData, index, relation, monitorListStore}) {
   );
 }
 
-export default observer(ActionWrap);
+export default inject('payModalStore', 'messageStore')(observer(ActionWrap));
