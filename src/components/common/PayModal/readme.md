@@ -2,7 +2,7 @@
 ````
     payModalStore.openCompModal({
       'modalType': 'createMonitor',//continueMonitor,createMonitor   不一样的modalType会有不一样的标题
-      'width': '560',//弹出框宽度
+      'width': '560px',//弹出框宽度
       'pactName': '用户服务协议',
       'pactUrl': '/',协议地址
       'pointText': '创建报告即视为同意',

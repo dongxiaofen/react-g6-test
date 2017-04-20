@@ -14,7 +14,7 @@ function BaseList({listData, routing, reportManageStore, payModalStore}) {
   const turnToMonitor = (reportId) => {
     payModalStore.openCompModal({
       'modalType': 'createMonitor',
-      'width': '560',
+      'width': '560px',
       'pactName': '用户服务协议',
       'pactUrl': '/',
       'pointText': '创建报告即视为同意',
