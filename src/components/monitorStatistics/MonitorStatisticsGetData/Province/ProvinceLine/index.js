@@ -7,7 +7,6 @@ import StatisticTitle from '../../../StatisticTitle';
 import ProvinceLineChart from './ProvinceLineChart';
 
 function ProvinceLine({ msStore }) {
-  console.log(msStore);
   return (
     <Col width="6">
       <StatisticTitle title={msStore.provinceName} subTitle=" - 变化趋势" />

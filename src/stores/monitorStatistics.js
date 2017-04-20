@@ -713,7 +713,7 @@ class MonitorStatisticsStore {
    * 行业统计store
    */
   // 行业统计显示区块数store，最多显示10个
-  @observable industryRankLength = '';
+  @observable industryRankLength = 0;
   @observable industryId = '';
   @observable industryName = '';
   // 行业统计store
@@ -774,35 +774,37 @@ class MonitorStatisticsStore {
   };
   // 行业统计变化趋势store
   @observable industryTrend = {
-    dataZoom: [
-      {
-        type: 'slider',
-        bottom: 0,
-        dataBackground: {
-          areaStyle: {
-            color: '#eeeeee',
+    result: {},
+    chartOption: {
+      dataZoom: [
+        {
+          type: 'slider',
+          bottom: 0,
+          dataBackground: {
+            areaStyle: {
+              color: '#eeeeee',
+            },
+          },
+          fillerColor: 'rgba(230, 230, 230, 0.4)',
+          handleStyle: {
+            color: '#dddddd'
           },
         },
-        fillerColor: 'rgba(230, 230, 230, 0.4)',
-        handleStyle: {
-          color: '#dddddd'
+        {
+          type: 'inside',
         },
-      },
-      {
-        type: 'inside',
-      },
-    ],
-    tooltip: {
-      trigger: 'axis',
-      axisPointer: {
-        lineStyle: {
-          color: '#e5e5e5',
-        }
-      },
-      backgroundColor: '#ffffff',
-      padding: [0, 0],
-      formatter: (ticket) => {
-        const str = `
+      ],
+      tooltip: {
+        trigger: 'axis',
+        axisPointer: {
+          lineStyle: {
+            color: '#e5e5e5',
+          }
+        },
+        backgroundColor: '#ffffff',
+        padding: [0, 0],
+        formatter: (ticket) => {
+          const str = `
           <div style="box-shadow: 0 0 7px #dddddd; padding: 15px 20px; background-color: #ffffff">
             <p style="text-align: center; padding-bottom: 10px;">
               <a style="color:#999999;">
@@ -822,96 +824,97 @@ class MonitorStatisticsStore {
               </a>
             </p>
           </div>`;
-        return str;
-      },
-    },
-    grid: {
-      top: '10',
-      left: '4%',
-      right: '66',
-      bottom: '45',
-      containLabel: true
-    },
-    xAxis: {
-      type: 'category',
-      boundaryGap: false,
-      splitLine: {
-        show: true,
-        lineStyle: {
-          type: 'dashed',
-          color: ['#f5f5f5']
-        }
-      },
-      axisTick: {
-        show: false,
-      },
-      axisLine: {
-        lineStyle: {
-          color: '#e5e5e5',
-        }
-      },
-      axisLabel: {
-        textStyle: {
-          color: '#999999',
+          return str;
         },
       },
-      data: []
-    },
-    yAxis: {
-      type: 'value',
-      splitLine: {
-        show: false,
+      grid: {
+        top: '10',
+        left: '4%',
+        right: '66',
+        bottom: '45',
+        containLabel: true
       },
-      axisLabel: {
-        textStyle: {
-          color: '#999999',
-        },
-      },
-      axisLine: {
-        show: false,
-      },
-      axisTick: {
-        show: false,
-      },
-    },
-    series: [
-      {
-        name: '信息',
-        type: 'line',
-        stack: '总量1',
-        areaStyle: { normal: {} },
-        lineStyle: {
-          normal: {
-            color: '#b0bec5',
-            width: 3,
+      xAxis: {
+        type: 'category',
+        boundaryGap: false,
+        splitLine: {
+          show: true,
+          lineStyle: {
+            type: 'dashed',
+            color: ['#f5f5f5']
           }
         },
-        itemStyle: {
-          normal: {
-            color: '#b0bec5',
+        axisTick: {
+          show: false,
+        },
+        axisLine: {
+          lineStyle: {
+            color: '#e5e5e5',
           }
         },
-        data: [],
-      },
-      {
-        name: '企业',
-        type: 'line',
-        stack: '总量2',
-        areaStyle: { normal: {} },
-        lineStyle: {
-          normal: {
-            color: '#bcaaa4',
-            width: 3,
-          }
-        },
-        itemStyle: {
-          normal: {
-            color: '#bcaaa4'
-          }
+        axisLabel: {
+          textStyle: {
+            color: '#999999',
+          },
         },
         data: []
       },
-    ]
+      yAxis: {
+        type: 'value',
+        splitLine: {
+          show: false,
+        },
+        axisLabel: {
+          textStyle: {
+            color: '#999999',
+          },
+        },
+        axisLine: {
+          show: false,
+        },
+        axisTick: {
+          show: false,
+        },
+      },
+      series: [
+        {
+          name: '信息',
+          type: 'line',
+          stack: '总量1',
+          areaStyle: { normal: {} },
+          lineStyle: {
+            normal: {
+              color: '#b0bec5',
+              width: 3,
+            }
+          },
+          itemStyle: {
+            normal: {
+              color: '#b0bec5',
+            }
+          },
+          data: [],
+        },
+        {
+          name: '企业',
+          type: 'line',
+          stack: '总量2',
+          areaStyle: { normal: {} },
+          lineStyle: {
+            normal: {
+              color: '#bcaaa4',
+              width: 3,
+            }
+          },
+          itemStyle: {
+            normal: {
+              color: '#bcaaa4'
+            }
+          },
+          data: []
+        },
+      ]
+    }
   };
 
   /**
@@ -1458,6 +1461,122 @@ class MonitorStatisticsStore {
   // 设置选定区域名称
   @action.bound setProvinceName(provinceName) {
     this.provinceName = provinceName;
+  }
+
+  // 获取行业统计
+  @action.bound getIndustryStatistics(params) {
+    this.setLoading('industryStatistics', true);
+    monitorStatisticsApi.getIndustryStatistics(params)
+      .then(action('get industry statistics', (resp) => {
+        const statisticSeriesData = [];
+        let industryId = '';
+        let industryName = '';
+        let statisticDataSum = 0;
+        const statisticDataPer = [];
+        let statisticData = resp.data;
+        if (statisticData.length) {
+          const pieColor = [
+            '#80cbc4',
+            '#a5d6a7',
+            '#c5e1a5',
+            '#90caf9',
+            '#7986cb',
+            '#b0bec5',
+            '#bcaaa4',
+            '#ffe082',
+            '#fff59d',
+            '#e6ee9c',
+          ];
+          // 只取前10个，没有10个，直接赋值数组长度
+          let dataLength = 0;
+          if (statisticData.length >= 10) {
+            dataLength = 10;
+          } else {
+            dataLength = statisticData.length;
+          }
+          // 算总数
+          statisticData.forEach((item) => {
+            statisticDataSum += item.monitorCount;
+          });
+          // 排序，从大到小
+          statisticData = statisticData.sort((prev, next) => {
+            return next.monitorCount - prev.monitorCount;
+          });
+          // 算百分比，最多保留两位小数
+          statisticData.forEach((item) => {
+            let per = item.monitorCount / statisticDataSum * 100;
+            per = per.toFixed(2);
+            statisticDataPer.push(per);
+          });
+          // 封装数据
+          for (let idx = 0; idx < dataLength; idx++) {
+            statisticSeriesData.push({
+              value: statisticData[idx].monitorCount,
+              name: statisticData[idx].industryName,
+              industryId: statisticData[idx].industryId,
+              per: statisticDataPer[idx],
+              itemStyle: {
+                normal: {
+                  color: pieColor[idx]
+                }
+              },
+            });
+          }
+          industryId = statisticData[0].industryId;
+          industryName = statisticData[0].industryName;
+        }
+        this.industryStatistics.chartOption.series[0].data = statisticSeriesData;
+        this.industryId = industryId;
+        this.industryName = industryName;
+        this.industryRankLength = statisticData.length;
+        this.industryStatistics.result = statisticData;
+        this.setLoading('industryStatistics');
+        this.getIndustryTrend({
+          ...params,
+          industryId: industryId
+        });
+      }))
+      .catch((err) => {
+        console.log(err);
+        this.setErrorBody('industryStatistics', err.response.data);
+        this.setLoading('industryStatistics');
+      });
+  }
+
+  // 行业趋势
+  @action.bound getIndustryTrend(params) {
+    this.setLoading('industryTrend', true);
+    monitorStatisticsApi.getIndustryTrend(params)
+      .then(action('get industry trend', (resp) => {
+        const statisticTrendDate = [];
+        const statisticTrendEvent = [];
+        const statisticTrendCompany = [];
+        const statisticTrendData = resp.data;
+        let compliteDate = [];
+        if (statisticTrendData.length) {
+          compliteDate = this.dealWithDate(params.begin, params.end, statisticTrendData);
+          compliteDate.forEach((item) => {
+            statisticTrendDate.push(item.date);
+            statisticTrendEvent.push(item.eventCount);
+            statisticTrendCompany.push(item.companyCount);
+          });
+        }
+        this.industryTrend.chartOption.xAxis.data = statisticTrendDate;
+        this.industryTrend.chartOption.series[0].data = statisticTrendEvent;
+        this.industryTrend.chartOption.series[1].data = statisticTrendCompany;
+        this.industryTrend.result = statisticTrendData;
+        this.setLoading('industryTrend');
+      }))
+      .catch((err) => {
+        console.log(err);
+        this.setErrorBody('industryTrend', err.response.data);
+        this.setLoading('industryTrend');
+      });
+  }
+
+  // 设置选定行业名称
+  @action.bound setIndustryName(industryName) {
+    this.industryName = industryName;
   }
 }
 export default new MonitorStatisticsStore();

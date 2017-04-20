@@ -20,62 +20,15 @@ export function getProvince(params) {
   return axios.get('/api/riskBoard/distribution/province', { params: params });
 }
 
-// // 行业趋势
-// export function getStatisticTrend(params, industryId) {
-//   const newParams = params;
-//   newParams.industryId = industryId;
-//   return dispatch => {
-//     setLoading(dispatch, 'statisticTrend', true);
-//     axios.get('/api/riskBoard/industry/trend', { params: newParams })
-//       .then((resp) => {
-//         dispatch({
-//           type: ActionTypes.SET_HEAD_TREND_STATISTIC_TREND,
-//           data: resp.data,
-//           params: newParams,
-//         });
-//         setLoading(dispatch, 'statisticTrend');
-//       })
-//       .catch((err) => {
-//         console.log(err);
-//         dispatch({
-//           type: ActionTypes.SET_HEAD_TREND_STATISTIC_TREND,
-//           data: [],
-//         });
-//         setErrorBody(
-//           dispatch,
-//           ['statisticChart', 'lineResult', 'errorBody'],
-//           err.response.data
-//         );
-//         setLoading(dispatch, 'statisticTrend');
-//       });
-//   };
-// }
+// 行业统计
+export function getIndustryStatistics(params) {
+  return axios.get('/api/riskBoard/industry/statistic', { params: params });
+}
 
-// // 行业统计
-// export function getStatisticChart(params) {
-//   return (dispatch, getState) => {
-//     setLoading(dispatch, 'statisticChart', true);
-//     axios.get('/api/riskBoard/industry/statistic', { params: params })
-//       .then((resp) => {
-//         dispatch({
-//           type: ActionTypes.SET_HEAD_TREND_STATISTIC_CHART,
-//           data: resp.data,
-//         });
-//         setLoading(dispatch, 'statisticChart');
-//         const newParams = getState().getIn(['headTrend', 'params']).toJS();
-//         const industryId = getState().getIn(['headTrend', 'statisticChart', 'industryId']);
-//         getStatisticTrend(newParams, industryId)(dispatch);
-//       })
-//       .catch((err) => {
-//         setErrorBody(
-//           dispatch,
-//           ['statisticChart', 'pieResult', 'errorBody'],
-//           err.response.data
-//         );
-//         setLoading(dispatch, 'statisticChart');
-//       });
-//   };
-// }
+// 行业趋势
+export function getIndustryTrend(params) {
+  return axios.get('/api/riskBoard/industry/trend', { params: params });
+}
 
 // // 来源分析(最下面的图表)
 // export function getSource(params) {

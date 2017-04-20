@@ -17,12 +17,14 @@ function Province({ msStore }) {
         <ProvinceAll msStore={msStore} />
         <ProvinceBar msStore={msStore} />
       </Row>
-      <StatisticHoverBox topArrow="1">
-        <Row>
-          <ProvinceLine msStore={msStore} />
-          <ProvinceMap msStore={msStore} />
-        </Row>
-      </StatisticHoverBox>
+      <div style={{ marginTop: 70 }}>
+        <StatisticHoverBox topArrow="1">
+          <Row>
+            <ProvinceLine msStore={msStore} />
+            <ProvinceMap msStore={msStore} />
+          </Row>
+        </StatisticHoverBox>
+      </div>
     </div>
   );
 }

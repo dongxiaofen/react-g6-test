@@ -12,6 +12,7 @@ import SwitchData from './SwitchData';
 import StatisticInfo from './StatisticInfo';
 import ChangeTrend from './ChangeTrend';
 import Province from './Province';
+import Industry from './Industry';
 
 const params = {
   begin: moment().subtract(29, 'day').format('YYYY-MM-DD'),
@@ -32,6 +33,7 @@ export default class MonitorStatisticsGetData extends Component {
     msStore.getStatistic(params);
     msStore.getChangeTrend(params);
     msStore.getProvinceAll(params);
+    msStore.getIndustryStatistics(params);
     msStore.setParams(params);
   }
 
@@ -59,6 +61,7 @@ export default class MonitorStatisticsGetData extends Component {
           loading={msStore.loadingGroup.statistic} />
         <ChangeTrend msStore={msStore} />
         <Province msStore={msStore} />
+        <Industry msStore={msStore} />
       </Container>
     );
   }
