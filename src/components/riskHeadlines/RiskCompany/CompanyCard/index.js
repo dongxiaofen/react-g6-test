@@ -1,7 +1,7 @@
 import React from 'react';
 import styles from './index.less';
 import SubCompany from './SubCompany';
-// import AnimateLoading from 'components/common/Hoc/ajaxIntercept/AnimateLoading';
+import AnimateLoading from 'components/hoc/LoadingComp/AnimateLoading';
 import {observer} from 'mobx-react';
 function CompanyCard({riskHeadlinesStore, companyData}) {
   const companyList = riskHeadlinesStore.companyList;
@@ -42,10 +42,16 @@ function CompanyCard({riskHeadlinesStore, companyData}) {
   const subCompanyData = subCompanyList.get(companyData.monitorId) || [];
   const cssName = subCompanyData.length > 0 ? styles.up : styles.extend;
   const viewText = () => {
-    if (subCompanyData.length < 1) {
-      // const extendStatus = riskHeadlinesStore.subCompany.extend[monitorId];
-      const extendStatus = false;
-      return extendStatus ? <div className={styles.loading}></div> : <span><i className="fa fa-angle-down" aria-hidden="true"></i>展开</span>;
+    if (subCompanyData.length > -1) {
+      const extendStatus = riskHeadlinesStore.subCompLoading.get(monitorId);
+      if (extendStatus) {
+        return (
+          <div className={styles.loading}>
+            <AnimateLoading animateCategory={1}/>
+          </div>
+        );
+      }
+      return (<span><i className="fa fa-angle-down" aria-hidden="true"></i>展开</span>);
     }
     return <span><i className="fa fa-angle-down" aria-hidden="true"></i>收起</span>;
   };
@@ -57,9 +63,9 @@ function CompanyCard({riskHeadlinesStore, companyData}) {
         {
           companyData.relatedCompanyCount > 0 ?
           <div className={styles.subInfo}>
-            <p onClick={extendSubCompany} className={cssName}>
+            <div onClick={extendSubCompany} className={cssName}>
               {viewText()}
-            </p>
+            </div>
             <p className={styles.relateInfo}>
               该企业共<span className={styles.number}>{companyData.relatedCompanyCount}</span>家关联公司发生<span className={styles.number}>{companyData.relatedEventCount}</span>条信息
             </p>

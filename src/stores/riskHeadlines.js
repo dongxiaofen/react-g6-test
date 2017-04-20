@@ -42,6 +42,8 @@ const initState = {
     source: '',
     url: '',
   },
+  subCompanyList: {},
+  subCompLoading: {},
   detailLoading: {},
 };
 class RiskHeadlinesStore {
@@ -52,7 +54,7 @@ class RiskHeadlinesStore {
   subCompanyList = observable.map({});
   @observable detailModalData = Object.assign({}, initState.detailModalData);
   detailLoading = observable.map({});
-
+  subCompLoading = observable.map({});
   @computed get dimGroupType() {
     const output = [];
     this.filterConfig.forEach((fiterItem)=>{
@@ -66,7 +68,6 @@ class RiskHeadlinesStore {
     return 'dimGroupType=' + this.dimGroupType.join('&dimGroupType=');
   }
   cancelRiskApi() {
-    console.log(axiosCancel);
     if (axiosCancel.companyListCancel) {
       axiosCancel.companyListCancel();
     }
@@ -104,6 +105,8 @@ class RiskHeadlinesStore {
   @action.bound getCompanyList(dimGroupTypeStr, params, flag = 'other') {
     this.resetModuleData('events');
     this.resetModuleData('companyList');
+    this.resetMap('subCompanyList');
+    this.resetMap('subCompLoading');
 
     this.cancelRiskApi('list');
     const CancelToken = axios.CancelToken;
@@ -118,7 +121,6 @@ class RiskHeadlinesStore {
     }))
     .catch((error) => {
       console.log('companyList', error);
-      console.log(axios.isCancel(error), error);
       if (!axios.isCancel(error)) {
         if (flag === 'today') {
           this.setCompanyList({errorToday: '今日监控企业未发现信息，您可以选择其他时间段监控信息'});
@@ -133,6 +135,7 @@ class RiskHeadlinesStore {
   }
   @action.bound getSubCompanyList(monitorId, params, type = 'normal') {
     const dimGroupTypeStr = this.dimGroupTypeStr;
+    this.subCompLoading.set(monitorId, true);
 
     this.cancelRiskApi('subList');
     const CancelToken = axios.CancelToken;
@@ -142,18 +145,20 @@ class RiskHeadlinesStore {
     riskHeadlinesApi.getSubCompanyList(dimGroupTypeStr, monitorId, params, source)
     .then(action('getSubCompanyList', (resp)=> {
       this.subCompanyList.set(monitorId, resp.data);
+      this.subCompLoading.set(monitorId, false);
       axiosCancel.companySubListCancel = null;
       if (type === 'default') { // 默认获取第一个关联公司的事件
         this.getCompanyInfo(resp.data[0].monitorId, params);
         this.riskUpdateValue('companyList', 'active', resp.data[0].monitorId);
       }
     }))
-    .catch((error)=>{
+    .catch(action('subCompany', (error)=>{
       console.log('getSubCompanyList', error);
       if (!axios.isCancel(error)) {
         axiosCancel.companySubListCancel = null;
       }
-    });
+      this.subCompLoading.set(monitorId, false);
+    }));
   }
   @action.bound getCompanyInfo(monitorId, params) {
     this.resetCompanyInfo();
@@ -281,11 +286,22 @@ class RiskHeadlinesStore {
   @action.bound resetModuleData(objName) {
     this[objName] = initState[objName];
   }
+  @action.bound resetMap(key) {
+    this[key].clear();
+  }
   @action.bound resetCompanyInfo() {
     this.setCompanyInfo({});
   }
   @action.bound resetCompanyEvents() {
     this.setCompanyEvents([]);
+  }
+  @action.bound resetRiskStore() {
+    this.resetModuleData('filterParams');
+    this.resetModuleData('filterConfig');
+    this.resetModuleData('companyList');
+    this.resetModuleData('events');
+    this.resetMap('subCompanyList');
+    this.resetMap('subCompanyList');
   }
 }
 export default new RiskHeadlinesStore();
