@@ -3,7 +3,6 @@ import { observer } from 'mobx-react';
 import { ModuleTitle, CommonTable } from 'components/common/report';
 
 function PersonList({personList, isLoading}) {
-  console.log(personList);
   const data = {
     meta: [
       { 'key': 'name', 'width': '4' },
@@ -17,7 +16,7 @@ function PersonList({personList, isLoading}) {
   };
   return (
     <div>
-      <ModuleTitle module="主要人员" />
+      <ModuleTitle module="主要人员" count={personList.length} />
       <CommonTable {...data} />
     </div>
   );

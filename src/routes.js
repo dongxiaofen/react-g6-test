@@ -4,6 +4,7 @@ import {
     App,
     Home,
     Relation,
+    SearchCompany,
     MyHomePage,
     RiskHeadlines,
     Account,
@@ -37,6 +38,7 @@ export default (allStore) => {
       <IndexRoute component={ HomePage } />
       <Route path="pdfDown" component={ Home } />
       <Route path="relation" component={ Relation } />
+      <Route path="searchCompany" component={ SearchCompany } />
       <Route path="myHomePage" component={ MyHomePage } />
       <Route path="riskHeadlines" component={ RiskHeadlines } />
       <Route path="account" component={ Account } />
