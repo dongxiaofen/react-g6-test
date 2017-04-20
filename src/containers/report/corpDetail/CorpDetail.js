@@ -31,7 +31,7 @@ export default class CorpDetail extends Component {
 
         </TabPane>
         <TabPane tab="对外投资任职">
-          <Enterprise />
+          <Enterprise entinvItemList={corpDetailStore.entinvItemList} isLoading={isLoading} />
         </TabPane>
       </Tabs>
     );

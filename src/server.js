@@ -160,13 +160,14 @@ app.use((req, res) => {
         //       console.log(resp.body);
         //     })
 
-        // 获取报告leftBar高亮
+        /*获取报告leftBar高亮*/
         let reportActiveItem = '';
         if (reqPathName.indexOf('companyHome')) {
           const arr = reqPathName.split('/');
           reportActiveItem = arr[arr.length - 1];
         }
         allStores.leftBarStore.activeItem = reportActiveItem;
+        /*获取报告leftBar高亮*/
         const component = (
           <Provider { ...allStores }>
             <RouterContext {...renderProps} />
