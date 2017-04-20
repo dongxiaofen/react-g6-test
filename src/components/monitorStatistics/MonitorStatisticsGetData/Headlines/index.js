@@ -4,20 +4,20 @@ import { observer } from 'mobx-react';
 import styles from '../index.less';
 import Row from 'components/common/layout/Row';
 
-import IndustryStatistics from './IndustryStatistics';
-import IndustryTrend from './IndustryTrend';
-function Industry({ msStore }) {
+import HeadlinesTrend from './HeadlinesTrend';
+import HeadlinesType from './HeadlinesType';
+function Headlines({ msStore }) {
   return (
     <div className={styles.statisticItem}>
       <Row>
-        <IndustryStatistics msStore={msStore} />
-        <IndustryTrend msStore={msStore} />
+        <HeadlinesTrend msStore={msStore} />
+        <HeadlinesType msStore={msStore} />
       </Row>
     </div>
   );
 }
 
-Industry.propTypes = {
+Headlines.propTypes = {
   msStore: PropTypes.object,
 };
-export default observer(Industry);
+export default observer(Headlines);

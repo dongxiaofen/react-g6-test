@@ -30,47 +30,7 @@ export function getIndustryTrend(params) {
   return axios.get('/api/riskBoard/industry/trend', { params: params });
 }
 
-// // 来源分析(最下面的图表)
-// export function getSource(params) {
-//   return dispatch => {
-//     setLoading(dispatch, 'source', true);
-//     axios.get('/api/riskBoard/source', { params: params })
-//       .then((resp) => {
-//         dispatch({
-//           type: ActionTypes.SET_HEAD_TREND_SOURCE,
-//           data: resp.data,
-//           params: params,
-//         });
-//         setLoading(dispatch, 'source');
-//       })
-//       .catch((err) => {
-//         console.log(err);
-//         setErrorBody(
-//           dispatch,
-//           ['source', 'pieResult', 'errorBody'],
-//           err.response.data
-//         );
-//         setErrorBody(
-//           dispatch,
-//           ['source', 'lineResult', 'errorBody'],
-//           err.response.data
-//         );
-//         setLoading(dispatch, 'source');
-//       });
-//   };
-// }
-
-// export function setParams(params) {
-//   return (dispatch, getState) => {
-//     dispatch({
-//       type: ActionTypes.SET_HEAD_TREND_PARAMS,
-//       data: params,
-//     });
-//     const newParams = getState().getIn(['headTrend', 'params']).toJS();
-//     getStatistic(newParams)(dispatch);
-//     getChangeTrend(newParams)(dispatch);
-//     getStatisticChart(newParams)(dispatch, getState);
-//     getProvinceAll(newParams)(dispatch, getState);
-//     getSource(newParams)(dispatch);
-//   };
-// }
+// 来源分析(最下面的图表)
+export function getHeadlines(params) {
+  return axios.get('/api/riskBoard/source', { params: params });
+}

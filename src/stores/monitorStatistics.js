@@ -156,7 +156,7 @@ class MonitorStatisticsStore {
     provinceAll: false,
     industryTrend: false,
     industryStatistics: false,
-    source: false,
+    headlines: false,
   };
 
   @observable errorBody = {
@@ -165,7 +165,7 @@ class MonitorStatisticsStore {
     provinceAll: {},
     industryTrend: {},
     industryStatistics: {},
-    source: {},
+    headlines: {},
   };
 
   @observable params = {};
@@ -924,7 +924,7 @@ class MonitorStatisticsStore {
   @observable typeDefault = '工商更新';
   // 头条趋势分析store
   @observable headlinesTrend = {
-    result: {},
+    result: [],
     chartOption: {
       dataZoom: [
         {
@@ -1150,7 +1150,7 @@ class MonitorStatisticsStore {
   };
   // 头条类型分析store
   @observable headlinesType = {
-    result: {},
+    result: [],
     chartOption: {
       tooltip: {
         axisPointer: {
@@ -1206,6 +1206,8 @@ class MonitorStatisticsStore {
     this.getStatistic(params);
     this.getChangeTrend(params);
     this.getProvinceAll(params);
+    this.getIndustryStatistics(params);
+    this.getHeadlines(params);
   }
 
   // 设置loading
@@ -1577,6 +1579,121 @@ class MonitorStatisticsStore {
   // 设置选定行业名称
   @action.bound setIndustryName(industryName) {
     this.industryName = industryName;
+  }
+
+  // 获取头条数据
+  @action.bound getHeadlines(params) {
+    this.setLoading('headlines', true);
+    monitorStatisticsApi.getHeadlines(params)
+      .then(action('get headlines', (resp) => {
+        const sourceTrendDate = [];
+        const sourceTrendAll = [];
+        const sourceTrendCorp = [];
+        const sourceTrendLegal = [];
+        const sourceTrendNews = [];
+        const sourceTrendOperation = [];
+        const sourceTrendStock = [];
+        const sourceTrendTeam = [];
+        const pieSource = [];
+        let compliteSourceDate = [];
+        const sourceTrend = resp.data.sourceTrend;
+        const sourceRatioMap = resp.data.sourceRatioMap;
+        // 判断是否为空对象
+        const sourceRatioMapIsEmpty = ((obj) => {
+          for (const name in obj) {
+            if (obj.hasOwnProperty(name)) {
+              return false;
+            }
+          }
+          return true;
+        })(sourceRatioMap);
+        let defaultText;
+        if (sourceTrend.length && !sourceRatioMapIsEmpty) {
+          compliteSourceDate = this.dealWithDate2(params.begin, params.end, sourceTrend);
+          compliteSourceDate.forEach((item) => {
+            sourceTrendDate.push(item.date);
+            sourceTrendAll.push(item.all || 0);
+            sourceTrendCorp.push(item.corp || 0);
+            sourceTrendLegal.push(item.legal || 0);
+            sourceTrendNews.push(item.news || 0);
+            sourceTrendOperation.push(item.operation || 0);
+            sourceTrendStock.push(item.stock || 0);
+            sourceTrendTeam.push(item.team || 0);
+          });
+          // 南丁格尔玫瑰图 {value: 10, name: 'rose1'}
+          // 各分类条目
+          const optionsMap = {};
+          Object.keys(sourceRatioMap).forEach((key) => {
+            const thisOptions = [];
+            Object.keys(sourceRatioMap[key].detailSource).forEach((key_) => {
+              thisOptions.push({ key: key_, value: sourceRatioMap[key].detailSource[key_] });
+            });
+            optionsMap[key] = thisOptions;
+          });
+          const pieSourceCORP = {
+            name: '工商更新',
+            value: sourceRatioMap.CORP ? sourceRatioMap.CORP.total : 0,
+            data: optionsMap.CORP ? optionsMap.CORP : [],
+            itemStyle: { normal: { color: '#787464' } }
+          };
+          const pieSourceLEGAL = {
+            name: '法务更新',
+            value: sourceRatioMap.LEGAL ? sourceRatioMap.LEGAL.total : 0,
+            data: optionsMap.LEGAL ? optionsMap.LEGAL : [],
+            itemStyle: { normal: { color: '#6EA0A7' } }
+          };
+          const pieSourceNEWS = {
+            name: '舆情更新',
+            value: sourceRatioMap.NEWS ? sourceRatioMap.NEWS.total : 0,
+            data: optionsMap.NEWS ? optionsMap.NEWS : [],
+            itemStyle: { normal: { color: '#909F8C' } }
+          };
+          const pieSourceOPERATION = {
+            name: '经营更新',
+            value: sourceRatioMap.OPERATION ? sourceRatioMap.OPERATION.total : 0,
+            data: optionsMap.OPERATION ? optionsMap.OPERATION : [],
+            itemStyle: { normal: { color: '#6E7074' } }
+          };
+          const pieSourceSTOCK = {
+            name: '上市公告',
+            value: sourceRatioMap.STOCK ? sourceRatioMap.STOCK.total : 0,
+            data: optionsMap.STOCK ? optionsMap.STOCK : [],
+            itemStyle: { normal: { color: '#CEAC85' } }
+          };
+          const pieSourceTEAM = {
+            name: '团队更新',
+            value: sourceRatioMap.TEAM ? sourceRatioMap.TEAM.total : 0,
+            data: optionsMap.TEAM ? optionsMap.TEAM : [],
+            itemStyle: { normal: { color: '#E5A18F' } }
+          };
+          // set defaultText push options
+          [pieSourceCORP, pieSourceLEGAL, pieSourceNEWS, pieSourceOPERATION, pieSourceSTOCK, pieSourceTEAM].forEach((item) => {
+            if (item.value > 0) {
+              pieSource.unshift(item);
+              defaultText = !defaultText ? item.name : defaultText;
+            }
+          });
+        }
+        this.headlinesTrend.chartOption.xAxis.data = sourceTrendDate;
+        this.headlinesTrend.chartOption.series[0].data = sourceTrendAll;
+        this.headlinesTrend.chartOption.series[1].data = sourceTrendCorp;
+        this.headlinesTrend.chartOption.series[2].data = sourceTrendLegal;
+        this.headlinesTrend.chartOption.series[3].data = sourceTrendNews;
+        this.headlinesTrend.chartOption.series[4].data = sourceTrendOperation;
+        this.headlinesTrend.chartOption.series[5].data = sourceTrendStock;
+        this.headlinesTrend.chartOption.series[6].data = sourceTrendTeam;
+
+        this.headlinesType.chartOption.series[0].data = pieSource;
+
+        this.headlinesTrend.result = sourceTrend;
+        this.headlinesType.result = sourceRatioMap;
+        this.setLoading('headlines');
+      }))
+      .catch((err) => {
+        console.log(err);
+        this.setErrorBody('headlines', err.response.data);
+        this.setLoading('headlines');
+      });
   }
 }
 export default new MonitorStatisticsStore();
