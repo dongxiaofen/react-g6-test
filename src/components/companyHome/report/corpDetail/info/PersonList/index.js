@@ -16,7 +16,7 @@ function PersonList({personList, isLoading}) {
   };
   return (
     <div>
-      <ModuleTitle module="主要人员" />
+      <ModuleTitle module="主要人员" count={personList.length} />
       <CommonTable {...data} />
     </div>
   );

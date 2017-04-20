@@ -20,7 +20,7 @@ function ShareHolder({ shareHolderList, isLoading }) {
   };
   return (
     <div>
-      <ModuleTitle module="股东信息" />
+      <ModuleTitle module="股东信息" count={shareHolderList.length} />
       <CommonTable {...data} />
     </div>
   );
