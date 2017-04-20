@@ -4,7 +4,7 @@ import Thead from './Thead';
 import Tbody from './Tbody';
 import styles from './index.less';
 import { loadingComp } from 'components/hoc';
-import Pager from '../Pager';
+import Pager from '../../Pager';
 
 function CommonTable({meta, tData, dict, uiStore}) {
   const {index, size} = uiStore.uiState[dict];
@@ -14,7 +14,7 @@ function CommonTable({meta, tData, dict, uiStore}) {
         <Thead meta={meta} dict={dict} />
         <Tbody meta={meta} tData={tData.slice((index - 1) * size, index * size)} />
       </table>
-      <Pager dict={dict} tData={tData} />
+      <Pager module={dict} tData={tData} type="small" />
     </div>
   );
 }
