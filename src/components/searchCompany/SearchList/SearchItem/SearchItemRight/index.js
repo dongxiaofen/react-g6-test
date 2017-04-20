@@ -16,7 +16,7 @@ function SearchItemRight({itemData, modalStore, payModalStore, singleData, creat
         createMonitor={createMonitor} />
     );
   }
-  if (itemData.reportStatus === 'REPORT' || itemData.monitorStatus === 'MONITOR') {
+  if (itemData.reportStatus === 'REPORT' || itemData.monitorStatus === 'MONITOR' || itemData.monitorStatus === 'PAUSE' || itemData.monitorStatus === 'EXPIRED') {
     output = (
       <ReportButton itemData={itemData} />
     );

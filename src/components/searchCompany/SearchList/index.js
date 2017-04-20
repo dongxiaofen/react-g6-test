@@ -23,6 +23,7 @@ function SearchList({searchCompanyStore, modalStore, payModalStore}) {
     createMonitor,
     pageParams,
     getPageList,
+    getFeedBack,
   } = searchCompanyStore;
   const listData = [];
   searchResult.map((itemData, idx) => {
@@ -38,12 +39,14 @@ function SearchList({searchCompanyStore, modalStore, payModalStore}) {
       </div>
     );
   });
+  console.log(modalStore, '======modalStore aaa');
   const pageClick = (newPage) => {
     getPageList(newPage);
   };
   let result = '';
   if (isShowResult) {
     if (searchResult.length > 0) {
+      console.log(111111);
       result = (
         <div className={`${styles.wrapList}`}>
           <FilterSheet
@@ -54,7 +57,10 @@ function SearchList({searchCompanyStore, modalStore, payModalStore}) {
             filterItemClick={filterItemClick}
             page={page}
             searchKeyFilter={searchKeyFilter}
-            updateValue={updateValue} />
+            updateValue={updateValue}
+            searchResult={searchResult}
+            modalStore={modalStore}
+            getFeedBack={getFeedBack} />
           <div className={`${styles.listDataWrap}`}>
             {listData}
           </div>
@@ -68,7 +74,21 @@ function SearchList({searchCompanyStore, modalStore, payModalStore}) {
         </div>
       );
     } else {
-      result = (<div>没有找到相关公司</div>);
+      console.log(222222);
+      result = (
+        <div className={`${styles.wrapList}`}>
+          <FilterSheet
+            filterSheet={filterSheet}
+            filterArray={filterArray}
+            filterArrayStatus={filterArrayStatus}
+            filterSingleShow={filterSingleShow}
+            filterItemClick={filterItemClick}
+            page={page}
+            searchKeyFilter={searchKeyFilter}
+            updateValue={updateValue} />
+          <div className={`${styles.noCompany}`}>没有找到相关公司</div>
+        </div>
+      );
     }
   } else {
     result = <span></span>;
