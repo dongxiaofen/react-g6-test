@@ -1,12 +1,15 @@
 import { observable, action } from 'mobx';
 import { companyHomeApi } from 'api';
 class CorpDetailStore {
+  @observable isLoading = true;
+  @observable isMount = false;
+
   @observable registerInfo = [];
   @observable shareHolderList = [];
   @observable personList = [];
   @observable filiationList = [];
-  @observable isLoading = true;
-  @observable isMount = false;
+
+  @observable entinvItemList = [];
 
   @action.bound getReportModule(module, monitorId, reportId, companyName, companyType) {
     this.isMount = true;
@@ -17,6 +20,7 @@ class CorpDetailStore {
         this.shareHolderList = resp.data.corpDetail.shareHolderList;
         this.personList = resp.data.corpDetail.personListForPortal;
         this.filiationList = resp.data.corpDetail.filiationList;
+        this.entinvItemList = resp.data.corpDetail.entinvItemList;
       }));
   }
 }

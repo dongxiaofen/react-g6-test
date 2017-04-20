@@ -17,4 +17,5 @@ export riskStore from './report/risk';
 export messageStore from './message';
 export reportManageStore from './reportManage';
 export payModalStore from './payModal';
+export uiStore from './ui';
 // append here from plop
