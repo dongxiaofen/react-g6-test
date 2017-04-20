@@ -22,7 +22,7 @@ function CompanyWrap({data, monitorListStore}) {
   };
   const viewRelation = () => {
     if (!relStatus || relStatus === 'hide') {
-      monitorListStore.getRelationList(monitorId);
+      monitorListStore.getRelationList(111);
     } else {
       monitorListStore.delRelationList(monitorId);
     }

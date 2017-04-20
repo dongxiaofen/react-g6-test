@@ -1,19 +1,20 @@
 import { observable, action } from 'mobx';
 import axios from 'axios';
 import pathval from 'pathval';
+import messageStore from './message';
 import { monitorListApi } from 'api';
 const CancelToken = axios.CancelToken;
 class MonitorListStore {
   axiosCancel = [];
   @observable searchInput = '';
   @observable sortDirection = {
-    start_tm: 'DESC',
-    expire_dt: 'DESC',
+    startTm: 'DESC',
+    expireDt: 'DESC',
     latestTs: 'DESC',
   };
   @observable searchParams = {
     companyName: '',
-    sort: 'start_tm,DESC',
+    sort: 'startTm,DESC',
     monitorStatus: '',
     index: 1,
     size: 10,
@@ -71,7 +72,10 @@ class MonitorListStore {
       }))
       .catch(action('getRelList_success', err => {
         this.relationListStatus.set(monitorId, 'hide');
-        this.relationList.set(monitorId, err.response.data);
+        messageStore.openMessage({
+          type: 'error',
+          content: err.response && err.response.data && err.response.data.message || '获取失败',
+        });
       }));
   }
   @action.bound delRelationList(monitorId) {
