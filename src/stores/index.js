@@ -1,4 +1,4 @@
-export homeStore from './home';
+// export homeStore from './home';
 export searchStore from './search';
 export relationStore from './relation';
 export alertStore from './alert';
@@ -19,5 +19,5 @@ export accountSettingStore from './accountSetting';
 export messageStore from './message';
 export reportManageStore from './reportManage';
 export payModalStore from './payModal';
-
+export uiStore from './ui';
 // append here from plop

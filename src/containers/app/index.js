@@ -9,20 +9,16 @@ import DetailModal from 'components/common/DetailModal';
 import Message from 'components/common/Message';
 import PayModal from 'components/common/PayModal';
 
-@inject('modalStore', 'detailModalStore', 'messageStore', 'homeStore', 'payModalStore')@observer
+@inject('modalStore', 'detailModalStore', 'messageStore', 'payModalStore')@observer
 export default class App extends Component {
   static propTypes = {
     children: PropTypes.object.isRequired,
     location: PropTypes.object,
-    homeStore: PropTypes.object,
     modalStore: PropTypes.object,
     detailModalStore: PropTypes.object,
     messageStore: PropTypes.object,
     payModalStore: PropTypes.object,
   };
-  componentDidMount() {
-    this.props.homeStore.postLogin();
-  }
   render() {
     const pathname = this.props.location.pathname;
     if (pathname === '/' || pathname === '/pdfDown' || pathname === '/solution' || pathname === '/about') {
