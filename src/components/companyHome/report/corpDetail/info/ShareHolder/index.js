@@ -1,15 +1,12 @@
 import React, { PropTypes } from 'react';
 import { observer } from 'mobx-react';
 import { ModuleTitle, CommonTable } from 'components/common/report';
-import styles from './index.less';
+// import styles from './index.less';
 
 function ShareHolder({ shareHolderList, isLoading }) {
-  const highlightText = (text) => {
-    return <span className={styles.shareholderName}>{text}</span>;
-  };
   const data = {
     meta: [
-      { 'key': 'shareholderName', 'width': '4', 'modifyText': highlightText },
+      { 'key': 'shareholderName', 'width': '4' },
       { 'key': 'subConam', 'width': '2' },
       { 'key': 'regCapCur', 'width': '1.2' },
       { 'key': 'fundedRatio', 'width': '1.4' },
@@ -17,7 +14,9 @@ function ShareHolder({ shareHolderList, isLoading }) {
     ],
     tData: shareHolderList,
     dict: 'shareholder',
-    isLoading: isLoading
+    isLoading: isLoading,
+    module: '股东信息',
+    error: shareHolderList.length === 0
   };
   return (
     <div>

@@ -18,6 +18,7 @@ export default class Html extends Component {
     component: PropTypes.node,
     pdfDown: PropTypes.string,
     isDev: PropTypes.bool,
+    reqPathName: PropTypes.string,
   };
   prepareStore(allStore) {
     const keyArr = Object.keys(allStore);
@@ -26,6 +27,9 @@ export default class Html extends Component {
       output[key] = toJS(allStore[key]);
     });
     return output;
+  }
+  isFirstLoad() {
+    return this.props.pdfDown === '1' || this.props.reqPathName === '/';
   }
   render() {
     const {assets, component, ...allStore} = this.props;
@@ -75,6 +79,13 @@ export default class Html extends Component {
 
           {this.props.pdfDown === '1' ? '' :
             <script src={assets.javascript.main} charSet="UTF-8"/>
+          }
+
+          {this.isFirstLoad() ? '' :
+            <script src="../vendors/js/echarts_v3_3_2.min.js"></script>
+          }
+          {this.isFirstLoad() ? '' :
+            <script src="../vendors/js/map/china.min.js"></script>
           }
         </body>
       </html>

@@ -10,6 +10,14 @@ export default class CompanyHome extends Component {
   static propTypes = {
     children: PropTypes.object,
   };
+  componentWillUnmount() {
+    console.log('CompanyHome componentWillUnmount', window.reportSourceCancel);
+    // cancel pending api call
+    window.reportSourceCancel.forEach((cancel) => {
+      cancel();
+    });
+    // reset report store data
+  }
   render() {
     return (
       <div>

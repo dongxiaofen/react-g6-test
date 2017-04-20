@@ -4,5 +4,6 @@ export * as companyHomeApi from './companyHome';
 export * as myHomePageApi from './myHomePage';
 export * as clientApi from './client';
 export * as riskHeadlinesApi from './riskHeadline';
+export * as reportManageApi from './reportManage';
 export * as monitorStatisticsApi from './monitorStatistics';
 // append here from plop

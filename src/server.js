@@ -159,8 +159,15 @@ app.use((req, res) => {
         //     .end(function (err, resp) {
         //       console.log(resp.body);
         //     })
-        allStores.searchStore.searchKey = '誉存科技';
-        // console.log('homeStore', homeStore);
+
+        /*获取报告leftBar高亮*/
+        let reportActiveItem = '';
+        if (reqPathName.indexOf('companyHome')) {
+          const arr = reqPathName.split('/');
+          reportActiveItem = arr[arr.length - 1];
+        }
+        allStores.leftBarStore.activeItem = reportActiveItem;
+        /*获取报告leftBar高亮*/
         const component = (
           <Provider { ...allStores }>
             <RouterContext {...renderProps} />
@@ -177,7 +184,7 @@ app.use((req, res) => {
           '<!--[if lte IE 11]>\n' +
           '<script src="https://as.alipayobjects.com/g/component/??es6-shim/0.35.1/es6-sham.min.js,es6-shim/0.35.1/es6-shim.min.js"></script>\n' +
           '<![endif]-->\n' +
-          ReactDOM.renderToString(<Html isDev={__DEVELOPMENT__} assets={webpackIsomorphicTools.assets()} component={component} {...allStores} />));
+          ReactDOM.renderToString(<Html reqPathName={reqPathName} isDev={__DEVELOPMENT__} assets={webpackIsomorphicTools.assets()} component={component} {...allStores} />));
       }
 
     } else {

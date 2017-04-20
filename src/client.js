@@ -13,7 +13,7 @@ import Uuid from 'node-uuid';
 import { Provider } from 'mobx-react';
 import combineServerData from 'helpers/combineServerData';
 import * as allStore from 'stores';
-import { useStrict } from 'mobx';
+import { useStrict, runInAction } from 'mobx';
 import { RouterStore, syncHistoryWithStore } from 'mobx-react-router';
 // import { useStrict, spy } from 'mobx';
 // // 全局监听action
@@ -82,8 +82,8 @@ axios.interceptors.response.use((response) => {
     return Promise.reject(error);
   }
   if (error.response.data.errorCode === 401006 || error.response.data.errorCode === 401007) {
-    allStore.modalStore.openTextModal('登录超时', '请重新登录', ()=>{
-      allStore.homeStore.postLogin();
+    runInAction('显示登录框', () => {
+      allStore.loginStore.isShowLogin = true;
     });
     // allStore.modalStore.openAsyncModal((callback) => {
     //   require.ensure([], (require) => {
@@ -91,7 +91,7 @@ axios.interceptors.response.use((response) => {
     //   });
     // });
   } else if (error.response.status === 502) {
-    allStore.modalStore.openTextModal('后端正在部署', '请稍后');
+    allStore.messageStore.openMessage({type: 'warning', content: '后端正在部署', duration: 5000});
   }
   return Promise.reject(error);
 });

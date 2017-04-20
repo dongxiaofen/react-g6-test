@@ -1,14 +1,13 @@
 import React, { PropTypes } from 'react';
 import { observer } from 'mobx-react';
 import Trow from './Trow';
-import styles from './index.less';
 
 function Tbody({meta, tData}) {
   return (
-    <tbody className={styles.tbody}>
+    <tbody>
       {
         tData.map((rData, idx) => {
-          return <Trow key={rData.shareholderName + idx} rData={rData} meta={meta} />;
+          return <Trow key={rData[meta[0].key] + idx} rData={rData} meta={meta} />;
         })
       }
     </tbody>
@@ -16,6 +15,7 @@ function Tbody({meta, tData}) {
 }
 
 Tbody.propTypes = {
-  foo: PropTypes.string,
+  meta: PropTypes.array.isRequired,
+  tData: PropTypes.array.isRequired
 };
 export default observer(Tbody);
