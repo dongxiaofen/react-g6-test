@@ -3,6 +3,7 @@ export searchStore from './search';
 export relationStore from './relation';
 export alertStore from './alert';
 export modalStore from './modal';
+export searchCompanyStore from './searchCompany';
 export monitorStatisticsStore from './monitorStatistics';
 export bannerStore from './banner';
 export myHomePageStore from './myHomePage';
