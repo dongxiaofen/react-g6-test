@@ -3,6 +3,7 @@ import { observer, inject } from 'mobx-react';
 import styles from './index.less';
 import SearchItem from './SearchItem';
 import FilterSheet from './FilterSheet';
+import Pagination from 'components/lib/pagination';
 // import { Container, Row, Col } from 'components/common/Layout';
 
 function SearchList({searchCompanyStore, modalStore, payModalStore}) {
@@ -20,6 +21,8 @@ function SearchList({searchCompanyStore, modalStore, payModalStore}) {
     updateValue,
     singleData,
     createMonitor,
+    pageParams,
+    getPageList,
   } = searchCompanyStore;
   const listData = [];
   searchResult.map((itemData, idx) => {
@@ -35,6 +38,9 @@ function SearchList({searchCompanyStore, modalStore, payModalStore}) {
       </div>
     );
   });
+  const pageClick = (newPage) => {
+    getPageList(newPage);
+  };
   let result = '';
   if (isShowResult) {
     if (searchResult.length > 0) {
@@ -51,6 +57,13 @@ function SearchList({searchCompanyStore, modalStore, payModalStore}) {
             updateValue={updateValue} />
           <div className={`${styles.listDataWrap}`}>
             {listData}
+          </div>
+          <div className={`${styles.pageWrap}`}>
+            <Pagination
+              current={pageParams.index}
+              pageSize={pageParams.size}
+              total={page.totalElements}
+              onChange={pageClick} />
           </div>
         </div>
       );

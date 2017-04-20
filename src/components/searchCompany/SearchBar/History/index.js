@@ -19,7 +19,7 @@ export default class History extends Component {
     console.log(searchHistoryList.length, '===size');
     if (searchHistoryList.length === 0) {
       output.push(
-        <span className={`${styles.historyText}`}>无</span>
+        <span key="null" className={`${styles.historyText}`}>无</span>
       );
     } else {
       searchHistoryList.map((obj, idx)=>{

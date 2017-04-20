@@ -96,7 +96,9 @@ class SearchCompanyStore {
     const params = {
       params: {
         keyWord: this.searchKey,
-        type: this.searchType
+        type: this.searchType,
+        index: this.pageParams.index,
+        size: this.pageParams.size,
       },
     };
     // 赋值显示到filter的公司名
@@ -257,6 +259,8 @@ class SearchCompanyStore {
         }
       }
     });
+    // 重置页数
+    this.pageParams.index = 1;
     // 发送请求
     this.filterSearchCompany();
     console.log(this.filterSheet.filterResult, '=======filterResult');
@@ -302,6 +306,21 @@ class SearchCompanyStore {
       .catch(action('createMonitor error', (err) => {
         console.log(err.response, '=====createMonitor error');
       }));
+  }
+  // 分页
+  @action.bound getPageList(newPage) {
+    this.pageParams.index = newPage;
+    let type = '';
+    Object.keys(this.filterSheet.filterResult).map((key)=>{
+      if (this.filterSheet.filterResult && this.filterSheet.filterResult[key] && this.filterSheet.filterResult[key].length > 0) {
+        type = 'filter';
+      }
+    });
+    if (type === 'filter') {
+      this.filterSearchCompany();
+    } else {
+      this.getCompanyList();
+    }
   }
 }
 export default new SearchCompanyStore();
