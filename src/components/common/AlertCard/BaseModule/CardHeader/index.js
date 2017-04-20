@@ -2,7 +2,7 @@ import React from 'react';
 import { observer } from 'mobx-react';
 import styles from './index.less';
 import Grade from './Grade';
-import ALERT_CONFIG from 'config/Dict/alertCard';
+import ALERT_CONFIG from 'dict/alertCard';
 import CompanyName from './CompanyName'; // 报告时间轴才会有的组件，待测试
 function CardHeader({data, module, hasSecondType, cardType, modifyDate}) {
   const itemData = data.items;

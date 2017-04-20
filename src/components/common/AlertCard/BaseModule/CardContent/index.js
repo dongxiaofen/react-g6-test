@@ -3,7 +3,7 @@ import { observer } from 'mobx-react';
 import styles from '../index.less';
 import {Col, Row} from 'components/common/layout';
 import KeyValue from '../KeyValue';
-import DICT from 'config/Dict/reportModule';
+import DICT from 'dict/reportModule';
 function CardContent({data, show, contentHtml, isModal}) {
   const content = ()=>{
     const output = [];
