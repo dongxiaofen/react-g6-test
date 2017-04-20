@@ -150,13 +150,13 @@ class MonitorStatisticsStore {
   }
 
   @observable loadingGroup = {
-    statistic: false,
-    changeTrend: false,
-    province: false,
-    provinceAll: false,
-    industryTrend: false,
-    industryStatistics: false,
-    headlines: false,
+    statistic: true,
+    changeTrend: true,
+    province: true,
+    provinceAll: true,
+    industryTrend: true,
+    industryStatistics: true,
+    headlines: true,
   };
 
   @observable errorBody = {
@@ -520,9 +520,13 @@ class MonitorStatisticsStore {
           bottom: 0,
           dataBackground: {
             areaStyle: {
-              color: '#dddddd'
+              color: '#eeeeee',
             },
-          }
+          },
+          fillerColor: 'rgba(230, 230, 230, 0.4)',
+          handleStyle: {
+            color: '#dddddd'
+          },
         },
         {
           type: 'inside',
