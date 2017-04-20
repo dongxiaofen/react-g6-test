@@ -7,6 +7,7 @@ import TypeFilter from 'components/monitorList/TypeFilter';
 import TimeSort from 'components/monitorList/TimeSort';
 import Counter from 'components/monitorList/Counter';
 import TableList from 'components/monitorList/TableList';
+import PauseInfo from 'components/monitorList/PauseInfo';
 import AddRelation from 'components/common/AddRelation';
 @inject('monitorListStore')
 @observer
@@ -27,6 +28,7 @@ export default class MonitorList extends Component {
         <TimeSort {...this.props} />
         <Counter {...this.props} />
         <TableList {...this.props} />
+        <PauseInfo {...this.props} />
         <AddRelation useForm="monitorList" {...this.props} />
       </Container>
     );

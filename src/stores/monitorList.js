@@ -21,6 +21,15 @@ class MonitorListStore {
   };
   @observable monitorCount = {};
   @observable mainList = {};
+  @observable pauseInfo = {
+    visible: false,
+    loading: false,
+    monitorId: '',
+    status: '',
+    index: '',
+    relation: '',
+    mMonitorId: '',
+  };
   relationList = observable.map({});
   relationListStatus = observable.map({});
   switchLoading = observable.map({});
@@ -29,6 +38,9 @@ class MonitorListStore {
   }
   @action.bound changeParams(params) {
     Object.assign(this.searchParams, params);
+  }
+  @action.bound changeStatusInfo(params) {
+    Object.assign(this.pauseInfo, params);
   }
   @action.bound getMainCount() {
     const {monitorStatus, companyName} = this.searchParams;
@@ -83,21 +95,32 @@ class MonitorListStore {
     this.relationList.set(monitorId, null);
   }
   @action.bound changeStatus(params) {
-    const {monitorId, status, index, relation, mMonitorId} = params;
+    const {monitorId, status, index, relation, mMonitorId} = params || this.pauseInfo;
     this.switchLoading.set(monitorId, true);
     monitorListApi.changeMonitorStatus({monitorId, status})
       .then(action('changeStatus_success', resp => {
         if (relation === 'main') {
           this.mainList.content[index] = resp.data.slice(-1)[0];
           this.relationList.set(monitorId, resp.data.slice(0, -1));
+          this.pauseInfo.visible = false;
+          this.pauseInfo.loading = false;
         } else {
           this.relationList.get(mMonitorId)[index] = resp.data[0];
         }
         this.switchLoading.set(monitorId, false);
+        messageStore.openMessage({
+          type: 'info',
+          content: '修改成功',
+        });
       }))
       .catch(action('changeStatus_error', err => {
         this.switchLoading.set(monitorId, false);
-        console.log(err);
+        this.pauseInfo.visible = false;
+        this.pauseInfo.loading = false;
+        messageStore.openMessage({
+          type: 'error',
+          content: err.response && err.response.data && err.response.data.message || '修改失败',
+        });
       }));
   }
   @action.bound renewalAction(params) {

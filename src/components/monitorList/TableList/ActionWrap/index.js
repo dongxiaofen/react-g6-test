@@ -19,13 +19,25 @@ function ActionWrap({data, mainData, index, relation, monitorListStore, payModal
   const relDisable = relation === 'relation' && mainData.status === 'PAUSE';
   const relLoading = relation === 'relation' && monitorListStore.switchLoading.get(mainData.monitorId);
   const changeStatus = (newStatus) => {
-    monitorListStore.changeStatus({
-      monitorId,
-      status: newStatus ? 'MONITOR' : 'PAUSE',
-      index,
-      relation,
-      mMonitorId: relation === 'relation' ? mainData.monitorId : monitorId,
-    });
+    if (newStatus) {
+      monitorListStore.changeStatus({
+        visible: true,
+        monitorId,
+        status: newStatus ? 'MONITOR' : 'PAUSE',
+        index,
+        relation,
+        mMonitorId: relation === 'relation' ? mainData.monitorId : monitorId,
+      });
+    } else {
+      monitorListStore.changeStatusInfo({
+        visible: true,
+        monitorId,
+        status: newStatus ? 'MONITOR' : 'PAUSE',
+        index,
+        relation,
+        mMonitorId: relation === 'relation' ? mainData.monitorId : monitorId,
+      });
+    }
   };
   const successCb = () => {
     payModalStore.closeAction();
@@ -52,8 +64,8 @@ function ActionWrap({data, mainData, index, relation, monitorListStore, payModal
   };
   const recharge = () => {
     payModalStore.openCompModal({
-      'modalType': 'createMonitor',
-      'width': '560',
+      'modalType': 'continueMonitor',
+      'width': '560px',
       'pactName': '用户服务协议',
       'pactUrl': '/',
       'pointText': '创建报告即视为同意',
