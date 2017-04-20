@@ -78,6 +78,9 @@ axios.interceptors.response.use((response) => {
 }, (error) => {
   // Do something with request error
   console.log('error', error);
+  if (axios.isCancel(error)) {
+    return Promise.reject(error);
+  }
   if (error.response.data.errorCode === 401006 || error.response.data.errorCode === 401007) {
     runInAction('显示登录框', () => {
       allStore.loginStore.isShowLogin = true;

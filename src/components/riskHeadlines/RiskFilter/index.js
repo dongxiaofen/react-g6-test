@@ -71,7 +71,6 @@ function RiskFilter({riskHeadlinesStore}) {
     }
     return riskFilter;
   };
-  console.log(riskHeadlinesStore, '====');
   const filterParams = riskHeadlinesStore.filterParams;
   return (
     <div className={styles.wrap}>

@@ -2,27 +2,20 @@ import React, { Component, PropTypes} from 'react';
 import { observer, inject} from 'mobx-react';
 import RiskFilter from '../RiskFilter';
 import RiskCompany from '../RiskCompany';
-// import RiskMessage from './RiskMessage';
+import RiskMessage from '../RiskMessage';
 import styles from './index.less';
 import {Container, Row, Col} from 'components/common/layout';
-@inject('riskHeadlinesStore', 'homeStore')
+@inject('riskHeadlinesStore')
 @observer
 export default class RiskMain extends Component {
-  static propTypes = {
-    riskHeadlinesStore: PropTypes.object,
-    homeStore: PropTypes.object,
-  }
   componentDidMount() {
-    // const params = this.props.riskHeadlines.getIn(['filterParams']).toJS();
-    // this.props.riskheadlinesBoundAC.getCompanyList(params);
+    const dimGroupTypeStr = this.props.riskHeadlinesStore.dimGroupTypeStr;
+    const params = this.props.riskHeadlinesStore.filterParams;
+    this.props.riskHeadlinesStore.getCompanyList(dimGroupTypeStr, params, 'today');
     this.caculateHeight();
-    this.props.homeStore.postLogin();
   }
   componentWillUnmount() {
-    // this.props.riskheadlinesBoundAC.resetRiskData('filterParams');
-    // this.props.riskheadlinesBoundAC.resetRiskData('companyList');
-    // this.props.riskheadlinesBoundAC.resetRiskData('events');
-    // this.props.riskheadlinesBoundAC.resetRiskData('filterConfig');
+    this.props.riskHeadlinesStore.resetRiskStore();
   }
   caculateHeight = ()=> {
     const bodyH = document.body.clientHeight > 800 ? document.body.clientHeight : 800;
@@ -33,16 +26,10 @@ export default class RiskMain extends Component {
   }
   render() {
     const riskHeadlinesStore = this.props.riskHeadlinesStore;
-    const comListCss = riskHeadlinesStore.companyList.data.error ? styles.riskCompanyNoData : styles.riskCompany; // 没有数据的时候背景为白色
+    const comListCss = riskHeadlinesStore.companyList.data.error || riskHeadlinesStore.companyList.data.errorToday ? styles.riskCompanyNoData : styles.riskCompany; // 没有数据的时候背景为白色
+    const messCss = riskHeadlinesStore.events.data.error ? styles.riskMessageNoData : styles.riskMessage;
     return (
       <Container>
-        {/* <DetailsModal
-          {...this.props}
-          visible={detailsModalConfig.get('visible')}
-          titlePath={detailsModalConfig.get('titlePath')}
-          contentPath={detailsModalConfig.get('contentPath')}
-          sourcePath={detailsModalConfig.get('sourcePath')}
-          onCancel={this.detailsModalOnCancel} />*/}
         <Row className={styles.riskHeadlines}>
           <Col width="4">
             <div className={styles.wrap} id="riskFilter">
@@ -53,14 +40,11 @@ export default class RiskMain extends Component {
             </div>
           </Col>
           <Col width="8">
-            <div id="riskCompany" style={{height: this.riskMessHeight}} className={styles.riskMessage}>
-              {/* <RiskMessage
-                events={riskHeadlines.get('events')}
-                commonBoundAC={this.props.commonBoundAC}
-                riskheadlinesBoundAC={this.props.riskheadlinesBoundAC}
-                filterParams={riskHeadlines.get('filterParams')}
+            <div id="riskCompany" style={{height: this.riskMessHeight}} className={messCss}>
+               <RiskMessage
+                riskHeadlinesStore={riskHeadlinesStore}
                 contentHeight={this.containerH}
-                history={this.props.history}/>*/}
+                history={this.props.history}/>
             </div>
           </Col>
         </Row>
@@ -68,3 +52,8 @@ export default class RiskMain extends Component {
     );
   }
 }
+RiskMain.propTypes = {
+  riskHeadlinesStore: PropTypes.object,
+  homeStore: PropTypes.object,
+  history: PropTypes.object,
+};
