@@ -153,6 +153,6 @@ function CfcaMain({isHeaderScroll, arrowOnClick}) {
 }
 
 CfcaMain.propTypes = {
-  foo: PropTypes.string,
+  isHeaderScroll: PropTypes.bool,
 };
 export default observer(CfcaMain);

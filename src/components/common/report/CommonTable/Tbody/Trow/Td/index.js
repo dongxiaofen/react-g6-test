@@ -14,6 +14,7 @@ function Td({ keyObj, rData }) {
 }
 
 Td.propTypes = {
-  foo: PropTypes.string,
+  keyObj: PropTypes.object.isRequired,
+  rData: PropTypes.object.isRequired
 };
 export default observer(Td);

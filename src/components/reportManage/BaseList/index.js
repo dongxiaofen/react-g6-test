@@ -1,15 +1,30 @@
 import React, {PropTypes} from 'react';
 import { observer, inject } from 'mobx-react';
 import styles from './index.less';
-import pathval from 'pathval';
 import { runInAction } from 'mobx';
+import pathval from 'pathval';
 
 function BaseList({listData, routing, reportManageStore, payModalStore}) {
+  const choiceOk = () => {
+    const reportId = pathval.getPathValue(reportManageStore, 'agreeModal.reportId');
+    const params = pathval.getPathValue(reportManageStore, 'params');
+    reportManageStore.upGradeToMonitor(reportId, params, pathval.getPathValue(payModalStore, 'selectValue'));
+  };
+
   const turnToMonitor = (reportId) => {
+    payModalStore.openCompModal({
+      'modalType': 'createMonitor',
+      'width': '560',
+      'pactName': '用户服务协议',
+      'pactUrl': '/',
+      'pointText': '创建报告即视为同意',
+      'callBack': choiceOk
+    });
+
     runInAction('显示弹窗', () => {
       pathval.setPathValue(reportManageStore, 'agreeModal.reportId', reportId);
-      pathval.setPathValue(payModalStore, 'value.monitorModalStatus', true);
-      pathval.setPathValue(payModalStore, 'value.modalType', 'turnMonitor');
+      // pathval.setPathValue(payModalStore, 'value.monitorModalStatus', true);
+      // pathval.setPathValue(payModalStore, 'value.modalType', 'turnMonitor');
     });
   };
 
