@@ -3,7 +3,6 @@ import { observer } from 'mobx-react';
 import { ModuleTitle, CommonTable } from 'components/common/report';
 
 function PersonList({personList, isLoading}) {
-  console.log(personList);
   const data = {
     meta: [
       { 'key': 'name', 'width': '4' },
