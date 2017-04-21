@@ -23,6 +23,7 @@ function Trademark({ trademarkInfo, uiStore }) {
 
 Trademark.propTypes = {
   assetsStore: PropTypes.object,
+  isLoading: PropTypes.bool,
 };
 
 export default inject('assetsStore', 'uiStore')(loadingComp(
@@ -31,7 +32,7 @@ export default inject('assetsStore', 'uiStore')(loadingComp(
     category: 0,
     error: props.error,
     errCategory: 1,
-    module: props.module
+    module: '商标'
   })}
 )(observer(Trademark)));
 

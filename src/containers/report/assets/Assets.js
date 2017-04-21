@@ -21,12 +21,16 @@ export default class Assets extends Component {
     assetsStore: PropTypes.object
   };
   render() {
+    const assetsStore = this.props.assetsStore;
     return (
       <Tabs>
         <TabPane tab="无形资产/招投标">
-          <Trademark trademarkInfo={this.props.assetsStore.trademarkData} />
-          <Patent />
-          <Bidding />
+          <Trademark trademarkInfo={this.props.assetsStore.trademarkData}
+                     isLoading={assetsStore.trLoading}
+                     error={false}
+          />
+          <Patent isLoading={assetsStore.patentLoading} />
+          <Bidding isLoading={assetsStore.biddingLoading} />
         </TabPane>
       </Tabs>
     );

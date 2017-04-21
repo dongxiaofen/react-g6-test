@@ -7,6 +7,10 @@ class AssetsStore {
   @observable biddingData = [];
   @observable isMount = false ;
 
+  @observable trLoading = true;
+  @observable patentLoading = true;
+  @observable biddingLoading = true;
+
   @action.bound getReportModule(apiModule, monitorId, reportId, companyName, companyType, pagesInfo) {
     this.isMount = true;
     companyHomeApi.getReportModule(apiModule, monitorId, reportId, companyName, companyType, pagesInfo)
@@ -16,7 +20,7 @@ class AssetsStore {
             this.patentData = response.data;
             break;
           case 'trademark':
-            console.log(response.data.content);
+            this.trLoading = false;
             this.trademarkData = response.data.content;
             break;
           case 'bidding':
