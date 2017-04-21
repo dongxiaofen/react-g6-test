@@ -1,6 +1,5 @@
 import React, { Component, PropTypes } from 'react';
 import { observer, inject } from 'mobx-react';
-import axios from 'axios';
 import moment from 'moment';
 
 import Container from 'components/common/layout/Container';
@@ -11,6 +10,9 @@ import styles from './index.less';
 import SwitchData from './SwitchData';
 import StatisticInfo from './StatisticInfo';
 import ChangeTrend from './ChangeTrend';
+import Province from './Province';
+import Industry from './Industry';
+import Headlines from './Headlines';
 
 const params = {
   begin: moment().subtract(29, 'day').format('YYYY-MM-DD'),
@@ -23,13 +25,12 @@ export default class MonitorStatisticsGetData extends Component {
     monitorStatisticsStore: PropTypes.object
   };
   componentDidMount() {
-    axios.post('/api/user/login', {
-      email: 'cy@sc.cn',
-      password: '25f9e794323b453885f5181f1b624d0b'
-    });
     const msStore = this.props.monitorStatisticsStore;
     msStore.getStatistic(params);
     msStore.getChangeTrend(params);
+    msStore.getProvinceAll(params);
+    msStore.getIndustryStatistics(params);
+    msStore.getHeadlines(params);
     msStore.setParams(params);
   }
 
@@ -55,7 +56,10 @@ export default class MonitorStatisticsGetData extends Component {
           statistic={msStore.statistic}
           params={msStore.params}
           loading={msStore.loadingGroup.statistic} />
-        <ChangeTrend changeTrend={msStore.changeTrend} />
+        <ChangeTrend msStore={msStore} />
+        <Province msStore={msStore} />
+        <Industry msStore={msStore} />
+        <Headlines msStore={msStore} />
       </Container>
     );
   }

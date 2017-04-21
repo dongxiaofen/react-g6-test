@@ -18,7 +18,13 @@ class Tabs extends Component {
     if (this.props.defaultActiveKey) {
       return;
     }
-    const children = this.props.children;
+    this.checkPropsValid(this.props);
+  }
+  componentWillReceiveProps(nextProps) {
+    this.checkPropsValid(nextProps);
+  }
+  checkPropsValid(props) {
+    const children = props.children;
     const validChildIdx = React.Children.map(children, (child, idx) => {
       if (!child.props.none && !child.props.disabled) {
         return idx + 1;

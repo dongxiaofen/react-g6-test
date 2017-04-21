@@ -5,11 +5,11 @@ class UiStore {
   @observable uiState = {
     shareholder: {
       index: 1,
-      size: 2
+      size: 4
     },
     personList: {
       index: 1,
-      size: 2
+      size: 4
     },
     filiationList: {
       index: 1,

@@ -42,5 +42,3 @@ function SearchItem({item, showDetail}) {
   );
 }
 export default muiThemeable()(observer(SearchItem));
-
-

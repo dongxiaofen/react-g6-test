@@ -42,7 +42,7 @@ class PayModalStore {
     @observable pointText = '';
     @observable pactUrl = '';
     @observable pactName ='';
-    @observable width = '560';
+    @observable width = '560px';
 
     @observable callBack = null;
 
