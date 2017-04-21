@@ -4,6 +4,7 @@ import {
     App,
     Home,
     Relation,
+    SearchCompany,
     MyHomePage,
     RiskHeadlines,
     Account,
@@ -17,6 +18,7 @@ import {
     TestModal,
     Internet,
     MonitorStatistics,
+    AccountSetting,
     ReportManage,
     Assets,
 // first append here from plop
@@ -38,6 +40,7 @@ export default (allStore) => {
       <IndexRoute component={ HomePage } />
       <Route path="pdfDown" component={ Home } />
       <Route path="relation" component={ Relation } />
+      <Route path="searchCompany" component={ SearchCompany } />
       <Route path="myHomePage" component={ MyHomePage } />
       <Route path="riskHeadlines" component={ RiskHeadlines } />
       <Route path="account" component={ Account } />
@@ -56,6 +59,7 @@ export default (allStore) => {
       {/* 测试modal用 */}
       <Route path="testModal" component={TestModal } />
       <Route path="monitorStatistics" component={ MonitorStatistics } />
+      <Route path="accountSetting" component={ AccountSetting } />
       <Route path="reportManage" component={ ReportManage } />
 {/* second append here from plop */}
     </Route>

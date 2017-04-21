@@ -1,0 +1,48 @@
+@import "~sc-colors/index.less";
+.box {
+  float: left;
+  width: 50%;
+  height: 560px;
+}
+.newBusiness {
+  composes: box;
+  padding-right: 10px;
+  margin-bottom: 20px;
+}
+.provinceRank {
+  composes: box;
+  padding-left: 10px;
+  margin-bottom: 20px;
+}
+.industryDist {
+  composes: box;
+  padding-right: 10px;
+}
+.scaleDist {
+  composes: box;
+  padding-left: 10px;
+}
+.bgBox {
+  position: relative;
+  padding: 30px;
+  height: 100%;
+  background-color: @white1;
+  box-shadow:0 2px 4px 0 rgba(176,190,197,0.50);
+}
+.chartTitle {
+  position: absolute;
+  top: 30px;
+  left: 30px;
+  color: @mdc-blue-grey-500;
+  z-index: 1;
+}
+@media screen and (max-width: 1366px) {
+  .newBusiness, .provinceRank, .industryDist, .scaleDist {
+    float: none;
+    width: 100%;
+    padding: 0;
+  }
+  .newBusiness, .industryDist {
+    margin-bottom: 20px;
+  }
+}

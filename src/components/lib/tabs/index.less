@@ -14,6 +14,10 @@
   color: #78909C;
   border-bottom: 4px solid transparent;
   cursor: pointer;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
 }
 .tabBarAct {
   composes: tabBar;
@@ -21,7 +25,7 @@
 }
 .tabBarDis {
   composes: tabBar;
-  color: #90A4AE;
+  color: #B0BEC5;
   cursor: not-allowed;
 }
 .tabConBox {

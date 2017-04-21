@@ -6,6 +6,7 @@ import pathval from 'pathval';
 
 function BaseList({listData, routing, reportManageStore, payModalStore}) {
   const choiceOk = () => {
+    console.log('====asdsa');
     const reportId = pathval.getPathValue(reportManageStore, 'agreeModal.reportId');
     const params = pathval.getPathValue(reportManageStore, 'params');
     reportManageStore.upGradeToMonitor(reportId, params, pathval.getPathValue(payModalStore, 'selectValue'));

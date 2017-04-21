@@ -9,13 +9,20 @@
   color: @mdc-blue-grey-800;
 }
 
-.backgroundBox {
+.statisticItem {
   margin-top: 20px;
+  padding: 20px;
+
   background-color: @mdc-white-darker;
   .box-shadow-block;
-}
 
-.statisticItem {
-  .backgroundBox;
-  padding: 20px;
+  -webkit-transition: all .3s ease-in-out;
+     -moz-transition: all .3s ease-in-out;
+      -ms-transition: all .3s ease-in-out;
+       -o-transition: all .3s ease-in-out;
+          transition: all .3s ease-in-out;
+
+  &:hover {
+    .box-shadow-block-click;
+  }
 }
