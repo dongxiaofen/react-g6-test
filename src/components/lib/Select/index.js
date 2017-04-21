@@ -6,6 +6,7 @@ export default class Select extends Component {
     value: PropTypes.string,
     onChange: PropTypes.func,
     defaultValue: PropTypes.string,
+    className: PropTypes.string,
     children: PropTypes.node,
   };
   static defaultProps = {
@@ -78,10 +79,11 @@ export default class Select extends Component {
   }
   render() {
     const cssName = this.state.isExtend ? `${styles.select} ${styles.selectExtend}` : styles.select;
+    const inputCss = this.props.className ? `${styles.selectInput} ${this.props.className}` : styles.selectInput;
     return (
       <div className={cssName} style={{ width: this.props.width }}>
         <div
-          className={styles.selectInput}
+          className={inputCss}
           tabIndex="0"
           onMouseDown={this.toggleSelect}
           onBlur={this.blurHandle}>

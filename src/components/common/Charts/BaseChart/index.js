@@ -1,4 +1,5 @@
 import React, { Component, PropTypes } from 'react';
+import { toJS } from 'mobx';
 import { observer } from 'mobx-react';
 
 const chartFunc = {};
@@ -9,6 +10,7 @@ export default class BaseChart extends Component {
     option: PropTypes.object,
     height: PropTypes.string,
     width: PropTypes.string,
+    clickAction: PropTypes.func,
   }
 
   static defaultProps = {
@@ -18,14 +20,17 @@ export default class BaseChart extends Component {
   componentDidMount() {
     const chartId = this.props.chartId;
     const myChart = window.echarts.init(document.getElementById(chartId));
-    myChart.setOption(this.props.option);
+    myChart.setOption(toJS(this.props.option));
+    if (this.props.clickAction) {
+      myChart.on('click', this.props.clickAction);
+    }
     chartFunc[chartId] = myChart.resize;
     window.addEventListener('resize', chartFunc[chartId]);
   }
 
   componentDidUpdate() {
     const myChart = window.echarts.getInstanceByDom(document.getElementById(this.props.chartId));
-    myChart.setOption(this.props.option.toJS());
+    myChart.setOption(toJS(this.props.option));
   }
 
   componentWillUnmount() {
