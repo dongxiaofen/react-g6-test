@@ -9,25 +9,21 @@ import DetailModal from 'components/common/DetailModal';
 import Message from 'components/common/Message';
 import PayModal from 'components/common/PayModal';
 
-@inject('routing', 'modalStore', 'detailModalStore', 'messageStore', 'payModalStore')
+@inject('modalStore', 'detailModalStore', 'messageStore', 'payModalStore')
 @observer
 export default class App extends Component {
   static propTypes = {
     children: PropTypes.object.isRequired,
-    routing: PropTypes.object,
+    location: PropTypes.object,
     modalStore: PropTypes.object,
     detailModalStore: PropTypes.object,
     messageStore: PropTypes.object,
     payModalStore: PropTypes.object,
   };
   render() {
-    if (__SERVER__) {
-      return null;
-    }
-    let output;
-    const pathname = this.props.routing.location.pathname;
+    const pathname = this.props.location.pathname;
     if (pathname === '/' || pathname === '/pdfDown' || pathname === '/solution' || pathname === '/about') {
-      output = (
+      return (
         <div className={styles.container}>
           {
             pathname === '/pdfDown' ? '' :
@@ -36,26 +32,24 @@ export default class App extends Component {
           {this.props.children}
         </div>
       );
-    } else {
-      output = (
-        <div className={styles.wrap}>
-          {false && <DevTools />}
-          <Login pathname={pathname} />
-          {/* <BackTop /> */}
-          {/* <MenuBar {...this.props} /> */}
-          <Modal modalStore={this.props.modalStore} />
-          <DetailModal detailModalStore={this.props.detailModalStore} />
-          <Message messageStore={this.props.messageStore} />
-          <PayModal payModalStore={this.props.payModalStore} />
-          <div className={styles.box}>
-            <div className={styles.content}>
-              {this.props.children}
-              {/* {React.cloneElement(this.props.children, this.props)} */}
-            </div>
+    }
+    return (
+      <div className={styles.wrap}>
+        {false && <DevTools />}
+        <Login pathname={pathname} />
+        {/* <BackTop /> */}
+        {/* <MenuBar {...this.props} /> */}
+        <Modal modalStore={this.props.modalStore} />
+        <DetailModal detailModalStore={this.props.detailModalStore} />
+        <Message messageStore={this.props.messageStore} />
+        <PayModal payModalStore={this.props.payModalStore} />
+        <div className={styles.box}>
+          <div className={styles.content}>
+            {this.props.children}
+            {/* {React.cloneElement(this.props.children, this.props)} */}
           </div>
         </div>
-      );
-    }
-    return output;
+      </div>
+    );
   }
 }
