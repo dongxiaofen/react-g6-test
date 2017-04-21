@@ -20,6 +20,6 @@ function HoverBox({ width, left, children }) {
 HoverBox.propTypes = {
   width: PropTypes.string,
   left: PropTypes.string,
-  children: PropTypes.object,
+  children: PropTypes.node,
 };
 export default observer(HoverBox);

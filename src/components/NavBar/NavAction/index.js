@@ -1,16 +1,15 @@
 import React, { Component, PropTypes } from 'react';
-import { observer } from 'mobx-react';
+import { observer, inject } from 'mobx-react';
 import { browserHistory } from 'react-router';
 
 import styles from './index.less';
 import HoverBox from './HoverBox';
 
-@observer
-export class Action extends Component {
+@inject('clientStore')@observer
+export default class NavAction extends Component {
   static propTypes = {
-    client: PropTypes.object,
+    clientStore: PropTypes.object,
     clientBoundAC: PropTypes.object,
-    location: PropTypes.object,
     commonBoundAC: PropTypes.object,
     searchCompanyBoundAC: PropTypes.object,
   };
@@ -44,7 +43,7 @@ export class Action extends Component {
     this.setState({
       showSetting: false,
     });
-    this.props.clientBoundAC.logout();
+    // this.props.clientBoundAC.logout();
   }
 
   inputChange = (evt) => {
@@ -55,9 +54,9 @@ export class Action extends Component {
 
   enterToSearch = (evt) => {
     if (evt.keyCode === 13 && this.state.inputValue.trim() !== '') {
-      this.props.commonBoundAC.updateValue(['searchKey'], evt.target.value, 'SEARCH_COMPANY_UPDATE_VALUE');
-      this.props.searchCompanyBoundAC.searchCompany({ keyWord: evt.target.value, type: 'COMPANY_NAME' });
-      this.props.searchCompanyBoundAC.showResult(true);
+      // this.props.commonBoundAC.updateValue(['searchKey'], evt.target.value, 'SEARCH_COMPANY_UPDATE_VALUE');
+      // this.props.searchCompanyBoundAC.searchCompany({ keyWord: evt.target.value, type: 'COMPANY_NAME' });
+      // this.props.searchCompanyBoundAC.showResult(true);
       browserHistory.push(`/searchCompany`);
     }
   }
@@ -76,9 +75,9 @@ export class Action extends Component {
   }
 
   render() {
-    const moduleData = this.props.client;
-    const userEmail = moduleData.getIn(['userInfo', 'email']);
-    const userName = moduleData.getIn(['userInfo', 'contact']);
+    const userInfo = this.props.clientStore.userInfo;
+    const userEmail = userInfo.email;
+    const userName = userInfo.contact;
     return (
       <div className={`clearfix ${styles.wrap}`}>
         <div className={`clearfix ${styles.searchBox}`} ref="searchBox">

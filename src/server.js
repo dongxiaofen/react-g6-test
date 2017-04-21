@@ -17,6 +17,7 @@ import logger from 'morgan';
 import { match, RouterContext } from 'react-router';
 import { Provider } from 'mobx-react';
 import getRoutes from './routes';
+import { RouterStore } from 'mobx-react-router';
 import * as allStores from 'stores';
 fundebug.apikey = '45f943a4862476f1895ca38d28def3231ea03ca1e4c94320476f52019f29560f';
 const agent = require('superagent-defaults')();
@@ -168,6 +169,10 @@ app.use((req, res) => {
         }
         allStores.leftBarStore.activeItem = reportActiveItem;
         /*获取报告leftBar高亮*/
+
+        /*服务端注入RouterStore*/
+        const routingStore = new RouterStore();
+        allStores.routing = routingStore;
         const component = (
           <Provider { ...allStores }>
             <RouterContext {...renderProps} />

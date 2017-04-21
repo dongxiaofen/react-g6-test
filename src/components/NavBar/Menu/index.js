@@ -3,7 +3,7 @@ import { observer } from 'mobx-react';
 import { browserHistory } from 'react-router';
 import styles from './index.less';
 
-function Menu({ location }) {
+function Menu({ routing }) {
   const config = [
     { parent: { module: '首页', route: 'myHomePage' } },
     { parent: { module: '查询', route: 'searchCompany' } },
@@ -38,12 +38,12 @@ function Menu({ location }) {
   };
 
   const childrenIsActiveFun = (route) => {
-    const pathname = location.pathname.substr(1);
+    const pathname = routing.location.pathname.substr(1);
     return route === pathname;
   };
 
   const parentItemIsActiveFun = (item) => {
-    const pathname = location.pathname.substr(1);
+    const pathname = routing.location.pathname.substr(1);
     const children = item.children;
     if (children && children.length > 0) {
       const isHas = children.find((child) => {
@@ -130,6 +130,6 @@ function Menu({ location }) {
 }
 
 Menu.propTypes = {
-  location: PropTypes.object,
+  routing: PropTypes.object,
 };
 export default observer(Menu);
