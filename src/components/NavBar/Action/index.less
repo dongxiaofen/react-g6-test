@@ -1,3 +1,177 @@
-.box {
+@import "~sc-colors/index.less";
 
+.transition-all(@second: .3s) {
+  -webkit-transform: translateZ(0);
+     -moz-transform: translateZ(0);
+       -o-transform: translateZ(0);
+          transform: translateZ(0);
+
+  -webkit-transition: all @second ease-in-out;
+     -moz-transition: all @second ease-in-out;
+       -o-transition: all @second ease-in-out;
+          transition: all @second ease-in-out;
+}
+
+.wrap{
+  font-size: 14px;
+}
+
+.searchBox{
+  position: relative;
+  float: left;
+  width: 300px;
+  margin-top: 18px;
+}
+
+.searchInput{
+  width: 300px;
+  height: 35px;
+  padding-left: 40px;
+
+  color: @blue8;
+  line-height: 33px;
+
+  background: transparent;
+  border: 1px solid @mdc-blue-grey-50;
+  border-radius: 100px;
+}
+
+.searchInput:hover,
+.searchInput:focus
+{
+  border: 1px solid @mdc-blue-grey-50;
+  box-shadow: none;
+}
+
+.searchInput:focus {
+  color: @mdc-blue-grey-500;
+}
+.searchBoxOnFocus .searchIcon {
+  background-image: url('imgs/navbar/search_hover.png');
+}
+
+.searchIcon{
+  position: absolute;
+  top: 7px;
+  left: 14px;
+  width: 20px;
+  height: 20px;
+
+  background-image: url('imgs/navbar/search.png');
+
+  .transition-all;
+}
+
+.iconStyle {
+  position: relative;
+  float: left;
+  margin-left: 30px;
+  line-height: 70px;
+}
+
+.icon {
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+
+  vertical-align: middle;
+  cursor: pointer;
+
+  .transition-all;
+}
+
+.icon:hover + .hoverBox {
+  visibility: visible;
+  opacity: 1;
+  top: 71px;
+}
+
+.appCode {
+  padding: 10px;
+  text-align: center;
+}
+
+.appCodeImg {
+  width: 120px;
+  height: 120px;
+
+  background-image: url('imgs/navbar/code.png');
+  background-size: 120px 120px;
+}
+
+.appCodeText {
+  margin-top: 10px;
+
+  font-size: 14px;
+  line-height: 14px;
+  color: @mdc-blue-grey-400;
+}
+
+.userInfo {
+  padding: 20px;
+}
+
+.userInfoBorder {
+  height: 1px;
+  margin-top: 15px;
+  margin-bottom: 15px;
+  background-color: @mdc-blue-grey-50;
+}
+
+.userInfoText {
+  font-size: 14px;
+  line-height: 14px;
+  color: @mdc-blue-grey-400;
+}
+
+.userInfoText:last-child {
+  line-height: 16px;
+}
+
+.userInfoBlock {
+  float: left;
+}
+
+.userInfoBlock:first-child {
+  width: 42px;
+}
+.userInfoBlock:last-child {
+  width: 140px;
+  overflow: hidden;
+  white-space: nowrap;  
+  text-overflow: ellipsis; 
+}
+
+.logout {
+  text-align: center;
+}
+
+.logoutText
+{  
+  font-size: 14px;
+  line-height: 40px;
+  color: @mdc-blue-grey-400;
+}
+
+.userInfoIcon {
+  width: 28px;
+  height: 28px;
+  background-image: url('imgs/navbar/user.png');
+  &:hover {
+    background-image: url('imgs/navbar/user_hover.png');
+  }
+}
+
+.appCodeIcon {
+  background-image: url('imgs/navbar/app_code.png');
+  &:hover {
+    background-image: url('imgs/navbar/app_code_hover.png');
+  }
+}
+
+.exitIcon {
+  background-image: url('imgs/navbar/exit.png');
+  &:hover {
+    background-image: url('imgs/navbar/exit_hover.png');
+  }
 }

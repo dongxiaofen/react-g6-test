@@ -6,7 +6,7 @@ import styles from './index.less';
 function Menu({ location }) {
   const config = [
     { parent: { module: '首页', route: 'myHomePage' } },
-    { parent: { module: '查询', route: 'search' } },
+    { parent: { module: '查询', route: 'searchCompany' } },
     { parent: { module: '报告', route: 'reportManage' } },
     {
       parent: { module: '监控' },
