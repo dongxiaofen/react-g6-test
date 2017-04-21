@@ -1,7 +1,11 @@
 import React, { Component, PropTypes } from 'react';
+import AntdPager from 'antd/lib/pagination';
 import styles from './index.less';
 export default class Pagination extends Component {
   static propTypes = {
+    type: PropTypes.string,
+    simple: PropTypes.bool,
+    showQuickJumper: PropTypes.bool,
     current: PropTypes.number,
     pageSize: PropTypes.number,
     total: PropTypes.number,
@@ -68,6 +72,18 @@ export default class Pagination extends Component {
     const totalPage = Math.ceil(this.props.total / this.props.pageSize);
     const prevClass = this.props.current === 1 ? styles.btnDisable : styles.btn;
     const nextClass = this.props.current === totalPage ? styles.btnDisable : styles.btn;
+    if (this.props.type === 'antd') {
+      return (
+        <AntdPager
+          current={this.props.current}
+          pageSize={this.props.pageSize}
+          total={this.props.total}
+          onChange={this.props.onChange}
+          showQuickJumper={this.props.showQuickJumper}
+          simple={this.props.simple}
+          />
+      );
+    }
     return (
       <div className={styles.wrapper}>
         <span onClick={this.previous.bind(this)} className={prevClass}>
@@ -95,5 +111,8 @@ export default class Pagination extends Component {
   }
 }
 Pagination.defaultProps = {
+  type: 'antd',
   pageSize: 10,
+  simple: false,
+  showQuickJumper: true,
 };

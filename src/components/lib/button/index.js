@@ -24,7 +24,7 @@ function Button({ btnType, className, loading, disabled, children, onClick, ...p
       onClick={clickHandle}
       >
       {children}
-      {loading && <i style={{marginLeft: '5px'}} className="fa fa-spin fa-spinner"></i>}
+      {loading && <i style={{marginLeft: '5px'}} className="anticon anticon-spin anticon-loading"></i>}
     </button>
   );
 }
