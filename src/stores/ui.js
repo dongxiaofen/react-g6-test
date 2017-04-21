@@ -19,6 +19,11 @@ class UiStore {
       index: 1,
       size: 10,
       show: {}
+    },
+    judgeDoc: {
+      index: 1,
+      size: 10,
+      show: {},
     }
   };
 
