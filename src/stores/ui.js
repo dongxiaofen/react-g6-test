@@ -19,7 +19,23 @@ class UiStore {
       index: 1,
       size: 10,
       show: {}
-    }
+    },
+    yearInvestor: {
+      index: 1,
+      size: 10,
+    },
+    yearWebsite: {
+      index: 1,
+      size: 10,
+    },
+    yearEquityChange: {
+      index: 1,
+      size: 10,
+    },
+    yearChangeRecords: {
+      index: 1,
+      size: 10,
+    },
   };
 
   @action.bound updateUiStore(keypath, value) {

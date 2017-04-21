@@ -19,7 +19,6 @@ function Investor({yearReportList, yearReportTab, isLoading}) {
       listNum = yearReportList[0].investorInformations.length;
     }
   }
-  console.log(listNum, listData, '====');
   const data = {
     meta: [
       { 'key': 'shareholderName', 'width': '2' },

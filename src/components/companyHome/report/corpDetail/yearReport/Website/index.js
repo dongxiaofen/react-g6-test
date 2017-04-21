@@ -19,7 +19,6 @@ function Website({yearReportList, yearReportTab, isLoading}) {
       listNum = yearReportList[0].websiteList.length;
     }
   }
-  console.log(listNum, listData, '====');
   const data = {
     meta: [
       { 'key': 'type', 'width': '3' },
@@ -27,7 +26,7 @@ function Website({yearReportList, yearReportTab, isLoading}) {
       { 'key': 'link', 'width': '3' },
     ],
     tData: listData,
-    dict: 'shareholder',
+    dict: 'yearWebsite',
     isLoading: isLoading,
     module: '网站或网店信息',
     error: listNum === 0
