@@ -14,7 +14,7 @@ function Enterprise({entinvItemList, isLoading}) {
   };
   return (
     <div>
-      <ModuleTitle module="企业对外投资" />
+      <ModuleTitle module="企业对外投资" count={entinvItemList.length} />
       <CardTable {...data} />
     </div>
   );
