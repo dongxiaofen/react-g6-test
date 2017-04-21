@@ -53,3 +53,24 @@ export const getReportModule = (module, monitorId, reportId, companyName, compan
   window.reportSourceCancel.push(source.cancel);
   return axios.get(url, { cancelToken: source.token });
 };
+export const getInternet = ({monitorId, reportId, companyName, companyType, pageParams}) => {
+  let url;
+  if (companyType === 'MAIN') {
+    if (monitorId) {
+      url = `/api/monitor/${monitorId}/internet`;
+    } else {
+      url = `/api/report/internet?reportId=${reportId}`;
+    }
+  } else if (companyType === 'ASSOCIATE') {
+    url = `/api/monitor/${monitorId}/internet`;
+  } else if (companyType === 'FREE') {
+    url = `/api/free/internet?companyName=${encodeURI(companyName)}`;
+  }
+  const CancelToken = axios.CancelToken;
+  const source = CancelToken.source();
+  if (window.reportSourceCancel === undefined) {
+    window.reportSourceCancel = [];
+  }
+  window.reportSourceCancel.push(source.cancel);
+  return axios.get(url, { cancelToken: source.token, params: pageParams });
+};

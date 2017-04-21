@@ -1,0 +1,143 @@
+@import "~sc-colors/index.less";
+.labelRow{
+  position: relative;
+  width: 100%;
+  margin-bottom: 30px;
+  padding: 20px 0;
+  border: 1px solid @black12;
+  background: @white1;
+  transition: all .5s;
+  &:nth-last-child(2){
+    margin-bottom: 0;
+  }
+  &:hover{
+    box-shadow: 0 0 7px @black9;
+  }
+}
+.label {
+  float: left;
+  min-width: 100px;
+  text-align: center;
+  background-image: url('imgs/companyHome/risk/labelRep.png');
+  display: block;
+  margin-left: -8px;
+  height: 28px;
+  background-repeat: no-repeat;
+  span {
+    line-height: 22px;
+    background: @blue5;
+    display: block;
+    padding: 0 20px;
+    color: @blue2;
+    font-size: 15px;
+    font-family: "Microsoft Yahei";
+    width: 135px;
+    overflow: hidden;
+    height: 22px;
+  }
+}
+.rowContent {
+  margin-left: 15px;
+  float: left;
+  width: 80%;
+  padding-right: 90px;
+}
+.col{
+  display: inline-block;
+  vertical-align: top;
+}
+.viewBtn{
+  position: absolute;
+  height: 20px;
+  right: 20px;
+  top: 25px;
+  color: @blue3;
+  cursor: pointer;
+  i {
+    margin-right: 5px;
+  }
+  &:hover {
+    color: @blue2;
+  }
+}
+.viewLink{
+  position: absolute;
+  height: 40px;
+  line-height: 40px;
+  right: 20px;
+  bottom: 30px;
+  color: @blue2;
+  cursor: pointer;
+}
+.lightBlock{
+  display: inline-block;
+  padding: 2px 10px;
+  color: @blue2;
+  border-radius: 11px;
+  background: @blue7;
+}
+.paddingBlock{
+  display: inline-block;
+  padding: 5px 10px;
+  .key{
+    color: @black4;
+  }
+  .value{
+    color: @black5;
+  }
+}
+.hide {
+  display: none;
+}
+// 对外投资任职
+.investment .key {
+  color: @black7;
+}
+.investment .value {
+  color: @black4;
+}
+.top {
+  width: 100%;
+  padding: 5px 10px;
+}
+.name {
+  color: @blue2;
+  font-weight: bold;
+  margin-right: 20px;
+}
+.status {
+  border: 1px solid @black11;
+  font-size: 10px;
+  padding: 2px 5px;
+  margin-right: 10px;
+  border-radius: 3px;
+  color: @black5;
+}
+.type {
+  border: 1px solid @black11;
+  font-size: 10px;
+  padding: 2px 5px;
+  border-radius: 3px;
+  color: @black5;
+}
+.date {
+  float: right;
+  color: @black5;
+}
+.displayNone {
+  display: none;
+}
+.detailWrap {
+  clear: both;
+  padding: 20px;
+}
+.detail {
+  border-top: 1px solid @black12;
+  padding: 30px 20px;
+}
+.loading {
+  text-align: center;
+}
+.pointer {
+  cursor: pointer;
+}

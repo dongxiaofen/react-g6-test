@@ -24,8 +24,10 @@ import {
 // first append here from plop
   } from 'containers';
 
-function requireAuth(allStore, nextState, replace) {
-  console.log(allStore, nextState, replace, '------requireAuth');
+// function requireAuth(allStore, nextState, replace) {
+function requireAuth() {
+  // console.log(allStore, nextState, replace, '------requireAuth');
+
   // if (allStore !== 'server') {
   //   const { reportId } = allStore.routing.location.query;
   //   if (!reportId) {
