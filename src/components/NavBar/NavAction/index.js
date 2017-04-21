@@ -5,13 +5,11 @@ import { browserHistory } from 'react-router';
 import styles from './index.less';
 import HoverBox from './HoverBox';
 
-@inject('clientStore')@observer
+@inject('clientStore', 'searchCompanyStore')@observer
 export default class NavAction extends Component {
   static propTypes = {
     clientStore: PropTypes.object,
-    clientBoundAC: PropTypes.object,
-    commonBoundAC: PropTypes.object,
-    searchCompanyBoundAC: PropTypes.object,
+    searchCompanyStore: PropTypes.object,
   };
 
   constructor(props) {
@@ -43,7 +41,7 @@ export default class NavAction extends Component {
     this.setState({
       showSetting: false,
     });
-    // this.props.clientBoundAC.logout();
+    this.props.clientStore.loginOut();
   }
 
   inputChange = (evt) => {
@@ -54,9 +52,10 @@ export default class NavAction extends Component {
 
   enterToSearch = (evt) => {
     if (evt.keyCode === 13 && this.state.inputValue.trim() !== '') {
-      // this.props.commonBoundAC.updateValue(['searchKey'], evt.target.value, 'SEARCH_COMPANY_UPDATE_VALUE');
-      // this.props.searchCompanyBoundAC.searchCompany({ keyWord: evt.target.value, type: 'COMPANY_NAME' });
-      // this.props.searchCompanyBoundAC.showResult(true);
+      const searchCompanyStore = this.props.searchCompanyStore;
+      searchCompanyStore.searchTabClick('COMPANY_NAME');
+      searchCompanyStore.searchChange(evt);
+      searchCompanyStore.getCompanyList();
       browserHistory.push(`/searchCompany`);
     }
   }
