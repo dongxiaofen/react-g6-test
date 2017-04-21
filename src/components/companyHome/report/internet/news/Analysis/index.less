@@ -1,0 +1,49 @@
+@import "~sc-colors/index.less";
+.newsItem{
+  display: inline-block;
+  vertical-align: top;
+  width: 50%;
+  margin-top: 20px;
+}
+.newsScore{
+  float: left;
+  width: 60px;
+  height: 60px;
+  line-height: 60px;
+  font-size: 16px;
+  text-align: center;
+  color: @blue2;
+  font-weight: bold;
+  border-radius: 50%;
+  border: 2px solid @blue2;
+}
+.newsDim{
+  padding-left: 70px;
+  margin-top: 10px;
+  line-height: 20px;
+  font-size: 13px;
+  color: @blue2;
+}
+.newsDesc{
+  padding-left: 70px;
+  line-height: 20px;
+  font-size: 13px;
+  color: @black5;
+}
+.waitInfo {
+  width: 100%;
+  height: 40px;
+  text-align: center;
+  line-height: 40px;
+  background: #f6f8fa;
+}
+@media screen and (max-width: 1920px) {
+  .newsRow{
+    float: none;
+    width: 800px;
+    margin-bottom: 40px;
+  }
+  .newsRow:last-child{
+    margin-bottom: 0;
+  }
+}
