@@ -20,6 +20,10 @@ class UiStore {
       size: 10,
       show: {}
     },
+    internetInfo: {
+      index: 1,
+      size: 10,
+    },
     judgeDoc: {
       index: 1,
       size: 10,

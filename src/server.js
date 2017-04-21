@@ -30,6 +30,9 @@ const app = new Express();
 const server = new http.Server(app);
 const getQueryObj = (url) => {
   const theRequest = {};
+  if (!url) {
+    return theRequest;
+  }
   const strs = url.substr(1).split('&');
   for (var i = 0; i < strs.length; i++) {
     theRequest[strs[i].split('=')[0]] = unescape(strs[i].split('=')[1]);
