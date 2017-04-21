@@ -29,13 +29,16 @@ class UiStore {
       size: 10,
     },
     internetInfo: {
-      index: 1,
-      size: 10,
-    },
-    judgeDoc: {
-      index: 1,
-      size: 10,
-      show: observable.map({}),
+      news: {
+        index: 1,
+        size: 10,
+        type: 'ALL',
+      },
+      judgeDoc: {
+        index: 1,
+        size: 10,
+        show: observable.map({}),
+      }
     }
   };
 
