@@ -28,7 +28,6 @@ function Court({court, updateValue}) {
         return <div></div>;
     }
   };
-  console.log(courtData);
   return (
     <div>
       <div className={styles.riskTab}>

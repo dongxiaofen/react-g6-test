@@ -2,8 +2,8 @@ import React from 'react';
 import { observer } from 'mobx-react';
 import styles from './index.less';
 import config from 'dict/reportModule';
-function JudgeCard({itemData, rowIdx, data, showParams}) {
-  const show = showParams.show[rowIdx];
+function JudgeCard({itemData, rowIdx, data, showParams, uiStore, module}) {
+  const show = showParams.show.get(rowIdx);
   const createItem = ()=>{
     const output = [];
     const dict = data.dict;
@@ -28,6 +28,7 @@ function JudgeCard({itemData, rowIdx, data, showParams}) {
     return output;
   };
   const viewDetail = () => {
+    uiStore.toggleShowValue(module, rowIdx);
   };
   const iconStr = show ? 'up' : 'down';
   const label = itemData.judgeProcess === '' ? itemData.caseType : `${itemData.caseType} ${itemData.judgeProcess.substring(0, 2)}`;

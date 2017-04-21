@@ -29,7 +29,8 @@ function JudgeBox({data, uiStore}) {
               rowIdx= {`${page}-${rowIdx}`}
               module={module}
               data={data}
-              showParams={showParams}/>
+              showParams={showParams}
+              uiStore={uiStore}/>
           </div>
         );
         rowIdx ++;
