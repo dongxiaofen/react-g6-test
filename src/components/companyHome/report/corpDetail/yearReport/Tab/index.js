@@ -4,7 +4,7 @@ import styles from './index.less';
 
 function Tab({}) {
   return (
-    <div>
+    <div className={styles.box}>
 
     </div>
   );

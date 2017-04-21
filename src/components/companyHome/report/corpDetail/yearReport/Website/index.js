@@ -1,16 +1,48 @@
 import React, {PropTypes} from 'react';
 import { observer } from 'mobx-react';
-import styles from './index.less';
+import { ModuleTitle, CommonTable } from 'components/common/report';
+// import styles from './index.less';
 
-function Website({}) {
+function Website({yearReportList, yearReportTab, isLoading}) {
+  let listData = {};
+  let listNum = 0;
+  if (yearReportList && yearReportList.length > 0) {
+    if (yearReportTab.length > 0) {
+      yearReportList.map((obj)=>{
+        if (yearReportTab === obj.year) {
+          listData = obj.websiteList;
+          listNum = obj.websiteList.length;
+        }
+      });
+    } else {
+      listData = yearReportList[0].websiteList;
+      listNum = yearReportList[0].websiteList.length;
+    }
+  }
+  console.log(listNum, listData, '====');
+  const data = {
+    meta: [
+      { 'key': 'type', 'width': '3' },
+      { 'key': 'name', 'width': '4' },
+      { 'key': 'link', 'width': '3' },
+    ],
+    tData: listData,
+    dict: 'shareholder',
+    isLoading: isLoading,
+    module: '网站或网店信息',
+    error: listNum === 0
+  };
   return (
     <div>
-
+      <ModuleTitle module="网站或网店信息" count={listNum} />
+      <CommonTable {...data} />
     </div>
   );
 }
 
 Website.propTypes = {
-  foo: PropTypes.string,
+  yearReportList: PropTypes.object,
+  yearReportTab: PropTypes.string,
+  isLoading: PropTypes.bool,
 };
 export default observer(Website);

@@ -1,36 +1,26 @@
 import React, {PropTypes} from 'react';
 import { observer } from 'mobx-react';
 import { ModuleTitle } from 'components/common/report';
+import AlterAnalysisTab from './AlterAnalysisTab';
 import styles from './index.less';
-import { loadingComp } from 'components/hoc';
 
-function AlterAnalysis({alterAnalysis}) {
-  const alterArray = [];
-  if (alterAnalysis && alterAnalysis.length > 0) {
-    alterAnalysis.map((obj)=>{
-      alterArray.push(
-        <span key={obj.name}>{obj.name}</span>
-      );
-    });
-  }
+function AlterAnalysis({alterAnalysis, isLoading}) {
+  const data = {
+    items: alterAnalysis,
+    isLoading: isLoading,
+    module: '变更分析',
+    error: alterAnalysis.length === 0
+  };
   return (
     <div className={styles.box}>
       <ModuleTitle module="变更分析" />
-      {alterArray}
+      <AlterAnalysisTab {...data} />
     </div>
   );
 }
 
 AlterAnalysis.propTypes = {
-  foo: PropTypes.string,
+  alterAnalysis: PropTypes.object,
+  isLoading: PropTypes.bool,
 };
-export default loadingComp({
-  mapDataToProps: props => ({
-    loading: props.isLoading,
-    category: 0,
-    error: props.error,
-    errCategory: 1,
-    module: props.module
-  })
-})(observer(AlterAnalysis));
-// export default observer(AlterAnalysis);
+export default observer(AlterAnalysis);

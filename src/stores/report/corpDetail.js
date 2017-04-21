@@ -15,6 +15,10 @@ class CorpDetailStore {
   @observable alterAnalysis = [];
   // 工商变更-变更信息
   @observable alterList = [];
+  // 企业年报
+  @observable yearReportList = [];
+  // 选择年报
+  @observable yearReportTab = '';
 
   @action.bound getReportModule(module, monitorId, reportId, companyName, companyType) {
     this.isMount = true;
@@ -30,6 +34,8 @@ class CorpDetailStore {
         this.alterAnalysis = resp.data.tendency.result[0].data;
         // 工商变更-变更信息
         this.alterList = resp.data.tendency.result[0].alterList;
+        // 企业年报
+        this.yearReportList = resp.data.corpDetail.yearReportList;
       }));
   }
 }
