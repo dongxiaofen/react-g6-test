@@ -27,7 +27,7 @@ function FreeButton({modalStore, payModalStore, itemData, singleData, createMoni
   const monitorOpen = () => {
     payModalStore.openCompModal({
       'modalType': 'createMonitor',
-      'width': '560',
+      'width': '560px',
       'pactName': '用户服务协议',
       'pactUrl': '/',
       'pointText': '创建报告即视为同意',
