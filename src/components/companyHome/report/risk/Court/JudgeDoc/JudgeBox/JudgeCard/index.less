@@ -1,11 +1,14 @@
 @import "~sc-colors/index.less";
-.labelRow{
+.baseRow {
   position: relative;
   width: 100%;
-  margin-bottom: 30px;
   padding: 20px 0;
-  border: 1px solid @black12;
   background: @white1;
+}
+.labelRow {
+  composes: baseRow;
+  margin-bottom: 30px;
+  border: 1px solid @black12;
   transition: all .5s;
   &:nth-last-child(2){
     margin-bottom: 0;
@@ -13,6 +16,9 @@
   &:hover{
     box-shadow: 0 0 7px @black9;
   }
+}
+.modalRow {
+  composes: baseRow;
 }
 .label {
   float: left;

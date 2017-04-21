@@ -53,3 +53,9 @@ export const getReportModule = (module, monitorId, reportId, companyName, compan
   window.reportSourceCancel.push(source.cancel);
   return axios.get(url, { cancelToken: source.token });
 };
+export const getJudgeDetailMonitor = (monitorCompanyId, params)=> {
+  return axios.get(`/api/monitor/${monitorCompanyId}/risk/judgeDoc`, {params});
+};
+export const getJudgeDetailReport = (params)=> {
+  return axios.get(`/api/report/risk/judgeDoc`, {params});
+};

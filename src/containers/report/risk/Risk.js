@@ -15,11 +15,10 @@ export default class Risk extends Component {
   };
   render() {
     const riskStore = this.props.riskStore;
-    const isLoading = riskStore.isLoading;
     return (
       <Tabs>
         <TabPane tab="法务信息">
-          <Court court={riskStore.court} isLoading={isLoading} updateValue={riskStore.updateValue}/>
+          <Court riskStore={riskStore}/>
         </TabPane>
         <TabPane tab="税务公示信息">
           <Tax />

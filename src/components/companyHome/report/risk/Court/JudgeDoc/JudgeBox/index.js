@@ -54,7 +54,7 @@ function JudgeBox({data, uiStore}) {
   return (
     <div className="clearfix">
       {createTable()}
-      <Pager module={module} type="samll" tData={data.items}/>
+      <Pager module={module} type="small" tData={data.items}/>
     </div>
   );
 }
