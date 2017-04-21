@@ -5,6 +5,13 @@ import Row from 'components/common/layout/Row';
 import StatisticInfoItem from './StatisticInfoItem';
 
 function StatisticInfo({ statistic, params, loading }) {
+  const statisticCheck = (key, text) => {
+    if (text) {
+      return statistic && statistic[key] ? statistic[key] : '暂无';
+    }
+    return statistic && statistic[key] ? statistic[key] : 0;
+  };
+
   let firstTitle;
   switch (params.type) {
     case 'MAIN':
@@ -17,46 +24,46 @@ function StatisticInfo({ statistic, params, loading }) {
       firstTitle = '监控中所有企业';
       break;
   }
-  let companyAvgUpdate = statistic.companyAvgUpdate ? statistic.companyAvgUpdate : 0;
+  let companyAvgUpdate = statisticCheck('companyAvgUpdate');
   if (companyAvgUpdate && companyAvgUpdate >= 0) {
     companyAvgUpdate = '+' + companyAvgUpdate;
   }
   const config = [
     {
       title: firstTitle,
-      num: statistic.companyInMonitor,
+      num: statisticCheck('companyInMonitor'),
       numTitle: '家',
       subtitle1: '更新企业',
-      subContent1: statistic.companyUpdated ? statistic.companyUpdated : '暂无',
+      subContent1: statisticCheck('companyUpdated', 1),
       subtitle2: '企业平均变化量',
       subContent2: companyAvgUpdate
     },
     {
       title: '分布地区',
-      num: statistic.provinceCount,
+      num: statisticCheck('provinceCount'),
       numTitle: '个',
       subtitle1: '更新最多地区',
-      subContent1: statistic.provinceMax ? statistic.provinceMax : '暂无',
+      subContent1: statisticCheck('provinceMax', 1),
       subtitle2: '该地区更新企业',
-      subContent2: statistic.provinceCountInMax ? statistic.provinceCountInMax : 0
+      subContent2: statisticCheck('provinceCountInMax')
     },
     {
       title: '分布行业',
-      num: statistic.industryCount,
+      num: statisticCheck('industryCount'),
       numTitle: '个',
       subtitle1: '更新最多行业',
-      subContent1: statistic.industryMax ? statistic.industryMax : '暂无',
+      subContent1: statisticCheck('industryMax', 1),
       subtitle2: '该行业更新企业',
-      subContent2: statistic.industryCountInMax ? statistic.industryCountInMax : 0
+      subContent2: statisticCheck('industryCountInMax')
     },
     {
       title: '更新数据来源',
-      num: statistic.sourceCount,
+      num: statisticCheck('sourceCount'),
       numTitle: '个',
       subtitle1: '更新最多来源',
-      subContent1: statistic.sourceMax ? statistic.sourceMax : '暂无',
+      subContent1: statisticCheck('sourceMax', 1),
       subtitle2: '该行业更新企业',
-      subContent2: statistic.sourceCountInMax ? statistic.sourceCountInMax : 0
+      subContent2: statisticCheck('sourceCountInMax')
     },
   ];
   return (

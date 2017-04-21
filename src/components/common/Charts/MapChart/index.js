@@ -4,17 +4,12 @@ import { observer } from 'mobx-react';
 
 const chartFunc = {};
 @observer
-export default class BaseChart extends Component {
+export default class MapChart extends Component {
   static propTypes = {
-    chartId: PropTypes.string,
     option: PropTypes.object,
+    chartId: PropTypes.string,
     height: PropTypes.string,
-    width: PropTypes.string,
     clickAction: PropTypes.func,
-  }
-
-  static defaultProps = {
-    width: '100%'
   }
 
   componentDidMount() {
@@ -41,14 +36,14 @@ export default class BaseChart extends Component {
 
   render() {
     const stylesConfig = {
-      position: 'relative',
-      width: `${this.props.width}`,
-      height: `${this.props.height}`
+      width: '100%',
+      height: this.props.height,
+      position: 'relative'
     };
     return (
       <div
         id={this.props.chartId}
-        style={stylesConfig}>
+        style={ stylesConfig }>
       </div>
     );
   }
