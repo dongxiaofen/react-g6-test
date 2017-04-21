@@ -14,13 +14,39 @@ function FilterSheet({
     filterSingleShow,
     filterItemClick,
     updateValue,
+    searchResult,
+    modalStore,
+    getFeedBack,
   }) {
+  console.log(modalStore, '======modalStore bbb');
+  let type = '';
+  if (filterSheet && filterSheet.filterStatus) {
+    Object.keys(filterSheet.filterStatus).map((key)=>{
+      if (filterSheet.filterStatus && filterSheet.filterStatus[key] && filterSheet.filterStatus[key].length > 0) {
+        type = 'filter';
+      }
+    });
+  }
+  // 判断是否开始时就是无数据
+  if (type !== 'filter' && searchResult === undefined) {
+    return (
+      <div className={styles.wrap}>
+        <FilterTotal
+          modalStore={modalStore}
+          filterSheet={filterSheet}
+          page={page}
+          searchKeyFilter={searchKeyFilter} />
+      </div>
+    );
+  }
   return (
     <div className={styles.wrap}>
       <FilterTotal
+        modalStore={modalStore}
         filterSheet={filterSheet}
         page={page}
-        searchKeyFilter={searchKeyFilter} />
+        searchKeyFilter={searchKeyFilter}
+        getFeedBack={getFeedBack} />
       <FilterContent
         filterSheet={filterSheet}
         filterArray={filterArray}
@@ -39,9 +65,12 @@ FilterSheet.propTypes = {
   filterArray: PropTypes.object,
   filterArrayStatus: PropTypes.object,
   page: PropTypes.object,
+  searchResult: PropTypes.object,
+  modalStore: PropTypes.object,
   searchKeyFilter: PropTypes.string,
   filterSingleShow: PropTypes.func,
   filterItemClick: PropTypes.func,
   updateValue: PropTypes.func,
+  getFeedBack: PropTypes.func,
 };
 export default observer(FilterSheet);
