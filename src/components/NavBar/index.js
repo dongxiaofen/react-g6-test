@@ -1,44 +1,23 @@
-// import React, {PropTypes} from 'react';
-// import { observer, inject } from 'mobx-react';
+import React, {PropTypes} from 'react';
+import { observer } from 'mobx-react';
 
-// import styles from './index.less';
-// import Container from 'components/common/layout/Container';
+import styles from './index.less';
+import Container from 'components/common/layout/Container';
 
-// import Menu from './Menu';
+import Menu from './Menu';
 
-// function NavBar({ routing }) {
-//   return (
-//     <div className={`clearfix ${styles.menu}`}>
-//       <Container>
-//         {/*<Menu routing={routing} />*/}
-//         <div className={`clearfix ${styles['menu-right']}`}>
-//         </div>
-//       </Container>
-//       <div className={styles.menuBottomBorder}></div>
-//     </div>
-//   );
-// }
-
-// NavBar.propTypes = {
-//   routing: PropTypes.object,
-// };
-// export default inject('routing')(observer(NavBar));
-
-import React, { Component, PropTypes } from 'react';
-import { observer, inject } from 'mobx-react';
-@inject('routing')
-@observer
-export default class NavBar extends Component {
-  static propTypes = {
-    routing: PropTypes.object,
-  }
-  render() {
-    console.log(this.props.routing, '--------------------------routing');
-    return (
-      <div>
-      xxxxx
-        this is NavBar
-      </div>
-    );
-  }
+function NavBar({ location }) {
+  return (
+    <div className={`clearfix ${styles.navbar}`}>
+      <Container>
+        <Menu location={location} />
+      </Container>
+      <div className={styles.navbarBottomBorder}></div>
+    </div>
+  );
 }
+
+NavBar.propTypes = {
+  location: PropTypes.object,
+};
+export default observer(NavBar);

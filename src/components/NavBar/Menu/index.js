@@ -1,8 +1,9 @@
 import React, {PropTypes} from 'react';
 import { observer } from 'mobx-react';
+import { browserHistory } from 'react-router';
 import styles from './index.less';
 
-function Menu({ routing }) {
+function Menu({ location }) {
   const config = [
     { parent: { module: '首页', route: 'myHomePage' } },
     { parent: { module: '查询', route: 'search' } },
@@ -11,7 +12,7 @@ function Menu({ routing }) {
       parent: { module: '监控' },
       children: [
         { module: '每日监控', route: 'riskHeadlines' },
-        { module: '监控统计', route: 'headTrend' },
+        { module: '监控统计', route: 'monitorStatistics' },
         { module: '监控列表', route: 'monitorList' },
       ]
     },
@@ -33,16 +34,16 @@ function Menu({ routing }) {
   ];
 
   const routeToPage = (route) => {
-    this.props.history.push(`/${route}`);
+    browserHistory.push(`/${route}`);
   };
 
   const childrenIsActiveFun = (route) => {
-    const pathname = routing.location.pathname.substr(1);
+    const pathname = location.pathname.substr(1);
     return route === pathname;
   };
 
   const parentItemIsActiveFun = (item) => {
-    const pathname = routing.location.pathname.substr(1);
+    const pathname = location.pathname.substr(1);
     const children = item.children;
     if (children && children.length > 0) {
       const isHas = children.find((child) => {
@@ -121,7 +122,7 @@ function Menu({ routing }) {
       <div className={styles.logo}>
         <div className={styles.logoImg}></div>
       </div>
-      <div className={`clearfix ${styles['navbar-left']}`}>
+      <div className={`clearfix ${styles['navbar-menu']}`}>
         {createItem()}
       </div>
     </div>
@@ -129,6 +130,6 @@ function Menu({ routing }) {
 }
 
 Menu.propTypes = {
-  routing: PropTypes.object,
+  location: PropTypes.object,
 };
 export default observer(Menu);

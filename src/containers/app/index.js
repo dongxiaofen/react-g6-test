@@ -42,7 +42,7 @@ export default class App extends Component {
         <DetailModal detailModalStore={this.props.detailModalStore} />
         <Message messageStore={this.props.messageStore} />
         <PayModal payModalStore={this.props.payModalStore} />
-        <NavBar />
+        <NavBar location={this.props.location} />
         <div className={styles.box}>
           <div className={styles.content}>
             {this.props.children}
