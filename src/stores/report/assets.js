@@ -7,9 +7,9 @@ class AssetsStore {
   @observable biddingData = [];
   @observable isMount = false ;
 
-  @action.bound getReportModule(apiModule, monitorId, reportId, companyName, companyType) {
+  @action.bound getReportModule(apiModule, monitorId, reportId, companyName, companyType, pagesInfo) {
     this.isMount = true;
-    companyHomeApi.getReportModule(`operation/${apiModule}`, monitorId, reportId, companyName, companyType)
+    companyHomeApi.getReportModule(apiModule, monitorId, reportId, companyName, companyType, pagesInfo)
       .then(action(`get ${apiModule} Data`, (response) => {
         switch (apiModule) {
           case 'patent':

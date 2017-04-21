@@ -4,15 +4,19 @@ import { observer, inject } from 'mobx-react';
 import { ModuleTitle } from 'components/common/report';
 import TrademarkCard from '../TrademarkCard';
 import { loadingComp } from 'components/hoc';
+import Pager from 'components/common/Pager';
 
-function Trademark({ trademarkInfo }) {
+function Trademark({ trademarkInfo, uiStore }) {
   return (
     <div>
-      <ModuleTitle module="商标" />
-      {
-        trademarkInfo ?
-          trademarkInfo.map( (item, index) => <TrademarkCard key={`trademarkInfoData${index}`} cardData={item} />) : ''
-      }
+      <div className="clearfix">
+        <ModuleTitle module="商标" />
+        {
+          trademarkInfo ?
+            trademarkInfo.map( (item, index) => <TrademarkCard key={`trademarkInfoData${index}`} cardData={item} />) : ''
+        }
+      </div>
+      <Pager tData={trademarkInfo} module="trademarkLists" uiStore={uiStore} type="large" />
     </div>
   );
 }
@@ -21,7 +25,7 @@ Trademark.propTypes = {
   assetsStore: PropTypes.object,
 };
 
-export default inject('assetsStore')(loadingComp(
+export default inject('assetsStore', 'uiStore')(loadingComp(
   {mapDataToProps: props => ({
     loading: props.isLoading,
     category: 0,

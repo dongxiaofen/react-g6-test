@@ -19,6 +19,10 @@ class UiStore {
       index: 1,
       size: 10,
       show: {}
+    },
+    trademarkLists: {
+      index: 1,
+      size: 10,
     }
   };
 

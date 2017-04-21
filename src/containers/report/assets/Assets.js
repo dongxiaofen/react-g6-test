@@ -6,9 +6,13 @@ import Patent from 'components/companyHome/report/assets/bidding/Patent';
 import { batchReport } from 'components/hoc';
 
 const TabPane = Tabs.TabPane;
-const apiArr = ['patent', 'trademark', 'bidding'];
+const apiArr = [
+  {api: 'patent', pageInfo: ''},
+  {api: 'trademark', pageInfo: 'trademarkLists'},
+  {api: 'bidding', pageInfo: ''}
+];
 
-@inject('routing', 'assetsStore')
+@inject('routing', 'assetsStore', 'uiStore')
 @batchReport('assets', apiArr)
 @observer
 export default class Assets extends Component {

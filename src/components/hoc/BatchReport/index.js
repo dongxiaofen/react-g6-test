@@ -7,13 +7,24 @@ function hoc(module, apiArr) {
       static propTypes = {
         routing: PropTypes.object,
         [`${module}Store`]: PropTypes.object,
+        uiStore: PropTypes.object,
       };
       componentDidMount() {
         if (!this.props[`${module}Store`].isMount) {
           const { monitorId, reportId, companyName, companyType } = this.props.routing.location.query;
           if (module === 'assets' && apiArr) {
             apiArr.map( (apiModule) => {
-              this.props[`${module}Store`].getReportModule(apiModule, monitorId, reportId, companyName, companyType);
+              if (this.props.uiStore) {
+                this.props[`${module}Store`].getReportModule(
+                  apiModule.api,
+                  monitorId,
+                  reportId,
+                  companyName,
+                  companyType,
+                  this.props.uiStore.uiState[apiModule.pageInfo] ? this.props.uiStore.uiState[apiModule.pageInfo] : {'index': 1, 'size': '10'});
+              }else {
+                this.props[`${module}Store`].getReportModule(apiModule.api, monitorId, reportId, companyName, companyType);
+              }
             });
           }else {
             this.props[`${module}Store`].getReportModule(module, monitorId, reportId, companyName, companyType);
