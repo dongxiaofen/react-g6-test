@@ -20,9 +20,10 @@ class UiStore {
       size: 10,
       show: {}
     },
-    internetInfo: {
+    news: {
       index: 1,
       size: 10,
+      type: 'ALL',
     },
     judgeDoc: {
       index: 1,

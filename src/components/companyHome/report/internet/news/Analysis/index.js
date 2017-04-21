@@ -29,13 +29,12 @@ function Analysis({internetStore}) {
   };
   let output;
   const error = internetStore.analysis.error;
-  console.log(error, '======');
   if (error && error.errorCode === 404208) {
     output = <ErrorText error={{message: '暂无信息，平台正为您实时抓取新闻，请五分钟后再浏览'}} />;
   } else if (error) {
     output = <ErrorText module="新闻分析" errCategory={0} />;
   } else if (data) {
-    output = newsAnalyse();
+    output = <div className={styles.itemBox}>{newsAnalyse()}</div>;
   } else if (data === undefined) {
     output = <AnimateLoading />;
   }
