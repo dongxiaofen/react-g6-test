@@ -17,3 +17,6 @@ export const createReport = (params) => {
 export const createMonitor = (params) => {
   return axios.post(`/api/monitor`, params);
 };
+export const getFeedBack = (params) => {
+  return axios.post(`/api/company/search/feedback`, params);
+};
