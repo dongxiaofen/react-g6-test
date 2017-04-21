@@ -2,6 +2,7 @@ import React from 'react';
 import { observer, inject} from 'mobx-react';
 import styles from './index.less';
 import JudeCard from './JudgeCard';
+import Pager from 'components/common/Pager';
 
 function JudgeBox({data, uiStore}) {
   const module = data.module;
@@ -22,7 +23,7 @@ function JudgeBox({data, uiStore}) {
       const itemCard = [];
       dataAarry.map((obj, idx) => {
         itemCard.push(
-          <div className={styles.rowItem}>
+          <div className={styles.rowItem} key={`card${index}${idx}`}>
             <JudeCard
               key={`${index}${idx}`}
               itemData={obj}
@@ -53,6 +54,7 @@ function JudgeBox({data, uiStore}) {
   return (
     <div className="clearfix">
       {createTable()}
+      <Pager module={module} type="samll" tData={data.items}/>
     </div>
   );
 }
