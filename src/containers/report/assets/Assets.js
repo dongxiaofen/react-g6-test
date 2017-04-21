@@ -7,14 +7,9 @@ import Bidding from 'components/companyHome/report/assets/bidding/Bidding';
 import { batchReport } from 'components/hoc';
 
 const TabPane = Tabs.TabPane;
-const apiArr = [
-  {api: 'patent', pageInfo: ''},
-  {api: 'trademark', pageInfo: 'trademarkLists'},
-  {api: 'bidding', pageInfo: ''}
-];
 
 @inject('routing', 'assetsStore', 'uiStore')
-@batchReport('assets', apiArr)
+@batchReport('assets')
 @observer
 export default class Assets extends Component {
   static propTypes = {
