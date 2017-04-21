@@ -12,7 +12,6 @@ export default class SearchCompany extends Component {
     searchCompanyStore: PropTypes.object,
   }
   render() {
-    console.log(this.props.searchCompanyStore.isShowResult, '======isShowResult');
     let searchBarDom = '';
     let topStyle = styles.top;
     if (this.props.searchCompanyStore.isShowResult) {

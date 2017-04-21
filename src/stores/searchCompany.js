@@ -105,7 +105,6 @@ class SearchCompanyStore {
     this.searchKeyFilter = this.searchKey;
     searchApi.getCompanyList(params)
       .then(action('searchCompany list', (resp) => {
-        console.log(resp, '======searchCompany result');
         this.searchResult = resp.data.data;
         // filterSheet相关
         if (resp.data.aggregations) {
@@ -129,22 +128,12 @@ class SearchCompanyStore {
       .catch(action('searchCompany error', (err) => {
         console.log(err.response, '=====searchCompany error');
         this.isShowResult = true;
-        // 重置数据
-        // this.filterSheet.data = [];
-        // this.filterSheet.filterStatus = {
-        //   industryType: [],
-        //   scale: [],
-        //   province: [],
-        //   companyStatus: [],
-        //   stockMarket: []
-        // };
       }));
   }
   // 获取历史记录
   @action.bound getHistory() {
     searchApi.getHistory()
       .then(action('searchCompany history', (resp) => {
-        console.log(resp, '======searchCompany history');
         this.historyResult = resp.data.content;
       }))
       .catch((err) => {
@@ -194,7 +183,6 @@ class SearchCompanyStore {
     this.searchKeyFilter = this.searchKey;
     searchApi.getFilterSearch(params)
       .then(action('filterSearchCompany list', (resp) => {
-        console.log(resp, '======filterSearchCompany result');
         this.searchResult = resp.data.data;
         this.page = resp.data.page;
       }))
@@ -263,7 +251,6 @@ class SearchCompanyStore {
     this.pageParams.index = 1;
     // 发送请求
     this.filterSearchCompany();
-    console.log(this.filterSheet.filterResult, '=======filterResult');
   }
   // 收起打开筛选
   @action.bound updateValue(oldValue, newValue) {
@@ -278,7 +265,6 @@ class SearchCompanyStore {
     const companyName = this.singleItemData.company;
     searchApi.createReport(companyName)
       .then(action('createReport', (resp) => {
-        console.log(resp, '======createReport result');
         modalStore.closeAction();
         const obj = {
           content: '已创建报告'
@@ -294,7 +280,6 @@ class SearchCompanyStore {
   @action.bound createMonitor(obj) {
     searchApi.createMonitor(obj)
       .then(action('createMonitor', (resp) => {
-        console.log(resp, '======createMonitor result');
         payModalStore.closeAction();
         const text = {
           content: '已创建监控'
@@ -321,6 +306,19 @@ class SearchCompanyStore {
     } else {
       this.getCompanyList();
     }
+  }
+  // 提交关键词
+  @action.bound getFeedBack() {
+    const params = {
+      name: this.searchKeyFilter,
+    };
+    searchApi.getFeedBack(params)
+      .then(action('getFeedBack list', (resp) => {
+        console.log(resp, '======getFeedBack result');
+      }))
+      .catch(action('getFeedBack error', (err) => {
+        console.log(err.response, '=====getFeedBack error');
+      }));
   }
 }
 export default new SearchCompanyStore();

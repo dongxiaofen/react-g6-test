@@ -1,6 +1,6 @@
 import React, {Component, PropTypes} from 'react';
 import ReactDOM from 'react-dom/server';
-import serialize from 'serialize-javascript';
+// import serialize from 'serialize-javascript';
 import Helmet from 'react-helmet';
 import {toJS} from 'mobx';
 /**
@@ -71,7 +71,7 @@ export default class Html extends Component {
         <body>
           <div id="content" style={{height: '100%'}} dangerouslySetInnerHTML={{__html: content}}/>
           {this.props.pdfDown === '1' ? '' :
-            <script dangerouslySetInnerHTML={{__html: `window.__data=${serialize(stores)};`}} charSet="UTF-8"/>
+            <script dangerouslySetInnerHTML={{__html: `window.__data=${JSON.stringify(stores)};`}} charSet="UTF-8"/>
           }
           {this.props.pdfDown === '1' ? '' :
             <script src={assets.javascript['common.js']} charSet="UTF-8"/>

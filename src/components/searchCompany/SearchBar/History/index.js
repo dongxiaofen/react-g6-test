@@ -16,7 +16,6 @@ export default class History extends Component {
   getHistory = ()=>{
     const output = [];
     const searchHistoryList = this.props.historyResult;
-    console.log(searchHistoryList.length, '===size');
     if (searchHistoryList.length === 0) {
       output.push(
         <span key="null" className={`${styles.historyText}`}>无</span>

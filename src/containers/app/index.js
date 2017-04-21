@@ -1,4 +1,4 @@
-import React, {Component, PropTypes} from 'react';
+import React, { Component, PropTypes } from 'react';
 import { observer, inject } from 'mobx-react';
 import DevTools from 'mobx-react-devtools';
 import styles from './index.less';
@@ -9,7 +9,8 @@ import DetailModal from 'components/common/DetailModal';
 import Message from 'components/common/Message';
 import PayModal from 'components/common/PayModal';
 
-@inject('modalStore', 'detailModalStore', 'messageStore', 'payModalStore')@observer
+@inject('modalStore', 'detailModalStore', 'messageStore', 'payModalStore')
+@observer
 export default class App extends Component {
   static propTypes = {
     children: PropTypes.object.isRequired,
@@ -26,7 +27,7 @@ export default class App extends Component {
         <div className={styles.container}>
           {
             pathname === '/pdfDown' ? '' :
-            <Login pathname={pathname} />
+              <Login pathname={pathname} />
           }
           {this.props.children}
         </div>
@@ -35,7 +36,7 @@ export default class App extends Component {
     return (
       <div className={styles.wrap}>
         {false && <DevTools />}
-         <Login pathname={pathname} />
+        <Login pathname={pathname} />
         {/* <BackTop /> */}
         {/* <MenuBar {...this.props} /> */}
         <Modal modalStore={this.props.modalStore} />

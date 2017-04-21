@@ -147,5 +147,6 @@ function Login({loginStore, clientStore, pathname}) {
 Login.propTypes = {
   foo: PropTypes.string,
 };
+
 export default inject('loginStore', 'clientStore')(observer(Login));
 

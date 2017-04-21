@@ -1,0 +1,66 @@
+@import '~sc-colors/index.less';
+
+.rankBG {
+  border: 1px solid @black13;
+}
+.rankList {
+  float: left;
+  width: 24.13%;
+  height: 330px;
+  padding-left: 20px;
+  padding-top: 12px;
+  padding-bottom: 12px;
+  background-color: @black15;
+}
+@media (max-width: 1366px) {
+  .rankList {
+    padding-left: 10px;
+  }
+}
+
+.rankList li {
+  margin-bottom: 14px;
+}
+.rankList li:last-child {
+  margin-bottom: 0;
+}
+
+.rankListTitle,
+.rankListTitleTop
+{
+  float: left;
+  margin-top: 1px;
+  margin-right: 12px;
+  width: 14px;
+  height: 14px;
+
+  text-align: center;
+  line-height: 14px;
+  color: @black8;
+
+  background-color: @white1;
+  border: 1px solid @black12;
+}
+
+.rankListTitleTop {
+  color: @yellow4;
+
+  background-color: @yellow3;
+  border-color: @yellow2;
+  border-radius: 100px;
+}
+
+.rankListContent {
+  float: left;
+  width: 80px;
+
+  overflow:hidden;
+  word-break:keep-all;
+  white-space:nowrap;
+  text-overflow:ellipsis;
+  color: @black7;
+}
+.rankChart {
+  float: left;
+  width: 75.87%;
+}

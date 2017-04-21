@@ -2,7 +2,8 @@ import React, {PropTypes} from 'react';
 import { observer } from 'mobx-react';
 import styles from './index.less';
 
-function FilterTotal({filterSheet, page, searchKeyFilter}) {
+function FilterTotal({filterSheet, page, searchKeyFilter, modalStore, getFeedBack}) {
+  console.log(modalStore, filterSheet.searchType, '======modalStore');
   // total
   let totalNumDom = '';
   let totalText = '找到约';
@@ -19,6 +20,16 @@ function FilterTotal({filterSheet, page, searchKeyFilter}) {
         条结果
       </div>
     );
+  } else {
+    totalNumDom = (
+      <div className={styles.totalCon}>
+        找到
+        <span className={styles.findNum}>
+          0
+        </span>
+        条结果
+      </div>
+    );
   }
   // search
   let searchKey = '';
@@ -30,11 +41,36 @@ function FilterTotal({filterSheet, page, searchKeyFilter}) {
       </div>
     );
   }
+  const confirmAction = () => {
+    getFeedBack();
+    modalStore.closeAction();
+  };
+  const closeAction = () => {
+    modalStore.closeAction();
+  };
+  // feedBack
+  const feedBack = () => {
+    const args = {
+      title: '添加关键字',
+      confirmAction: confirmAction,
+      cancelAction: closeAction,
+      confirmText: '提交',
+      cancelText: '取消',
+      isSingleBtn: false,
+      confirmLoading: false,
+      loader: (cb) => {
+        require.ensure([], (require) => {
+          cb(require('./FeedBack'));
+        });
+      }
+    };
+    modalStore.openCompModal({ ...args });
+  };
   return (
     <div className={`${styles.wrap}`}>
       {searchKey}
       {totalNumDom}
-      <div className={styles.noResult}>
+      <div onClick={feedBack} className={styles.noResult}>
         没有想要的结果？提供关键词
       </div>
     </div>
@@ -44,6 +80,8 @@ function FilterTotal({filterSheet, page, searchKeyFilter}) {
 FilterTotal.propTypes = {
   filterSheet: PropTypes.object,
   page: PropTypes.object,
+  modalStore: PropTypes.object,
   searchKeyFilter: PropTypes.string,
+  getFeedBack: PropTypes.func,
 };
 export default observer(FilterTotal);
