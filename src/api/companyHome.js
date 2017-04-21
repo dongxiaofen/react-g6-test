@@ -74,3 +74,6 @@ export const getInternet = ({monitorId, reportId, companyName, companyType, para
   window.reportSourceCancel.push(source.cancel);
   return axios.get(url, { cancelToken: source.token, params: params });
 };
+export const getNewsDetail = (url) => {
+  return axios.get(url);
+};

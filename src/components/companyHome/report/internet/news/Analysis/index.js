@@ -34,7 +34,7 @@ function Analysis({internetStore}) {
   } else if (error) {
     output = <ErrorText module="新闻分析" errCategory={0} />;
   } else if (data) {
-    output = newsAnalyse();
+    output = <div className={styles.itemBox}>{newsAnalyse()}</div>;
   } else if (data === undefined) {
     output = <AnimateLoading />;
   }

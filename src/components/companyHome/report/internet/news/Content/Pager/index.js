@@ -16,7 +16,7 @@ function Pager({uiStore, internetStore, routing, total}) {
     internetStore.getInternet(params);
   };
   return (
-    <div style={{textAlign: 'right', marginTop: '20px'}}>
+    <div style={{textAlign: 'right'}}>
       <Pagination
         current={pageParams.index}
         pageSize={pageParams.size}
