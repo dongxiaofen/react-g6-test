@@ -1,0 +1,19 @@
+@import "~sc-colors/index.less";
+.tabBase {
+  display: block;
+  float: left;
+  margin-right: 50px;
+  border-radius: 4px;
+  padding: 2px 10px;
+  margin-bottom: 10px;
+  cursor: pointer;
+}
+.tab {
+  composes: tabBase;
+  color: @black7;
+}
+.tabActive {
+  composes: tabBase;
+  color: @white1;
+  background-color: @blue2;
+}

@@ -1,19 +1,33 @@
-import React, { Component } from 'react';
+import React, { Component, PropTypes} from 'react';
 import { observer, inject } from 'mobx-react';
 import Court from 'components/companyHome/report/risk/Court';
 import Tax from 'components/companyHome/report/risk/Tax';
 import {batchReport} from 'components/hoc';
+import Tabs from 'components/lib/tabs';
+const TabPane = Tabs.TabPane;
 
 @inject('routing', 'riskStore')
 @batchReport('risk')
 @observer
 export default class Risk extends Component {
+  static propTypes = {
+    riskStore: PropTypes.object
+  };
   render() {
+    const riskStore = this.props.riskStore;
+    const isLoading = riskStore.isLoading;
     return (
-      <div>
-        <Court />
-        <Tax />
-      </div>
+      <Tabs>
+        <TabPane tab="法务信息">
+          <Court court={riskStore.court} isLoading={isLoading} updateValue={riskStore.updateValue}/>
+        </TabPane>
+        <TabPane tab="税务公示信息">
+          <Tax />
+        </TabPane>
+        <TabPane tab="工商公示信息">
+          <Tax />
+        </TabPane>
+      </Tabs>
     );
   }
 }

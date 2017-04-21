@@ -1,5 +1,5 @@
 import React, {PropTypes} from 'react';
-import { observer } from 'mobx-react';
+import { observer, inject } from 'mobx-react';
 
 import styles from './index.less';
 import Container from 'components/common/layout/Container';
@@ -23,4 +23,4 @@ NavBar.propTypes = {
   routing: PropTypes.object,
   clientStore: PropTypes.object,
 };
-export default observer(NavBar);
+export default inject('routing')(observer(NavBar));
