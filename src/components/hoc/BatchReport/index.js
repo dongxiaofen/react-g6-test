@@ -1,7 +1,7 @@
 import React, { Component, PropTypes } from 'react';
 import { observer } from 'mobx-react';
 
-function hoc(module) {
+function hoc(module, apiArr) {
   return (WrappedComponent) => {
     class BatchReport extends Component {
       static propTypes = {
@@ -11,7 +11,13 @@ function hoc(module) {
       componentDidMount() {
         if (!this.props[`${module}Store`].isMount) {
           const { monitorId, reportId, companyName, companyType } = this.props.routing.location.query;
-          this.props[`${module}Store`].getReportModule(module, monitorId, reportId, companyName, companyType);
+          if (module === 'assets' && apiArr) {
+            apiArr.map( (apiModule) => {
+              this.props[`${module}Store`].getReportModule(apiModule, monitorId, reportId, companyName, companyType);
+            });
+          }else {
+            this.props[`${module}Store`].getReportModule(module, monitorId, reportId, companyName, companyType);
+          }
         }
       }
       render() {

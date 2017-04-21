@@ -18,6 +18,7 @@ import {
     Internet,
     MonitorStatistics,
     ReportManage,
+    Assets,
 // first append here from plop
   } from 'containers';
 
@@ -47,7 +48,8 @@ export default (allStore) => {
         <Route path="corpDetail" component={CorpDetail} />
         <Route path="risk" component={Risk} />
         <Route path="internet" component={ Internet } />
-      {/* third append here from plop */}
+        <Route path="assets" component={ Assets } />
+{/* third append here from plop */}
       </Route>
       <Route path="solution" component={ Solution } />
       <Route path="about" component={ About } />
