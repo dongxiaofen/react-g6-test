@@ -1,18 +1,17 @@
 import React, {PropTypes} from 'react';
 import { observer } from 'mobx-react';
-import { CardTable } from 'components/common/report';
 import { ModuleTitle } from 'components/common/report';
 
-function Patent({}) {
+function Bidding({}) {
   return (
     <div>
-      <ModuleTitle module="专利信息" />
-      <CardTable />
+      <ModuleTitle module="招投标信息" />
+      test
     </div>
   );
 }
 
-Patent.propTypes = {
+Bidding.propTypes = {
   foo: PropTypes.string,
 };
-export default observer(Patent);
+export default observer(Bidding);

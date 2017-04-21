@@ -24,6 +24,10 @@ class UiStore {
       index: 1,
       size: 10,
     },
+    patentLists: {
+      index: 1,
+      size: 10,
+    },
     internetInfo: {
       index: 1,
       size: 10,
