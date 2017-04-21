@@ -11,6 +11,11 @@ class CorpDetailStore {
 
   @observable entinvItemList = [];
 
+  // 工商变更-变更分析
+  @observable alterAnalysis = [];
+  // 工商变更-变更信息
+  @observable alterList = [];
+
   @action.bound getReportModule(module, monitorId, reportId, companyName, companyType) {
     this.isMount = true;
     companyHomeApi.getReportModule(module, monitorId, reportId, companyName, companyType)
@@ -21,6 +26,10 @@ class CorpDetailStore {
         this.personList = resp.data.corpDetail.personListForPortal;
         this.filiationList = resp.data.corpDetail.filiationList;
         this.entinvItemList = resp.data.corpDetail.entinvItemList;
+        // 工商变更-变更分析
+        this.alterAnalysis = resp.data.tendency.result[0].data;
+        // 工商变更-变更信息
+        this.alterList = resp.data.tendency.result[0].alterList;
       }));
   }
 }
