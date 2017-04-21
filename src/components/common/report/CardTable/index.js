@@ -1,12 +1,13 @@
 import React, {PropTypes} from 'react';
 import { observer } from 'mobx-react';
 // import styles from './index.less';
+import CardTitle from './CardTitle';
 
 function CardTable({}) {
   return (
     <div>
-      {/* <CardTitle />
-      <CardExpand />
+      <CardTitle mainTitle="test" />
+      {/* <CardExpand />
       <CardBody /> */}
     </div>
   );
