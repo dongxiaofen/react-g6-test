@@ -3,8 +3,8 @@ import { observer } from 'mobx-react';
 import styles from './index.less';
 function TypeFilter({monitorListStore}) {
   const sortConfig = [
-    {name: '首次监控', property: 'startTm'},
-    {name: '截止日期', property: 'expireDt'},
+    {name: '首次监控', property: 'start_tm'},
+    {name: '截止日期', property: 'expire_dt'},
     {name: '最近更新', property: 'latestTs'},
   ];
   const sortDirection = monitorListStore.sortDirection;
