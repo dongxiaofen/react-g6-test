@@ -19,12 +19,12 @@ export const getBannerInfo = (monitorId, reportId, companyName, companyType) => 
 export const toggleMonitorStatus = (monitorId, status) => {
   return axios.put(`/api/monitor/${monitorId}/status`, { status: status });
 };
-export const getReportModule = (module, monitorId, reportId, companyName, companyType) => {
+export const getReportModule = (module, monitorId, reportId, companyName, companyType, pagesInfo) => {
   let url;
   if (companyType === 'MAIN') {
     if (monitorId) {
       if (module === 'trademark' || module === 'patent' || module === 'bidding') {
-        url = `/api/monitor/${monitorId}/operation/${module}${module === 'bidding' ? '' : '?index=1&limit=10'}`;
+        url = `/api/monitor/${monitorId}/operation/${module}${module === 'trademark' || module === 'patent' ? '?index=' + pagesInfo.index + '&limit=' + pagesInfo.size : ''}`;
       } else if (module === 'person/page') {
         url = `/api/monitor/${monitorId}/person/page?index=1&size=10`;
       } else {
@@ -32,7 +32,7 @@ export const getReportModule = (module, monitorId, reportId, companyName, compan
       }
     } else if (reportId) {
       if (module === 'trademark' || module === 'patent' || module === 'bidding') {
-        url = `/api/report/operation/${module}?reportId=${reportId}${module === 'bidding' ? '' : '?index=1&limit=10'}`;
+        url = `/api/report/operation/${module}?reportId=${reportId}${module === 'patent' || module === 'trademark' ? '?index=' + pagesInfo.index + '&limit=' + pagesInfo.size : ''}`;
       } else if (module === 'person/page') {
         url = `/api/report/${reportId}/person/page?index=1&size=10`;
       } else {

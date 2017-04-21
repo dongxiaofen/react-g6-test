@@ -22,4 +22,5 @@ export messageStore from './message';
 export reportManageStore from './reportManage';
 export payModalStore from './payModal';
 export uiStore from './ui';
+export assetsStore from './report/assets';
 // append here from plop
