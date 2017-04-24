@@ -8,13 +8,13 @@ class MonitorListStore {
   axiosCancel = [];
   @observable searchInput = '';
   @observable sortDirection = {
-    startTm: 'DESC',
-    expireDt: 'DESC',
+    start_tm: 'DESC',
+    expire_dt: 'DESC',
     latestTs: 'DESC',
   };
   @observable searchParams = {
     companyName: '',
-    sort: 'startTm,DESC',
+    sort: 'start_tm,DESC',
     monitorStatus: '',
     index: 1,
     size: 10,

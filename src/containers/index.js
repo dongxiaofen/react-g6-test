@@ -18,4 +18,5 @@ export TestModal from './testModal';
 export Internet from './report/internet';
 export MonitorStatistics from './monitorStatistics';
 export ReportManage from './reportManage';
+export Assets from './report/assets';
 // append here from plop

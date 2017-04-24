@@ -28,6 +28,17 @@ const cookieParser = require('cookie-parser');
 const pretty = new PrettyError();
 const app = new Express();
 const server = new http.Server(app);
+const getQueryObj = (url) => {
+  const theRequest = {};
+  if (!url) {
+    return theRequest;
+  }
+  const strs = url.substr(1).split('&');
+  for (var i = 0; i < strs.length; i++) {
+    theRequest[strs[i].split('=')[0]] = unescape(strs[i].split('=')[1]);
+  }
+  return theRequest;
+};
 const getStringifyData = (data) => {
   let cache = [];
   const output = JSON.stringify(data, function (key, value) {
@@ -110,7 +121,7 @@ app.use((req, res) => {
       // hydrateOnClient();
     } else if (renderProps) {
       const reqPathName = url.parse(req.url).pathname;
-      console.log('路由被match', reqPathName);
+      console.log('路由被match', url.parse(req.url));
       if (reqPathName === '/pdfDown') {
         allStores.searchStore.searchKey = '誉存科技';// 服务端初始化数据
         const params = {
@@ -172,6 +183,10 @@ app.use((req, res) => {
 
         /*服务端注入RouterStore*/
         const routingStore = new RouterStore();
+        routingStore.location = {
+          pathname: reqPathName,
+          query: getQueryObj(url.parse(req.url).query)
+        };
         allStores.routing = routingStore;
         const component = (
           <Provider { ...allStores }>
