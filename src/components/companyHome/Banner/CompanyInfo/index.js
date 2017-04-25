@@ -18,7 +18,7 @@ function CompanyInfo({ bannerStore }) {
           <HistoryName {...bannerStore} />
           <RiskLabel riskInfo={bannerStore.riskInfo} />
         </div>
-        <div className={styles.bannerInfoContent}>
+        <div id="bannerLeftContent" className={styles.bannerInfoContent}>
           <Industry industryNames={bannerStore.industryNames} />
           <Contact {...bannerStore} />
         </div>
