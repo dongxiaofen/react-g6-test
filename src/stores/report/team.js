@@ -10,6 +10,16 @@ class TeamStore {
     return true;
   }
 
+  dealWithObjectToArray(obj) {
+    const keys = Object.keys(obj);
+    return keys.map((item) => {
+      return {
+        name: item,
+        value: obj[item]
+      };
+    });
+  }
+
   @observable isLoading = true;
   @observable isMount = false;
 
@@ -20,7 +30,11 @@ class TeamStore {
   @observable wageScale = [];
   @observable similarCompanyAvgSalary = '';
   // 招聘岗位分布
-  @observable recruitment= [];
+  @observable recruitment= { Axis: [], data: [] };
+  // 毕业学校
+  @observable finishSchool = { Axis: [], data: [] };
+  // 所学专业
+  @observable majorInfo = { Axis: [], data: [] };
 
   @observable teamAnalysis = {};
 
@@ -32,10 +46,6 @@ class TeamStore {
         const recruitmentData = respData.recruitAndResumeResponse;
         if (recruitmentData && !this.isEmptyObject(recruitmentData) ) {
           const recruitmentStatistic = recruitmentData.recruitmentStatisticResponse;
-
-          const staffInfo = recruitmentData.resumeStatisticResponse;
-          let staffSchool = staffInfo.schoolInfo;
-          let staffSpe = staffInfo.majorInfo;
 
           let recruitmentInfoData = [];
           const recruitmentInfo = recruitmentData.recruitmentInfo;
@@ -108,16 +118,20 @@ class TeamStore {
             });
           }
 
+          const staffInfo = recruitmentData.resumeStatisticResponse;
+          let staffSchool = staffInfo.schoolInfo;
+          let staffSpe = staffInfo.majorInfo;
           // 员工背景，毕业学校
           const staffSchoolAxis = [];
           const staffSchoolData = [];
-          if (staffSchool && staffSchool.length > 0) {
+          if (staffSchool && !this.isEmptyObject(staffSchool)) {
+            staffSchool = this.dealWithObjectToArray(staffSchool);
             staffSchool = staffSchool.sort((prev, next) => {
-              return prev - next;
+              return prev.value - next.value;
             });
-            staffSchool.forEach((item, key) => {
-              staffSchoolAxis.push(key);
-              staffSchoolData.push(item);
+            staffSchool.forEach((item) => {
+              staffSchoolAxis.push(item.name);
+              staffSchoolData.push(item.value);
             });
           }
 
@@ -140,9 +154,19 @@ class TeamStore {
               staffSpeData.push(staffSpe[idx].value);
             }
           }
+
+          // 招聘信息
           this.companyInfo = companyInfo;
           this.wageScale = wageScale;
           this.similarCompanyAvgSalary = similarCompanyAvgSalary;
+          this.recruitment.Axis = recruitmentJobAxis;
+          this.recruitment.data = recruitmentJobData;
+
+          // 员工背景
+          this.finishSchool.Axis = staffSchoolAxis;
+          this.finishSchool.data = staffSchoolData;
+          this.majorInfo.Axis = staffSpeAxis;
+          this.majorInfo.data = staffSpeData;
         }
         this.isLoading = false;
       }));

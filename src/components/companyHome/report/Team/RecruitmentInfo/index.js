@@ -5,12 +5,9 @@ import { toJS } from 'mobx';
 import styles from './index.less';
 import { Row } from 'components/common/layout';
 import BaseChart from 'components/common/Charts/BaseChart';
+import { loadingComp } from 'components/hoc';
 
-function RecruitmentInfo({
-  companyInfo,
-  wageScale,
-  similarCompanyAvgSalary
-}) {
+function RecruitmentInfo({ teamStore }) {
   const wageScaleOption = {
     tooltip: {
       backgroundColor: '#ffffff',
@@ -49,11 +46,12 @@ function RecruitmentInfo({
             }
           },
         },
-        data: toJS(wageScale),
+        data: toJS(teamStore.wageScale),
       }
     ],
   };
 
+  const recruitment = teamStore.recruitment;
   const recruitmentOption = {
     dataZoom: [
       {
@@ -113,7 +111,7 @@ function RecruitmentInfo({
           color: '#999999',
         },
       },
-      data: []
+      data: toJS(recruitment.Axis)
     },
     yAxis: {
       type: 'value',
@@ -141,7 +139,7 @@ function RecruitmentInfo({
             color: '#3483E9',
           }
         },
-        data: []
+        data: toJS(recruitment.data)
       }
     ]
   };
@@ -162,7 +160,7 @@ function RecruitmentInfo({
             {item.title}
           </div>
           <div className={styles['info1-box-content']}>
-            {companyInfo[item.key]}
+            {teamStore.companyInfo[item.key]}
           </div>
         </div>
       );
@@ -176,6 +174,7 @@ function RecruitmentInfo({
     );
   };
 
+  const similarCompanyAvgSalary = teamStore.similarCompanyAvgSalary;
   return (
     <div>
       <Row>
@@ -187,7 +186,7 @@ function RecruitmentInfo({
             {
               similarCompanyAvgSalary
               ?
-              <div className={styles['chart-title-sub']}>(全国招聘薪资平均为{similarCompanyAvgSalary})</div>
+                <div className={styles['chart-title-sub']}>(全国招聘薪资平均为{similarCompanyAvgSalary})</div>
               : null
             }
           </div>
@@ -204,8 +203,18 @@ function RecruitmentInfo({
 }
 
 RecruitmentInfo.propTypes = {
-  companyInfo: PropTypes.object,
-  wageScale: PropTypes.object,
-  similarCompanyAvgSalary: PropTypes.string,
+  teamStore: PropTypes.object,
 };
-export default observer(RecruitmentInfo);
+export default loadingComp({
+  mapDataToProps: props => {
+    const teamStore = props.teamStore;
+    const isError = teamStore.isEmptyObject(teamStore.companyInfo)
+      && !teamStore.wageScale.length
+      && !teamStore.recruitment.data.length;
+    return {
+      loading: teamStore.isLoading,
+      error: isError,
+      module: '招聘信息'
+    };
+  }
+})(observer(RecruitmentInfo));
