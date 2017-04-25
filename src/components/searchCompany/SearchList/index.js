@@ -39,14 +39,12 @@ function SearchList({searchCompanyStore, modalStore, payModalStore}) {
       </div>
     );
   });
-  console.log(modalStore, '======modalStore aaa');
   const pageClick = (newPage) => {
     getPageList(newPage);
   };
   let result = '';
   if (isShowResult) {
     if (searchResult.length > 0) {
-      console.log(111111);
       result = (
         <div className={`${styles.wrapList}`}>
           <FilterSheet
@@ -74,18 +72,19 @@ function SearchList({searchCompanyStore, modalStore, payModalStore}) {
         </div>
       );
     } else {
-      console.log(222222);
       result = (
         <div className={`${styles.wrapList}`}>
           <FilterSheet
             filterSheet={filterSheet}
             filterArray={filterArray}
+            modalStore={modalStore}
             filterArrayStatus={filterArrayStatus}
             filterSingleShow={filterSingleShow}
             filterItemClick={filterItemClick}
             page={page}
             searchKeyFilter={searchKeyFilter}
-            updateValue={updateValue} />
+            updateValue={updateValue}
+            getFeedBack={getFeedBack} />
           <div className={`${styles.noCompany}`}>没有找到相关公司</div>
         </div>
       );

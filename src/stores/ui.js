@@ -20,6 +20,22 @@ class UiStore {
       size: 10,
       show: observable.map({})
     },
+    yearInvestor: {
+      index: 1,
+      size: 10,
+    },
+    yearWebsite: {
+      index: 1,
+      size: 10,
+    },
+    yearEquityChange: {
+      index: 1,
+      size: 10,
+    },
+    yearChangeRecords: {
+      index: 1,
+      size: 10,
+    },
     trademarkLists: {
       index: 1,
       size: 10,
