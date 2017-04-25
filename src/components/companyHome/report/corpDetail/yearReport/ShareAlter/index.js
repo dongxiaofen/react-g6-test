@@ -20,14 +20,16 @@ function ShareAlter({yearReportList, yearReportTab, isLoading}) {
     }
   }
   const data = {
-    meta: [
-      { 'key': 'shareholderName', 'width': '2' },
-      { 'key': 'equityBefore', 'width': '3' },
-      { 'key': 'equityAfter', 'width': '3' },
-      { 'key': 'time', 'width': '2' },
-    ],
-    tData: listData,
-    dict: 'yearEquityChange',
+    meta: {
+      tData: listData,
+      dict: 'yearEquityChange',
+      body: [
+        { 'key': 'shareholderName', 'width': '2' },
+        { 'key': 'equityBefore', 'width': '3' },
+        { 'key': 'equityAfter', 'width': '3' },
+        { 'key': 'time', 'width': '2' },
+      ],
+    },
     isLoading: isLoading,
     module: '股权变更信息',
     error: listNum === 0

@@ -30,6 +30,8 @@ class SearchCompanyStore {
   @observable searchKeyFilter = '';
   // 是否已搜索
   @observable isShowResult = false;
+  // 是否开启loading
+  @observable isShowLoading = false;
   // 搜索返回结果
   @observable searchResult = [];
   // 搜索返回结果 searchParameter
@@ -93,6 +95,12 @@ class SearchCompanyStore {
   @observable singleItemData = {};
   // 获取搜索公司列表
   @action.bound getCompanyList() {
+    // 是否已搜索
+    this.isShowResult = true;
+    // filter公司名赋值
+    this.searchKeyFilter = this.searchKey;
+    // 打开loading
+    this.isShowLoading = true;
     const params = {
       params: {
         keyWord: this.searchKey,
@@ -119,18 +127,18 @@ class SearchCompanyStore {
             }
           });
         }
-        this.searchKeyFilter = this.searchKey;
         this.searchParameter = resp.data.searchParameter;
         this.page = resp.data.page;
-        this.isShowResult = true;
+        // 关闭loading
+        this.isShowLoading = false;
       }))
       .catch(action('searchCompany error', (err) => {
         console.log(err.response, '=====searchCompany error');
         this.searchResult = [];
-        this.searchKeyFilter = this.searchKey;
         this.searchParameter = '';
         this.page = {};
-        this.isShowResult = true;
+        // 关闭loading
+        this.isShowLoading = false;
         // 重置filter
         this.filterSheet = {
           // filterSheet status
@@ -214,6 +222,8 @@ class SearchCompanyStore {
   }
   // filter发送请求
   @action.bound filterSearchCompany() {
+    // 打开loading
+    this.isShowLoading = true;
     const params = {
       // scrollId: searchCompanyState.getIn(['searchResult', 'scrollId']),
       index: this.pageParams.index,
@@ -227,11 +237,15 @@ class SearchCompanyStore {
       .then(action('filterSearchCompany list', (resp) => {
         this.searchResult = resp.data.data;
         this.page = resp.data.page;
+        // 关闭loading
+        this.isShowLoading = false;
       }))
       .catch(action('filterSearchCompany error', (err) => {
         console.log(err.response, '=====filterSearchCompany error');
         this.searchResult = [];
         this.page = {};
+        // 关闭loading
+        this.isShowLoading = false;
       }));
   }
   // 点击filterItem  key:类型 idx:序号 type:选择或取消
@@ -251,7 +265,7 @@ class SearchCompanyStore {
             this.filterSheet.filterStatus[key] = status;
             this.filterSheet.filterStatusAll[key] = true;
           } else {
-            // 是否是公司规模 公司规模只能单选和全选
+            // 公司规模只能单选和全选 所以特殊处理
             if (key === 'scale') {
               const value = obj.value[idx];
               this.filterSheet.filterResult[key] = [];
@@ -281,10 +295,29 @@ class SearchCompanyStore {
             this.filterSheet.filterStatus[key] = status;
             this.filterSheet.filterStatusAll[key] = false;
           } else {
-            const value = obj.value[idx];
-            const valIdx = this.filterSheet.filterResult[key].indexOf(value);
-            this.filterSheet.filterResult[key].splice(valIdx, 1);
-            this.filterSheet.filterStatus[key][idx] = false;
+            // 公司规模全选后单选取消的那一项为选择的那一项 这块逻辑待确定
+            if (key === 'scale') {
+              const value = obj.value[idx];
+              // const valIdx = this.filterSheet.filterResult[key].indexOf(value);
+              // this.filterSheet.filterResult[key].splice(valIdx, 1);
+              // this.filterSheet.filterStatus[key][idx] = false;
+              this.filterSheet.filterResult[key] = [];
+              this.filterSheet.filterResult[key].push(value);
+              const status = [];
+              this.filterSheet.filterStatus[key].map((val, num)=>{
+                if (num === idx) {
+                  status.push(val);
+                } else {
+                  status.push(false);
+                }
+              });
+              this.filterSheet.filterStatus[key] = status;
+            } else {
+              const value = obj.value[idx];
+              const valIdx = this.filterSheet.filterResult[key].indexOf(value);
+              this.filterSheet.filterResult[key].splice(valIdx, 1);
+              this.filterSheet.filterStatus[key][idx] = false;
+            }
           }
         }
       }

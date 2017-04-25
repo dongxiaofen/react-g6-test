@@ -20,17 +20,19 @@ function Investor({yearReportList, yearReportTab, isLoading}) {
     }
   }
   const data = {
-    meta: [
-      { 'key': 'shareholderName', 'width': '2' },
-      { 'key': 'subConam', 'width': '2' },
-      { 'key': 'subConDate', 'width': '1' },
-      { 'key': 'subConType', 'width': '1' },
-      { 'key': 'paidConMoney', 'width': '2' },
-      { 'key': 'paidTime', 'width': '1' },
-      { 'key': 'paidType', 'width': '1' },
-    ],
-    tData: listData,
-    dict: 'yearInvestor',
+    meta: {
+      tData: listData,
+      dict: 'yearInvestor',
+      body: [
+        { 'key': 'shareholderName', 'width': '2' },
+        { 'key': 'subConam', 'width': '2' },
+        { 'key': 'subConDate', 'width': '1' },
+        { 'key': 'subConType', 'width': '1' },
+        { 'key': 'paidConMoney', 'width': '2' },
+        { 'key': 'paidTime', 'width': '1' },
+        { 'key': 'paidType', 'width': '1' },
+      ]
+    },
     isLoading: isLoading,
     module: '股东及出资信息',
     error: listNum === 0
