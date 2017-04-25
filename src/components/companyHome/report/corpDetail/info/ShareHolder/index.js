@@ -5,15 +5,17 @@ import { ModuleTitle, CommonTable } from 'components/common/report';
 
 function ShareHolder({ shareHolderList, isLoading }) {
   const data = {
-    meta: [
-      { 'key': 'shareholderName', 'width': '4' },
-      { 'key': 'subConam', 'width': '2' },
-      { 'key': 'regCapCur', 'width': '1.2' },
-      { 'key': 'fundedRatio', 'width': '1.4' },
-      { 'key': 'conDate', 'width': '1.4' },
-    ],
-    tData: shareHolderList,
-    dict: 'shareholder',
+    meta: {
+      body: [
+        { 'key': 'shareholderName', 'width': '4' },
+        { 'key': 'subConam', 'width': '2' },
+        { 'key': 'regCapCur', 'width': '1.2' },
+        { 'key': 'fundedRatio', 'width': '1.4' },
+        { 'key': 'conDate', 'width': '1.4' },
+      ],
+      tData: shareHolderList,
+      dict: 'shareholder',
+    },
     isLoading: isLoading,
     module: '股东信息',
     error: shareHolderList.length === 0

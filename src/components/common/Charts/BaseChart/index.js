@@ -28,10 +28,10 @@ export default class BaseChart extends Component {
     window.addEventListener('resize', chartFunc[chartId]);
   }
 
-  componentDidUpdate() {
-    const myChart = window.echarts.getInstanceByDom(document.getElementById(this.props.chartId));
-    myChart.setOption(toJS(this.props.option));
-  }
+  // componentDidUpdate() {
+  //   const myChart = window.echarts.getInstanceByDom(document.getElementById(this.props.chartId));
+  //   myChart.setOption(toJS(this.props.option));
+  // }
 
   componentWillUnmount() {
     const chartId = this.props.chartId;

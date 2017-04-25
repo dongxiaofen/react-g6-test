@@ -18,6 +18,8 @@ function CardExpand({serialNum, module, uiStore, isExpanded}) {
 }
 
 CardExpand.propTypes = {
-  foo: PropTypes.string,
+  module: PropTypes.string.isRequired,
+  isExpanded: PropTypes.bool.isRequired,
+  serialNum: PropTypes.number.isRequired
 };
 export default observer(CardExpand);
