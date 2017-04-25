@@ -4,18 +4,16 @@ import Tbody from './Tbody';
 import styles from './index.less';
 import { loadingComp } from 'components/hoc';
 
-function KvTable({ meta, items, dict }) {
+function KvTable({ meta }) {
   return (
     <table className={styles.table}>
-      <Tbody meta={meta} items={items} dict={dict} />
+      <Tbody meta={meta.body} items={meta.items} dict={meta.dict} />
     </table>
   );
 }
 
 KvTable.propTypes = {
-  meta: PropTypes.array.isRequired,
-  items: PropTypes.object.isRequired,
-  dict: PropTypes.string.isRequired
+  meta: PropTypes.object.isRequired
 };
 export default loadingComp({
   mapDataToProps: props => ({

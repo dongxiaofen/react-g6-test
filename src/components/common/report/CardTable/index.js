@@ -22,7 +22,8 @@ function CardTable({meta, module, uiStore}) {
 }
 
 CardTable.propTypes = {
-  meta: PropTypes.object.isRequired
+  meta: PropTypes.object.isRequired,
+  module: PropTypes.string.isRequired
 };
 export default loadingComp({
   mapDataToProps: props => ({
