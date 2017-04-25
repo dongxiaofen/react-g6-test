@@ -4,26 +4,26 @@ import { ModuleTitle, KvTable } from 'components/common/report';
 // import styles from './index.less';
 
 function RegisterInfo({ registerInfo, isLoading }) {
-  // console.log('registerInfo', registerInfo);
-  const handleRegCap = () => {
-    const items = registerInfo[0];
+  const handleRegCap = (items) => {
     if (items.regCap === '0.0' || items.regCap === '0' || items.regCap === '' || items.regCap === undefined) {
       return '--';
     }
     return items.regCap + items.unit + items.regCapCur;
   };
   const data = {
-    meta: [
-      [{ 'key': 'enterpriseName', 'type': 'half' }, { 'key': 'regNo', 'type': 'half' }],
-      [{ 'key': 'orgNum', 'type': 'half' }, { 'key': 'socialCreditIdentifier', 'type': 'half' }],
-      [{ 'key': 'frName', 'type': 'half' }, { 'key': 'enterpriseType', 'type': 'half' }],
-      [{ 'key': 'regCap', 'type': 'half', 'modifyText': handleRegCap }, { 'key': 'regOrg', 'type': 'half' }],
-      [{ 'key': 'enterpriseStatus', 'type': 'half' }, { 'key': 'esDate', 'type': 'half' }],
-      [{ 'key': 'address', 'type': 'full' }],
-      [{ 'key': 'operateScope', 'type': 'full' }],
-    ],
-    items: registerInfo[0],
-    dict: 'RegisterInfo',
+    meta: {
+      items: registerInfo[0],
+      dict: 'RegisterInfo',
+      body: [
+        [{ 'key': 'enterpriseName', 'type': 'half' }, { 'key': 'regNo', 'type': 'half' }],
+        [{ 'key': 'orgNum', 'type': 'half' }, { 'key': 'socialCreditIdentifier', 'type': 'half' }],
+        [{ 'key': 'frName', 'type': 'half' }, { 'key': 'enterpriseType', 'type': 'half' }],
+        [{ 'key': 'regCap', 'type': 'half', 'modifyBlock': handleRegCap }, { 'key': 'regOrg', 'type': 'half' }],
+        [{ 'key': 'enterpriseStatus', 'type': 'half' }, { 'key': 'esDate', 'type': 'half' }],
+        [{ 'key': 'address', 'type': 'full' }],
+        [{ 'key': 'operateScope', 'type': 'full' }],
+      ],
+    },
     isLoading: isLoading,
     module: '注册信息',
     error: registerInfo.length === 0
