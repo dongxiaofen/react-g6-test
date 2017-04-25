@@ -7,7 +7,7 @@ function Patent({patentItemList, isLoading}) {
     meta: {
       title: {
         main: 'title',
-        sub: ['title']
+        sub: ['updateTime']
       },
       body: [
         { 'key': 'title', 'width': '6' },
