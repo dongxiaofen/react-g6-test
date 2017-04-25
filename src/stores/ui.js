@@ -18,7 +18,7 @@ class UiStore {
     entinvItemLists: {
       index: 1,
       size: 10,
-      show: {}
+      show: observable.map({})
     },
     yearInvestor: {
       index: 1,
@@ -53,7 +53,9 @@ class UiStore {
       judgeDoc: {
         index: 1,
         size: 10,
-        show: observable.map({}),
+        show: observable.map({
+          0: false
+        }),
       }
     }
   };
@@ -61,7 +63,7 @@ class UiStore {
   @action.bound updateUiStore(keypath, value) {
     pathval.setPathValue(this.uiState, keypath, value);
   }
-  @action.bound toggleShowValue(module, rowIdx) {
+  @action.bound toggleExpand(module, rowIdx) {
     const value = this.uiState[module].show.get(rowIdx);
     this.uiState[module].show.set(rowIdx, !value);
   }
