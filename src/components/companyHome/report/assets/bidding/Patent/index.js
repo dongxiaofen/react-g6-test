@@ -12,17 +12,16 @@ function Patent({patentItemList, isLoading}) {
       body: [
         { 'key': 'title', 'width': '6' },
         { 'key': 'classificationNumbercname', 'width': '6' },
-        // { 'key': 'regNo', 'width': '6' },
-        // { 'key': 'authPubDate', 'width': '6' },
-        // { 'key': 'authPubNum', 'width': '6' },
-        // { 'key': 'classificationNumber', 'width': '6' },
+        { 'key': 'authPubDate', 'width': '6' },
+        { 'key': 'authPubNum', 'width': '6' },
+        { 'key': 'description', 'width': '12', 'hide': true },
       ],
       isExpand: false,
       dict: 'patentInfo',
       cData: patentItemList
     },
     isLoading: isLoading,
-    module: '企业对外投资',
+    module: '专利信息',
     error: patentItemList.length === 0
   };
   return (
