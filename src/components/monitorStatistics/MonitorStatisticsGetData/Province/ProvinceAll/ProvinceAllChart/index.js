@@ -20,19 +20,19 @@ function ProvinceAllChart({ msStore }) {
       <div className={styles.tip2}>
         <div className={`clearfix ${styles.mb10}`}>
           <div className={styles.round1}></div>
-          <div className={`fs7 ${styles.tipText}`}>大于50家</div>
+          <div className={styles.tipText}>大于50家</div>
         </div>
         <div className={`clearfix ${styles.mb10}`}>
           <div className={styles.round2}></div>
-          <div className={`fs7 ${styles.tipText}`}>21-50家</div>
+          <div className={styles.tipText}>21-50家</div>
         </div>
         <div className={`clearfix ${styles.mb10}`}>
           <div className={styles.round3}></div>
-          <div className={`fs7 ${styles.tipText}`}>11-20家</div>
+          <div className={styles.tipText}>11-20家</div>
         </div>
         <div className={`clearfix`}>
           <div className={styles.round4}></div>
-          <div className={`fs7 ${styles.tipText}`}>1-10家</div>
+          <div className={styles.tipText}>1-10家</div>
         </div>
       </div>
       <MapChart
