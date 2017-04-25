@@ -1,7 +1,7 @@
 import React, {PropTypes} from 'react';
 import { observer } from 'mobx-react';
 import styles from './index.less';
-import { loadingComp } from 'components/hoc';
+// import { loadingComp } from 'components/hoc';
 
 function TabItem({items, yearReportTab, setYearReport}) {
   const itemsArray = [];
@@ -43,12 +43,13 @@ TabItem.propTypes = {
   items: PropTypes.object.isRequired,
   // setYearReport: PropTypes.func,
 };
-export default loadingComp({
-  mapDataToProps: props => ({
-    loading: props.isLoading,
-    category: 0,
-    error: props.error,
-    errCategory: 1,
-    module: props.module
-  })
-})(observer(TabItem));
+export default observer(TabItem);
+// export default loadingComp({
+//   mapDataToProps: props => ({
+//     loading: props.isLoading,
+//     category: 0,
+//     error: props.error,
+//     errCategory: 1,
+//     module: props.module
+//   })
+// })(observer(TabItem));

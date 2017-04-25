@@ -8,11 +8,11 @@ function AlterList({alterList, isLoading}) {
     meta: {
       title: {
         main: 'altItem',
-        sub: ['altDate']
+        // sub: ['altDate']
       },
       body: [
         // { 'key': 'altItem', 'width': '6' },
-        // { 'key': 'altDate', 'width': '6' },
+        { 'key': 'altDate', 'width': '12' },
         { 'key': 'altBe', 'width': '6', 'hide': true },
         { 'key': 'altAf', 'width': '6', 'hide': true },
       ],

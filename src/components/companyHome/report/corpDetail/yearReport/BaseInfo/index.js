@@ -17,15 +17,17 @@ function BaseInfo({yearReportList, yearReportTab, isLoading}) {
     }
   }
   const data = {
-    meta: [
-      [{ 'key': 'name', 'type': 'half' }, { 'key': 'regNo', 'type': 'half' }],
-      [{ 'key': 'enterpriseStatus', 'type': 'half' }, { 'key': 'employeeCount', 'type': 'half' }],
-      [{ 'key': 'zipcode', 'type': 'half' }, { 'key': 'phone', 'type': 'half' }],
-      [{ 'key': 'email', 'type': 'half' }, { 'key': 'address', 'type': 'half' }],
-      [{ 'key': 'buyEquity', 'type': 'half' }, { 'key': 'equityTransfer', 'type': 'half' }],
-    ],
-    items: listData,
-    dict: 'yearBaseInfo',
+    meta: {
+      items: listData,
+      dict: 'yearBaseInfo',
+      body: [
+        [{ 'key': 'name', 'type': 'half' }, { 'key': 'regNo', 'type': 'half' }],
+        [{ 'key': 'enterpriseStatus', 'type': 'half' }, { 'key': 'employeeCount', 'type': 'half' }],
+        [{ 'key': 'zipcode', 'type': 'half' }, { 'key': 'phone', 'type': 'half' }],
+        [{ 'key': 'email', 'type': 'half' }, { 'key': 'address', 'type': 'half' }],
+        [{ 'key': 'buyEquity', 'type': 'half' }, { 'key': 'equityTransfer', 'type': 'half' }],
+      ],
+    },
     isLoading: isLoading,
     module: '企业基本信息',
     error: yearReportList.length === 0
