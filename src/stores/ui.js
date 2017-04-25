@@ -64,6 +64,7 @@ class UiStore {
     pathval.setPathValue(this.uiState, keypath, value);
   }
   @action.bound toggleExpand(module, rowIdx) {
+    console.log(module, rowIdx);
     const value = this.uiState[module].show.get(rowIdx);
     this.uiState[module].show.set(rowIdx, !value);
   }
