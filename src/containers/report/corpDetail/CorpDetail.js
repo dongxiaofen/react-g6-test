@@ -52,6 +52,7 @@ export default class CorpDetail extends Component {
           <Tab
             yearReportList={corpDetailStore.yearReportList}
             yearReportTab={corpDetailStore.yearReportTab}
+            setYearReport={corpDetailStore.setYearReport}
             isLoading={isLoading} />
           <BaseInfo
             yearReportList={corpDetailStore.yearReportList}

@@ -38,5 +38,9 @@ class CorpDetailStore {
         this.yearReportList = resp.data.corpDetail.yearReportList;
       }));
   }
+  // 设置年报显示某年
+  @action.bound setYearReport(item) {
+    this.yearReportTab = item;
+  }
 }
 export default new CorpDetailStore();
