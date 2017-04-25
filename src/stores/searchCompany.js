@@ -101,8 +101,6 @@ class SearchCompanyStore {
         size: this.pageParams.size,
       },
     };
-    // 赋值显示到filter的公司名
-    this.searchKeyFilter = this.searchKey;
     searchApi.getCompanyList(params)
       .then(action('searchCompany list', (resp) => {
         this.searchResult = resp.data.data;
@@ -121,13 +119,57 @@ class SearchCompanyStore {
             }
           });
         }
+        this.searchKeyFilter = this.searchKey;
         this.searchParameter = resp.data.searchParameter;
         this.page = resp.data.page;
         this.isShowResult = true;
       }))
       .catch(action('searchCompany error', (err) => {
         console.log(err.response, '=====searchCompany error');
+        this.searchResult = [];
+        this.searchKeyFilter = this.searchKey;
+        this.searchParameter = '';
+        this.page = {};
         this.isShowResult = true;
+        // 重置filter
+        this.filterSheet = {
+          // filterSheet status
+          filterSheetStatus: false,
+          // 配置
+          config: {
+            industryType: '行业类型',
+            scale: '公司规模',
+            province: '省份地区',
+            companyStatus: '经营状态',
+            stockMarket: '上市类型'
+          },
+          // 基础数据
+          data: [],
+          // 选中结果状态
+          filterStatus: {
+            industryType: [],
+            scale: [],
+            province: [],
+            companyStatus: [],
+            stockMarket: [],
+          },
+          // 是否全选
+          filterStatusAll: {
+            industryType: false,
+            scale: false,
+            province: false,
+            companyStatus: false,
+            stockMarket: false,
+          },
+          // 选中结果
+          filterResult: {
+            industryType: [],
+            scale: [],
+            province: [],
+            companyStatus: [],
+            stockMarket: [],
+          },
+        };
       }));
   }
   // 获取历史记录
