@@ -18,23 +18,36 @@ class UiStore {
     entinvItemLists: {
       index: 1,
       size: 10,
-      show: {}
+      show: observable.map({})
+    },
+    trademarkLists: {
+      index: 1,
+      size: 10,
+    },
+    patentLists: {
+      index: 1,
+      size: 10,
     },
     internetInfo: {
-      index: 1,
-      size: 10,
-    },
-    judgeDoc: {
-      index: 1,
-      size: 10,
-      show: observable.map({}),
+      news: {
+        index: 1,
+        size: 10,
+        type: 'ALL',
+      },
+      judgeDoc: {
+        index: 1,
+        size: 10,
+        show: observable.map({
+          0: false
+        }),
+      }
     }
   };
 
   @action.bound updateUiStore(keypath, value) {
     pathval.setPathValue(this.uiState, keypath, value);
   }
-  @action.bound toggleShowValue(module, rowIdx) {
+  @action.bound toggleExpand(module, rowIdx) {
     const value = this.uiState[module].show.get(rowIdx);
     this.uiState[module].show.set(rowIdx, !value);
   }

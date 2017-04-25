@@ -23,4 +23,5 @@ export reportManageStore from './reportManage';
 export payModalStore from './payModal';
 export uiStore from './ui';
 export teamStore from './report/team';
+export assetsStore from './report/assets';
 // append here from plop

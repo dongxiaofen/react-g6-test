@@ -1,12 +1,16 @@
 import { observable, action } from 'mobx';
 import { companyHomeApi } from 'api';
+import detailModalStore from '../detailModal';
+import messageStore from '../message';
 import pathval from 'pathval';
 class InternetStore {
   @observable isMount = false;
   @observable analysis = {};
   @observable statistic = {};
   @observable newsData = {};
-
+  @action.bound changeValue(keyPath, value) {
+    pathval.setPathValue(this, keyPath, value);
+  }
   @action.bound getReportModule(module, monitorId, reportId, companyName, companyType) {
     this.isMount = true;
     this.analysis = {};
@@ -34,10 +38,23 @@ class InternetStore {
     this.newsData = {};
     companyHomeApi.getInternet(params)
       .then(action('get internet info success', resp => {
-        this.info = {data: resp.data.info.data};
+        this.newsData = {data: resp.data.info.data};
       }))
       .catch(action('get internet info error', err => {
         this.newsData = {error: err.response.data};
+      }));
+  }
+  @action.bound getNewsDetail(url) {
+    companyHomeApi.getNewsDetail(url)
+      .then(action('get internet detail success', resp => {
+        detailModalStore.visible = true;
+        console.log(resp);
+      }))
+      .catch(action('get internet detail error', err => {
+        messageStore.openMessage({
+          type: 'error',
+          content: pathval.getPathValue(err, 'response.data.message') || '获取新闻数据失败'
+        });
       }));
   }
 }
