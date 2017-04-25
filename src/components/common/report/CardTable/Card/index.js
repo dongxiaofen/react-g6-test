@@ -15,15 +15,16 @@ function Card({meta, cData, serialNum, uiStore}) {
       <CardTitle meta={meta} cData={cData} />
       {
         isExpanded === '' ? '' :
-        <CardExpand module={meta.dict} cData={cData} serialNum={serialNum} uiStore={uiStore} isExpanded={isExpanded} />
+        <CardExpand module={meta.dict} cData={cData} serialNum={serialNum} uiStore={uiStore} isExpanded={!!isExpanded} />
       }
-      <CardBody meta={meta} cData={cData} isExpanded={isExpanded} />
+      <CardBody meta={meta} cData={cData} isExpanded={!!isExpanded} />
     </div>
   );
 }
 
 Card.propTypes = {
   meta: PropTypes.object.isRequired,
-  cData: PropTypes.object.isRequired
+  cData: PropTypes.object.isRequired,
+  serialNum: PropTypes.number.isRequired,
 };
 export default inject('uiStore')(observer(Card));

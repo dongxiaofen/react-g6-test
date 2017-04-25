@@ -8,7 +8,7 @@ function TabItem({items, yearReportTab, setYearReport}) {
   if (items && items.length > 0) {
     items.map((item, idx)=>{
       if (yearReportTab === item.year) {
-        console.log(yearReportTab, item.year, '====1');
+        // console.log(yearReportTab, item.year, '====1');
         itemsArray.push(
           <div
             onClick={setYearReport.bind(this, item.year)}
@@ -16,7 +16,7 @@ function TabItem({items, yearReportTab, setYearReport}) {
         );
       } else {
         if (idx === 0 && yearReportTab.length < 1) {
-          console.log(yearReportTab, item.year, '====2');
+          // console.log(yearReportTab, item.year, '====2');
           itemsArray.push(
             <div
               onClick={setYearReport.bind(this, item.year)}
@@ -24,7 +24,7 @@ function TabItem({items, yearReportTab, setYearReport}) {
               className={`${styles.yearItem} ${styles.yearItemActive}`}>{item.year}年</div>
           );
         } else {
-          console.log(yearReportTab, item.year, '====3');
+          // console.log(yearReportTab, item.year, '====3');
           itemsArray.push(
             <div
               onClick={setYearReport.bind(this, item.year)}

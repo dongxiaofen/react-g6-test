@@ -5,6 +5,18 @@ import { Row, Col } from 'components/common/layout';
 import config from 'dict/reportModule';
 
 function CardBody({ meta, cData, isExpanded }) {
+  const getValue = (item, value) => {
+    let output = '';
+    if (item.modifyText) {
+      output = item.modifyText(value);
+    } else if (item.modifyBlock) {
+      output = item.modifyBlock(cData);
+    } else {
+      output = value ? value : '--';
+    }
+    return output;
+  };
+
   const getCardBody = () => {
     const output = [];
     meta.body.map((item, idx) => {
@@ -12,7 +24,7 @@ function CardBody({ meta, cData, isExpanded }) {
         output.push(
           <Col key={item.key + idx} width={item.width} className={styles.col} >
             <span className={styles.key}>{config[meta.dict][item.key]}: </span>
-            <span className={styles.value}>{cData[item.key]}</span>
+            <span className={styles.value}>{getValue(item, cData[item.key])}</span>
           </Col>
         );
       }
@@ -27,6 +39,8 @@ function CardBody({ meta, cData, isExpanded }) {
 }
 
 CardBody.propTypes = {
-  foo: PropTypes.string,
+  meta: PropTypes.object.isRequired,
+  cData: PropTypes.object.isRequired,
+  isExpanded: PropTypes.bool.isRequired
 };
 export default observer(CardBody);

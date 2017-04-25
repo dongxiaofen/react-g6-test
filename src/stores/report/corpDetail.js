@@ -10,7 +10,10 @@ class CorpDetailStore {
   @observable filiationList = [];
 
   @observable entinvItemList = [];
-
+  // 对外投资任职-法人对外投资
+  @observable frinvList = [];
+  // 对外投资任职-法人对外任职
+  @observable frPositionList = [];
   // 工商变更-变更分析
   @observable alterAnalysis = [];
   // 工商变更-变更信息
@@ -30,6 +33,10 @@ class CorpDetailStore {
         this.personList = resp.data.corpDetail.personListForPortal;
         this.filiationList = resp.data.corpDetail.filiationList;
         this.entinvItemList = resp.data.corpDetail.entinvItemList;
+        // 对外投资任职-法人对外投资
+        this.frinvList = resp.data.corpDetail.frinvList;
+        // 对外投资任职-法人对外任职
+        this.frPositionList = resp.data.corpDetail.frPositionList;
         // 工商变更-变更分析
         this.alterAnalysis = resp.data.tendency.result[0].data;
         // 工商变更-变更信息

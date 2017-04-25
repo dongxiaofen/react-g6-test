@@ -68,6 +68,7 @@ axios.interceptors.request.use((axiosConfig) => {
   // Do something before request is sent
   axiosConfig.headers['sc-id'] = `web-${Uuid.v4()}`;
   axiosConfig.headers['scm-source'] = 'SC_WEB';
+  axiosConfig.headers['Cache-Control'] = 'no-cache';
   return axiosConfig;
 }, (error) => {
   console.log('request error', error);

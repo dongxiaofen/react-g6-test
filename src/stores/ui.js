@@ -20,6 +20,21 @@ class UiStore {
       size: 10,
       show: observable.map({})
     },
+    frinvList: {
+      index: 1,
+      size: 10,
+      show: observable.map({})
+    },
+    frPositionList: {
+      index: 1,
+      size: 10,
+      show: observable.map({})
+    },
+    alterList: {
+      index: 1,
+      size: 10,
+      show: observable.map({})
+    },
     yearInvestor: {
       index: 1,
       size: 10,
