@@ -35,6 +35,8 @@ class TeamStore {
   @observable finishSchool = { Axis: [], data: [] };
   // 所学专业
   @observable majorInfo = { Axis: [], data: [] };
+  // 近期招聘信息
+  @observable recentRecruitment = [];
 
   @observable teamAnalysis = {};
 
@@ -47,23 +49,6 @@ class TeamStore {
         if (recruitmentData && !this.isEmptyObject(recruitmentData) ) {
           const recruitmentStatistic = recruitmentData.recruitmentStatisticResponse;
 
-          let recruitmentInfoData = [];
-          const recruitmentInfo = recruitmentData.recruitmentInfo;
-          if (recruitmentInfo && !this.isEmptyObject(recruitmentInfo)) {
-            recruitmentInfoData = recruitmentData.recruitmentInfo.data;
-            if (recruitmentInfoData && recruitmentInfoData.length > 0) {
-              recruitmentInfoData = recruitmentInfoData.forEach((item) => {
-                const obj = {};
-                obj.category = item.category;
-                obj.salaryText = item.salaryText ? item.salaryText : '无';
-                obj.address = item.address ? item.address : '无';
-                obj.requireNum = item.requireNum ? item.requireNum : '无';
-                obj.releaseTime = item.releaseTime ? item.releaseTime : '无';
-                obj.sourceUrl = item.sourceUrl;
-                return obj;
-              });
-            }
-          }
           // 全国招聘薪资的平均数
           let similarCompanyAvgSalary = recruitmentStatistic.similarCompanyAvgSalary;
           if (similarCompanyAvgSalary) {
@@ -155,6 +140,25 @@ class TeamStore {
             }
           }
 
+          // 近期招聘信息
+          let recruitmentInfoData = [];
+          const recruitmentInfo = recruitmentData.recruitmentInfo;
+          if (recruitmentInfo && !this.isEmptyObject(recruitmentInfo)) {
+            recruitmentInfoData = recruitmentInfo.data;
+            if (recruitmentInfoData && recruitmentInfoData.length > 0) {
+              recruitmentInfoData = recruitmentInfoData.map((item) => {
+                const obj = {};
+                obj.category = item.category;
+                obj.salaryText = item.salaryText ? item.salaryText : '无';
+                obj.address = item.address ? item.address : '无';
+                obj.requireNum = item.requireNum ? item.requireNum : '无';
+                obj.releaseTime = item.releaseTime ? item.releaseTime : '无';
+                obj.sourceUrl = item.sourceUrl;
+                return obj;
+              });
+            }
+          }
+
           // 招聘信息
           this.companyInfo = companyInfo;
           this.wageScale = wageScale;
@@ -167,6 +171,10 @@ class TeamStore {
           this.finishSchool.data = staffSchoolData;
           this.majorInfo.Axis = staffSpeAxis;
           this.majorInfo.data = staffSpeData;
+
+          // 近期招聘职位
+          this.recentRecruitment = recruitmentInfoData;
+          console.log(recruitmentInfoData, '===================recruitmentInfoData');
         }
         this.isLoading = false;
       }));

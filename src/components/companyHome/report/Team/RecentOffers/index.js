@@ -3,8 +3,8 @@ import { observer } from 'mobx-react';
 
 import { Row, Col } from 'components/common/layout';
 
-function RecentOffers({ teamStore }) {
-  console.log(teamStore);
+function RecentOffers({ recentRecruitment }) {
+  console.log(recentRecruitment);
   return (
     <div>
       <Row>
