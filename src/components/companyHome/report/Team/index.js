@@ -18,11 +18,14 @@ export default class Team extends Component {
     teamStore: PropTypes.object,
   }
   render() {
+    const teamStore = this.props.teamStore;
     return (
       <Tabs>
         <TabPane tab="招聘/员工背景">
           <ModuleTitle module="招聘信息" />
-          <RecruitmentInfo teamStore={this.props.teamStore} />
+          <RecruitmentInfo
+            companyInfo={teamStore.companyInfo}
+            wageScale={teamStore.wageScale}/>
           <ModuleTitle module="员工背景" />
           <StaffInfo teamStore={this.props.teamStore} />
           <ModuleTitle module="近期招聘信息" />

@@ -17,7 +17,8 @@ class TeamStore {
   // 公司信息
   @observable companyInfo = {};
   // 企业招聘薪资比例
-  @observable wage = [];
+  @observable wageScale = [];
+  @observable similarCompanyAvgSalary = '';
   // 招聘岗位分布
   @observable recruitment= [];
 
@@ -31,7 +32,6 @@ class TeamStore {
         const recruitmentData = respData.recruitAndResumeResponse;
         if (recruitmentData && !this.isEmptyObject(recruitmentData) ) {
           const recruitmentStatistic = recruitmentData.recruitmentStatisticResponse;
-          let salaryDis = recruitmentStatistic.salaryDis;
 
           const staffInfo = recruitmentData.resumeStatisticResponse;
           let staffSchool = staffInfo.schoolInfo;
@@ -77,17 +77,16 @@ class TeamStore {
           companyInfo.workingYearsAvg = recruitmentStatistic.workingYearsAvg ? recruitmentStatistic.workingYearsAvg.toFixed(2) + '年' : '暂无信息';
           companyInfo.degreeInfo = degreeInfo.length ? degreeInfo.join('，') : '暂无信息';
 
-          // 全国同行业招聘薪资比例
-          const recruitmentScale = [];
-          if (salaryDis && salaryDis.length > 0) {
-            salaryDis = salaryDis.sort((prve, next) => {
-              return next - prve;
-            });
+          // 招聘信息第二块，企业招聘薪资比例
+          const wageScale = [];
+          const salaryDis = recruitmentStatistic.salaryDis;
+          if (salaryDis && !this.isEmptyObject(salaryDis)) {
             let salaryDisCount = 0;
-            salaryDis.forEach((item, key) => {
-              recruitmentScale.push({
-                name: key,
-                value: (item * 100).toFixed(2),
+            const salaryDisKey = Object.keys(salaryDis);
+            salaryDisKey.forEach((item) => {
+              wageScale.push({
+                name: item,
+                value: (salaryDis[item] * 100).toFixed(2),
                 itemStyle: {
                   normal: {
                     color: `rgba(67, 191, 119, ${1 - 0.2 * salaryDisCount})`
@@ -98,7 +97,7 @@ class TeamStore {
             });
           }
 
-          // 招聘岗位分布
+          // 招聘信息第三块，招聘岗位分布
           const recruitmentJobAxis = [];
           const recruitmentJobData = [];
           const categoryInfo = recruitmentStatistic.categoryInfo;
@@ -109,7 +108,7 @@ class TeamStore {
             });
           }
 
-          // 毕业学校
+          // 员工背景，毕业学校
           const staffSchoolAxis = [];
           const staffSchoolData = [];
           if (staffSchool && staffSchool.length > 0) {
@@ -122,7 +121,7 @@ class TeamStore {
             });
           }
 
-          // 所学专业
+          // 员工背景，所学专业
           const staffSpeAxis = [];
           const staffSpeData = [];
           if (staffSpe && staffSpe.length > 0) {
@@ -142,6 +141,8 @@ class TeamStore {
             }
           }
           this.companyInfo = companyInfo;
+          this.wageScale = wageScale;
+          this.similarCompanyAvgSalary = similarCompanyAvgSalary;
         }
         this.isLoading = false;
       }));
