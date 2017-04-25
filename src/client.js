@@ -69,6 +69,9 @@ axios.interceptors.request.use((axiosConfig) => {
   axiosConfig.headers['sc-id'] = `web-${Uuid.v4()}`;
   axiosConfig.headers['scm-source'] = 'SC_WEB';
   axiosConfig.headers['Cache-Control'] = 'no-cache';
+  if (axiosConfig.params) {
+    axiosConfig.params.timestamp = new Date().getTime();
+  }
   return axiosConfig;
 }, (error) => {
   console.log('request error', error);
