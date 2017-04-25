@@ -6,9 +6,11 @@ import PersonList from 'components/companyHome/report/corpDetail/info/PersonList
 import FiliationList from 'components/companyHome/report/corpDetail/info/FiliationList';
 
 import Enterprise from 'components/companyHome/report/corpDetail/foreign/Enterprise';
+import Investment from 'components/companyHome/report/corpDetail/foreign/Investment';
+import Office from 'components/companyHome/report/corpDetail/foreign/Office';
 
 import AlterAnalysis from 'components/companyHome/report/corpDetail/alter/AlterAnalysis';
-// import AlterList from 'components/companyHome/report/corpDetail/alter/AlterList';
+import AlterList from 'components/companyHome/report/corpDetail/alter/AlterList';
 
 import Tab from 'components/companyHome/report/corpDetail/yearReport/Tab';
 import BaseInfo from 'components/companyHome/report/corpDetail/yearReport/BaseInfo';
@@ -44,10 +46,12 @@ export default class CorpDetail extends Component {
         </TabPane>
         <TabPane tab="对外投资任职" key="对外投资任职">
           <Enterprise entinvItemList={corpDetailStore.entinvItemList} isLoading={isLoading} />
+          <Investment frinvList={corpDetailStore.frinvList} isLoading={isLoading} />
+          <Office frPositionList={corpDetailStore.frPositionList} isLoading={isLoading} />
         </TabPane>
         <TabPane tab="工商变更" key="工商变更">
           <AlterAnalysis alterAnalysis={corpDetailStore.alterAnalysis} isLoading={isLoading} />
-          {/* <AlterList alterList={corpDetailStore.alterList} isLoading={isLoading} /> */}
+          <AlterList alterList={corpDetailStore.alterList} isLoading={isLoading} />
         </TabPane>
         <TabPane tab="企业年报" key="企业年报">
           <Tab
