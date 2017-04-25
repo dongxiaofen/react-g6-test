@@ -2,14 +2,16 @@ import React, { PropTypes } from 'react';
 import { observer } from 'mobx-react';
 import { ModuleTitle, CommonTable } from 'components/common/report';
 
-function PersonList({personList, isLoading}) {
+function PersonList({ personList, isLoading }) {
   const data = {
-    meta: [
-      { 'key': 'name', 'width': '4' },
-      { 'key': 'position', 'width': '6' },
-    ],
-    tData: personList,
-    dict: 'personList',
+    meta: {
+      body: [
+        { 'key': 'name', 'width': '4' },
+        { 'key': 'position', 'width': '6' },
+      ],
+      tData: personList,
+      dict: 'personList',
+    },
     isLoading: isLoading,
     module: '主要人员',
     error: personList.length === 0

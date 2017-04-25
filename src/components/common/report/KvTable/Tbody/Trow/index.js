@@ -7,9 +7,9 @@ function Trow({rMeta, items, dict}) {
   const getValue = (tMeta, value) => {
     let output = '';
     if (tMeta.modifyText) {
-      output = tMeta.modifyText();
+      output = tMeta.modifyText(value);
     } else if (tMeta.modifyBlock) {
-      output = tMeta.modifyBlock(value);
+      output = tMeta.modifyBlock(items);
     } else {
       output = value ? value : '--';
     }

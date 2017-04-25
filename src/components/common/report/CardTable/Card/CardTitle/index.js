@@ -28,6 +28,7 @@ function CardTitle({meta, cData}) {
 }
 
 CardTitle.propTypes = {
-  foo: PropTypes.string,
+  meta: PropTypes.object.isRequired,
+  cData: PropTypes.object.isRequired,
 };
 export default observer(CardTitle);
