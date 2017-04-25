@@ -24,9 +24,10 @@ class UiStore {
       index: 1,
       size: 10,
     },
-    patentLists: {
+    patentInfo: {
       index: 1,
       size: 10,
+      show: observable.map({}),
     },
     internetInfo: {
       news: {

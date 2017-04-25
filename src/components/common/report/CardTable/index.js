@@ -13,7 +13,7 @@ function CardTable({meta, uiStore}) {
       {
         cData.map((data, idx) => {
           const serialNum = size * (index - 1) + idx;
-          return <Card key={data.regNo + idx} meta={meta} cData={data} serialNum={serialNum} />;
+          return <Card key={data.title + idx} meta={meta} cData={data} serialNum={serialNum} />;
         })
       }
       <Pager module={meta.dict} tData={meta.cData} type="small" />
