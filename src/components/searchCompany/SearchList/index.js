@@ -4,6 +4,7 @@ import styles from './index.less';
 import SearchItem from './SearchItem';
 import FilterSheet from './FilterSheet';
 import Pagination from 'components/lib/pagination';
+import { loadingComp } from 'components/hoc';
 // import { Container, Row, Col } from 'components/common/Layout';
 
 function SearchList({searchCompanyStore, modalStore, payModalStore}) {
@@ -102,4 +103,12 @@ SearchList.propTypes = {
   modalStore: PropTypes.object,
   payModalStore: PropTypes.object,
 };
-export default inject('searchCompanyStore', 'modalStore', 'payModalStore')(observer(SearchList));
+export default inject('searchCompanyStore', 'modalStore', 'payModalStore')(loadingComp({
+  mapDataToProps: props => ({
+    loading: props.searchCompanyStore.isShowLoading === true ? true : false,
+    imgCategory: 14,
+    category: 2,
+    module: '搜索列表',
+  }),
+})(observer(SearchList)));
+// export default inject('searchCompanyStore', 'modalStore', 'payModalStore')(observer(SearchList));

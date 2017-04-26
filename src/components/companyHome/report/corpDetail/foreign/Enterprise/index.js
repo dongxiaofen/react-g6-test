@@ -19,7 +19,6 @@ function Enterprise({ entinvItemList, isLoading }) {
         { 'key': 'regOrg', 'width': '4', 'hide': true },
         { 'key': 'esDate', 'width': '4', 'hide': true },
       ],
-      isExpand: false,
       dict: 'entinvItemLists',
       cData: entinvItemList
     },

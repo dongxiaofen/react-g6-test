@@ -20,11 +20,11 @@ export default class Assets extends Component {
     return (
       <Tabs>
         <TabPane tab="无形资产/招投标">
-          <Trademark trademarkInfo={this.props.assetsStore.trademarkData}
+          <Trademark trademarkInfo={assetsStore.trademarkData}
                      isLoading={assetsStore.trLoading}
                      error={false}
           />
-          <Patent isLoading={assetsStore.patentLoading} />
+          <Patent patentItemList={assetsStore.patentData} isLoading={assetsStore.patentLoading} />
           <Bidding isLoading={assetsStore.biddingLoading} />
         </TabPane>
       </Tabs>

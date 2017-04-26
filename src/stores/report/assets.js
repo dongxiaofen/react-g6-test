@@ -24,7 +24,8 @@ class AssetsStore {
         .then(action(`get ${apiModule.api} Data`, (response) => {
           switch (apiModule.api) {
             case 'patent':
-              this.patentData = response.data;
+              this.patentLoading = false;
+              this.patentData = response.data.content;
               break;
             case 'trademark':
               this.trLoading = false;

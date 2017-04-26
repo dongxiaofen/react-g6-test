@@ -20,14 +20,16 @@ function ChangeRecord({yearReportList, yearReportTab, isLoading}) {
     }
   }
   const data = {
-    meta: [
-      { 'key': 'changedItem', 'width': '2' },
-      { 'key': 'beforeChange', 'width': '3' },
-      { 'key': 'afterChange', 'width': '3' },
-      { 'key': 'time', 'width': '2' },
-    ],
-    tData: listData,
-    dict: 'yearChangeRecords',
+    meta: {
+      tData: listData,
+      dict: 'yearChangeRecords',
+      body: [
+        { 'key': 'changedItem', 'width': '2' },
+        { 'key': 'beforeChange', 'width': '3' },
+        { 'key': 'afterChange', 'width': '3' },
+        { 'key': 'time', 'width': '2' },
+      ],
+    },
     isLoading: isLoading,
     module: '修改记录',
     error: listNum === 0

@@ -20,13 +20,15 @@ function Website({yearReportList, yearReportTab, isLoading}) {
     }
   }
   const data = {
-    meta: [
-      { 'key': 'type', 'width': '3' },
-      { 'key': 'name', 'width': '4' },
-      { 'key': 'link', 'width': '3' },
-    ],
-    tData: listData,
-    dict: 'yearWebsite',
+    meta: {
+      tData: listData,
+      dict: 'yearWebsite',
+      body: [
+        { 'key': 'type', 'width': '3' },
+        { 'key': 'name', 'width': '4' },
+        { 'key': 'link', 'width': '3' },
+      ],
+    },
     isLoading: isLoading,
     module: '网站或网店信息',
     error: listNum === 0

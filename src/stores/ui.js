@@ -55,9 +55,10 @@ class UiStore {
       index: 1,
       size: 10,
     },
-    patentLists: {
+    patentInfo: {
       index: 1,
       size: 10,
+      show: observable.map({}),
     },
     internetInfo: {
       news: {
@@ -83,6 +84,7 @@ class UiStore {
     pathval.setPathValue(this.uiState, keypath, value);
   }
   @action.bound toggleExpand(module, rowIdx) {
+    console.log(module, rowIdx);
     const value = this.uiState[module].show.get(rowIdx);
     this.uiState[module].show.set(rowIdx, !value);
   }
