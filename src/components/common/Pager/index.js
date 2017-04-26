@@ -4,8 +4,9 @@ import Pagination from 'antd/lib/pagination';
 import styles from './index.less';
 
 function Pager({ tData, module, uiStore, type }) {
-  const { index, size } = uiStore.uiState[module];
-  if (tData.length <= size) {
+  const { index, size, totalElements } = uiStore.uiState[module];
+  const dataLength = totalElements ? totalElements : tData.length;
+  if (dataLength <= size) {
     return null;
   }
   const pageChange = (pageIndex) => {
@@ -16,7 +17,7 @@ function Pager({ tData, module, uiStore, type }) {
       <div className={'clearfix ' + styles.pagination}>
         {
           type === 'small' ?
-            <Pagination simple current={index} pageSize={size} total={tData.length} onChange={pageChange} /> :
+            <Pagination simple current={index} pageSize={size} total={dataLength} onChange={pageChange} /> :
             <Pagination showQuickJumper current={index} pageSize={size} total={tData.length} onChange={pageChange} />
         }
       </div>

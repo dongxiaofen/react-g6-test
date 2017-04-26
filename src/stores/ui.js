@@ -1,7 +1,14 @@
-import { observable, action } from 'mobx';
+import { observable, action, reaction } from 'mobx';
 import pathval from 'pathval';
 
 class UiStore {
+  constructor() {
+    reaction(
+      () => this.uiState.patentInfo.index,
+      value => console.log('reaction 1:', value)
+    );
+  }
+
   @observable uiState = {
     shareholder: {
       index: 1,
@@ -58,6 +65,7 @@ class UiStore {
     patentInfo: {
       index: 1,
       size: 10,
+      totalElements: 0, // 服务端分页
       show: observable.map({}),
     },
     internetInfo: {

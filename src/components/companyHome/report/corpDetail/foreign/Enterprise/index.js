@@ -4,11 +4,15 @@ import { ModuleTitle, CardTable } from 'components/common/report';
 // import styles from './index.less';
 
 function Enterprise({ entinvItemList, isLoading }) {
+  // const handleClick = (foo, bar) => {
+  //   console.log(foo, bar);
+  // };
   const data = {
     meta: {
       title: {
         main: 'entName',
-        sub: ['entStatus', 'entType']
+        sub: ['entStatus', 'entType'],
+        // handleClick: handleClick
       },
       body: [
         { 'key': 'name', 'width': '4' },
