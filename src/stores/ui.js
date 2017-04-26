@@ -60,20 +60,18 @@ class UiStore {
       size: 10,
       show: observable.map({}),
     },
-    internetInfo: {
-      news: {
-        index: 1,
-        size: 10,
-        type: 'ALL',
-      },
-      judgeDoc: {
-        index: 1,
-        size: 10,
-        show: observable.map({
-          0: false
-        }),
-      }
-    }
+    news: {
+      index: 1,
+      size: 10,
+      type: 'ALL',
+    },
+    judgeDoc: {
+      index: 1,
+      size: 10,
+      show: observable.map({
+        0: false
+      }),
+    },
   };
 
   @action.bound updateUiStore(keypath, value) {

@@ -1,5 +1,7 @@
 import { observable, action } from 'mobx';
 import { companyHomeApi } from 'api';
+import axios from 'axios';
+const CancelToken = axios.CancelToken;
 import detailModalStore from '../detailModal';
 import messageStore from '../message';
 import pathval from 'pathval';
@@ -8,6 +10,9 @@ class InternetStore {
   @observable analysis = {};
   @observable statistic = {};
   @observable newsData = {};
+  @observable activeUrl = '';
+  newsDetailCancel = null;
+  newsCancel = null;
   @action.bound changeValue(keyPath, value) {
     pathval.setPathValue(this, keyPath, value);
   }
@@ -36,25 +41,49 @@ class InternetStore {
   }
   @action.bound getInternet(params) {
     this.newsData = {};
-    companyHomeApi.getInternet(params)
+    if (this.newsCancel) {
+      console.log(this.newsCancel, '-------------');
+      this.newsCancel();
+    }
+    const source = CancelToken.source();
+    this.newsCancel = source.cancel;
+    companyHomeApi.getInternet(params, source)
       .then(action('get internet info success', resp => {
+        this.newsCancel = null;
         this.newsData = {data: resp.data.info.data};
       }))
       .catch(action('get internet info error', err => {
-        this.newsData = {error: err.response.data};
+        if (!axios.isCancel(err)) {
+          this.newsCancel = null;
+          this.newsData = {error: err.response.data};
+        }
       }));
   }
-  @action.bound getNewsDetail(url) {
-    companyHomeApi.getNewsDetail(url)
+  @action.bound getNewsDetail(url, activeUrl) {
+    this.activeUrl = activeUrl;
+    if (this.newsDetailCancel) {
+      this.newsDetailCancel();
+      console.log('cancel', this.newsDetailCancel);
+      this.newsDetailCancel = null;
+    }
+    const source = CancelToken.source();
+    this.newsDetailCancel = source.cancel;
+    companyHomeApi.getNewsDetail(url, source)
       .then(action('get internet detail success', resp => {
-        detailModalStore.visible = true;
         console.log(resp);
+        this.newsDetailCancel = null;
+        detailModalStore.visible = true;
+        this.activeUrl = '';
       }))
       .catch(action('get internet detail error', err => {
-        messageStore.openMessage({
-          type: 'error',
-          content: pathval.getPathValue(err, 'response.data.message') || '获取新闻数据失败'
-        });
+        if (!axios.isCancel(err)) {
+          this.newsDetailCancel = null;
+          this.activeUrl = '';
+          messageStore.openMessage({
+            type: 'error',
+            content: pathval.getPathValue(err, 'response.data.message') || '获取新闻数据失败'
+          });
+        }
       }));
   }
 }
