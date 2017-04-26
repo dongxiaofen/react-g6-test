@@ -181,11 +181,49 @@ class TeamStore {
         }
         const teamResponse = respData.teamResponse;
         if (teamResponse && !this.isEmptyObject(teamResponse)) {
-          // const recruitMonitorAnalyze = teamResponse.recruitMonitorAnalyze;
-          const resumeDis = teamResponse.resumeDis;
-          const salaryAvg = teamResponse.salaryAvg;
+          const recruitMonitorAnalyze = teamResponse.recruitMonitorAnalyze;
+          console.log(recruitMonitorAnalyze, '------------------------recruitMonitorAnalyze');
+          // if (recruitMonitorAnalyze && recruitMonitorAnalyze.size > 0) {
+          //   // 先把年取出来
+          //   const keys = Object.keys(recruitMonitorAnalyze.toJS());
+          //   keys.map((item) => {
+          //     years.push(item.split('-')[0]);
+          //   });
+          //   years = Array.from(new Set(years)).sort();
+          //   // 配置好年数组
+          //   years.forEach((item) => {
+          //     newAddJobData[item] = new Array();
+          //   });
+          //   const recruitMonitorAnalyzeKeys = Object.keys(recruitMonitorAnalyze.toJS()).sort();
+          //   const recruitMonitorAnalyNewData = {};
+          //   recruitMonitorAnalyzeKeys.map((data) => {
+          //     recruitMonitorAnalyze.map((item, key) => {
+          //       if (key === data) {
+          //         recruitMonitorAnalyNewData[data] = item.toJS();
+          //       }
+          //     });
+          //   });
+          //   // -------------------------------------------------------------
+          //   years.map((data) => {
+          //     for (const key in recruitMonitorAnalyNewData) {
+          //       if (recruitMonitorAnalyNewData.hasOwnProperty(key)) {
+          //         const year = key.split('-')[0];
+          //         if (data === year) {
+          //           const month = Number(key.split('-')[1]);
+          //           const obj = {};
+          //           obj[month] = recruitMonitorAnalyNewData[key];
+          //           newAddJobData[year].push(obj);
+          //         }
+          //       }
+          //     }
+          //   });
+          //   const newData = newAddJobData[years[years.length - 1]];
+          //   newAddJobMonth = Object.keys(newData[newData.length - 1])[0];
+          //   newAddJobDetail = Object.values(newData[newData.length - 1])[0];
+          // }
 
           // 招聘平均薪资趋势
+          const salaryAvg = teamResponse.salaryAvg;
           const salaryAvgAxis = [];
           const salaryAvgData = [];
           if (salaryAvg && !this.isEmptyObject(salaryAvg)) {
@@ -199,6 +237,7 @@ class TeamStore {
           }
 
           // 离职意向趋势
+          const resumeDis = teamResponse.resumeDis;
           const leaveTrendAxis = [];
           const leaveTrendData = [];
           if (resumeDis && !this.isEmptyObject(resumeDis)) {

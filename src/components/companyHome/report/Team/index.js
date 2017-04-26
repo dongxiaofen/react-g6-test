@@ -11,6 +11,7 @@ import StaffInfo from './StaffInfo';
 import RecentOffers from './RecentOffers';
 
 import TrendAnalysis from './TrendAnalysis';
+import SiteAndJob from './SiteAndJob';
 
 @inject('teamStore', 'routing')
 @batchReport('team')
@@ -45,6 +46,7 @@ export default class Team extends Component {
         <TabPane tab="团队监控分析" key="团队监控分析">
           <div>
             <ModuleTitle module="新增招聘地点/岗位" />
+            <SiteAndJob />
           </div>
           <div>
             <ModuleTitle module="趋势分析" />
