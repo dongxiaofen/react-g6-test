@@ -7,7 +7,7 @@ import Tabs from 'antd/lib/tabs';
 const TabPane = Tabs.TabPane;
 import { batchReport } from 'components/hoc';
 
-@inject('routing', 'assetsStore', 'uiStore')
+@inject('routing', 'assetsStore')
 @batchReport('assets')
 @observer
 export default class Assets extends Component {
