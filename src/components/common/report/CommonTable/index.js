@@ -6,23 +6,21 @@ import styles from './index.less';
 import { loadingComp } from 'components/hoc';
 import Pager from '../../Pager';
 
-function CommonTable({meta, tData, dict, uiStore}) {
-  const {index, size} = uiStore.uiState[dict];
+function CommonTable({meta, uiStore}) {
+  const {index, size} = uiStore.uiState[meta.dict];
   return (
     <div>
       <table className={styles.table}>
-        <Thead meta={meta} dict={dict} />
-        <Tbody meta={meta} tData={tData.slice((index - 1) * size, index * size)} />
+        <Thead meta={meta.body} dict={meta.dict} />
+        <Tbody meta={meta.body} tData={meta.tData.slice((index - 1) * size, index * size)} />
       </table>
-      <Pager module={dict} tData={tData} type="small" />
+      <Pager module={meta.dict} tData={meta.tData} type="small" />
     </div>
   );
 }
 
 CommonTable.propTypes = {
-  meta: PropTypes.array.isRequired,
-  tData: PropTypes.object.isRequired,
-  dict: PropTypes.string.isRequired
+  meta: PropTypes.object.isRequired
 };
 export default loadingComp({
   mapDataToProps: props => ({

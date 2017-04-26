@@ -1,6 +1,6 @@
 import React, {PropTypes} from 'react';
 import { observer } from 'mobx-react';
-import styles from './index.less';
+import styles from '../../index.less';
 import { browserHistory } from 'react-router';
 
 function CompanyName({itemData}) {

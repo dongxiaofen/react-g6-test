@@ -18,7 +18,6 @@ function FilterSheet({
     modalStore,
     getFeedBack,
   }) {
-  console.log(modalStore, '======modalStore bbb');
   let type = '';
   if (filterSheet && filterSheet.filterStatus) {
     Object.keys(filterSheet.filterStatus).map((key)=>{
@@ -35,7 +34,8 @@ function FilterSheet({
           modalStore={modalStore}
           filterSheet={filterSheet}
           page={page}
-          searchKeyFilter={searchKeyFilter} />
+          searchKeyFilter={searchKeyFilter}
+          getFeedBack={getFeedBack} />
       </div>
     );
   }

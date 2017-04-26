@@ -14,8 +14,20 @@ export default class SearchCompany extends Component {
   render() {
     let searchBarDom = '';
     let topStyle = styles.top;
+    let searchList = '';
     if (this.props.searchCompanyStore.isShowResult) {
       topStyle = '';
+      searchList = (
+        <div className={`${styles.searchListWrap}`}>
+          <Container>
+            <Row>
+              <Col>
+                <SearchList />
+              </Col>
+            </Row>
+          </Container>
+        </div>
+      );
     } else {
       searchBarDom = (
         <div className={`${styles.searchBarWrap} ${styles.bdWhite}`}>
@@ -37,15 +49,7 @@ export default class SearchCompany extends Component {
           </Container>
         </div>
         {searchBarDom}
-        <div className={`${styles.searchListWrap}`}>
-          <Container>
-            <Row>
-              <Col>
-                <SearchList />
-              </Col>
-            </Row>
-          </Container>
-        </div>
+        {searchList}
       </div>
     );
   }
