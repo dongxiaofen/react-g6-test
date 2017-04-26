@@ -17,6 +17,7 @@ class AssetsStore {
       .then(action( (response) => {
         this.patentLoading = false;
         this.patentData = response.data.content;
+        uiStore.uiState.patentInfo.totalElements = response.data.totalElements;
       }))
       .catch((err) => {
         console.log(err.response.data);
@@ -28,6 +29,7 @@ class AssetsStore {
       .then(action( (response) => {
         this.trLoading = false;
         this.trademarkData = response.data.content;
+        uiStore.uiState.trademarkLists.totalElements = response.data.totalElements;
       }))
       .catch((err) => {
         console.log(err.response.data);

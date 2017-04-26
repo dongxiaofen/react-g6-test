@@ -1,7 +1,26 @@
-import { observable, action } from 'mobx';
+import { observable, action, reaction } from 'mobx';
 import pathval from 'pathval';
+import bannerStore from './banner';
+import assetsStore from './report/assets';
 
 class UiStore {
+  constructor() {
+    reaction(
+      () => this.uiState.trademarkLists.index,
+      () => {
+        const {monitorId, reportId, companyName, companyType} = bannerStore;
+        assetsStore.getTrademarkData(monitorId, reportId, companyName, companyType);
+      }
+    );
+    reaction(
+      () => this.uiState.patentInfo.index,
+      () => {
+        const {monitorId, reportId, companyName, companyType} = bannerStore;
+        assetsStore.getPatentData(monitorId, reportId, companyName, companyType);
+      }
+    );
+  }
+
   @observable uiState = {
     shareholder: {
       index: 1,
@@ -54,10 +73,12 @@ class UiStore {
     trademarkLists: {
       index: 1,
       size: 10,
+      totalElements: 0, // 服务端分页
     },
     patentInfo: {
       index: 1,
       size: 10,
+      totalElements: 0, // 服务端分页
       show: observable.map({}),
     },
     internetInfo: {

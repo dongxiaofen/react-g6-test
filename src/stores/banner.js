@@ -2,7 +2,11 @@ import { observable, action } from 'mobx';
 import {companyHomeApi} from 'api';
 class BannerStore {
   // banner
+  @observable monitorId = '';
+  @observable reportId = '';
   @observable companyName = '';
+  @observable companyType = '';
+
   @observable hisNameVis = false;
   @observable contactVis = false;
   @observable historyName = [];
@@ -38,6 +42,10 @@ class BannerStore {
     this.contactExtended = this.contactExtended === key ? '' : key;
   }
   @action.bound getBannerInfo(monitorId, reportId, companyName, companyType) {
+    this.monitorId = monitorId;
+    this.reportId = reportId;
+    this.companyName = companyName;
+    this.companyType = companyType;
     companyHomeApi.getBannerInfo(monitorId, reportId, companyName, companyType)
       .then(action('get banner info...', (resp) => {
         console.log('banner结果', resp.data);
