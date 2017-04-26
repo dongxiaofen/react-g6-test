@@ -72,6 +72,10 @@ class UiStore {
           0: false
         }),
       }
+    },
+    recentRecruitment: {
+      index: 1,
+      size: 10
     }
   };
 

@@ -35,7 +35,9 @@ export default class Team extends Component {
           </div>
           <div>
             <ModuleTitle module="近期招聘信息" />
-            <RecentOffers recentRecruitment={teamStore.recentRecruitment} />
+            <RecentOffers
+              recentRecruitment={teamStore.recentRecruitment}
+              isLoading={teamStore.isLoading}/>
           </div>
         </TabPane>
         <TabPane tab="团队监控分析" key="团队监控分析">
