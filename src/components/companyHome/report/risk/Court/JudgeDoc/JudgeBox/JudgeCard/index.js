@@ -28,7 +28,7 @@ function JudgeCard({itemData, rowIdx, data, showParams, uiStore, module, type = 
     return output;
   };
   const viewDetail = () => {
-    uiStore.toggleShowValue(module, rowIdx);
+    uiStore.toggleExpand(module, rowIdx);
   };
   const iconStr = show ? 'up' : 'down';
   const label = itemData.judgeProcess === '' ? itemData.caseType : `${itemData.caseType} ${itemData.judgeProcess.substring(0, 2)}`;

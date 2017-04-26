@@ -9,8 +9,9 @@ function SimpleTabs({data, active, clickHandel}) {
       const text = dataItem.label || dataItem.key;
       const tabCss = dataItem.key === active ? styles.tabActive : styles.tab;
       output.push(
-        <p className={tabCss} key={`tab${idx}`} onClick={clickHandel.bind(null, dataItem.key)}>
-          {dataItem.number || dataItem.number === 0 ? `${text}(${dataItem.number})` : text}
+        <p className={styles.tabWrap} key={`tab${idx}`} onClick={clickHandel.bind(null, dataItem.key)}>
+          <span className={tabCss}>{dataItem.number || dataItem.number === 0 ? `${text}（${dataItem.number}）` : text}</span>
+          <span className={styles.line}>|</span>
         </p>
       );
     });

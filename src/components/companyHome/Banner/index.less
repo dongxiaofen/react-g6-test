@@ -11,21 +11,14 @@
   top: 70px;
   z-index: 1000;
   width: 100%;
-  padding-top: 20px;
-  padding-bottom: 20px;
-  height: 158px;
+  padding-top: 15px;
+  padding-bottom: 15px;
+  height: 148px;
   box-shadow:0 2px 4px 0 rgba(176,190,197,0.50);
   .transition-all;
 }
 .bannerInfoWrap img {
   float: left;
-  height: 118px;
-  .transition-all;
-}
-.info{
-  float: left;
-  width: 100%;
-  background: @white1;
   height: 118px;
   .transition-all;
 }
@@ -35,11 +28,34 @@
   opacity: 0;
 }
 .infosmall {
-  height: 50px;
+  height: 66px;
 }
 .infosmall .bannerInfoLeft {
   height: 50px;
 }
 .infosmall .bannerInfoRight {
   height: 50px;
+}
+
+//文字上滑
+.bannerInfoLeft {
+  float: left;
+  height: 118px;
+  width: 100%;
+}
+.bannerInfoLeft > div > img {
+  float: left;
+}
+.companyBox{
+  margin-bottom: 5px;
+}
+.bannerInfoContent {
+  float: left;
+  width: 100%;
+  .transition-all;
+}
+.displayNo {
+  margin-top: -65px;
+  visibility: hidden;
+  opacity: 0;
 }

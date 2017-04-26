@@ -18,7 +18,54 @@ class UiStore {
     entinvItemLists: {
       index: 1,
       size: 10,
-      show: {}
+      show: observable.map({})
+    },
+    frinvList: {
+      index: 1,
+      size: 10,
+      show: observable.map({})
+    },
+    frPositionList: {
+      index: 1,
+      size: 10,
+      show: observable.map({})
+    },
+    alterList: {
+      index: 1,
+      size: 10,
+      show: observable.map({})
+    },
+    yearInvestor: {
+      index: 1,
+      size: 10,
+    },
+    yearWebsite: {
+      index: 1,
+      size: 10,
+    },
+    yearEquityChange: {
+      index: 1,
+      size: 10,
+    },
+    yearChangeRecords: {
+      index: 1,
+      size: 10,
+    },
+    trademarkLists: {
+      index: 1,
+      size: 10,
+    },
+    patentInfo: {
+      index: 1,
+      size: 10,
+      show: observable.map({}),
+    },
+    internetInfo: {
+      news: {
+        index: 1,
+        size: 10,
+        type: 'ALL',
+      }
     },
     judgeDoc: {
       index: 1,
@@ -30,7 +77,7 @@ class UiStore {
   @action.bound updateUiStore(keypath, value) {
     pathval.setPathValue(this.uiState, keypath, value);
   }
-  @action.bound toggleShowValue(module, rowIdx) {
+  @action.bound toggleExpand(module, rowIdx) {
     const value = this.uiState[module].show.get(rowIdx);
     this.uiState[module].show.set(rowIdx, !value);
   }

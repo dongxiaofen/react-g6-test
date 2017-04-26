@@ -3,7 +3,6 @@ import { observer } from 'mobx-react';
 import styles from './index.less';
 
 function FilterTotal({filterSheet, page, searchKeyFilter, modalStore, getFeedBack}) {
-  console.log(modalStore, filterSheet.searchType, '======modalStore');
   // total
   let totalNumDom = '';
   let totalText = '找到约';
