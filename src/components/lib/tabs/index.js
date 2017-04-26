@@ -21,7 +21,11 @@ class Tabs extends Component {
     this.checkPropsValid(this.props);
   }
   componentWillReceiveProps(nextProps) {
-    this.checkPropsValid(nextProps);
+    const nextChildCount = React.Children.count(nextProps.props.children);
+    const currChildCount = React.Children.count(this.props.children);
+    if (nextChildCount !== currChildCount) {
+      this.checkPropsValid(nextProps);
+    }
   }
   checkPropsValid(props) {
     const children = props.children;
