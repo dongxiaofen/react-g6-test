@@ -27,6 +27,14 @@ function Table({data, routing, internetStore}) {
     } else {
       return false;
     }
+    const detail = {
+      type: mapLabelToType(item.label),
+      label: item.label,
+      time: item.publishTime,
+      title: item.title,
+      source: item.source,
+    };
+    internetStore.assignDetail(detail);
     internetStore.getNewsDetail(getUrl, url);
   };
   return (

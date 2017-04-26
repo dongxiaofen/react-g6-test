@@ -13,8 +13,19 @@ class InternetStore {
   @observable activeUrl = '';
   newsDetailCancel = null;
   newsCancel = null;
+  @observable detailInfo = {
+    type: '',
+    label: '',
+    time: '',
+    title: '',
+    source: '',
+    html: '',
+  };
   @action.bound changeValue(keyPath, value) {
     pathval.setPathValue(this, keyPath, value);
+  }
+  @action.bound assignDetail(obj) {
+    Object.assign(this.detailInfo, obj);
   }
   @action.bound getReportModule(module, monitorId, reportId, companyName, companyType) {
     this.isMount = true;
@@ -42,7 +53,6 @@ class InternetStore {
   @action.bound getInternet(params) {
     this.newsData = {};
     if (this.newsCancel) {
-      console.log(this.newsCancel, '-------------');
       this.newsCancel();
     }
     const source = CancelToken.source();
@@ -63,16 +73,23 @@ class InternetStore {
     this.activeUrl = activeUrl;
     if (this.newsDetailCancel) {
       this.newsDetailCancel();
-      console.log('cancel', this.newsDetailCancel);
       this.newsDetailCancel = null;
     }
     const source = CancelToken.source();
     this.newsDetailCancel = source.cancel;
     companyHomeApi.getNewsDetail(url, source)
       .then(action('get internet detail success', resp => {
-        console.log(resp);
+        this.detailInfo.html = resp.data.html;
         this.newsDetailCancel = null;
-        detailModalStore.visible = true;
+        detailModalStore.openDetailModal((cb) => {
+          require.ensure([], require => {
+            cb(
+              require('components/companyHome/report/internet/news/detail/DetailHeader'),
+              require('components/companyHome/report/internet/news/detail/DetailContent'),
+              require('components/companyHome/report/internet/news/detail/DetailFooter')
+            );
+          });
+        });
         this.activeUrl = '';
       }))
       .catch(action('get internet detail error', err => {
