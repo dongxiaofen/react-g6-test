@@ -10,6 +10,8 @@ import RecruitmentInfo from './RecruitmentInfo';
 import StaffInfo from './StaffInfo';
 import RecentOffers from './RecentOffers';
 
+import TrendAnalysis from './TrendAnalysis';
+
 @inject('teamStore', 'routing')
 @batchReport('team')
 @observer
@@ -46,6 +48,10 @@ export default class Team extends Component {
           </div>
           <div>
             <ModuleTitle module="趋势分析" />
+            <TrendAnalysis
+              salaryAvgTrend={teamStore.salaryAvgTrend}
+              leaveTrend={teamStore.leaveTrend}
+              isLoading={teamStore.isLoading} />
           </div>
         </TabPane>
       </Tabs>

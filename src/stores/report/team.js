@@ -1,4 +1,5 @@
 import { observable, action } from 'mobx';
+import moment from 'moment';
 import { companyHomeApi } from 'api';
 class TeamStore {
   isEmptyObject(obj) {
@@ -23,7 +24,6 @@ class TeamStore {
   @observable isLoading = true;
   @observable isMount = false;
 
-  /* 招聘信息 */
   // 公司信息
   @observable companyInfo = {};
   // 企业招聘薪资比例
@@ -38,7 +38,11 @@ class TeamStore {
   // 近期招聘信息
   @observable recentRecruitment = [];
 
-  @observable teamAnalysis = {};
+  // 招聘平均薪资趋势
+  @observable salaryAvgTrend = { Axis: [], data: [] };
+
+  // 离职意向趋势
+  @observable leaveTrend = { Axis: [], data: [] };
 
   @action.bound getReportModule(module, monitorId, reportId, companyName, companyType) {
     this.isMount = true;
@@ -174,7 +178,47 @@ class TeamStore {
 
           // 近期招聘职位
           this.recentRecruitment = recruitmentInfoData;
-          console.log(recruitmentInfoData, '===================recruitmentInfoData');
+        }
+        const teamResponse = respData.teamResponse;
+        if (teamResponse && !this.isEmptyObject(teamResponse)) {
+          // const recruitMonitorAnalyze = teamResponse.recruitMonitorAnalyze;
+          const resumeDis = teamResponse.resumeDis;
+          const salaryAvg = teamResponse.salaryAvg;
+
+          // 招聘平均薪资趋势
+          const salaryAvgAxis = [];
+          const salaryAvgData = [];
+          if (salaryAvg && !this.isEmptyObject(salaryAvg)) {
+            const dealWithSalaryAvg = this.dealWithObjectToArray(salaryAvg);
+            dealWithSalaryAvg.forEach((item) => {
+              salaryAvgAxis.push(moment(item.name).format('YYYY年MM月'));
+              salaryAvgData.push(item.value ? item.value.toFixed(2) : 0);
+            });
+            this.salaryAvgTrend.Axis = salaryAvgAxis;
+            this.salaryAvgTrend.data = salaryAvgData;
+          }
+
+          // 离职意向趋势
+          const leaveTrendAxis = [];
+          const leaveTrendData = [];
+          if (resumeDis && !this.isEmptyObject(resumeDis)) {
+            const dealWithResumeDis = this.dealWithObjectToArray(resumeDis);
+            dealWithResumeDis.forEach((item) => {
+              leaveTrendAxis.push(moment(item.name).format('YYYY年MM月'));
+              const itemValueKeys = Object.keys(item.value);
+              if (itemValueKeys.length > 0) {
+                let itemSum = 0;
+                itemValueKeys.forEach((key) => {
+                  itemSum += item.value[key];
+                });
+                leaveTrendData.push({ value: itemSum, item: item.value });
+              } else {
+                leaveTrendData.push({ value: 0, item: '' });
+              }
+            });
+            this.leaveTrend.Axis = leaveTrendAxis;
+            this.leaveTrend.data = leaveTrendData;
+          }
         }
         this.isLoading = false;
       }));
