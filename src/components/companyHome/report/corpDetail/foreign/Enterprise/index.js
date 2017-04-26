@@ -4,9 +4,9 @@ import { ModuleTitle, CardTable } from 'components/common/report';
 // import styles from './index.less';
 
 function Enterprise({ entinvItemList, isLoading }) {
-  // const handleClick = (foo, bar) => {
-  //   console.log(foo, bar);
-  // };
+  const handleClick = (foo, bar) => {
+    console.log(foo, bar);
+  };
   const data = {
     meta: {
       title: {
@@ -15,7 +15,7 @@ function Enterprise({ entinvItemList, isLoading }) {
         // handleClick: handleClick
       },
       body: [
-        { 'key': 'name', 'width': '4' },
+        { 'key': 'name', 'width': '4', handleClick: handleClick },
         { 'key': 'subConam', 'width': '4' },
         { 'key': 'fundedRatio', 'width': '4' },
         { 'key': 'regCap', 'width': '4', 'hide': true },

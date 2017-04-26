@@ -6,8 +6,8 @@ import Pager from '../../Pager';
 import Card from './Card';
 
 function CardTable({meta, module, uiStore}) {
-  const {index, size} = uiStore.uiState[meta.dict];
-  const cData = meta.cData.slice((index - 1) * size, index * size);
+  const {index, size, totalElements} = uiStore.uiState[meta.dict];
+  const cData = totalElements ? meta.cData : meta.cData.slice((index - 1) * size, index * size);
   return (
     <div>
       {
