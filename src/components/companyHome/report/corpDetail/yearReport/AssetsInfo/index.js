@@ -17,14 +17,16 @@ function AssetsInfo({yearReportList, yearReportTab, isLoading}) {
     }
   }
   const data = {
-    meta: [
-      [{ 'key': 'generalAssets', 'type': 'half' }, { 'key': 'ownersEequity', 'type': 'half' }],
-      [{ 'key': 'revenue', 'type': 'half' }, { 'key': 'profit', 'type': 'half' }],
-      [{ 'key': 'mainRevenue', 'type': 'half' }, { 'key': 'netProfit', 'type': 'half' }],
-      [{ 'key': 'taxPayment', 'type': 'half' }, { 'key': 'liability', 'type': 'half' }],
-    ],
-    items: listData,
-    dict: 'yearAssetsInfo',
+    meta: {
+      items: listData,
+      dict: 'yearAssetsInfo',
+      body: [
+        [{ 'key': 'generalAssets', 'type': 'half' }, { 'key': 'ownersEequity', 'type': 'half' }],
+        [{ 'key': 'revenue', 'type': 'half' }, { 'key': 'profit', 'type': 'half' }],
+        [{ 'key': 'mainRevenue', 'type': 'half' }, { 'key': 'netProfit', 'type': 'half' }],
+        [{ 'key': 'taxPayment', 'type': 'half' }, { 'key': 'liability', 'type': 'half' }],
+      ],
+    },
     isLoading: isLoading,
     module: '企业资产状况信息(单位：万元)',
     error: yearReportList.length === 0
