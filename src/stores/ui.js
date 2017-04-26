@@ -71,6 +71,11 @@ class UiStore {
       index: 1,
       size: 10,
       show: observable.map({}),
+    },
+    courtAnnouncement: {
+      index: 1,
+      size: 10,
+      show: observable.map({}),
     }
   };
 

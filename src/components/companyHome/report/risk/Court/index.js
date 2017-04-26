@@ -4,6 +4,7 @@ import SimpleTabs from 'components/common/SimpleTabs';
 import styles from './index.less';
 import loadingComp from 'components/hoc/LoadingComp';
 import JudgeDoc from './JudgeDoc';
+import CourtAnnouncement from './CourtAnnouncement';
 
 function Court({riskStore}) {
   const court = riskStore.court;
@@ -25,6 +26,8 @@ function Court({riskStore}) {
     switch (court.tabAct) {
       case 'judeDoc':
         return <JudgeDoc courtData={courtData.judgeDoc.data} regTime={regTime} riskStore={riskStore}/>;
+      case 'courtAnnouncement':
+        return <CourtAnnouncement courtAnnouncement={courtData.courtAnnouncement} regTime={regTime} riskStore={riskStore}/>;
       default:
         return <div></div>;
     }
