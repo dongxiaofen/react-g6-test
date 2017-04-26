@@ -5,6 +5,7 @@ import styles from './index.less';
 import loadingComp from 'components/hoc/LoadingComp';
 import JudgeDoc from './JudgeDoc';
 import CourtAnnouncement from './CourtAnnouncement';
+import CourtNotice from './CourtNotice';
 
 function Court({riskStore}) {
   const court = riskStore.court;
@@ -27,7 +28,9 @@ function Court({riskStore}) {
       case 'judeDoc':
         return <JudgeDoc courtData={courtData.judgeDoc.data} regTime={regTime} riskStore={riskStore}/>;
       case 'courtAnnouncement':
-        return <CourtAnnouncement courtAnnouncement={courtData.courtAnnouncement} regTime={regTime} riskStore={riskStore}/>;
+        return <CourtAnnouncement courtAnnouncement={courtData.courtAnnouncement} regTime={regTime}/>;
+      case 'courtNotice':
+        return <CourtNotice courtNotice={courtData.courtNotice} regTime={regTime} />;
       default:
         return <div></div>;
     }
