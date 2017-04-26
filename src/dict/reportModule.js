@@ -503,7 +503,7 @@ const config = {
     'requireNum': '人数',
     'releaseTime': '职位发布时间',
   },
-  recent: {
+  recentRecruitment: {
     category: '近期招聘职位',
     salaryText: '薪资',
     address: '地点',
