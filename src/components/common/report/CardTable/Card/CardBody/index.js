@@ -7,12 +7,14 @@ import config from 'dict/reportModule';
 function CardBody({ meta, cData, isExpanded }) {
   const getValue = (item, value) => {
     let output = '';
-    if (item.modifyText) {
-      output = item.modifyText(value);
+    if (item.handleClick) {
+      output = <span onClick={item.handleClick.bind(null, value, cData)} className={styles.valueClick}>{value}</span>;
+    } else if (item.modifyText) {
+      output = <span className={styles.value}>{item.modifyText(value)}</span>;
     } else if (item.modifyBlock) {
-      output = item.modifyBlock(cData);
+      output = <span className={styles.value}>{item.modifyBlock(cData)}</span>;
     } else {
-      output = value ? value : '--';
+      output = <span className={styles.value}>{value ? value : '--'}</span>;
     }
     return output;
   };
@@ -24,7 +26,7 @@ function CardBody({ meta, cData, isExpanded }) {
         output.push(
           <Col key={item.key + idx} width={item.width} className={styles.col} >
             <span className={styles.key}>{config[meta.dict][item.key]}: </span>
-            <span className={styles.value}>{getValue(item, cData[item.key])}</span>
+            {getValue(item, cData[item.key])}
           </Col>
         );
       }
