@@ -6,15 +6,19 @@ import { loadingComp } from 'components/hoc';
 
 import Detail from './Detail';
 import Calendar from './Calendar';
-function SiteAndJob({}) {
+function SiteAndJob({ siteAndJob, setSiteAndJob, setSiteAndJobYear }) {
+  console.log(siteAndJob, '--------siteAndJob');
   return (
     <div>
       <Row>
         <Col width="8">
-          <Detail />
+          <Detail siteAndJob={siteAndJob} />
         </Col>
         <Col width="4">
-          <Calendar />
+          <Calendar
+            siteAndJob={siteAndJob}
+            setSiteAndJob={setSiteAndJob}
+            setSiteAndJobYear={setSiteAndJobYear} />
         </Col>
       </Row>
     </div>
@@ -22,13 +26,14 @@ function SiteAndJob({}) {
 }
 
 SiteAndJob.propTypes = {
-  salaryAvgTrend: PropTypes.object,
-  leaveTrend: PropTypes.object,
+  siteAndJob: PropTypes.object,
+  setSiteAndJob: PropTypes.func,
+  setSiteAndJobYear: PropTypes.func,
 };
 export default loadingComp({
-  mapDataToProps: () => ({
-    loading: false,
+  mapDataToProps: props => ({
+    loading: props.isLoading,
     module: '新增招聘地点/岗位',
-    error: false
+    error: props.isEmptyObject(props.siteAndJob.data)
   })
 })(observer(SiteAndJob));

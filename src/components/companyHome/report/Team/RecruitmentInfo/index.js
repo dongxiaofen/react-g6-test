@@ -208,7 +208,9 @@ RecruitmentInfo.propTypes = {
 export default loadingComp({
   mapDataToProps: props => {
     const teamStore = props.teamStore;
-    const isError = teamStore.isEmptyObject(teamStore.companyInfo)
+    const companyInfo = teamStore.dealWithObjectToArray(teamStore.companyInfo);
+    const isNotData = !companyInfo.every((item) => item === '暂无信息');
+    const isError = isNotData
       && !teamStore.wageScale.length
       && !teamStore.recruitment.data.length;
     return {

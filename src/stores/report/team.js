@@ -38,6 +38,18 @@ class TeamStore {
   // 近期招聘信息
   @observable recentRecruitment = [];
 
+  // 新增招聘地点/岗位
+  @observable siteAndJob = {
+    year: '',
+    years: [],
+    yearIndex: '',
+    month: '',
+    latestYear: '',
+    latestMonth: '',
+    detail: {},
+    data: {}
+  };
+
   // 招聘平均薪资趋势
   @observable salaryAvgTrend = { Axis: [], data: [] };
 
@@ -181,46 +193,40 @@ class TeamStore {
         }
         const teamResponse = respData.teamResponse;
         if (teamResponse && !this.isEmptyObject(teamResponse)) {
-          const recruitMonitorAnalyze = teamResponse.recruitMonitorAnalyze;
-          console.log(recruitMonitorAnalyze, '------------------------recruitMonitorAnalyze');
-          // if (recruitMonitorAnalyze && recruitMonitorAnalyze.size > 0) {
-          //   // 先把年取出来
-          //   const keys = Object.keys(recruitMonitorAnalyze.toJS());
-          //   keys.map((item) => {
-          //     years.push(item.split('-')[0]);
-          //   });
-          //   years = Array.from(new Set(years)).sort();
-          //   // 配置好年数组
-          //   years.forEach((item) => {
-          //     newAddJobData[item] = new Array();
-          //   });
-          //   const recruitMonitorAnalyzeKeys = Object.keys(recruitMonitorAnalyze.toJS()).sort();
-          //   const recruitMonitorAnalyNewData = {};
-          //   recruitMonitorAnalyzeKeys.map((data) => {
-          //     recruitMonitorAnalyze.map((item, key) => {
-          //       if (key === data) {
-          //         recruitMonitorAnalyNewData[data] = item.toJS();
-          //       }
-          //     });
-          //   });
-          //   // -------------------------------------------------------------
-          //   years.map((data) => {
-          //     for (const key in recruitMonitorAnalyNewData) {
-          //       if (recruitMonitorAnalyNewData.hasOwnProperty(key)) {
-          //         const year = key.split('-')[0];
-          //         if (data === year) {
-          //           const month = Number(key.split('-')[1]);
-          //           const obj = {};
-          //           obj[month] = recruitMonitorAnalyNewData[key];
-          //           newAddJobData[year].push(obj);
-          //         }
-          //       }
-          //     }
-          //   });
-          //   const newData = newAddJobData[years[years.length - 1]];
-          //   newAddJobMonth = Object.keys(newData[newData.length - 1])[0];
-          //   newAddJobDetail = Object.values(newData[newData.length - 1])[0];
-          // }
+          let recruitMonitorAnalyze = teamResponse.recruitMonitorAnalyze;
+          if (recruitMonitorAnalyze && !this.isEmptyObject(recruitMonitorAnalyze)) {
+            let years = [];
+            const siteAndJob = {};
+            recruitMonitorAnalyze = this.dealWithObjectToArray(recruitMonitorAnalyze);
+            recruitMonitorAnalyze.forEach((item) => {
+              years.push(item.name.split('-')[0]);
+            });
+            years = Array.from(new Set(years));
+            years.forEach((item) => {
+              siteAndJob[item] = [];
+            });
+            recruitMonitorAnalyze.forEach((item) => {
+              years.forEach((year) => {
+                if (item.name.includes(year)) {
+                  const month = Number(item.name.split('-')[1]);
+                  const obj = {};
+                  obj[month] = item.value;
+                  siteAndJob[year].push(obj);
+                }
+              });
+            });
+            const latest = siteAndJob[years[years.length - 1]];
+            const latestMonth = Object.keys(latest[latest.length - 1])[0];
+            const latestDetail = Object.values(latest[latest.length - 1])[0];
+            this.siteAndJob.data = siteAndJob;
+            this.siteAndJob.year = years[years.length - 1];
+            this.siteAndJob.latestYear = years[years.length - 1];
+            this.siteAndJob.yearIndex = years.length - 1;
+            this.siteAndJob.years = years;
+            this.siteAndJob.month = latestMonth;
+            this.siteAndJob.latestMonth = latestMonth;
+            this.siteAndJob.detail = latestDetail;
+          }
 
           // 招聘平均薪资趋势
           const salaryAvg = teamResponse.salaryAvg;
@@ -261,6 +267,29 @@ class TeamStore {
         }
         this.isLoading = false;
       }));
+  }
+
+  @action.bound setSiteAndJob(calendarData, month) {
+    let setCalendarData = {};
+    calendarData.map((item) => {
+      const itemMonth = Number(Object.keys(item)[0]);
+      if (itemMonth === month) {
+        setCalendarData = Object.values(item)[0];
+      }
+    });
+    this.siteAndJob.month = month;
+    this.siteAndJob.detail = setCalendarData;
+  }
+
+  @action.bound setSiteAndJobYear(_years, _yearIndex, _data) {
+    const setYearData = _years[_yearIndex];
+    const data = _data[setYearData];
+    const month = Object.keys(data[data.length - 1])[0];
+    const detail = Object.values(data[data.length - 1])[0];
+    this.siteAndJob.year = setYearData;
+    this.siteAndJob.month = month;
+    this.siteAndJob.yearIndex = _yearIndex;
+    this.siteAndJob.detail = detail;
   }
 }
 export default new TeamStore();

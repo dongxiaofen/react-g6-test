@@ -46,7 +46,12 @@ export default class Team extends Component {
         <TabPane tab="团队监控分析" key="团队监控分析">
           <div>
             <ModuleTitle module="新增招聘地点/岗位" />
-            <SiteAndJob />
+            <SiteAndJob
+              siteAndJob={teamStore.siteAndJob}
+              setSiteAndJob={teamStore.setSiteAndJob}
+              setSiteAndJobYear={teamStore.setSiteAndJobYear}
+              isEmptyObject={teamStore.isEmptyObject}
+              isLoading={teamStore.isLoading}/>
           </div>
           <div>
             <ModuleTitle module="趋势分析" />
