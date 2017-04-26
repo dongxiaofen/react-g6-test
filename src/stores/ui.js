@@ -81,6 +81,20 @@ class UiStore {
       index: 1,
       size: 10,
       show: observable.map({}),
+    },
+    courtExecution: {
+      index: 1,
+      size: 10,
+    },
+    dishonestyList: {
+      index: 1,
+      size: 10,
+      show: observable.map({}),
+    },
+    litigationAssets: {
+      index: 1,
+      size: 10,
+      show: observable.map({}),
     }
   };
 

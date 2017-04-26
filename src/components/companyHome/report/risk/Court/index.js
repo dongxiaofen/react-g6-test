@@ -6,6 +6,9 @@ import loadingComp from 'components/hoc/LoadingComp';
 import JudgeDoc from './JudgeDoc';
 import CourtAnnouncement from './CourtAnnouncement';
 import CourtNotice from './CourtNotice';
+import CourtExecution from './CourtExecution';
+import DishonestyList from './DishonestyList';
+import LitigationAssets from './LitigationAssets';
 
 function Court({riskStore}) {
   const court = riskStore.court;
@@ -31,6 +34,12 @@ function Court({riskStore}) {
         return <CourtAnnouncement courtAnnouncement={courtData.courtAnnouncement} regTime={regTime}/>;
       case 'courtNotice':
         return <CourtNotice courtNotice={courtData.courtNotice} regTime={regTime} />;
+      case 'courtExecution':
+        return <CourtExecution courtExecution={courtData.courtExecution} regTime={regTime} />;
+      case 'dishonestyList':
+        return <DishonestyList dishonestyList={courtData.dishonestyList} regTime={regTime} />;
+      case 'litigationAssets':
+        return <LitigationAssets litigationAssets={courtData.litigationAssets} regTime={regTime} />;
       default:
         return <div></div>;
     }
