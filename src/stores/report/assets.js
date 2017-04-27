@@ -7,6 +7,11 @@ class AssetsStore {
   @observable patentData = [];
   @observable biddingData = [];
   @observable isMount = false ;
+  // 弹框标题数据||信息来源
+  @observable titleData = {};
+  // 弹出框详情
+  @observable bidMarkertDetailData = {};
+  @observable bidMarkertContent = '';
 
   @observable trLoading = true;
   @observable patentLoading = true;
@@ -39,6 +44,7 @@ class AssetsStore {
   @action.bound getBiddingData(monitorId, reportId, companyName, companyType) {
     companyHomeApi.getReportModule('bidding', monitorId, reportId, companyName, companyType)
       .then(action( (response) => {
+        this.biddingLoading = false;
         this.biddingData = response.data;
       }))
       .catch((err) => {
@@ -51,6 +57,17 @@ class AssetsStore {
     this.getBiddingData(monitorId, reportId, companyName, companyType);
     this.getPatentData(monitorId, reportId, companyName, companyType);
     this.getTrademarkData(monitorId, reportId, companyName, companyType);
+  }
+
+  @action.bound getDetail(url, showDetail) {
+    companyHomeApi.getNewsDetail(url)
+      .then(action( (response) => {
+        this.bidMarkertContent = response.data.result;
+        showDetail.call(this);
+      }))
+      .catch((error) => {
+        console.log(error);
+      });
   }
 }
 export default new AssetsStore();

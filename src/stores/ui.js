@@ -2,6 +2,7 @@ import { observable, action, reaction } from 'mobx';
 import pathval from 'pathval';
 import bannerStore from './banner';
 import assetsStore from './report/assets';
+import reportManageStore from './reportManage';
 
 class UiStore {
   constructor() {
@@ -17,6 +18,13 @@ class UiStore {
       () => {
         const {monitorId, reportId, companyName, companyType} = bannerStore;
         assetsStore.getPatentData(monitorId, reportId, companyName, companyType);
+      }
+    );
+    reaction(
+      () => this.uiState.reportManagePager.index,
+      () => {
+        pathval.setPathValue(reportManageStore, 'list', {});
+        reportManageStore.getReportList(this.uiState.reportManagePager);
       }
     );
   }
@@ -81,6 +89,10 @@ class UiStore {
       totalElements: 0, // 服务端分页
       show: observable.map({}),
     },
+    biddingList: {
+      index: 1,
+      size: 10,
+    },
     internetInfo: {
       news: {
         index: 1,
@@ -98,7 +110,12 @@ class UiStore {
     recentRecruitment: {
       index: 1,
       size: 10
-    }
+    },
+    reportManagePager: {
+      index: 1,
+      size: 10,
+      totalElements: 0, // 服务端分页
+    },
   };
 
   @action.bound updateUiStore(keypath, value) {
