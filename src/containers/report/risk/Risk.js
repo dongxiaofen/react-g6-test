@@ -2,6 +2,7 @@ import React, { Component, PropTypes} from 'react';
 import { observer, inject } from 'mobx-react';
 import Court from 'components/companyHome/report/risk/Court';
 import Tax from 'components/companyHome/report/risk/Tax';
+import Mici from 'components/companyHome/report/risk/Mici';
 import {batchReport} from 'components/hoc';
 import Tabs from 'components/lib/tabs';
 const TabPane = Tabs.TabPane;
@@ -21,10 +22,10 @@ export default class Risk extends Component {
           <Court riskStore={riskStore}/>
         </TabPane>
         <TabPane tab="税务公示信息">
-          <Tax />
+          <Tax riskStore={riskStore}/>
         </TabPane>
         <TabPane tab="工商公示信息">
-          <Tax />
+          <Mici riskStore={riskStore}/>
         </TabPane>
       </Tabs>
     );

@@ -95,6 +95,21 @@ class UiStore {
       index: 1,
       size: 10,
       show: observable.map({}),
+    },
+    jyErrorData: {
+      index: 1,
+      size: 10,
+      show: observable.map({}),
+    },
+    checkMessage: {
+      index: 1,
+      size: 10,
+      show: observable.map({}),
+    },
+    taxPublicInfo: {
+      index: 1,
+      size: 10,
+      show: observable.map({}),
     }
   };
 

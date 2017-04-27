@@ -21,6 +21,8 @@ class RiskStore {
       content: {},
     }
   };
+  @observable corpDetailPunish = {};
+  @observable taxList = [];
   @action.bound getReportModule(module, monitorId, reportId, companyName, companyType) {
     this.isMount = true;
     this.isLoading = true;
@@ -28,6 +30,8 @@ class RiskStore {
       .then(action('get risk data', (resp)=>{
         this.isLoading = false;
         this.court.courtData = resp.data.data.court;
+        this.corpDetailPunish = resp.data.data.corpDetailPunish;
+        this.taxList = resp.data.data.taxList;
       }))
       .catch((error)=>{
         console.log('risk error', error);
