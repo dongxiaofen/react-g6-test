@@ -52,6 +52,7 @@ export default loadingComp({
   mapDataToProps: props => ({
     loading: props.msStore.loadingGroup.provinceAll,
     category: 0,
+    height: 400,
     error: !props.msStore.isEmptyObject('errorBody', 'provinceAll') || !props.msStore.provinceAll.result.length,
     errCategory: 1,
   })

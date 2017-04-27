@@ -7,7 +7,6 @@ import { loadingComp } from 'components/hoc';
 import Detail from './Detail';
 import Calendar from './Calendar';
 function SiteAndJob({ siteAndJob, setSiteAndJob, setSiteAndJobYear }) {
-  console.log(siteAndJob, '--------siteAndJob');
   return (
     <div>
       <Row>

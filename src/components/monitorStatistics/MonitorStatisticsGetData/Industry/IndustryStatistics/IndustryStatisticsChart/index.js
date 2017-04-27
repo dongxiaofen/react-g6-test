@@ -27,6 +27,7 @@ export default loadingComp({
   mapDataToProps: props => ({
     loading: props.msStore.loadingGroup.industryStatistics,
     category: 0,
+    height: 363,
     error: !props.msStore.isEmptyObject('errorBody', 'industryStatistics') || !props.msStore.industryStatistics.result.length,
     errCategory: 1,
   })
