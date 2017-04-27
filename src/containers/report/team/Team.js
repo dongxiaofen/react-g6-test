@@ -6,12 +6,12 @@ const TabPane = Tabs.TabPane;
 import { batchReport } from 'components/hoc';
 import { ModuleTitle } from 'components/common/report';
 
-import RecruitmentInfo from 'components/companyHome/report/Team/RecruitmentInfo';
-import StaffInfo from 'components/companyHome/report/Team/StaffInfo';
-import RecentOffers from 'components/companyHome/report/Team/RecentOffers';
+import RecruitmentInfo from 'components/companyHome/report/team/RecruitmentInfo';
+import StaffInfo from 'components/companyHome/report/team/StaffInfo';
+import RecentOffers from 'components/companyHome/report/team/RecentOffers';
 
-import TrendAnalysis from 'components/companyHome/report/Team/TrendAnalysis';
-import SiteAndJob from 'components/companyHome/report/Team/SiteAndJob';
+import TrendAnalysis from 'components/companyHome/report/team/TrendAnalysis';
+import SiteAndJob from 'components/companyHome/report/team/SiteAndJob';
 
 @inject('teamStore', 'routing')
 @batchReport('team')
