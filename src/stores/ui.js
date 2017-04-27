@@ -22,6 +22,7 @@ class UiStore {
     reaction(
       () => this.uiState.monitorListPager.index,
       () => {
+        document.body.scrollTop = 0;
         monitorListStore.getMainList();
       }
     );
