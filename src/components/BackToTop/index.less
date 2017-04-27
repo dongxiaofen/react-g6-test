@@ -1,0 +1,41 @@
+@import "~sc-colors/index.less";
+
+.transition-all(@secend: .3s) {
+  -webkit-transform: translateZ(0);
+     -moz-transform: translateZ(0);
+       -o-transform: translateZ(0);
+          transform: translateZ(0);
+
+  -webkit-transition: all @secend ease-in-out;
+     -moz-transition: all @secend ease-in-out;
+       -o-transition: all @secend ease-in-out;
+          transition: all @secend ease-in-out;
+}
+
+.backTop {
+  position: fixed;
+  right: 10px;
+  bottom: 30px;
+
+  visibility: hidden;
+  opacity: 0;
+  z-index: 1000;
+
+  .transition-all;
+}
+
+.backTopShow {
+  visibility: visible;
+  opacity: 1;
+}
+
+.backTopimg {
+  width: 30px;
+  height: 30px;
+  background-image: url('imgs/back_to_top.png');
+  cursor: pointer;
+  .transition-all;  
+  &:hover {
+    background-image: url('imgs/back_to_top_hover.png');
+  }
+}
