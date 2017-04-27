@@ -4,7 +4,6 @@ import { observer } from 'mobx-react';
 import Col from 'components/common/layout/Col';
 import StatisticTitle from 'components/monitorStatistics/StatisticTitle';
 import StatisticHoverBox from 'components/monitorStatistics/StatisticHoverBox';
-import ChartBox from 'components/monitorStatistics/ChartBox';
 
 import IndustryTrendChart from './IndustryTrendChart';
 function IndustryTrend({ msStore }) {
@@ -14,9 +13,7 @@ function IndustryTrend({ msStore }) {
     <Col width="6">
       <StatisticHoverBox leftArrow="1">
         <StatisticTitle title={title} subTitle={subTitle} />
-        <ChartBox height={300}>
-          <IndustryTrendChart msStore={msStore} />
-        </ChartBox>
+        <IndustryTrendChart msStore={msStore} />
       </StatisticHoverBox>
     </Col>
   );

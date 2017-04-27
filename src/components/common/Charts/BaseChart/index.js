@@ -8,8 +8,8 @@ export default class BaseChart extends Component {
   static propTypes = {
     chartId: PropTypes.string,
     option: PropTypes.object,
-    height: PropTypes.string,
-    width: PropTypes.string,
+    height: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+    width: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
     clickAction: PropTypes.func,
   }
 

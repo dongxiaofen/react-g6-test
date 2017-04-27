@@ -3,7 +3,7 @@ import { observer } from 'mobx-react';
 import styles from './index.less';
 
 import noDataChart from 'imgs/loading/noDataChart.png';
-function ErrorText({ module, error, errCategory = 0 }) {
+function ErrorText({ module, error, errCategory = 0, height }) {
   const dict = {
     '基本信息': '暂无信息，可能存在时间相对滞后或工商未公示的情况',
     '税务信息': '暂无税务公示信息',
@@ -82,22 +82,30 @@ function ErrorText({ module, error, errCategory = 0 }) {
     '监控统计头条类型分析': '暂无信息，可能存在时间相对滞后或未公示情况，仅供参考',
   };
   if (errCategory) {
+    const imgStyleHeght = height ? { height: height } : {};
     return (
-      <div className={styles.noDataContent}>
-        <div className={`clearfix ${styles.noDataBox}`}>
-          <div className={styles.noDataImg}>
-            <img src={noDataChart} />
-          </div>
-          <div className={styles.noDataText}>
-            {dict[module] || error.message || '暂无信息'}
+      <div className={styles.noDataImgBox} style={imgStyleHeght}>
+        <div className={styles.noDataContent}>
+          <div className={`clearfix ${styles.noDataBox}`}>
+            <div className={styles.noDataImg}>
+              <img src={noDataChart} />
+            </div>
+            <div className={styles.noDataText}>
+              {dict[module] || error.message || '暂无信息'}
+            </div>
           </div>
         </div>
       </div>
     );
   }
   return (
-    <div className={styles.box}>
-      {dict[module] || error.message || '暂无信息'}
+    <div className={styles.msgBox}>
+      <div className={`clearfix ${styles.msgItem}`}>
+        <div className={styles.msgImg}></div>
+        <div className={styles.msgText}>
+          {dict[module] || error.message || '暂无信息'}
+        </div>
+      </div>
     </div>
   );
 }
@@ -105,5 +113,6 @@ function ErrorText({ module, error, errCategory = 0 }) {
 ErrorText.propTypes = {
   module: PropTypes.string,
   errCategory: PropTypes.number,
+  height: PropTypes.oneOfType([PropTypes.string, PropTypes.number])
 };
 export default observer(ErrorText);

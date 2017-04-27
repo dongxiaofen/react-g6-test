@@ -1,14 +1,13 @@
 import React, { Component, PropTypes } from 'react';
 import { observer, inject } from 'mobx-react';
-import Tabs from 'components/lib/tabs';
 import Trademark from 'components/companyHome/report/assets/bidding/Trademark';
 import Patent from 'components/companyHome/report/assets/bidding/Patent';
 import Bidding from 'components/companyHome/report/assets/bidding/Bidding';
+import Tabs from 'antd/lib/tabs';
+const TabPane = Tabs.TabPane;
 import { batchReport } from 'components/hoc';
 
-const TabPane = Tabs.TabPane;
-
-@inject('routing', 'assetsStore', 'uiStore')
+@inject('routing', 'assetsStore')
 @batchReport('assets')
 @observer
 export default class Assets extends Component {
@@ -18,14 +17,14 @@ export default class Assets extends Component {
   render() {
     const assetsStore = this.props.assetsStore;
     return (
-      <Tabs>
-        <TabPane tab="无形资产/招投标">
+      <Tabs defaultActiveKey="无形资产/招投标">
+        <TabPane tab="无形资产/招投标" key="无形资产/招投标">
           <Trademark trademarkInfo={assetsStore.trademarkData}
                      isLoading={assetsStore.trLoading}
                      error={false}
           />
           <Patent patentItemList={assetsStore.patentData} isLoading={assetsStore.patentLoading} />
-          <Bidding isLoading={assetsStore.biddingLoading} />
+          <Bidding biddingItemList={assetsStore.biddingData} isLoading={assetsStore.biddingLoading} />
         </TabPane>
       </Tabs>
     );
