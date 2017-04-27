@@ -115,17 +115,54 @@ class UiStore {
       totalElements: 0, // 服务端分页
       show: observable.map({}),
     },
+    judgeDoc: {
+      index: 1,
+      size: 10,
+      show: observable.map({}),
+    },
+    courtAnnouncement: {
+      index: 1,
+      size: 10,
+      show: observable.map({}),
+    },
+    courtNotice: {
+      index: 1,
+      size: 10,
+      show: observable.map({}),
+    },
+    courtExecution: {
+      index: 1,
+      size: 10,
+    },
+    dishonestyList: {
+      index: 1,
+      size: 10,
+      show: observable.map({}),
+    },
+    litigationAssets: {
+      index: 1,
+      size: 10,
+      show: observable.map({}),
+    },
+    jyErrorData: {
+      index: 1,
+      size: 10,
+      show: observable.map({}),
+    },
+    checkMessage: {
+      index: 1,
+      size: 10,
+      show: observable.map({}),
+    },
+    taxPublicInfo: {
+      index: 1,
+      size: 10,
+      show: observable.map({}),
+    },
     news: {
       index: 1,
       size: 10,
       type: 'ALL',
-    },
-    judgeDoc: {
-      index: 1,
-      size: 10,
-      show: observable.map({
-        0: false
-      }),
     },
     biddingList: {
       index: 1,
@@ -146,7 +183,6 @@ class UiStore {
     pathval.setPathValue(this.uiState, keypath, value);
   }
   @action.bound toggleExpand(module, rowIdx) {
-    console.log(module, rowIdx);
     const value = this.uiState[module].show.get(rowIdx);
     this.uiState[module].show.set(rowIdx, !value);
   }

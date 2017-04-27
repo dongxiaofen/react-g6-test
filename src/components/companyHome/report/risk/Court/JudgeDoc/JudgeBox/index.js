@@ -7,6 +7,7 @@ import Pager from 'components/common/Pager';
 function JudgeBox({data, uiStore}) {
   const module = data.module;
   const showParams = uiStore.uiState[module];
+  console.log(showParams, uiStore);
   const page = showParams.index;
   const size = showParams.size;
   const getCurrData = ()=>{
@@ -54,7 +55,7 @@ function JudgeBox({data, uiStore}) {
   return (
     <div className="clearfix">
       {createTable()}
-      <Pager module={module} type="samll" tData={data.items}/>
+      <Pager module={module} type="small" tData={data.items}/>
     </div>
   );
 }
