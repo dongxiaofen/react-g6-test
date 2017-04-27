@@ -3,6 +3,8 @@ import pathval from 'pathval';
 import bannerStore from './banner';
 import assetsStore from './report/assets';
 import monitorListStore from './monitorList';
+import reportManageStore from './reportManage';
+
 class UiStore {
   constructor() {
     reaction(
@@ -24,6 +26,13 @@ class UiStore {
       () => {
         document.body.scrollTop = 0;
         monitorListStore.getMainList();
+      }
+    );
+    reaction(
+      () => this.uiState.reportManagePager.index,
+      () => {
+        pathval.setPathValue(reportManageStore, 'list', {});
+        reportManageStore.getReportList(this.uiState.reportManagePager);
       }
     );
   }
@@ -118,10 +127,19 @@ class UiStore {
         0: false
       }),
     },
+    biddingList: {
+      index: 1,
+      size: 10,
+    },
     recentRecruitment: {
       index: 1,
       size: 10
-    }
+    },
+    reportManagePager: {
+      index: 1,
+      size: 10,
+      totalElements: 0, // 服务端分页
+    },
   };
 
   @action.bound updateUiStore(keypath, value) {
