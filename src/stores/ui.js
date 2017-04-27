@@ -81,6 +81,11 @@ class UiStore {
       totalElements: 0, // 服务端分页
       show: observable.map({}),
     },
+    judgeDoc: {
+      index: 1,
+      size: 10,
+      show: observable.map({}),
+    },
     courtAnnouncement: {
       index: 1,
       size: 10,

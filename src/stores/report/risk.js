@@ -15,7 +15,7 @@ class RiskStore {
       {key: 'dishonestyList', label: '失信被执行人信息'},
       {key: 'litigationAssets', label: '涉诉资产'}
     ],
-    tabAct: '',
+    tabAct: 'judeDoc',
     detailModalData: {
       info: {},
       content: {},
