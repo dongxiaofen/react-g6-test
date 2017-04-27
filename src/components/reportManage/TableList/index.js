@@ -33,6 +33,5 @@ export default inject('reportManageStore', 'uiStore')(loadingComp(
     loading: pathval.getPathValue(props.reportManageStore, 'list.data.content') === null ? true : false,
     imgCategory: 14,
     category: 2,
-    error:pathval.getPathValue(props.reportManageStore, 'list.data.content') === null
   })}
 )(observer(TableList)));

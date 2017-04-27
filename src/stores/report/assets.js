@@ -47,9 +47,10 @@ class AssetsStore {
         this.biddingLoading = false;
         this.biddingData = response.data;
       }))
-      .catch((err) => {
+      .catch( action( (err) => {
+        this.biddingLoading = false;
         console.log(err.response.data);
-      });
+      }));
   }
 
   @action.bound getReportModule(module, monitorId, reportId, companyName, companyType) {
