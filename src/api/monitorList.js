@@ -1,7 +1,8 @@
 import axios from 'axios';
-export const getMonitorCount = (params) => {
+export const getMonitorCount = (params, source) => {
   return axios.get('/api/monitor/statistic', {
     params: params,
+    cancelToken: source.token
   });
 };
 export const getMainList = (params, source) => {

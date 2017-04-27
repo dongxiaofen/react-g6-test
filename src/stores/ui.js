@@ -2,6 +2,7 @@ import { observable, action, reaction } from 'mobx';
 import pathval from 'pathval';
 import bannerStore from './banner';
 import assetsStore from './report/assets';
+import monitorListStore from './monitorList';
 import reportManageStore from './reportManage';
 
 class UiStore {
@@ -21,6 +22,13 @@ class UiStore {
       }
     );
     reaction(
+      () => this.uiState.monitorListPager.index,
+      () => {
+        document.body.scrollTop = 0;
+        monitorListStore.getMainList();
+      }
+    );
+    reaction(
       () => this.uiState.reportManagePager.index,
       () => {
         pathval.setPathValue(reportManageStore, 'list', {});
@@ -30,6 +38,24 @@ class UiStore {
   }
 
   @observable uiState = {
+    monitorList: {
+      searchInput: '',
+      sortDirection: {
+        start_tm: 'DESC',
+        expire_dt: 'DESC',
+        latestTs: 'DESC',
+      },
+      params: {
+        companyName: '',
+        sort: 'start_tm,DESC',
+        monitorStatus: '',
+      }
+    },
+    monitorListPager: {
+      index: 1,
+      size: 10,
+      totalElements: 10,
+    },
     shareholder: {
       index: 1,
       size: 4
@@ -89,23 +115,21 @@ class UiStore {
       totalElements: 0, // 服务端分页
       show: observable.map({}),
     },
+    news: {
+      index: 1,
+      size: 10,
+      type: 'ALL',
+    },
+    judgeDoc: {
+      index: 1,
+      size: 10,
+      show: observable.map({
+        0: false
+      }),
+    },
     biddingList: {
       index: 1,
       size: 10,
-    },
-    internetInfo: {
-      news: {
-        index: 1,
-        size: 10,
-        type: 'ALL',
-      },
-      judgeDoc: {
-        index: 1,
-        size: 10,
-        show: observable.map({
-          0: false
-        }),
-      }
     },
     recentRecruitment: {
       index: 1,
