@@ -25,7 +25,8 @@ function TableList({ reportManageStore, uiStore }) {
 }
 
 TableList.propTypes = {
-  foo: PropTypes.string,
+  reportManageStore: PropTypes.object,
+  uiStore: PropTypes.object,
 };
 export default inject('reportManageStore', 'uiStore')(loadingComp(
   {mapDataToProps: props=> ({
