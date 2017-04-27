@@ -1,6 +1,7 @@
 import React from 'react';
 import { observer, inject } from 'mobx-react';
 import SimpleTabs from 'components/common/SimpleTabs';
+import styles from './index.less';
 function NewsTabs({internetStore, uiStore, routing}) {
   const statistic = internetStore.statistic.data;
   const activeType = uiStore.uiState.news.type;
@@ -42,7 +43,9 @@ function NewsTabs({internetStore, uiStore, routing}) {
     {label: '其他新闻', key: 'NEWS_OTHER', number: getCount('NEWS_OTHER')},
   ];
   return (
-    <SimpleTabs data={tabData} active={activeType} clickHandel={typeHandle} />
+    <div className={styles.tabsBox}>
+      <SimpleTabs data={tabData} active={activeType} clickHandel={typeHandle} />
+    </div>
   );
 }
 export default inject('uiStore', 'routing')(observer(NewsTabs));
