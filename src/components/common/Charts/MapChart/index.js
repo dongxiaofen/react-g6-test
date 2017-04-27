@@ -8,7 +8,7 @@ export default class MapChart extends Component {
   static propTypes = {
     option: PropTypes.object,
     chartId: PropTypes.string,
-    height: PropTypes.string,
+    height: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
     clickAction: PropTypes.func,
   }
 

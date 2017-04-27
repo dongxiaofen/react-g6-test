@@ -52,6 +52,7 @@ export default loadingComp({
   mapDataToProps: props => ({
     loading: props.msStore.loadingGroup.headlines,
     category: 0,
+    height: 450,
     error: !props.msStore.isEmptyObject('errorBody', 'headlines') || !props.msStore.headlinesTrend.result.length,
     errCategory: 1,
   })
