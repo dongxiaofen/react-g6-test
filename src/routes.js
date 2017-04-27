@@ -22,6 +22,7 @@ import {
     ReportManage,
     Team,
     Assets,
+    Network,
 // first append here from plop
   } from 'containers';
 
@@ -56,6 +57,7 @@ export default (allStore) => {
         <Route path="internet" component={ Internet } />
         <Route path="team" component={ Team } />
         <Route path="assets" component={ Assets } />
+        <Route path="network" component={ Network } />
 {/* third append here from plop */}
       </Route>
       <Route path="solution" component={ Solution } />
