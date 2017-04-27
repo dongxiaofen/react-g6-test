@@ -115,7 +115,6 @@ class UiStore {
       totalElements: 0, // 服务端分页
       show: observable.map({}),
     },
-<<<<<<< HEAD
     judgeDoc: {
       index: 1,
       size: 10,
@@ -164,13 +163,6 @@ class UiStore {
       index: 1,
       size: 10,
       type: 'ALL',
-    },
-    judgeDoc: {
-      index: 1,
-      size: 10,
-      show: observable.map({
-        0: false
-      }),
     },
     biddingList: {
       index: 1,
