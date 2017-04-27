@@ -67,7 +67,7 @@ export const getInternet = ({monitorId, reportId, companyName, companyType, para
 export const getNewsDetail = (url, source) => {
   return axios.get(url, {cancelToken: source.token});
 };
-export const getBiddingDetail = (url) => {
-  return axios.get(url);
+export const getBiddingDetail = (url, source) => {
+  return axios.get(url, {cancelToken: source.token});
 };
 

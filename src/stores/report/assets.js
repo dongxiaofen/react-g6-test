@@ -1,6 +1,8 @@
 import { observable, action } from 'mobx';
 import { companyHomeApi } from 'api';
 import uiStore from '../ui';
+import axios from 'axios';
+const CancelToken = axios.CancelToken;
 
 class AssetsStore {
   @observable trademarkData = [];
@@ -61,7 +63,8 @@ class AssetsStore {
   }
 
   @action.bound getDetail(url, showDetail) {
-    companyHomeApi.getBiddingDetail(url)
+    const source = CancelToken.source();
+    companyHomeApi.getBiddingDetail(url, source)
       .then(action( (response) => {
         this.bidMarkertContent = response.data.result;
         showDetail.call(this);
