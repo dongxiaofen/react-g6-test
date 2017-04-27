@@ -3,19 +3,28 @@ import { observer } from 'mobx-react';
 import styles from './index.less';
 import ImgLoading from './ImgLoading';
 import AnimateLoading from './AnimateLoading';
-import ErrorText from './ErrorText';
+import ErrorText from 'components/common/ErrorText';
 
 function hoc({mapDataToProps}) {
   return (WrappedComponent) => {
     function LoadingComp(props) {
-      const { loading, category, animateCategory, imgCategory, error, module, errCategory } = mapDataToProps(props);
+      const {
+        loading,
+        category,
+        animateCategory,
+        imgCategory,
+        error,
+        module,
+        errCategory,
+        height
+      } = mapDataToProps(props);
       let output;
       if (loading) {
         switch (category) {
           case 0:
             // animateCategory默认调用的是6个条状
             // 传数字 1 进去调用的是3个小条状
-            output = <AnimateLoading animateCategory={animateCategory} />;
+            output = <AnimateLoading animateCategory={animateCategory} height={height} />;
             break;
           case 1:
             output = <ImgLoading imgCategory={imgCategory} />;
@@ -37,7 +46,7 @@ function hoc({mapDataToProps}) {
             break;
         }
       } else if (error) {
-        output = <ErrorText module={module} error={error} errCategory={errCategory} />;
+        output = <ErrorText module={module} error={error} errCategory={errCategory} height={height} />;
       } else {
         output = <WrappedComponent {...props} />;
       }
