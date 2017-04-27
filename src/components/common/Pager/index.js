@@ -13,14 +13,12 @@ function Pager({ tData, module, uiStore, type }) {
     uiStore.updateUiStore(`${module}.index`, pageIndex);
   };
   return (
-    <div className={styles.wrap}>
-      <div className={'clearfix ' + styles.pagination}>
-        {
-          type === 'small' ?
-            <Pagination simple current={index} pageSize={size} total={dataLength} onChange={pageChange} /> :
-            <Pagination showQuickJumper current={index} pageSize={size} total={dataLength} onChange={pageChange} />
-        }
-      </div>
+    <div className={`clearfix ${type === 'small' ? styles.pagination : styles.paginationLarge}`}>
+      {
+        type === 'small' ?
+          <Pagination simple current={index} pageSize={size} total={dataLength} onChange={pageChange} /> :
+          <Pagination showQuickJumper current={index} pageSize={size} total={dataLength} onChange={pageChange} />
+      }
     </div>
   );
 }

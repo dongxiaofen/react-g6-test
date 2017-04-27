@@ -1,6 +1,8 @@
 import { observable, action } from 'mobx';
 import { companyHomeApi } from 'api';
 import uiStore from '../ui';
+import axios from 'axios';
+const CancelToken = axios.CancelToken;
 
 class AssetsStore {
   @observable trademarkData = [];
@@ -47,9 +49,10 @@ class AssetsStore {
         this.biddingLoading = false;
         this.biddingData = response.data;
       }))
-      .catch((err) => {
+      .catch( action( (err) => {
+        this.biddingLoading = false;
         console.log(err.response.data);
-      });
+      }));
   }
 
   @action.bound getReportModule(module, monitorId, reportId, companyName, companyType) {
@@ -60,7 +63,8 @@ class AssetsStore {
   }
 
   @action.bound getDetail(url, showDetail) {
-    companyHomeApi.getNewsDetail(url)
+    const source = CancelToken.source();
+    companyHomeApi.getBiddingDetail(url, source)
       .then(action( (response) => {
         this.bidMarkertContent = response.data.result;
         showDetail.call(this);
