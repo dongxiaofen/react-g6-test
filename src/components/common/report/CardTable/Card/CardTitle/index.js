@@ -6,7 +6,17 @@ function CardTitle({meta, cData}) {
   if (!meta.title) {
     return null;
   }
-  const mainTitle = meta.title.main;
+  const getMainTitle = () => {
+    const mainTitle = meta.title.main;
+    const handleClick = meta.title.handleClick;
+    let output = '';
+    if (handleClick) {
+      output = <span onClick={handleClick.bind(null, cData[mainTitle], cData)} className={styles.mainTitleClick}>{cData[mainTitle]}</span>;
+    } else {
+      output = <span className={styles.mainTitle}>{cData[mainTitle]}</span>;
+    }
+    return output;
+  };
   const getSubTitle = () => {
     if (!meta.title.sub) {
       return null;
@@ -21,7 +31,7 @@ function CardTitle({meta, cData}) {
   };
   return (
     <div className={styles.box}>
-      <span className={styles.mainTitle}>{cData[mainTitle]}</span>
+      {getMainTitle()}
       {getSubTitle()}
     </div>
   );

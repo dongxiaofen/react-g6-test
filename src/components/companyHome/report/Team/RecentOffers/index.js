@@ -1,28 +1,37 @@
 import React, {PropTypes} from 'react';
 import { observer } from 'mobx-react';
 
-import { Row, Col } from 'components/common/layout';
+import { CommonTable } from 'components/common/report';
 
-function RecentOffers({ teamStore }) {
-  console.log(teamStore);
+function RecentOffers({ recentRecruitment, isLoading }) {
+  const modifyBlock = (obj) => {
+    const url = obj.sourceUrl;
+    const category = obj.category;
+    return <a href={url} target="_blank">{category}</a>;
+  };
+  const data = {
+    meta: {
+      body: [
+        { 'key': 'category', 'width': '1.2', 'modifyBlock': modifyBlock},
+        { 'key': 'salaryText', 'width': '2' },
+        { 'key': 'address', 'width': '4' },
+        { 'key': 'requireNum', 'width': '1.4' },
+        { 'key': 'releaseTime', 'width': '1.4' },
+      ],
+      tData: recentRecruitment,
+      dict: 'recentRecruitment'
+    },
+    isLoading: isLoading,
+    module: '近期招聘信息',
+    error: recentRecruitment.length === 0
+  };
   return (
-    <div>
-      <Row>
-        <Col width="6">
-          this is staff
-        </Col>
-        <Col width="3">
-          this is staff
-        </Col>
-        <Col width="3">
-          this is staff
-        </Col>
-      </Row>
-    </div>
+    <CommonTable {...data} />
   );
 }
 
 RecentOffers.propTypes = {
-  teamStore: PropTypes.object,
+  recentRecruitment: PropTypes.object,
+  isLoading: PropTypes.bool,
 };
 export default observer(RecentOffers);
