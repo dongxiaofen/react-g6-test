@@ -49,7 +49,7 @@ export const getReportModule = (module, monitorId, reportId, companyName, compan
   window.reportSourceCancel.push(source.cancel);
   return axios.get(url, { cancelToken: source.token });
 };
-export const getInternet = ({monitorId, reportId, companyName, companyType, params}) => {
+export const getInternet = ({monitorId, reportId, companyName, companyType, params}, source) => {
   let url;
   if (companyType === 'MAIN') {
     if (monitorId) {
@@ -62,14 +62,8 @@ export const getInternet = ({monitorId, reportId, companyName, companyType, para
   } else if (companyType === 'FREE') {
     url = `/api/free/internet?companyName=${encodeURI(companyName)}`;
   }
-  const CancelToken = axios.CancelToken;
-  const source = CancelToken.source();
-  if (window.reportSourceCancel === undefined) {
-    window.reportSourceCancel = [];
-  }
-  window.reportSourceCancel.push(source.cancel);
   return axios.get(url, { cancelToken: source.token, params: params });
 };
-export const getNewsDetail = (url) => {
-  return axios.get(url);
+export const getNewsDetail = (url, source) => {
+  return axios.get(url, {cancelToken: source.token});
 };
