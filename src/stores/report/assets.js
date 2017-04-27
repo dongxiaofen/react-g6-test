@@ -3,6 +3,8 @@ import { companyHomeApi } from 'api';
 import uiStore from '../ui';
 import axios from 'axios';
 const CancelToken = axios.CancelToken;
+import messageStore from '../message';
+import pathval from 'pathval';
 
 class AssetsStore {
   @observable trademarkData = [];
@@ -12,7 +14,6 @@ class AssetsStore {
   // 弹框标题数据||信息来源
   @observable titleData = {};
   // 弹出框详情
-  @observable bidMarkertDetailData = {};
   @observable bidMarkertContent = '';
 
   @observable trLoading = true;
@@ -70,7 +71,10 @@ class AssetsStore {
         showDetail.call(this);
       }))
       .catch((error) => {
-        console.log(error);
+        messageStore.openMessage({
+          type: 'error',
+          content: pathval.getPathValue(error, 'response.data.message') || '获取招投标详情失败'
+        });
       });
   }
 }
