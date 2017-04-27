@@ -24,7 +24,7 @@ export default class Assets extends Component {
                      error={false}
           />
           <Patent patentItemList={assetsStore.patentData} isLoading={assetsStore.patentLoading} />
-          <Bidding isLoading={assetsStore.biddingLoading} />
+          <Bidding biddingItemList={assetsStore.biddingData} isLoading={assetsStore.biddingLoading} />
         </TabPane>
       </Tabs>
     );

@@ -5,7 +5,7 @@ import uiStore from '../ui';
 class AssetsStore {
   @observable trademarkData = [];
   @observable patentData = [];
-  @observable biddingData = [];
+  @observable biddingData = '';
   @observable isMount = false ;
 
   @observable trLoading = true;
@@ -39,6 +39,7 @@ class AssetsStore {
   @action.bound getBiddingData(monitorId, reportId, companyName, companyType) {
     companyHomeApi.getReportModule('bidding', monitorId, reportId, companyName, companyType)
       .then(action( (response) => {
+        this.biddingLoading = false;
         this.biddingData = response.data;
       }))
       .catch((err) => {

@@ -81,6 +81,10 @@ class UiStore {
       totalElements: 0, // 服务端分页
       show: observable.map({}),
     },
+    biddingList: {
+      index: 1,
+      size: 10,
+    },
     internetInfo: {
       news: {
         index: 1,
