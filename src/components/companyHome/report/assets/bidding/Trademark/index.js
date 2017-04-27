@@ -2,7 +2,7 @@ import React, {PropTypes} from 'react';
 import { observer } from 'mobx-react';
 // import styles from './index.less';
 import { ModuleTitle } from 'components/common/report';
-import TrademarkCard from '../TrademarkCard';
+import TrademarkCard from './TrademarkCard';
 import { loadingComp } from 'components/hoc';
 import Pager from 'components/common/Pager';
 
