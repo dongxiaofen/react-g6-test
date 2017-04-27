@@ -3,7 +3,7 @@ import { observer } from 'mobx-react';
 import styles from './index.less';
 import ImgLoading from './ImgLoading';
 import AnimateLoading from './AnimateLoading';
-import ErrorText from './ErrorText';
+import ErrorText from 'components/common/ErrorText';
 
 function hoc({mapDataToProps}) {
   return (WrappedComponent) => {
