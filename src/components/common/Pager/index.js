@@ -26,9 +26,9 @@ function Pager({ tData, module, uiStore, type }) {
 }
 
 Pager.propTypes = {
-  tData: PropTypes.object.isRequired,
-  module: PropTypes.string.isRequired,
-  uiStore: PropTypes.object.isRequired,
-  type: PropTypes.string.isRequired,
+  tData: PropTypes.object,
+  module: PropTypes.string,
+  uiStore: PropTypes.object,
+  type: PropTypes.string,
 };
 export default inject('uiStore')(observer(Pager));
