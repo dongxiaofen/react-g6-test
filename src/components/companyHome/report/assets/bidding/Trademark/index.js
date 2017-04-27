@@ -34,4 +34,3 @@ export default loadingComp(
     module: '商标'
   })}
 )(observer(Trademark));
-
