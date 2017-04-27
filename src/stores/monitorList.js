@@ -6,7 +6,8 @@ import uiStore from './ui';
 import { monitorListApi } from 'api';
 const CancelToken = axios.CancelToken;
 class MonitorListStore {
-  axiosCancel = [];
+  mainListCancel = null;
+  mainCountCancel = null;
   @observable monitorCount = {};
   @observable mainList = {};
   @observable pauseInfo = {
@@ -33,34 +34,44 @@ class MonitorListStore {
   @action.bound getMainCount() {
     const {monitorStatus, companyName} = uiStore.uiState.monitorList.params;
     this.monitorCount = {};
-    monitorListApi.getMonitorCount({monitorStatus, companyName})
+    if (this.mainCountCancel) {
+      this.mainCountCancel();
+      this.mainCountCancel = null;
+    }
+    const source = CancelToken.source();
+    this.mainCountCancel = source.cancel;
+    monitorListApi.getMonitorCount({monitorStatus, companyName}, source)
       .then(action('getCount_success', resp => {
+        this.mainCountCancel = null;
         this.monitorCount = resp.data;
       }))
       .catch(action('getCount_error', err => {
-        this.monitorCount = err.response.data;
+        if (!axios.isCancel(err)) {
+          this.mainCountCancel = null;
+          this.monitorCount = err.response.data;
+        }
       }));
   }
   @action.bound getMainList() {
-    if (this.axiosCancel[0]) {
-      const cancel = this.axiosCancel.pop();
-      cancel();
+    if (this.mainListCancel) {
+      this.mainListCancel();
+      this.mainListCancel = null;
     }
     const source = CancelToken.source();
     const mainParams = Object.assign({}, uiStore.uiState.monitorListPager, uiStore.uiState.monitorList.params);
     delete mainParams.totalElements;
-    this.axiosCancel.push(source.cancel);
+    this.mainListCancel = source.cancel;
     this.mainList = {};
     monitorListApi.getMainList(mainParams, source)
       .then(action('getMainList_success', resp => {
-        this.axiosCancel.pop();
+        this.mainListCancel = null;
         uiStore.uiState.monitorListPager.totalElements = resp.data.totalElements;
         const data = resp.data.content && resp.data.content.length > 0 ? resp.data : {error: {message: '未查询到相关监控信息'}, content: []};
         this.mainList = data;
       }))
       .catch(action('getMainList_error', err => {
         if (!axios.isCancel(err)) {
-          this.axiosCancel.pop();
+          this.mainListCancel = null;
           this.mainList = {error: err.response.data, content: []};
         }
       }));
