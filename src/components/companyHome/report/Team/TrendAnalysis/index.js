@@ -6,6 +6,7 @@ import styles from './index.less';
 import { Row, Col } from 'components/common/layout';
 import BaseChart from 'components/common/Charts/BaseChart';
 import { loadingComp } from 'components/hoc';
+import ErrorText from 'components/hoc/LoadingComp/ErrorText';
 
 function TrendAnalysis({ salaryAvgTrend, leaveTrend }) {
   const salaryAvgTrendOption = {
@@ -262,13 +263,21 @@ function TrendAnalysis({ salaryAvgTrend, leaveTrend }) {
         <Col width="6">
           <div className={styles['trend-box-block']}>
             <div className={styles['chart-title']}>招聘平均薪资趋势：</div>
-            <BaseChart chartId="salaryAvgTrend" height="290px" option={salaryAvgTrendOption} />
+            {
+              salaryAvgTrend.data.length > 0
+                ? <BaseChart chartId="salaryAvgTrend" height="290px" option={salaryAvgTrendOption} />
+                : <ErrorText module="招聘信息" errCategory={1} height={290} />
+            }
           </div>
         </Col>
         <Col width="6">
           <div className={styles['trend-box-block']}>
             <div className={styles['chart-title']}>离职意向趋势：</div>
-            <BaseChart chartId="leaveTrend" height="290px" option={leaveTrendOption} />
+            {
+              leaveTrend.data.length > 0
+                ? <BaseChart chartId="leaveTrend" height="290px" option={leaveTrendOption} />
+                : <ErrorText module="招聘信息" errCategory={1} height={290} />
+            }
           </div>
         </Col>
       </Row>
