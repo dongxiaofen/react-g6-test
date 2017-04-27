@@ -6,7 +6,7 @@ import styles from './index.less';
 import { Row, Col } from 'components/common/layout';
 import BaseChart from 'components/common/Charts/BaseChart';
 import { loadingComp } from 'components/hoc';
-import ErrorText from 'components/hoc/LoadingComp/ErrorText';
+import ErrorText from 'components/common/ErrorText';
 
 function TrendAnalysis({ salaryAvgTrend, leaveTrend }) {
   const salaryAvgTrendOption = {

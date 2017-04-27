@@ -1,7 +1,7 @@
 import React from 'react';
 import { observer } from 'mobx-react';
 import { ModuleTitle } from 'components/common/report';
-import ErrorText from 'components/hoc/LoadingComp/ErrorText';
+import ErrorText from 'components/common/ErrorText';
 import AnimateLoading from 'components/hoc/LoadingComp/AnimateLoading';
 import NewsTabs from './NewsTabs';
 import Table from './Table';

@@ -99,8 +99,13 @@ function ErrorText({ module, error, errCategory = 0, height }) {
     );
   }
   return (
-    <div className={styles.box}>
-      {dict[module] || error.message || '暂无信息'}
+    <div className={styles.msgBox}>
+      <div className={`clearfix ${styles.msgItem}`}>
+        <div className={styles.msgImg}></div>
+        <div className={styles.msgText}>
+          {dict[module] || error.message || '暂无信息'}
+        </div>
+      </div>
     </div>
   );
 }
