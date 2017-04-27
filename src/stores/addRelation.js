@@ -28,6 +28,10 @@ class AddRelationStore {
         console.log(resp);
         this.resetParams();
         if (useForm === 'monitorList') {
+          messageStore.openMessage({
+            type: 'info',
+            content: '创建成功',
+          });
           monitorListStore.getMainCount();
           monitorListStore.getRelationList(monitorId);
         }
