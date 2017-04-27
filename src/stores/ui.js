@@ -2,7 +2,7 @@ import { observable, action, reaction } from 'mobx';
 import pathval from 'pathval';
 import bannerStore from './banner';
 import assetsStore from './report/assets';
-
+import monitorListStore from './monitorList';
 class UiStore {
   constructor() {
     reaction(
@@ -19,9 +19,33 @@ class UiStore {
         assetsStore.getPatentData(monitorId, reportId, companyName, companyType);
       }
     );
+    reaction(
+      () => this.uiState.monitorListPager.index,
+      () => {
+        monitorListStore.getMainList();
+      }
+    );
   }
 
   @observable uiState = {
+    monitorList: {
+      searchInput: '',
+      sortDirection: {
+        start_tm: 'DESC',
+        expire_dt: 'DESC',
+        latestTs: 'DESC',
+      },
+      params: {
+        companyName: '',
+        sort: 'start_tm,DESC',
+        monitorStatus: '',
+      }
+    },
+    monitorListPager: {
+      index: 1,
+      size: 10,
+      totalElements: 10,
+    },
     shareholder: {
       index: 1,
       size: 4

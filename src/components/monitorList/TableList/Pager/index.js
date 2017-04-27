@@ -2,15 +2,14 @@ import React from 'react';
 import { observer } from 'mobx-react';
 import Pagination from 'components/lib/pagination';
 import styles from './index.less';
-function Pager({monitorListStore}) {
+function Pager({monitorListStore, uiStore}) {
   const pageChange = (page) => {
     monitorListStore.changeParams({
       index: page,
     });
     monitorListStore.getMainList();
   };
-  const {index, size} = monitorListStore.searchParams;
-  const totalElements = monitorListStore.mainList.totalElements || 10;
+  const {index, size, totalElements} = uiStore.uiState.monitorList.params;
   return (
     <div className={styles.wrapper}>
       <Pagination

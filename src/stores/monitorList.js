@@ -2,23 +2,11 @@ import { observable, action } from 'mobx';
 import axios from 'axios';
 import pathval from 'pathval';
 import messageStore from './message';
+import uiStore from './ui';
 import { monitorListApi } from 'api';
 const CancelToken = axios.CancelToken;
 class MonitorListStore {
   axiosCancel = [];
-  @observable searchInput = '';
-  @observable sortDirection = {
-    start_tm: 'DESC',
-    expire_dt: 'DESC',
-    latestTs: 'DESC',
-  };
-  @observable searchParams = {
-    companyName: '',
-    sort: 'start_tm,DESC',
-    monitorStatus: '',
-    index: 1,
-    size: 10,
-  };
   @observable monitorCount = {};
   @observable mainList = {};
   @observable pauseInfo = {
@@ -43,7 +31,7 @@ class MonitorListStore {
     Object.assign(this.pauseInfo, params);
   }
   @action.bound getMainCount() {
-    const {monitorStatus, companyName} = this.searchParams;
+    const {monitorStatus, companyName} = uiStore.uiState.monitorList.params;
     this.monitorCount = {};
     monitorListApi.getMonitorCount({monitorStatus, companyName})
       .then(action('getCount_success', resp => {
@@ -59,12 +47,14 @@ class MonitorListStore {
       cancel();
     }
     const source = CancelToken.source();
-    const mainParams = this.searchParams;
+    const mainParams = Object.assign({}, uiStore.uiState.monitorListPager, uiStore.uiState.monitorList.params);
+    delete mainParams.totalElements;
     this.axiosCancel.push(source.cancel);
     this.mainList = {};
     monitorListApi.getMainList(mainParams, source)
       .then(action('getMainList_success', resp => {
         this.axiosCancel.pop();
+        uiStore.uiState.monitorListPager.totalElements = resp.data.totalElements;
         const data = resp.data.content && resp.data.content.length > 0 ? resp.data : {error: {message: '未查询到相关监控信息'}, content: []};
         this.mainList = data;
       }))
