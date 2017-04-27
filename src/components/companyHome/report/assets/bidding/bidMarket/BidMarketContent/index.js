@@ -1,11 +1,11 @@
 import React, {PropTypes} from 'react';
 import { observer, inject } from 'mobx-react';
-import styles from 'index.less';
+import styles from './index.less';
 
 function BidMarketContent({assetsStore}) {
   return (
     <div className={styles['bidMarket-content']}>
-      <div dangerouslySetInnerHTML={{__html: assetsStore.biddingData}}></div>
+      <div dangerouslySetInnerHTML={{__html: assetsStore.bidMarkertContent}}></div>
     </div>
   );
 }

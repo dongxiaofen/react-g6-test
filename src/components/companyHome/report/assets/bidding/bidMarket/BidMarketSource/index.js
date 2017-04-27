@@ -1,16 +1,13 @@
 import React, {PropTypes} from 'react';
-import { observer } from 'mobx-react';
-import styles from './index.less';
+import { observer, inject } from 'mobx-react';
+import Source from './Source';
 
-function BidMarketSource({}) {
-  return (
-    <div>
-
-    </div>
-  );
+function BidMarketSource({assetsStore}) {
+  const { titleData } = assetsStore;
+  return (<Source url={titleData.url} source={titleData.website} />);
 }
 
 BidMarketSource.propTypes = {
-  foo: PropTypes.string,
+  assetStore: PropTypes.object,
 };
-export default observer(BidMarketSource);
+export default inject('assetsStore')(observer(BidMarketSource));

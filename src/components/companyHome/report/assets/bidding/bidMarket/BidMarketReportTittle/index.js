@@ -1,35 +1,36 @@
 import React, {PropTypes} from 'react';
-import { observer } from 'mobx-react';
+import { observer, inject } from 'mobx-react';
 import styles from './index.less';
 
-function BidMarketPeportTittle({}) {
+function BidMarketReportTittle({assetsStore}) {
+  const { titleData } = assetsStore;
   return (
     <div className={styles['report-block']}>
       <div className={styles['report-block-item']}>
         <span className={styles['report-block-key']}>招投标标题：</span>
         <span className={styles['report-block-value']}>
-            {titleData.get('title') ? titleData.get('title') : ''}
+            {titleData.title ? titleData.title : ''}
           </span>
       </div>
       <div className={styles['report-block-item']}>
         <span className={styles['report-block-key']}>公告日期：</span>
-        <span className={styles['report-block-value']}>{titleData.get('publishDate') ? titleData.get('publishDate') : '无'}</span>
+        <span className={styles['report-block-value']}>{titleData.publishDate ? titleData.publishDate : '无'}</span>
       </div>
       <div className={styles['report-block-item']}>
         <span className={styles['report-block-key']}>公告类型：</span>
-        <span className={styles['report-block-value']}>{titleData.get('type') ? titleData.get('type') : '无'}</span>
+        <span className={styles['report-block-value']}>{titleData.type ? titleData.type : '无'}</span>
       </div>
       <div className={`${styles['report-block-item']} ${styles['report-block-bid']}`}>
         <span className={styles['report-block-key']}>投标方：</span>
         <span className={styles['report-block-value']}>
-            {titleData.get('participator') ? titleData.get('participator') : '无'}
+            {titleData.participator ? titleData.participator : '无'}
           </span>
       </div>
     </div>
   );
 }
 
-BidMarketPeportTittle.propTypes = {
-  foo: PropTypes.string,
+BidMarketReportTittle.propTypes = {
+  assetsStore: PropTypes.object,
 };
-export default observer(BidMarketPeportTittle);
+export default inject('assetsStore')(observer(BidMarketReportTittle));
