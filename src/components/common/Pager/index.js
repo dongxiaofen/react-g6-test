@@ -18,7 +18,7 @@ function Pager({ tData, module, uiStore, type }) {
         {
           type === 'small' ?
             <Pagination simple current={index} pageSize={size} total={dataLength} onChange={pageChange} /> :
-            <Pagination showQuickJumper current={index} pageSize={size} total={tData.length} onChange={pageChange} />
+            <Pagination showQuickJumper current={index} pageSize={size} total={dataLength} onChange={pageChange} />
         }
       </div>
     </div>
