@@ -66,7 +66,7 @@ class AssetsStore {
   }
 
   @action.bound getDetail(url, showDetail) {
-    if (this.biddingDetailCancel){
+    if (this.biddingDetailCancel) {
       this.biddingDetailCancel();
       this.biddingDetailCancel = null;
     }
@@ -79,13 +79,13 @@ class AssetsStore {
         showDetail.call(this);
       }))
       .catch((error) => {
-      if (!axios.isCancel(error)){
-        this.biddingDetailCancel = null;
-        messageStore.openMessage({
-          type: 'error',
-          content: pathval.getPathValue(error, 'response.data.message') || '获取招投标详情失败'
-        });
-      }
+        if (!axios.isCancel(error)) {
+          this.biddingDetailCancel = null;
+          messageStore.openMessage({
+            type: 'error',
+            content: pathval.getPathValue(error, 'response.data.message') || '获取招投标详情失败'
+          });
+        }
       });
   }
 }
