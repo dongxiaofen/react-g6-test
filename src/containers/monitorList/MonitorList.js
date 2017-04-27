@@ -9,7 +9,7 @@ import Counter from 'components/monitorList/Counter';
 import TableList from 'components/monitorList/TableList';
 import PauseInfo from 'components/monitorList/PauseInfo';
 import AddRelation from 'components/common/AddRelation';
-@inject('monitorListStore')
+@inject('monitorListStore', 'uiStore')
 @observer
 export default class MonitorList extends Component {
   static propTypes = {

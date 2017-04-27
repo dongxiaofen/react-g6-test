@@ -2,6 +2,8 @@ import { observable, action, reaction } from 'mobx';
 import pathval from 'pathval';
 import bannerStore from './banner';
 import assetsStore from './report/assets';
+import monitorListStore from './monitorList';
+import reportManageStore from './reportManage';
 
 class UiStore {
   constructor() {
@@ -19,9 +21,41 @@ class UiStore {
         assetsStore.getPatentData(monitorId, reportId, companyName, companyType);
       }
     );
+    reaction(
+      () => this.uiState.monitorListPager.index,
+      () => {
+        document.body.scrollTop = 0;
+        monitorListStore.getMainList();
+      }
+    );
+    reaction(
+      () => this.uiState.reportManagePager.index,
+      () => {
+        pathval.setPathValue(reportManageStore, 'list', {});
+        reportManageStore.getReportList(this.uiState.reportManagePager);
+      }
+    );
   }
 
   @observable uiState = {
+    monitorList: {
+      searchInput: '',
+      sortDirection: {
+        start_tm: 'DESC',
+        expire_dt: 'DESC',
+        latestTs: 'DESC',
+      },
+      params: {
+        companyName: '',
+        sort: 'start_tm,DESC',
+        monitorStatus: '',
+      }
+    },
+    monitorListPager: {
+      index: 1,
+      size: 10,
+      totalElements: 10,
+    },
     shareholder: {
       index: 1,
       size: 4
@@ -81,6 +115,7 @@ class UiStore {
       totalElements: 0, // 服务端分页
       show: observable.map({}),
     },
+<<<<<<< HEAD
     judgeDoc: {
       index: 1,
       size: 10,
@@ -125,17 +160,31 @@ class UiStore {
       size: 10,
       show: observable.map({}),
     },
-    internetInfo: {
-      news: {
-        index: 1,
-        size: 10,
-        type: 'ALL',
-      },
+    news: {
+      index: 1,
+      size: 10,
+      type: 'ALL',
+    },
+    judgeDoc: {
+      index: 1,
+      size: 10,
+      show: observable.map({
+        0: false
+      }),
+    },
+    biddingList: {
+      index: 1,
+      size: 10,
     },
     recentRecruitment: {
       index: 1,
       size: 10
-    }
+    },
+    reportManagePager: {
+      index: 1,
+      size: 10,
+      totalElements: 0, // 服务端分页
+    },
   };
 
   @action.bound updateUiStore(keypath, value) {

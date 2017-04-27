@@ -5,7 +5,7 @@ import ItemTr from './ItemTr';
 import MainTr from './MainTr';
 import RelTr from './RelTr';
 import AddTr from './AddTr';
-import Pager from './Pager';
+import Pager from 'components/common/Pager';
 import styles from './index.less';
 function TableList({monitorListStore}) {
   const mainData = monitorListStore.mainList.content;
@@ -68,7 +68,7 @@ function TableList({monitorListStore}) {
   return (
     <div className={styles.wrapper}>
       {createList()}
-      <Pager monitorListStore={monitorListStore} />
+      <Pager module="monitorListPager" />
     </div>
   );
 }

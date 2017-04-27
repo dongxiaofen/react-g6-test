@@ -3,6 +3,7 @@ import { observer, inject } from 'mobx-react';
 import Config from 'dict/reportModule';
 import styles from './index.less';
 function Table({data, routing, internetStore}) {
+  const activeUrl = internetStore.activeUrl;
   const mapLabelToType = (label) => {
     if (!label) {
       return '其他新闻';
@@ -26,7 +27,15 @@ function Table({data, routing, internetStore}) {
     } else {
       return false;
     }
-    internetStore.getNewsDetail(getUrl);
+    const detail = {
+      type: mapLabelToType(item.label),
+      label: item.label,
+      time: item.publishTime,
+      title: item.title,
+      source: item.source,
+    };
+    internetStore.assignDetail(detail);
+    internetStore.getNewsDetail(getUrl, url);
   };
   return (
     <div>
@@ -43,7 +52,7 @@ function Table({data, routing, internetStore}) {
               <span
                 className={styles.viewBtn}
                 onClick={viewNews.bind(null, item)}>
-                全文
+                {activeUrl === item.url ? '获取中' : '全文'}
               </span>
             </div>
             <div>

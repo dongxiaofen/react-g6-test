@@ -1,19 +1,18 @@
 import React from 'react';
 import { observer } from 'mobx-react';
 import styles from './index.less';
-function TypeFilter({monitorListStore}) {
+function TypeFilter({monitorListStore, uiStore}) {
   const sortConfig = [
     {name: '首次监控', property: 'start_tm'},
     {name: '截止日期', property: 'expire_dt'},
     {name: '最近更新', property: 'latestTs'},
   ];
-  const sortDirection = monitorListStore.sortDirection;
+  const sortDirection = uiStore.uiState.monitorList.sortDirection;
+  const properties = uiStore.uiState.monitorList.params.sort.split(',')[0];
   const sortHandle = (property, newSortValue) => {
-    monitorListStore.changeValue(`sortDirection.${property}`, newSortValue);
-    monitorListStore.changeParams({
-      sort: `${property},${newSortValue}`,
-      index: 1,
-    });
+    uiStore.updateUiStore(`monitorList.sortDirection.${property}`, newSortValue);
+    uiStore.updateUiStore(`monitorList.params.sort`, `${property},${newSortValue}`);
+    uiStore.updateUiStore(`monitorList.params.index`, 1);
     monitorListStore.getMainList();
   };
   const createSort = () => {
@@ -22,7 +21,6 @@ function TypeFilter({monitorListStore}) {
       ASC: 'DESC',
       DESC: 'ASC'
     };
-    const properties = monitorListStore.searchParams.sort.split(',')[0];
     let itemCss;
     let actStr;
     let directionStr;

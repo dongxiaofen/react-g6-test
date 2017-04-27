@@ -13,22 +13,20 @@ function Pager({ tData, module, uiStore, type }) {
     uiStore.updateUiStore(`${module}.index`, pageIndex);
   };
   return (
-    <div className={styles.wrap}>
-      <div className={'clearfix ' + styles.pagination}>
-        {
-          type === 'small' ?
-            <Pagination simple current={index} pageSize={size} total={dataLength} onChange={pageChange} /> :
-            <Pagination showQuickJumper current={index} pageSize={size} total={dataLength} onChange={pageChange} />
-        }
-      </div>
+    <div className={`clearfix ${type === 'small' ? styles.pagination : styles.paginationLarge}`}>
+      {
+        type === 'small' ?
+          <Pagination simple current={index} pageSize={size} total={dataLength} onChange={pageChange} /> :
+          <Pagination showQuickJumper current={index} pageSize={size} total={dataLength} onChange={pageChange} />
+      }
     </div>
   );
 }
 
 Pager.propTypes = {
-  tData: PropTypes.object.isRequired,
-  module: PropTypes.string.isRequired,
-  uiStore: PropTypes.object.isRequired,
-  type: PropTypes.string.isRequired,
+  tData: PropTypes.object,
+  module: PropTypes.string,
+  uiStore: PropTypes.object,
+  type: PropTypes.string,
 };
 export default inject('uiStore')(observer(Pager));
