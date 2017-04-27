@@ -25,12 +25,14 @@ function TableList({ reportManageStore, uiStore }) {
 }
 
 TableList.propTypes = {
-  foo: PropTypes.string,
+  reportManageStore: PropTypes.object,
+  uiStore: PropTypes.object,
 };
 export default inject('reportManageStore', 'uiStore')(loadingComp(
   {mapDataToProps: props=> ({
     loading: pathval.getPathValue(props.reportManageStore, 'list.data.content') === null ? true : false,
     imgCategory: 14,
     category: 2,
+    error:pathval.getPathValue(props.reportManageStore, 'list.data.content') === null
   })}
 )(observer(TableList)));

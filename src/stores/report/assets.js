@@ -60,7 +60,7 @@ class AssetsStore {
   }
 
   @action.bound getDetail(url, showDetail) {
-    companyHomeApi.getNewsDetail(url)
+    companyHomeApi.getBiddingDetail(url)
       .then(action( (response) => {
         this.bidMarkertContent = response.data.result;
         showDetail.call(this);

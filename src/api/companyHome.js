@@ -73,3 +73,7 @@ export const getInternet = ({monitorId, reportId, companyName, companyType, para
 export const getNewsDetail = (url) => {
   return axios.get(url);
 };
+export const getBiddingDetail = (url) => {
+  return axios.get(url);
+};
+
