@@ -220,5 +220,15 @@ class UiStore {
     const value = this.uiState[module].show.get(rowIdx);
     this.uiState[module].show.set(rowIdx, !value);
   }
+  @action.bound resetAccountPager() {
+    const template = {
+      index: 1,
+      size: 10,
+      totalElements: 0,
+    };
+    this.uiState.accountConsume = Object.assign({}, template);
+    this.uiState.accountRecharge = Object.assign({}, template);
+    this.uiState.accountSummary = Object.assign({}, template);
+  }
 }
 export default new UiStore();

@@ -2,11 +2,12 @@ import React from 'react';
 import { observer } from 'mobx-react';
 import { loadingComp } from 'components/hoc';
 import styles from './index.less';
-function TreeList({accountSettingStore}) {
+function TreeList({accountSettingStore, uiStore}) {
   const data = accountSettingStore.tree.data.content;
   const searchInput = accountSettingStore.tree.searchInput.trim();
   const activeIndex = accountSettingStore.tree.activeIndex;
   const getUserData = (uId, level) => {
+    uiStore.resetAccountPager();
     accountSettingStore.getUserInfo(uId);
     accountSettingStore.getReportAndMonitor(uId);
     accountSettingStore.getProvince(uId);
