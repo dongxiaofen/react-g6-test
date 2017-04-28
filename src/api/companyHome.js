@@ -49,6 +49,12 @@ export const getReportModule = (module, monitorId, reportId, companyName, compan
   window.reportSourceCancel.push(source.cancel);
   return axios.get(url, { cancelToken: source.token });
 };
+export const getJudgeDetailMonitor = (monitorCompanyId, params)=> {
+  return axios.get(`/api/monitor/${monitorCompanyId}/risk/judgeDoc`, {params});
+};
+export const getJudgeDetailReport = (params)=> {
+  return axios.get(`/api/report/risk/judgeDoc`, {params});
+};
 export const getInternet = ({monitorId, reportId, companyName, companyType, params}, source) => {
   let url;
   if (companyType === 'MAIN') {
@@ -65,5 +71,8 @@ export const getInternet = ({monitorId, reportId, companyName, companyType, para
   return axios.get(url, { cancelToken: source.token, params: params });
 };
 export const getNewsDetail = (url, source) => {
+  return axios.get(url, {cancelToken: source.token});
+};
+export const getBiddingDetail = (url, source) => {
   return axios.get(url, {cancelToken: source.token});
 };

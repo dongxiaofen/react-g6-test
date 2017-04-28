@@ -4,9 +4,15 @@ import SimpleTabs from 'components/common/SimpleTabs';
 import styles from './index.less';
 import loadingComp from 'components/hoc/LoadingComp';
 import JudgeDoc from './JudgeDoc';
+import CourtAnnouncement from './CourtAnnouncement';
+import CourtNotice from './CourtNotice';
+import CourtExecution from './CourtExecution';
+import DishonestyList from './DishonestyList';
+import LitigationAssets from './LitigationAssets';
 
-function Court({court, updateValue}) {
-  const courtData = court.courtData;
+function Court({riskStore}) {
+  const court = riskStore.court;
+  const courtData = riskStore.court.courtData;
   const modifyTabData = () => {
     const output = court.courtTab.slice(0);
     output.map((tab)=>{
@@ -15,7 +21,7 @@ function Court({court, updateValue}) {
     return output;
   };
   const changeTab = (key) => {
-    updateValue('court.tabAct', key);
+    riskStore.updateValue('court.tabAct', key);
   };
   const regTime = (value)=>{
     return value ? value.slice(0, 10) : '无';
@@ -23,7 +29,17 @@ function Court({court, updateValue}) {
   const createModule = ()=> {
     switch (court.tabAct) {
       case 'judeDoc':
-        return <JudgeDoc courtData={courtData.judgeDoc.data} regTime={regTime}/>;
+        return <JudgeDoc courtData={courtData.judgeDoc.data} regTime={regTime} riskStore={riskStore}/>;
+      case 'courtAnnouncement':
+        return <CourtAnnouncement courtAnnouncement={courtData.courtAnnouncement} regTime={regTime}/>;
+      case 'courtNotice':
+        return <CourtNotice courtNotice={courtData.courtNotice} regTime={regTime} />;
+      case 'courtExecution':
+        return <CourtExecution courtExecution={courtData.courtExecution} regTime={regTime} />;
+      case 'dishonestyList':
+        return <DishonestyList dishonestyList={courtData.dishonestyList} regTime={regTime} />;
+      case 'litigationAssets':
+        return <LitigationAssets litigationAssets={courtData.litigationAssets} regTime={regTime} />;
       default:
         return <div></div>;
     }
@@ -41,6 +57,6 @@ function Court({court, updateValue}) {
 }
 export default loadingComp({
   mapDataToProps: props => ({
-    loading: props.isLoading,
+    loading: props.riskStore.isLoading,
   })
 })(observer(Court));
