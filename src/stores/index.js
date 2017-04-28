@@ -25,4 +25,5 @@ export uiStore from './ui';
 export teamStore from './report/team';
 export assetsStore from './report/assets';
 export networkStore from './report/network';
+export alertAnalysisStore from './report/alertAnalysis';
 // append here from plop
