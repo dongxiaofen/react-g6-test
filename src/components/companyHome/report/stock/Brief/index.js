@@ -3,7 +3,10 @@ import { observer } from 'mobx-react';
 
 import { ModuleTitle, KvTable } from 'components/common/report';
 function Brief({ brief, isEmptyObject, isLoading }) {
-  console.log(brief, '--------------brief');
+  if (!isEmptyObject(brief)) {
+    brief.issued_shares = brief.issued_shares ? (brief.issued_shares / 10000).toFixed(2) : '';
+    brief.reg_cap = brief.reg_cap ? (brief.reg_cap / 10000).toFixed(2) : '';
+  }
   const data = {
     meta: {
       items: brief,
@@ -35,5 +38,7 @@ function Brief({ brief, isEmptyObject, isLoading }) {
 
 Brief.propTypes = {
   brief: PropTypes.object,
+  isEmptyObject: PropTypes.func,
+  isLoading: PropTypes.bool,
 };
 export default observer(Brief);

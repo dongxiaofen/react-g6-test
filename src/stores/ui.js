@@ -177,6 +177,18 @@ class UiStore {
       size: 10,
       totalElements: 0, // 服务端分页
     },
+    stockShareHolder: {
+      index: 1,
+      size: 10
+    },
+    stockCirculateShareHolder: {
+      index: 1,
+      size: 10
+    },
+    stockManagement: {
+      index: 1,
+      size: 10
+    }
   };
 
   @action.bound updateUiStore(keypath, value) {

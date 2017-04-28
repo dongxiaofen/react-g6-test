@@ -24,7 +24,7 @@ function Pager({ tData, module, uiStore, type }) {
 }
 
 Pager.propTypes = {
-  tData: PropTypes.object,
+  tData: PropTypes.oneOfType([PropTypes.array, PropTypes.object]),
   module: PropTypes.string,
   uiStore: PropTypes.object,
   type: PropTypes.string,
