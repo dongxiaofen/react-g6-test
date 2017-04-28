@@ -28,7 +28,7 @@ function Menu({ routing }) {
       parent: { module: '设置' },
       children: [
         { module: '预警设置', route: 'ruleList' },
-        { module: '账号设置', route: 'account' },
+        { module: '账号设置', route: 'accountSetting' },
       ],
     },
   ];
