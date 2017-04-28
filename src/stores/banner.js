@@ -19,6 +19,9 @@ class BannerStore {
   @observable lastModifiedTs = '获取中...';
   @observable refreshStatus = 'complete';
 
+  // 上市代码
+  @observable stockCode = '';
+
 
   closeHisNamePopoverAlias = this.closeHisNamePopover;
   openHisNamePopoverAlias = this.openHisNamePopover;
@@ -71,6 +74,14 @@ class BannerStore {
       .catch((err) => {
         console.log('toggle monitor status 出错', err.response);
       });
+  }
+
+  // 获取上市代码
+  @action.bound getStockCode({ reportId, monitorId, analysisReportId }) {
+    companyHomeApi.getStockCode({ reportId, monitorId, analysisReportId })
+      .then(action('get stock code', (resp) => {
+        this.stockCode = resp.data;
+      }));
   }
 }
 export default new BannerStore();

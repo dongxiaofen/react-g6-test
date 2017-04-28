@@ -14,6 +14,7 @@ export default class Banner extends Component {
   componentDidMount() {
     const { monitorId, reportId, companyName, companyType } = this.props.routing.location.query;
     this.props.bannerStore.getBannerInfo(monitorId, reportId, companyName, companyType);
+    this.props.bannerStore.getStockCode({ monitorId, reportId, companyName, companyType });
     window.addEventListener('scroll', this.scrollReport);
   }
   componentWillUnmount() {

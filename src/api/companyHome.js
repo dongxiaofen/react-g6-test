@@ -12,6 +12,21 @@ export const getBannerInfo = (monitorId, reportId, companyName, companyType) => 
   }
   return axios.get(url);
 };
+
+export const getStockCode = ({ reportId, monitorId, analysisReportId }) => {
+  let url;
+  if (reportId) {
+    url = `/api/report/${reportId}/stockCode`;
+  }
+  if (monitorId) {
+    url = `/api/monitor/${monitorId}/stockCode`;
+  }
+  if (analysisReportId) {
+    url = `/api/analysisReport/${analysisReportId}/stockCode`;
+  }
+  return axios.get(url);
+};
+
 export const toggleMonitorStatus = (monitorId, status) => {
   return axios.put(`/api/monitor/${monitorId}/status`, { status: status });
 };
