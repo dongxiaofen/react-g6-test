@@ -10,7 +10,7 @@ class DetailModalStore {
     this.visible = false;
   }
 
-  @action.bound openDetailModal(loader, closeAction, title) {
+  @action.bound openDetailModal(loader, title, closeAction) {
     loader((_titleComp, _contentComp, _sourceComp) => {
       runInAction(() => {
         this.titleComp = _titleComp;
