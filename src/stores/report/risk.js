@@ -15,14 +15,30 @@ class RiskStore {
       {key: 'dishonestyList', label: '失信被执行人信息'},
       {key: 'litigationAssets', label: '涉诉资产'}
     ],
-    tabAct: 'judeDoc',
+    tabAct: '',
     detailModalData: {
       info: {},
       content: {},
-    }
+    },
+    hasCourtData: true,
   };
   @observable corpDetailPunish = {};
   @observable taxList = [];
+  @action.bound getDefaultCourtTab(courtCount) {
+    let tabAct = '';
+    const courtTab = this.court.courtTab;
+    for (const tabItem of courtTab) {
+      if (courtCount[tabItem.label] > 0) {
+        tabAct = tabItem.key;
+        break;
+      }
+    }
+    if (tabAct === '') {
+      this.court.hasCourtData = false;
+      tabAct = 'judeDoc';
+    }
+    return tabAct;
+  }
   @action.bound getReportModule(module, monitorId, reportId, companyName, companyType) {
     this.isMount = true;
     this.isLoading = true;
@@ -30,6 +46,7 @@ class RiskStore {
       .then(action('get risk data', (resp)=>{
         this.isLoading = false;
         this.court.courtData = resp.data.data.court;
+        this.court.tabAct = this.getDefaultCourtTab(resp.data.data.court.countCount);
         this.corpDetailPunish = resp.data.data.corpDetailPunish;
         this.taxList = resp.data.data.taxList;
       }))
@@ -71,6 +88,21 @@ class RiskStore {
   }
   @action.bound updateValue(path, value) {
     pathval.setPathValue(this, path, value);
+  }
+  @action.bound resetData(path, type) {
+    let value = '';
+    if (type !== 'str') {
+      value = type === 'obj' ? {} : [];
+    }
+    pathval.setPathValue(this, path, value);
+  }
+  @action.bound resetStore() {
+    this.resetData('court.courtData', 'obj');
+    this.resetData('court.tabAct', 'str');
+    this.resetData('corpDetailPunish', 'obj');
+    this.resetData('taxList', 'ary');
+    this.isLoading = true;
+    this.isMount = false;
   }
 }
 export default new RiskStore();

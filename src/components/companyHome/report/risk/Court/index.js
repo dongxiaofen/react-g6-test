@@ -58,5 +58,7 @@ function Court({riskStore}) {
 export default loadingComp({
   mapDataToProps: props => ({
     loading: props.riskStore.isLoading,
+    error: !props.riskStore.court.hasCourtData,
+    module: '法院公告'
   })
 })(observer(Court));
