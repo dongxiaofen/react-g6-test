@@ -177,6 +177,11 @@ class UiStore {
       size: 10,
       totalElements: 0, // 服务端分页
     },
+    relPerCheck: {
+      index: 1,
+      size: 10,
+      totalElements: 0, // 服务端分页
+    }
   };
 
   @action.bound updateUiStore(keypath, value) {

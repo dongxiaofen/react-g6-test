@@ -21,4 +21,5 @@ export ReportManage from './reportManage';
 export Team from './report/team';
 export Assets from './report/assets';
 export Network from './report/network';
+export RelPerCheck from './report/relPerCheck';
 // append here from plop
