@@ -21,6 +21,7 @@ class Tabs extends Component {
     this.checkPropsValid(this.props);
   }
   componentWillReceiveProps(nextProps) {
+    console.log(nextProps);
     this.checkPropsValid(nextProps);
   }
   checkPropsValid(props) {

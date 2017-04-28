@@ -118,7 +118,8 @@ class AccountSettingStore {
     delete params.totalElements;
     accountSettingApi.getConsume(uId, params)
       .then(action('getConsume_success', resp => {
-        this.tabs.consume = resp.data;
+        const data = resp.data.page.content.length === 0 ? {error: {message: '暂无消费记录'}, page: []} : resp.data;
+        this.tabs.consume = data;
         uiStore.updateUiStore('accountConsume.totalElements', resp.data.page.totalElements);
       }))
       .catch(action('getConsume_error', err => {
@@ -133,7 +134,8 @@ class AccountSettingStore {
     delete params.totalElements;
     accountSettingApi.getRecharge(uId, params)
       .then(action('getRecharge_success', resp => {
-        this.tabs.recharge = resp.data;
+        const data = resp.data.content.length === 0 ? {error: {message: '暂无充值记录'}, content: []} : resp.data;
+        this.tabs.recharge = data;
         uiStore.updateUiStore('accountRecharge.totalElements', resp.data.totalElements);
       }))
       .catch(action('getRecharge_error', err => {
@@ -148,7 +150,8 @@ class AccountSettingStore {
     delete params.totalElements;
     accountSettingApi.getSummary(uId, params)
       .then(action('getSummary_success', resp => {
-        this.tabs.summary = resp.data;
+        const data = resp.data.page.content.length === 0 ? {error: {message: '暂无消费记录'}, page: []} : resp.data;
+        this.tabs.summary = data;
         uiStore.updateUiStore('accountSummary.totalElements', resp.data.page.totalElements);
       }))
       .catch(action('getSummary_error', err => {

@@ -45,7 +45,7 @@ function Consume({accountSettingStore}) {
   return (
     <div className={styles.wrapper}>
       <div className={styles.totalConsume}>
-        {`总消费点数 ${totalConsume} 点`}
+        {`总消费点数 ${totalConsume || 0} 点`}
       </div>
       <AccountTable
         module="accountConsume"
