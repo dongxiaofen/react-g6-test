@@ -1,16 +1,22 @@
 import React, {PropTypes} from 'react';
 import { observer } from 'mobx-react';
-// import styles from './index.less';
+import TaxInfo from './TaxInfo';
+import loadingComp from 'components/hoc/LoadingComp';
 
-function Tax({}) {
+function Tax({riskStore}) {
+  const taxList = riskStore.taxList;
   return (
     <div>
-      Tax
+      <TaxInfo taxList={taxList}/>
     </div>
   );
 }
 
 Tax.propTypes = {
-  foo: PropTypes.string,
+  riskStore: PropTypes.object,
 };
-export default observer(Tax);
+export default loadingComp({
+  mapDataToProps: props => ({
+    loading: props.riskStore.isLoading,
+  })
+})(observer(Tax));

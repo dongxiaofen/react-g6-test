@@ -1,19 +1,33 @@
 @import "~sc-colors/index.less";
-.tabBase {
+.tabWrap {
   display: block;
   float: left;
-  margin-right: 50px;
-  border-radius: 4px;
-  padding: 2px 10px;
-  margin-bottom: 10px;
+  font-size: 14px;
+  line-height: 1em;
+  color: @mdc-blue-grey-200;
+}
+.tabBase {
   cursor: pointer;
+  user-select: none;
+}
+.line {
+  padding: 0 25px;
+}
+.tabWrap:last-of-type .line{
+  display: none;
 }
 .tab {
   composes: tabBase;
-  color: @black7;
+  &:hover {
+    color: @mdc-blue-400;
+  }
+}
+.tabDis {
+  composes: tabBase;
+  color: @mdc-blue-grey-100;
+  cursor: not-allowed;
 }
 .tabActive {
   composes: tabBase;
-  color: @white1;
-  background-color: @blue2;
+  color: @mdc-blue-400;
 }

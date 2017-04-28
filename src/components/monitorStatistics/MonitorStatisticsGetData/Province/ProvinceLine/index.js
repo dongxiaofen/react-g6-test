@@ -3,7 +3,6 @@ import { observer } from 'mobx-react';
 
 import Col from 'components/common/layout/Col';
 import StatisticTitle from 'components/monitorStatistics/StatisticTitle';
-import ChartBox from 'components/monitorStatistics/ChartBox';
 
 import ProvinceLineChart from './ProvinceLineChart';
 
@@ -13,9 +12,7 @@ function ProvinceLine({ msStore }) {
   return (
     <Col width="6">
       <StatisticTitle title={title} subTitle={subTitle} />
-      <ChartBox height={330}>
-        <ProvinceLineChart msStore={msStore} />
-      </ChartBox>
+      <ProvinceLineChart msStore={msStore} />
     </Col>
   );
 }

@@ -24,7 +24,7 @@ const barConf = [
     menuText: '关联网络',
     menuKey: 'network',
     children: [
-      { menuText: '关联关系', menuKey: 'currentNetwork', helpInfo: helpInfo1, contain: ['main', 'report'] },
+      { menuText: '关联关系', menuKey: 'network', helpInfo: helpInfo1, contain: ['main', 'report'] },
       { menuText: '风险关系', menuKey: 'blacklistNetwork', helpInfo: helpInfo1, contain: ['main', 'report'] },
     ],
     helpInfo: helpInfo1,
@@ -35,6 +35,7 @@ const barConf = [
     menuKey: 'trendAnalyse',
     children: [
       { menuText: '事件时间轴', menuKey: 'eventLine', helpInfo: helpInfo2, contain: ['main'] },
+      { menuText: '预警分析', menuKey: 'alertAnalysis', contain: ['main'] },
     ],
     helpInfo: helpInfo2,
     contain: ['main'],

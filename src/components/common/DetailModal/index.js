@@ -6,14 +6,16 @@ function _DetailModal({detailModalStore}) {
   const {
     visible,
     closeAction,
+    title,
     titleComp,
     contentComp,
-    sourceComp
+    sourceComp,
   } = detailModalStore;
   return (
     <div>
       <DetailModal
         visible={visible}
+        title={title}
         titleComp={titleComp}
         contentComp={contentComp}
         sourceComp={sourceComp}

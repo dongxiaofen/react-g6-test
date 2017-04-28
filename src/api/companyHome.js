@@ -49,7 +49,13 @@ export const getReportModule = (module, monitorId, reportId, companyName, compan
   window.reportSourceCancel.push(source.cancel);
   return axios.get(url, { cancelToken: source.token });
 };
-export const getInternet = ({monitorId, reportId, companyName, companyType, params}) => {
+export const getJudgeDetailMonitor = (monitorCompanyId, params)=> {
+  return axios.get(`/api/monitor/${monitorCompanyId}/risk/judgeDoc`, {params});
+};
+export const getJudgeDetailReport = (params)=> {
+  return axios.get(`/api/report/risk/judgeDoc`, {params});
+};
+export const getInternet = ({monitorId, reportId, companyName, companyType, params}, source) => {
   let url;
   if (companyType === 'MAIN') {
     if (monitorId) {
@@ -62,14 +68,30 @@ export const getInternet = ({monitorId, reportId, companyName, companyType, para
   } else if (companyType === 'FREE') {
     url = `/api/free/internet?companyName=${encodeURI(companyName)}`;
   }
-  const CancelToken = axios.CancelToken;
-  const source = CancelToken.source();
-  if (window.reportSourceCancel === undefined) {
-    window.reportSourceCancel = [];
-  }
-  window.reportSourceCancel.push(source.cancel);
   return axios.get(url, { cancelToken: source.token, params: params });
 };
-export const getNewsDetail = (url) => {
+export const getNewsDetail = (url, source) => {
+  return axios.get(url, {cancelToken: source.token});
+};
+export const getBiddingDetail = (url, source) => {
+  return axios.get(url, {cancelToken: source.token});
+};
+
+export const changeAnnouncement = ({ stockType, monitorId, reportId }) => {
+  let url;
+  if (monitorId) {
+    if (stockType) {
+      url = `/api/monitor/${monitorId}/stock/announcement?stockType=${stockType}`;
+    } else {
+      url = `/api/monitor/${monitorId}/stock/announcement`;
+    }
+  }
+  if (reportId) {
+    if (stockType) {
+      url = `/api/report/stock/announcement?reportId=${reportId}&stockType=${stockType}`;
+    } else {
+      url = `/api/report/stock/announcement?reportId=${reportId}`;
+    }
+  }
   return axios.get(url);
 };

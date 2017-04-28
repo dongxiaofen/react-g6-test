@@ -4,6 +4,7 @@ import DevTools from 'mobx-react-devtools';
 import styles from './index.less';
 import Login from 'components/Login';
 import NavBar from 'components/NavBar';
+import BackToTop from 'components/BackToTop';
 // import MyAlert from 'components/common/MyAlert';
 import Modal from 'components/common/Modal';
 import DetailModal from 'components/common/DetailModal';
@@ -38,7 +39,7 @@ export default class App extends Component {
       <div className={styles.wrap}>
         {false && <DevTools />}
         <Login pathname={pathname} />
-        {/* <BackTop /> */}
+        <BackToTop />
         <Modal modalStore={this.props.modalStore} />
         <DetailModal detailModalStore={this.props.detailModalStore} />
         <Message messageStore={this.props.messageStore} />

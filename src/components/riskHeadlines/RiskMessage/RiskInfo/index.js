@@ -10,6 +10,9 @@ function RiskInfo({riskHeadlinesStore, history}) {
   const viewReport = ()=> {
     history.push(`/companyHome?monitorId=${monitorId}&companyType=${isSubCom ? 'ASSOCIATE' : 'MAIN'}`);
   };
+  if (this.props.riskHeadlinesStore.events.info.error) {
+    return <div></div>;
+  }
   return (
     <div>
       <p className={isSubCom ? styles.subCom : styles.mainCom}>
@@ -24,8 +27,5 @@ function RiskInfo({riskHeadlinesStore, history}) {
 export default loadingComp({
   mapDataToProps: props => ({
     loading: Object.keys(props.riskHeadlinesStore.events.info).length > 0 ? false : true,
-    error: props.riskHeadlinesStore.events.info.error,
-    category: 1,
-    imgCategory: 8,
   }),
 })(observer(RiskInfo));

@@ -20,7 +20,6 @@ export default loadingComp({
     loading: props.isLoading,
     category: 0,
     error: props.error,
-    errCategory: 1,
     module: props.module
   })
 })(observer(KvTable));

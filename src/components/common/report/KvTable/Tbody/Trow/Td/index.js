@@ -15,7 +15,7 @@ function Td({position, type, value}) {
 }
 
 Td.propTypes = {
-  value: PropTypes.string.isRequired,
+  value: PropTypes.oneOfType([PropTypes.string.isRequired, PropTypes.number.isRequired]),
   type: PropTypes.string.isRequired,
   position: PropTypes.string.isRequired
 };

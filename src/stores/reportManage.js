@@ -3,6 +3,7 @@ import { reportManageApi } from 'api';
 import payModalStore from './payModal';
 import messageStore from './message';
 import pathval from 'pathval';
+import uiStore from './ui';
 
 class ReportManageStore {
   @observable config = [
@@ -45,6 +46,7 @@ class ReportManageStore {
     reportManageApi.getReportList(params)
       .then(action( (response) => {
         this.list = response;
+        uiStore.uiState.reportManagePager.totalElements = response.data.totalElements;
       }))
       .catch((err) => {
         console.log(err.response);

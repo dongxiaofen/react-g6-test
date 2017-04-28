@@ -2,8 +2,8 @@ import React from 'react';
 import { observer } from 'mobx-react';
 import styles from './index.less';
 import config from 'dict/reportModule';
-function JudgeCard({itemData, rowIdx, data, showParams, uiStore, module}) {
-  const show = showParams.show.get(rowIdx);
+function JudgeCard({itemData, rowIdx, data, showParams, uiStore, module, type = 'normal'}) {
+  const show = type === 'modal' ? true : showParams.show.get(rowIdx);
   const createItem = ()=>{
     const output = [];
     const dict = data.dict;
@@ -12,9 +12,9 @@ function JudgeCard({itemData, rowIdx, data, showParams, uiStore, module}) {
     let value = '';
     keyConfig.map((obj, idx) => {
       blockCss = obj.highLight ? styles.lightBlock : styles.paddingBlock;
-      value = obj.handle ? obj.handle(itemData[obj.key]) : itemData[obj.key];
+      value = obj.handle ? obj.handle(itemData[obj.key], itemData) : itemData[obj.key];
       if (!value || value === '') {
-        value = '无';
+        value = '--';
       }
       output.push(
         <div className={styles.col} key={idx} style={{width: obj.width / 12 * 100 + '%'}}>
@@ -28,22 +28,26 @@ function JudgeCard({itemData, rowIdx, data, showParams, uiStore, module}) {
     return output;
   };
   const viewDetail = () => {
-    uiStore.toggleShowValue(module, rowIdx);
+    uiStore.toggleExpand(module, rowIdx);
   };
   const iconStr = show ? 'up' : 'down';
   const label = itemData.judgeProcess === '' ? itemData.caseType : `${itemData.caseType} ${itemData.judgeProcess.substring(0, 2)}`;
+  const rowCss = type === 'modal' ? styles.modalRow : styles.labelRow;
   return (
-    <div className={`${styles.labelRow} clearfix`}>
+    <div className={`${rowCss} clearfix`}>
       <div className={styles.label}>
         <span title={itemData.label}>{label}</span>
       </div>
       <div className={`${styles.rowContent} clearfix`}>
         {createItem()}
       </div>
-      <span onClick={viewDetail} className={styles.viewBtn}>
-        <i className={'fa fa-angle-' + iconStr}></i>
-        {show ? '收起' : '查看详情'}&nbsp;
-      </span>
+      {
+        type === 'modal' ? '' :
+        <span onClick={viewDetail} className={styles.viewBtn}>
+          <i className={'fa fa-angle-' + iconStr}></i>
+          {show ? '收起' : '展开'}&nbsp;
+        </span>
+      }
     </div>
   );
 }
