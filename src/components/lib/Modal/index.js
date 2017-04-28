@@ -9,7 +9,7 @@ export default class Modal extends Component {
     visible: PropTypes.bool.isRequired,
     isNeedBtn: PropTypes.bool,
     title: PropTypes.string,
-    width: PropTypes.string,
+    width: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
     isCustomize: PropTypes.bool,
     pointText: PropTypes.string,
     pactName: PropTypes.string,
@@ -19,6 +19,7 @@ export default class Modal extends Component {
     // text
     cancelText: PropTypes.string,
     confirmText: PropTypes.string,
+    confirmWidth: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
     // action
     cancelAction: PropTypes.func,
     confirmAction: PropTypes.func,
@@ -99,6 +100,7 @@ export default class Modal extends Component {
       btnComp = (
         <Button
           className={styles.confirmSingleButton}
+          width={this.props.confirmWidth}
           btnType="primary"
           loading={this.props.confirmLoading}
           onClick={this.confirmAction}>

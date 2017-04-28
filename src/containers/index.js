@@ -20,4 +20,6 @@ export MonitorStatistics from './monitorStatistics';
 export ReportManage from './reportManage';
 export Team from './report/team';
 export Assets from './report/assets';
+export RuleList from './ruleList';
+export RuleAdd from './ruleAdd';
 // append here from plop
