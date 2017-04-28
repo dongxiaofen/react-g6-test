@@ -32,22 +32,25 @@ class AccountSettingStore {
   @action.bound getTreeList() {
     accountSettingApi.getTreeList()
       .then(action('getTreeList_success', resp => {
-        const treeData = new Formater(resp);
-        treeData.formatData(null, null, 'cy@sc.cn');
-        this.tree.data = {content: treeData.formatResult};
-        const uId = treeData.formatResult[0].id;
-        this.getUserInfo(uId);
-        this.getReportAndMonitor(uId);
-        this.getProvince(uId);
-        this.getIndustry(uId);
-        this.getScale(uId);
-        this.getConsume(uId);
-        this.getRecharge(uId);
-        this.getSummary(uId);
-        this.getLoginRecord(uId);
+        if (resp.data && resp.data.length > 0) {
+          const treeData = new Formater(resp);
+          treeData.formatData(null, null, 'cy@sc.cn');
+          this.tree.data = {content: treeData.formatResult};
+          const uId = treeData.formatResult[0].id;
+          this.getUserInfo(uId);
+          this.getReportAndMonitor(uId);
+          this.getProvince(uId);
+          this.getIndustry(uId);
+          this.getScale(uId);
+          this.getConsume(uId);
+          this.getRecharge(uId);
+          this.getSummary(uId);
+          this.getLoginRecord(uId);
+        } else {
+          this.tree.data = {error: {message: '暂无用户信息'}, content: []};
+        }
       }))
       .catch(action('getTreeList_error', err => {
-        console.log(err);
         this.tree.data = {error: err.response.data, content: []};
         this.base = {data: {}};
         this.tabs.business.reportAndMonitor = {error: err.response.data};
@@ -77,7 +80,6 @@ class AccountSettingStore {
         this.tabs.business.reportAndMonitor = noData ? {error: {message: '暂无数据'}, data: []} : {data: resp.data};
       }))
       .catch(action('getReportAndMonitor_error', err => {
-        console.log(err);
         this.tabs.business.reportAndMonitor = {error: err.response.data, data: {}};
       }));
   }
@@ -89,7 +91,6 @@ class AccountSettingStore {
         this.tabs.business.province = noData ? {error: {message: '暂无数据'}, content: []} : {content: resp.data};
       }))
       .catch(action('getProvince_error', err => {
-        console.log(err);
         this.tabs.business.province = {error: err.response.data, content: []};
       }));
   }
@@ -101,7 +102,6 @@ class AccountSettingStore {
         this.tabs.business.industry = noData ? {error: {message: '暂无数据'}, content: []} : {content: resp.data};
       }))
       .catch(action('getIndustry_error', err => {
-        console.log(err);
         this.tabs.business.industry = {error: err.response.data, content: []};
       }));
   }
@@ -115,7 +115,6 @@ class AccountSettingStore {
         this.tabs.business.scale = noData ? {error: {message: '暂无数据'}, data: {}} : {data: resp.data};
       }))
       .catch(action('getScale_error', err => {
-        console.log(err);
         this.tabs.business.scale = {error: err.response.data, data: {}};
       }));
   }
@@ -131,7 +130,6 @@ class AccountSettingStore {
         uiStore.updateUiStore('accountConsume.totalElements', resp.data.page.totalElements);
       }))
       .catch(action('getConsume_error', err => {
-        console.log(err);
         this.tabs.consume = {error: err.response.data, page: []};
       }));
   }
@@ -147,7 +145,6 @@ class AccountSettingStore {
         uiStore.updateUiStore('accountRecharge.totalElements', resp.data.totalElements);
       }))
       .catch(action('getRecharge_error', err => {
-        console.log(err);
         this.tabs.recharge = {error: err.response.data, content: []};
       }));
   }
@@ -163,7 +160,6 @@ class AccountSettingStore {
         uiStore.updateUiStore('accountSummary.totalElements', resp.data.page.totalElements);
       }))
       .catch(action('getSummary_error', err => {
-        console.log(err);
         this.tabs.summary = {error: err.response.data, page: []};
       }));
   }
@@ -179,7 +175,6 @@ class AccountSettingStore {
         uiStore.updateUiStore('accountLoginRecord.totalElements', resp.data.totalElements);
       }))
       .catch(action('getLoginRecord_error', err => {
-        console.log(err);
         this.tabs.loginRecord = {error: err.response.data, content: []};
       }));
   }
