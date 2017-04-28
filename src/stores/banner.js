@@ -60,7 +60,7 @@ class BannerStore {
         this.stockCode = resp.data.stockCode;
       }))
       .catch((err) => {
-        console.log('banner出错', err.response);
+        console.log('banner出错', err);
       });
   }
   @action.bound toggleMonitorStatus(monitorId, status) {
