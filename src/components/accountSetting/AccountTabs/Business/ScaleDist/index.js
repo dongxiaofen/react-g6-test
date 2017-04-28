@@ -43,20 +43,20 @@ function ScaleDist({accountSettingStore}) {
           </p>
           <p style="text-align: left; padding-bottom: 6px;">
             <a style="color:#3483e9;">
-              <span style="padding-right: 15px">监控主体企业</span>
-              <span>${ticket.data.monitor || 0}</span>家
+              <span style="padding-right: 15px">报告企业</span>
+              <span>${ticket.data.report || 0}</span>家
             </a>
           </p>
           <p style="text-align: left; padding-bottom: 6px;">
             <a style="color:#3483e9;">
-              <span style="padding-right: 15px">评估报告企业</span>
+              <span style="padding-right: 15px">评估企业</span>
               <span>${ticket.data.analysisReport || 0}</span>家
             </a>
           </p>
           <p style="text-align: left;">
             <a style="color:#3483e9;">
-              <span style="padding-right: 15px">查询报告企业</span>
-              <span>${ticket.data.report || 0}</span>家
+              <span style="padding-right: 15px">监控企业</span>
+              <span>${ticket.data.monitor || 0}</span>家
             </a>
           </p>
         </div>`;
@@ -92,7 +92,7 @@ function ScaleDist({accountSettingStore}) {
   const createLabel = () => {
     return labelConf.map(item => {
       return (
-        <div className={styles.labelItem}>
+        <div className={styles.labelItem} key={item.name}>
           <div className={styles.labelRow}>
             <span className={styles.labelIcon} style={{backgroundColor: item.color}}></span>
             <span className={styles.labelName}>{item.name}</span>
@@ -119,6 +119,7 @@ export default loadingComp({
     loading: props.accountSettingStore.tabs.business.scale.data === undefined ? true : false,
     error: props.accountSettingStore.tabs.business.scale.error,
     height: 500,
+    errCategory: 1,
     category: 0,
   }),
 })(observer(ScaleDist));

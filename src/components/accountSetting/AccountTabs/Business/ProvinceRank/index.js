@@ -139,6 +139,7 @@ export default loadingComp({
     loading: props.accountSettingStore.tabs.business.province.content === undefined ? true : false,
     error: props.accountSettingStore.tabs.business.province.error,
     height: 500,
+    errCategory: 1,
     category: 0,
   }),
 })(observer(ProvinceRank));

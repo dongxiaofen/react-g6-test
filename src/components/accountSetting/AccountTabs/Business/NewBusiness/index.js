@@ -203,6 +203,7 @@ export default loadingComp({
     loading: props.accountSettingStore.tabs.business.reportAndMonitor.data === undefined ? true : false,
     error: props.accountSettingStore.tabs.business.reportAndMonitor.error,
     height: 500,
+    errCategory: 1,
     category: 0,
   }),
 })(observer(NewBusiness));

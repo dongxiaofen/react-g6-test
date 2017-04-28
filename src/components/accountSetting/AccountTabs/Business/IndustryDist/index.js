@@ -136,6 +136,7 @@ export default loadingComp({
     loading: props.accountSettingStore.tabs.business.industry.content === undefined ? true : false,
     error: props.accountSettingStore.tabs.business.industry.error,
     height: 500,
+    errCategory: 1,
     category: 0,
   }),
 })(observer(IndustryDist));

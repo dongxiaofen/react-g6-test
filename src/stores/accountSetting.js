@@ -73,7 +73,8 @@ class AccountSettingStore {
     this.tabs.business.reportAndMonitor = {};
     accountSettingApi.getReportAndMonitor(uId)
       .then(action('getReportAndMonitor_success', resp => {
-        this.tabs.business.reportAndMonitor = {data: resp.data};
+        const noData = resp.data.monitorSatisic.length === 0 && resp.data.reportStatisic.length === 0 && resp.data.analysisReportStatistic.length === 0;
+        this.tabs.business.reportAndMonitor = noData ? {error: {message: '暂无数据'}, data: []} : {data: resp.data};
       }))
       .catch(action('getReportAndMonitor_error', err => {
         console.log(err);
@@ -84,7 +85,8 @@ class AccountSettingStore {
     this.tabs.business.province = {};
     accountSettingApi.getProvince(uId)
       .then(action('getProvince_success', resp => {
-        this.tabs.business.province = {content: resp.data};
+        const noData = resp.data.length === 0;
+        this.tabs.business.province = noData ? {error: {message: '暂无数据'}, content: []} : {content: resp.data};
       }))
       .catch(action('getProvince_error', err => {
         console.log(err);
@@ -95,7 +97,8 @@ class AccountSettingStore {
     this.tabs.business.industry = {};
     accountSettingApi.getIndustry(uId)
       .then(action('getIndustry_success', resp => {
-        this.tabs.business.industry = {content: resp.data};
+        const noData = resp.data.length === 0;
+        this.tabs.business.industry = noData ? {error: {message: '暂无数据'}, content: []} : {content: resp.data};
       }))
       .catch(action('getIndustry_error', err => {
         console.log(err);
@@ -106,7 +109,10 @@ class AccountSettingStore {
     this.tabs.business.scale = {};
     accountSettingApi.getScale(uId)
       .then(action('getScale_success', resp => {
-        this.tabs.business.scale = {data: resp.data};
+        const noData = Object.keys(resp.data).every(key => {
+          return resp.data[key] === 0;
+        });
+        this.tabs.business.scale = noData ? {error: {message: '暂无数据'}, data: {}} : {data: resp.data};
       }))
       .catch(action('getScale_error', err => {
         console.log(err);
@@ -120,8 +126,8 @@ class AccountSettingStore {
     delete params.totalElements;
     accountSettingApi.getConsume(uId, params)
       .then(action('getConsume_success', resp => {
-        const data = resp.data.page.content.length === 0 ? {error: {message: '暂无消费记录'}, page: []} : resp.data;
-        this.tabs.consume = data;
+        const noData = resp.data.page === undefined || resp.data.page.content.length === 0;
+        this.tabs.consume = noData ? {error: {message: '暂无消费记录'}, page: []} : resp.data;
         uiStore.updateUiStore('accountConsume.totalElements', resp.data.page.totalElements);
       }))
       .catch(action('getConsume_error', err => {
@@ -136,8 +142,8 @@ class AccountSettingStore {
     delete params.totalElements;
     accountSettingApi.getRecharge(uId, params)
       .then(action('getRecharge_success', resp => {
-        const data = resp.data.content.length === 0 ? {error: {message: '暂无充值记录'}, content: []} : resp.data;
-        this.tabs.recharge = data;
+        const noData = resp.data.content === undefined || resp.data.content.length === 0;
+        this.tabs.recharge = noData ? {error: {message: '暂无充值记录'}, content: []} : resp.data;
         uiStore.updateUiStore('accountRecharge.totalElements', resp.data.totalElements);
       }))
       .catch(action('getRecharge_error', err => {
@@ -152,8 +158,8 @@ class AccountSettingStore {
     delete params.totalElements;
     accountSettingApi.getSummary(uId, params)
       .then(action('getSummary_success', resp => {
-        const data = resp.data.page.content.length === 0 ? {error: {message: '暂无消费记录'}, page: []} : resp.data;
-        this.tabs.summary = data;
+        const noData = resp.data.page === undefined || resp.data.page.content.length === 0;
+        this.tabs.summary = noData ? {error: {message: '暂无消费记录'}, page: []} : resp.data;
         uiStore.updateUiStore('accountSummary.totalElements', resp.data.page.totalElements);
       }))
       .catch(action('getSummary_error', err => {
@@ -168,8 +174,8 @@ class AccountSettingStore {
     delete params.totalElements;
     accountSettingApi.getLoginRecord(uId, params)
       .then(action('getLoginRecord_success', resp => {
-        const data = !resp.data.content || resp.data.content.length === 0 ? {error: {message: '暂无登录记录'}, content: []} : resp.data;
-        this.tabs.loginRecord = data;
+        const noData = resp.data.content === undefined || resp.data.content.length === 0;
+        this.tabs.loginRecord = noData ? {error: {message: '暂无登录记录'}, content: []} : resp.data;
         uiStore.updateUiStore('accountLoginRecord.totalElements', resp.data.totalElements);
       }))
       .catch(action('getLoginRecord_error', err => {
