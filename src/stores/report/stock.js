@@ -2,14 +2,25 @@ import { observable, action } from 'mobx';
 import { companyHomeApi } from 'api';
 
 class StockStore {
+  isEmptyObject(obj) {
+    for (const key in obj) {
+      if (obj.hasOwnProperty(key)) {
+        return false;
+      }
+    }
+    return true;
+  }
+
   @observable isLoading = true;
   @observable isMount = false;
+
+  @observable brief = {};
 
   // 上市公告-公司概况
   @action.bound getCompany(module, monitorId, reportId, companyName, companyType) {
     companyHomeApi.getReportModule(module, monitorId, reportId, companyName, companyType)
       .then(action('get stock company', (resp) => {
-        console.log(resp.data);
+        this.brief = resp.data.brief;
       }));
   }
   // 上市公告-公告列表
@@ -28,10 +39,10 @@ class StockStore {
   }
 
   @action.bound getReportModule(module, monitorId, reportId, companyName, companyType) {
-    this.isMount = true;
     this.getCompany('stock/company', monitorId, reportId, companyName, companyType);
     this.getAnnouncement('stock/announcement', monitorId, reportId, companyName, companyType);
     this.getAnnouncementType('stock/announcement/type', monitorId, reportId, companyName, companyType);
+    this.isMount = true;
   }
 }
 export default new StockStore();
