@@ -14,7 +14,9 @@ function CommonTable({meta, uiStore}) {
         <Thead meta={meta.body} dict={meta.dict} />
         <Tbody meta={meta.body} tData={meta.tData.slice((index - 1) * size, index * size)} />
       </table>
-      <Pager module={meta.dict} tData={meta.tData} type="small" />
+      <div className={styles.pager}>
+        <Pager module={meta.dict} tData={meta.tData} type="small" />
+      </div>
     </div>
   );
 }
