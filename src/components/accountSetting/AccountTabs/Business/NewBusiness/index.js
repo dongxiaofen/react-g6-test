@@ -65,19 +65,19 @@ function NewBusiness({accountSettingStore}) {
               ${ticket[0].name}
             </a>
           </p>
-          <p style="text-align: center; padding-bottom: 6px;">
+          <p style="text-align: left; padding-bottom: 6px;">
             <a style="color:#3483e9;">
               <span style="padding-right: 15px">${ticket[0].seriesName}</span>
               <span>${ticket[0].value || 0}</span>家
             </a>
           </p>
-          <p style="text-align: center; padding-bottom: 6px;">
+          <p style="text-align: left; padding-bottom: 6px;">
             <a style="color:#e08632;">
               <span style="padding-right: 15px">${ticket[1].seriesName}</span>
               <span>${ticket[1].value || 0}</span>家
             </a>
           </p>
-          <p style="text-align: center;">
+          <p style="text-align: left;">
             <a style="color:#43bf77;">
               <span style="padding-right: 15px">${ticket[2].seriesName}</span>
               <span>${ticket[2].value || 0}</span>家
@@ -192,7 +192,7 @@ function NewBusiness({accountSettingStore}) {
   return (
     <div className={styles.wrapper}>
       <Chart
-        chartId="areaRanking"
+        chartId="newBusiness"
         height="500"
         option={createOption()} />
     </div>
