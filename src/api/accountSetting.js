@@ -6,16 +6,16 @@ export const getUserInfo = (uId) => {
   return axios.get(`/api/user/sub/${uId}`);
 };
 export const getReportAndMonitor = (uId) => {
-  return axios.get(`/api/user/sub/${uId}/statistic/reportAndMonitor`);
+  return axios.get(`/api/user/sub/${uId}/statistic/reportAndMonitor/xx`);
 };
 export const getProvince = (uId) => {
-  return axios.get(`/api/user/sub/${uId}/statistic/province`);
+  return axios.get(`/api/user/sub/${uId}/statistic/province/xx`);
 };
 export const getIndustry = (uId) => {
-  return axios.get(`/api/user/sub/${uId}/statistic/industry`);
+  return axios.get(`/api/user/sub/${uId}/statistic/industry/xx`);
 };
 export const getScale = (uId) => {
-  return axios.get(`/api/user/sub/${uId}/statistic/scale`);
+  return axios.get(`/api/user/sub/${uId}/statistic/scale/xx`);
 };
 export const getConsume = (uId, params) => {
   return axios.get(`/api/user/sub/${uId}/consume`, {params});

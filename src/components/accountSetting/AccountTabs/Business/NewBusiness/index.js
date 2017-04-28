@@ -5,13 +5,21 @@ import Chart from 'components/common/echarts/ResizeChart';
 import styles from './index.less';
 function NewBusiness({accountSettingStore}) {
   const data = accountSettingStore.tabs.business.reportAndMonitor.data;
-  const reportData = data.reportStatisic;
-  const monitorData = data.monitorSatisic;
+  const reportData = data.reportStatisic || [];
+  const analysisReportData = data.analysisReportStatistic || [];
+  const monitorData = data.monitorSatisic || [];
   const reportDate = reportData.map(item => item.date);
+  const analysisReportDate = analysisReportData.map(item => item.date);
   const monitorDate = monitorData.map(item => item.date);
-  const allDate = Array.from(new Set(reportDate.concat(monitorDate)));
+  const allDate = Array.from(new Set(reportDate.concat(analysisReportDate).concat(monitorDate)));
   const allReportData = allDate.map(date => {
     const matchData = reportData.find(item => {
+      return item.date === date;
+    });
+    return (matchData && matchData.count) || 0;
+  });
+  const allAnalysisReportData = allDate.map(date => {
+    const matchData = analysisReportData.find(item => {
       return item.date === date;
     });
     return (matchData && matchData.count) || 0;
@@ -60,13 +68,19 @@ function NewBusiness({accountSettingStore}) {
           <p style="text-align: center; padding-bottom: 6px;">
             <a style="color:#3483e9;">
               <span style="padding-right: 15px">${ticket[0].seriesName}</span>
-              <span>${ticket[0].value}</span>家
+              <span>${ticket[0].value || 0}</span>家
+            </a>
+          </p>
+          <p style="text-align: center; padding-bottom: 6px;">
+            <a style="color:#e08632;">
+              <span style="padding-right: 15px">${ticket[1].seriesName}</span>
+              <span>${ticket[1].value || 0}</span>家
             </a>
           </p>
           <p style="text-align: center;">
             <a style="color:#43bf77;">
-              <span style="padding-right: 15px">${ticket[1].seriesName}</span>
-              <span>${ticket[1].value}</span>家
+              <span style="padding-right: 15px">${ticket[2].seriesName}</span>
+              <span>${ticket[2].value || 0}</span>家
             </a>
           </p>
         </div>`;
@@ -140,9 +154,26 @@ function NewBusiness({accountSettingStore}) {
         data: allReportData,
       },
       {
-        name: '新增监控企业',
+        name: '新增评估企业',
         type: 'line',
         stack: '总量2',
+        lineStyle: {
+          normal: {
+            color: '#e08632',
+            width: 3,
+          }
+        },
+        itemStyle: {
+          normal: {
+            color: '#e08632',
+          }
+        },
+        data: allAnalysisReportData,
+      },
+      {
+        name: '新增监控企业',
+        type: 'line',
+        stack: '总量3',
         lineStyle: {
           normal: {
             color: '#43bf77',
@@ -171,6 +202,7 @@ export default loadingComp({
   mapDataToProps: props => ({
     loading: props.accountSettingStore.tabs.business.reportAndMonitor.data === undefined ? true : false,
     error: props.accountSettingStore.tabs.business.reportAndMonitor.error,
+    height: 500,
     category: 0,
   }),
 })(observer(NewBusiness));
