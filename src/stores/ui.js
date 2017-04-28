@@ -48,6 +48,12 @@ class UiStore {
       }
     );
     reaction(
+      () => this.uiState.accountLoginRecord.index,
+      () => {
+        accountSettingStore.getLoginRecord();
+      }
+    );
+    reaction(
       () => this.uiState.reportManagePager.index,
       () => {
         pathval.setPathValue(reportManageStore, 'list', {});
@@ -234,6 +240,7 @@ class UiStore {
     this.uiState.accountConsume = Object.assign({}, template);
     this.uiState.accountRecharge = Object.assign({}, template);
     this.uiState.accountSummary = Object.assign({}, template);
+    this.uiState.accountLoginRecord = Object.assign({}, template);
   }
 }
 export default new UiStore();
