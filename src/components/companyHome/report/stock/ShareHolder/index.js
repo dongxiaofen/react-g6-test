@@ -1,7 +1,7 @@
 import React, {PropTypes} from 'react';
 import { observer } from 'mobx-react';
 import { ModuleTitle, CommonTable } from 'components/common/report';
-function ShareHolder({ shareHolder, isEmptyObject, isLoading }) {
+function ShareHolder({ shareHolder, isEmptyObject, isOverViewLoading }) {
   let output = [];
   let key = '';
   if (!isEmptyObject(shareHolder)) {
@@ -22,7 +22,7 @@ function ShareHolder({ shareHolder, isEmptyObject, isLoading }) {
       tData: output,
       dict: 'stockShareHolder',
     },
-    isLoading: isLoading,
+    isLoading: isOverViewLoading,
     module: '十大股东',
     error: isEmptyObject(shareHolder)
   };
@@ -38,6 +38,6 @@ function ShareHolder({ shareHolder, isEmptyObject, isLoading }) {
 ShareHolder.propTypes = {
   shareHolder: PropTypes.object,
   isEmptyObject: PropTypes.func,
-  isLoading: PropTypes.bool,
+  isOverViewLoading: PropTypes.bool,
 };
 export default observer(ShareHolder);

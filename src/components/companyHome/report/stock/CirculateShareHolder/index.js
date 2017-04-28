@@ -1,7 +1,7 @@
 import React, {PropTypes} from 'react';
 import { observer } from 'mobx-react';
 import { ModuleTitle, CommonTable } from 'components/common/report';
-function CirculateShareHolder({ circulateShareHolder, isEmptyObject, isLoading }) {
+function CirculateShareHolder({ circulateShareHolder, isEmptyObject, isOverViewLoading }) {
   let output = [];
   let key = '';
   if (!isEmptyObject(circulateShareHolder)) {
@@ -22,7 +22,7 @@ function CirculateShareHolder({ circulateShareHolder, isEmptyObject, isLoading }
       tData: output,
       dict: 'stockCirculateShareHolder',
     },
-    isLoading: isLoading,
+    isLoading: isOverViewLoading,
     module: '流通股东',
     error: isEmptyObject(circulateShareHolder)
   };
@@ -38,6 +38,6 @@ function CirculateShareHolder({ circulateShareHolder, isEmptyObject, isLoading }
 CirculateShareHolder.propTypes = {
   circulateShareHolder: PropTypes.object,
   isEmptyObject: PropTypes.func,
-  isLoading: PropTypes.bool,
+  isOverViewLoading: PropTypes.bool,
 };
 export default observer(CirculateShareHolder);

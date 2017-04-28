@@ -187,8 +187,12 @@ class UiStore {
     },
     stockManagement: {
       index: 1,
+      size: 20
+    },
+    stockAnnouncement: {
+      index: 1,
       size: 10
-    }
+    },
   };
 
   @action.bound updateUiStore(keypath, value) {

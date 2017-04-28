@@ -2,7 +2,7 @@ import React, {PropTypes} from 'react';
 import { observer } from 'mobx-react';
 
 import { ModuleTitle, KvTable } from 'components/common/report';
-function Brief({ brief, isEmptyObject, isLoading }) {
+function Brief({ brief, isEmptyObject, isOverViewLoading }) {
   if (!isEmptyObject(brief)) {
     brief.issued_shares = brief.issued_shares ? (brief.issued_shares / 10000).toFixed(2) : '';
     brief.reg_cap = brief.reg_cap ? (brief.reg_cap / 10000).toFixed(2) : '';
@@ -24,7 +24,7 @@ function Brief({ brief, isEmptyObject, isLoading }) {
         [{ 'key': 'listing_recommender', 'type': 'half' }, { 'key': 'main_underwriter', 'type': 'half' }],
       ],
     },
-    isLoading: isLoading,
+    isLoading: isOverViewLoading,
     module: '公司概况',
     error: isEmptyObject(brief)
   };
@@ -39,6 +39,6 @@ function Brief({ brief, isEmptyObject, isLoading }) {
 Brief.propTypes = {
   brief: PropTypes.object,
   isEmptyObject: PropTypes.func,
-  isLoading: PropTypes.bool,
+  isOverViewLoading: PropTypes.bool,
 };
 export default observer(Brief);

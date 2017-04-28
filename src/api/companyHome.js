@@ -76,3 +76,22 @@ export const getNewsDetail = (url, source) => {
 export const getBiddingDetail = (url, source) => {
   return axios.get(url, {cancelToken: source.token});
 };
+
+export const changeAnnouncement = ({ stockType, monitorId, reportId }) => {
+  let url;
+  if (monitorId) {
+    if (stockType) {
+      url = `/api/monitor/${monitorId}/stock/announcement?stockType=${stockType}`;
+    } else {
+      url = `/api/monitor/${monitorId}/stock/announcement`;
+    }
+  }
+  if (reportId) {
+    if (stockType) {
+      url = `/api/report/stock/announcement?reportId=${reportId}&stockType=${stockType}`;
+    } else {
+      url = `/api/report/stock/announcement?reportId=${reportId}`;
+    }
+  }
+  return axios.get(url);
+};

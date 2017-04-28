@@ -1,7 +1,7 @@
 import React, {PropTypes} from 'react';
 import { observer } from 'mobx-react';
 import { ModuleTitle, CommonTable } from 'components/common/report';
-function Management({ management, isLoading }) {
+function Management({ management, isOverViewLoading }) {
   const data = {
     meta: {
       body: [
@@ -14,7 +14,7 @@ function Management({ management, isLoading }) {
       tData: management,
       dict: 'stockManagement',
     },
-    isLoading: isLoading,
+    isLoading: isOverViewLoading,
     module: '十大股东',
     error: management.length === 0
   };
@@ -28,6 +28,6 @@ function Management({ management, isLoading }) {
 
 Management.propTypes = {
   management: PropTypes.object,
-  isLoading: PropTypes.bool,
+  isOverViewLoading: PropTypes.bool,
 };
 export default observer(Management);
