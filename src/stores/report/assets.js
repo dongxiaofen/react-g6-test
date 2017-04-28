@@ -3,6 +3,8 @@ import { companyHomeApi } from 'api';
 import uiStore from '../ui';
 import axios from 'axios';
 const CancelToken = axios.CancelToken;
+import messageStore from '../message';
+import pathval from 'pathval';
 
 class AssetsStore {
   @observable trademarkData = [];
@@ -12,8 +14,9 @@ class AssetsStore {
   // 弹框标题数据||信息来源
   @observable titleData = {};
   // 弹出框详情
-  @observable bidMarkertDetailData = {};
   @observable bidMarkertContent = '';
+  // 取消请求
+  @observable biddingDetailCancel = null;
 
   @observable trLoading = true;
   @observable patentLoading = true;
@@ -63,14 +66,26 @@ class AssetsStore {
   }
 
   @action.bound getDetail(url, showDetail) {
+    if (this.biddingDetailCancel) {
+      this.biddingDetailCancel();
+      this.biddingDetailCancel = null;
+    }
     const source = CancelToken.source();
+    this.biddingDetailCancel = source.cancel;
     companyHomeApi.getBiddingDetail(url, source)
       .then(action( (response) => {
+        this.biddingDetailCancel = null;
         this.bidMarkertContent = response.data.result;
         showDetail.call(this);
       }))
       .catch((error) => {
-        console.log(error);
+        if (!axios.isCancel(error)) {
+          this.biddingDetailCancel = null;
+          messageStore.openMessage({
+            type: 'error',
+            content: pathval.getPathValue(error, 'response.data.message') || '获取招投标详情失败'
+          });
+        }
       });
   }
 }
