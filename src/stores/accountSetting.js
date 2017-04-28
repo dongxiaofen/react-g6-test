@@ -2,6 +2,7 @@ import { observable, action } from 'mobx';
 import { accountSettingApi } from 'api';
 import pathval from 'pathval';
 import Formater from 'helpers/formatTreeData';
+import uiStore from './ui';
 class AccountSettingStore {
   @observable tree = {
     addModal: {
@@ -21,20 +22,8 @@ class AccountSettingStore {
       scale: {},
     },
     consume: {},
-    consumePager: {
-      index: 1,
-      size: 10,
-    },
     recharge: {},
-    rechargePager: {
-      index: 1,
-      size: 10,
-    },
     summary: {},
-    summaryPager: {
-      index: 1,
-      size: 10,
-    },
   };
   @action.bound changeValue(key, value) {
     pathval.setPathValue(this, key, value);
@@ -58,6 +47,14 @@ class AccountSettingStore {
       .catch(action('getTreeList_error', err => {
         console.log(err);
         this.tree.data = {error: err.response.data, content: []};
+        this.base = {data: {}};
+        this.tabs.business.reportAndMonitor = {error: err.response.data};
+        this.tabs.business.province = {error: err.response.data};
+        this.tabs.business.industry = {error: err.response.data};
+        this.tabs.business.scale = {error: err.response.data};
+        this.tabs.consume = {error: err.response.data, page: []};
+        this.tabs.recharge = {error: err.response.data, content: []};
+        this.tabs.summary = {error: err.response.data, page: []};
       }));
   }
   @action.bound getUserInfo(uId) {
@@ -67,8 +64,7 @@ class AccountSettingStore {
         this.base = {data: resp.data};
       }))
       .catch(action('getUserInfo_error', err => {
-        console.log(err);
-        this.base = {data: {}};
+        this.base = {error: err.response.data};
       }));
   }
   @action.bound getReportAndMonitor(uId) {
@@ -115,36 +111,45 @@ class AccountSettingStore {
         this.tabs.business.scale = {error: err.response.data};
       }));
   }
-  @action.bound getConsume(uId) {
+  @action.bound getConsume(userId) {
     this.tabs.consume = {};
-    const params = this.tabs.consumePager;
+    const uId = userId || this.base.data.id;
+    const params = uiStore.uiState.accountConsume;
+    delete params.totalElements;
     accountSettingApi.getConsume(uId, params)
       .then(action('getConsume_success', resp => {
         this.tabs.consume = resp.data;
+        uiStore.updateUiStore('accountConsume.totalElements', resp.data.page.totalElements);
       }))
       .catch(action('getConsume_error', err => {
         console.log(err);
         this.tabs.consume = {error: err.response.data, page: []};
       }));
   }
-  @action.bound getRecharge(uId) {
+  @action.bound getRecharge(userId) {
     this.tabs.recharge = {};
-    const params = this.tabs.rechargePager;
+    const uId = userId || this.base.data.id;
+    const params = uiStore.uiState.accountRecharge;
+    delete params.totalElements;
     accountSettingApi.getRecharge(uId, params)
       .then(action('getRecharge_success', resp => {
         this.tabs.recharge = resp.data;
+        uiStore.updateUiStore('accountRecharge.totalElements', resp.data.totalElements);
       }))
       .catch(action('getRecharge_error', err => {
         console.log(err);
         this.tabs.recharge = {error: err.response.data, content: []};
       }));
   }
-  @action.bound getSummary(uId) {
+  @action.bound getSummary(userId) {
     this.tabs.summary = {};
-    const params = this.tabs.summaryPager;
+    const uId = userId || this.base.data.id;
+    const params = uiStore.uiState.accountSummary;
+    delete params.totalElements;
     accountSettingApi.getSummary(uId, params)
       .then(action('getSummary_success', resp => {
         this.tabs.summary = resp.data;
+        uiStore.updateUiStore('accountSummary.totalElements', resp.data.page.totalElements);
       }))
       .catch(action('getSummary_error', err => {
         console.log(err);

@@ -22,7 +22,6 @@ function NewBusiness({accountSettingStore}) {
     });
     return (matchData && matchData.count) || 0;
   });
-  console.log(allMonitorData, allReportData);
   const createOption = () => ({
     dataZoom: [
       {

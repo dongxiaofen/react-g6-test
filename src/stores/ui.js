@@ -3,6 +3,7 @@ import pathval from 'pathval';
 import bannerStore from './banner';
 import assetsStore from './report/assets';
 import monitorListStore from './monitorList';
+import accountSettingStore from './accountSetting';
 import reportManageStore from './reportManage';
 
 class UiStore {
@@ -26,6 +27,24 @@ class UiStore {
       () => {
         document.body.scrollTop = 0;
         monitorListStore.getMainList();
+      }
+    );
+    reaction(
+      () => this.uiState.accountConsume.index,
+      () => {
+        accountSettingStore.getConsume();
+      }
+    );
+    reaction(
+      () => this.uiState.accountRecharge.index,
+      () => {
+        accountSettingStore.getRecharge();
+      }
+    );
+    reaction(
+      () => this.uiState.accountSummary.index,
+      () => {
+        accountSettingStore.getSummary();
       }
     );
     reaction(
@@ -54,7 +73,22 @@ class UiStore {
     monitorListPager: {
       index: 1,
       size: 10,
-      totalElements: 10,
+      totalElements: 0,
+    },
+    accountConsume: {
+      index: 1,
+      size: 10,
+      totalElements: 0,
+    },
+    accountRecharge: {
+      index: 1,
+      size: 10,
+      totalElements: 0,
+    },
+    accountSummary: {
+      index: 1,
+      size: 10,
+      totalElements: 0,
     },
     shareholder: {
       index: 1,

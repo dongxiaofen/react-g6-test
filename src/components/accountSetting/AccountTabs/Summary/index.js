@@ -1,11 +1,10 @@
 import React from 'react';
 import { observer } from 'mobx-react';
-import Popover from 'antd/lib/popover';
 import { loadingComp } from 'components/hoc';
 import AccountTable from '../AccountTable';
 import styles from './index.less';
 function Summary({accountSettingStore}) {
-  const consume = {
+  const timeMap = {
     ONE_MONTH: '1个月',
     TWO_MONTH: '2个月',
     THREE_MONTH: '3个月',
@@ -25,50 +24,33 @@ function Summary({accountSettingStore}) {
     MONITOR_MAIN_RENEWAL: '主体监控续费',
     PERSON_CHECK: '个人核查',
   };
-  const handleTimeType = (value) => {
-    return consume[value];
+  const handleConsumeInfo = (value, item) => {
+    const nameStr = item.companyName ? `企业：${item.companyName}` : '';
+    const timeStr = item.timeType ? `；监控时长：${timeMap[item.timeType]}` : '';
+    const personStr = item.memo ? `；核查人姓名：${item.memo}` : '';
+    return nameStr + timeStr + personStr;
   };
   const handleConsumeType = (value) => {
     return consumeType[value];
   };
-  const handleMemo = (value, item) => {
-    return item.consumeOperationType === 'PERSON_CHECK' ? `核查人姓名：${item.memo}` : '';
-  };
   const handleName = (value, item) => {
-    return (
-      <Popover
-        placement="top"
-        content={`${value}（${item.operatorEmail}）`}
-        >
-        <span>{value}</span>
-      </Popover>
-    );
+    return `${value}（${item.operatorEmail}）`;
   };
   const head = [
     {name: '消费编号', key: 'seqNum'},
-    {name: '企业名称', key: 'companyName'},
     {name: '消费类型', key: 'consumeOperationType', handle: handleConsumeType},
-    {name: '监控时长', key: 'timeType', handle: handleTimeType},
-    {name: '消费点数', key: 'consume'},
-    {name: '操作人', key: 'operatorName', handle: handleName},
     {name: '操作时间', key: 'opTime'},
-    {name: '备注', key: 'memo', handle: handleMemo},
+    {name: '消费点数', key: 'consume'},
+    {name: '消费内容', key: 'consumeInfo', handle: handleConsumeInfo},
+    {name: '操作人', key: 'operatorName', handle: handleName},
   ];
-  const changePage = (newPage) => {
-    const uId = accountSettingStore.base.data.id;
-    accountSettingStore.changeValue('tabs.summaryPager.index', newPage);
-    accountSettingStore.getSummary(uId);
-  };
   const data = accountSettingStore.tabs.summary.page;
-  const params = accountSettingStore.tabs.summaryPager;
   return (
     <div className={styles.wrapper}>
       <AccountTable
+        module="accountSummary"
         headData={head}
-        bodyData={data.content}
-        pageParams={params}
-        totalElements={data.totalElements}
-        pageChange={changePage} />
+        bodyData={data.content} />
     </div>
   );
 }
