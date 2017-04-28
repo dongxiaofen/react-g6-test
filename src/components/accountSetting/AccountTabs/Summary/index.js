@@ -44,9 +44,13 @@ function Summary({accountSettingStore}) {
     {name: '消费内容', key: 'consumeInfo', handle: handleConsumeInfo},
     {name: '操作人', key: 'operatorName', handle: handleName},
   ];
+  const totalConsume = accountSettingStore.tabs.summary.totalConsume;
   const data = accountSettingStore.tabs.summary.page;
   return (
     <div className={styles.wrapper}>
+      <div className={styles.totalConsume}>
+        {`所有帐号总消费点数 ${totalConsume || 0} 点`}
+      </div>
       <AccountTable
         module="accountSummary"
         headData={head}

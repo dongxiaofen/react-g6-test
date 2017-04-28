@@ -14,7 +14,7 @@ function AccountTable({headData, bodyData, module}) {
   };
   const createBody = () => {
     const body = [];
-    bodyData.forEach(bodyItem => {
+    bodyData.forEach((bodyItem, idx) => {
       const trItem = [];
       headData.forEach(headItem => {
         const handle = headItem.handle;
@@ -25,7 +25,7 @@ function AccountTable({headData, bodyData, module}) {
           </td>
         );
       });
-      body.push(<tr key={bodyItem.seqNum}>{trItem}</tr>);
+      body.push(<tr key={module + idx}>{trItem}</tr>);
     });
     return body;
   };

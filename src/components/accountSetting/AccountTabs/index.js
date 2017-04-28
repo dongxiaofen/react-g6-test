@@ -6,6 +6,7 @@ import Business from './Business';
 import Consume from './Consume';
 import Recharge from './Recharge';
 import Summary from './Summary';
+import LoginRecord from './LoginRecord';
 function AccountTabs(props) {
   const baseInfo = props.accountSettingStore.base.data;
   const access = !baseInfo || baseInfo.parentUserId;
@@ -22,6 +23,9 @@ function AccountTabs(props) {
       </TabPane>
       <TabPane tab="消费汇总" none={access}>
         <Summary {...props} />
+      </TabPane>
+      <TabPane tab="登录记录">
+        <LoginRecord {...props} />
       </TabPane>
     </Tabs>
   );

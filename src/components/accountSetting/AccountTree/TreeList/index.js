@@ -18,6 +18,7 @@ function TreeList({accountSettingStore, uiStore}) {
       accountSettingStore.getRecharge(uId);
       accountSettingStore.getSummary(uId);
     }
+    accountSettingStore.getLoginRecord(uId);
   };
   const extend = (idx, level, uId) => {
     const extendVal = accountSettingStore.tree.data.content[idx].extend;

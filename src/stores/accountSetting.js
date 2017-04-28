@@ -24,6 +24,7 @@ class AccountSettingStore {
     consume: {},
     recharge: {},
     summary: {},
+    loginRecord: {},
   };
   @action.bound changeValue(key, value) {
     pathval.setPathValue(this, key, value);
@@ -43,6 +44,7 @@ class AccountSettingStore {
         this.getConsume(uId);
         this.getRecharge(uId);
         this.getSummary(uId);
+        this.getLoginRecord(uId);
       }))
       .catch(action('getTreeList_error', err => {
         console.log(err);
@@ -157,6 +159,22 @@ class AccountSettingStore {
       .catch(action('getSummary_error', err => {
         console.log(err);
         this.tabs.summary = {error: err.response.data, page: []};
+      }));
+  }
+  @action.bound getLoginRecord(userId) {
+    this.tabs.loginRecord = {};
+    const uId = userId || this.base.data.id;
+    const params = uiStore.uiState.accountLoginRecord;
+    delete params.totalElements;
+    accountSettingApi.getLoginRecord(uId, params)
+      .then(action('getLoginRecord_success', resp => {
+        const data = !resp.data.content || resp.data.content.length === 0 ? {error: {message: '暂无登录记录'}, content: []} : resp.data;
+        this.tabs.loginRecord = data;
+        uiStore.updateUiStore('accountLoginRecord.totalElements', resp.data.totalElements);
+      }))
+      .catch(action('getLoginRecord_error', err => {
+        console.log(err);
+        this.tabs.loginRecord = {error: err.response.data, page: []};
       }));
   }
 }
