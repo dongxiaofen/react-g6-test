@@ -266,7 +266,11 @@ class TeamStore {
           }
         }
         this.isLoading = false;
-      }));
+      }))
+      .catch((err) => {
+        console.log(err);
+        this.isLoading = false;
+      });
   }
 
   @action.bound setSiteAndJob(calendarData, month) {
