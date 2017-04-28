@@ -35,6 +35,7 @@ const barConf = [
     menuKey: 'trendAnalyse',
     children: [
       { menuText: '事件时间轴', menuKey: 'eventLine', helpInfo: helpInfo2, contain: ['main'] },
+      { menuText: '预警分析', menuKey: 'alertAnalysis', contain: ['main'] },
     ],
     helpInfo: helpInfo2,
     contain: ['main'],

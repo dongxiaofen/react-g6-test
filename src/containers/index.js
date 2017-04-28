@@ -20,6 +20,8 @@ export MonitorStatistics from './monitorStatistics';
 export ReportManage from './reportManage';
 export Team from './report/team';
 export Assets from './report/assets';
+export Stock from './report/stock';
 export Network from './report/network';
 export RelPerCheck from './report/relPerCheck';
+export AlertAnalysis from './report/alertAnalysis';
 // append here from plop

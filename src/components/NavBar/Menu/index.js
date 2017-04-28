@@ -4,16 +4,37 @@ import { browserHistory } from 'react-router';
 import styles from './index.less';
 
 function Menu({ routing }) {
+  // const config = [
+  //   {
+  //     parent: { module: '设置' },
+  //     children: [
+  //       { module: '账号设置', route: 'account' },
+  //     ],
+  //   },
+  // ];
+
   const config = [
     { parent: { module: '首页', route: 'myHomePage' } },
-    { parent: { module: '查询', route: 'searchCompany' } },
-    { parent: { module: '报告', route: 'reportManage' } },
     {
-      parent: { module: '监控' },
+      parent: { module: '头条' },
       children: [
-        { module: '每日监控', route: 'riskHeadlines' },
-        { module: '监控统计', route: 'monitorStatistics' },
+        { module: '每日头条', route: 'riskHeadlines' },
+        { module: '头条趋势', route: 'monitorStatistics' },
+      ]
+    },
+    {
+      parent: { module: '企业' },
+      children: [
+        { module: '企业查询', route: 'searchCompany' },
+        { module: '报告列表', route: 'reportManage' },
         { module: '监控列表', route: 'monitorList' },
+      ]
+    },
+    {
+      parent: { module: '预警' },
+      children: [
+        { module: '预警企业', route: 'ruleList222' },
+        { module: '预警设置', route: 'ruleList' },
       ]
     },
     {
@@ -22,13 +43,6 @@ function Menu({ routing }) {
         { module: '招投标', route: 'bidMarket' },
         { module: '资产交易', route: 'poorAssets' },
         { module: '风险企业', route: 'blackList' },
-      ],
-    },
-    {
-      parent: { module: '设置' },
-      children: [
-        { module: '预警设置', route: 'ruleList' },
-        { module: '账号设置', route: 'account' },
       ],
     },
   ];
