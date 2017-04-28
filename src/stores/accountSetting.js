@@ -30,6 +30,7 @@ class AccountSettingStore {
     pathval.setPathValue(this, key, value);
   }
   @action.bound getTreeList() {
+    this.resetStore();
     accountSettingApi.getTreeList()
       .then(action('getTreeList_success', resp => {
         if (resp.data && resp.data.length > 0) {
@@ -177,6 +178,30 @@ class AccountSettingStore {
       .catch(action('getLoginRecord_error', err => {
         this.tabs.loginRecord = {error: err.response.data, content: []};
       }));
+  }
+  @action.bound resetStore() {
+    this.tree = {
+      addModal: {
+        show: false,
+        form: {},
+      },
+      searchInput: '',
+      activeIndex: 0,
+      data: {},
+    };
+    this.base = {};
+    this.tabs = {
+      business: {
+        reportAndMonitor: {},
+        province: {},
+        industry: {},
+        scale: {},
+      },
+      consume: {},
+      recharge: {},
+      summary: {},
+      loginRecord: {},
+    };
   }
 }
 

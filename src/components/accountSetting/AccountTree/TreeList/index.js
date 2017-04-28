@@ -131,6 +131,7 @@ export default loadingComp({
   mapDataToProps: props => ({
     loading: props.accountSettingStore.tree.data.content === undefined ? true : false,
     error: props.accountSettingStore.tree.data.error,
-    category: 2,
+    category: 0,
+    height: 200,
   }),
 })(observer(TreeList));
