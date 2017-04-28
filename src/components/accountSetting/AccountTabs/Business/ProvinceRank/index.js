@@ -48,20 +48,20 @@ function ProvinceRank({accountSettingStore}) {
           </p>
           <p style="text-align: left; padding-bottom: 6px;">
             <a style="color:#ffbd3d;">
-              <span style="padding-right: 15px">监控主体企业</span>
-              <span>${ticket.data.companyCount || 0}</span>家
+              <span style="padding-right: 15px">报告企业</span>
+              <span>${ticket.data.reportCount || 0}</span>家
             </a>
           </p>
           <p style="text-align: left; padding-bottom: 6px;">
             <a style="color:#ffbd3d;">
-              <span style="padding-right: 15px">评估报告企业</span>
+              <span style="padding-right: 15px">评估企业</span>
               <span>${ticket.data.analysisReportCount || 0}</span>家
             </a>
           </p>
           <p style="text-align: left;">
             <a style="color:#ffbd3d;">
-              <span style="padding-right: 15px">查询报告企业</span>
-              <span>${ticket.data.reportCount || 0}</span>家
+              <span style="padding-right: 15px">监控企业</span>
+              <span>${ticket.data.companyCount || 0}</span>家
             </a>
           </p>
         </div>`;
