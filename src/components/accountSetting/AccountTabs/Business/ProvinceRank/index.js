@@ -15,7 +15,7 @@ function ProvinceRank({accountSettingStore}) {
       companyCount: item.companyCount,
     };
   });
-  const areaRankingOption = {
+  const provinceRankOption = {
     dataZoom: [
       {
         type: 'slider',
@@ -130,7 +130,7 @@ function ProvinceRank({accountSettingStore}) {
       <Chart
         chartId="provinceRank"
         height="500"
-        option={areaRankingOption} />
+        option={provinceRankOption} />
     </div>
   );
 }
