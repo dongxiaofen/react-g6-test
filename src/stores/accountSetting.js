@@ -66,7 +66,7 @@ class AccountSettingStore {
         this.base = {data: resp.data};
       }))
       .catch(action('getUserInfo_error', err => {
-        this.base = {error: err.response.data};
+        this.base = {error: err.response.data, data: {}};
       }));
   }
   @action.bound getReportAndMonitor(uId) {
@@ -78,7 +78,7 @@ class AccountSettingStore {
       }))
       .catch(action('getReportAndMonitor_error', err => {
         console.log(err);
-        this.tabs.business.reportAndMonitor = {error: err.response.data};
+        this.tabs.business.reportAndMonitor = {error: err.response.data, data: {}};
       }));
   }
   @action.bound getProvince(uId) {
@@ -90,7 +90,7 @@ class AccountSettingStore {
       }))
       .catch(action('getProvince_error', err => {
         console.log(err);
-        this.tabs.business.province = {error: err.response.data};
+        this.tabs.business.province = {error: err.response.data, content: []};
       }));
   }
   @action.bound getIndustry(uId) {
@@ -102,7 +102,7 @@ class AccountSettingStore {
       }))
       .catch(action('getIndustry_error', err => {
         console.log(err);
-        this.tabs.business.industry = {error: err.response.data};
+        this.tabs.business.industry = {error: err.response.data, content: []};
       }));
   }
   @action.bound getScale(uId) {
@@ -116,7 +116,7 @@ class AccountSettingStore {
       }))
       .catch(action('getScale_error', err => {
         console.log(err);
-        this.tabs.business.scale = {error: err.response.data};
+        this.tabs.business.scale = {error: err.response.data, data: {}};
       }));
   }
   @action.bound getConsume(userId) {
@@ -180,7 +180,7 @@ class AccountSettingStore {
       }))
       .catch(action('getLoginRecord_error', err => {
         console.log(err);
-        this.tabs.loginRecord = {error: err.response.data, page: []};
+        this.tabs.loginRecord = {error: err.response.data, content: []};
       }));
   }
 }

@@ -58,6 +58,8 @@ export default loadingComp({
   mapDataToProps: props => ({
     loading: props.accountSettingStore.tabs.consume.page === undefined ? true : false,
     error: props.accountSettingStore.tabs.consume.error,
-    category: 2,
+    category: 0,
+    errCategory: 1,
+    height: 200,
   }),
 })(observer(Consume));

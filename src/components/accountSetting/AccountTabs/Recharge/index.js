@@ -31,6 +31,8 @@ export default loadingComp({
   mapDataToProps: props => ({
     loading: props.accountSettingStore.tabs.recharge.content === undefined ? true : false,
     error: props.accountSettingStore.tabs.recharge.error,
-    category: 2,
+    category: 0,
+    errCategory: 1,
+    height: 200,
   }),
 })(observer(Recharge));

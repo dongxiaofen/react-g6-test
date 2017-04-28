@@ -62,6 +62,8 @@ export default loadingComp({
   mapDataToProps: props => ({
     loading: props.accountSettingStore.tabs.summary.page === undefined ? true : false,
     error: props.accountSettingStore.tabs.summary.error,
-    category: 2,
+    category: 0,
+    errCategory: 1,
+    height: 200,
   }),
 })(observer(Summary));
