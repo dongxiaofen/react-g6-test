@@ -5,21 +5,12 @@ const RangePicker = DatePicker.RangePicker;
 import styles from './index.less';
 // import {Checkbox, Input} from 'components/lib';
 import Input from 'components/lib/input';
-import Checkbox from 'components/lib/check/Checkbox';
+import {Checkbox} from 'antd';
 import moment from 'moment';
 function RiskFilter({riskHeadlinesStore}) {
   const disabledDate = (current)=> {
     return current && current.valueOf() > Date.now();
   };
-  // const getDimGroupType = (list) => {
-  //   const dimGroupType = [];
-  //   list.forEach((item)=>{
-  //     if (item.checked === 1) {
-  //       dimGroupType.push(item.enumKey);
-  //     }
-  //   });
-  //   return dimGroupType;
-  // };
   const getCompanyList = () => {
     riskHeadlinesStore.getCompanyList(riskHeadlinesStore.dimGroupTypeStr, riskHeadlinesStore.filterParams);
   };
@@ -37,9 +28,8 @@ function RiskFilter({riskHeadlinesStore}) {
     }
     getCompanyList();
   };
-  const checkFilter = (idx, evt)=> {
-    const checked = evt.target.checked ? 1 : 0;
-    riskHeadlinesStore.riskUpdateValue('filterConfig', `${idx}.checked`, checked);
+  const checkFilter = (evt)=> {
+    riskHeadlinesStore.riskUpdateValue('filterConfig', `${evt.target.value}.checked`, evt.target.checked);
     getCompanyList();
   };
   const createCheckBox = ()=> {
@@ -47,18 +37,17 @@ function RiskFilter({riskHeadlinesStore}) {
     const dimGroupType = riskHeadlinesStore.dimGroupType;
     const output = [];
     filterCig.forEach((item, idx)=>{
-      const disabled = dimGroupType.length <= 1 && item.checked === 1 ? -1 : 0;
+      const disabled = dimGroupType.length <= 1 && item.checked === 1 ? true : false;
       output.push(
         <div key={item.enumKey} className={styles.checkBox} key={`checkBox${idx}`}>
           <Checkbox
             defaultChecked={item.checked}
-            id={`messageFilter${idx}`}
             checked={item.checked}
             disabled={disabled}
-            onChange={checkFilter.bind(null, idx)}
-            label={`${item.name}`}
+            onChange={checkFilter}
+            value={idx}
             textCss={styles.text}
-            title={disabled === -1 ? '维度类型至少保留一个' : ''}/>
+            title={disabled === -1 ? '维度类型至少保留一个' : ''}>{item.name}</Checkbox>
         </div>
       );
     });
