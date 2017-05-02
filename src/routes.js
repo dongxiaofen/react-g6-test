@@ -22,6 +22,8 @@ import {
     ReportManage,
     Team,
     Assets,
+    RuleList,
+    RuleAdd,
     Stock,
     Network,
     RelPerCheck,
@@ -75,6 +77,8 @@ export default (allStore) => {
       <Route path="accountSetting" component={ AccountSetting } />
       <Route path="reportManage" component={ ReportManage } />
       <Route path="personReport" component={ PersonReport } />
+      <Route path="ruleList" component={ RuleList } />
+      <Route path="ruleAdd" component={ RuleAdd } />
 {/* second append here from plop */}
     </Route>
   );

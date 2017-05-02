@@ -5,7 +5,7 @@ import { browserHistory } from 'react-router';
 import styles from './index.less';
 // import HoverBox from './HoverBox';
 
-@inject('clientStore', 'searchCompanyStore')@observer
+@inject('searchCompanyStore')@observer
 export default class NavAction extends Component {
   static propTypes = {
     clientStore: PropTypes.object,
@@ -60,23 +60,15 @@ export default class NavAction extends Component {
     }
   }
 
-  logoutMouseOver = () => {
-    const logoutRef = this.refs.logoutRef;
-    const preClass = logoutRef.className;
-    const newClass = `${preClass} ${styles.logoutHover}`;
-    logoutRef.className = newClass;
+  account() {
+    browserHistory.push('/account');
   }
 
-  logoutMouseOut = () => {
-    const logoutRef = this.refs.logoutRef;
-    const newClass = logoutRef.className.split(' ')[0];
-    logoutRef.className = newClass;
+  collection() {
+    browserHistory.push('/collection');
   }
 
   render() {
-    // const userInfo = this.props.clientStore.userInfo;
-    // const userEmail = userInfo.email;
-    // const userName = userInfo.contact;
     return (
       <div className={`clearfix ${styles.wrap}`}>
         <div className={`clearfix ${styles.searchBox}`} ref="searchBox">
@@ -98,10 +90,10 @@ export default class NavAction extends Component {
           </span>
         </div>
         <div className={styles.menuBox}>
-          <span>
+          <span onClick={this.account}>
             <i className="fa fa-user" aria-hidden="true"></i>账号
           </span>
-          <span>
+          <span onClick={this.collection}>
             <i className="fa fa-star-o" aria-hidden="true"></i>收藏
           </span>
           <span onClick={this.logout}>
