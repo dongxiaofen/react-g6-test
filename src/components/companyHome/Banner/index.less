@@ -1,59 +1,20 @@
 @import '~sc-colors/index.less';
-.transition-all(@secend: .6s) {
-  -webkit-transition:all @secend ease-in-out;
-     -moz-transition:all @secend ease-in-out;
-       -o-transition:all @secend ease-in-out;
-          transition:all @secend ease-in-out;
+
+.companyInfo {
+  float: left;
 }
+
 .bannerInfoWrap {
   background: @mdc-white-darker;
-  position: fixed;
-  top: 70px;
   width: 100%;
-  padding-top: 15px;
-  padding-bottom: 15px;
-  height: 148px;
+  padding-top: 26px;
+  padding-bottom: 26px;
   box-shadow:0 2px 4px 0 rgba(176,190,197,0.50);
-  .transition-all;
 }
 .bannerInfoWrap img {
   float: left;
-  height: 118px;
-  .transition-all;
 }
 .infosmall .messageWrap {
-  margin-top: -65px;
-  visibility: hidden;
-  opacity: 0;
-}
-.infosmall {
-  height: 66px;
-}
-.infosmall .bannerInfoLeft {
-  height: 50px;
-}
-.infosmall .bannerInfoRight {
-  height: 50px;
-}
-
-//文字上滑
-.bannerInfoLeft {
-  float: left;
-  height: 118px;
-  width: 100%;
-}
-.bannerInfoLeft > div > img {
-  float: left;
-}
-.companyBox{
-  margin-bottom: 5px;
-}
-.bannerInfoContent {
-  float: left;
-  width: 100%;
-  .transition-all;
-}
-.displayNo {
   margin-top: -65px;
   visibility: hidden;
   opacity: 0;

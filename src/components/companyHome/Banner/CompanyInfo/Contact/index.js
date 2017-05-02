@@ -3,7 +3,14 @@ import { observer } from 'mobx-react';
 import styles from './index.less';
 import Popover from 'components/lib/popover';
 
-function Contact({contactVis, bannerData, closeContactPopoverAlias, openContactPopoverAlias, contactExtended, extendContactAlias}) {
+function Contact({
+  contactVis,
+  bannerData,
+  closeContactPopoverAlias,
+  openContactPopoverAlias,
+  contactExtended,
+  extendContactAlias
+}) {
   const config = [
     { key: 'email', value: '邮箱地址' },
     { key: 'phone', value: '公司电话' },
@@ -81,7 +88,7 @@ function Contact({contactVis, bannerData, closeContactPopoverAlias, openContactP
         id="contactInfo">
         <span className={`${styles.messageStyle}`}>
           基本联系信息
-            <i className={iconCss}></i>
+          <i className={iconCss}></i>
         </span>
       </Popover>
     </div>

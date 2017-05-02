@@ -62,7 +62,7 @@ function ReportAction({ bannerStore, routing }) {
     );
   }
   return (
-    <div>
+    <div className={`clearfix`}>
       {leftTypeBtn}
       {monitorId && companyType === 'MAIN' && bannerStore.monitorStatus !== 'EXPIRED' ? <div className={styles.bannerLines}></div> : ''}
       {monitorId && companyType === 'MAIN' ? <div className={styles.bannerBtnLeft} onClick={openPayModal.bind(this, 'recharge', 'continueMonitor', 'monitorModalStatus')}>续期</div> : ''}
