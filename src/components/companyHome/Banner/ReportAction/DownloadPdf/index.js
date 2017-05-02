@@ -25,14 +25,18 @@ export default class DownloadPdf extends Component {
   downloadAllChecked() {
     const isAllChecked = this.props.bannerStore.isAllChecked;
     const stockCode = this.props.bannerStore.stockCode;
-    const levelOneChecked = this.props.bannerStore.pdfDownloadConfig.levelOne.every((item) => {
+    const output = [];
+    this.props.bannerStore.pdfDownloadConfig.levelOne.map((item) => {
       if (item.value === 'STOCK') {
         if (stockCode) {
-          return item.checked === true;
+          output.push(item.checked === true);
         }
+      } else {
+        output.push(item.checked === true);
       }
-      return item.checked === true;
+      return output;
     });
+    const levelOneChecked = output.every((item) => item === true);
     return isAllChecked || levelOneChecked;
   }
 
@@ -146,9 +150,16 @@ export default class DownloadPdf extends Component {
     }
     levelTwoKeys.map((key) => {
       levelTwo[key].map((item) => {
-        if (item.checked) {
-          queryArray.push(key);
-          queryArray.push(item.value);
+        if (item.value === 'TEAM_ANALYSIS') {
+          if (monitorId && item.checked) {
+            queryArray.push(key);
+            queryArray.push(item.value);
+          }
+        } else {
+          if (item.checked) {
+            queryArray.push(key);
+            queryArray.push(item.value);
+          }
         }
       });
     });
@@ -164,9 +175,11 @@ export default class DownloadPdf extends Component {
       if (analysisReportId) {
         window.open(`/pdfDown?analysisReportId=${reportId}${queryStr}`);
       }
+      this.props.bannerStore.clearPdfConfigChecked();
     } else {
       this.setState({ tipInfo: true });
     }
+    console.log(queryArray, '------queryArray');
   }
 
   render() {

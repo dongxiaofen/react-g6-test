@@ -109,9 +109,13 @@ function ReportAction({ bannerStore, modalStore, payModalStore, routing }) {
   };
 
   const openDownLoadPdf = () => {
+    const clearPdfConfigChecked = () => {
+      bannerStore.clearPdfConfigChecked();
+    };
     modalStore.openCompModal({
       width: 750,
       isCustomize: true,
+      closeAction: clearPdfConfigChecked,
       loader: (cb) => {
         require.ensure([], (require) => {
           cb(require('./DownloadPdf'));

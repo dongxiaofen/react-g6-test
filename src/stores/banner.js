@@ -229,14 +229,47 @@ class BannerStore {
     const levelOne = this.pdfDownloadConfig.levelOne;
     const levelTwo = this.pdfDownloadConfig.levelTwo;
     const levelTwoKeys = Object.keys(levelTwo);
+    const stockCode = this.stockCode;
     levelOne.map((item) => {
-      item.checked = checked;
+      if (item.value === 'STOCK') {
+        if (stockCode) {
+          item.checked = checked;
+        }
+      } else {
+        item.checked = checked;
+      }
+    });
+    levelTwoKeys.map((key) => {
+      if (key === 'STOCK') {
+        if (stockCode) {
+          levelTwo[key].map((item) => {
+            item.checked = checked;
+          });
+        }
+      } else {
+        levelTwo[key].map((item) => {
+          item.checked = checked;
+        });
+      }
+    });
+  }
+
+  // 重置pdfConfig checked
+  @action.bound clearPdfConfigChecked() {
+    const pdfDownloadConfig = this.pdfDownloadConfig;
+    const levelOne = pdfDownloadConfig.levelOne;
+    const levelTwo = pdfDownloadConfig.levelTwo;
+    const levelTwoKeys = Object.keys(levelTwo);
+    levelOne.map((item) => {
+      item.checked = false;
     });
     levelTwoKeys.map((key) => {
       levelTwo[key].map((item) => {
-        item.checked = checked;
+        item.checked = false;
       });
     });
+    this.isAllChecked = false;
+    modalStore.visible = false;
   }
 }
 export default new BannerStore();
