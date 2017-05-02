@@ -13,7 +13,6 @@ function CheckItem({itemData, routing, relPerCheckStore}) {
   const personCheckId = itemData.id;
   const showStr = showId[personCheckId] ? 'show' : 'hide';
   const idCard = showStr === 'show' && idCardArr[personCheckId] ? idCardArr[personCheckId] : itemData.idCard;
-
   const matchStr = match ? 'match' : 'noMatch';
   const cssStr = `${matchStr}_${showStr}`;
   const viewDetail = () => {
@@ -24,20 +23,17 @@ function CheckItem({itemData, routing, relPerCheckStore}) {
   };
   const showIdCard = (evt) => {
     evt.stopPropagation();
-    const show = showId[personCheckId];
+    const show = idCardArr[personCheckId];
     if (show) {
-      runInAction(('show IDcard', () => {
-        pathval.setPathValue(relPerCheckStore, `showId.${personCheckId}`, true);
+      runInAction(('hide IDcard', () => {
+        pathval.setPathValue(relPerCheckStore, `showId.${personCheckId}`, false);
         pathval.setPathValue(relPerCheckStore, `idCard.${personCheckId}`, '');
       }));
-      // props.commonBoundAC.updateValue(['personCheck', 'showId', personCheckId], false, 'REPORT_UPDATE_VALUE');
-      // props.commonBoundAC.updateValue(['personCheck', 'idCard', personCheckId], '', 'REPORT_UPDATE_VALUE');
     } else {
       runInAction(('show IDcard', () => {
         pathval.setPathValue(relPerCheckStore, `showId.${personCheckId}`, true);
       }));
-      // props.commonBoundAC.updateValue(['personCheck', 'showId', personCheckId], true, 'REPORT_UPDATE_VALUE');
-      // props.reportBoundAC.getCardId({monitorId, reportId, personCheckId});
+      relPerCheckStore.getIdCard({monitorId, reportId, personCheckId});
     }
   };
   return (
