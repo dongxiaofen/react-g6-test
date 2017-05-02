@@ -2,6 +2,7 @@ import { observable, action } from 'mobx';
 import { companyHomeApi } from 'api';
 import uiStore from '../ui';
 import pathval from 'pathval';
+import messageStore from '../message';
 
 class RelPerCheckStore {
   @observable personCheckInfoData = [];
@@ -24,11 +25,13 @@ class RelPerCheckStore {
   @observable relatedIdCard = '';
   // 是否提交
   @observable relatedSubmit = false;
+  @observable reloadMonitorId = '';
 
   @observable isMount = false;
   @action.bound getReportModule(module, monitorId) {
     companyHomeApi.getPersonCheckInfo({monitorId, 'params': uiStore.uiState.relPerCheck})
       .then(action( (response) => {
+        this.reloadMonitorId = monitorId;
         this.personCheckInfoData = response.data.content;
       }))
       .catch(action( (error) => {
@@ -38,13 +41,15 @@ class RelPerCheckStore {
   @action.bound submitRelated(url, params) {
     this.isLoading = true;
     companyHomeApi.checkPersonInfo(url, params)
-      .then( action( (response) => {
+      .then( action( () => {
         this.isLoading = false;
-        console.log(response);
+        this.showCheckModal = false;
+        messageStore.openMessage({type: 'info', content: '核查成功', duration: '1500'});
+        this.getReportModule('', this.relatedIdCard);
       }))
       .catch(action( (error) => {
-        console.log(error);
         this.isLoading = false;
+        messageStore.openMessage({type: 'info', content: error.response.data, duration: '1500'});
       }));
   }
   @action.bound getIdCard({monitorId, reportId, personCheckId}) {

@@ -82,15 +82,6 @@ export const getPersonCheckInfo = ({monitorId, params}) => {
 export const checkPersonInfo = (url, params) => {
   return axios.post(url, params);
 };
-export const getIdCard = ({monitorId, reportId, personCheckId}) => {
-  let url;
-  if (monitorId) {
-    url = `/api/monitor/${monitorId}/person/cardId?personCheckId=${personCheckId}`;
-  } else {
-    url = `/api/report/${reportId}/person/cardId?personCheckId=${personCheckId}`;
-  }
-  return axios.get(url);
-};
 export const changeAnnouncement = ({ stockType, monitorId, reportId }) => {
   let url;
   if (monitorId) {

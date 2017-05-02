@@ -198,6 +198,10 @@ class UiStore {
       index: 1,
       size: 10
     },
+    personBlacklist: {
+      index: 1,
+      size: 10
+    }
   };
 
   @action.bound updateUiStore(keypath, value) {

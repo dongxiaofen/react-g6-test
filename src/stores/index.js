@@ -27,4 +27,5 @@ export assetsStore from './report/assets';
 export stockStore from './report/stock';
 export networkStore from './report/network';
 export relPerCheckStore from './report/relPerCheck';
+export personReportStore from './personReport';
 // append here from plop
