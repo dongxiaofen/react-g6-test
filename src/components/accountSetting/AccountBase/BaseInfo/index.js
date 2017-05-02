@@ -66,7 +66,7 @@ function BaseInfo({accountSettingStore}) {
     </div>
   );
   if (baseInfo.data) {
-    const content = config.map((item, idx) => {
+    output = config.map((item, idx) => {
       return (
         <Item
           key={idx}
@@ -74,7 +74,6 @@ function BaseInfo({accountSettingStore}) {
           values={baseInfo.data[item.keys]} />
       );
     });
-    output = content;
   }
   return (
     <div className={styles.wrapper}>

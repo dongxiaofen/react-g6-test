@@ -35,11 +35,16 @@ function PwdModal({accountSettingStore}) {
   };
   const modalConfirm = () => {
     if (allInputCheck()) {
-      const url = '/api/user/password';
-      accountSettingStore.changePwd(url, {
-        oldPwd: encHex.stringify(md5(formVal.oldPwd.value)),
-        newPwd: encHex.stringify(md5(formVal.newPwd.value)),
-      });
+      const userId = accountSettingStore.base.data.id;
+      const email = accountSettingStore.base.data.email;
+      const url = email ? '/api/user/password' : `/api/user/sub/${userId}/password`;
+      const params = email ? {
+        oldPw: encHex.stringify(md5(formVal.oldPwd.value)),
+        newPw: encHex.stringify(md5(formVal.newPwd.value)),
+      } : {
+        newPw: encHex.stringify(md5(formVal.newPwd.value)),
+      };
+      accountSettingStore.changePwd(url, params);
     }
   };
   const computedMsg = () => {
