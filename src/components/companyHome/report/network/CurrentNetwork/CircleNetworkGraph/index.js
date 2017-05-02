@@ -7,6 +7,9 @@ let nodesData;
 let edgesData;
 let svgEdges;
 let svgNodes;
+let svgEdgepaths;
+let svgEdgelabels;
+let svgTexts;
 let simulation;
 let zoom;
 let isDragging = false;
@@ -53,12 +56,19 @@ export default class CircleNetworkGraph extends Component {
       .force('charge', d3.forceManyBody())
       .force('center', d3.forceCenter(width / 2, height / 2));
 
+    simulation
+      .nodes(nodesData)
+      .on('tick', this.ticked);
+
+    simulation.force('link')
+      .links(edgesData);
 
     svgEdges = svg.append('g')
       .attr('class', styles.links)
       .selectAll('line')
       .data(edgesData)
-      .enter().append('line');
+      .enter().append('line')
+      .attr('marker-end', 'url(#mainArrow)');
     // .attr('stroke-width', (data) => { return Math.sqrt(data.value); });
 
     svgNodes = svg.append('g')
@@ -67,21 +77,93 @@ export default class CircleNetworkGraph extends Component {
       .data(nodesData)
       .enter().append('circle')
       .attr('r', 10)
-      // .attr('fill', (data) => { return color(data.group); })
+      .attr('class', (data) => {
+        let res;
+        if (data.show === 0) {
+          res = styles.hide;
+        } else if (data.category === 0) {
+          res = styles.mainCompany;
+        } else if (data.blackList && data.category !== 7) {
+          res = styles.blackListNodes;
+        } else if (data.status === 0) {
+          res = styles.cancelNodes;
+        } else {
+          res = styles[`category${data.category}`];
+        }
+        return res;
+      })
       .call(d3.drag()
         .on('start', this.dragstarted)
         .on('drag', this.dragged)
         .on('end', this.dragended));
 
     svgNodes.append('title')
-      .text((data) => { return data.name; });
+      .text((data) => { return data.category === 0 ? data.name : '单击查看详情'; });
 
-    simulation
-      .nodes(nodesData)
-      .on('tick', this.ticked);
+    svgTexts = svg.selectAll('text')
+      .data(nodesData)
+      .enter()
+      .append('text')
+      .attr('class', (data) => {
+        if (data.show === 0) {
+          return styles.hide;
+        }
+        return styles.nodeText;
+      })
+      .attr('text-anchor', 'middle')
+      .attr('dy', (data) => {
+        return data.cateType === 0 ? 45 : 25;
+      })
+      .text((data) => {         // 返回节点的名字
+        return data.name;
+      })
+      .call(d3.drag()
+        .on('start', this.dragstarted)
+        .on('drag', this.dragged)
+        .on('end', this.dragended));
 
-    simulation.force('link')
-      .links(edgesData);
+    svgEdgepaths = svg.selectAll('.edgepath')
+      .data(edgesData)
+      .enter()
+      .append('path')
+      .attr('d', (data) => { return 'M ' + data.source.x + ' ' + data.source.y + ' L ' + data.target.x + ' ' + data.target.y; })
+      .attr('class', 'edgepath')
+      .attr('id', (data, idx) => { return 'edgepath' + idx; })
+      .style('pointer-events', 'none');
+
+    svgEdgelabels = svg.selectAll('.edgelabel')
+      .data(edgesData)
+      .enter()
+      .append('text')
+      .style('pointer-events', 'none')
+      .attr('dx', 40)
+      .attr('dy', -2)
+      .attr('class', (data) => {
+        return data.index >= 0 ? styles.show : styles.hide;
+      })
+      .attr('font-size', 8)
+      .attr('fill', '#aaa')
+      .attr('id', (data, idx) => { return 'edgelabel' + idx; });
+
+
+    svgEdgelabels.append('textPath')
+      .attr('xlink:href', (data, idx) => { return '#edgepath' + idx; })
+      .style('pointer-events', 'none')
+      .text((data) => { return this.getLinkInfo(data); });
+  }
+  // 获取边的关系
+  getLinkInfo = (data) => {
+    const description = [];
+    const relation = data.name;
+    Object.keys(relation).map((key) => {
+      if (key === '股东' && data.invRatio !== -1) {
+        const invCurrency = (data.invCurrency === '人民币' || data.invCurrency === '') ? '万人民币' : data.invCurrency;
+        description.push(`${relation[key][0]}(投资金额: ${data.invConum + invCurrency},投资比例: ${data.invRatio.toFixed(2)}%)`);
+      } else {
+        description.push(`${key}(${relation[key][0]})`);
+      }
+    });
+    return description.join(',');
   }
   // 获取最小半径公式
   getRadius = (nodeCount, nodeRadius = 25) => {
@@ -212,6 +294,33 @@ export default class CircleNetworkGraph extends Component {
     svgNodes
       .attr('cx', (data) => { return data.x; })
       .attr('cy', (data) => { return data.y; });
+
+    svgTexts
+      .attr('x', (data) => {
+        if (data.layer !== -1) {
+          return data.x;
+        }
+      })
+      .attr('y', (data) => {
+        if (data.layer !== -1) {
+          return data.y;
+        }
+      });
+
+    svgEdgepaths.attr('d', (data) => {
+      const path = 'M ' + data.source.x + ' ' + data.source.y + ' L ' + data.target.x + ' ' + data.target.y;
+      return path;
+    });
+
+    svgEdgelabels.attr('transform', function test(data) {
+      if (data.target.x < data.source.x) {// 边上的文字自动转向
+        const bbox = this.getBBox();
+        const rx = bbox.x + bbox.width / 2;
+        const ry = bbox.y + bbox.height / 2;
+        return 'rotate(180 ' + rx + ' ' + ry + ')';
+      }
+      return 'rotate(0)';
+    });
   }
   dragstarted = (data) => {
     if (!d3.event.active) simulation.alphaTarget(0.3).restart();
@@ -243,7 +352,30 @@ export default class CircleNetworkGraph extends Component {
   render() {
     return (
       <div>
-        <svg width="960" height="600"></svg>
+        <svg width="960" height="600">
+          <defs>
+            <marker id="mainArrow"
+              markerUnits="userSpaceOnUse"
+              markerWidth="10"
+              markerHeight="10"
+              viewBox="0 0 12 12"
+              refX="25"
+              refY="6"
+              orient="auto">
+              <path d="M2,2 L10,6 L2,10 L6,6 L2,2" className={styles.arrow} />
+            </marker>
+            <marker id="relativeArrow"
+              markerUnits="userSpaceOnUse"
+              markerWidth="10"
+              markerHeight="10"
+              viewBox="0 0 12 12"
+              refX="30"
+              refY="6"
+              orient="auto">
+              <path d="M2,2 L10,6 L2,10 L6,6 L2,2" className={styles.arrow} />
+            </marker>
+          </defs>
+        </svg>
       </div>
     );
   }

@@ -7,6 +7,9 @@ let nodesData;
 let edgesData;
 let svgEdges;
 let svgNodes;
+// let svgTexts;
+let svgEdgepaths;
+let svgEdgelabels;
 let simulation;
 let zoom;
 let isDragging = false;
@@ -42,6 +45,12 @@ export default class ForceNetworkGraph extends Component {
       .force('charge', d3.forceManyBody())
       .force('center', d3.forceCenter(width / 2, height / 2));
 
+    simulation
+      .nodes(nodesData)
+      .on('tick', this.ticked);
+
+    simulation.force('link')
+      .links(edgesData);
 
     svgEdges = svg.append('g')
       .attr('class', styles.links)
@@ -55,22 +64,64 @@ export default class ForceNetworkGraph extends Component {
       .selectAll('circle')
       .data(nodesData)
       .enter().append('circle')
-      .attr('r', 10)
+      .attr('r', 5)
       // .attr('fill', (data) => { return color(data.group); })
       .call(d3.drag()
         .on('start', this.dragstarted)
         .on('drag', this.dragged)
         .on('end', this.dragended));
 
-    svgNodes.append('title')
-      .text((data) => { return data.name; });
+    svgEdgepaths = svg.selectAll('.edgepath')
+      .data(edgesData)
+      .enter()
+      .append('path')
+      .attr('d', (data) => { return 'M ' + data.source.x + ' ' + data.source.y + ' L ' + data.target.x + ' ' + data.target.y; })
+      .attr('class', 'edgepath')
+      .attr('id', (data, idx) => { return 'edgepath' + idx; })
+      .style('pointer-events', 'none');
 
-    simulation
-      .nodes(nodesData)
-      .on('tick', this.ticked);
+    svgEdgelabels = svg.selectAll('.edgelabel')
+      .data(edgesData)
+      .enter()
+      .append('text')
+      .style('pointer-events', 'none')
+      .attr('dx', 8)
+      .attr('dy', -2)
+      .attr('class', (data) => {
+        return data.index > 10 ? styles.show : styles.hide;
+      })
+      .attr('font-size', 10)
+      .attr('fill', '#aaa')
+      .attr('id', (data, idx) => { return 'edgelabel' + idx; });
 
-    simulation.force('link')
-      .links(edgesData);
+
+    svgEdgelabels.append('textPath')
+      .attr('xlink:href', (data, idx) => { return '#edgepath' + idx; })
+      .style('pointer-events', 'none')
+      .text(() => { return 'label11111111111111111111111111 '; });
+
+    // svgNodes.append('title')
+    //   .text((data) => { console.log(data); return data.name; });
+
+    // svgTexts = svg.selectAll('text')
+    //   .data(nodesData)
+    //   .enter()
+    //   .append('text')
+    //   .attr('class', (data) => {
+    //     if (data.show === 0) {
+    //       return styles.hide;
+    //     }
+    //     return styles.text;
+    //   })
+    //   .attr('text-anchor', 'middle')
+    //   .attr('dy', (data) => {
+    //     console.log(data, data.x);
+    //     return data.cateType === 0 ? 45 : 25;
+    //   })
+    //   .text((data) => {         // 返回节点的名字
+    //     return data.name;
+    //   })
+    //   .call(d3.drag);
   }
   ticked = () => {
     svgEdges
@@ -82,17 +133,44 @@ export default class ForceNetworkGraph extends Component {
     svgNodes
       .attr('cx', (data) => { return data.x; })
       .attr('cy', (data) => { return data.y; });
+
+    svgEdgepaths.attr('d', (data) => {
+      const path = 'M ' + data.source.x + ' ' + data.source.y + ' L ' + data.target.x + ' ' + data.target.y;
+      // console.log(d)
+      return path;
+    });
+
+    svgEdgelabels.attr('transform', () => {
+      // if (data.target.x < data.source.x) {
+      //   bbox = this.getBBox();
+      //   rx = bbox.x + bbox.width / 2;
+      //   ry = bbox.y + bbox.height / 2;
+      //   return 'rotate(180 ' + rx + ' ' + ry + ')';
+      // }
+      return 'rotate(0)';
+    });
+    // svgTexts
+    //   .attr('x', (data) => {
+    //     if (data.layer !== -1) {
+    //       return data.x;
+    //     }
+    //   })
+    //   .attr('y', (data) => {
+    //     if (data.layer !== -1) {
+    //       return data.y;
+    //     }
+    //   });
   }
   dragstarted = (data) => {
     if (!d3.event.active) simulation.alphaTarget(0.3).restart();
-    console.log(data, '开始拖拽');
+    // console.log(data, '开始拖拽');
     data.fx = data.x;
     data.fy = data.y;
   }
 
   dragged = (data) => {
     isDragging = true;
-    console.log(data, '拖拽。。。');
+    // console.log(data, '拖拽。。。');
     data.fx = d3.event.x;
     data.fy = d3.event.y;
   }
@@ -102,7 +180,7 @@ export default class ForceNetworkGraph extends Component {
     if (!isDragging) {
       console.log(data, '单击');
     } else {
-      console.log(data, '拖拽结束');
+      // console.log(data, '拖拽结束');
     }
     isDragging = false;
     // data.fx = null;

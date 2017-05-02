@@ -1,3 +1,5 @@
+@import '~sc-colors/index.less';
+
 .links {
   stroke: #999;
   stroke-opacity: 0.6;
@@ -8,6 +10,93 @@
   stroke-width: 1.5px;
 }
 
-.text {
-  stroke: white;
+.nodeText {
+  fill: grey;
+}
+.show {
+  display: block;
+}
+.hide {
+  display: none;
+}
+.arrow {
+  fill: #e5e5e5;
+}
+
+.focusNode {
+  cursor: pointer;
+  stroke: @yellow1;
+  stroke-width: 2px;
+  fill: @yellow1;
+}
+.searchNode {
+  cursor: pointer;
+  stroke: @red1;
+  stroke-width: 2px;
+  fill: @red1;
+}
+.cancelNodes {
+  cursor: pointer;
+  stroke: none;
+  fill: #bbbbbb;
+}
+.blackListNodes {
+  cursor: pointer;
+  stroke: none;
+  fill: #000;
+}
+.mainCompany {
+  cursor: pointer;
+  stroke: none;
+  fill: #3a637f;
+}
+.category1 {
+  cursor: pointer;
+  stroke: none;
+  fill: #c23531;
+}
+.category2 {
+  cursor: pointer;
+  stroke: none;
+  fill: #dd9177;
+}
+.category3 {
+  cursor: pointer;
+  stroke: none;
+  fill: #bda29a;
+}
+.category4 {
+  cursor: pointer;
+  stroke: none;
+  fill: #448587;
+}
+.category5 {
+  cursor: pointer;
+  stroke: none;
+  fill: #91c7ae;
+}
+.category6 {
+  cursor: pointer;
+  stroke: none;
+  fill: #bd8b43;
+}
+.category7 {
+  cursor: pointer;
+  stroke: none;
+  fill: #749f83;
+}
+.category8 {
+  cursor: pointer;
+  stroke: none;
+  fill: #6e7074;
+}
+.relativeCompany {
+  cursor: pointer;
+  stroke: none;
+  fill: #4ab2e8;
+}
+.relativePerson {
+  cursor: pointer;
+  stroke: none;
+  fill: #365ebf;
 }
