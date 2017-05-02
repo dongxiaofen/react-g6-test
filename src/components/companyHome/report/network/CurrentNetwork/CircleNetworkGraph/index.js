@@ -1,0 +1,250 @@
+import React, { Component, PropTypes } from 'react';
+import { observer, inject } from 'mobx-react';
+import { toJS } from 'mobx';
+import styles from './index.less';
+import * as d3 from 'd3';
+let nodesData;
+let edgesData;
+let svgEdges;
+let svgNodes;
+let simulation;
+let zoom;
+let isDragging = false;
+const layerCount = {}; // 存储各层的节点数
+const radiusArr = []; // 存储半径长度
+let nodeXY = {}; // 存储同心圆各节点坐标
+let centerNodeX;
+let centerNodeY;
+let nodeAdded = false;
+let saveNodeXY = false;
+
+@inject('networkStore')
+@observer
+export default class CircleNetworkGraph extends Component {
+  static propTypes = {
+    networkStore: PropTypes.object
+  };
+
+  componentDidMount() {
+    // console.log(toJS(this.props.networkStore), 'componentDidMount');
+    const graph = toJS(this.props.networkStore.currentNetwork);
+    nodesData = graph.nodes;
+    edgesData = graph.links;
+    // 统计各层的节点数
+    this.getLayerCount();
+    // 计算半径长度
+    this.getRadiusArr();
+    // console.log('radiusArr', radiusArr, layerCount);
+    zoom = d3.zoom();
+    const svg = d3.select('svg')
+      .call(zoom.on('zoom', () => {
+        // console.log(d3.event.transform);
+        svg.attr('transform', `translate(${d3.event.transform.x}, ${d3.event.transform.y}) scale(${d3.event.transform.k})`);
+      }))
+      .append('g');
+    const width = d3.select('svg').attr('width');
+    const height = d3.select('svg').attr('height');
+    centerNodeX = width / 2;
+    centerNodeY = height / 2;
+    // const color = d3.scaleOrdinal(d3.schemeCategory20);
+
+    simulation = d3.forceSimulation()
+      .force('link', d3.forceLink().id((data) => { return data.name; }))
+      .force('charge', d3.forceManyBody())
+      .force('center', d3.forceCenter(width / 2, height / 2));
+
+
+    svgEdges = svg.append('g')
+      .attr('class', styles.links)
+      .selectAll('line')
+      .data(edgesData)
+      .enter().append('line');
+    // .attr('stroke-width', (data) => { return Math.sqrt(data.value); });
+
+    svgNodes = svg.append('g')
+      .attr('class', styles.nodes)
+      .selectAll('circle')
+      .data(nodesData)
+      .enter().append('circle')
+      .attr('r', 10)
+      // .attr('fill', (data) => { return color(data.group); })
+      .call(d3.drag()
+        .on('start', this.dragstarted)
+        .on('drag', this.dragged)
+        .on('end', this.dragended));
+
+    svgNodes.append('title')
+      .text((data) => { return data.name; });
+
+    simulation
+      .nodes(nodesData)
+      .on('tick', this.ticked);
+
+    simulation.force('link')
+      .links(edgesData);
+  }
+  // 获取最小半径公式
+  getRadius = (nodeCount, nodeRadius = 25) => {
+    return nodeRadius / Math.sin(Math.PI / nodeCount);
+  }
+  // 统计各层的节点数
+  getLayerCount = () => {
+    nodesData.map((node) => {
+      if (layerCount[node.layer] === undefined) {
+        layerCount[node.layer] = 1;
+      } else {
+        layerCount[node.layer]++;
+      }
+    });
+  }
+  // 计算半径长度
+  getRadiusArr = () => {
+    Object.keys(layerCount).map((key) => {
+      if (key > 0) {
+        const defaultRadius = key === '1' ? 150 : radiusArr[key - 2] + 100;
+        if (layerCount[key] === 1) { // 只有一个关联节点
+          radiusArr.push(defaultRadius);
+        } else {
+          radiusArr.push(Math.max(defaultRadius, this.getRadius(layerCount[key])));
+        }
+      }
+    });
+  }
+  // 获取所有节点坐标
+  getNodeXY = () => {
+    const idxObj = {};
+    Object.keys(layerCount).map((key) => {
+      if (key > 0) {
+        idxObj[key] = 0;
+      }
+    });
+    nodesData.forEach((node) => {
+      const nodeLayer = node.layer ? node.layer : 1;
+      if (nodeLayer === 0) {
+        node.x = centerNodeX;
+        node.y = centerNodeY;
+      } else {
+        const xy = {
+          x: radiusArr[nodeLayer - 1] * Math.cos(2 * idxObj[nodeLayer] * Math.PI / layerCount[nodeLayer]) + centerNodeX,
+          y: centerNodeY - radiusArr[nodeLayer - 1] * Math.sin(2 * idxObj[nodeLayer] * Math.PI / layerCount[nodeLayer])
+        };
+        node.x = xy.x;
+        node.y = xy.y;
+        nodeXY[node.index] = xy;
+        idxObj[nodeLayer]++;
+      }
+    });
+    saveNodeXY = true;
+  }
+  // 用户添加新节点后重新计算所有节点坐标
+  getNewNodeXY = () => {
+    // 重新计算层的节点数
+    const newLayerCount = {};
+    nodesData.map((node) => {
+      const nodeLayer = node.layer ? node.layer : 1;
+      if (newLayerCount[nodeLayer] === undefined) {
+        newLayerCount[nodeLayer] = 1;
+      } else {
+        newLayerCount[nodeLayer]++;
+      }
+    });
+    const idxObj = {};
+    Object.keys(newLayerCount).map((key) => {
+      if (key > 0) {
+        idxObj[key] = 0;
+      }
+    });
+    // 重新计算半径
+    const newRadiusArr = [];
+    Object.keys(newLayerCount).map((key) => {
+      if (key > 0) {
+        const defaultRadius = key === '1' ? 150 : newRadiusArr[key - 2] + 100;
+        if (newLayerCount[key] === 1) { // 只有一个关联节点
+          newRadiusArr.push(defaultRadius);
+        } else {
+          newRadiusArr.push(Math.max(defaultRadius, this.getRadius(newLayerCount[key])));
+        }
+      }
+    });
+    nodeXY = {};
+    nodesData.forEach((node) => {
+      const nodeLayer = node.layer ? node.layer : 1;
+      if (nodeLayer === 0) {
+        node.x = centerNodeX;
+        node.y = centerNodeY;
+      } else {
+        const xy = {
+          x: newRadiusArr[nodeLayer - 1] * Math.cos(2 * idxObj[nodeLayer] * Math.PI / newLayerCount[nodeLayer]) + centerNodeX,
+          y: centerNodeY - newRadiusArr[nodeLayer - 1] * Math.sin(2 * idxObj[nodeLayer] * Math.PI / newLayerCount[nodeLayer])
+        };
+        node.x = xy.x;
+        node.y = xy.y;
+        nodeXY[node.index] = xy;
+        idxObj[nodeLayer]++;
+      }
+    });
+    nodeAdded = false;
+  }
+  ticked = () => {
+    if (!saveNodeXY) { // 只跑一次,然后存到nodeXY
+      this.getNodeXY();
+    } else if (nodeAdded) { // 用户添加新节点
+      console.log('添加节点后', nodesData);
+      this.getNewNodeXY();
+    } else {
+      nodesData.forEach((node) => {
+        if (node.layer === 0) {
+          node.x = centerNodeX;
+          node.y = centerNodeY;
+        } else if (node.dragged !== 1) {
+          node.x = nodeXY[node.index].x;
+          node.y = nodeXY[node.index].y;
+        }
+      });
+    }
+
+    svgEdges
+      .attr('x1', (data) => { return data.source.x; })
+      .attr('y1', (data) => { return data.source.y; })
+      .attr('x2', (data) => { return data.target.x; })
+      .attr('y2', (data) => { return data.target.y; });
+
+    svgNodes
+      .attr('cx', (data) => { return data.x; })
+      .attr('cy', (data) => { return data.y; });
+  }
+  dragstarted = (data) => {
+    if (!d3.event.active) simulation.alphaTarget(0.3).restart();
+    // console.log(data, '开始拖拽');
+    nodesData[nodesData.findIndex((node) => node.index === data.index)].dragged = 1; // 允许拖拽
+    data.fx = data.x;
+    data.fy = data.y;
+  }
+
+  dragged = (data) => {
+    isDragging = true;
+    // console.log(data, '拖拽。。。');
+    data.fx = d3.event.x;
+    data.fy = d3.event.y;
+  }
+
+  dragended = (data) => {
+    if (!d3.event.active) simulation.alphaTarget(0);
+    if (!isDragging) {
+      console.log(data, '单击');
+    } else {
+      // console.log(data, '拖拽结束');
+    }
+    isDragging = false;
+    // data.fx = null;
+    // data.fy = null;
+  }
+
+  render() {
+    return (
+      <div>
+        <svg width="960" height="600"></svg>
+      </div>
+    );
+  }
+}

@@ -5,7 +5,12 @@ class NetworkStore {
   @observable isLoading = true;
   @observable isMount = false;
   @observable currentNetwork = {};
+  @observable layout = 'circle';
 
+
+  @action.bound switchLayout() {
+    this.layout = this.layout === 'circle' ? 'force' : 'circle';
+  }
   @action.bound getReportModule(module, monitorId, reportId, companyName, companyType) {
     this.isMount = true;
     companyHomeApi.getReportModule(module, monitorId, reportId, companyName, companyType)

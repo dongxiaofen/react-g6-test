@@ -13,7 +13,7 @@ export default class Network extends Component {
   render() {
     return (
       <div>
-        <CurrentNetwork isLoading={this.props.networkStore.isLoading} />
+        <CurrentNetwork isLoading={this.props.networkStore.isLoading} layout={this.props.networkStore.layout} switchLayout={this.props.networkStore.switchLayout} />
       </div>
     );
   }

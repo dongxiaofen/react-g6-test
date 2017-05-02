@@ -3,14 +3,21 @@ import { observer } from 'mobx-react';
 // import styles from './index.less';
 import { loadingComp } from 'components/hoc';
 import {Row, Col} from 'components/common/layout';
-import NetworkGraph from './NetworkGraph';
+import CircleNetworkGraph from './CircleNetworkGraph';
+import ForceNetworkGraph from './ForceNetworkGraph';
 
-function CurrentNetwork(props) {
-  console.log('net', props);
+function CurrentNetwork({layout}) {
+  // const swithLayout = () => {
+  //   switchLayout();
+  // };
   return (
     <Row>
       <Col width="9">
-        <NetworkGraph />
+        {/* <a onClick={swithLayout}>切换</a> */}
+        {
+          layout === 'circle' ?
+          <CircleNetworkGraph /> : <ForceNetworkGraph />
+        }
       </Col>
       <Col width="3">
         {/* <TypeList {...this.props} /> */}
