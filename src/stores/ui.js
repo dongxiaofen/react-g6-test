@@ -205,6 +205,10 @@ class UiStore {
     executed: {
       index: 1,
       size: 10
+    },
+    dishonesty: {
+      index: 1,
+      size: 5
     }
   };
 

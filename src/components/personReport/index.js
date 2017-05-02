@@ -4,6 +4,7 @@ import {Container, Row, Col} from 'components/common/layout';
 import Banner from './Banner';
 import PersonBlackList from './PersonBlackList';
 import Executed from './Executed';
+import DishonestyList from './DishonestyList';
 import styles from './index.less';
 
 function PersonReportBody({routing, personReportStore}) {
@@ -24,6 +25,11 @@ function PersonReportBody({routing, personReportStore}) {
           <div className={`clearfix ${styles.wrap}`}>
             <div className={styles.boxItem}>
               <Executed executedData={personReportStore.executed} isLoading={personReportStore.isLoading} />
+            </div>
+          </div>
+          <div className={`clearfix ${styles.wrap}`}>
+            <div className={styles.boxItem}>
+              <DishonestyList dishonestyList={personReportStore.dishonestyList} isLoading={personReportStore.isLoading} />
             </div>
           </div>
         </Col>

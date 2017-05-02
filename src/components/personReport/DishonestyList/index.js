@@ -1,26 +1,19 @@
 import React, {PropTypes} from 'react';
-import { observer } from 'mobx-react';
-import styles from './index.less';
-import { ModuleTitle, CommonTable } from 'components/common/report';
+import { observer, inject } from 'mobx-react';
+import { ModuleTitle } from 'components/common/report';
+import Pager from 'components/common/Pager';
+import BlackSingleList from './BlackSingleList';
 
-function DishonestyList({}) {
-  const data = {
-    meta: {
-      body: [
-        { 'key': 'name', 'width': '4' },
-        { 'key': 'position', 'width': '6' },
-      ],
-      tData: personList,
-      dict: 'personList',
-    },
-    isLoading: isLoading,
-    module: '主要人员',
-    error: personList.length === 0
-  };
+function DishonestyList({dishonestyList, uiStore}) {
+  const {index, size } = uiStore.uiState.dishonesty;
+  const dishonestyListData = dishonestyList.slice((index - 1) * size, index * size);
   return (
     <div>
-      <ModuleTitle module="主要人员" count={personList.length} />
-      <CommonTable {...data} />
+      <ModuleTitle module={`失信被执行人信息（${dishonestyList ? dishonestyList.length : 0}）`} />
+      {
+        dishonestyListData ? dishonestyListData.map((item, numbers) => <BlackSingleList listData={item} key={`blackList${numbers}`} index={numbers + 1} />) : ''
+      }
+      <Pager uiStore={uiStore} type="small" module="dishonesty" tData={dishonestyList} />
     </div>
   );
 }
@@ -28,4 +21,4 @@ function DishonestyList({}) {
 DishonestyList.propTypes = {
   foo: PropTypes.string,
 };
-export default observer(DishonestyList);
+export default inject('uiStore')(observer(DishonestyList));

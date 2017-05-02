@@ -25,6 +25,7 @@ class PersonReportStore {
       .then(action( (response) => {
         this.blacklistData = response.data.blacklistResponses;
         this.executed = response.data.executedResponses;
+        this.dishonestyList = response.data.dishonestyResponses;
         this.isLoading = false;
       }))
       .catch(action(() => {
