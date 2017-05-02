@@ -109,6 +109,10 @@ function PwdModal({accountSettingStore}) {
       confirmLoading={moduleData.loading}
       >
       <h3 className={styles.modalTitle}>修改密码</h3>
+      <div className={styles.emailLine}>
+        <span className={styles.emailKey}>账号</span>
+        <span className={styles.emailVal}>{email}</span>
+      </div>
       {createInput()}
       <div className={errorBoxCss}>
         <i className={styles.errIcon}></i>
