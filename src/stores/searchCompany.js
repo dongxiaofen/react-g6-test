@@ -420,7 +420,7 @@ class SearchCompanyStore {
         };
         messageStore.openMessage({ ...obj });
         // 跳转
-        browserHistory.push(`/companyHome?analysisReportId=${resp.data.reportId}&companyType=MAIN`);
+        browserHistory.push(`/companyHome?analysisReportId=${resp.data.analysisReportId}&companyType=MAIN`);
       }))
       .catch(action('createAnalysisReport error', (err) => {
         // 关闭弹出按钮loading

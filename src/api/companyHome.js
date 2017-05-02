@@ -12,6 +12,21 @@ export const getBannerInfo = (monitorId, reportId, companyName, companyType) => 
   }
   return axios.get(url);
 };
+
+export const getStockCode = ({ reportId, monitorId, analysisReportId }) => {
+  let url;
+  if (reportId) {
+    url = `/api/report/${reportId}/stockCode`;
+  }
+  if (monitorId) {
+    url = `/api/monitor/${monitorId}/stockCode`;
+  }
+  if (analysisReportId) {
+    url = `/api/analysisReport/${analysisReportId}/stockCode`;
+  }
+  return axios.get(url);
+};
+
 export const toggleMonitorStatus = (monitorId, status) => {
   return axios.put(`/api/monitor/${monitorId}/status`, { status: status });
 };
@@ -100,4 +115,21 @@ export const changeAnnouncement = ({ stockType, monitorId, reportId }) => {
     }
   }
   return axios.get(url);
+};
+
+// 创建高级报告或者深度报告
+export const createReport = (active, companyName) => {
+  let url;
+  // 1为高级报告
+  if (active === 1) {
+    url = '/api/report';
+  } else {
+    url = '/api/analysisReport';
+  }
+  return axios.post(url, { companyName: companyName });
+};
+
+// 创建监控
+export const createMonitor = (params) => {
+  return axios.post(`/api/monitor`, params);
 };
