@@ -1,8 +1,8 @@
 import React from 'react';
 import { observer } from 'mobx-react';
-import Pagination from 'components/lib/pagination';
+import Pager from 'components/common/Pager';
 import styles from './index.less';
-function AccountTable({headData, bodyData, pageParams, totalElements, pageChange}) {
+function AccountTable({headData, bodyData, module}) {
   const createHead = () => {
     const head = [];
     headData.forEach(item => {
@@ -14,7 +14,7 @@ function AccountTable({headData, bodyData, pageParams, totalElements, pageChange
   };
   const createBody = () => {
     const body = [];
-    bodyData.forEach(bodyItem => {
+    bodyData.forEach((bodyItem, idx) => {
       const trItem = [];
       headData.forEach(headItem => {
         const handle = headItem.handle;
@@ -25,7 +25,7 @@ function AccountTable({headData, bodyData, pageParams, totalElements, pageChange
           </td>
         );
       });
-      body.push(<tr key={bodyItem.seqNum}>{trItem}</tr>);
+      body.push(<tr key={module + idx}>{trItem}</tr>);
     });
     return body;
   };
@@ -39,13 +39,7 @@ function AccountTable({headData, bodyData, pageParams, totalElements, pageChange
           {createBody()}
         </tbody>
       </table>
-      <div className={styles.pagination}>
-        <Pagination
-          current={pageParams.index}
-          pageSize={pageParams.size}
-          total={totalElements}
-          onChange={pageChange}/>
-      </div>
+      <Pager module={module} type="small" />
     </div>
   );
 }

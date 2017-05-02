@@ -45,6 +45,13 @@ function Menu({ routing }) {
         { module: '风险企业', route: 'blackList' },
       ],
     },
+    {
+      parent: { module: '设置' },
+      children: [
+        { module: '预警设置', route: 'ruleList' },
+        { module: '账号设置', route: 'accountSetting' },
+      ],
+    },
   ];
 
   const routeToPage = (route) => {
