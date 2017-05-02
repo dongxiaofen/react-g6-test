@@ -7,8 +7,13 @@ import md5 from 'crypto-js/md5';
 import encHex from 'crypto-js/enc-hex';
 import styles from './index.less';
 function PwdModal({accountSettingStore}) {
+  if (!accountSettingStore.base.data) {
+    return null;
+  }
   const moduleData = accountSettingStore.pwdModal;
   const formVal = moduleData.form;
+  const userId = accountSettingStore.base.data.id;
+  const email = accountSettingStore.base.data.email;
   const errorMsg = moduleData.errorMsg;
   const errorBoxCss = errorMsg ? styles.errorBox : styles.errorBoxHide;
   const formConf = [
@@ -16,6 +21,9 @@ function PwdModal({accountSettingStore}) {
     {type: 'password', name: 'newPwd', placeholder: '请输入新密码', sameCheck: 'reNewPwd'},
     {type: 'password', name: 'reNewPwd', placeholder: '请再次输入新密码', sameCheck: 'newPwd'},
   ];
+  if (email) {
+    formConf.shift();
+  }
   const allInputCheck = () => {
     const msgArr = [];
     formConf.forEach(item => {
@@ -35,13 +43,11 @@ function PwdModal({accountSettingStore}) {
   };
   const modalConfirm = () => {
     if (allInputCheck()) {
-      const userId = accountSettingStore.base.data.id;
-      const email = accountSettingStore.base.data.email;
-      const url = email ? '/api/user/password' : `/api/user/sub/${userId}/password`;
+      const url = email ? `/api/user/sub/${userId}/password` : `/api/user/password`;
       const params = email ? {
-        oldPw: encHex.stringify(md5(formVal.oldPwd.value)),
         newPw: encHex.stringify(md5(formVal.newPwd.value)),
       } : {
+        oldPw: encHex.stringify(md5(formVal.oldPwd.value)),
         newPw: encHex.stringify(md5(formVal.newPwd.value)),
       };
       accountSettingStore.changePwd(url, params);
