@@ -14,12 +14,12 @@ function CompanyInfo({ bannerStore }) {
     <div className={`clearfix ${styles.companyBox}`}>
       <div className="clearfix">
         <CompanyName companyName={bannerStore.companyName} />
-        <HistoryName {...bannerStore} />
         <RiskLabel riskInfo={bannerStore.riskInfo} />
       </div>
       <div className={`clearfix ${styles.baseInfo}`}>
         <Industry industryNames={bannerStore.industryNames} />
         <Contact {...bannerStore} />
+        <HistoryName {...bannerStore} />
       </div>
       <div className={`clearfix`}>
         <Status bannerStore={bannerStore} />
