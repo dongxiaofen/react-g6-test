@@ -2,6 +2,7 @@ import { observable, action } from 'mobx';
 import { accountSettingApi } from 'api';
 import pathval from 'pathval';
 import Formater from 'helpers/formatTreeData';
+import uiStore from './ui';
 class AccountSettingStore {
   @observable tree = {
     addModal: {
@@ -21,43 +22,46 @@ class AccountSettingStore {
       scale: {},
     },
     consume: {},
-    consumePager: {
-      index: 1,
-      size: 10,
-    },
     recharge: {},
-    rechargePager: {
-      index: 1,
-      size: 10,
-    },
     summary: {},
-    summaryPager: {
-      index: 1,
-      size: 10,
-    },
+    loginRecord: {},
   };
   @action.bound changeValue(key, value) {
     pathval.setPathValue(this, key, value);
   }
   @action.bound getTreeList() {
+    this.resetStore();
     accountSettingApi.getTreeList()
       .then(action('getTreeList_success', resp => {
-        const treeData = new Formater(resp);
-        treeData.formatData(null, null, 'cy@sc.cn');
-        this.tree.data = {content: treeData.formatResult};
-        const uId = treeData.formatResult[0].id;
-        this.getUserInfo(uId);
-        this.getReportAndMonitor(uId);
-        this.getProvince(uId);
-        this.getIndustry(uId);
-        this.getScale(uId);
-        this.getConsume(uId);
-        this.getRecharge(uId);
-        this.getSummary(uId);
+        if (resp.data && resp.data.length > 0) {
+          const treeData = new Formater(resp);
+          treeData.formatData(null, null, 'cy@sc.cn');
+          this.tree.data = {content: treeData.formatResult};
+          const uId = treeData.formatResult[0].id;
+          this.getUserInfo(uId);
+          this.getReportAndMonitor(uId);
+          this.getProvince(uId);
+          this.getIndustry(uId);
+          this.getScale(uId);
+          this.getConsume(uId);
+          this.getRecharge(uId);
+          this.getSummary(uId);
+          this.getLoginRecord(uId);
+        } else {
+          this.tree.data = {error: {message: '暂无用户信息'}, content: []};
+        }
       }))
       .catch(action('getTreeList_error', err => {
-        console.log(err);
         this.tree.data = {error: err.response.data, content: []};
+        this.base = {data: {}};
+        this.tabs.business.reportAndMonitor = {error: err.response.data, data: []};
+        this.tabs.business.province = {error: err.response.data, content: []};
+        this.tabs.business.industry = {error: err.response.data, content: []};
+        this.tabs.business.scale = {error: err.response.data, data: {}};
+        this.tabs.consume = {error: err.response.data, page: []};
+        this.tabs.recharge = {error: err.response.data, content: []};
+        this.tabs.summary = {error: err.response.data, page: []};
+        this.tabs.loginRecord = {error: err.response.data, content: []};
       }));
   }
   @action.bound getUserInfo(uId) {
@@ -67,89 +71,138 @@ class AccountSettingStore {
         this.base = {data: resp.data};
       }))
       .catch(action('getUserInfo_error', err => {
-        console.log(err);
-        this.base = {data: {}};
+        this.base = {error: err.response.data, data: {}};
       }));
   }
   @action.bound getReportAndMonitor(uId) {
     this.tabs.business.reportAndMonitor = {};
     accountSettingApi.getReportAndMonitor(uId)
       .then(action('getReportAndMonitor_success', resp => {
-        this.tabs.business.reportAndMonitor = {data: resp.data};
+        const noData = resp.data.monitorSatisic.length === 0 && resp.data.reportStatisic.length === 0;
+        this.tabs.business.reportAndMonitor = noData ? {error: {message: '暂无数据'}, data: []} : {data: resp.data};
       }))
       .catch(action('getReportAndMonitor_error', err => {
-        console.log(err);
-        this.tabs.business.reportAndMonitor = {error: err.response.data};
+        this.tabs.business.reportAndMonitor = {error: err.response.data, data: {}};
       }));
   }
   @action.bound getProvince(uId) {
     this.tabs.business.province = {};
     accountSettingApi.getProvince(uId)
       .then(action('getProvince_success', resp => {
-        this.tabs.business.province = {content: resp.data};
+        const noData = resp.data.length === 0;
+        this.tabs.business.province = noData ? {error: {message: '暂无数据'}, content: []} : {content: resp.data};
       }))
       .catch(action('getProvince_error', err => {
-        console.log(err);
-        this.tabs.business.province = {error: err.response.data};
+        this.tabs.business.province = {error: err.response.data, content: []};
       }));
   }
   @action.bound getIndustry(uId) {
     this.tabs.business.industry = {};
     accountSettingApi.getIndustry(uId)
       .then(action('getIndustry_success', resp => {
-        this.tabs.business.industry = {content: resp.data};
+        const noData = resp.data.length === 0;
+        this.tabs.business.industry = noData ? {error: {message: '暂无数据'}, content: []} : {content: resp.data};
       }))
       .catch(action('getIndustry_error', err => {
-        console.log(err);
-        this.tabs.business.industry = {error: err.response.data};
+        this.tabs.business.industry = {error: err.response.data, content: []};
       }));
   }
   @action.bound getScale(uId) {
     this.tabs.business.scale = {};
     accountSettingApi.getScale(uId)
       .then(action('getScale_success', resp => {
-        this.tabs.business.scale = {data: resp.data};
+        const noData = Object.keys(resp.data).every(key => {
+          return resp.data[key] === 0;
+        });
+        this.tabs.business.scale = noData ? {error: {message: '暂无数据'}, data: {}} : {data: resp.data};
       }))
       .catch(action('getScale_error', err => {
-        console.log(err);
-        this.tabs.business.scale = {error: err.response.data};
+        this.tabs.business.scale = {error: err.response.data, data: {}};
       }));
   }
-  @action.bound getConsume(uId) {
+  @action.bound getConsume(userId) {
     this.tabs.consume = {};
-    const params = this.tabs.consumePager;
+    const uId = userId || this.base.data.id;
+    const params = uiStore.uiState.accountConsume;
+    delete params.totalElements;
     accountSettingApi.getConsume(uId, params)
       .then(action('getConsume_success', resp => {
-        this.tabs.consume = resp.data;
+        const noData = resp.data.page === undefined || resp.data.page.content.length === 0;
+        this.tabs.consume = noData ? {error: {message: '暂无消费记录'}, page: []} : resp.data;
+        uiStore.updateUiStore('accountConsume.totalElements', resp.data.page.totalElements);
       }))
       .catch(action('getConsume_error', err => {
-        console.log(err);
         this.tabs.consume = {error: err.response.data, page: []};
       }));
   }
-  @action.bound getRecharge(uId) {
+  @action.bound getRecharge(userId) {
     this.tabs.recharge = {};
-    const params = this.tabs.rechargePager;
+    const uId = userId || this.base.data.id;
+    const params = uiStore.uiState.accountRecharge;
+    delete params.totalElements;
     accountSettingApi.getRecharge(uId, params)
       .then(action('getRecharge_success', resp => {
-        this.tabs.recharge = resp.data;
+        const noData = resp.data.content === undefined || resp.data.content.length === 0;
+        this.tabs.recharge = noData ? {error: {message: '暂无充值记录'}, content: []} : resp.data;
+        uiStore.updateUiStore('accountRecharge.totalElements', resp.data.totalElements);
       }))
       .catch(action('getRecharge_error', err => {
-        console.log(err);
         this.tabs.recharge = {error: err.response.data, content: []};
       }));
   }
-  @action.bound getSummary(uId) {
+  @action.bound getSummary(userId) {
     this.tabs.summary = {};
-    const params = this.tabs.summaryPager;
+    const uId = userId || this.base.data.id;
+    const params = uiStore.uiState.accountSummary;
+    delete params.totalElements;
     accountSettingApi.getSummary(uId, params)
       .then(action('getSummary_success', resp => {
-        this.tabs.summary = resp.data;
+        const noData = resp.data.page === undefined || resp.data.page.content.length === 0;
+        this.tabs.summary = noData ? {error: {message: '暂无消费记录'}, page: []} : resp.data;
+        uiStore.updateUiStore('accountSummary.totalElements', resp.data.page.totalElements);
       }))
       .catch(action('getSummary_error', err => {
-        console.log(err);
         this.tabs.summary = {error: err.response.data, page: []};
       }));
+  }
+  @action.bound getLoginRecord(userId) {
+    this.tabs.loginRecord = {};
+    const uId = userId || this.base.data.id;
+    const params = uiStore.uiState.accountLoginRecord;
+    delete params.totalElements;
+    accountSettingApi.getLoginRecord(uId, params)
+      .then(action('getLoginRecord_success', resp => {
+        const noData = resp.data.content === undefined || resp.data.content.length === 0;
+        this.tabs.loginRecord = noData ? {error: {message: '暂无登录记录'}, content: []} : resp.data;
+        uiStore.updateUiStore('accountLoginRecord.totalElements', resp.data.totalElements);
+      }))
+      .catch(action('getLoginRecord_error', err => {
+        this.tabs.loginRecord = {error: err.response.data, content: []};
+      }));
+  }
+  @action.bound resetStore() {
+    this.tree = {
+      addModal: {
+        show: false,
+        form: {},
+      },
+      searchInput: '',
+      activeIndex: 0,
+      data: {},
+    };
+    this.base = {};
+    this.tabs = {
+      business: {
+        reportAndMonitor: {},
+        province: {},
+        industry: {},
+        scale: {},
+      },
+      consume: {},
+      recharge: {},
+      summary: {},
+      loginRecord: {},
+    };
   }
 }
 
