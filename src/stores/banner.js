@@ -23,6 +23,13 @@ class BannerStore {
   // 上市代码
   @observable stockCode = '';
 
+  // 升级成高级报告或者深度报告
+  @observable updateHighOrDeep = {
+    active: 1,
+    pointText: '已选择高级查询报告',
+    pointTextSub: '（包含快速查询报告数据，另有关联网络、上市、新闻、团队、经营数据）'
+  };
+
 
   closeHisNamePopoverAlias = this.closeHisNamePopover;
   openHisNamePopoverAlias = this.openHisNamePopover;
@@ -86,5 +93,25 @@ class BannerStore {
         this.stockCode = resp.data;
       }));
   }
+
+  // 修改UpdateHighOrDeep
+  @action.bound setUpdateHighOrDeep({ active, pointText, pointTextSub }) {
+    this.updateHighOrDeep.active = active;
+    this.updateHighOrDeep.pointText = pointText;
+    this.updateHighOrDeep.pointTextSub = pointTextSub;
+  }
+
+  // 创建高级报告
+  @action.bound createReport(active, companyName) {
+    companyHomeApi.createReport(active, companyName)
+      .then(action('create report', (resp) => {
+        console.log(resp.data);
+      }))
+      .catch((err) => {
+        console.log(err);
+      });
+  }
+
+  // 创建深度报告
 }
 export default new BannerStore();

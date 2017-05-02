@@ -9,6 +9,7 @@
 }
 
 .btn {
+  position: relative;
   width: 130px;
 
   font-size: 14px;
@@ -38,6 +39,29 @@
     line-height: 44px;
 
     border: 2px solid @mdc-blue-400;
+  }
+}
+
+.icon {
+  display: none;
+  position: absolute;
+  right: -1px;
+  bottom: -1px;
+  width: 14px;
+  height: 13px;
+
+  background-image: url('imgs/bannerInfo/yes.png');
+}
+
+.active {
+  width: 130px;
+  line-height: 44px;
+
+  background-color: #fff;
+  border: 2px solid @mdc-blue-400;
+
+  .icon {
+    display: block;
   }
 }
 

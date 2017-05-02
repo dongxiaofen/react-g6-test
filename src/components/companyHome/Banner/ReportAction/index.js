@@ -17,7 +17,12 @@ function ReportAction({ bannerStore, modalStore, routing }) {
   };
   const openPayModal = () => {
   };
-  const openUpdateModal = () => {
+  const updateHighOrDeepConfirmAction = () => {
+    const companyName = routing.location.query.companyName;
+    const updateHighOrDeep = bannerStore.updateHighOrDeep;
+    bannerStore.createReport(updateHighOrDeep.active, companyName);
+  };
+  const openUpdateHighOrDeepModal = () => {
     modalStore.openCompModal({
       title: '升级报告',
       width: 420,
@@ -25,6 +30,7 @@ function ReportAction({ bannerStore, modalStore, routing }) {
       pointText: '升级报告即视为同意',
       pactUrl: 'xxxxxx',
       pactName: '用户服务协议',
+      confirmAction: updateHighOrDeepConfirmAction,
       loader: (cb) => {
         require.ensure([], (require) => {
           cb(require('./UpdateHighOrDeep'));
@@ -40,7 +46,7 @@ function ReportAction({ bannerStore, modalStore, routing }) {
     const _reportId = routing.location.query.reportId;
     const _analysisReportId = routing.location.query.analysisReportId;
 
-    const updateReport = <div className={styles.actionBtn} onClick={openUpdateModal}>升级报告</div>;
+    const updateReport = <div className={styles.actionBtn} onClick={openUpdateHighOrDeepModal}>升级报告</div>;
     const addMonitor = <div className={styles.actionBtn}>加入监控</div>;
     const updateMonitor = <div className={styles.actionBtn}>升级监控</div>;
     const monitorRenewal = <div className={styles.actionBtn}>监控续期</div>;

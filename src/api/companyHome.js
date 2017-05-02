@@ -116,3 +116,15 @@ export const changeAnnouncement = ({ stockType, monitorId, reportId }) => {
   }
   return axios.get(url);
 };
+
+// 创建高级报告或者深度报告
+export const createReport = (active, companyName) => {
+  let url;
+  // 1为高级报告
+  if (active === 1) {
+    url = '/api/report';
+  } else {
+    url = '/api/analysisReport';
+  }
+  return axios.post(url, { companyName: companyName });
+};
