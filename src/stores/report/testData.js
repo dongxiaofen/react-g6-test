@@ -134,7 +134,7 @@ const testData = [
   {
     'id': 12324,
     'ruleName': '较大比例关联公司发生工商注册资本变更',
-    'ruleId': 12,
+    'ruleId': 11,
     'time': '2016-04-18 00:00:00',
     'companyName': '****影视文化传播有限公司',
     'ruleDescription': '检测该主体公司所有关联公司是否大部分(30%)都发生了注册资本变更',

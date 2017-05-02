@@ -1,11 +1,24 @@
 import React, {PropTypes} from 'react';
 import { observer } from 'mobx-react';
-
-function Rule11({}) {
+import DetailCard from '../../DetailCard';
+function Rule11({data}) {
+  const meta = {
+    dict: 'rule11',
+    body: [
+      [{ 'key': 'companyName', colSpan: '1'}, { 'key': 'relation', colSpan: '2'}],
+      [{ 'key': 'capChangeInfo', kids: [
+        {key: 'altBe', colSpan: '1'},
+        {key: 'altAf', colSpan: '1'},
+        {key: 'eventTime', colSpan: '1'},
+      ]
+      }],
+    ],
+    maxCols: 3,
+    items: data.detail,
+    hasNumber: true,
+  };
   return (
-    <div>
-      Rule12
-    </div>
+    <DetailCard meta={meta} />
   );
 }
 
