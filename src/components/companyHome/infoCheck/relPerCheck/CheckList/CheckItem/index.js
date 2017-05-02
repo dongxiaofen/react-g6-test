@@ -2,17 +2,15 @@ import React, {PropTypes} from 'react';
 import { observer, inject } from 'mobx-react';
 import styles from './index.less';
 import KeyValue from './KeyValue';
-import pathval from 'pathval';
-import { runInAction } from 'mobx';
 
 function CheckItem({itemData, routing, relPerCheckStore}) {
   const { match } = itemData;
   const { monitorId, reportId } = routing.location.query;
-  const showId = pathval.getPathValue(relPerCheckStore, 'showId');
-  const idCardArr = pathval.getPathValue(relPerCheckStore, 'idCard');
+  const showId = relPerCheckStore.showId;
+  const idCardArr = relPerCheckStore.idCard;
   const personCheckId = itemData.id;
-  const showStr = showId[personCheckId] ? 'show' : 'hide';
-  const idCard = showStr === 'show' && idCardArr[personCheckId] ? idCardArr[personCheckId] : itemData.idCard;
+  const showStr = showId.get(personCheckId) ? 'show' : 'hide';
+  const idCard = showStr === 'show' && idCardArr.get(personCheckId) ? idCardArr.get(personCheckId) : itemData.idCard;
   const matchStr = match ? 'match' : 'noMatch';
   const cssStr = `${matchStr}_${showStr}`;
   const viewDetail = () => {
@@ -23,16 +21,12 @@ function CheckItem({itemData, routing, relPerCheckStore}) {
   };
   const showIdCard = (evt) => {
     evt.stopPropagation();
-    const show = idCardArr[personCheckId];
+    const show = idCardArr.get(personCheckId);
     if (show) {
-      runInAction(('hide IDcard', () => {
-        pathval.setPathValue(relPerCheckStore, `showId.${personCheckId}`, false);
-        pathval.setPathValue(relPerCheckStore, `idCard.${personCheckId}`, '');
-      }));
+      relPerCheckStore.toggleExpand('showId', personCheckId, false);
+      relPerCheckStore.toggleExpand('idCard', personCheckId, '');
     } else {
-      runInAction(('show IDcard', () => {
-        pathval.setPathValue(relPerCheckStore, `showId.${personCheckId}`, true);
-      }));
+      relPerCheckStore.toggleExpand('showId', personCheckId, true);
       relPerCheckStore.getIdCard({monitorId, reportId, personCheckId});
     }
   };
@@ -60,6 +54,8 @@ function CheckItem({itemData, routing, relPerCheckStore}) {
 }
 
 CheckItem.propTypes = {
+  keys: PropTypes.string,
   itemData: PropTypes.object,
+  routing: PropTypes.object,
 };
 export default inject('routing', 'relPerCheckStore')(observer(CheckItem));
