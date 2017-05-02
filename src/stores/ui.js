@@ -201,6 +201,10 @@ class UiStore {
     personBlacklist: {
       index: 1,
       size: 10
+    },
+    executed: {
+      index: 1,
+      size: 10
     }
   };
 

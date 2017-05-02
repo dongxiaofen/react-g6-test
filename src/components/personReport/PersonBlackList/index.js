@@ -19,11 +19,11 @@ function PersonBlackList({personBlacklist, isLoading}) {
     },
     isLoading: isLoading,
     module: '老赖记录',
-    error: personBlacklist.length === 0
+    error: personBlacklist === undefined
   };
   return (
     <div>
-      <ModuleTitle module={`老赖记录（${personBlacklist.length}）`} />
+      <ModuleTitle module={`老赖记录（${personBlacklist ? personBlacklist.length : 0}）`} />
       <CommonTable {...data} />
     </div>
   );

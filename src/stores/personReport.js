@@ -24,6 +24,7 @@ class PersonReportStore {
     personReportApi.getDetailInfo(url, params)
       .then(action( (response) => {
         this.blacklistData = response.data.blacklistResponses;
+        this.executed = response.data.executedResponses;
         this.isLoading = false;
       }))
       .catch(action(() => {
