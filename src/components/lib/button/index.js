@@ -1,7 +1,7 @@
 import React, { PropTypes } from 'react';
 import styles from './index.less';
 
-function Button({ btnType, className, loading, disabled, children, onClick, ...props }) {
+function Button({ btnType, className, loading, disabled, children, onClick, width, ...props }) {
   const clickHandle = (evt) => {
     if (loading || disabled) {
       return false;
@@ -21,6 +21,7 @@ function Button({ btnType, className, loading, disabled, children, onClick, ...p
     <button
       {...props}
       className={cssName}
+      style={{ width: width }}
       onClick={clickHandle}
       >
       {children}
@@ -31,6 +32,7 @@ function Button({ btnType, className, loading, disabled, children, onClick, ...p
 Button.propTypes = {
   btnType: PropTypes.string,
   className: PropTypes.string,
+  width: PropTypes.number,
   loading: PropTypes.bool,
   disabled: PropTypes.bool,
   children: PropTypes.node,

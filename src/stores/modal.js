@@ -21,6 +21,7 @@ class ModalStore {
   // button text
   @observable cancelText = '取消';
   @observable confirmText = '确认';
+  @observable confirmWidth = '';
 
   // loading
   @observable cancelLoading = false;
@@ -43,6 +44,7 @@ class ModalStore {
     cancelText,
     confirmText,
     confirmAction,
+    confirmWidth,
     cancelAction,
     closeAction,
     cancelLoading,
@@ -61,6 +63,7 @@ class ModalStore {
     // action
     this.confirmAction = confirmAction;
     this.cancelAction = cancelAction;
+    this.confirmWidth = confirmWidth;
     if (closeAction) { this.closeAction = closeAction; }
     // button text
     if (cancelText) { this.cancelText = cancelText; }
