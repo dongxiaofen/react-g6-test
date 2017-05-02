@@ -28,6 +28,8 @@ class SearchCompanyStore {
   @observable searchKey = '';
   // 显示到filter的公司名
   @observable searchKeyFilter = '';
+  // tab下拉框是否收起
+  @observable searchTabStatus = false;
   // 是否已搜索
   @observable isShowResult = false;
   // 是否开启loading
@@ -93,6 +95,8 @@ class SearchCompanyStore {
   @observable loading = false;
   // 点击某条数据相关信息
   @observable singleItemData = {};
+  // 选择那种报告 'analysis'深度 'report'高级 'free'快速
+  @observable reportType = 'analysis';
   // 获取搜索公司列表
   @action.bound getCompanyList() {
     // 是否已搜索
@@ -197,8 +201,17 @@ class SearchCompanyStore {
     this.getCompanyList();
   }
   // 切换tab
-  @action.bound searchTabClick(key) {
+  @action.bound searchTabClick(key, type) {
+    if (type === 'top') {
+      this.searchTabStatus = key;
+    } else {
+      this.searchType = key;
+    }
+  }
+  // 切换tab
+  @action.bound searchTabMouseDown(key) {
     this.searchType = key;
+    this.searchTabStatus = false;
   }
   // 搜索的searchKey
   @action.bound searchChange(evt) {
@@ -331,25 +344,125 @@ class SearchCompanyStore {
   @action.bound updateValue(oldValue, newValue) {
     this.filterSheet[oldValue] = newValue;
   }
-  // singleData
+  // 选择的单条数据
   @action.bound singleData(data) {
     this.singleItemData = data;
   }
-  // 创建报告
+  // 创建免费报告
+  @action.bound createFreeReport() {
+    modalStore.closeAction();
+    const obj = {
+      content: '快速查询报告创建成功'
+    };
+    messageStore.openMessage({ ...obj });
+    const companyName = this.singleItemData.company;
+    browserHistory.push('/companyHome?companyName=' + companyName + '&companyType=FREE');
+  }
+  // 创建高级报告
   @action.bound createReport() {
+    // 打开弹出按钮loading
+    modalStore.confirmLoading = true;
     const companyName = this.singleItemData.company;
     searchApi.createReport(companyName)
       .then(action('createReport', (resp) => {
+        // 关闭弹出按钮loading
+        modalStore.confirmLoading = false;
+        // 关闭model
         modalStore.closeAction();
+        // 弹出成功提示
         const obj = {
-          content: '已创建报告'
+          content: '高级查询报告创建成功'
         };
         messageStore.openMessage({ ...obj });
+        // 跳转
         browserHistory.push(`/companyHome?reportId=${resp.data.reportId}&companyType=MAIN`);
       }))
       .catch(action('createReport error', (err) => {
+        // 关闭弹出按钮loading
+        modalStore.confirmLoading = false;
+        // 关闭model
+        modalStore.closeAction();
+        if (err.response && err.response.data && err.response.data.message) {
+          // 重复创建时
+          if (err.response.data.errorCode === 409201) {
+            // 弹出成功提示
+            const obj = {
+              content: '高级查询报告创建成功'
+            };
+            messageStore.openMessage({ ...obj });
+            // 跳转
+            browserHistory.push(`/companyHome?reportId=${err.response.data.data.reportId}&companyType=MAIN`);
+          } else {
+            // 弹出失败提示
+            const obj = {
+              content: err.response.data.message
+            };
+            messageStore.openMessage({ ...obj });
+          }
+        }
         console.log(err.response, '=====createReport error');
       }));
+  }
+  // 创建深度报告
+  @action.bound createAnalysisReport() {
+    // 打开弹出按钮loading
+    modalStore.confirmLoading = true;
+    const companyName = this.singleItemData.company;
+    searchApi.createAnalysisReport(companyName)
+      .then(action('createAnalysisReport', (resp) => {
+        // 关闭弹出按钮loading
+        modalStore.confirmLoading = false;
+        // 关闭model
+        modalStore.closeAction();
+        // 弹出成功提示
+        const obj = {
+          content: '深度分析报告创建成功'
+        };
+        messageStore.openMessage({ ...obj });
+        // 跳转
+        browserHistory.push(`/companyHome?analysisReportId=${resp.data.reportId}&companyType=MAIN`);
+      }))
+      .catch(action('createAnalysisReport error', (err) => {
+        // 关闭弹出按钮loading
+        modalStore.confirmLoading = false;
+        // 关闭model
+        modalStore.closeAction();
+        if (err.response && err.response.data && err.response.data.message) {
+          // 重复创建时
+          if (err.response.data.errorCode === 409201) {
+            // 弹出成功提示
+            const obj = {
+              content: '深度分析报告创建成功'
+            };
+            messageStore.openMessage({ ...obj });
+            // 跳转
+            browserHistory.push(`/companyHome?analysisReportId=${err.response.data.data.analysisReportId}&companyType=MAIN`);
+          } else {
+            // 弹出失败提示
+            const obj = {
+              content: err.response.data.message
+            };
+            messageStore.openMessage({ ...obj });
+          }
+        }
+        console.log(err.response, '=====createAnalysisReport error');
+      }));
+  }
+  // 选择哪种报告
+  @action.bound selectReportType(obj) {
+    this.reportType = obj;
+  }
+  // 根据选择的报告类型创建报告
+  @action.bound createReportType() {
+    if (this.reportType === 'free') {
+      this.createFreeReport();
+    }
+    if (this.reportType === 'report') {
+      this.createReport();
+    }
+    if (this.reportType === 'analysis') {
+      this.createAnalysisReport();
+    }
   }
   // 创建监控
   @action.bound createMonitor(obj) {

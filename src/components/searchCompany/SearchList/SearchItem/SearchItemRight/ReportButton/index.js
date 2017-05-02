@@ -7,6 +7,8 @@ function ReportButton({itemData}) {
   const hrefCompany = () => {
     if (itemData && itemData.reportId > 0) {
       browserHistory.push('/companyHome?reportId=' + itemData.reportId + '&companyType=MAIN');
+    } else if (itemData && itemData.analysisReportId > 0) {
+      browserHistory.push('/companyHome?analysisReportId=' + itemData.analysisReportId + '&companyType=MAIN');
     } else {
       browserHistory.push('/companyHome?monitorId=' + itemData.monitorId + '&companyType=MAIN');
     }

@@ -17,6 +17,7 @@ function _Modal({modalStore}) {
     confirmText,
     cancelLoading,
     confirmLoading,
+    confirmWidth,
     closeAction,
     confirmAction,
     cancelAction
@@ -34,6 +35,7 @@ function _Modal({modalStore}) {
       pactName={pactName}
       cancelText={cancelText}
       confirmText={confirmText}
+      confirmWidth={confirmWidth}
       cancelLoading={cancelLoading}
       confirmLoading={confirmLoading}
       confirmAction={confirmAction}
@@ -49,4 +51,3 @@ _Modal.propTypes = {
 };
 
 export default inject('modalStore')(observer(_Modal));
-

@@ -13,12 +13,12 @@ const initState = {
     companyName: '',
   },
   filterConfig: [
-    {name: '工商', enumKey: 'CORP', checked: 1},
-    {name: '法务', enumKey: 'LEGAL', checked: 1},
-    {name: '新闻', enumKey: 'NEWS', checked: 1},
-    {name: '经营', enumKey: 'OPERATION', checked: 1},
-    {name: '团队', enumKey: 'TEAM', checked: 1},
-    {name: '上市', enumKey: 'STOCK', checked: 1},
+    {name: '工商', enumKey: 'CORP', checked: true},
+    {name: '法务', enumKey: 'LEGAL', checked: true},
+    {name: '新闻', enumKey: 'NEWS', checked: true},
+    {name: '经营', enumKey: 'OPERATION', checked: true},
+    {name: '团队', enumKey: 'TEAM', checked: true},
+    {name: '上市', enumKey: 'STOCK', checked: true},
   ],
   events: {
     info: {},
@@ -58,7 +58,7 @@ class RiskHeadlinesStore {
   @computed get dimGroupType() {
     const output = [];
     this.filterConfig.forEach((fiterItem)=>{
-      if (fiterItem.checked === 1) {
+      if (fiterItem.checked) {
         output.push(fiterItem.enumKey);
       }
     });

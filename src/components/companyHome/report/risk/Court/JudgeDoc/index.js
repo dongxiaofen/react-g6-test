@@ -10,7 +10,6 @@ function JudgeDoc({courtData, regTime, routing, riskStore}) {
     const params = {docId, trailDate};
     if (routing.location.query.monitorId) {
       const monitorCompanyId = routing.location.query.monitorId;
-      console.log(params);
       riskStore.getJudgeDetailMonitor(monitorCompanyId, params, data);
     } else {
       riskStore.getJudgeDetailReport(params, data);

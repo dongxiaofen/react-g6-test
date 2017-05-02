@@ -5,7 +5,9 @@ import styles from './index.less';
 function SearchTabTop({
   searchTypeConfig,
   searchType,
-  searchTabClick}) {
+  searchTabClick,
+  searchTabMouseDown,
+  searchTabStatus}) {
   // tab配置
   const stConfig = searchTypeConfig;
   // tab组
@@ -13,25 +15,40 @@ function SearchTabTop({
   // 循环tab并push
   Object.keys(stConfig).map((key)=>{
     // const buttonStyle = searchType === key ? styles.buttonActive : styles.button;
-    if (searchType !== key) {
-      tabDom.push(
-        <a
-          key={key}
-          onClick={searchTabClick.bind(this, key)}>
-          {stConfig[key]}
-        </a>
-      );
+    let active = styles.tab;
+    if (searchType === key) {
+      active = styles.active;
     }
+    tabDom.push(
+      <a
+        className={active}
+        key={key}
+        onMouseDown={searchTabMouseDown.bind(this, key)}>
+        {stConfig[key]}
+      </a>
+    );
   });
+  // 下拉是否收起
+  let searchTab = styles.searchTab;
+  let searchTabWrap = styles.searchTabWrap;
+  if (searchTabStatus) {
+    searchTab = styles.searchTabShow;
+    searchTabWrap = styles.searchTabWrapShow;
+  }
   return (
-    <div className={styles.searchTabWrap}>
-      <div title={searchTypeConfig[searchType]} className={styles.searchTabActive}>
+    <div
+      tabIndex="0"
+      onMouseOver={searchTabClick.bind(this, true, 'top')}
+      onMouseOut={searchTabClick.bind(this, false, 'top')}
+      className={searchTabWrap}>
+      <div
+        title={searchTypeConfig[searchType]} className={styles.searchTabActive}>
         <div className={styles.searchTabActiveCon}>
           {searchTypeConfig[searchType]}
         </div>
         <i></i>
       </div>
-      <div className={styles.searchTab}>
+      <div className={searchTab}>
         {tabDom}
       </div>
     </div>
@@ -41,6 +58,8 @@ function SearchTabTop({
 SearchTabTop.propTypes = {
   searchTypeConfig: PropTypes.object,
   searchType: PropTypes.string,
-  searchTabClick: PropTypes.func
+  searchTabStatus: PropTypes.bool,
+  searchTabClick: PropTypes.func,
+  searchTabMouseDown: PropTypes.func,
 };
 export default observer(SearchTabTop);

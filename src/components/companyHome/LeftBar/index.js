@@ -35,9 +35,19 @@ const barConf = [
     menuKey: 'trendAnalyse',
     children: [
       { menuText: '事件时间轴', menuKey: 'eventLine', helpInfo: helpInfo2, contain: ['main'] },
+      { menuText: '预警分析', menuKey: 'alertAnalysis', contain: ['main'] },
     ],
     helpInfo: helpInfo2,
     contain: ['main'],
+  },
+  {
+    menuText: '信息核查',
+    menuKey: 'infoCheck',
+    children: [
+      {menuText: '关联人核查', menuKey: 'relPerCheck', helpInfo: helpInfo1, contain: ['main', 'report']},
+    ],
+    helpInfo: helpInfo1,
+    contain: ['main', 'report'],
   },
   {
     menuText: '企业现勘',
