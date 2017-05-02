@@ -8,11 +8,20 @@ class PersonReportStore {
   @observable blacklistData =[];
   @observable dishonestyList =[];
   @observable isLoading = true;
-  @action.bound getMonitorCardId() {
-
-  }
-  @action.bound getReportCardId() {
-
+  @action.bound getCardId(params) {
+    let url;
+    if (params.reportType === 'monitor') {
+      url = `/api/monitor/${params.companyId}/person/cardId`;
+    } else {
+      url = `/api/report/${params.companyId}/person/cardId`;
+    }
+    personReportApi.getCardId(url, params)
+      .then( action( (response) => {
+        this.idCard = response.data;
+      }))
+      .catch(action( (error) => {
+        console.log(error.response.data);
+      }));
   }
   @action.bound getDetailInfo(params) {
     let url;
@@ -26,6 +35,7 @@ class PersonReportStore {
         this.blacklistData = response.data.blacklistResponses;
         this.executed = response.data.executedResponses;
         this.dishonestyList = response.data.dishonestyResponses;
+        this.reportData = response.data;
         this.isLoading = false;
       }))
       .catch(action(() => {

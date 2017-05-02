@@ -5,15 +5,11 @@ import {Row, Col} from 'components/common/layout';
 import { runInAction } from 'mobx';
 import photo from 'imgs/personReport/photo.png';
 
-function Banner({personReportStore, routing, params}) {
+function Banner({personReportStore, params}) {
   const bannerInfo = personReportStore.reportData;
   const idCard = personReportStore.idCard;
-  const getIdCard = ()=> {
-    if (routing.location.query.monitorId === 'monitor') {
-      personReportStore.getMonitorCardId(routing.location.query.monitorId, {personCheckId: params.personCheckId});
-    } else {
-      personReportStore.getReportCardId(routing.location.query.reportId, {personCheckId: params.personCheckId});
-    }
+  const getIdCard = () => {
+    personReportStore.getCardId(params);
   };
   const clickIdCard = () => {
     if (idCard === '') {
