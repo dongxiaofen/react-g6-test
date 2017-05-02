@@ -2,7 +2,7 @@ import React, { PropTypes } from 'react';
 import { observer, inject } from 'mobx-react';
 import styles from './index.less';
 
-function ReportAction({ bannerStore, modalStore, routing }) {
+function ReportAction({ bannerStore, modalStore, payModalStore, routing }) {
   const {monitorId, reportId, companyType} = routing.location.query;
   const operatMonitor = () => {
     if (bannerStore.monitorStatus === 'PAUSE' || bannerStore.monitorStatus === 'MONITOR') {
@@ -15,8 +15,35 @@ function ReportAction({ bannerStore, modalStore, routing }) {
       }
     }
   };
-  const openPayModal = () => {
+
+  const choiceOk = () => {
+    const companyName = routing.location.query.companyName;
+    const obj = { companyName: companyName, time: payModalStore.selectValue };
+    bannerStore.createMonitor(obj);
   };
+
+  const openPayModal = () => {
+    // payModalStore.openCompModal({
+    //   'modalType': 'createMonitor',
+    //   'width': '560px',
+    //   'pactName': '用户服务协议',
+    //   'pactUrl': '/',
+    //   'pointText': '创建报告即视为同意',
+    //   'callBack': choiceOk
+    // });
+  };
+
+  const openCreateMonitorModal = () => {
+    payModalStore.openCompModal({
+      'modalType': 'createMonitor',
+      'width': '560px',
+      'pactName': '用户服务协议',
+      'pactUrl': '/',
+      'pointText': '创建报告即视为同意',
+      'callBack': choiceOk
+    });
+  };
+
   const updateHighOrDeepConfirmAction = () => {
     const companyName = routing.location.query.companyName;
     const updateHighOrDeep = bannerStore.updateHighOrDeep;
@@ -47,7 +74,7 @@ function ReportAction({ bannerStore, modalStore, routing }) {
     const _analysisReportId = routing.location.query.analysisReportId;
 
     const updateReport = <div className={styles.actionBtn} onClick={openUpdateHighOrDeepModal}>升级报告</div>;
-    const addMonitor = <div className={styles.actionBtn}>加入监控</div>;
+    const addMonitor = <div className={styles.actionBtn} onClick={openCreateMonitorModal}>加入监控</div>;
     const updateMonitor = <div className={styles.actionBtn}>升级监控</div>;
     const monitorRenewal = <div className={styles.actionBtn}>监控续期</div>;
     switch (_companyType) {
@@ -132,6 +159,7 @@ function ReportAction({ bannerStore, modalStore, routing }) {
 ReportAction.propTypes = {
   bannerStore: PropTypes.object,
   modalStore: PropTypes.object,
+  payModalStore: PropTypes.object,
   routing: PropTypes.object,
 };
-export default inject('routing', 'modalStore')(observer(ReportAction));
+export default inject('routing', 'modalStore', 'payModalStore')(observer(ReportAction));

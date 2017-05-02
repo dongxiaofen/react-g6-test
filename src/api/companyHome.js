@@ -128,3 +128,8 @@ export const createReport = (active, companyName) => {
   }
   return axios.post(url, { companyName: companyName });
 };
+
+// 创建监控
+export const createMonitor = (params) => {
+  return axios.post(`/api/monitor`, params);
+};

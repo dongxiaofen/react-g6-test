@@ -1,5 +1,9 @@
 import { observable, action } from 'mobx';
+import { browserHistory } from 'react-router';
 import {companyHomeApi} from 'api';
+import modalStore from './modal';
+import messageStore from './message';
+import payModalStore from './payModal';
 class BannerStore {
   // banner
   @observable monitorId = '';
@@ -101,17 +105,40 @@ class BannerStore {
     this.updateHighOrDeep.pointTextSub = pointTextSub;
   }
 
-  // 创建高级报告
+  // 创建高级报告或者深度报告
   @action.bound createReport(active, companyName) {
+    modalStore.confirmLoading = true;
     companyHomeApi.createReport(active, companyName)
       .then(action('create report', (resp) => {
         console.log(resp.data);
+        modalStore.confirmLoading = false;
+        modalStore.closeAction();
+        if (resp.data.reportId) {
+          messageStore.openMessage({ content: '高级查询报告创建成功' });
+          browserHistory.push(`/companyHome?reportId=${resp.data.reportId}&companyType=MAIN`);
+        }
+        if (resp.data.analysisReportId) {
+          messageStore.openMessage({ content: '深度分析报告创建成功' });
+          browserHistory.push(`/companyHome?analysisReportId=${resp.data.analysisReportId}&companyType=MAIN`);
+        }
       }))
       .catch((err) => {
         console.log(err);
+        modalStore.confirmLoading = false;
       });
   }
 
-  // 创建深度报告
+  // 创建监控
+  @action.bound createMonitor(obj) {
+    companyHomeApi.createMonitor(obj)
+      .then(action('create monitor', (resp) => {
+        payModalStore.closeAction();
+        messageStore.openMessage({ content: '成功创建监控' });
+        browserHistory.push(`/companyHome?monitorId=${resp.data.monitorId}&companyType=MAIN`);
+      }))
+      .catch(action('createMonitor error', (err) => {
+        console.log(err.response, '=====createMonitor error');
+      }));
+  }
 }
 export default new BannerStore();
