@@ -10,7 +10,7 @@ class AlertAnalysisStore {
       'ruleName': '新增风险关联',
       'ruleTime': '2017-01-15'
     },
-    detail: testData[1],
+    detail: testData[4],
   }
   @action.bound openDetailModal() {
     const companyName = this.detailData.detail.companyName;
