@@ -91,6 +91,12 @@ export const getNewsDetail = (url, source) => {
 export const getBiddingDetail = (url, source) => {
   return axios.get(url, {cancelToken: source.token});
 };
+export const getPersonCheckInfo = ({monitorId, params}) => {
+  return axios.get(`/api/monitor/${monitorId}/person/page`, {params: params});
+};
+export const checkPersonInfo = (url, params) => {
+  return axios.post(url, params);
+};
 
 export const changeAnnouncement = ({ stockType, monitorId, reportId }) => {
   let url;

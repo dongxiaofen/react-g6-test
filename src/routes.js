@@ -22,8 +22,11 @@ import {
     ReportManage,
     Team,
     Assets,
+    RuleList,
+    RuleAdd,
     Stock,
     Network,
+    RelPerCheck,
     AlertAnalysis,
 // first append here from plop
   } from 'containers';
@@ -61,6 +64,7 @@ export default (allStore) => {
         <Route path="assets" component={ Assets } />
         <Route path="stock" component={ Stock } />
         <Route path="network" component={ Network } />
+        <Route path="relPerCheck" component={ RelPerCheck } />
         <Route path="alertAnalysis" component={ AlertAnalysis } />
 {/* third append here from plop */}
       </Route>
@@ -71,6 +75,8 @@ export default (allStore) => {
       <Route path="monitorStatistics" component={ MonitorStatistics } />
       <Route path="accountSetting" component={ AccountSetting } />
       <Route path="reportManage" component={ ReportManage } />
+      <Route path="ruleList" component={ RuleList } />
+      <Route path="ruleAdd" component={ RuleAdd } />
 {/* second append here from plop */}
     </Route>
   );
