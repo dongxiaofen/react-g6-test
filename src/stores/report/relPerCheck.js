@@ -1,11 +1,12 @@
 import { observable, action } from 'mobx';
 import { companyHomeApi } from 'api';
 import uiStore from '../ui';
+import pathval from 'pathval';
 
 class RelPerCheckStore {
   @observable personCheckInfoData = [];
-  @observable showId = {};
-  @observable idCard = {};
+  showId = observable.map({});
+  idCard = observable.map({});
   // 弹窗
   @observable showCheckModal = false;
   @observable isLoading = false;
@@ -44,6 +45,16 @@ class RelPerCheckStore {
       .catch(action( (error) => {
         console.log(error);
         this.isLoading = false;
+      }));
+  }
+  @action.bound getIdCard({monitorId, reportId, personCheckId}) {
+    companyHomeApi.getIdCard({monitorId, reportId, personCheckId})
+      .then( action( (response) => {
+        pathval.setPathValue(this, `showId.${personCheckId}`, true);
+        pathval.setPathValue(this, `idCard.${personCheckId}`, response.data);
+      }))
+      .catch( action( (err) => {
+        console.log(err.response.data);
       }));
   }
 }

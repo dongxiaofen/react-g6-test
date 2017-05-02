@@ -26,6 +26,7 @@ import {
     Network,
     RelPerCheck,
     AlertAnalysis,
+    PersonReport,
 // first append here from plop
   } from 'containers';
 
@@ -73,6 +74,7 @@ export default (allStore) => {
       <Route path="monitorStatistics" component={ MonitorStatistics } />
       <Route path="accountSetting" component={ AccountSetting } />
       <Route path="reportManage" component={ ReportManage } />
+      <Route path="personReport" component={ PersonReport } />
 {/* second append here from plop */}
     </Route>
   );
