@@ -24,6 +24,7 @@ import {
     Assets,
     Stock,
     Network,
+    RelPerCheck,
     AlertAnalysis,
 // first append here from plop
   } from 'containers';
@@ -61,6 +62,7 @@ export default (allStore) => {
         <Route path="assets" component={ Assets } />
         <Route path="stock" component={ Stock } />
         <Route path="network" component={ Network } />
+        <Route path="relPerCheck" component={ RelPerCheck } />
         <Route path="alertAnalysis" component={ AlertAnalysis } />
 {/* third append here from plop */}
       </Route>

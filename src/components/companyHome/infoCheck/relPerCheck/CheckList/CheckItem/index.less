@@ -1,0 +1,123 @@
+@import "~sc-colors/index.less";
+
+.wrapper {
+  position: relative;
+  margin-bottom: 20px;
+  padding: 20px;
+  padding-left: 70px;
+  font-size: 14px;
+  background: @mdc-white-darker;
+  border: 1px solid @mdc-grey-200;
+  transition: all .3s;
+}
+.wrapperMatch {
+  composes: wrapper;
+  cursor: pointer;
+}
+.wrapper:hover {
+  box-shadow: 0 2px 4px 0 rgba(176,190,197,0.50);
+}
+.label {
+  position: absolute;
+  top: 15px;
+  left: -8px;
+  width: 65px;
+  height: 23px;
+  line-height: 23px;
+  text-align: center;
+}
+.labelBlue {
+  composes: label;
+  color: @mdc-blue-400;
+  background: @mdc-blue-50;
+}
+.labelGray {
+  composes: label;
+  color: @mdc-grey-500;
+  background: @mdc-grey-200;
+}
+.labelArrow {
+  position: absolute;
+  left: 0;
+  bottom: -7px;
+  width: 0;
+  height: 0;
+  border-bottom: 4px solid transparent;
+  border-left: 4px solid transparent;
+}
+.labelArrowGrey {
+  composes: labelArrow;
+  border-top: 4px solid @mdc-grey-400;
+  border-right: 4px solid @mdc-grey-400;
+}
+.labelArrowBlue {
+  composes: labelArrow;
+  border-top: 4px solid @mdc-blue-100;
+  border-right: 4px solid @mdc-blue-100;
+}
+.line1 {
+  margin-bottom: 20px;
+  line-height: 1;
+}
+.perNameBlue {
+  color: @mdc-blue-400;
+  margin-right: 10px;
+}
+.perNameBlack {
+  color: @mdc-grey-700;
+  margin-right: 10px;
+}
+.relation {
+  color: @mdc-grey-500;
+  margin-right: 30px;
+}
+.idCardBlue {
+  color: @mdc-blue-400;
+}
+.idCardBlack {
+  color: @mdc-grey-700;
+}
+.line2 {
+  line-height: 1;
+}
+.line2:after {
+  content: '';
+  display: block;
+  clear: both;
+}
+.values {
+  margin-left: 10px;
+}
+.icon {
+  position: relative;
+  top: 1px;
+  display: inline-block;
+  width: 19px;
+  height: 12px;
+  margin-left: 10px;
+  background-position: center;
+  background-repeat: no-repeat;
+  cursor: pointer;
+}
+.match_show {
+  composes: icon;
+  background-image: url(imgs/personCheck/match_show.png);
+}
+.match_hide {
+  composes: icon;
+  background-image: url(imgs/personCheck/match_hide.png);
+}
+.noMatch_show {
+  composes: icon;
+  background-image: url(imgs/personCheck/noMatch_show.png);
+}
+.noMatch_hide {
+  composes: icon;
+  background-image: url(imgs/personCheck/noMatch_hide.png);
+}
+.checkTime {
+  float: right;
+  font-size: 14px;
+  line-height: 1;
+  color: @mdc-grey-500;
+}
