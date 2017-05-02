@@ -24,6 +24,9 @@ export payModalStore from './payModal';
 export uiStore from './ui';
 export teamStore from './report/team';
 export assetsStore from './report/assets';
+export ruleStore from './rule';
+export stockStore from './report/stock';
 export networkStore from './report/network';
 export alertAnalysisStore from './report/alertAnalysis';
+export relPerCheckStore from './report/relPerCheck';
 // append here from plop

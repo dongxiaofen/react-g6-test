@@ -13,6 +13,7 @@ class AlertAnalysisStore {
     detail: testData[1],
   }
   @action.bound openDetailModal() {
+    const companyName = this.detailData.detail.companyName;
     detailModalStore.openDetailModal((cp)=>{
       require.ensure([], (require)=>{
         cp(
@@ -20,7 +21,7 @@ class AlertAnalysisStore {
           require('components/companyHome/report/AlertAnalysis/detail/Content')
         );
       });
-    });
+    }, `预警详情（${companyName}）`);
   }
 }
 export default new AlertAnalysisStore();

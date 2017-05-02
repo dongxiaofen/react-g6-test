@@ -2,9 +2,9 @@ import React, { PropTypes, Component } from 'react';
 const chartFunc = {};
 const resizeArr = [
   'newBusiness',
-  'industry',
-  'scale',
-  'areaRanking',
+  'provinceRank',
+  'industryDist',
+  'scaleDist',
 ];
 export default class ResizeChart extends Component {
   static propTypes = {

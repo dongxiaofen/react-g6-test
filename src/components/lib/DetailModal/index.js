@@ -5,6 +5,8 @@ import styles from './index.less';
 export default class DetailModal extends Component {
   static propTypes = {
     visible: PropTypes.bool.isRequired,
+    title: PropTypes.string,
+    isNeedheight: PropTypes.bool,
     titleComp: PropTypes.func,
     contentComp: PropTypes.func,
     sourceComp: PropTypes.func,
@@ -17,15 +19,9 @@ export default class DetailModal extends Component {
 
   componentDidUpdate() {
     this.bodyStyle();
-    const detailModalTag = document.getElementById('detail-modal');
-    const titleTag = document.getElementById('detail-modal-title');
-    const contentTag = document.getElementById('detail-modal-content');
-    const sourceTag = document.getElementById('detail-modal-source');
-
-    const detailModalTagHeight = parseInt(this.getStyle(detailModalTag).height, 10);
-    const titleTagHeight = parseInt(this.getStyle(titleTag).height, 10);
-    const sourceTagHeight = parseInt(this.getStyle(sourceTag).height, 10);
-    contentTag.style.height = detailModalTagHeight - titleTagHeight - sourceTagHeight + 'px';
+    setTimeout(() => {
+      this.contentStyle();
+    }, 100);
   }
 
   getStyle(ele) {
@@ -36,6 +32,20 @@ export default class DetailModal extends Component {
       style = ele.currentStyle;
     }
     return style;
+  }
+
+  contentStyle() {
+    const detailModalTag = this.refs['detail-modal'];
+    const titleTag = this.refs['detail-modal-title'];
+    const contentTag = this.refs['detail-modal-content'];
+
+    const titleTagHeight = parseInt(this.getStyle(titleTag).height, 10);
+    contentTag.style.height = 630 - titleTagHeight - 60 + 'px';
+    contentTag.scrollTop = 0;
+
+    // 设置modal相对于顶部的高度
+    const windowHeight = document.documentElement.clientHeight;
+    detailModalTag.style.marginTop = windowHeight / 2 - 315 + 'px';
   }
 
   // 隐藏body的滚动条
@@ -57,21 +67,23 @@ export default class DetailModal extends Component {
       : `${styles.contentLayer}`;
     return (
       <div className={modalBox}>
-        <div id="detail-modal" className={contentBox}>
-          <div id="detail-modal-title" className="clearfix">
-            <div className={`clearfix ${styles.title}`} onClick={this.props.closeAction}>
-              点击关闭查看
-              <div className={styles.closeIcon}></div>
+        <div ref="detail-modal" className={contentBox}>
+          <div ref="detail-modal-title" className="clearfix">
+            <div className={`clearfix ${styles.title}`}>
+              <div className={styles.titleName}>{this.props.title}</div>
+              <div className={styles.close} onClick={this.props.closeAction}>
+                <i className="fa fa-times"></i>
+              </div>
             </div>
             <div className="clearfix">
               {this.props.titleComp ? <this.props.titleComp /> : null}
             </div>
             <div className={styles.line}></div>
           </div>
-          <div id="detail-modal-content" className={`clearfix ${styles.content}`}>
+          <div ref="detail-modal-content" className={`clearfix ${styles.content}`}>
             {this.props.contentComp ? <this.props.contentComp /> : null}
           </div>
-          <div id="detail-modal-source" className={`clearfix ${styles.source}`}>
+          <div ref="detail-modal-source" className={`clearfix ${styles.source}`}>
             {this.props.sourceComp ? <this.props.sourceComp /> : null}
           </div>
         </div>

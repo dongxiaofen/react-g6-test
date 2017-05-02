@@ -12,7 +12,7 @@ function TypeFilter({monitorListStore, uiStore}) {
   const sortHandle = (property, newSortValue) => {
     uiStore.updateUiStore(`monitorList.sortDirection.${property}`, newSortValue);
     uiStore.updateUiStore(`monitorList.params.sort`, `${property},${newSortValue}`);
-    uiStore.updateUiStore(`monitorList.params.index`, 1);
+    uiStore.updateUiStore(`monitorListPager.index`, 1);
     monitorListStore.getMainList();
   };
   const createSort = () => {

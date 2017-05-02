@@ -3,6 +3,7 @@ import pathval from 'pathval';
 import bannerStore from './banner';
 import assetsStore from './report/assets';
 import monitorListStore from './monitorList';
+import accountSettingStore from './accountSetting';
 import reportManageStore from './reportManage';
 
 class UiStore {
@@ -26,6 +27,30 @@ class UiStore {
       () => {
         document.body.scrollTop = 0;
         monitorListStore.getMainList();
+      }
+    );
+    reaction(
+      () => this.uiState.accountConsume.index,
+      () => {
+        accountSettingStore.getConsume();
+      }
+    );
+    reaction(
+      () => this.uiState.accountRecharge.index,
+      () => {
+        accountSettingStore.getRecharge();
+      }
+    );
+    reaction(
+      () => this.uiState.accountSummary.index,
+      () => {
+        accountSettingStore.getSummary();
+      }
+    );
+    reaction(
+      () => this.uiState.accountLoginRecord.index,
+      () => {
+        accountSettingStore.getLoginRecord();
       }
     );
     reaction(
@@ -54,7 +79,27 @@ class UiStore {
     monitorListPager: {
       index: 1,
       size: 10,
-      totalElements: 10,
+      totalElements: 0,
+    },
+    accountConsume: {
+      index: 1,
+      size: 10,
+      totalElements: 0,
+    },
+    accountRecharge: {
+      index: 1,
+      size: 10,
+      totalElements: 0,
+    },
+    accountSummary: {
+      index: 1,
+      size: 10,
+      totalElements: 0,
+    },
+    accountLoginRecord: {
+      index: 1,
+      size: 10,
+      totalElements: 0,
     },
     shareholder: {
       index: 1,
@@ -177,6 +222,27 @@ class UiStore {
       size: 10,
       totalElements: 0, // 服务端分页
     },
+    relPerCheck: {
+      index: 1,
+      size: 10,
+      totalElements: 0, // 服务端分页
+    },
+    stockShareHolder: {
+      index: 1,
+      size: 10
+    },
+    stockCirculateShareHolder: {
+      index: 1,
+      size: 10
+    },
+    stockManagement: {
+      index: 1,
+      size: 20
+    },
+    stockAnnouncement: {
+      index: 1,
+      size: 10
+    },
   };
 
   @action.bound updateUiStore(keypath, value) {
@@ -185,6 +251,17 @@ class UiStore {
   @action.bound toggleExpand(module, rowIdx) {
     const value = this.uiState[module].show.get(rowIdx);
     this.uiState[module].show.set(rowIdx, !value);
+  }
+  @action.bound resetAccountPager() {
+    const template = {
+      index: 1,
+      size: 10,
+      totalElements: 0,
+    };
+    this.uiState.accountConsume = Object.assign({}, template);
+    this.uiState.accountRecharge = Object.assign({}, template);
+    this.uiState.accountSummary = Object.assign({}, template);
+    this.uiState.accountLoginRecord = Object.assign({}, template);
   }
 }
 export default new UiStore();
