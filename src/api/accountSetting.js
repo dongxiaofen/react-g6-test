@@ -29,3 +29,6 @@ export const getSummary = (uId, params) => {
 export const getLoginRecord = (uId, params) => {
   return axios.get(`/api/user/sub/${uId}/login`, {params});
 };
+export const addNewUser = (params) => {
+  return axios.post(`/api/user/sub`, params);
+};

@@ -39,7 +39,7 @@ const validate = {
     if (!validate.isNotEmpty(pwd)) {
       msg = '请输入密码';
     } else if (!validate.validatePwd(pwd)) {
-      msg = '请输入包含字母、数字和特殊字符的8-32位的密码';
+      msg = '请输入包含字母，数字和特殊字符的8-32位密码';
     } else if (rePwd && !validate.isEqual(pwd, rePwd)) {
       msg = '两次输入的密码不一致';
     }
@@ -48,9 +48,11 @@ const validate = {
   vdRePwd: (pwd1, pwd2) => {
     let msg = '';
     if (!validate.isNotEmpty(pwd1)) {
-      msg = '请再次输入密码';
-    } else if (!validate.isEqual(pwd1, pwd2)) {
+      msg = '确认密码不能为空';
+    } else if (pwd2 && !validate.isEqual(pwd1, pwd2)) {
       msg = '两次输入的密码不一致';
+    } else if (!validate.validatePwd(pwd1)) {
+      msg = '请输入包含字母，数字和特殊字符的8-32位密码';
     }
     return msg;
   },
