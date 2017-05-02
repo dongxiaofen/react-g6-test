@@ -5,7 +5,7 @@ import AddModal from '../../userModal/AddModal';
 import styles from './index.less';
 function AddUser(props) {
   const showAddModal = () => {
-    props.accountSettingStore.changeValue('tree.addModal.visible', true);
+    props.accountSettingStore.changeValue('addModal.visible', true);
   };
   return (
     <div>

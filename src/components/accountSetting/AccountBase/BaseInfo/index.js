@@ -2,16 +2,20 @@ import React from 'react';
 import { observer } from 'mobx-react';
 import AnimateLoading from 'components/hoc/LoadingComp/AnimateLoading';
 import Item from '../Item';
+import PwdModal from '../../userModal/PwdModal';
 import styles from './index.less';
 function BaseInfo({accountSettingStore}) {
   const baseInfo = accountSettingStore.base;
   const activeIndex = accountSettingStore.tree.activeIndex;
+  const showPwdModal = () => {
+    accountSettingStore.changeValue('pwdModal.visible', true);
+  };
   const handleEmail = (values) => {
     const level = accountSettingStore.tree.data.content[activeIndex].level;
     return (
       <div className={styles.pwdBox}>
         {values}
-        {level < 2 && <span className={styles.changePwd}>修改密码</span>}
+        {level < 2 && <span className={styles.changePwd} onClick={showPwdModal}>修改密码</span>}
       </div>
     );
   };
@@ -78,6 +82,7 @@ function BaseInfo({accountSettingStore}) {
         <h2 className={styles.baseTitle}>基本信息</h2>
         {output}
       </div>
+      <PwdModal />
     </div>
   );
 }

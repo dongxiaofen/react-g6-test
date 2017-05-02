@@ -7,10 +7,10 @@ import md5 from 'crypto-js/md5';
 import encHex from 'crypto-js/enc-hex';
 import styles from './index.less';
 function AddModal({accountSettingStore}) {
-  const moduleData = accountSettingStore.tree.addModal;
-  const visible = moduleData.visible;
+  const moduleData = accountSettingStore.addModal;
   const formVal = moduleData.form;
   const errorMsg = moduleData.errorMsg;
+  const errorBoxCss = errorMsg ? styles.errorBox : styles.errorBoxHide;
   const formConf = [
     {type: 'text', name: 'email', placeholder: '请输入登录账号'},
     {type: 'password', name: 'password', placeholder: '请输入登录密码', sameCheck: 'confirmPassword'},
@@ -31,21 +31,20 @@ function AddModal({accountSettingStore}) {
     });
     return msgArr[0] || '';
   };
-  const errorBoxCss = errorMsg ? styles.errorBox : styles.errorBoxHide;
   const inputChange = (evt) => {
     const {name, value} = evt.target;
-    accountSettingStore.changeValue(`tree.addModal.form.${name}.value`, value);
+    accountSettingStore.changeValue(`addModal.form.${name}.value`, value);
   };
   const inputCheck = (sameCheck, evt) => {
     const {name, value} = evt.target;
     const vdRule = formVal[name].vdRule;
     const sameVal = sameCheck && formVal[sameCheck].value;
     const msg = vdRule && validate[vdRule](value, sameVal);
-    accountSettingStore.changeValue(`tree.addModal.form.${name}.errorMsg`, msg);
+    accountSettingStore.changeValue(`addModal.form.${name}.errorMsg`, msg);
     if (sameCheck && !msg) {
-      accountSettingStore.changeValue(`tree.addModal.form.${sameCheck}.errorMsg`, '');
+      accountSettingStore.changeValue(`addModal.form.${sameCheck}.errorMsg`, '');
     }
-    accountSettingStore.changeValue(`tree.addModal.errorMsg`, msg || computedMsg());
+    accountSettingStore.changeValue(`addModal.errorMsg`, msg || computedMsg());
   };
   const allInputCheck = () => {
     const msgArr = [];
@@ -55,10 +54,10 @@ function AddModal({accountSettingStore}) {
       const msg = vdRule && validate[vdRule](value, sameVal);
       if (msg) {
         msgArr.push(msg);
-        accountSettingStore.changeValue(`tree.addModal.form.${item.name}.errorMsg`, msg);
+        accountSettingStore.changeValue(`addModal.form.${item.name}.errorMsg`, msg);
       }
     });
-    accountSettingStore.changeValue(`tree.addModal.errorMsg`, msgArr[0]);
+    accountSettingStore.changeValue(`addModal.errorMsg`, msgArr[0]);
     return !msgArr[0];
   };
   const modalCancel = () => {
@@ -97,7 +96,7 @@ function AddModal({accountSettingStore}) {
   };
   return (
     <Modal
-      visible={visible}
+      visible={moduleData.visible}
       width="440px"
       closeAction={modalCancel}
       cancelAction={modalCancel}

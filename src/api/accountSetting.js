@@ -32,3 +32,6 @@ export const getLoginRecord = (uId, params) => {
 export const addNewUser = (params) => {
   return axios.post(`/api/user/sub`, params);
 };
+export const changePwd = (url, params) => {
+  return axios.put(url, params);
+};

@@ -6,58 +6,80 @@ import uiStore from './ui';
 import messageStore from './message';
 class AccountSettingStore {
   @observable tree = {
-    addModal: {
-      visible: false,
-      errorMsg: '',
-      loading: false,
-      form: {
-        email: {
-          value: '',
-          vdRule: 'vdEmail',
-          errorMsg: '',
-        },
-        password: {
-          value: '',
-          vdRule: 'vdPwd',
-          errorMsg: '',
-        },
-        confirmPassword: {
-          value: '',
-          vdRule: 'vdRePwd',
-          errorMsg: '',
-        },
-        contact: {
-          value: '',
-          vdRule: 'vdName',
-          errorMsg: '',
-        },
-        department: {
-          value: '',
-          vdRule: '',
-          errorMsg: '',
-        },
-        contactPosition: {
-          value: '',
-          vdRule: '',
-          errorMsg: '',
-        },
-        phone: {
-          value: '',
-          vdRule: '',
-          errorMsg: '',
-        },
-        contactEmail: {
-          value: '',
-          vdRule: '',
-          errorMsg: '',
-        },
-      },
-    },
     searchInput: '',
     activeIndex: 0,
     data: {},
   };
+  @observable addModal = {
+    visible: false,
+    errorMsg: '',
+    loading: false,
+    form: {
+      email: {
+        value: '',
+        vdRule: 'vdEmail',
+        errorMsg: '',
+      },
+      password: {
+        value: '',
+        vdRule: 'vdPwd',
+        errorMsg: '',
+      },
+      confirmPassword: {
+        value: '',
+        vdRule: 'vdRePwd',
+        errorMsg: '',
+      },
+      contact: {
+        value: '',
+        vdRule: 'vdName',
+        errorMsg: '',
+      },
+      department: {
+        value: '',
+        vdRule: '',
+        errorMsg: '',
+      },
+      contactPosition: {
+        value: '',
+        vdRule: '',
+        errorMsg: '',
+      },
+      phone: {
+        value: '',
+        vdRule: '',
+        errorMsg: '',
+      },
+      contactEmail: {
+        value: '',
+        vdRule: '',
+        errorMsg: '',
+      },
+    },
+  };
   @observable base = {};
+  @observable pwdModal = {
+    visible: false,
+    errorMsg: '',
+    loading: false,
+    form: {
+      oldPwd: {
+        value: '',
+        vdRule: 'vdPwdIsNotEmpty',
+        errorMsg: '',
+      },
+      newPwd: {
+        value: '',
+        vdRule: 'vdPwd',
+        errorMsg: '',
+      },
+      reNewPwd: {
+        value: '',
+        vdRule: 'vdRePwd',
+        errorMsg: '',
+      },
+    }
+  };
   @observable tabs = {
     business: {
       reportAndMonitor: {},
@@ -73,8 +95,26 @@ class AccountSettingStore {
   @action.bound changeValue(key, value) {
     pathval.setPathValue(this, key, value);
   }
+  @action.bound changePwd(url, params) {
+    this.pwdModal.loading = true;
+    accountSettingApi.changePwd(url, params)
+      .then(action('changePwd_success', () => {
+        this.resetPwdModalInfo();
+        messageStore.openMessage({
+          type: 'info',
+          content: '修改密码成功',
+        });
+      }))
+      .catch(action('changePwd_error', err => {
+        this.pwdModal.loading = false;
+        messageStore.openMessage({
+          type: 'error',
+          content: err.response && err.response.data && err.response.data.message || '新增账号失败',
+        });
+      }));
+  }
   @action.bound addNewUser(params) {
-    this.tree.addModal.loading = true;
+    this.addModal.loading = true;
     accountSettingApi.addNewUser(params)
       .then(action('addNewUser_success', () => {
         this.resetAddInfo();
@@ -101,7 +141,7 @@ class AccountSettingStore {
           type: 'error',
           content: err.response && err.response.data && err.response.data.message || '新增账号失败',
         });
-        this.tree.addModal.loading = false;
+        this.addModal.loading = false;
       }));
   }
   @action.bound getTreeList() {
@@ -256,7 +296,7 @@ class AccountSettingStore {
       }));
   }
   @action.bound resetAddInfo() {
-    this.tree.addModal = {
+    this.addModal = {
       visible: false,
       errorMsg: '',
       loading: false,
@@ -303,6 +343,30 @@ class AccountSettingStore {
           errorMsg: '',
         },
       },
+    };
+  }
+  @action.bound resetPwdModalInfo() {
+    this.pwdModal = {
+      visible: false,
+      errorMsg: '',
+      loading: false,
+      form: {
+        oldPwd: {
+          value: '',
+          vdRule: 'vdPwdIsNotEmpty',
+          errorMsg: '',
+        },
+        newPwd: {
+          value: '',
+          vdRule: 'vdPwd',
+          errorMsg: '',
+        },
+        reNewPwd: {
+          value: '',
+          vdRule: 'vdRePwd',
+          errorMsg: '',
+        },
+      }
     };
   }
   @action.bound resetStore() {
