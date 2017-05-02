@@ -3,12 +3,15 @@ import { observer } from 'mobx-react';
 import AnimateLoading from 'components/hoc/LoadingComp/AnimateLoading';
 import Item from '../Item';
 import styles from './index.less';
-function BaseInfo({baseInfo}) {
+function BaseInfo({accountSettingStore}) {
+  const baseInfo = accountSettingStore.base;
+  const activeIndex = accountSettingStore.tree.activeIndex;
   const handleEmail = (values) => {
+    const level = accountSettingStore.tree.data.content[activeIndex].level;
     return (
       <div className={styles.pwdBox}>
         {values}
-        <span className={styles.changePwd}>修改密码</span>
+        {level < 2 && <span className={styles.changePwd}>修改密码</span>}
       </div>
     );
   };
