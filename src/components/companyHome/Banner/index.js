@@ -3,6 +3,7 @@ import { observer, inject } from 'mobx-react';
 import styles from './index.less';
 import { Container } from 'components/common/layout';
 import CompanyInfo from './CompanyInfo';
+import ReportAction from './ReportAction';
 
 @inject('bannerStore', 'routing')
 @observer
@@ -16,12 +17,37 @@ export default class Banner extends Component {
     this.props.bannerStore.getBannerInfo(monitorId, reportId, companyName, companyType);
     this.props.bannerStore.getStockCode({ monitorId, reportId, companyName, companyType });
   }
+  bannerCountAndDate() {
+    const bannerStore = this.props.bannerStore;
+    const companyType = this.props.routing.location.query.companyType;
+    return (
+      <div className={`clearfix ${styles.countAndDate}`}>
+        {
+          companyType !== 'FREE'
+          ?
+          <div className={styles.date}>
+            更新日期：{bannerStore.lastModifiedTs}
+          </div>
+          : null
+        }
+        <div className={styles.count}>
+          被查询次数：{bannerStore.searchedCount}
+        </div>
+      </div>
+    );
+  }
   render() {
     return (
       <div className={`clearfix ${styles.bannerInfoWrap}`}>
         <Container>
-          <div className={styles.companyInfo}>
-            <CompanyInfo />
+          <div className="clearfix" style={{ position: 'relative' }}>
+            <div className={styles.companyInfo}>
+              <CompanyInfo />
+            </div>
+            <div className={styles.action}>
+              <ReportAction bannerStore={this.props.bannerStore} />
+            </div>
+            {this.bannerCountAndDate()}
           </div>
         </Container>
       </div>

@@ -12,12 +12,13 @@ class BannerStore {
   @observable historyName = [];
   @observable riskInfo = [];
   @observable industryNames = [];
-  @observable stockCode = '';
   @observable bannerData = {};
   @observable contactExtended = '';
   @observable monitorStatus = '';
   @observable lastModifiedTs = '获取中...';
   @observable refreshStatus = 'complete';
+  @observable searchedCount = '';
+  @observable lastModifiedTs = '';
 
   // 上市代码
   @observable stockCode = '';
@@ -61,6 +62,8 @@ class BannerStore {
         this.lastModifiedTs = resp.data.lastModifiedTs ? resp.data.lastModifiedTs : '无';
         this.refreshStatus = 'complete';
         this.stockCode = resp.data.stockCode;
+        this.searchedCount = resp.data.searchedCount;
+        this.lastModifiedTs = resp.data.lastModifiedTs;
       }))
       .catch((err) => {
         console.log('banner出错', err);
