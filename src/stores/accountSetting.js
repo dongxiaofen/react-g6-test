@@ -54,13 +54,14 @@ class AccountSettingStore {
       .catch(action('getTreeList_error', err => {
         this.tree.data = {error: err.response.data, content: []};
         this.base = {data: {}};
-        this.tabs.business.reportAndMonitor = {error: err.response.data};
-        this.tabs.business.province = {error: err.response.data};
-        this.tabs.business.industry = {error: err.response.data};
-        this.tabs.business.scale = {error: err.response.data};
+        this.tabs.business.reportAndMonitor = {error: err.response.data, data: []};
+        this.tabs.business.province = {error: err.response.data, content: []};
+        this.tabs.business.industry = {error: err.response.data, content: []};
+        this.tabs.business.scale = {error: err.response.data, data: {}};
         this.tabs.consume = {error: err.response.data, page: []};
         this.tabs.recharge = {error: err.response.data, content: []};
         this.tabs.summary = {error: err.response.data, page: []};
+        this.tabs.loginRecord = {error: err.response.data, content: []};
       }));
   }
   @action.bound getUserInfo(uId) {
@@ -77,7 +78,7 @@ class AccountSettingStore {
     this.tabs.business.reportAndMonitor = {};
     accountSettingApi.getReportAndMonitor(uId)
       .then(action('getReportAndMonitor_success', resp => {
-        const noData = resp.data.monitorSatisic.length === 0 && resp.data.reportStatisic.length === 0 && resp.data.analysisReportStatistic.length === 0;
+        const noData = resp.data.monitorSatisic.length === 0 && resp.data.reportStatisic.length === 0;
         this.tabs.business.reportAndMonitor = noData ? {error: {message: '暂无数据'}, data: []} : {data: resp.data};
       }))
       .catch(action('getReportAndMonitor_error', err => {
