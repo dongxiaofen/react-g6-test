@@ -9,7 +9,7 @@ import LegendBar from './LegendBar';
 import NodePanel from './NodePanel';
 
 function CurrentNetwork({layout, swithLayout}) {
-  const svgWidth = document.getElementById('reportContainer').offsetWidth * 5 / 8;
+  const svgWidth = document.getElementById('reportContainer').offsetWidth * 3 / 5 - 15;
   const svgHeight = window.screen.height - 280;
   return (
     <Row>
