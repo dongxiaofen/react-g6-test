@@ -44,17 +44,22 @@ function DetailTable({itemData, body, dict, rowIdx, hasNumber, maxCols}) {
         });
       } else {
         configs.forEach((config, index)=>{
-          const colWidth = ((100 - 3.2) / maxCols) * config.colSpan;
-          td.push(
-            <td colSpan={config.colSpan} key={`${idx}-${index}`} style={{width: `${colWidth}%`}}>
-              {CONFIG[dict][config.key]}：{getValue(config, itemData[config.key])}
-            </td>);
+          let colSpan = config.colSpan || 1;
+          console.log(colSpan);
+          colSpan = config.colSpanHandle ? config.colSpanHandle(itemData[config.key], itemData) : colSpan;
+          const colWidth = ((100 - 3.2) / maxCols) * colSpan;
+          if (colWidth > 0) {
+            td.push(
+              <td colSpan={colSpan} key={`${idx}-${index}`} style={{width: `${colWidth}%`}}>
+                {CONFIG[dict][config.key]}：{getValue(config, itemData[config.key])}
+              </td>);
+          }
         });
         output.push(
           <tr key={`${rowIdx}-${idx}`}>
             {
               idx === 0 && hasNumber ?
-              <th rowSpan={caculateRowsSpan()} className={styles.number} style={{width: '3.2%'}}>1</th>
+              <th rowSpan={caculateRowsSpan()} className={styles.number} style={{width: '3.2%'}}>{rowIdx + 1}</th>
               : null
             }
             {td}

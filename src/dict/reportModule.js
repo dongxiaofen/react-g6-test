@@ -612,6 +612,12 @@ const config = {
   rule12: {
     companyName: '关联企业',
     relation: '关联关系',
+  },
+  rule7: {
+    companyName: '关联企业',
+    relation: '关联关系',
+    casesDis: '失信被执行人记录',
+    casesLegal: '作为被告且败诉的法务信息',
   }
 };
 

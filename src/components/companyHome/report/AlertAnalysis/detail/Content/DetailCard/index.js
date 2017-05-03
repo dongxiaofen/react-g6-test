@@ -8,7 +8,7 @@ function DetailCard({meta}) {
     const output = [];
     meta.items.map((itemData, rowIdx)=>{
       output.push(
-        <div className={styles.card}>
+        <div className={styles.card} key={`${rowIdx}Card`}>
           <DetailTable key={`${rowIdx}Card`} itemData={itemData} rowIdx={rowIdx} {...meta}/>
         </div>
       );
