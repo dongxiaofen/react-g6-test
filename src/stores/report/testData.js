@@ -315,6 +315,39 @@ const testData = {
       }
     ]
   },
+  rule13to31: {
+    'id': 12324,
+    'ruleId': 13,
+    'companyName': '浙江平湖市共联压铸厂',
+    'time': '2011-12-20 00:00:00',
+    'detail': [
+      {
+        'ruleDescription': '该企业业务涉及通用设备制造业，该行业为国家限制发展的产业',
+        'policy': [
+          {
+            'title': '关于印发《京津冀及周边地区2017年大气污染防治工作方案》的通知',
+            'url': 'http://dqhj.mep.gov.cn/dtxx/201703/t20170323_408663.shtml',
+            'createDate': '2017-02-17',
+            'publishDate': '2017-03-23',
+            'number': null,
+            'source': ['环境保护部'],
+            'results': ['国家限制发展的产业'],
+            'intersectionIndustry': ['废弃资源综合利用业']
+          },
+          {
+            'title': '关于进一步做好固体废物领域审批审核管理工作的通知',
+            'url': 'http://www.mep.gov.cn/gkml/hbb/bwj/201504/t20150407_298670.htm',
+            'createDate': '2015-03-30',
+            'publishDate': '2015-03-31',
+            'number': '环发[2015]47号',
+            'source': ['环境保护部', '公安部', '财政部'],
+            'results': ['国家限制发展的产业'],
+            'intersectionIndustry': ['生态保护和环境治理业']
+          },
+        ]
+      },
+    ]
+  }
 };
 // const testData = [
 //   {

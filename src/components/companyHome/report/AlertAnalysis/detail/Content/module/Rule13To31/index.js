@@ -1,7 +1,8 @@
 import React, {PropTypes} from 'react';
 import { observer } from 'mobx-react';
 import SimpleCard from 'components/common/report/alertAnalysis/SimpleCard';
-function Rule6({data}) {
+import styles from './index.less';
+function Rule13To31({data}) {
   const modifyPolicy = (value)=> {
     const output = [];
     value.map((itemData)=> {
@@ -11,9 +12,10 @@ function Rule6({data}) {
         </p>
       );
     });
+    return output;
   };
   const meta = {
-    dict: 'rule6',
+    dict: 'rule12to31',
     body: [
       {'key': 'policy', 'width': '12', blockShow: true, modifyBlock: modifyPolicy},
     ],
@@ -24,7 +26,7 @@ function Rule6({data}) {
   );
 }
 
-Rule6.propTypes = {
+Rule13To31.propTypes = {
   foo: PropTypes.string,
 };
-export default observer(Rule6);
+export default observer(Rule13To31);
