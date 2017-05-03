@@ -6,7 +6,7 @@ import styles from './index.less';
 function AccountBase(props) {
   return (
     <div className={styles.wrapper}>
-      <BaseInfo baseInfo={props.accountSettingStore.base} />
+      <BaseInfo {...props} />
       <OperateInfo baseInfo={props.accountSettingStore.base} />
     </div>
   );

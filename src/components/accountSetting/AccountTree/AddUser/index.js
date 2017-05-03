@@ -1,10 +1,11 @@
 import React from 'react';
 import { observer } from 'mobx-react';
 import Button from 'components/lib/button';
+import AddModal from '../../userModal/AddModal';
 import styles from './index.less';
-function AddUser() {
+function AddUser(props) {
   const showAddModal = () => {
-    console.log('---');
+    props.accountSettingStore.changeValue('addModal.visible', true);
   };
   return (
     <div>
@@ -13,6 +14,7 @@ function AddUser() {
         onClick={showAddModal}>
         <span className={styles.plusIcon}>+</span>新增账号
       </Button>
+      <AddModal {...props} />
     </div>
   );
 }

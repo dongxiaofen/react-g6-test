@@ -1,6 +1,5 @@
 import React from 'react';
 import { observer } from 'mobx-react';
-import mobx from 'mobx';
 import { loadingComp } from 'components/hoc';
 import styles from './index.less';
 function TreeList({accountSettingStore, uiStore}) {
@@ -115,7 +114,6 @@ function TreeList({accountSettingStore, uiStore}) {
     });
     return output;
   };
-  console.log('treeData--', mobx.toJS(data));
   return (
     <div className={styles.wrapper}>
       {

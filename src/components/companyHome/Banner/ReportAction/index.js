@@ -73,10 +73,10 @@ function ReportAction({ bannerStore, modalStore, payModalStore, routing }) {
     const _reportId = routing.location.query.reportId;
     const _analysisReportId = routing.location.query.analysisReportId;
 
-    const updateReport = <div className={styles.actionBtn} onClick={openUpdateHighOrDeepModal}>升级报告</div>;
-    const addMonitor = <div className={styles.actionBtn} onClick={openCreateMonitorModal}>加入监控</div>;
-    const updateMonitor = <div className={styles.actionBtn}>升级监控</div>;
-    const monitorRenewal = <div className={styles.actionBtn}>监控续期</div>;
+    const updateReport = <div key="btnUpdateReprot" className={styles.actionBtn} onClick={openUpdateHighOrDeepModal}>升级报告</div>;
+    const addMonitor = <div key="btnAddMonitor" className={styles.actionBtn} onClick={openCreateMonitorModal}>加入监控</div>;
+    const updateMonitor = <div key="btnUpdateMonitor" className={styles.actionBtn}>升级监控</div>;
+    const monitorRenewal = <div key="btnRenewalMonitor" className={styles.actionBtn}>监控续期</div>;
     switch (_companyType) {
       case 'FREE':
         outputBtn.push(updateReport);
@@ -107,6 +107,23 @@ function ReportAction({ bannerStore, modalStore, payModalStore, routing }) {
       </div>
     );
   };
+
+  const openDownLoadPdf = () => {
+    const clearPdfConfigChecked = () => {
+      bannerStore.clearPdfConfigChecked();
+    };
+    modalStore.openCompModal({
+      width: 750,
+      isCustomize: true,
+      closeAction: clearPdfConfigChecked,
+      loader: (cb) => {
+        require.ensure([], (require) => {
+          cb(require('./DownloadPdf'));
+        });
+      }
+    });
+  };
+
   let monitorText = '';
   let monitorCss = styles.bgOrange;
   let refreshCss = styles.enable;
@@ -147,11 +164,13 @@ function ReportAction({ bannerStore, modalStore, payModalStore, routing }) {
       </div>
     );
   }
+  console.log(leftTypeBtn, '-----------------leftTypeBtn');
   return (
     <div className={`clearfix ${styles.actionBox}`}>
       {bannerActionBtn()}
-      {leftTypeBtn}
-      {monitorId && companyType === 'MAIN' ? <div className={styles.bannerAction} onClick={openPayModal.bind(this, 'recharge', 'continueMonitor', 'monitorModalStatus')}>续期</div> : ''}
+      <div style={{ cursor: 'pointer' }} onClick={openDownLoadPdf}>下载pdf</div>
+      {/* {leftTypeBtn} */}
+      {/* {monitorId && companyType === 'MAIN' ? <div className={styles.bannerAction} onClick={openPayModal.bind(this, 'recharge', 'continueMonitor', 'monitorModalStatus')}>续期</div> : ''} */}
     </div>
   );
 }

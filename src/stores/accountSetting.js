@@ -3,17 +3,115 @@ import { accountSettingApi } from 'api';
 import pathval from 'pathval';
 import Formater from 'helpers/formatTreeData';
 import uiStore from './ui';
+import messageStore from './message';
 class AccountSettingStore {
   @observable tree = {
-    addModal: {
-      show: false,
-      form: {},
-    },
     searchInput: '',
     activeIndex: 0,
     data: {},
   };
+  @observable addModal = {
+    visible: false,
+    errorMsg: '',
+    loading: false,
+    form: {
+      email: {
+        value: '',
+        vdRule: 'vdEmail',
+        errorMsg: '',
+      },
+      password: {
+        value: '',
+        vdRule: 'vdPwd',
+        errorMsg: '',
+      },
+      confirmPassword: {
+        value: '',
+        vdRule: 'vdRePwd',
+        errorMsg: '',
+      },
+      contact: {
+        value: '',
+        vdRule: 'vdName',
+        errorMsg: '',
+      },
+      department: {
+        value: '',
+        vdRule: '',
+        errorMsg: '',
+      },
+      contactPosition: {
+        value: '',
+        vdRule: '',
+        errorMsg: '',
+      },
+      phone: {
+        value: '',
+        vdRule: '',
+        errorMsg: '',
+      },
+      contactEmail: {
+        value: '',
+        vdRule: '',
+        errorMsg: '',
+      },
+    },
+  };
   @observable base = {};
+  @observable pwdModal = {
+    visible: false,
+    errorMsg: '',
+    loading: false,
+    form: {
+      oldPwd: {
+        value: '',
+        vdRule: 'vdPwdIsNotEmpty',
+        errorMsg: '',
+      },
+      newPwd: {
+        value: '',
+        vdRule: 'vdPwd',
+        errorMsg: '',
+      },
+      reNewPwd: {
+        value: '',
+        vdRule: 'vdRePwd',
+        errorMsg: '',
+      },
+    }
+  };
+  @observable editModal = {
+    visible: false,
+    errorMsg: '',
+    loading: false,
+    form: {
+      contact: {
+        value: '',
+        vdRule: 'vdName',
+        errorMsg: '',
+      },
+      contactPosition: {
+        value: '',
+        vdRule: '',
+        errorMsg: '',
+      },
+      department: {
+        value: '',
+        vdRule: '',
+        errorMsg: '',
+      },
+      phone: {
+        value: '',
+        vdRule: '',
+        errorMsg: '',
+      },
+      contactEmail: {
+        value: '',
+        vdRule: '',
+        errorMsg: '',
+      },
+    }
+  };
   @observable tabs = {
     business: {
       reportAndMonitor: {},
@@ -28,6 +126,55 @@ class AccountSettingStore {
   };
   @action.bound changeValue(key, value) {
     pathval.setPathValue(this, key, value);
+  }
+  @action.bound changePwd(url, params) {
+    this.pwdModal.loading = true;
+    accountSettingApi.changePwd(url, params)
+      .then(action('changePwd_success', () => {
+        this.resetPwdModalInfo();
+        messageStore.openMessage({
+          type: 'info',
+          content: '修改密码成功',
+        });
+      }))
+      .catch(action('changePwd_error', err => {
+        this.pwdModal.loading = false;
+        messageStore.openMessage({
+          type: 'error',
+          content: err.response && err.response.data && err.response.data.message || '新增账号失败',
+        });
+      }));
+  }
+  @action.bound addNewUser(params) {
+    this.addModal.loading = true;
+    accountSettingApi.addNewUser(params)
+      .then(action('addNewUser_success', () => {
+        this.resetAddInfo();
+        messageStore.openMessage({
+          type: 'info',
+          content: '新增账号成功',
+        });
+        accountSettingApi.getTreeList()
+          .then(action('getTreeList_success', resp => {
+            if (resp.data && resp.data.length > 0) {
+              const treeData = new Formater(resp);
+              treeData.formatData(null, null, 'cy@sc.cn');
+              this.tree.data = {content: treeData.formatResult};
+            } else {
+              this.tree.data = {error: {message: '暂无用户信息'}, content: []};
+            }
+          }))
+          .catch(action('getTreeList_error', err => {
+            this.tree.data = {error: err.response.data, content: []};
+          }));
+      }))
+      .catch(action('addNewUser_error', err => {
+        messageStore.openMessage({
+          type: 'error',
+          content: err.response && err.response.data && err.response.data.message || '新增账号失败',
+        });
+        this.addModal.loading = false;
+      }));
   }
   @action.bound getTreeList() {
     this.resetStore();
@@ -180,16 +327,119 @@ class AccountSettingStore {
         this.tabs.loginRecord = {error: err.response.data, content: []};
       }));
   }
-  @action.bound resetStore() {
-    this.tree = {
-      addModal: {
-        show: false,
-        form: {},
+  @action.bound resetAddInfo() {
+    this.addModal = {
+      visible: false,
+      errorMsg: '',
+      loading: false,
+      form: {
+        errorMsg: '',
+        email: {
+          value: '',
+          vdRule: 'vdEmail',
+          errorMsg: '',
+        },
+        password: {
+          value: '',
+          vdRule: 'vdPwd',
+          errorMsg: '',
+        },
+        confirmPassword: {
+          value: '',
+          vdRule: 'vdRePwd',
+          errorMsg: '',
+        },
+        contact: {
+          value: '',
+          vdRule: 'vdName',
+          errorMsg: '',
+        },
+        department: {
+          value: '',
+          vdRule: '',
+          errorMsg: '',
+        },
+        contactPosition: {
+          value: '',
+          vdRule: '',
+          errorMsg: '',
+        },
+        phone: {
+          value: '',
+          vdRule: '',
+          errorMsg: '',
+        },
+        contactEmail: {
+          value: '',
+          vdRule: '',
+          errorMsg: '',
+        },
       },
-      searchInput: '',
-      activeIndex: 0,
-      data: {},
     };
+  }
+  @action.bound resetPwdModalInfo() {
+    this.pwdModal = {
+      visible: false,
+      errorMsg: '',
+      loading: false,
+      form: {
+        oldPwd: {
+          value: '',
+          vdRule: 'vdPwdIsNotEmpty',
+          errorMsg: '',
+        },
+        newPwd: {
+          value: '',
+          vdRule: 'vdPwd',
+          errorMsg: '',
+        },
+        reNewPwd: {
+          value: '',
+          vdRule: 'vdRePwd',
+          errorMsg: '',
+        },
+      }
+    };
+  }
+  @action.bound resetEditModal() {
+    this.editModal = {
+      visible: false,
+      errorMsg: '',
+      loading: false,
+      form: {
+        contact: {
+          value: '',
+          vdRule: 'vdName',
+          errorMsg: '',
+        },
+        contactPosition: {
+          value: '',
+          vdRule: '',
+          errorMsg: '',
+        },
+        department: {
+          value: '',
+          vdRule: '',
+          errorMsg: '',
+        },
+        phone: {
+          value: '',
+          vdRule: '',
+          errorMsg: '',
+        },
+        contactEmail: {
+          value: '',
+          vdRule: '',
+          errorMsg: '',
+        },
+      }
+    };
+  }
+  @action.bound resetStore() {
+    this.resetAddInfo();
+    this.tree.searchInput = '';
+    this.tree.activeIndex = 0;
+    this.tree.data = {};
     this.base = {};
     this.tabs = {
       business: {
