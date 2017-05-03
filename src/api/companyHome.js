@@ -97,6 +97,9 @@ export const getPersonCheckInfo = ({monitorId, params}) => {
 export const checkPersonInfo = (url, params) => {
   return axios.post(url, params);
 };
+export const getIdCard = (url) => {
+  return axios.get(url);
+};
 export const changeAnnouncement = ({ stockType, monitorId, reportId }) => {
   let url;
   if (monitorId) {

@@ -1,7 +1,6 @@
 import { observable, action } from 'mobx';
 import { companyHomeApi } from 'api';
 import uiStore from '../ui';
-import pathval from 'pathval';
 import messageStore from '../message';
 
 class RelPerCheckStore {
@@ -53,14 +52,27 @@ class RelPerCheckStore {
       }));
   }
   @action.bound getIdCard({monitorId, reportId, personCheckId}) {
-    companyHomeApi.getIdCard({monitorId, reportId, personCheckId})
+    let url;
+    if (monitorId) {
+      url = `/api/monitor/${monitorId}/person/cardId?personCheckId=${personCheckId}`;
+    } else {
+      url = `/api/report/${reportId}/person/cardId?personCheckId=${personCheckId}`;
+    }
+    companyHomeApi.getIdCard(url)
       .then( action( (response) => {
-        pathval.setPathValue(this, `showId.${personCheckId}`, true);
-        pathval.setPathValue(this, `idCard.${personCheckId}`, response.data);
+        this.showId.set(personCheckId, true);
+        this.idCard.set(personCheckId, response.data);
       }))
       .catch( action( (err) => {
         console.log(err.response.data);
       }));
+  }
+  @action.bound toggleExpand(moudle, personCheckId, value) {
+    // this[moudle][personCheckId] = value;
+    if (moudle === 'showId') {
+      this.showId.set(personCheckId, value);
+    }
+    this.idCard.set(personCheckId, value);
   }
 }
 export default new RelPerCheckStore();

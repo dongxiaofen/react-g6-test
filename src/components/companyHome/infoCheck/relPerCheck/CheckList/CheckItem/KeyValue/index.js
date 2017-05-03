@@ -23,8 +23,6 @@ function KeyValue({match, keys, values}) {
 }
 
 KeyValue.propTypes = {
-  keys: PropTypes.string,
-  match: PropTypes.bool,
-  values: PropTypes.number
+  match: PropTypes.bool
 };
 export default observer(KeyValue);
