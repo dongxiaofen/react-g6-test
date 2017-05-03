@@ -3,15 +3,17 @@ import { observer } from 'mobx-react';
 import AnimateLoading from 'components/hoc/LoadingComp/AnimateLoading';
 import Item from '../Item';
 import PwdModal from '../../userModal/PwdModal';
+import EditModal from '../../userModal/EditModal';
 import styles from './index.less';
 function BaseInfo({accountSettingStore}) {
   const baseInfo = accountSettingStore.base;
-  const activeIndex = accountSettingStore.tree.activeIndex;
+  const tree = accountSettingStore.tree;
+  const activeIndex = tree.activeIndex;
   const showPwdModal = () => {
     accountSettingStore.changeValue('pwdModal.visible', true);
   };
   const handleEmail = (values) => {
-    const level = accountSettingStore.tree.data.content[activeIndex].level;
+    const level = tree.data.content[activeIndex].level;
     return (
       <div className={styles.pwdBox}>
         {values}
@@ -19,11 +21,17 @@ function BaseInfo({accountSettingStore}) {
       </div>
     );
   };
-  const handleEdit = (values) => {
+  const editUserInfo = (name, values) => {
+    accountSettingStore.changeValue('editModal.actName', name);
+    accountSettingStore.changeValue(`editModal.form.${name}.value`, values);
+    accountSettingStore.changeValue('editModal.visible', true);
+  };
+  const handleEdit = (values, name) => {
+    const level = tree.data.content[activeIndex].level;
     return (
-      <div className={styles.editBox}>
+      <div className={level < 2 ? styles.editBox : styles.editDisable}>
         {values}
-        <span className={styles.editBtn}>修改</span>
+        {level < 2 && <span className={styles.editBtn} onClick={editUserInfo.bind(null, name, values)}>修改</span>}
       </div>
     );
   };
@@ -82,6 +90,7 @@ function BaseInfo({accountSettingStore}) {
         {output}
       </div>
       <PwdModal />
+      <EditModal />
     </div>
   );
 }

@@ -39,7 +39,7 @@ function PwdModal({accountSettingStore}) {
     return !msgArr[0];
   };
   const modalCancel = () => {
-    accountSettingStore.resetPwdModalInfo();
+    accountSettingStore.resetPwdModal();
   };
   const modalConfirm = () => {
     if (allInputCheck()) {
