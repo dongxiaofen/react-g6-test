@@ -1,18 +1,19 @@
 import React, {PropTypes} from 'react';
 import { observer, inject } from 'mobx-react';
-import styles from './index.less';
 import { runInAction } from 'mobx';
 import pathval from 'pathval';
 
-function BaseList({listData, routing, reportManageStore, payModalStore}) {
+import styles from './index.less';
+import { Row, Col } from 'components/common/layout';
+
+function BaseList({ item, status, routing, reportManageStore, payModalStore }) {
+  const reportId = status === 'report' ? item.reportId : item.analysisReportId;
   const choiceOk = () => {
-    console.log('====asdsa');
-    const reportId = pathval.getPathValue(reportManageStore, 'agreeModal.reportId');
     const params = pathval.getPathValue(reportManageStore, 'params');
     reportManageStore.upGradeToMonitor(reportId, params, pathval.getPathValue(payModalStore, 'selectValue'));
   };
 
-  const turnToMonitor = (reportId) => {
+  const turnToMonitor = () => {
     payModalStore.openCompModal({
       'modalType': 'createMonitor',
       'width': '560px',
@@ -24,14 +25,16 @@ function BaseList({listData, routing, reportManageStore, payModalStore}) {
 
     runInAction('显示弹窗', () => {
       pathval.setPathValue(reportManageStore, 'agreeModal.reportId', reportId);
-      // pathval.setPathValue(payModalStore, 'value.monitorModalStatus', true);
-      // pathval.setPathValue(payModalStore, 'value.modalType', 'turnMonitor');
     });
   };
 
-  const viewReport = (reportId) => {
+  const viewReport = () => {
     const { push } = routing;
-    push(`/companyHome?reportId=${reportId}&companyType=MAIN`);
+    if (status === 'report') {
+      push(`/companyHome?reportId=${reportId}&companyType=MAIN`);
+    } else {
+      push(`/companyHome?analysisReportId=${reportId}&companyType=MAIN`);
+    }
   };
 
   const stockTableType = (stockType) => {
@@ -43,44 +46,69 @@ function BaseList({listData, routing, reportManageStore, payModalStore}) {
     }
     return str;
   };
+
   return (
-    <div className={styles.item}>
-      <div className={styles.companyInfo}>
-        <div className={styles.nameWrap}>
-          <span onClick={viewReport.bind(this, listData.reportId)} className={styles.name}>{listData.companyName}</span>
-          {listData.companyStatus ? <span title={listData.companyStatus} className={styles.mainLabel}>{listData.companyStatus}</span> : ''}
-          {stockTableType(listData.stockType)}
-        </div>
-        <div className={styles.infoDetail}>
-          <span className={styles.detailItem}>{`法人：${listData.frName ? listData.frName : '无'}`}</span>
-          <span className={styles.detailItem}>{`地址：${listData.address ? listData.address : '无'}`}</span>
-        </div>
-      </div>
-      <div className={styles.lastModifiedTs}>
-        <div className={styles.timeValue}>{listData.lastModifiedTs.replace(/-/g, '/')}</div>
-        <div className={styles.timeKey}>最近刷新日期</div>
-      </div>
-      <div className={styles.createdTs}>
-        <div className={styles.timeValue}>{listData.createdTs.replace(/-/g, '/')}</div>
-        <div className={styles.timeKey}>创建报告日期</div>
-      </div>
-      <div className={styles.anTime}>
-        <div className={styles.timeValue}>{listData.analysisCount}</div>
-        <div className={styles.timeKey}>刷新次数</div>
-      </div>
-      <div className={styles.actionWrap}>
-        <div
-          onClick={turnToMonitor.bind(this, listData.reportId)}
-          className={`${styles.turnBtn}`}>
-          加入监控
-        </div>
-        <div className={styles.deleteBtn}>删除报告</div>
-      </div>
+    <div className={`clearfix ${styles.item}`}>
+      <Row>
+        <Col width="5">
+          <div className={styles.nameWrap}>
+            <span onClick={viewReport} className={styles.name}>{item.companyName}</span>
+            {
+              item.companyStatus
+                ? <span title={item.companyStatus} className={styles.mainLabel}>{item.companyStatus}</span>
+                : null
+            }
+            {stockTableType(item.stockType)}
+          </div>
+          <div className={styles.infoDetail}>
+            <span className={styles.detailItem}>{`法人：${item.frName ? item.frName : '无'}`}</span>
+            <span className={styles.detailItem}>{`地址：${item.address ? item.address : '无'}`}</span>
+          </div>
+        </Col>
+        <Col width="4">
+          <div className="clearfix">
+            <div className={styles.lastModifiedTs}>
+              <div className={styles.timeValue}>{item.lastModifiedTs}</div>
+              <div className={styles.timeKey}>最近刷新日期</div>
+            </div>
+            <div className={styles.createdTs}>
+              <div className={styles.timeValue}>{item.createdTs}</div>
+              <div className={styles.timeKey}>创建报告日期</div>
+            </div>
+            <div className={styles.anTime}>
+              <div className={styles.timeValue}>{item.analysisCount}</div>
+              <div className={styles.timeKey}>刷新次数</div>
+            </div>
+          </div>
+        </Col>
+        <Col width="3">
+          <div className="clearfix">
+            <div className={`clearfix ${styles.actionWrap}`}>
+              {
+                status === 'report'
+                ?
+                <div className={`${styles.turnBtn}`}>
+                  升级报告
+                </div>
+                : null
+              }
+              <div className={`${styles.turnBtn}`}
+                onClick={turnToMonitor}>
+                加入监控
+            </div>
+            </div>
+          </div>
+        </Col>
+      </Row>
     </div>
   );
 }
 
 BaseList.propTypes = {
+  routing: PropTypes.object,
+  reportManageStore: PropTypes.object,
+  payModalStore: PropTypes.object,
   item: PropTypes.object,
+  status: PropTypes.string,
 };
 export default inject('routing', 'reportManageStore', 'payModalStore')(observer(BaseList));

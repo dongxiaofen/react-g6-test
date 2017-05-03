@@ -217,6 +217,14 @@ class UiStore {
       index: 1,
       size: 10
     },
+    reportManageList: {
+      reportStatus: 'report',
+      params: {
+        companyName: '',
+        index: 1,
+        size: 10,
+      }
+    },
     reportManagePager: {
       index: 1,
       size: 10,

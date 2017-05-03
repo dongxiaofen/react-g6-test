@@ -2,7 +2,6 @@ import { observable, action } from 'mobx';
 import { reportManageApi } from 'api';
 import payModalStore from './payModal';
 import messageStore from './message';
-import pathval from 'pathval';
 import uiStore from './ui';
 
 class ReportManageStore {
@@ -17,18 +16,16 @@ class ReportManageStore {
     iconType: 'info',
     msg: '',
   };
-  @observable reportList = {
-    loading: true,
-    module: ''
-  };
+  // @observable reportList = {
+  //   loading: true,
+  //   module: ''
+  // };
   @observable searchWithCompany = '';
   @observable focus = false;
-  @observable params = {
-    companyName: '',
-    index: 1,
-    size: 10,
-  };
-  @observable list = {};
+
+  @observable reportList = [];
+  @observable isLoading = false;
+
   @observable monitorId = '';
   @observable agreeModal = {
     reportId: '',
@@ -43,26 +40,41 @@ class ReportManageStore {
   };
 
   @action.bound getReportList(params) {
+    this.isLoading = true;
     reportManageApi.getReportList(params)
-      .then(action( (response) => {
-        this.list = response;
-        uiStore.uiState.reportManagePager.totalElements = response.data.totalElements;
+      .then(action('get report page', (resp) => {
+        this.reportList = resp.data.content;
+        uiStore.uiState.reportManagePager.totalElements = resp.data.totalElements;
+        this.isLoading = false;
       }))
       .catch((err) => {
-        console.log(err.response);
+        console.log(err.response, '-----getReportList');
+        this.isLoading = false;
+      });
+  }
+
+  @action.bound getAnalysisReportList(params) {
+    this.isLoading = true;
+    reportManageApi.getAnalysisReportList(params)
+      .then(action('get analysis report page', (resp) => {
+        this.reportList = resp.data.content;
+        uiStore.uiState.reportManagePager.totalElements = resp.data.totalElements;
+        this.isLoading = false;
+      }))
+      .catch((err) => {
+        console.log(err.response, '--------getAnalysisReportList');
+        this.isLoading = false;
       });
   }
 
   @action.bound upGradeToMonitor(reportId, params, selectValue) {
     reportManageApi.upGradeToMonitor(reportId, selectValue)
-      .then(action( (response) => {
-        if (response.status === 200) {
+      .then(action('update to monitor', (resp) => {
+        if (resp.status === 200) {
           payModalStore.closeAction();
           messageStore.openMessage({type: 'info', content: '加入监控成功', duration: '1500'});
-
-
-          pathval.setPathValue(this, 'monitorId', response.data.monitorId);
-          this.getReportList(0, params);
+          this.monitorId = resp.data.monitorId;
+          this.getReportList(params);
         }
       }))
       .catch(action( (err) => {
