@@ -1,6 +1,9 @@
 @import '~sc-colors/index.less';
 .wrap{
   position: relative;
+  float: right;
+  margin-top: 22px;
+
   transition: all .3s;
   &:hover{
     .searchIcon{
@@ -20,12 +23,15 @@
   float: left;
   width: 260px;
   height: 35px;
-  color: @mdc-blue-grey-400;
-  border: none;
-  border-bottom: 1px solid @mdc-blue-grey-100 ;
   padding-left: 20px;
-  background: none;
+
   font-size: 14px;
+  color: @mdc-blue-grey-400;
+
+  background: none;
+  border: none;
+  border-radius: 0;
+  border-bottom: 1px solid @mdc-blue-grey-100 ;
 }
 
 
@@ -33,8 +39,11 @@
   position: absolute;
   left: 0;
   top: 10px;
+
   font-size: 16px;
   color: @mdc-blue-grey-200;
+
+  cursor: pointer;
 }
 .Active{
   .searchIcon{

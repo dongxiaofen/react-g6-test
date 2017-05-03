@@ -241,6 +241,9 @@ class UiStore {
       index: 1,
       size: 10
     },
+    reportManageList: {
+      reportStatus: 'report',
+    },
     reportManagePager: {
       index: 1,
       size: 10,

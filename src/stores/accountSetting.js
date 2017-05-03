@@ -8,6 +8,7 @@ class AccountSettingStore {
   @observable tree = {
     searchInput: '',
     activeIndex: 0,
+    activeId: -1,
     data: {},
   };
   @observable addModal = {
@@ -83,32 +84,43 @@ class AccountSettingStore {
   @observable editModal = {
     visible: false,
     errorMsg: '',
+    actName: 'contact',
     loading: false,
     form: {
       contact: {
         value: '',
         vdRule: 'vdName',
         errorMsg: '',
+        placeholder: '姓名（必填）',
+        title: '修改姓名',
       },
       contactPosition: {
         value: '',
         vdRule: '',
         errorMsg: '',
+        placeholder: '职务',
+        title: '修改职务',
       },
       department: {
         value: '',
         vdRule: '',
         errorMsg: '',
+        placeholder: '部门',
+        title: '修改部门',
       },
       phone: {
         value: '',
         vdRule: '',
         errorMsg: '',
+        placeholder: '电话',
+        title: '修改电话',
       },
       contactEmail: {
         value: '',
         vdRule: '',
         errorMsg: '',
+        placeholder: '邮箱',
+        title: '修改邮箱',
       },
     }
   };
@@ -127,11 +139,34 @@ class AccountSettingStore {
   @action.bound changeValue(key, value) {
     pathval.setPathValue(this, key, value);
   }
+  @action.bound editInfo(url, name, params) {
+    this.editModal.loading = true;
+    accountSettingApi.editInfo(url, params)
+      .then(action('editInfo_success', () => {
+        this.resetEditModal();
+        this.base.data[name] = params[name];
+        if (name === 'contact') {
+          const index = this.tree.activeIndex;
+          this.tree.data.content[index][name] = params[name];
+        }
+        messageStore.openMessage({
+          type: 'info',
+          content: '修改成功',
+        });
+      }))
+      .catch(action('editInfo_error', err => {
+        this.editModal.loading = false;
+        messageStore.openMessage({
+          type: 'error',
+          content: err.response && err.response.data && err.response.data.message || '修改失败',
+        });
+      }));
+  }
   @action.bound changePwd(url, params) {
     this.pwdModal.loading = true;
     accountSettingApi.changePwd(url, params)
       .then(action('changePwd_success', () => {
-        this.resetPwdModalInfo();
+        this.resetPwdModal();
         messageStore.openMessage({
           type: 'info',
           content: '修改密码成功',
@@ -149,7 +184,7 @@ class AccountSettingStore {
     this.addModal.loading = true;
     accountSettingApi.addNewUser(params)
       .then(action('addNewUser_success', () => {
-        this.resetAddInfo();
+        this.resetAddModal();
         messageStore.openMessage({
           type: 'info',
           content: '新增账号成功',
@@ -185,6 +220,7 @@ class AccountSettingStore {
           treeData.formatData(null, null, 'cy@sc.cn');
           this.tree.data = {content: treeData.formatResult};
           const uId = treeData.formatResult[0].id;
+          this.tree.activeId = uId;
           this.getUserInfo(uId);
           this.getReportAndMonitor(uId);
           this.getProvince(uId);
@@ -200,7 +236,7 @@ class AccountSettingStore {
       }))
       .catch(action('getTreeList_error', err => {
         this.tree.data = {error: err.response.data, content: []};
-        this.base = {data: {}};
+        this.base = {error: err.response.data, data: {}};
         this.tabs.business.reportAndMonitor = {error: err.response.data, data: []};
         this.tabs.business.province = {error: err.response.data, content: []};
         this.tabs.business.industry = {error: err.response.data, content: []};
@@ -327,7 +363,7 @@ class AccountSettingStore {
         this.tabs.loginRecord = {error: err.response.data, content: []};
       }));
   }
-  @action.bound resetAddInfo() {
+  @action.bound resetAddModal() {
     this.addModal = {
       visible: false,
       errorMsg: '',
@@ -377,7 +413,7 @@ class AccountSettingStore {
       },
     };
   }
-  @action.bound resetPwdModalInfo() {
+  @action.bound resetPwdModal() {
     this.pwdModal = {
       visible: false,
       errorMsg: '',
@@ -405,41 +441,57 @@ class AccountSettingStore {
     this.editModal = {
       visible: false,
       errorMsg: '',
+      actName: 'contact',
       loading: false,
       form: {
         contact: {
           value: '',
           vdRule: 'vdName',
           errorMsg: '',
+          placeholder: '姓名（必填）',
+          title: '修改姓名',
         },
         contactPosition: {
           value: '',
           vdRule: '',
           errorMsg: '',
+          placeholder: '职务',
+          title: '修改职务',
         },
         department: {
           value: '',
           vdRule: '',
           errorMsg: '',
+          placeholder: '部门',
+          title: '修改部门',
         },
         phone: {
           value: '',
           vdRule: '',
           errorMsg: '',
+          placeholder: '电话',
+          title: '修改电话',
         },
         contactEmail: {
           value: '',
           vdRule: '',
           errorMsg: '',
+          placeholder: '邮箱',
+          title: '修改邮箱',
         },
       }
     };
   }
-  @action.bound resetStore() {
-    this.resetAddInfo();
+  @action.bound resetTree() {
     this.tree.searchInput = '';
     this.tree.activeIndex = 0;
     this.tree.data = {};
+  }
+  @action.bound resetStore() {
+    this.resetAddModal();
+    this.resetPwdModal();
+    this.resetEditModal();
+    this.resetTree();
     this.base = {};
     this.tabs = {
       business: {
