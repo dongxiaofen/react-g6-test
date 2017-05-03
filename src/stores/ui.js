@@ -4,6 +4,7 @@ import bannerStore from './banner';
 import assetsStore from './report/assets';
 import monitorListStore from './monitorList';
 import ruleStore from './rule';
+import ruleCompanyStore from './ruleCompany';
 import accountSettingStore from './accountSetting';
 import reportManageStore from './reportManage';
 
@@ -34,6 +35,12 @@ class UiStore {
       () => this.uiState.ruleListPager.index,
       () => {
         ruleStore.getRuleList();
+      }
+    );
+    reaction(
+      () => this.uiState.ruleCompanyListPager.index,
+      () => {
+        ruleCompanyStore.getCompanyList();
       }
     );
     reaction(
@@ -109,6 +116,11 @@ class UiStore {
       totalElements: 0,
     },
     ruleListPager: {
+      index: 1,
+      size: 10,
+      show: observable.map({})
+    },
+    ruleCompanyListPager: {
       index: 1,
       size: 10,
       show: observable.map({})

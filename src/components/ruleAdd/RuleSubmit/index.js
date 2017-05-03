@@ -4,8 +4,8 @@ import styles from './index.less';
 
 function RuleSubmit({}) {
   return (
-    <div>
-
+    <div className={styles.box}>
+      RuleSubmit
     </div>
   );
 }

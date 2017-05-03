@@ -4,8 +4,8 @@ import styles from './index.less';
 
 function ReportType({}) {
   return (
-    <div>
-
+    <div className={styles.box}>
+      ReportType
     </div>
   );
 }

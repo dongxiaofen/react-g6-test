@@ -2,15 +2,15 @@ import React, {PropTypes} from 'react';
 import { observer } from 'mobx-react';
 import styles from './index.less';
 
-function Number({}) {
+function Numbers({}) {
   return (
-    <div>
-
+    <div className={styles.box}>
+      Numbers
     </div>
   );
 }
 
-Number.propTypes = {
+Numbers.propTypes = {
   foo: PropTypes.string,
 };
-export default observer(Number);
+export default observer(Numbers);

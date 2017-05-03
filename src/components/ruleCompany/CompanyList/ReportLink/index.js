@@ -4,8 +4,8 @@ import styles from './index.less';
 
 function ReportLink({}) {
   return (
-    <div>
-
+    <div className={styles.box}>
+      查看预警分析
     </div>
   );
 }

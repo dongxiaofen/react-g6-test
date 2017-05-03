@@ -4,8 +4,8 @@ import styles from './index.less';
 
 function TriggerNum({}) {
   return (
-    <div>
-
+    <div className={styles.name}>
+      TriggerNum
     </div>
   );
 }

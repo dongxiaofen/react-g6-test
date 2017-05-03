@@ -62,7 +62,7 @@ class RuleStore {
   @observable eventTypeThreeStyle = '';
 
   // 查看预警id
-  @observable ruleCheckId = '';
+  // @observable ruleCheckId = '';
   // 地区
   @observable area = '地区不限';
   // 行业名与ID
@@ -72,6 +72,8 @@ class RuleStore {
   @observable name = '';
   // 规模
   @observable scale = 'UNLIMITED';
+  // 选择应用范围或应用企业
+  @observable selectRange = 'range';
   // submit后提示框
   @observable submitModal = false;
   // 添加预警或修改预警时是否已经submit
@@ -130,6 +132,14 @@ class RuleStore {
   // 存储当前操作的单条数据
   @action.bound setItemData(data) {
     this.itemData = data;
+  }
+  // 填写预警名称
+  @action.bound changeName(evt) {
+    this.name = evt.target.value;
+  }
+  // 选择应用范围或应用企业
+  @action.bound setSelectRange(text) {
+    this.selectRange = text;
   }
 }
 export default new RuleStore();

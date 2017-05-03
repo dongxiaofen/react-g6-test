@@ -4,13 +4,13 @@ import styles from './index.less';
 
 function Industry({}) {
   return (
-    <div>
-
+    <div className={styles.box}>
+      Industry
     </div>
   );
 }
 
 Industry.propTypes = {
-  foo: PropTypes.string,
+  ruleStore: PropTypes.object,
 };
 export default observer(Industry);

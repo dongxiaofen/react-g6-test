@@ -9,7 +9,8 @@ function CompanySearch({}) {
         预警企业
       </div>
       <div className={styles.searchWrap}>
-        预警企业
+        <i></i>
+        <input placeholder="输入企业名称" />
       </div>
     </div>
   );

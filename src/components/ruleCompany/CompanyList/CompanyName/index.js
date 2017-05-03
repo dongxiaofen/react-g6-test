@@ -4,8 +4,8 @@ import styles from './index.less';
 
 function CompanyName({}) {
   return (
-    <div>
-
+    <div className={styles.box}>
+      CompanyName
     </div>
   );
 }
