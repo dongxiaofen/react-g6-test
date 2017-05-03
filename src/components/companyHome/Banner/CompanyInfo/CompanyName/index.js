@@ -11,6 +11,6 @@ function CompanyName({companyName}) {
 }
 
 CompanyName.propTypes = {
-  foo: PropTypes.string,
+  companyName: PropTypes.string,
 };
 export default observer(CompanyName);

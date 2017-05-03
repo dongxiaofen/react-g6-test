@@ -39,11 +39,21 @@ function RelPerInfo({relPerCheckStore}) {
     );
   }
   return (
+  <div>
+    <Button className={styles.noDataButton} onClick={handleClick}>添加核查</Button>
+    <CheckModal visible={relPerCheckStore.showCheckModal}
+                width="421px"
+                closeAction={closeModal}
+                relPerCheckStore={relPerCheckStore}
+                pointText = "核查即视为同意"
+                pactUrl= "/"
+                pactName= "用户服务协议"
+                btnLoading={relPerCheckStore.isLoading}/>
     <CheckList listData={relPerCheckStore.personCheckInfoData} />
+  </div>
   );
 }
-
 RelPerInfo.propTypes = {
-  foo: PropTypes.string,
+  relPerCheckStore: PropTypes.object,
 };
 export default inject('relPerCheckStore')(observer(RelPerInfo));

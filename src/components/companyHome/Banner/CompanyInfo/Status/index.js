@@ -63,16 +63,17 @@ function Status({bannerStore, routing}) {
   }
   const reportNames = getNameAndConfig(companyType, monitorId);
   return (
-    <div>
+    <div className={`clearfix`}>
       {leftType}
       <div className={styles.reportType}>
-        {`(您当前的版本为 ${reportNames})`}
+        {`当前浏览为 ${reportNames}`}
       </div>
     </div>
   );
 }
 
 Status.propTypes = {
-  foo: PropTypes.string,
+  bannerStore: PropTypes.object,
+  routing: PropTypes.object,
 };
 export default inject('routing')(observer(Status));

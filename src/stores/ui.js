@@ -243,6 +243,18 @@ class UiStore {
       index: 1,
       size: 10
     },
+    personBlacklist: {
+      index: 1,
+      size: 10
+    },
+    executed: {
+      index: 1,
+      size: 10
+    },
+    dishonesty: {
+      index: 1,
+      size: 5
+    }
   };
 
   @action.bound updateUiStore(keypath, value) {

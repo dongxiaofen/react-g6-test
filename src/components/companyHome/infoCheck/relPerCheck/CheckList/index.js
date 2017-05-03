@@ -13,6 +13,6 @@ function CheckList({listData}) {
 }
 
 CheckList.propTypes = {
-  foo: PropTypes.string,
+  listData: PropTypes.object,
 };
 export default observer(CheckList);

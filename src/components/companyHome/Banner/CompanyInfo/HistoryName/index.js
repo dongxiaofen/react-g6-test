@@ -31,8 +31,8 @@ function HistoryName({hisNameVis, historyName, closeHisNamePopoverAlias, openHis
         openPopover={openHisNamePopoverAlias}
         id="historyName">
         <span className={`${styles.historyNameBtn}`}>
-          更名历史
-            <i className={iconCss}></i>
+          历史更名
+          <i className={iconCss}></i>
         </span>
       </Popover>
     </div>
