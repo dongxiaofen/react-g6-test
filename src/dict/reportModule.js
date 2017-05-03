@@ -618,6 +618,9 @@ const config = {
     relation: '关联关系',
     casesDis: '失信被执行人记录',
     casesLegal: '作为被告且败诉的法务信息',
+  },
+  rule10: {
+    involedIndustryPolicy: '政策依据'
   }
 };
 
