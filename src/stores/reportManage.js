@@ -6,22 +6,22 @@ import messageStore from './message';
 import uiStore from './ui';
 
 class ReportManageStore {
-  @observable msgModal = {
-    show: false,
-    iconType: 'info',
-    msg: '',
-  };
-  // @observable reportList = {
-  //   loading: true,
-  //   module: ''
-  // };
-  @observable searchWithCompany = '';
   @observable focus = false;
+  @observable companyName = '';
 
   @observable reportList = [];
   @observable isLoading = false;
 
   @observable monitorId = '';
+
+  // 设置搜索的公司名称
+  @action.bound setCompanyName(value) {
+    this.companyName = value;
+  }
+  // 设置搜索的focus
+  @action.bound setFocus(value) {
+    this.focus = value;
+  }
 
   @action.bound getReportList(params) {
     this.isLoading = true;

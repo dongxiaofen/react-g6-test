@@ -4,7 +4,7 @@ import { inject, observer } from 'mobx-react';
 import {Container, Row, Col} from 'components/common/layout';
 import styles from './index.less';
 
-// import Filter from './Filter';
+import Filter from './Filter';
 import TypeFilter from './TypeFilter';
 import TableList from './TableList';
 
@@ -42,12 +42,10 @@ export default class ReportMain extends Component {
         <Row>
           <Col>
             <div className="clearfix">
-              <div className={`clearfix ${styles.filter}`}>
-                <h1 className={styles.title}>报告列表</h1>
-                <div className={styles.filterWrap}>
-                  {/* <Filter /> */}
-                </div>
-              </div>
+              <h1 className={styles.title}>报告列表</h1>
+              <Filter
+                reportManageStore={this.props.reportManageStore}
+                reportManagePager={reportManagePager}/>
             </div>
             <TypeFilter reportManageStore={this.props.reportManageStore} />
             <div className={styles.listArea} style={styleCofing}>
