@@ -19,7 +19,9 @@ let isDragging = false;
 @observer
 export default class ForceNetworkGraph extends Component {
   static propTypes = {
-    networkStore: PropTypes.object
+    networkStore: PropTypes.object,
+    svgWidth: PropTypes.number,
+    svgHeight: PropTypes.number
   };
 
   componentDidMount() {
@@ -190,7 +192,7 @@ export default class ForceNetworkGraph extends Component {
   render() {
     return (
       <div>
-        <svg width="960" height="600"></svg>
+        <svg width={this.props.svgWidth} height={this.props.svgHeight} ></svg>
       </div>
     );
   }

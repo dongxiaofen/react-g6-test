@@ -25,7 +25,9 @@ let saveNodeXY = false;
 @observer
 export default class CircleNetworkGraph extends Component {
   static propTypes = {
-    networkStore: PropTypes.object
+    networkStore: PropTypes.object,
+    svgWidth: PropTypes.number,
+    svgHeight: PropTypes.number,
   };
 
   componentDidMount() {
@@ -351,8 +353,8 @@ export default class CircleNetworkGraph extends Component {
 
   render() {
     return (
-      <div>
-        <svg width="960" height="600">
+      <div className={styles.svgBox}>
+        <svg width={this.props.svgWidth} height={this.props.svgHeight} >
           <defs>
             <marker id="mainArrow"
               markerUnits="userSpaceOnUse"

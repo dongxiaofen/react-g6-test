@@ -5,18 +5,18 @@ import { loadingComp } from 'components/hoc';
 import {Row, Col} from 'components/common/layout';
 import CircleNetworkGraph from './CircleNetworkGraph';
 import ForceNetworkGraph from './ForceNetworkGraph';
+import LegendBar from './LegendBar';
 
-function CurrentNetwork({layout}) {
-  // const swithLayout = () => {
-  //   switchLayout();
-  // };
+function CurrentNetwork({layout, swithLayout}) {
+  const svgWidth = document.getElementById('reportContainer').offsetWidth * 5 / 8;
+  const svgHeight = window.screen.height - 280;
   return (
     <Row>
       <Col width="9">
-        {/* <a onClick={swithLayout}>切换</a> */}
+        <LegendBar swithLayout={swithLayout} />
         {
           layout === 'circle' ?
-          <CircleNetworkGraph /> : <ForceNetworkGraph />
+          <CircleNetworkGraph {...{svgWidth, svgHeight}} /> : <ForceNetworkGraph {...{svgWidth, svgHeight}} />
         }
       </Col>
       <Col width="3">
