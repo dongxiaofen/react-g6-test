@@ -35,3 +35,6 @@ export const addNewUser = (params) => {
 export const changePwd = (url, params) => {
   return axios.put(url, params);
 };
+export const editInfo = (url, params) => {
+  return axios.put(url, params);
+};

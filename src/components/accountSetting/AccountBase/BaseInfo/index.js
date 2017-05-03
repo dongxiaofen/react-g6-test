@@ -3,6 +3,7 @@ import { observer } from 'mobx-react';
 import AnimateLoading from 'components/hoc/LoadingComp/AnimateLoading';
 import Item from '../Item';
 import PwdModal from '../../userModal/PwdModal';
+import EditModal from '../../userModal/EditModal';
 import styles from './index.less';
 function BaseInfo({accountSettingStore}) {
   const baseInfo = accountSettingStore.base;
@@ -19,11 +20,16 @@ function BaseInfo({accountSettingStore}) {
       </div>
     );
   };
-  const handleEdit = (values) => {
+  const editUserInfo = (name, values) => {
+    accountSettingStore.changeValue('editModal.actName', name);
+    accountSettingStore.changeValue(`editModal.form.${name}.value`, values);
+    accountSettingStore.changeValue('editModal.visible', true);
+  };
+  const handleEdit = (values, name) => {
     return (
       <div className={styles.editBox}>
         {values}
-        <span className={styles.editBtn}>修改</span>
+        <span className={styles.editBtn} onClick={editUserInfo.bind(null, name, values)}>修改</span>
       </div>
     );
   };
@@ -65,7 +71,7 @@ function BaseInfo({accountSettingStore}) {
       <AnimateLoading />
     </div>
   );
-  if (baseInfo.data) {
+  if (baseInfo.data && !baseInfo.error) {
     output = config.map((item, idx) => {
       return (
         <Item
@@ -74,6 +80,8 @@ function BaseInfo({accountSettingStore}) {
           values={baseInfo.data[item.keys]} />
       );
     });
+  } else if (baseInfo.error) {
+    output = '获取账号信息失败';
   }
   return (
     <div className={styles.wrapper}>
@@ -82,6 +90,7 @@ function BaseInfo({accountSettingStore}) {
         {output}
       </div>
       <PwdModal />
+      <EditModal />
     </div>
   );
 }
