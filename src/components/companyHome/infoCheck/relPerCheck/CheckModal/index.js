@@ -38,6 +38,21 @@ function CheckModal({visible, width, closeAction, btnLoading, relPerCheckStore, 
       relPerCheckStore.relatedType = evt.target.value;
     });
   };
+  // onFocusStyle
+  const onFocusStyle = (modle) => {
+    console.log(modle);
+    runInAction('修改对应模块状态', () => {
+      relPerCheckStore[modle] = true;
+    });
+  };
+
+  const onBlurStyle = (modle) => {
+    runInAction('修改对应模块状态', () => {
+      relPerCheckStore[modle] = false;
+    });
+  };
+
+  // validat
 
   // 输入relatedName
   const changeRelatedName = (evt)=>{
@@ -62,6 +77,8 @@ function CheckModal({visible, width, closeAction, btnLoading, relPerCheckStore, 
 
   // 关闭下拉选项
   const onBlurRelated = ()=>{
+    //  设置关联关系blur的样式状态
+    onBlurStyle('relationship');
     runInAction('change relatedNameModelStatus', () => {
       relPerCheckStore.relatedTypeModelStatus = false;
       relPerCheckStore.relatedNameModelStatus = false;
@@ -105,7 +122,7 @@ function CheckModal({visible, width, closeAction, btnLoading, relPerCheckStore, 
   // 默认姓名数据
   const relatedNameData = relPerCheckStore.relatedNameData;
   const relatedNameDom = [];
-  if (relatedNameData.size > 0) {
+  if (relatedNameData.length > 0) {
     relatedNameData.map((item)=> {
       relatedNameDom.push(
         <li onClick={clickHandle.bind(this, item, 'name')}>
@@ -130,9 +147,8 @@ function CheckModal({visible, width, closeAction, btnLoading, relPerCheckStore, 
              confirmText= "核查">
       <div className={styles.contentWrap}>
         <div className={styles.content}>
-          <div className={styles.validate}>
-            {relPerCheckStore.relatedSubmit === true && relPerCheckStore.relatedType.length < 1 ? <i></i> : ''}
-            {relPerCheckStore.relatedSubmit === true && relPerCheckStore.relatedType.length < 1 ? '关联关系必填' : ''}
+          <div className={relPerCheckStore.relatedSubmit === true && relPerCheckStore.relatedType.length < 1 ? styles.validate : styles.normal}>
+            {relPerCheckStore.relatedSubmit === true && relPerCheckStore.relatedType.length < 1 ? '关联关系必填' : '关联关系'}
           </div>
           <div
             tabIndex="1"
@@ -141,7 +157,9 @@ function CheckModal({visible, width, closeAction, btnLoading, relPerCheckStore, 
             <input
               onChange={changeRelatedType.bind(this)}
               onBlur={onBlurRelated.bind(this)}
-              className={styles.inputClass} value={relatedType}
+              onFocus={onFocusStyle(this, 'relationship')}
+              className={relPerCheckStore.relatedSubmit === true && relPerCheckStore.relatedType.length < 1 ? styles.inputClassError : styles.inputClass}
+              value={relatedType}
               placeholder="请输入关联关系" />
             <div className={relatedTypeModelStatus ? styles.listWrap : styles.hidden}>
               <ul>
@@ -155,9 +173,8 @@ function CheckModal({visible, width, closeAction, btnLoading, relPerCheckStore, 
               </ul>
             </div>
           </div>
-          <div className={styles.validate}>
-            {relPerCheckStore.relatedSubmit === true && relPerCheckStore.relatedName.length < 1 ? <i></i> : ''}
-            {relPerCheckStore.relatedSubmit === true && relPerCheckStore.relatedName.length < 1 ? '姓名必填' : ''}
+          <div className={relPerCheckStore.relatedSubmit === true && relPerCheckStore.relatedName.length < 1 ? styles.validate : styles.normal}>
+            {relPerCheckStore.relatedSubmit === true && relPerCheckStore.relatedName.length < 1 ? '姓名必填' : '姓名'}
           </div>
           <div
             tabIndex="1"
@@ -166,7 +183,9 @@ function CheckModal({visible, width, closeAction, btnLoading, relPerCheckStore, 
             onBlur={onBlurRelated.bind(this)}>
             <input
               onChange={changeRelatedName.bind(this)}
-              className={styles.inputClass}
+              onBlur={onBlurStyle(this, 'personName')}
+              onFocus={onFocusStyle(this, 'personName')}
+              className={relPerCheckStore.relatedSubmit === true && relPerCheckStore.relatedName.length < 1 ? styles.inputClassError : styles.inputClass}
               value={relatedName}
               placeholder="请输入姓名" />
             <div className={relatedNameModelStatus ? styles.listWrap : styles.hidden}>
@@ -175,13 +194,14 @@ function CheckModal({visible, width, closeAction, btnLoading, relPerCheckStore, 
               </ul>
             </div>
           </div>
-          <div className={styles.validate}>
-            {relPerCheckStore.relatedSubmit === true && idCardBool === false ? <i></i> : ''}
-            {relPerCheckStore.relatedSubmit === true && idCardBool === false ? idCardText : ''}
+          <div className={relPerCheckStore.relatedSubmit === true && idCardBool === false ? styles.validate : styles.normal}>
+            {relPerCheckStore.relatedSubmit === true && idCardBool === false ? idCardText : '身份证号码'}
           </div>
           <input
-            className={styles.inputClass}
+            className={relPerCheckStore.relatedSubmit === true && idCardBool === false ? styles.inputClassError : styles.inputClass}
             onChange={changeIdCard.bind(this)}
+            onBlur={onBlurStyle(this, 'idCardStatus')}
+            onFocus={onFocusStyle(this, 'idCardStatus')}
             value={relatedIdCard}
             placeholder="请输入身份证号" />
         </div>
