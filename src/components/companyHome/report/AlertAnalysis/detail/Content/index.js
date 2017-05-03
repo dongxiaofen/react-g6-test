@@ -1,7 +1,7 @@
 import React, {PropTypes} from 'react';
 import { observer, inject} from 'mobx-react';
 import styles from './index.less';
-import {Rule11, Rule12, Rule7, Rule32To50, ScopeAlter} from './module';
+import {Rule11, Rule12, Rule7, Rule32To50, ScopeAlter, ErrorInfo} from './module';
 function Content({alertAnalysisStore}) {
   const createModule = () => {
     const detail = alertAnalysisStore.detailData.detail;
@@ -20,6 +20,8 @@ function Content({alertAnalysisStore}) {
         return <Rule32To50 data={detail} />;
       case 9:
         return <ScopeAlter data={detail} />;
+      case 8:
+        return <ErrorInfo data={detail} />;
       default:
         return <div>12</div>;
     }

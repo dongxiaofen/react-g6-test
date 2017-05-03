@@ -259,6 +259,23 @@ const testData = {
         'type': 'saicInfoChange',
       }
     ]
+  },
+  rule8: {
+    'id': 12324,
+    'ruleName': '未按时公示年报',
+    'ruleId': 8,
+    'time': '2016-04-18 09:17:13',
+    'companyName': '重庆弗朗西机械有限公司',
+    'ruleDescription': '检测工商异常中是否存在未公示年报',
+    'detailSummary': [],
+    'detail': [
+      {
+        'decorg': '重庆市工商行政管理局大渡口区分局',
+        'abntime': '2016-07-05',
+        'specause': '未依照《企业信息公示暂行条例》第八条规定的期限公示年度报告',
+        'type': 'saicInfo',
+      }
+    ]
   }
 };
 // const testData = [
