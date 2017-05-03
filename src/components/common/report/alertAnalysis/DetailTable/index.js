@@ -33,7 +33,8 @@ function DetailTable({itemData, body, dict, rowIdx, hasNumber, maxCols}) {
             const colWidth = ((100 - 3.2) / maxCols) * kidConfig.colSpan;
             tdKid.push(
               <td colSpan={kidConfig.colSpan} key={`${idx}-${kidIdx}-${kidConfig.key}`} style={{width: `${colWidth}%`}}>
-                {CONFIG[dict][kidConfig.key]}：{getValue(kidConfig, kidData[kidConfig.key])}
+                <div className={styles.label}>{CONFIG[dict][kidConfig.key]}：</div>
+                <div className={styles.value}>{getValue(kidConfig, kidData[kidConfig.key])}</div>
               </td>);
           });
           output.push(
@@ -51,7 +52,8 @@ function DetailTable({itemData, body, dict, rowIdx, hasNumber, maxCols}) {
           if (colWidth > 0) {
             td.push(
               <td colSpan={colSpan} key={`${idx}-${index}`} style={{width: `${colWidth}%`}}>
-                {CONFIG[dict][config.key]}：{getValue(config, itemData[config.key])}
+                <div className={styles.label}>{CONFIG[dict][config.key]}：</div>
+                <div className={styles.value}>{getValue(config, itemData[config.key])}</div>
               </td>);
           }
         });
