@@ -1,8 +1,18 @@
 import React, { Component, PropTypes } from 'react';
 import { observer, inject } from 'mobx-react';
-import { toJS } from 'mobx';
+import { toJS, reaction } from 'mobx';
 import styles from './index.less';
 import * as d3 from 'd3';
+import bling1 from 'imgs/companyHome/network/1.gif';
+import bling2 from 'imgs/companyHome/network/2.gif';
+import bling3 from 'imgs/companyHome/network/3.gif';
+import bling4 from 'imgs/companyHome/network/4.gif';
+import bling5 from 'imgs/companyHome/network/5.gif';
+import bling6 from 'imgs/companyHome/network/6.gif';
+import bling7 from 'imgs/companyHome/network/7.gif';
+import bling8 from 'imgs/companyHome/network/8.gif';
+import bling9 from 'imgs/companyHome/network/9.gif';
+import bling10 from 'imgs/companyHome/network/10.gif';
 let nodesData;
 let edgesData;
 let svgEdges;
@@ -140,7 +150,7 @@ export default class CircleNetworkGraph extends Component {
       .attr('dx', 40)
       .attr('dy', -2)
       .attr('class', (data) => {
-        return data.index >= 0 ? styles.show : styles.hide;
+        return data.showInfo ? styles.show : styles.hide;
       })
       .attr('font-size', 8)
       .attr('fill', '#aaa')
@@ -151,6 +161,23 @@ export default class CircleNetworkGraph extends Component {
       .attr('xlink:href', (data, idx) => { return '#edgepath' + idx; })
       .style('pointer-events', 'none')
       .text((data) => { return this.getLinkInfo(data); });
+    // 监听点击和搜索节点事件
+    reaction(
+      () => this.props.networkStore.focusNodeName,
+      () => {
+        const { focusNodeName } = this.props.networkStore;
+        nodesData.map((node) => {
+          node.isFocus = false;
+        });
+        nodesData.map((node) => {
+          if (focusNodeName !== '' && node.name.indexOf(focusNodeName) >= 0 && node.category !== 0) {
+            node.isFocus = true;
+          }
+        });
+        // edgesData[0].showInfo = true;
+        this.reDraw();
+      }
+    );
   }
   // 获取边的关系
   getLinkInfo = (data) => {
@@ -294,7 +321,35 @@ export default class CircleNetworkGraph extends Component {
 
     svgNodes
       .attr('cx', (data) => { return data.x; })
-      .attr('cy', (data) => { return data.y; });
+      .attr('cy', (data) => { return data.y; })
+      .attr('class', (data) => {
+        let res;
+        if (data.show === 0) {
+          res = styles.hide;
+        } else if (data.isFocus) {
+          res = '';
+        } else if (data.category === 0) {
+          res = styles.mainCompany;
+        } else if (data.blackList && data.category !== 7) {
+          res = styles.blackListNodes;
+        } else if (data.status === 0) {
+          res = styles.cancelNodes;
+        } else {
+          res = styles[`category${data.category}`];
+        }
+        return res;
+      })
+      .attr('fill', (data) => {
+        let res;
+        if (data.blackList && data.category !== 7) {
+          res = 'url(#bling9)';
+        } else if (data.status === 0) {
+          res = 'url(#bling10)';
+        } else {
+          res = `url(#bling${data.category})`;
+        }
+        return data.isFocus ? res : '';
+      });
 
     svgTexts
       .attr('x', (data) => {
@@ -313,7 +368,7 @@ export default class CircleNetworkGraph extends Component {
       return path;
     });
 
-    svgEdgelabels.attr('transform', function test(data) {
+    svgEdgelabels.attr('transform', function autoRotate(data) {
       if (data.target.x < data.source.x) {// 边上的文字自动转向
         const bbox = this.getBBox();
         const rx = bbox.x + bbox.width / 2;
@@ -321,7 +376,10 @@ export default class CircleNetworkGraph extends Component {
         return 'rotate(180 ' + rx + ' ' + ry + ')';
       }
       return 'rotate(0)';
-    });
+    })
+      .attr('class', (data) => {
+        return data.showInfo ? styles.show : styles.hide;
+      });
   }
   dragstarted = (data) => {
     if (!d3.event.active) simulation.alphaTarget(0.3).restart();
@@ -351,6 +409,122 @@ export default class CircleNetworkGraph extends Component {
     // data.fy = null;
   }
 
+  // 重绘网络图
+  reDraw = () => {
+    // const checkedArr = this.props.currentNetwork.getIn(['typeList', 'checkedArr']).toArray();
+    // 连线
+    svgEdges = svgEdges.data(simulation.force('link').links());
+    // update
+    svgEdges
+      .attr('class', (data) => {
+        let res;
+        if (data.show === 0) {
+          res = styles.hide;
+        } else if (data.focus === 1) {
+          res = styles.focusLink;
+        } else {
+          res = styles.links;
+        }
+        return res;
+      });
+    // .attr('marker-end', (data)=>{
+    //   return data.show === 1 ? 'url(#relativeArrow)' : 'url(#mainArrow)';
+    // });
+    // enter
+    svgEdges.enter()
+      .append('line')
+      .attr('class', styles.links)
+      .attr('marker-end', () => {
+        return 'url(#relativeArrow)';
+      });
+    // exit
+    svgEdges.exit().remove();
+
+    // 节点
+    svgNodes = svgNodes.data(simulation.nodes());
+    // update
+    // svgNodes.attr('r', (data) => {
+    //   let res;
+    //   if (data.isFocus === 1) {
+    //     res = 20;
+    //   } else {
+    //     res = data.cateType === 0 ? 30 : 12;
+    //   }
+    //   return res;
+    // })
+    //   .attr('class', (data) => {
+    //     let res;
+    //     if (data.show === 0) {
+    //       res = styles.hide;
+    //     } else if (data.isFocus) {
+    //       res = '';
+    //     } else if (data.category === 0) {
+    //       res = styles.mainCompany;
+    //     } else if (data.blackList && data.category !== 7) {
+    //       res = styles.blackListNodes;
+    //     } else if (data.status === 0) {
+    //       res = styles.cancelNodes;
+    //     } else {
+    //       res = styles[`category${data.category}`];
+    //     }
+    //     return res;
+    //   })
+    //   .attr('fill', (data) => {
+    //     let res;
+    //     if (data.blackList && data.category !== 7) {
+    //       res = 'url(#bling9)';
+    //     } else if (data.status === 0) {
+    //       res = 'url(#bling10)';
+    //     } else {
+    //       res = `url(#bling${data.category})`;
+    //     }
+    //     return data.isFocus ? res : '';
+    //   })
+    //   .call(d3.drag()
+    //     .on('start', this.dragstarted)
+    //     .on('drag', this.dragged)
+    //     .on('end', this.dragended));
+    // enter
+    svgNodes.enter().append('circle')
+      .attr('r', 12)
+      .attr('class', (data) => {
+        let res;
+        if (data.blackList && data.category !== 7) {
+          res = styles.blackListNodes;
+        } else if (data.status === 0) {
+          res = styles.cancelNodes;
+        }
+        return res;
+      })
+      .call(d3.drag()
+        .on('start', this.dragstarted)
+        .on('drag', this.dragged)
+        .on('end', this.dragended));
+    // exit
+    svgNodes.exit().remove();
+
+    // 文字描述
+    svgTexts = svgTexts.data(simulation.nodes());
+    // update
+    svgTexts.attr('class', (data) => {
+      return data.show === 0 ? styles.hide : styles.nodeText;
+    });
+    // enter
+    svgTexts.enter().append('text')
+      .attr('class', styles.text)
+      .attr('text-anchor', 'middle')
+      .attr('dy', 25)
+      .text((data) => {         // 返回节点的名字
+        return data.name;
+      })
+      .call(d3.drag()
+        .on('start', this.dragstarted)
+        .on('drag', this.dragged)
+        .on('end', this.dragended));
+    // exit
+    svgTexts.exit().remove();
+    simulation.restart();
+  }
   render() {
     return (
       <div className={styles.svgBox}>
@@ -376,6 +550,36 @@ export default class CircleNetworkGraph extends Component {
               orient="auto">
               <path d="M2,2 L10,6 L2,10 L6,6 L2,2" className={styles.arrow} />
             </marker>
+            <pattern id="bling1" patternUnits="objectBoundingBox" width="1" height="1">
+              <image xlinkHref={bling1} x="0" y="0" width="40" height="40" />
+            </pattern>
+            <pattern id="bling2" patternUnits="objectBoundingBox" width="1" height="1">
+              <image xlinkHref={bling2} x="0" y="0" width="40" height="40" />
+            </pattern>
+            <pattern id="bling3" patternUnits="objectBoundingBox" width="1" height="1">
+              <image xlinkHref={bling3} x="0" y="0" width="40" height="40" />
+            </pattern>
+            <pattern id="bling4" patternUnits="objectBoundingBox" width="1" height="1">
+              <image xlinkHref={bling4} x="0" y="0" width="40" height="40" />
+            </pattern>
+            <pattern id="bling5" patternUnits="objectBoundingBox" width="1" height="1">
+              <image xlinkHref={bling5} x="0" y="0" width="40" height="40" />
+            </pattern>
+            <pattern id="bling6" patternUnits="objectBoundingBox" width="1" height="1">
+              <image xlinkHref={bling6} x="0" y="0" width="40" height="40" />
+            </pattern>
+            <pattern id="bling7" patternUnits="objectBoundingBox" width="1" height="1">
+              <image xlinkHref={bling7} x="0" y="0" width="40" height="40" />
+            </pattern>
+            <pattern id="bling8" patternUnits="objectBoundingBox" width="1" height="1">
+              <image xlinkHref={bling8} x="0" y="0" width="40" height="40" />
+            </pattern>
+            <pattern id="bling9" patternUnits="objectBoundingBox" width="1" height="1">
+              <image xlinkHref={bling9} x="0" y="0" width="40" height="40" />
+            </pattern>
+            <pattern id="bling10" patternUnits="objectBoundingBox" width="1" height="1">
+              <image xlinkHref={bling10} x="0" y="0" width="40" height="40" />
+            </pattern>
           </defs>
         </svg>
       </div>

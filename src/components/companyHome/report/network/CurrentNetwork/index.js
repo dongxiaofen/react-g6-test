@@ -7,6 +7,7 @@ import CircleNetworkGraph from './CircleNetworkGraph';
 import ForceNetworkGraph from './ForceNetworkGraph';
 import LegendBar from './LegendBar';
 import NodePanel from './NodePanel';
+import CircleTypeList from './CircleTypeList';
 
 function CurrentNetwork({layout, swithLayout}) {
   const svgWidth = document.getElementById('reportContainer').offsetWidth * 3 / 5 - 15;
@@ -22,7 +23,7 @@ function CurrentNetwork({layout, swithLayout}) {
         }
       </Col>
       <Col width="3">
-        {/* <TypeList {...this.props} /> */}
+        <CircleTypeList />
       </Col>
     </Row>
   );

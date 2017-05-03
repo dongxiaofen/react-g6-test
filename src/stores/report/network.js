@@ -21,6 +21,7 @@ class NetworkStore {
   @observable mainCompanyName = '';
   @observable layout = 'circle';
   @observable focusNodeName = '';
+  @observable searchKey = '';
 
   @action.bound focusNode(name) {
     this.focusNodeName = name;
@@ -28,6 +29,7 @@ class NetworkStore {
   }
   @action.bound closePanel() {
     this.nodePanel.show = false;
+    this.focusNodeName = '';
   }
   @action.bound switchLayout() {
     this.layout = this.layout === 'circle' ? 'force' : 'circle';
