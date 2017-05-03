@@ -37,5 +37,8 @@ export default inject('uiStore')(loadingComp(
     loading: props.loading,
     imgCategory: 14,
     category: 2,
+    errCategory: 2,
+    module: props.status === 'report' ? '高级查询报告列表' : '深度评估报告列表',
+    error: props.listData.length === 0,
   })}
 )(observer(TableList)));
