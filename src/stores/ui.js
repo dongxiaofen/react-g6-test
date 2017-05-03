@@ -4,6 +4,7 @@ import bannerStore from './banner';
 import assetsStore from './report/assets';
 import monitorListStore from './monitorList';
 import accountSettingStore from './accountSetting';
+import alertAnalysisStore from './report/alertAnalysis';
 import reportManageStore from './reportManage';
 
 class UiStore {
@@ -27,6 +28,13 @@ class UiStore {
       () => {
         document.body.scrollTop = 0;
         monitorListStore.getMainList();
+      }
+    );
+    reaction(
+      () => this.uiState.alertAnalysis.index,
+      () => {
+        const {monitorId, reportId} = bannerStore;
+        alertAnalysisStore.getAlertAnalysisList(monitorId, reportId);
       }
     );
     reaction(
