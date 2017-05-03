@@ -101,6 +101,11 @@ class UiStore {
       size: 10,
       totalElements: 0,
     },
+    alertAnalysis: {
+      index: 1,
+      size: 10,
+      totalElements: 0,
+    },
     shareholder: {
       index: 1,
       size: 4

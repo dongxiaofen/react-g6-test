@@ -1,10 +1,13 @@
 import React, {PropTypes} from 'react';
 import { observer, inject} from 'mobx-react';
-
+import { ModuleTitle } from 'components/common/report';
+import TableList from './TableList';
 function AlertAnalysis({alertAnalysisStore}) {
+  const len = alertAnalysisStore.listData.totalElements;
   return (
     <div>
-      <a onClick={alertAnalysisStore.openDetailModal}>查看</a>
+      <ModuleTitle module="预警信息" count={len} />
+      <TableList alertAnalysisStore={alertAnalysisStore} />
     </div>
   );
 }
