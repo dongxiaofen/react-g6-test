@@ -25,4 +25,5 @@ export RuleAdd from './ruleAdd';
 export Stock from './report/stock';
 export Network from './report/network';
 export AlertAnalysis from './report/alertAnalysis';
+export RuleCompany from './ruleCompany';
 // append here from plop

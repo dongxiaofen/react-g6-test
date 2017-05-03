@@ -3,6 +3,7 @@ import pathval from 'pathval';
 import bannerStore from './banner';
 import assetsStore from './report/assets';
 import monitorListStore from './monitorList';
+import ruleStore from './rule';
 import reportManageStore from './reportManage';
 
 class UiStore {
@@ -26,6 +27,12 @@ class UiStore {
       () => {
         document.body.scrollTop = 0;
         monitorListStore.getMainList();
+      }
+    );
+    reaction(
+      () => this.uiState.ruleListPager.index,
+      () => {
+        ruleStore.getRuleList();
       }
     );
     reaction(
@@ -55,6 +62,11 @@ class UiStore {
       index: 1,
       size: 10,
       totalElements: 10,
+    },
+    ruleListPager: {
+      index: 1,
+      size: 10,
+      show: observable.map({})
     },
     shareholder: {
       index: 1,

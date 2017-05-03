@@ -9,4 +9,5 @@ export * as addRelationApi from './addRelation';
 export * as accountSettingApi from './accountSetting';
 export * as reportManageApi from './reportManage';
 export * as monitorStatisticsApi from './monitorStatistics';
+export * as ruleApi from './rule';
 // append here from plop
