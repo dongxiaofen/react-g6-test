@@ -61,7 +61,7 @@ function AddModal({accountSettingStore}) {
     return !msgArr[0];
   };
   const modalCancel = () => {
-    accountSettingStore.resetAddInfo();
+    accountSettingStore.resetAddModal();
   };
   const modalConfirm = () => {
     if (allInputCheck()) {

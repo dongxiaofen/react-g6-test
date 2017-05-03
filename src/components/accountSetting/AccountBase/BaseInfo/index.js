@@ -7,12 +7,13 @@ import EditModal from '../../userModal/EditModal';
 import styles from './index.less';
 function BaseInfo({accountSettingStore}) {
   const baseInfo = accountSettingStore.base;
-  const activeIndex = accountSettingStore.tree.activeIndex;
+  const tree = accountSettingStore.tree;
+  const activeIndex = tree.activeIndex;
   const showPwdModal = () => {
     accountSettingStore.changeValue('pwdModal.visible', true);
   };
   const handleEmail = (values) => {
-    const level = accountSettingStore.tree.data.content[activeIndex].level;
+    const level = tree.data.content[activeIndex].level;
     return (
       <div className={styles.pwdBox}>
         {values}
@@ -26,10 +27,11 @@ function BaseInfo({accountSettingStore}) {
     accountSettingStore.changeValue('editModal.visible', true);
   };
   const handleEdit = (values, name) => {
+    const level = tree.data.content[activeIndex].level;
     return (
-      <div className={styles.editBox}>
+      <div className={level < 2 ? styles.editBox : styles.editDisable}>
         {values}
-        <span className={styles.editBtn} onClick={editUserInfo.bind(null, name, values)}>修改</span>
+        {level < 2 && <span className={styles.editBtn} onClick={editUserInfo.bind(null, name, values)}>修改</span>}
       </div>
     );
   };
@@ -71,7 +73,7 @@ function BaseInfo({accountSettingStore}) {
       <AnimateLoading />
     </div>
   );
-  if (baseInfo.data && !baseInfo.error) {
+  if (baseInfo.data) {
     output = config.map((item, idx) => {
       return (
         <Item
@@ -80,8 +82,6 @@ function BaseInfo({accountSettingStore}) {
           values={baseInfo.data[item.keys]} />
       );
     });
-  } else if (baseInfo.error) {
-    output = '获取账号信息失败';
   }
   return (
     <div className={styles.wrapper}>

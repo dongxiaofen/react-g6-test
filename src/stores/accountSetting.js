@@ -8,6 +8,7 @@ class AccountSettingStore {
   @observable tree = {
     searchInput: '',
     activeIndex: 0,
+    activeId: -1,
     data: {},
   };
   @observable addModal = {
@@ -145,7 +146,8 @@ class AccountSettingStore {
         this.resetEditModal();
         this.base.data[name] = params[name];
         if (name === 'contact') {
-          this.tree.data.content[this.tree.activeIndex][name] = params[name];
+          const index = this.tree.activeIndex;
+          this.tree.data.content[index][name] = params[name];
         }
         messageStore.openMessage({
           type: 'info',
@@ -164,7 +166,7 @@ class AccountSettingStore {
     this.pwdModal.loading = true;
     accountSettingApi.changePwd(url, params)
       .then(action('changePwd_success', () => {
-        this.resetPwdModalInfo();
+        this.resetPwdModal();
         messageStore.openMessage({
           type: 'info',
           content: '修改密码成功',
@@ -182,7 +184,7 @@ class AccountSettingStore {
     this.addModal.loading = true;
     accountSettingApi.addNewUser(params)
       .then(action('addNewUser_success', () => {
-        this.resetAddInfo();
+        this.resetAddModal();
         messageStore.openMessage({
           type: 'info',
           content: '新增账号成功',
@@ -218,6 +220,7 @@ class AccountSettingStore {
           treeData.formatData(null, null, 'cy@sc.cn');
           this.tree.data = {content: treeData.formatResult};
           const uId = treeData.formatResult[0].id;
+          this.tree.activeId = uId;
           this.getUserInfo(uId);
           this.getReportAndMonitor(uId);
           this.getProvince(uId);
@@ -360,7 +363,7 @@ class AccountSettingStore {
         this.tabs.loginRecord = {error: err.response.data, content: []};
       }));
   }
-  @action.bound resetAddInfo() {
+  @action.bound resetAddModal() {
     this.addModal = {
       visible: false,
       errorMsg: '',
@@ -410,7 +413,7 @@ class AccountSettingStore {
       },
     };
   }
-  @action.bound resetPwdModalInfo() {
+  @action.bound resetPwdModal() {
     this.pwdModal = {
       visible: false,
       errorMsg: '',
@@ -479,11 +482,16 @@ class AccountSettingStore {
       }
     };
   }
-  @action.bound resetStore() {
-    this.resetAddInfo();
+  @action.bound resetTree() {
     this.tree.searchInput = '';
     this.tree.activeIndex = 0;
     this.tree.data = {};
+  }
+  @action.bound resetStore() {
+    this.resetAddModal();
+    this.resetPwdModal();
+    this.resetEditModal();
+    this.resetTree();
     this.base = {};
     this.tabs = {
       business: {
