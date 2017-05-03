@@ -1,16 +1,11 @@
 import { observable, action } from 'mobx';
 import { reportManageApi } from 'api';
 import payModalStore from './payModal';
+import modalStore from './modal';
 import messageStore from './message';
 import uiStore from './ui';
 
 class ReportManageStore {
-  @observable config = [
-    {key: 'companyName', dictKey: '报告企业名称', width: '40%', handle: 'tooltip'},
-    {key: 'createdTs', dictKey: '创建报告日期', width: '20%', handle: 'time'},
-    {key: 'lastModifiedTs', dictKey: '最近分析日期', width: '20%', handle: 'time'},
-    {key: 'operation', dictKey: '操作', width: '20%'},
-  ];
   @observable msgModal = {
     show: false,
     iconType: 'info',
@@ -27,17 +22,6 @@ class ReportManageStore {
   @observable isLoading = false;
 
   @observable monitorId = '';
-  @observable agreeModal = {
-    reportId: '',
-    companyName: '',
-    turnToMonitor: {
-      visible: false,
-      title: '转为监控',
-      checked: 0,
-      showAgree: false,
-      loading: false,
-    },
-  };
 
   @action.bound getReportList(params) {
     this.isLoading = true;
@@ -67,20 +51,37 @@ class ReportManageStore {
       });
   }
 
-  @action.bound upGradeToMonitor(reportId, params, selectValue) {
-    reportManageApi.upGradeToMonitor(reportId, selectValue)
+  @action.bound upGradeToMonitor(reportId, status, params, selectValue) {
+    reportManageApi.upGradeToMonitor(reportId, status, selectValue)
       .then(action('update to monitor', (resp) => {
-        if (resp.status === 200) {
-          payModalStore.closeAction();
-          messageStore.openMessage({type: 'info', content: '加入监控成功', duration: '1500'});
-          this.monitorId = resp.data.monitorId;
+        payModalStore.closeAction();
+        messageStore.openMessage({ type: 'info', content: '加入监控成功', duration: '1500' });
+        this.monitorId = resp.data.monitorId;
+        if (status === 'report') {
           this.getReportList(params);
+        } else {
+          this.getAnalysisReportList(params);
         }
       }))
       .catch(action( (err) => {
         payModalStore.closeAction();
         messageStore.openMessage({type: 'warning', content: err.response.data.message, duration: '1500'});
       }));
+  }
+
+  @action.bound updateToAnalysisReport(reporId, params) {
+    modalStore.confirmLoading = true;
+    reportManageApi.updateToAnalysisReport(reporId)
+      .then(action('update to AnalysisReport', () => {
+        modalStore.confirmLoading = false;
+        modalStore.closeAction();
+        messageStore.openMessage({ type: 'info', content: '升级深度评估报告成功', duration: '1500' });
+        this.getReportList(params);
+      }))
+      .catch((err) => {
+        console.log(err.response);
+        modalStore.confirmLoading = false;
+      });
   }
 }
 export default new ReportManageStore();

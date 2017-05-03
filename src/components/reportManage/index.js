@@ -18,8 +18,12 @@ export default class ReportMain extends Component {
     routing: PropTypes.object
   }
   componentDidMount() {
-    const params = this.props.uiStore.uiState.reportManageList.params;
-    this.props.reportManageStore.getReportList(params);
+    const reportManagePager = this.props.uiStore.uiState.reportManagePager;
+    this.props.reportManageStore.getReportList({
+      companyName: '',
+      index: reportManagePager.index,
+      size: reportManagePager.size
+    });
   }
   componentWillUnmount() {
     this.props.uiStore.updateUiStore('reportManageList.reportStatus', 'report');

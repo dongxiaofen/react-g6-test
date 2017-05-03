@@ -9,10 +9,11 @@ function TypeFilter({ reportManageStore, uiStore }) {
   const changeFilter = (status) => {
     uiStore.updateUiStore('reportManageList.reportStatus', status);
     uiStore.updateUiStore('reportManagePager.index', 1);
+    const reportManagePager = uiStore.uiState.reportManagePager;
     const params = {
       companyName: '',
       index: 1,
-      size: 10
+      size: reportManagePager.size
     };
     if (status === 'report') {
       reportManageStore.getReportList(params);

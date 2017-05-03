@@ -1,16 +1,27 @@
 import React, {PropTypes} from 'react';
 import { observer, inject } from 'mobx-react';
-import { runInAction } from 'mobx';
-import pathval from 'pathval';
 
 import styles from './index.less';
 import { Row, Col } from 'components/common/layout';
 
-function BaseList({ item, status, routing, reportManageStore, payModalStore }) {
+function BaseList({
+  uiStore,
+  routing,
+  reportManageStore,
+  payModalStore,
+  modalStore,
+  item,
+  status,
+}) {
   const reportId = status === 'report' ? item.reportId : item.analysisReportId;
   const choiceOk = () => {
-    const params = pathval.getPathValue(reportManageStore, 'params');
-    reportManageStore.upGradeToMonitor(reportId, params, pathval.getPathValue(payModalStore, 'selectValue'));
+    const reportManagePager = uiStore.uiState.reportManagePager;
+    const params = {
+      companyName: '',
+      index: reportManagePager.index,
+      size: reportManagePager.size
+    };
+    reportManageStore.upGradeToMonitor(reportId, status, params, payModalStore.selectValue);
   };
 
   const turnToMonitor = () => {
@@ -21,10 +32,6 @@ function BaseList({ item, status, routing, reportManageStore, payModalStore }) {
       'pactUrl': '/',
       'pointText': '创建报告即视为同意',
       'callBack': choiceOk
-    });
-
-    runInAction('显示弹窗', () => {
-      pathval.setPathValue(reportManageStore, 'agreeModal.reportId', reportId);
     });
   };
 
@@ -45,6 +52,32 @@ function BaseList({ item, status, routing, reportManageStore, payModalStore }) {
       str = <span title="新三板" className={styles.mainLabel}>新三板</span>;
     }
     return str;
+  };
+
+  const openUpdateToAnalysisModal = (_reportId) => {
+    const updateDeepAction = () => {
+      const reportManagePager = uiStore.uiState.reportManagePager;
+      const params = {
+        companyName: '',
+        index: reportManagePager.index,
+        size: reportManagePager.size
+      };
+      reportManageStore.updateToAnalysisReport(_reportId, params);
+    };
+    modalStore.openCompModal({
+      title: '升级报告',
+      width: 420,
+      isSingleBtn: true,
+      pointText: '升级报告即视为同意',
+      pactUrl: 'xxxxxx',
+      pactName: '用户服务协议',
+      confirmAction: updateDeepAction,
+      loader: (cb) => {
+        require.ensure([], (require) => {
+          cb(require('./UpdateDeep'));
+        });
+      }
+    });
   };
 
   return (
@@ -87,15 +120,15 @@ function BaseList({ item, status, routing, reportManageStore, payModalStore }) {
               {
                 status === 'report'
                 ?
-                <div className={`${styles.turnBtn}`}>
-                  升级报告
-                </div>
+                  <div className={`${styles.turnBtn}`} onClick={openUpdateToAnalysisModal.bind(null, reportId)}>
+                    升级报告
+                  </div>
                 : null
               }
               <div className={`${styles.turnBtn}`}
                 onClick={turnToMonitor}>
                 加入监控
-            </div>
+              </div>
             </div>
           </div>
         </Col>
@@ -106,9 +139,17 @@ function BaseList({ item, status, routing, reportManageStore, payModalStore }) {
 
 BaseList.propTypes = {
   routing: PropTypes.object,
+  uiStore: PropTypes.object,
   reportManageStore: PropTypes.object,
   payModalStore: PropTypes.object,
+  modalStore: PropTypes.object,
   item: PropTypes.object,
   status: PropTypes.string,
 };
-export default inject('routing', 'reportManageStore', 'payModalStore')(observer(BaseList));
+export default inject(
+  'routing',
+  'uiStore',
+  'reportManageStore',
+  'modalStore',
+  'payModalStore'
+)(observer(BaseList));
