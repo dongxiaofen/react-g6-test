@@ -80,6 +80,8 @@ class ReportManageStore {
       }))
       .catch((err) => {
         console.log(err.response);
+        modalStore.closeAction();
+        messageStore.openMessage({ type: 'warning', content: err.response.data.message, duration: '1500' });
         modalStore.confirmLoading = false;
       });
   }
