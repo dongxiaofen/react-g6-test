@@ -3,7 +3,7 @@ import { observer } from 'mobx-react';
 import styles from './index.less';
 import Input from 'components/lib/input';
 
-function Filter({ reportManageStore, reportManagePager }) {
+function Filter({ reportManageStore, reportManagePager, status }) {
   const setFocus = (bool) => {
     reportManageStore.setFocus(bool);
   };
@@ -18,7 +18,11 @@ function Filter({ reportManageStore, reportManagePager }) {
       index: 1,
       size: reportManagePager.size
     };
-    reportManageStore.getReportList(params);
+    if (status === 'report') {
+      reportManageStore.getReportList(params);
+    } else {
+      reportManageStore.getAnalysisReportList(params);
+    }
   };
 
   const keyUpEvent = (evt) => {
@@ -43,5 +47,6 @@ function Filter({ reportManageStore, reportManagePager }) {
 Filter.propTypes = {
   reportManagePager: PropTypes.object,
   reportManageStore: PropTypes.object,
+  status: PropTypes.string,
 };
 export default observer(Filter);

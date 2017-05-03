@@ -28,6 +28,8 @@ export default class ReportMain extends Component {
   componentWillUnmount() {
     this.props.uiStore.updateUiStore('reportManageList.reportStatus', 'report');
     this.props.uiStore.updateUiStore('reportManagePager.index', 1);
+    this.props.reportManageStore.setCompanyName('');
+    this.props.reportManageStore.setFocus(false);
   }
   render() {
     const reportManageStore = this.props.reportManageStore;
@@ -45,6 +47,7 @@ export default class ReportMain extends Component {
               <h1 className={styles.title}>报告列表</h1>
               <Filter
                 reportManageStore={this.props.reportManageStore}
+                status={reportManageList.reportStatus}
                 reportManagePager={reportManagePager}/>
             </div>
             <TypeFilter reportManageStore={this.props.reportManageStore} />
@@ -52,7 +55,7 @@ export default class ReportMain extends Component {
               <TableList
                 status={reportManageList.reportStatus}
                 listData={reportManageStore.reportList}
-                loading={reportManageStore.isLoading}/>
+                loading={reportManageStore.isLoading} />
             </div>
           </Col>
         </Row>
