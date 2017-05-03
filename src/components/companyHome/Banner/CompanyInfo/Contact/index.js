@@ -3,17 +3,24 @@ import { observer } from 'mobx-react';
 import styles from './index.less';
 import Popover from 'components/lib/popover';
 
-function Contact({contactVis, bannerData, closeContactPopoverAlias, openContactPopoverAlias, contactExtended, extendContactAlias}) {
+function Contact({
+  contactVis,
+  bannerData,
+  closeContactPopoverAlias,
+  openContactPopoverAlias,
+  contactExtended,
+  extendContactAlias
+}) {
   const config = [
     { key: 'email', value: '邮箱地址' },
     { key: 'phone', value: '公司电话' },
     { key: 'index', value: '公司网址', subKey: 'url' },
-    { key: 'address', value: '公司地址' }
+    { key: 'address', value: '公司地址', subKey: 'address'}
   ];
-  const modifyAddress = (ary) => {
+  const removeRepeat = (ary, key) => {
     const output = [];
     ary.map((item) => {
-      output.push(item.address);
+      output.push(item[key]);
     });
     return Array.from(new Set(output));
   };
@@ -21,14 +28,16 @@ function Contact({contactVis, bannerData, closeContactPopoverAlias, openContactP
     const output = [];
     config.forEach((configItem, index) => {
       const children = [];
-      const infoData = configItem.key === 'address' ? modifyAddress(bannerData[configItem.key]) : bannerData[configItem.key];
+      const infoData = configItem.key === 'address' || configItem.key === 'index' ? removeRepeat(bannerData[configItem.key], configItem.subKey) : bannerData[configItem.key];
       if (infoData.length > 0) {
+        let idx = 0;
         for (const itemData of infoData) {
-          const item = configItem.subKey ? itemData[configItem.subKey] : itemData;
-          children.push(<p key={item} className={styles.infoText}>{item}</p>);
+          const item = itemData;
+          children.push(<p key={`${configItem.key}${idx}`} className={styles.infoText} >{item}</p>);
           if (contactExtended !== configItem.key) {
             break;
           }
+          idx++;
         }
         const arrowCss = contactExtended === configItem.key ? styles.arrowUp : styles.arrow;
         output.push(
@@ -79,7 +88,7 @@ function Contact({contactVis, bannerData, closeContactPopoverAlias, openContactP
         id="contactInfo">
         <span className={`${styles.messageStyle}`}>
           基本联系信息
-            <i className={iconCss}></i>
+          <i className={iconCss}></i>
         </span>
       </Popover>
     </div>

@@ -16,6 +16,6 @@ function Tbody({meta, tData}) {
 
 Tbody.propTypes = {
   meta: PropTypes.array.isRequired,
-  tData: PropTypes.array.isRequired
+  tData: PropTypes.oneOfType([PropTypes.array.isRequired, PropTypes.object.isRequired])
 };
 export default observer(Tbody);

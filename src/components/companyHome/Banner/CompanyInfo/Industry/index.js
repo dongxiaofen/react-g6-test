@@ -8,13 +8,12 @@ function Industry({ industryNames }) {
   }
   return (
     <div className={styles.industryStyle}>
-      <span>行业：</span>
-      <span>{industryNames.join('、')}</span>
+      <span>行业：{industryNames.join(' / ')}</span>
     </div>
   );
 }
 
 Industry.propTypes = {
-  foo: PropTypes.string,
+  industryNames: PropTypes.oneOfType([PropTypes.array, PropTypes.object]),
 };
 export default observer(Industry);

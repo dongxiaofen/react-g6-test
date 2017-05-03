@@ -4,19 +4,20 @@ import styles from './index.less';
 import FreeButton from './FreeButton';
 import ReportButton from './ReportButton';
 
-function SearchItemRight({itemData, modalStore, payModalStore, singleData, createMonitor}) {
+function SearchItemRight({itemData, modalStore, payModalStore, singleData, createMonitor, createReportType}) {
   let output = '';
-  if (itemData.monitorStatus !== 'MONITOR' && itemData.monitorStatus !== 'PAUSE' && itemData.monitorStatus !== 'EXPIRED' && itemData.reportStatus !== 'REPORT') {
+  if (itemData.monitorStatus !== 'MONITOR' && itemData.monitorStatus !== 'PAUSE' && itemData.monitorStatus !== 'EXPIRED' && itemData.reportStatus !== 'REPORT' && itemData.analysisReportStatus !== 'REPORT') {
     output = (
       <FreeButton
         payModalStore={payModalStore}
         modalStore={modalStore}
         itemData={itemData}
         singleData={singleData}
-        createMonitor={createMonitor} />
+        createMonitor={createMonitor}
+        createReportType={createReportType} />
     );
   }
-  if (itemData.reportStatus === 'REPORT' || itemData.monitorStatus === 'MONITOR' || itemData.monitorStatus === 'PAUSE' || itemData.monitorStatus === 'EXPIRED') {
+  if (itemData.reportStatus === 'REPORT' || itemData.monitorStatus === 'MONITOR' || itemData.monitorStatus === 'PAUSE' || itemData.monitorStatus === 'EXPIRED' || itemData.analysisReportStatus === 'REPORT') {
     output = (
       <ReportButton itemData={itemData} />
     );
@@ -34,5 +35,6 @@ SearchItemRight.propTypes = {
   payModalStore: PropTypes.object,
   singleData: PropTypes.func,
   createMonitor: PropTypes.func,
+  createReportType: PropTypes.func,
 };
 export default observer(SearchItemRight);

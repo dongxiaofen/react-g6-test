@@ -20,5 +20,11 @@ export MonitorStatistics from './monitorStatistics';
 export ReportManage from './reportManage';
 export Team from './report/team';
 export Assets from './report/assets';
+export RuleList from './ruleList';
+export RuleAdd from './ruleAdd';
+export Stock from './report/stock';
 export Network from './report/network';
+export RelPerCheck from './report/relPerCheck';
+export AlertAnalysis from './report/alertAnalysis';
+export PersonReport from './personReport';
 // append here from plop

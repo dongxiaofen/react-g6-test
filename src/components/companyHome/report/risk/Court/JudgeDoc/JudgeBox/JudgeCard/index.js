@@ -14,7 +14,7 @@ function JudgeCard({itemData, rowIdx, data, showParams, uiStore, module, type = 
       blockCss = obj.highLight ? styles.lightBlock : styles.paddingBlock;
       value = obj.handle ? obj.handle(itemData[obj.key], itemData) : itemData[obj.key];
       if (!value || value === '') {
-        value = '无';
+        value = '--';
       }
       output.push(
         <div className={styles.col} key={idx} style={{width: obj.width / 12 * 100 + '%'}}>

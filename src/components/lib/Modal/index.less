@@ -20,7 +20,7 @@
   bottom: 0;
 
   overflow: auto;
-  z-index: 1000;
+  z-index: 1500;
   background-color: rgba(0, 0, 0, 0.6);
 
   opacity: 0;
@@ -45,7 +45,11 @@
   box-shadow: 0 2px 13px 3px rgba(0,0,0,0.20);
   opacity: 0;
 
-  .transitionAll(.3s);
+  -webkit-transition: opactiy,visibility .3s ease-in-out;
+     -moz-transition: opactiy,visibility .3s ease-in-out;
+      -ms-transition: opactiy,visibility .3s ease-in-out;
+       -o-transition: opactiy,visibility .3s ease-in-out;
+          transition: opactiy,visibility .3s ease-in-out;
 }
 
 .visible {

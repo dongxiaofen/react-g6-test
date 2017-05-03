@@ -1,8 +1,9 @@
 import React, { Component, PropTypes } from 'react';
 import { observer, inject } from 'mobx-react';
 import styles from './index.less';
-import { Container, Row, Col } from 'components/common/layout';
+import { Container } from 'components/common/layout';
 import CompanyInfo from './CompanyInfo';
+import ReportAction from './ReportAction';
 
 @inject('bannerStore', 'routing')
 @observer
@@ -14,41 +15,40 @@ export default class Banner extends Component {
   componentDidMount() {
     const { monitorId, reportId, companyName, companyType } = this.props.routing.location.query;
     this.props.bannerStore.getBannerInfo(monitorId, reportId, companyName, companyType);
-    window.addEventListener('scroll', this.scrollReport);
+    this.props.bannerStore.getStockCode({ monitorId, reportId, companyName, companyType });
   }
-  componentWillUnmount() {
-    window.removeEventListener('scroll', this.scrollReport);
-  }
-  scrollReport = () => {
-    const bannerContentElement = this.refs.bannerContent;
-    if (document.body.scrollTop > 100) {
-      // 缩短banner
-      bannerContentElement.className = styles.bannerInfoWrap + ' ' + styles.infosmall;
-
-      document.getElementById('bannerLeftContent').className = styles.bannerInfoContent + ' ' + styles.displayNo;
-      document.getElementById('bannerLeftContent2').className = styles.bannerInfoContent + ' ' + styles.displayNo;
-    } else {
-      // 恢复banner
-      if (bannerContentElement) {
-        bannerContentElement.className = styles.bannerInfoWrap;
-      }
-
-      document.getElementById('bannerLeftContent').className = styles.bannerInfoContent;
-      document.getElementById('bannerLeftContent2').className = styles.bannerInfoContent;
-    }
+  bannerCountAndDate() {
+    const bannerStore = this.props.bannerStore;
+    const companyType = this.props.routing.location.query.companyType;
+    return (
+      <div className={`clearfix ${styles.countAndDate}`}>
+        {
+          companyType !== 'FREE'
+          ?
+          <div className={styles.date}>
+            更新日期：{bannerStore.lastModifiedTs}
+          </div>
+          : null
+        }
+        <div className={styles.count}>
+          被查询次数：{bannerStore.searchedCount}
+        </div>
+      </div>
+    );
   }
   render() {
     return (
-      <div ref="bannerContent" className={`${styles.bannerInfoWrap} clearfix`}>
+      <div className={`clearfix ${styles.bannerInfoWrap}`}>
         <Container>
-          <Row>
-            <Col width="8">
+          <div className="clearfix" style={{ position: 'relative' }}>
+            <div className={styles.companyInfo}>
               <CompanyInfo />
-            </Col>
-            <Col width="4">
-              actions
-          </Col>
-          </Row>
+            </div>
+            <div className={styles.action}>
+              <ReportAction bannerStore={this.props.bannerStore} />
+            </div>
+            {this.bannerCountAndDate()}
+          </div>
         </Container>
       </div>
     );

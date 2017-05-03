@@ -5,7 +5,7 @@ import styles from './index.less';
 
 function Pager({ tData, module, uiStore, type }) {
   const { index, size, totalElements } = uiStore.uiState[module];
-  const dataLength = totalElements ? totalElements : tData.length;
+  const dataLength = totalElements ? totalElements : (tData && tData.length || 0);
   if (dataLength <= size) {
     return null;
   }
@@ -24,7 +24,7 @@ function Pager({ tData, module, uiStore, type }) {
 }
 
 Pager.propTypes = {
-  tData: PropTypes.object,
+  tData: PropTypes.oneOfType([PropTypes.array, PropTypes.object]),
   module: PropTypes.string,
   uiStore: PropTypes.object,
   type: PropTypes.string,

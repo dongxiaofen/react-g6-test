@@ -5,9 +5,16 @@
   width: 120px;
   height: 43px;
   overflow: hidden;
+  outline: none;
 }
-.searchTabWrap:hover {
+.searchTabWrapShow {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 120px;
+  height: 43px;
   overflow: inherit;
+  outline: none;
 }
 
 .searchTabActive {
@@ -58,11 +65,17 @@
   height: 0;
   overflow: hidden;
 }
-.searchTabWrap:hover .searchTab{
+.searchTabShow{
+  position: absolute;
+  z-index: 1;
+  top: 43px;
+  left: -1px;
+  border: 1px solid #eeeeee;
+  overflow: hidden;
   transition: height ease 0.2s;
-  height: 129px;
+  height: 172px;
 }
-.searchTab a {
+.tab {
   float: left;
   display: block;
   width: 275px;
@@ -77,6 +90,22 @@
   white-space:nowrap;
   padding-right: 20px;
 }
-.searchTab a:hover {
+.active {
+  float: left;
+  display: block;
+  width: 275px;
+  height: 43px;
+  line-height: 44px;
+  background:#fafafa;
+  font-size:16px;
+  text-indent: 20px;
   color: #42a5f5;
+  text-align:left;
+  overflow:hidden;
+  white-space:nowrap;
+  padding-right: 20px;
+}
+.tab:hover, .active:hover {
+  background-color: #eeeeee;
+  color: #757575;
 }

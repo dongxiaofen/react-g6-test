@@ -3,9 +3,9 @@ import { observer, inject } from 'mobx-react';
 import { browserHistory } from 'react-router';
 
 import styles from './index.less';
-import HoverBox from './HoverBox';
+// import HoverBox from './HoverBox';
 
-@inject('clientStore', 'searchCompanyStore')@observer
+@inject('searchCompanyStore')@observer
 export default class NavAction extends Component {
   static propTypes = {
     clientStore: PropTypes.object,
@@ -60,37 +60,47 @@ export default class NavAction extends Component {
     }
   }
 
-  logoutMouseOver = () => {
-    const logoutRef = this.refs.logoutRef;
-    const preClass = logoutRef.className;
-    const newClass = `${preClass} ${styles.logoutHover}`;
-    logoutRef.className = newClass;
+  account() {
+    browserHistory.push('/account');
   }
 
-  logoutMouseOut = () => {
-    const logoutRef = this.refs.logoutRef;
-    const newClass = logoutRef.className.split(' ')[0];
-    logoutRef.className = newClass;
+  collection() {
+    browserHistory.push('/collection');
   }
 
   render() {
-    const userInfo = this.props.clientStore.userInfo;
-    const userEmail = userInfo.email;
-    const userName = userInfo.contact;
     return (
       <div className={`clearfix ${styles.wrap}`}>
         <div className={`clearfix ${styles.searchBox}`} ref="searchBox">
           <input
             className={styles.searchInput}
-            placeholder="请输入查询企业名称"
+            placeholder="请输入查询的公司..."
             value={this.state.inputValue}
             onFocus={this.setFocus.bind(this, true)}
             onBlur={this.setFocus.bind(this, false)}
             onKeyUp={this.enterToSearch}
             onChange={this.inputChange} />
-          <span className={styles.searchIcon}></span>
+          <span className={styles.searchIcon}>
+            <i className="fa fa-search" aria-hidden="true"></i>
+          </span>
         </div>
-        <div className={styles.iconStyle}>
+        <div className={styles.menuBox}>
+          <span>
+            <i className="fa fa-code-fork" aria-hidden="true"></i>下载APP
+          </span>
+        </div>
+        <div className={styles.menuBox}>
+          <span onClick={this.account}>
+            <i className="fa fa-user" aria-hidden="true"></i>账号
+          </span>
+          <span onClick={this.collection}>
+            <i className="fa fa-star-o" aria-hidden="true"></i>收藏
+          </span>
+          <span onClick={this.logout}>
+            <i className="fa fa-sign-out" aria-hidden="true"></i>退出
+          </span>
+        </div>
+        {/* <div className={styles.iconStyle}>
           <div className={`${styles.icon} ${styles.userInfoIcon}`}></div>
           <HoverBox width="230px" left="-100px">
             <div className={styles.userInfo}>
@@ -112,7 +122,7 @@ export default class NavAction extends Component {
               </div>
             </div>
           </HoverBox>
-        </div>
+        </div> */}
       </div>
     );
   }

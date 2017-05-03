@@ -26,3 +26,6 @@ export const getRecharge = (uId, params) => {
 export const getSummary = (uId, params) => {
   return axios.get(`/api/user/sub/${uId}/consume/summary`, {params});
 };
+export const getLoginRecord = (uId, params) => {
+  return axios.get(`/api/user/sub/${uId}/login`, {params});
+};
