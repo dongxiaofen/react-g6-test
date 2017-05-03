@@ -26,6 +26,7 @@ export Stock from './report/stock';
 export Network from './report/network';
 export RelPerCheck from './report/relPerCheck';
 export AlertAnalysis from './report/alertAnalysis';
+export RuleCompany from './ruleCompany';
 export PersonReport from './personReport';
 export Pdf from './pdf';
 // append here from plop

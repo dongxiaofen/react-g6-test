@@ -596,6 +596,28 @@ const config = {
     'loanDate': '贷款日期',
     'loanTerm': '贷款期限（年）',
     'overDate': '逾期开始日期'
+  },
+  rule32to50: {
+    companyName: '关联企业',
+    relation: '关联关系',
+    policy: '参考依据',
+  },
+  rule11: {
+    companyName: '关联企业',
+    relation: '关联关系',
+    eventTime: '变更日期',
+    altBe: '变更前',
+    altAf: '变更后'
+  },
+  rule12: {
+    companyName: '关联企业',
+    relation: '关联关系',
+  },
+  rule7: {
+    companyName: '关联企业',
+    relation: '关联关系',
+    casesDis: '失信被执行人记录',
+    casesLegal: '作为被告且败诉的法务信息',
   }
 };
 

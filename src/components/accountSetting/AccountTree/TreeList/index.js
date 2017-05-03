@@ -3,9 +3,10 @@ import { observer } from 'mobx-react';
 import { loadingComp } from 'components/hoc';
 import styles from './index.less';
 function TreeList({accountSettingStore, uiStore}) {
-  const data = accountSettingStore.tree.data.content;
-  const searchInput = accountSettingStore.tree.searchInput.trim();
-  const activeIndex = accountSettingStore.tree.activeIndex;
+  const moduleData = accountSettingStore.tree;
+  const data = moduleData.data.content;
+  const searchInput = moduleData.searchInput.trim();
+  const activeIndex = moduleData.activeIndex;
   const getUserData = (uId, level) => {
     uiStore.resetAccountPager();
     accountSettingStore.getUserInfo(uId);
@@ -21,17 +22,20 @@ function TreeList({accountSettingStore, uiStore}) {
     accountSettingStore.getLoginRecord(uId);
   };
   const extend = (idx, level, uId) => {
-    const extendVal = accountSettingStore.tree.data.content[idx].extend;
+    const extendVal = data[idx].extend;
     if (level !== 0) {
       accountSettingStore.changeValue(`tree.data.content[${idx}].extend`, !extendVal);
     }
     if (activeIndex !== idx) {
       accountSettingStore.changeValue(`tree.activeIndex`, idx);
+      accountSettingStore.changeValue(`tree.activeId`, uId);
       getUserData(uId, level);
     }
   };
-  const showNodeDetail = (idx, level, uId) => {
-    accountSettingStore.changeValue(`tree.activeIndex`, idx);
+  const showNodeDetail = (level, uId) => {
+    accountSettingStore.changeValue(`tree.activeId`, uId);
+    console.log(data.findIndex(item => item.id === uId), '--log');
+    accountSettingStore.changeValue(`tree.activeIndex`, data.findIndex(item => item.id === uId));
     getUserData(uId, level);
   };
   const judgeByPId = (pId) => {
@@ -67,12 +71,12 @@ function TreeList({accountSettingStore, uiStore}) {
       );
     }
     filterData.forEach((item, idx) => {
-      const itemCss = idx === activeIndex ? styles.itemActive : styles.item;
+      const itemCss = item.id === moduleData.activeId ? styles.itemActive : styles.item;
       output.push(
         <div
           key={idx}
           className={itemCss}
-          onClick={showNodeDetail.bind(null, idx, item.level, item.id)}
+          onClick={showNodeDetail.bind(null, item.level, item.id)}
           >
           <i className={styles.icon}></i>
           <span className={styles.treeName}>{item.contact}</span>
@@ -88,7 +92,7 @@ function TreeList({accountSettingStore, uiStore}) {
       const level = item.level;
       const padding = level > 1 ? (level - 1) * 23 : 0;
       const display = level < 2 || judgeByPId(item.parentUserId) ? 'block' : 'none';
-      const itemCss = idx === activeIndex ? styles.itemActive : styles.item;
+      const itemCss = item.id === moduleData.activeId ? styles.itemActive : styles.item;
       let icon;
       if (level === 0) {
         icon = <i className={styles.userIcon}></i>;

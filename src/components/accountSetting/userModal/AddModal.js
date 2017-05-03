@@ -16,8 +16,8 @@ function AddModal({accountSettingStore}) {
     {type: 'password', name: 'password', placeholder: '请输入登录密码', sameCheck: 'confirmPassword'},
     {type: 'password', name: 'confirmPassword', placeholder: '请再次输入登录密码', sameCheck: 'password'},
     {type: 'text', name: 'contact', placeholder: '姓名（必填）'},
-    {type: 'text', name: 'department', placeholder: '部门'},
     {type: 'text', name: 'contactPosition', placeholder: '职务'},
+    {type: 'text', name: 'department', placeholder: '部门'},
     {type: 'text', name: 'phone', placeholder: '电话'},
     {type: 'text', name: 'contactEmail', placeholder: '邮箱'},
   ];
@@ -61,7 +61,7 @@ function AddModal({accountSettingStore}) {
     return !msgArr[0];
   };
   const modalCancel = () => {
-    accountSettingStore.resetAddInfo();
+    accountSettingStore.resetAddModal();
   };
   const modalConfirm = () => {
     if (allInputCheck()) {

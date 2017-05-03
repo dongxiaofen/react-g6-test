@@ -3,6 +3,8 @@ import pathval from 'pathval';
 import bannerStore from './banner';
 import assetsStore from './report/assets';
 import monitorListStore from './monitorList';
+import ruleStore from './rule';
+import ruleCompanyStore from './ruleCompany';
 import accountSettingStore from './accountSetting';
 import reportManageStore from './reportManage';
 
@@ -27,6 +29,18 @@ class UiStore {
       () => {
         document.body.scrollTop = 0;
         monitorListStore.getMainList();
+      }
+    );
+    reaction(
+      () => this.uiState.ruleListPager.index,
+      () => {
+        ruleStore.getRuleList();
+      }
+    );
+    reaction(
+      () => this.uiState.ruleCompanyListPager.index,
+      () => {
+        ruleCompanyStore.getCompanyList();
       }
     );
     reaction(
@@ -100,6 +114,16 @@ class UiStore {
       index: 1,
       size: 10,
       totalElements: 0,
+    },
+    ruleListPager: {
+      index: 1,
+      size: 10,
+      show: observable.map({})
+    },
+    ruleCompanyListPager: {
+      index: 1,
+      size: 10,
+      show: observable.map({})
     },
     shareholder: {
       index: 1,
@@ -216,6 +240,9 @@ class UiStore {
     recentRecruitment: {
       index: 1,
       size: 10
+    },
+    reportManageList: {
+      reportStatus: 'report',
     },
     reportManagePager: {
       index: 1,

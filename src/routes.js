@@ -28,6 +28,7 @@ import {
     Network,
     RelPerCheck,
     AlertAnalysis,
+    RuleCompany,
     PersonReport,
     Pdf,
 // first append here from plop
@@ -81,6 +82,7 @@ export default (allStore) => {
       <Route path="ruleList" component={ RuleList } />
       <Route path="ruleAdd" component={ RuleAdd } />
       <Route path="pdf" component={ Pdf } />
+      <Route path="ruleCompany" component={ RuleCompany } />
 {/* second append here from plop */}
     </Route>
   );

@@ -33,7 +33,7 @@ function Menu({ routing }) {
     {
       parent: { module: '预警' },
       children: [
-        { module: '预警企业', route: 'ruleList222' },
+        { module: '预警企业', route: 'ruleCompany' },
         { module: '预警设置', route: 'ruleList' },
       ]
     },
