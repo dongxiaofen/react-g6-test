@@ -80,6 +80,38 @@ class AccountSettingStore {
       },
     }
   };
+  @observable editModal = {
+    visible: false,
+    errorMsg: '',
+    loading: false,
+    form: {
+      contact: {
+        value: '',
+        vdRule: 'vdName',
+        errorMsg: '',
+      },
+      contactPosition: {
+        value: '',
+        vdRule: '',
+        errorMsg: '',
+      },
+      department: {
+        value: '',
+        vdRule: '',
+        errorMsg: '',
+      },
+      phone: {
+        value: '',
+        vdRule: '',
+        errorMsg: '',
+      },
+      contactEmail: {
+        value: '',
+        vdRule: '',
+        errorMsg: '',
+      },
+    }
+  };
   @observable tabs = {
     business: {
       reportAndMonitor: {},
@@ -364,6 +396,40 @@ class AccountSettingStore {
         reNewPwd: {
           value: '',
           vdRule: 'vdRePwd',
+          errorMsg: '',
+        },
+      }
+    };
+  }
+  @action.bound resetEditModal() {
+    this.editModal = {
+      visible: false,
+      errorMsg: '',
+      loading: false,
+      form: {
+        contact: {
+          value: '',
+          vdRule: 'vdName',
+          errorMsg: '',
+        },
+        contactPosition: {
+          value: '',
+          vdRule: '',
+          errorMsg: '',
+        },
+        department: {
+          value: '',
+          vdRule: '',
+          errorMsg: '',
+        },
+        phone: {
+          value: '',
+          vdRule: '',
+          errorMsg: '',
+        },
+        contactEmail: {
+          value: '',
+          vdRule: '',
           errorMsg: '',
         },
       }

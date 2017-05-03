@@ -17,10 +17,14 @@ function Summary({accountSettingStore}) {
     ONE_YEAR: '1年',
   };
   const consumeType = {
-    REPORT_MAIN: '生成主体报告',
-    MONITOR_MAIN: '创建主体监控',
-    REPORT_REFRESH: '刷新主体报告',
-    REPORT_TO_MONITOR: '报告转监控',
+    REPORT_MAIN: '高级查询报告',
+    REPORT_REFRESH: '刷新高级查询报告',
+    REPORT_TO_MONITOR: '高级查询报告转监控',
+    ANALYSIS_REPORT_MAIN: '深度分析报告',
+    ANALYSIS_REPORT_REFRESH: '刷新深度分析报告',
+    ANALYSIS_REPORT_TO_MONITOR: '深度分析报告转监控',
+    REPORT_TO_ANALYSIS_REPORT: '高级查询报告升级为深度分析报告',
+    MONITOR_MAIN: '主体监控报告',
     MONITOR_MAIN_RENEWAL: '主体监控续费',
     PERSON_CHECK: '个人核查',
   };
