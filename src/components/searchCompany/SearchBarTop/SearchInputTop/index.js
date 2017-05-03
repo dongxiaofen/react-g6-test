@@ -8,7 +8,7 @@ function SearchInputTop({
   searchKey,
   searchChange,
   handleEnter,
-  getCompanyList}) {
+  searchCompanyClick}) {
   const placeholderText = plholderConfig[searchType];
   return (
     <div className={styles.searchInputWrap}>
@@ -19,7 +19,7 @@ function SearchInputTop({
         value={searchKey}
         className={styles.searchInput} />
       <button
-        onClick={getCompanyList}
+        onClick={searchCompanyClick}
         className={styles.searchButton}>搜索</button>
     </div>
   );
@@ -30,7 +30,7 @@ SearchInputTop.propTypes = {
   searchType: PropTypes.string,
   searchKey: PropTypes.string,
   searchChange: PropTypes.func,
-  getCompanyList: PropTypes.func,
+  searchCompanyClick: PropTypes.func,
   handleEnter: PropTypes.func,
 };
 export default observer(SearchInputTop);

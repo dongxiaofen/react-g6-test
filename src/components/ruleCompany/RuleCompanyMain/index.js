@@ -15,6 +15,9 @@ export default class RuleCompanyMain extends Component {
   componentDidMount() {
     this.props.ruleCompanyStore.getCompanyList();
   }
+  componentWillUnmount() {
+    this.props.ruleCompanyStore.resetData();
+  }
   render() {
     return (
       <div className={styles.box}>

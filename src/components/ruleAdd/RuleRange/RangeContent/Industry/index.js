@@ -2,7 +2,8 @@ import React, {PropTypes} from 'react';
 import { observer } from 'mobx-react';
 import styles from './index.less';
 
-function Industry({}) {
+function Industry({ruleStore}) {
+  console.log(ruleStore.industryList, '======industryList');
   return (
     <div className={styles.box}>
       Industry
