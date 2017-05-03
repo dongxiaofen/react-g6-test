@@ -1,10 +1,16 @@
 import { observable, action } from 'mobx';
 import detailModalStore from '../detailModal';
+import pathval from 'pathval';
+import axios from 'axios';
 import { companyHomeApi } from 'api';
 import uiStore from '../ui';
+import messageStore from '../message';
 import testData from './testData';
+const CancelToken = axios.CancelToken;
 class AlertAnalysisStore {
   @observable isMount = false;
+  @observable loadingId = -1;
+  alertCancel = null;
   @observable listData = {};
   @observable detailData = {
     info: {
@@ -15,6 +21,33 @@ class AlertAnalysisStore {
       'ruleTime': '2017-01-15'
     },
     detail: testData.rule8,
+  }
+  @action.bound changeValue(key, value) {
+    pathval.setPathValue(this, key, value);
+  }
+  @action.bound getAlertDetail(url) {
+    if (this.alertCancel) {
+      this.alertCancel();
+      this.alertCancel = null;
+    }
+    const source = CancelToken.source();
+    this.alertCancel = source.cancel;
+    companyHomeApi.getAlertDetail(url, source)
+      .then(action('getAlertDetail_success', resp => {
+        this.loadingId = -1;
+        this.alertCancel = null;
+        console.log(resp);
+      }))
+      .catch(action('getAlertDetail_error', err => {
+        if (!axios.isCancel(err)) {
+          this.loadingId = -1;
+          this.alertCancel = null;
+          messageStore.openMessage({
+            type: 'error',
+            content: pathval.getPathValue(err, 'response.data.message') || '获取数据失败'
+          });
+        }
+      }));
   }
   @action.bound getAlertAnalysisList(monitorId, reportId) {
     this.isMount = true;
