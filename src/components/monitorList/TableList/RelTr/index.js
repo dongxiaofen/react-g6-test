@@ -4,13 +4,13 @@ import { browserHistory } from 'react-router';
 import RelTime from './RelTime';
 import ActionWrap from '../ActionWrap';
 import styles from './index.less';
-function RelTr({data, mainData, index, monitorListStore}) {
+function RelTr({data, mainData, index, monitorListStore, uiStore}) {
   const viewReport = () => {
     const {monitorId, companyType} = data.monitorCompanyType;
     browserHistory.push(`/companyHome?monitorId=${monitorId}&companyType=${companyType}`);
   };
   const handleRelName = () => {
-    const { companyName } = monitorListStore.searchParams;
+    const { companyName } = uiStore.uiState.monitorList.params;
     if (companyName) {
       const regExp = new RegExp(companyName, 'g');
       const result = data.companyName.replace(regExp, match => `<span style="color: #42A5F5">${match}</span>`);
@@ -63,4 +63,4 @@ function RelTr({data, mainData, index, monitorListStore}) {
     </div>
   );
 }
-export default inject('monitorListStore')(observer(RelTr));
+export default inject('monitorListStore', 'uiStore')(observer(RelTr));

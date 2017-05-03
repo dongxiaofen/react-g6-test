@@ -2,11 +2,12 @@ import React from 'react';
 import { observer } from 'mobx-react';
 import { loadingComp } from 'components/hoc';
 import styles from './index.less';
-function TreeList({accountSettingStore}) {
+function TreeList({accountSettingStore, uiStore}) {
   const data = accountSettingStore.tree.data.content;
   const searchInput = accountSettingStore.tree.searchInput.trim();
   const activeIndex = accountSettingStore.tree.activeIndex;
   const getUserData = (uId, level) => {
+    uiStore.resetAccountPager();
     accountSettingStore.getUserInfo(uId);
     accountSettingStore.getReportAndMonitor(uId);
     accountSettingStore.getProvince(uId);
@@ -17,6 +18,7 @@ function TreeList({accountSettingStore}) {
       accountSettingStore.getRecharge(uId);
       accountSettingStore.getSummary(uId);
     }
+    accountSettingStore.getLoginRecord(uId);
   };
   const extend = (idx, level, uId) => {
     const extendVal = accountSettingStore.tree.data.content[idx].extend;
@@ -129,6 +131,7 @@ export default loadingComp({
   mapDataToProps: props => ({
     loading: props.accountSettingStore.tree.data.content === undefined ? true : false,
     error: props.accountSettingStore.tree.data.error,
-    category: 2,
+    category: 0,
+    height: 200,
   }),
 })(observer(TreeList));

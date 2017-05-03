@@ -28,4 +28,6 @@ export ruleStore from './rule';
 export stockStore from './report/stock';
 export networkStore from './report/network';
 export ruleCompanyStore from './ruleCompany';
+export relPerCheckStore from './report/relPerCheck';
+export personReportStore from './personReport';
 // append here from plop

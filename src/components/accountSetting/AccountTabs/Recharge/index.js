@@ -17,21 +17,13 @@ function Recharge({accountSettingStore}) {
     {name: '充值点数', key: 'point'},
     {name: '操作时间', key: 'opTime'},
   ];
-  const changePage = (newPage) => {
-    const uId = accountSettingStore.base.data.id;
-    accountSettingStore.changeValue('tabs.rechargePager.index', newPage);
-    accountSettingStore.getRecharge(uId);
-  };
   const data = accountSettingStore.tabs.recharge;
-  const params = accountSettingStore.tabs.rechargePager;
   return (
     <div className={styles.wrapper}>
       <AccountTable
+        module="accountRecharge"
         headData={head}
-        bodyData={data.content}
-        pageParams={params}
-        totalElements={data.totalElements}
-        pageChange={changePage} />
+        bodyData={data.content} />
     </div>
   );
 }
@@ -39,6 +31,8 @@ export default loadingComp({
   mapDataToProps: props => ({
     loading: props.accountSettingStore.tabs.recharge.content === undefined ? true : false,
     error: props.accountSettingStore.tabs.recharge.error,
-    category: 2,
+    category: 0,
+    errCategory: 1,
+    height: 200,
   }),
 })(observer(Recharge));

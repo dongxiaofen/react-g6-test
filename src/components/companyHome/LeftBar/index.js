@@ -41,6 +41,15 @@ const barConf = [
     contain: ['main'],
   },
   {
+    menuText: '信息核查',
+    menuKey: 'infoCheck',
+    children: [
+      {menuText: '关联人核查', menuKey: 'relPerCheck', helpInfo: helpInfo1, contain: ['main', 'report']},
+    ],
+    helpInfo: helpInfo1,
+    contain: ['main', 'report'],
+  },
+  {
     menuText: '企业现勘',
     menuKey: 'corprationXk',
     children: [
@@ -50,9 +59,10 @@ const barConf = [
     contain: ['main'],
   },
 ];
-function LeftBar({ leftBarStore, routing }) {
+function LeftBar({ leftBarStore, bannerStore, routing }) {
   const { monitorId, reportId, companyName, companyType } = routing.location.query;
-  const { activeMenu, stockCode } = leftBarStore;
+  const activeMenu = leftBarStore.activeMenu;
+  const stockCode = bannerStore.stockCode;
   const getReportType = () => {
     // 一共四种报告 free, report, main, relation
     let reportType;
@@ -145,6 +155,8 @@ function LeftBar({ leftBarStore, routing }) {
 }
 
 LeftBar.propTypes = {
-  foo: PropTypes.string,
+  leftBarStore: PropTypes.object,
+  bannerStore: PropTypes.object,
+  routing: PropTypes.object,
 };
-export default inject('leftBarStore', 'routing')(observer(LeftBar));
+export default inject('leftBarStore', 'bannerStore', 'routing')(observer(LeftBar));

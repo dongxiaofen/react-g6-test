@@ -10,7 +10,7 @@ function SearchBar({monitorListStore, uiStore}) {
   const handleSearch = (evt) => {
     if (evt.keyCode === 13) {
       uiStore.updateUiStore('monitorList.params.companyName', evt.target.value);
-      uiStore.updateUiStore('monitorList.params.index', 1);
+      uiStore.updateUiStore('monitorListPager.index', 1);
       monitorListStore.getMainCount();
       monitorListStore.getMainList();
     }

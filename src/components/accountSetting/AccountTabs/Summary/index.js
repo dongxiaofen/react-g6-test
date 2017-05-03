@@ -1,11 +1,10 @@
 import React from 'react';
 import { observer } from 'mobx-react';
-import Popover from 'antd/lib/popover';
 import { loadingComp } from 'components/hoc';
 import AccountTable from '../AccountTable';
 import styles from './index.less';
 function Summary({accountSettingStore}) {
-  const consume = {
+  const timeMap = {
     ONE_MONTH: '1个月',
     TWO_MONTH: '2个月',
     THREE_MONTH: '3个月',
@@ -18,57 +17,48 @@ function Summary({accountSettingStore}) {
     ONE_YEAR: '1年',
   };
   const consumeType = {
-    REPORT_MAIN: '生成主体报告',
-    MONITOR_MAIN: '创建主体监控',
-    REPORT_REFRESH: '刷新主体报告',
-    REPORT_TO_MONITOR: '报告转监控',
+    REPORT_MAIN: '高级查询报告',
+    REPORT_REFRESH: '刷新高级查询报告',
+    REPORT_TO_MONITOR: '高级查询报告转监控',
+    ANALYSIS_REPORT_MAIN: '深度分析报告',
+    ANALYSIS_REPORT_REFRESH: '刷新深度分析报告',
+    ANALYSIS_REPORT_TO_MONITOR: '深度分析报告转监控',
+    REPORT_TO_ANALYSIS_REPORT: '高级查询报告升级为深度分析报告',
+    MONITOR_MAIN: '主体监控报告',
     MONITOR_MAIN_RENEWAL: '主体监控续费',
     PERSON_CHECK: '个人核查',
   };
-  const handleTimeType = (value) => {
-    return consume[value];
+  const handleConsumeInfo = (value, item) => {
+    const nameStr = item.companyName ? `企业：${item.companyName}` : '';
+    const timeStr = item.timeType ? `；监控时长：${timeMap[item.timeType]}` : '';
+    const personStr = item.memo ? `；核查人姓名：${item.memo}` : '';
+    return nameStr + timeStr + personStr;
   };
   const handleConsumeType = (value) => {
     return consumeType[value];
   };
-  const handleMemo = (value, item) => {
-    return item.consumeOperationType === 'PERSON_CHECK' ? `核查人姓名：${item.memo}` : '';
-  };
   const handleName = (value, item) => {
-    return (
-      <Popover
-        placement="top"
-        content={`${value}（${item.operatorEmail}）`}
-        >
-        <span>{value}</span>
-      </Popover>
-    );
+    return `${value}（${item.operatorEmail}）`;
   };
   const head = [
     {name: '消费编号', key: 'seqNum'},
-    {name: '企业名称', key: 'companyName'},
     {name: '消费类型', key: 'consumeOperationType', handle: handleConsumeType},
-    {name: '监控时长', key: 'timeType', handle: handleTimeType},
-    {name: '消费点数', key: 'consume'},
-    {name: '操作人', key: 'operatorName', handle: handleName},
     {name: '操作时间', key: 'opTime'},
-    {name: '备注', key: 'memo', handle: handleMemo},
+    {name: '消费点数', key: 'consume'},
+    {name: '消费内容', key: 'consumeInfo', handle: handleConsumeInfo},
+    {name: '操作人', key: 'operatorName', handle: handleName},
   ];
-  const changePage = (newPage) => {
-    const uId = accountSettingStore.base.data.id;
-    accountSettingStore.changeValue('tabs.summaryPager.index', newPage);
-    accountSettingStore.getSummary(uId);
-  };
+  const totalConsume = accountSettingStore.tabs.summary.totalConsume;
   const data = accountSettingStore.tabs.summary.page;
-  const params = accountSettingStore.tabs.summaryPager;
   return (
     <div className={styles.wrapper}>
+      <div className={styles.totalConsume}>
+        {`所有帐号总消费点数 ${totalConsume || 0} 点`}
+      </div>
       <AccountTable
+        module="accountSummary"
         headData={head}
-        bodyData={data.content}
-        pageParams={params}
-        totalElements={data.totalElements}
-        pageChange={changePage} />
+        bodyData={data.content} />
     </div>
   );
 }
@@ -76,6 +66,8 @@ export default loadingComp({
   mapDataToProps: props => ({
     loading: props.accountSettingStore.tabs.summary.page === undefined ? true : false,
     error: props.accountSettingStore.tabs.summary.error,
-    category: 2,
+    category: 0,
+    errCategory: 1,
+    height: 200,
   }),
 })(observer(Summary));

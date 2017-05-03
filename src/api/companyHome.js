@@ -12,6 +12,21 @@ export const getBannerInfo = (monitorId, reportId, companyName, companyType) => 
   }
   return axios.get(url);
 };
+
+export const getStockCode = ({ reportId, monitorId, analysisReportId }) => {
+  let url;
+  if (reportId) {
+    url = `/api/report/${reportId}/stockCode`;
+  }
+  if (monitorId) {
+    url = `/api/monitor/${monitorId}/stockCode`;
+  }
+  if (analysisReportId) {
+    url = `/api/analysisReport/${analysisReportId}/stockCode`;
+  }
+  return axios.get(url);
+};
+
 export const toggleMonitorStatus = (monitorId, status) => {
   return axios.put(`/api/monitor/${monitorId}/status`, { status: status });
 };
@@ -76,7 +91,15 @@ export const getNewsDetail = (url, source) => {
 export const getBiddingDetail = (url, source) => {
   return axios.get(url, {cancelToken: source.token});
 };
-
+export const getPersonCheckInfo = ({monitorId, params}) => {
+  return axios.get(`/api/monitor/${monitorId}/person/page`, {params: params});
+};
+export const checkPersonInfo = (url, params) => {
+  return axios.post(url, params);
+};
+export const getIdCard = (url) => {
+  return axios.get(url);
+};
 export const changeAnnouncement = ({ stockType, monitorId, reportId }) => {
   let url;
   if (monitorId) {
@@ -93,5 +116,26 @@ export const changeAnnouncement = ({ stockType, monitorId, reportId }) => {
       url = `/api/report/stock/announcement?reportId=${reportId}`;
     }
   }
+  return axios.get(url);
+};
+
+// 创建高级报告或者深度报告
+export const createReport = (active, companyName) => {
+  let url;
+  // 1为高级报告
+  if (active === 1) {
+    url = '/api/report';
+  } else {
+    url = '/api/analysisReport';
+  }
+  return axios.post(url, { companyName: companyName });
+};
+
+// 创建监控
+export const createMonitor = (params) => {
+  return axios.post(`/api/monitor`, params);
+};
+// 获取核查人的列表
+export const getPersonName = (url) => {
   return axios.get(url);
 };

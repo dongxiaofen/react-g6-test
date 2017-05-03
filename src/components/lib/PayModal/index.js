@@ -42,9 +42,6 @@ function PayModal({
     // console.log('进入监控模块');
     modalContent = (
       <div className={styles.wrap}>
-        <div className={styles.title}>
-          {tittle}
-        </div>
         <div className={styles.select}>
           <div className={styles.selectWrap}>
             <div className={styles.selectRow}>
@@ -83,6 +80,7 @@ function PayModal({
              visible={visible}
              pointText={pointText}
              pactUrl={pactUrl}
+             title={tittle}
              pactName={pactName}
              isNeedBtn
       >

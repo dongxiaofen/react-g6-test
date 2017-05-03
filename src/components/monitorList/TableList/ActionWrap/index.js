@@ -19,7 +19,7 @@ function ActionWrap({data, mainData, index, relation, monitorListStore, payModal
   const relDisable = relation === 'relation' && mainData.status === 'PAUSE';
   const relLoading = relation === 'relation' && monitorListStore.switchLoading.get(mainData.monitorId);
   const changeStatus = (newStatus) => {
-    if (newStatus) {
+    if (newStatus || relation === 'relation') {
       monitorListStore.changeStatus({
         visible: true,
         monitorId,

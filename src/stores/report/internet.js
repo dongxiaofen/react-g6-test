@@ -103,5 +103,22 @@ class InternetStore {
         }
       }));
   }
+  @action.bound resetStore() {
+    this.isMount = false;
+    this.analysis = {};
+    this.statistic = {};
+    this.newsData = {};
+    this.activeUrl = '';
+    this.newsDetailCancel = null;
+    this.newsCancel = null;
+    this.detailInfo = {
+      type: '',
+      label: '',
+      time: '',
+      title: '',
+      source: '',
+      html: '',
+    };
+  }
 }
 export default new InternetStore();
