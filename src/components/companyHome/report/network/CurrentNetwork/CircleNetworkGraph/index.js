@@ -87,7 +87,7 @@ export default class CircleNetworkGraph extends Component {
       .selectAll('circle')
       .data(nodesData)
       .enter().append('circle')
-      .attr('r', 10)
+      .attr('r', 12)
       .attr('class', (data) => {
         let res;
         if (data.show === 0) {
@@ -322,6 +322,9 @@ export default class CircleNetworkGraph extends Component {
     svgNodes
       .attr('cx', (data) => { return data.x; })
       .attr('cy', (data) => { return data.y; })
+      .attr('r', (data)=>{
+        return data.isFocus ? 20 : 12;
+      })
       .attr('class', (data) => {
         let res;
         if (data.show === 0) {
