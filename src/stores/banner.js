@@ -127,7 +127,6 @@ class BannerStore {
         this.monitorStatus = resp.data.monitorStatus;
         this.lastModifiedTs = resp.data.lastModifiedTs ? resp.data.lastModifiedTs : '无';
         this.refreshStatus = 'complete';
-        this.stockCode = resp.data.stockCode;
         this.searchedCount = resp.data.searchedCount;
         this.lastModifiedTs = resp.data.lastModifiedTs;
       }))
@@ -150,7 +149,12 @@ class BannerStore {
     companyHomeApi.getStockCode({ reportId, monitorId, analysisReportId })
       .then(action('get stock code', (resp) => {
         this.stockCode = resp.data;
-      }));
+      }))
+      .catch((err) => {
+        if (err.response.status !== 404) {
+          console.log('获取stockCode出错', err.response);
+        }
+      });
   }
 
   // 修改UpdateHighOrDeep

@@ -80,39 +80,54 @@ function ErrorText({ module, error, errCategory = 0, height }) {
     '监控统计行业变化趋势': '暂无信息，可能存在时间相对滞后或未公示情况，仅供参考',
     '监控统计头条趋势分析': '暂无信息，可能存在时间相对滞后或未公示情况，仅供参考',
     '监控统计头条类型分析': '暂无信息，可能存在时间相对滞后或未公示情况，仅供参考',
+    '高级查询报告列表': '哟嚯嚯，哟嚯嚯',
+    '深度评估报告列表': '哟嚯嚯，哟嚯嚯，哟嚯嚯，哟嚯嚯',
   };
-  if (errCategory) {
-    const imgStyleHeght = height ? { height: height } : {};
-    return (
-      <div className={styles.noDataImgBox} style={imgStyleHeght}>
-        <div className={styles.noDataContent}>
-          <div className={`clearfix ${styles.noDataBox}`}>
-            <div className={styles.noDataImg}>
-              <img src={noDataChart} />
+  switch (errCategory) {
+    case 0:
+      const imgStyleHeght = height ? { height: height } : {};
+      return (
+        <div className={styles.noDataImgBox} style={imgStyleHeght}>
+          <div className={styles.noDataContent}>
+            <div className={`clearfix ${styles.noDataBox}`}>
+              <div className={styles.noDataImg}>
+                <img src={noDataChart} />
+              </div>
+              <div className={styles.noDataText}>
+                {dict[module] || error.message || '暂无信息'}
+              </div>
             </div>
-            <div className={styles.noDataText}>
+          </div>
+        </div>
+      );
+    case 1:
+      return (
+        <div className={styles.msgBox}>
+          <div className={`clearfix ${styles.msgItem}`}>
+            <div className={styles.msgImg}></div>
+            <div className={styles.msgText}>
               {dict[module] || error.message || '暂无信息'}
             </div>
           </div>
         </div>
-      </div>
-    );
-  }
-  return (
-    <div className={styles.msgBox}>
-      <div className={`clearfix ${styles.msgItem}`}>
-        <div className={styles.msgImg}></div>
-        <div className={styles.msgText}>
-          {dict[module] || error.message || '暂无信息'}
+      );
+    case 2:
+      return (
+        <div className={styles.noDataList}>
+          <div className={styles.imageBox}></div>
+          <div className={styles.tips}>
+            {dict[module] || error.message || '暂无信息'}
+          </div>
         </div>
-      </div>
-    </div>
-  );
+      );
+    default:
+      break;
+  }
 }
 
 ErrorText.propTypes = {
   module: PropTypes.string,
-  errCategory: PropTypes.number,
+  errCategory: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   height: PropTypes.oneOfType([PropTypes.string, PropTypes.number])
 };
 export default observer(ErrorText);

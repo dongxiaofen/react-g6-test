@@ -1,37 +1,44 @@
 import React, {PropTypes} from 'react';
 import { observer, inject } from 'mobx-react';
 import BaseList from './BaseList';
-import pathval from 'pathval';
 import styles from './index.less';
 import Pager from 'components/common/Pager';
 import { loadingComp } from 'components/hoc';
 
 
-function TableList({ reportManageStore, uiStore }) {
+function TableList({ listData, status, uiStore }) {
   return (
-      <div>
-        <div className={styles.table}>
-          {
-            pathval.getPathValue(reportManageStore, 'list.data.content') ? pathval.getPathValue(reportManageStore, 'list.data.content').map((item, index) =>
-              <BaseList key={`reportManage${index}Id`} listData={item}/>) : ''
-          }
-        </div>
-        <div className={styles.pages}>
-          <Pager tData={pathval.getPathValue(reportManageStore, 'list.data.content')} module="reportManagePager"
-                 uiStore={uiStore} type="large"/>
-        </div>
+    <div>
+      <div className={styles.list}>
+        {
+          listData && listData.length > 0
+            ?
+            listData.map((item, key) => <BaseList key={`reportManage${key}Id`} status={status} item={item} />)
+            : null
+        }
       </div>
-    );
+      <Pager
+        tData={listData}
+        module="reportManagePager"
+        uiStore={uiStore}
+        type="large" />
+    </div>
+  );
 }
 
 TableList.propTypes = {
-  reportManageStore: PropTypes.object,
+  listData: PropTypes.oneOfType([PropTypes.array, PropTypes.object]),
+  status: PropTypes.string,
+  loading: PropTypes.bool,
   uiStore: PropTypes.object,
 };
-export default inject('reportManageStore', 'uiStore')(loadingComp(
+export default inject('uiStore')(loadingComp(
   {mapDataToProps: props=> ({
-    loading: pathval.getPathValue(props.reportManageStore, 'list.data.content') === null ? true : false,
+    loading: props.loading,
     imgCategory: 14,
     category: 2,
+    errCategory: 2,
+    module: props.status === 'report' ? '高级查询报告列表' : '深度评估报告列表',
+    error: props.listData.length === 0,
   })}
 )(observer(TableList)));

@@ -1,0 +1,30 @@
+@import '~sc-colors/index.less';
+.wrapper {
+  border-bottom: 1px solid @mdc-blue-grey-100;
+  width: 100%;
+
+  & > div {
+    &:last-child {
+      margin-right: 0;
+    }
+  }
+}
+.filterItem {
+  float: left;
+  padding-bottom: 13px;
+  margin-right: 60px;
+
+  font-size: 14px;
+  line-height: 1;
+  color: @mdc-blue-grey-400;
+  cursor: pointer;
+  -webkit-user-select: none;
+     -moz-user-select: none;
+      -ms-user-select: none;
+          user-select: none;
+}
+.activeFilterItem {
+  .filterItem;
+  color: @mdc-blue-400;
+  border-bottom: 4px solid @mdc-blue-400;
+}
