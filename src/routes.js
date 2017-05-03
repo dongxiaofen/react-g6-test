@@ -28,6 +28,7 @@ import {
     Network,
     RelPerCheck,
     AlertAnalysis,
+    RuleCompany,
     PersonReport,
 // first append here from plop
   } from 'containers';
@@ -79,6 +80,7 @@ export default (allStore) => {
       <Route path="personReport" component={ PersonReport } />
       <Route path="ruleList" component={ RuleList } />
       <Route path="ruleAdd" component={ RuleAdd } />
+      <Route path="ruleCompany" component={ RuleCompany } />
 {/* second append here from plop */}
     </Route>
   );

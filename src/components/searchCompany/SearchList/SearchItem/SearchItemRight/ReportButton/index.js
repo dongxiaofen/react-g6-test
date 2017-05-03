@@ -4,6 +4,14 @@ import { browserHistory } from 'react-router';
 import styles from './index.less';
 
 function ReportButton({itemData}) {
+  let text = '';
+  if (itemData && itemData.reportId > 0) {
+    text = '查看高级报告';
+  } else if (itemData && itemData.analysisReportId > 0) {
+    text = '查看深度报告';
+  } else {
+    text = '查看监控';
+  }
   const hrefCompany = () => {
     if (itemData && itemData.reportId > 0) {
       browserHistory.push('/companyHome?reportId=' + itemData.reportId + '&companyType=MAIN');
@@ -15,7 +23,9 @@ function ReportButton({itemData}) {
   };
   return (
     <div onClick={hrefCompany} className={`${styles.wrap}`}>
-      <div className={`${styles.addMonitor}`}>查看</div>
+      <div className={`${styles.addMonitor}`}>
+        {text}
+      </div>
     </div>
   );
 }

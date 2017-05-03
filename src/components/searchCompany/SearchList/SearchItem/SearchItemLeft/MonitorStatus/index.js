@@ -30,12 +30,21 @@ function MonitorStatus({itemData}) {
         </div>
       );
       break;
-    case 'REPORT':
-      monitorStatus = (
-        <div className={styles.reportStatus}>
-          <span>已创建报告</span>
-        </div>
-      );
+    case 'NOT_MONITOR':
+      if (itemData && itemData.analysisReportStatus === 'REPORT') {
+        monitorStatus = (
+          <div className={styles.reportStatus}>
+            <span>深度分析报告</span>
+          </div>
+        );
+      }
+      if (itemData && itemData.reportStatus === 'REPORT') {
+        monitorStatus = (
+          <div className={styles.reportStatus}>
+            <span>高级查询报告</span>
+          </div>
+        );
+      }
       break;
     default:
       break;
