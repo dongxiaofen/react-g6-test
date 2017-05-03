@@ -135,3 +135,7 @@ export const createReport = (active, companyName) => {
 export const createMonitor = (params) => {
   return axios.post(`/api/monitor`, params);
 };
+// 获取核查人的列表
+export const getPersonName = (url) => {
+  return axios.get(url);
+};

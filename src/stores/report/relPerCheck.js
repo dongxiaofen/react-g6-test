@@ -5,6 +5,10 @@ import messageStore from '../message';
 
 class RelPerCheckStore {
   @observable personCheckInfoData = [];
+  // 输入框样式状态
+  @observable idCardStatus = false;
+  @observable relationship = false;
+  @observable personName = false;
   showId = observable.map({});
   idCard = observable.map({});
   // 弹窗
@@ -27,7 +31,8 @@ class RelPerCheckStore {
   @observable reloadMonitorId = '';
 
   @observable isMount = false;
-  @action.bound getReportModule(module, monitorId) {
+  @action.bound getReportModule(module, monitorId, reportId) {
+    this.getPersonName(monitorId, reportId);
     companyHomeApi.getPersonCheckInfo({monitorId, 'params': uiStore.uiState.relPerCheck})
       .then(action( (response) => {
         this.reloadMonitorId = monitorId;
@@ -44,7 +49,7 @@ class RelPerCheckStore {
         this.isLoading = false;
         this.showCheckModal = false;
         messageStore.openMessage({type: 'info', content: '核查成功', duration: '1500'});
-        this.getReportModule('', this.relatedIdCard);
+        this.getReportModule('', this.reloadMonitorId);
       }))
       .catch(action( (error) => {
         this.isLoading = false;
@@ -68,11 +73,25 @@ class RelPerCheckStore {
       }));
   }
   @action.bound toggleExpand(moudle, personCheckId, value) {
-    // this[moudle][personCheckId] = value;
     if (moudle === 'showId') {
       this.showId.set(personCheckId, value);
     }
     this.idCard.set(personCheckId, value);
+  }
+  @action.bound getPersonName(monitorId, reportId) {
+    let url;
+    if (monitorId) {
+      url = `/api/monitor/${monitorId}/person/names`;
+    }else {
+      url = `/api/monitor/${reportId}/person/names`;
+    }
+    companyHomeApi.getPersonName(url)
+      .then(action((response) => {
+        this.relatedNameData = response.data;
+      }))
+      .catch((error) => {
+        console.log(error.response.data);
+      });
   }
 }
 export default new RelPerCheckStore();
