@@ -1,16 +1,16 @@
 import React, {PropTypes} from 'react';
-import { observer } from 'mobx-react';
+import { observer, inject } from 'mobx-react';
 import {Container, Row, Col} from 'components/common/layout';
 import Header from './Header';
 import Overview from './OverView';
 
-function PdfReport({}) {
+function PdfReport({pdfStore}) {
   return (
     <Container>
       <Row>
         <Col width="12">
           <Header />
-          <Overview />
+          <Overview pdfStore={pdfStore} />
         </Col>
       </Row>
     </Container>
@@ -20,4 +20,4 @@ function PdfReport({}) {
 PdfReport.propTypes = {
   foo: PropTypes.string,
 };
-export default observer(PdfReport);
+export default inject('pdfStore')(observer(PdfReport));

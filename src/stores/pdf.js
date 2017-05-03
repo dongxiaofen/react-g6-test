@@ -8,10 +8,14 @@ class PdfStore {
   @observable report = {};
   @observable network = {};
 
+  // summary
+  @observable summary = {};
+
   @action.bound getOverviewData(id) {
     axios.get(`/api/pdf?monitorId=${id}&types=SUMMARY`)
       .then(action( (response) => {
         this.banner = response.data.banner;
+        this.summary = response.data.summary;
         console.log(response.data);
       }))
       .catch((error) => {
