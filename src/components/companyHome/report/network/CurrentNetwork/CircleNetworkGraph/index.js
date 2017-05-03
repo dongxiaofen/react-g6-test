@@ -64,7 +64,6 @@ export default class CircleNetworkGraph extends Component {
 
     simulation.force('link')
       .links(edgesData);
-
     svgEdges = svg.append('g')
       .attr('class', styles.links)
       .selectAll('line')
@@ -342,6 +341,7 @@ export default class CircleNetworkGraph extends Component {
   dragended = (data) => {
     if (!d3.event.active) simulation.alphaTarget(0);
     if (!isDragging) {
+      this.props.networkStore.focusNode(data.name);
       console.log(data, '单击');
     } else {
       // console.log(data, '拖拽结束');

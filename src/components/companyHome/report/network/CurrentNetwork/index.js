@@ -6,6 +6,7 @@ import {Row, Col} from 'components/common/layout';
 import CircleNetworkGraph from './CircleNetworkGraph';
 import ForceNetworkGraph from './ForceNetworkGraph';
 import LegendBar from './LegendBar';
+import NodePanel from './NodePanel';
 
 function CurrentNetwork({layout, swithLayout}) {
   const svgWidth = document.getElementById('reportContainer').offsetWidth * 5 / 8;
@@ -14,6 +15,7 @@ function CurrentNetwork({layout, swithLayout}) {
     <Row>
       <Col width="9">
         <LegendBar swithLayout={swithLayout} />
+        <NodePanel />
         {
           layout === 'circle' ?
           <CircleNetworkGraph {...{svgWidth, svgHeight}} /> : <ForceNetworkGraph {...{svgWidth, svgHeight}} />
