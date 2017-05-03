@@ -1,10 +1,10 @@
 import React, {PropTypes} from 'react';
-import { observer } from 'mobx-react';
+import { observer, inject} from 'mobx-react';
 
-function AlertAnalysis({}) {
+function AlertAnalysis({alertAnalysisStore}) {
   return (
     <div>
-      <a>查看</a>
+      <a onClick={alertAnalysisStore.openDetailModal}>查看</a>
     </div>
   );
 }
@@ -12,4 +12,4 @@ function AlertAnalysis({}) {
 AlertAnalysis.propTypes = {
   foo: PropTypes.string,
 };
-export default observer(AlertAnalysis);
+export default inject('alertAnalysisStore')(observer(AlertAnalysis));

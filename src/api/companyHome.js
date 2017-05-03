@@ -97,6 +97,9 @@ export const getPersonCheckInfo = ({monitorId, params}) => {
 export const checkPersonInfo = (url, params) => {
   return axios.post(url, params);
 };
+export const getIdCard = (url) => {
+  return axios.get(url);
+};
 export const changeAnnouncement = ({ stockType, monitorId, reportId }) => {
   let url;
   if (monitorId) {
@@ -131,4 +134,8 @@ export const createReport = (active, companyName) => {
 // 创建监控
 export const createMonitor = (params) => {
   return axios.post(`/api/monitor`, params);
+};
+// 获取核查人的列表
+export const getPersonName = (url) => {
+  return axios.get(url);
 };
