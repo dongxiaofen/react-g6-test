@@ -29,6 +29,7 @@ import {
     RelPerCheck,
     AlertAnalysis,
     PersonReport,
+    Pdf,
 // first append here from plop
   } from 'containers';
 
@@ -79,6 +80,7 @@ export default (allStore) => {
       <Route path="personReport" component={ PersonReport } />
       <Route path="ruleList" component={ RuleList } />
       <Route path="ruleAdd" component={ RuleAdd } />
+      <Route path="pdf" component={ Pdf } />
 {/* second append here from plop */}
     </Route>
   );
