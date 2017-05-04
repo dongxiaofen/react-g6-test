@@ -85,6 +85,17 @@ function ErrorText({ module, error, errCategory = 0, height }) {
   };
   switch (errCategory) {
     case 0:
+      return (
+        <div className={styles.msgBox}>
+          <div className={`clearfix ${styles.msgItem}`}>
+            <div className={styles.msgImg}></div>
+            <div className={styles.msgText}>
+              {dict[module] || error.message || '暂无信息'}
+            </div>
+          </div>
+        </div>
+      );
+    case 1:
       const imgStyleHeght = height ? { height: height } : {};
       return (
         <div className={styles.noDataImgBox} style={imgStyleHeght}>
@@ -96,17 +107,6 @@ function ErrorText({ module, error, errCategory = 0, height }) {
               <div className={styles.noDataText}>
                 {dict[module] || error.message || '暂无信息'}
               </div>
-            </div>
-          </div>
-        </div>
-      );
-    case 1:
-      return (
-        <div className={styles.msgBox}>
-          <div className={`clearfix ${styles.msgItem}`}>
-            <div className={styles.msgImg}></div>
-            <div className={styles.msgText}>
-              {dict[module] || error.message || '暂无信息'}
             </div>
           </div>
         </div>
