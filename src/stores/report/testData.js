@@ -1,4 +1,90 @@
 const testData = {
+  'rule111': {
+    'companyName': '****影视文化传播有限公司',
+    'id': 12324,
+    'ruleDescription': '检测该主体公司所有关联公司是否大部分(30%)都发生了注册资本变更',
+    'ruleName': '较大比例关联公司发生工商注册资本变更',
+    'ruleType': 5,
+    'time': '2016-04-18 00:00:00',
+    'detailSummary': [
+      {
+        'numOfNetworkComp': 10,
+        'numOfRegCapChange': 6,
+      }
+    ],
+    'detail': [
+      {
+        'altAf': '手机技术开发；手机生产、手机服、代理进出口。',
+        'altBe': '机关批准并经工商行院决定未规定许可的，自主选择经营项目开展经营活动。）',
+        'altItem': '经营范围',
+        'eventTime': '2011-02-14',
+        'type': 'saicScopeChange',
+      },
+      {
+        'altAf': '手机技术开发；手机生产、手机服、代理进出口。',
+        'altBe': '机关批准并经工商行院决定未规定许可的，自主选择经营项目开展经营活动。）',
+        'altItem': '经营范围',
+        'eventTime': '2011-02-14',
+        'type': 'saicScopeChange',
+      },
+      {
+        'altAf': '手机技术开发；手机生产、手机服、代理进出口。',
+        'altBe': '机关批准并经工商行院决定未规定许可的，自主选择经营项目开展经营活动。）',
+        'altItem': '经营范围',
+        'eventTime': '2011-02-14',
+        'type': 'saicScopeChange',
+      },
+      {
+        'altAf': '手机技术开发；手机生产、手机服、代理进出口。',
+        'altBe': '机关批准并经工商行院决定未规定许可的，自主选择经营项目开展经营活动。）',
+        'altItem': '经营范围',
+        'eventTime': '2011-02-14',
+        'type': 'saicScopeChange',
+      },
+      {
+        'altAf': '手机技术开发；手机生产、手机服、代理进出口。',
+        'altBe': '机关批准并经工商行院决定未规定许可的，自主选择经营项目开展经营活动。）',
+        'altItem': '经营范围',
+        'eventTime': '2011-02-14',
+        'type': 'saicScopeChange',
+      },
+      {
+        'altAf': '手机技术开发；手机生产、手机服、代理进出口。',
+        'altBe': '机关批准并经工商行院决定未规定许可的，自主选择经营项目开展经营活动。）',
+        'altItem': '经营范围',
+        'eventTime': '2011-02-14',
+        'type': 'saicScopeChange',
+      },
+      {
+        'altAf': '手机技术开发；手机生产、手机服、代理进出口。',
+        'altBe': '机关批准并经工商行院决定未规定许可的，自主选择经营项目开展经营活动。）',
+        'altItem': '经营范围',
+        'eventTime': '2011-02-14',
+        'type': 'saicScopeChange',
+      },
+      {
+        'altAf': '手机技术开发；手机生产、手机服、代理进出口。',
+        'altBe': '机关批准并经工商行院决定未规定许可的，自主选择经营项目开展经营活动。）',
+        'altItem': '经营范围',
+        'eventTime': '2011-02-14',
+        'type': 'saicScopeChange',
+      },
+      {
+        'altAf': '手机技术开发；手机生产、手机服、代理进出口。',
+        'altBe': '机关批准并经工商行院决定未规定许可的，自主选择经营项目开展经营活动。）',
+        'altItem': '经营范围',
+        'eventTime': '2011-02-14',
+        'type': 'saicScopeChange',
+      },
+      {
+        'altAf': '手机技术开发；手机生产、手机服、代理进出口。',
+        'altBe': '机关批准并经工商行院决定未规定许可的，自主选择经营项目开展经营活动。）',
+        'altItem': '经营范围',
+        'eventTime': '2011-02-14',
+        'type': 'saicScopeChange',
+      },
+    ]
+  },
   'rule11': {
     'id': 12324,
     'ruleName': '较大比例关联公司发生工商注册资本变更',
