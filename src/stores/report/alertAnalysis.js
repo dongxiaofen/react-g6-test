@@ -1,11 +1,11 @@
-import { observable, action } from 'mobx';
+import { observable, action, computed } from 'mobx';
 import detailModalStore from '../detailModal';
 import pathval from 'pathval';
 import axios from 'axios';
 import { companyHomeApi } from 'api';
 import uiStore from '../ui';
 import messageStore from '../message';
-// import testData from './testData';
+import testData from './testData';
 const CancelToken = axios.CancelToken;
 class AlertAnalysisStore {
   @observable isMount = false;
@@ -14,8 +14,12 @@ class AlertAnalysisStore {
   @observable listData = {};
   @observable detailData = {
     activeIndex: 0,
+    page: 1,
+    tabTop: computed(function() {
+      return 0 - (this.page - 1) * 8 * 60;
+    }),
     info: {},
-    detail: {},
+    detail: testData.rule111,
   }
   @action.bound changeValue(key, value) {
     pathval.setPathValue(this, key, value);
@@ -25,13 +29,14 @@ class AlertAnalysisStore {
       this.alertCancel();
       this.alertCancel = null;
     }
+    this.detailData.activeIndex = 0;
     const source = CancelToken.source();
     this.alertCancel = source.cancel;
     companyHomeApi.getAlertDetail(url, source)
       .then(action('getAlertDetail_success', resp => {
         this.loadingId = -1;
         this.alertCancel = null;
-        this.detailData.detail = resp.data;
+        // this.detailData.detail = resp.data;
         this.openDetailModal();
         console.log(resp);
       }))
