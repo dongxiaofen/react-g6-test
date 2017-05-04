@@ -24,6 +24,7 @@ function TableRow({data, routing, alertAnalysisStore}) {
       url = `/api/analysisReport/${reportId}/alert/${ruleMap[alertType]}/${data.id}`;
     }
     alertAnalysisStore.changeValue('loadingId', data.id);
+    alertAnalysisStore.changeValue('detailData.info', data);
     alertAnalysisStore.getAlertDetail(url);
   };
   return (
