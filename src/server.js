@@ -161,6 +161,7 @@ app.use((req, res) => {
           .then((resp) => {
             /*获取用户信息*/
             allStores.clientStore.userInfo = resp.data;
+            allStores.loginStore.isShowLogin = false;
             /*获取报告leftBar高亮*/
             let reportActiveItem = '';
             if (reqPathName.indexOf('companyHome')) {
