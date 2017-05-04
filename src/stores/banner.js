@@ -91,6 +91,9 @@ class BannerStore {
 
   @observable isAllChecked = false;
 
+  // 添加/取消收藏loading
+  @observable collectionLoading = false;
+
 
   closeHisNamePopoverAlias = this.closeHisNamePopover;
   openHisNamePopoverAlias = this.openHisNamePopover;
@@ -283,12 +286,15 @@ class BannerStore {
 
   // 添加/取消收藏
   @action.bound addOrCancelCollection({ reportId, analysisReportId, monitorId, params }) {
+    this.collectionLoading = true;
     companyHomeApi.addOrCancelCollection({ reportId, analysisReportId, monitorId, params })
       .then(action('add or cancel collection', () => {
         this.collection = !this.collection;
+        this.collectionLoading = false;
       }))
       .catch((err) => {
         console.log(err.response);
+        this.collectionLoading = false;
       });
   }
 }

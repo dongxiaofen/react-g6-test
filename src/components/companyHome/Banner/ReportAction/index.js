@@ -175,7 +175,11 @@ function ReportAction({ bannerStore, modalStore, payModalStore, routing }) {
     const monitorStatus = bannerStore.monitorStatus;
     const collectionAction = (
       <div key="textAction1" className={styles.textAction} onClick={addOrCancelCollection}>
-        <i className={collection ? 'fa fa-star' : 'fa fa-star-o'}></i>
+        {
+          bannerStore.collectionLoading
+          ? <i className="anticon anticon-spin anticon-loading"></i>
+          : <i className={collection ? 'fa fa-star' : 'fa fa-star-o'}></i>
+        }
         {collection ? '取消收藏' : '加入收藏'}
       </div>
     );
