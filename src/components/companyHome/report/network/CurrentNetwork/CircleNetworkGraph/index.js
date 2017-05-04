@@ -46,7 +46,7 @@ export default class CircleNetworkGraph extends Component {
     nodesData = graph.nodes;
     edgesData = graph.links;
     // 统计各层的节点数
-    this.getLayerCount();
+    this.getLayerCount(nodesData, layerCount);
     // 计算半径长度
     this.getRadiusArr();
     // console.log('radiusArr', radiusArr, layerCount);
@@ -163,7 +163,6 @@ export default class CircleNetworkGraph extends Component {
           }
         });
         this.focusRelatedLinks(focusNodeName);
-        // this.reDraw();
       }
     );
   }
@@ -187,12 +186,12 @@ export default class CircleNetworkGraph extends Component {
     return nodeRadius / Math.sin(Math.PI / nodeCount);
   }
   // 统计各层的节点数
-  getLayerCount = () => {
-    nodesData.map((node) => {
-      if (layerCount[node.layer] === undefined) {
-        layerCount[node.layer] = 1;
+  getLayerCount = (nodesData2, layerCount2) => {
+    nodesData2.map((node) => {
+      if (layerCount2[node.layer] === undefined) {
+        layerCount2[node.layer] = 1;
       } else {
-        layerCount[node.layer]++;
+        layerCount2[node.layer]++;
       }
     });
   }

@@ -37,7 +37,7 @@ export default loadingComp({
     loading: props.isLoading,
     category: 0,
     error: props.error,
-    errCategory: 1,
-    module: '关联图'
+    // errCategory: 1,
+    // module: '关联图'
   })
 })(observer(CurrentNetwork));

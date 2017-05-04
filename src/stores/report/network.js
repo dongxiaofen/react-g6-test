@@ -12,6 +12,7 @@ class NetworkStore {
       }
     });
   }
+  @observable error = '';
   @observable isLoading = true;
   @observable isMount = false;
   @observable currentNetwork = {
@@ -42,6 +43,11 @@ class NetworkStore {
         this.currentNetwork = resp.data.currentNetwork;
         this.mainCompanyName = resp.data.companyName;
         this.monitorInfoList = resp.data.monitorInfoList;
+      }))
+      .catch(action('currentNetwork出错', (err) => {
+        console.log('currentNetwork出错', err.response.data);
+        this.error = err.response.data;
+        this.isLoading = false;
       }));
   }
 }
