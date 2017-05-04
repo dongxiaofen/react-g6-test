@@ -15,7 +15,7 @@ export default class RuleAddMain extends Component {
   }
 
   componentDidMount() {
-    // this.props.ruleStore.getRuleList();
+    this.props.ruleStore.getIndustryList();
   }
 
   render() {

@@ -2,7 +2,7 @@ import React, {PropTypes} from 'react';
 import { observer } from 'mobx-react';
 import styles from './index.less';
 
-function CompanySearch({}) {
+function CompanySearch({ruleCompanyStore}) {
   return (
     <div className={styles.box}>
       <div className={styles.text}>
@@ -10,13 +10,17 @@ function CompanySearch({}) {
       </div>
       <div className={styles.searchWrap}>
         <i></i>
-        <input placeholder="输入企业名称" />
+        <input
+          onChange={ruleCompanyStore.changeName.bind(this)}
+          onKeyUp={ruleCompanyStore.handleEnter.bind(this)}
+          value={ruleCompanyStore.searchInput}
+          placeholder="输入企业名称" />
       </div>
     </div>
   );
 }
 
 CompanySearch.propTypes = {
-  foo: PropTypes.string,
+  ruleCompanyStore: PropTypes.object,
 };
 export default observer(CompanySearch);
