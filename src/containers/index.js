@@ -27,4 +27,5 @@ export Network from './report/network';
 export RelPerCheck from './report/relPerCheck';
 export AlertAnalysis from './report/alertAnalysis';
 export PersonReport from './personReport';
+export Collection from './collection';
 // append here from plop
