@@ -13,6 +13,9 @@ function BaseInfo({accountSettingStore}) {
     accountSettingStore.changeValue('pwdModal.visible', true);
   };
   const handleEmail = (values) => {
+    if (baseInfo.error) {
+      return values;
+    }
     const level = tree.data.content[activeIndex].level;
     return (
       <div className={styles.pwdBox}>
@@ -27,6 +30,9 @@ function BaseInfo({accountSettingStore}) {
     accountSettingStore.changeValue('editModal.visible', true);
   };
   const handleEdit = (values, name) => {
+    if (baseInfo.error) {
+      return values;
+    }
     const level = tree.data.content[activeIndex].level;
     return (
       <div className={level < 2 ? styles.editBox : styles.editDisable}>

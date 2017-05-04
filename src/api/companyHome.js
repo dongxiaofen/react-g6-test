@@ -135,10 +135,6 @@ export const createReport = (active, companyName) => {
 export const createMonitor = (params) => {
   return axios.post(`/api/monitor`, params);
 };
-// 获取核查人的列表
-export const getPersonName = (url) => {
-  return axios.get(url);
-};
 
 // 添加/删除收藏
 export const addOrCancelCollection = ({ reportId, analysisReportId, monitorId, params }) => {
@@ -153,4 +149,24 @@ export const addOrCancelCollection = ({ reportId, analysisReportId, monitorId, p
     url = `/api/monitor/${monitorId}/collection`;
   }
   return axios.put(url, params);
+};
+
+// 获取核查人的列表
+export const getPersonName = (url) => {
+  return axios.get(url);
+};
+
+// 获取评估分析列表
+export const getAlertAnalysisList = (monitorId, reportId, params) => {
+  let url;
+  if (monitorId) {
+    url = `/api/monitor/${monitorId}/alert/page`;
+  } else {
+    url = `/api/analysisReport/${reportId}/alert/page`;
+  }
+  return axios.get(url, {params: params});
+};
+// 获取评估分析列表详情
+export const getAlertDetail = (url, source) => {
+  return axios.get(url, {cancelToken: source.token});
 };

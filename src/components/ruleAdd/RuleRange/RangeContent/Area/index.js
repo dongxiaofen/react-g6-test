@@ -4,8 +4,8 @@ import styles from './index.less';
 
 function Area({}) {
   return (
-    <div>
-
+    <div className={styles.box}>
+      Area
     </div>
   );
 }

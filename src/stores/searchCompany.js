@@ -22,8 +22,6 @@ class SearchCompanyStore {
   };
   // 搜索类型
   @observable searchType = 'COMPANY_NAME';
-  // 历史记录
-  @observable searchHistory = [];
   // 点击搜索后公司名
   @observable searchKey = '';
   // 显示到filter的公司名
@@ -40,7 +38,7 @@ class SearchCompanyStore {
   @observable searchParameter = '';
   // 历史记录
   @observable historyResult = [];
-  // 数据条数
+  // 返回数据page集合
   @observable page = {};
   // 分页相关
   @observable pageParams = {
@@ -184,6 +182,13 @@ class SearchCompanyStore {
         };
       }));
   }
+  // 点击搜索按钮获取搜索列表
+  @action.bound searchCompanyClick() {
+    // 重置页数
+    this.pageParams.index = 1;
+    // 发送请求
+    this.getCompanyList();
+  }
   // 获取历史记录
   @action.bound getHistory() {
     searchApi.getHistory()
@@ -220,6 +225,9 @@ class SearchCompanyStore {
   // 搜索handleEnter
   @action.bound handleEnter(evt) {
     if (evt.keyCode === 13) {
+      // 重置页数
+      this.pageParams.index = 1;
+      // 发送请求
       this.getCompanyList();
     }
   }
@@ -507,6 +515,65 @@ class SearchCompanyStore {
       .catch(action('getFeedBack error', (err) => {
         console.log(err.response, '=====getFeedBack error');
       }));
+  }
+  // 重置所有数据
+  @action.bound resetData() {
+    this.searchType = 'COMPANY_NAME';
+    this.searchKey = '';
+    this.searchKeyFilter = '';
+    this.searchTabStatus = false;
+    this.isShowResult = false;
+    this.searchResult = [];
+    this.searchParameter = '';
+    this.page = {};
+    this.pageParams = {
+      index: 1,
+      size: 10
+    };
+    this.filterSheet = {
+      // filterSheet status
+      filterSheetStatus: false,
+      // 配置
+      config: {
+        industryType: '行业类型',
+        scale: '公司规模',
+        province: '省份地区',
+        companyStatus: '经营状态',
+        stockMarket: '上市类型'
+      },
+      // 基础数据
+      data: [],
+      // 选中结果状态
+      filterStatus: {
+        industryType: [],
+        scale: [],
+        province: [],
+        companyStatus: [],
+        stockMarket: [],
+      },
+      // 是否全选
+      filterStatusAll: {
+        industryType: false,
+        scale: false,
+        province: false,
+        companyStatus: false,
+        stockMarket: false,
+      },
+      // 选中结果
+      filterResult: {
+        industryType: [],
+        scale: [],
+        province: [],
+        companyStatus: [],
+        stockMarket: [],
+      },
+    };
+    this.filterArray = {};
+    this.filterArrayStatus = {};
+    this.filterToggle = false;
+    this.loading = false;
+    this.singleItemData = {};
+    this.reportType = 'analysis';
   }
 }
 export default new SearchCompanyStore();

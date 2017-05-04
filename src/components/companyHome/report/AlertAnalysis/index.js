@@ -1,10 +1,13 @@
 import React, {PropTypes} from 'react';
 import { observer, inject} from 'mobx-react';
-
-function AlertAnalysis({alertAnalysisStore}) {
+import { ModuleTitle } from 'components/common/report';
+import TableList from './TableList';
+function AlertAnalysis({alertAnalysisStore, uiStore}) {
+  const len = uiStore.uiState.alertAnalysis.totalElements;
   return (
     <div>
-      <a onClick={alertAnalysisStore.openDetailModal}>查看</a>
+      <ModuleTitle module="预警信息" count={len} />
+      <TableList alertAnalysisStore={alertAnalysisStore} />
     </div>
   );
 }
@@ -12,4 +15,4 @@ function AlertAnalysis({alertAnalysisStore}) {
 AlertAnalysis.propTypes = {
   foo: PropTypes.string,
 };
-export default inject('alertAnalysisStore')(observer(AlertAnalysis));
+export default inject('alertAnalysisStore', 'uiStore')(observer(AlertAnalysis));
