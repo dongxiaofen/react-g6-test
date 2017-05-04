@@ -135,10 +135,27 @@ export const createReport = (active, companyName) => {
 export const createMonitor = (params) => {
   return axios.post(`/api/monitor`, params);
 };
+
+// 添加/删除收藏
+export const addOrCancelCollection = ({ reportId, analysisReportId, monitorId, params }) => {
+  let url;
+  if (reportId) {
+    url = `/api/report/${reportId}/collection`;
+  }
+  if (analysisReportId) {
+    url = `/api/analysisReport/${analysisReportId}/collection`;
+  }
+  if (monitorId) {
+    url = `/api/monitor/${monitorId}/collection`;
+  }
+  return axios.put(url, params);
+};
+
 // 获取核查人的列表
 export const getPersonName = (url) => {
   return axios.get(url);
 };
+
 // 获取评估分析列表
 export const getAlertAnalysisList = (monitorId, reportId, params) => {
   let url;

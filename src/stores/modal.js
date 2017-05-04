@@ -16,6 +16,11 @@ class ModalStore {
   @observable cancelAction;
   @action.bound closeAction() {
     this.visible = false;
+    this.isCustomize = false;
+    this.isSingleBtn = false;
+    this.pointText = '';
+    this.pactUrl = '';
+    this.pactName = '';
   }
 
   // button text
