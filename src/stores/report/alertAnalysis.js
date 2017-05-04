@@ -32,7 +32,7 @@ class AlertAnalysisStore {
         this.loadingId = -1;
         this.alertCancel = null;
         this.detailData.detail = resp.data;
-        this.openDetailModal();
+        this.openDetailModal(this.detailData.info.alertType);
         console.log(resp);
       }))
       .catch(action('getAlertDetail_error', err => {
@@ -65,18 +65,29 @@ class AlertAnalysisStore {
         this.listData = err.response && {error: err.response.data, content: []} || {error: {message: '暂无信息'}, content: []};
       }));
   }
-  @action.bound openDetailModal() {
-    const companyName = this.detailData.detail.companyName;
-    detailModalStore.openDetailModal((cp)=>{
-      require.ensure([], (require)=>{
-        cp(
-          require('components/companyHome/report/AlertAnalysis/detail/Info'),
-          require('components/companyHome/report/AlertAnalysis/detail/Content'),
-          null,
-          require('components/companyHome/report/AlertAnalysis/detail/LeftBar')
-        );
-      });
-    }, `预警详情（${companyName}）`);
+  @action.bound openDetailModal(type) {
+    const companyName = this.detailData.info.companyName;
+    if (type === 'SYS_RULE') {
+      detailModalStore.openDetailModal((cp)=>{
+        require.ensure([], (require)=>{
+          cp(
+            require('components/companyHome/report/AlertAnalysis/detail/Info'),
+            require('components/companyHome/report/AlertAnalysis/detail/Content'),
+          );
+        });
+      }, `预警详情（${companyName}）`);
+    } else {
+      detailModalStore.openDetailModal((cp)=>{
+        require.ensure([], (require)=>{
+          cp(
+            require('components/companyHome/report/AlertAnalysis/detail/Info'),
+            require('components/companyHome/report/AlertAnalysis/detail/Content'),
+            null,
+            require('components/companyHome/report/AlertAnalysis/detail/LeftBar')
+          );
+        });
+      }, `预警详情（${companyName}）`);
+    }
   }
 }
 export default new AlertAnalysisStore();
