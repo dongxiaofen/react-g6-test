@@ -3,6 +3,7 @@ import { accountSettingApi } from 'api';
 import pathval from 'pathval';
 import Formater from 'helpers/formatTreeData';
 import uiStore from './ui';
+import clientStore from './client';
 import messageStore from './message';
 class AccountSettingStore {
   @observable tree = {
@@ -193,7 +194,8 @@ class AccountSettingStore {
           .then(action('getTreeList_success', resp => {
             if (resp.data && resp.data.length > 0) {
               const treeData = new Formater(resp);
-              treeData.formatData(null, null, 'cy@sc.cn');
+              const userEmail = clientStore.userInfo.email;
+              treeData.formatData(null, null, userEmail);
               this.tree.data = {content: treeData.formatResult};
             } else {
               this.tree.data = {error: {message: '暂无用户信息'}, content: []};
@@ -217,7 +219,8 @@ class AccountSettingStore {
       .then(action('getTreeList_success', resp => {
         if (resp.data && resp.data.length > 0) {
           const treeData = new Formater(resp);
-          treeData.formatData(null, null, 'cy@sc.cn');
+          const userEmail = clientStore.userInfo.email;
+          treeData.formatData(null, null, userEmail);
           this.tree.data = {content: treeData.formatResult};
           const uId = treeData.formatResult[0].id;
           this.tree.activeId = uId;
