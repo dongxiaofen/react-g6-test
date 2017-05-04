@@ -168,21 +168,41 @@ function ReportAction({ bannerStore, modalStore, payModalStore, routing }) {
     bannerStore.addOrCancelCollection({ reportId, analysisReportId, monitorId, params });
   };
 
+  const collectionTextAction = () => {
+    let output = null;
+    const collection = bannerStore.collection;
+    const collectionText = collection ? '取消收藏' : '加入收藏';
+    if (bannerStore.isLoading) {
+      output = (
+        <div key="textAction1" className={styles.textAction}>
+          加载中...
+        </div>
+      );
+    } else {
+      if (bannerStore.collectionLoading) {
+        output = (
+          <div key="textAction1" className={styles.textAction}>
+            <i className="anticon anticon-spin anticon-loading"></i>
+            {collectionText}
+          </div>
+        );
+      } else {
+        output = (
+          <div key="textAction1" className={styles.textAction} onClick={addOrCancelCollection}>
+            <i className={collection ? 'fa fa-star' : 'fa fa-star-o'}></i>
+            {collectionText}
+          </div>
+        );
+      }
+    }
+    return output;
+  };
+
   const bannerTextAction = () => {
     const output = [];
-    const collection = bannerStore.collection;
     const mainStatus = bannerStore.mainStatus;
     const monitorStatus = bannerStore.monitorStatus;
-    const collectionAction = (
-      <div key="textAction1" className={styles.textAction} onClick={addOrCancelCollection}>
-        {
-          bannerStore.collectionLoading
-          ? <i className="anticon anticon-spin anticon-loading"></i>
-          : <i className={collection ? 'fa fa-star' : 'fa fa-star-o'}></i>
-        }
-        {collection ? '取消收藏' : '加入收藏'}
-      </div>
-    );
+    const collectionAction = collectionTextAction();
     const refreshReportAction = (
       <div key="textAction2" className={styles.textAction}>
         <i className="fa fa-refresh"></i>

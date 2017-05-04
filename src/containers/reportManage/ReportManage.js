@@ -36,9 +36,6 @@ export default class ReportMain extends Component {
     const uiState = this.props.uiStore.uiState;
     const reportManagePager = uiState.reportManagePager;
     const reportManageList = uiState.reportManageList;
-    const styleCofing = {
-      marginBottom: reportManagePager.totalElements <= reportManagePager.size ? 20 : 0
-    };
     return (
       <Container>
         <Row>
@@ -51,7 +48,7 @@ export default class ReportMain extends Component {
                 reportManagePager={reportManagePager} />
             </div>
             <TypeFilter reportManageStore={this.props.reportManageStore} />
-            <div className={styles.listArea} style={styleCofing}>
+            <div className={styles.listArea}>
               <TableList
                 status={reportManageList.reportStatus}
                 listData={reportManageStore.reportList}

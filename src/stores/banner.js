@@ -11,6 +11,7 @@ class BannerStore {
   @observable companyName = '';
   @observable companyType = '';
 
+  @observable isLoading = false;
   @observable hisNameVis = false;
   @observable contactVis = false;
   @observable historyName = [];
@@ -121,9 +122,9 @@ class BannerStore {
     this.reportId = reportId;
     this.companyName = companyName;
     this.companyType = companyType;
+    this.isLoading = true;
     companyHomeApi.getBannerInfo(monitorId, reportId, companyName, companyType)
       .then(action('get banner info...', (resp) => {
-        console.log('banner结果', resp.data);
         this.companyName = resp.data.name;
         this.historyName = resp.data.bannerInfo.bannerInfo.historyName;
         this.riskInfo = resp.data.bannerInfo.bannerInfo.riskInfo;
@@ -136,9 +137,12 @@ class BannerStore {
         this.searchedCount = resp.data.searchedCount;
         this.lastModifiedTs = resp.data.lastModifiedTs;
         this.collection = resp.data.collection;
+
+        this.isLoading = false;
       }))
       .catch((err) => {
         console.log('banner出错', err);
+        this.isLoading = false;
       });
   }
   @action.bound toggleMonitorStatus(monitorId, status) {
