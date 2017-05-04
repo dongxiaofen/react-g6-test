@@ -511,6 +511,7 @@ class AccountSettingStore {
     this.resetPwdModal();
     this.resetEditModal();
     this.resetTabs();
+    uiStore.resetAccountPager();
   }
 }
 
