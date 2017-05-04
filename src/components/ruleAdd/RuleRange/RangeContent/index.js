@@ -6,8 +6,6 @@ import Area from './Area';
 import Scale from './Scale';
 
 function RangeContent({ruleStore}) {
-  const status = ruleStore.selectRange;
-  console.log(status);
   return (
     <div className={styles.box}>
       <Industry ruleStore={ruleStore} />

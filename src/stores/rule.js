@@ -28,8 +28,8 @@ class RuleStore {
   // 行业集合
   @observable industryList = [];
   @observable industryListOrg = [];
-  // 行业选择停留效果
-  @observable industryActive = '';
+  // 选择的值用作比较
+  @observable industryActive = '行业不限';
   // 默认行业名与ID 行业提交值
   @observable industry = '行业不限';
   @observable industryId = '0';
@@ -137,7 +137,9 @@ class RuleStore {
   @action.bound getIndustryList() {
     ruleApi.getIndustryList()
       .then(action('industryList', (resp) => {
-        this.industryList = resp.data;
+        const industry = [{'id': 0, 'name': '行业不限', 'analysis': true}];
+        const industryAll = industry.concat(resp.data);
+        this.industryList = industryAll;
       }))
       .catch(action('industryList error', (err) => {
         console.log(err.response, '=====ruleList error');
@@ -150,6 +152,41 @@ class RuleStore {
   // 选择应用范围或应用企业
   @action.bound setSelectRange(text) {
     this.selectRange = text;
+  }
+
+  // 行业列表收起与展开
+  @action.bound IndustryShowStatus(bool) {
+    this.industryListOrg = [];
+    this.industryShow = bool;
+  }
+  // 选择行业
+  @action.bound selectIndustry(value) {
+    this.industry = value.name;
+    this.industryId = value.id;
+    this.industryActive = value.name;
+    this.industryShow = false;
+    this.industryListOrg = [];
+  }
+  // 填写行业
+  @action.bound changeIndustry(evt) {
+    this.industry = evt.target.value;
+    const reg = new RegExp(evt.target.value);
+    const filterData = [];
+    this.industryList.map((item)=>{
+      if (reg.test(item.name)) {
+        filterData.push(item);
+      }
+    });
+    this.industryListOrg = filterData;
+  }
+
+  // 重置列表数据
+  @action.bound resetListData() {
+    this.ruleList = [];
+    this.ruleStatusId = '';
+    this.itemData = {};
+    uiStore.uiState.ruleListPager.index = 1;
+    uiStore.uiState.ruleListPager.size = 10;
   }
 }
 export default new RuleStore();
