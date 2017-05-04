@@ -5,16 +5,23 @@ import styles from './index.less';
 import { Container, Row, Col } from 'components/common/layout';
 
 import CardList from 'components/collection/CardList';
+import Search from 'components/collection/Search';
 
-@inject('collectionStore')
+@inject('collectionStore', 'uiStore')
 @observer
 export default class Collection extends Component {
   static propTypes = {
     collectionStore: PropTypes.object,
+    uiStore: PropTypes.object,
   }
 
   componentDidMount() {
-    this.props.collectionStore.getCollectionPage();
+    const collection = this.props.uiStore.uiState.collection;
+    this.props.collectionStore.getCollectionPage({
+      companyName: '',
+      index: 1,
+      size: collection.size
+    });
   }
 
   render() {
@@ -24,8 +31,10 @@ export default class Collection extends Component {
           <Col>
             <div className="clearfix">
               <h1 className={styles.title}>我的收藏</h1>
+              <Search collectionStore={this.props.collectionStore}
+                uiStore={this.props.uiStore} />
             </div>
-            <CardList collectionStore={this.props.collectionStore} />
+            <CardList collectionStore={this.props.collectionStore}/>
           </Col>
         </Row>
       </Container>

@@ -1,7 +1,7 @@
 import axios from 'axios';
 
-export const getCollectionPage = () => {
-  return axios.get(`/api/collection/page`, {params: {index: 1, size: 10}});
+export const getCollectionPage = (params) => {
+  return axios.get(`/api/collection/page`, { params: params });
 };
 
 export const cancelCollection = (id, productType) => {

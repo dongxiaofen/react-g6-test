@@ -27,6 +27,19 @@ function CardList({ collectionStore }) {
     collectionStore.cancelCollection(id, productType);
   };
 
+  const category = (productType) => {
+    switch (productType) {
+      case 'REPORT':
+        return '高级查询报告';
+      case 'ANALYSIS_REPORT':
+        return '深度分析报告';
+      case 'MONITOR':
+        return '主体监控报告';
+      default:
+        return '错误';
+    }
+  };
+
   const collectionList = () => {
     return collectionStore.resultContent.map((item, key) => {
       const id = item.id;
@@ -39,6 +52,7 @@ function CardList({ collectionStore }) {
                 onClick={viewCompany.bind(null, id, productType)}>
                 {item.companyName}
               </span>
+              <span className={styles.category}>{category(item.productType)}</span>
             </div>
             <div className={styles.infoDetail}>
               <span className={styles.detailItem}>{`法人：${item.frName ? item.frName : '无'}`}</span>

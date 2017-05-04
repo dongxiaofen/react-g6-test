@@ -5,6 +5,7 @@ import assetsStore from './report/assets';
 import monitorListStore from './monitorList';
 import accountSettingStore from './accountSetting';
 import reportManageStore from './reportManage';
+import collectionStore from './collection';
 
 class UiStore {
   constructor() {
@@ -56,8 +57,18 @@ class UiStore {
     reaction(
       () => this.uiState.reportManagePager.index,
       () => {
-        pathval.setPathValue(reportManageStore, 'list', {});
         reportManageStore.getReportList(this.uiState.reportManagePager);
+      }
+    );
+    reaction(
+      () => this.uiState.collection.index,
+      () => {
+        const collection = this.uiState.collection;
+        collectionStore.getCollectionPage({
+          companyName: collection.companyName,
+          index: collection.index,
+          size: collection.size
+        });
       }
     );
   }
@@ -257,7 +268,13 @@ class UiStore {
     dishonesty: {
       index: 1,
       size: 5
-    }
+    },
+    collection: {
+      companyName: '',
+      index: 1,
+      size: 10,
+      totalElements: 0, // 服务端分页
+    },
   };
 
   @action.bound updateUiStore(keypath, value) {
