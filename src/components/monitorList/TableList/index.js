@@ -67,7 +67,7 @@ function TableList({monitorListStore}) {
   }
   return (
     <div className={styles.wrapper}>
-      <div>
+      <div className={styles.tableList}>
         {createList()}
       </div>
       <Pager module="monitorListPager" />
