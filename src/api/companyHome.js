@@ -1,14 +1,20 @@
 import axios from 'axios';
-export const getBannerInfo = (monitorId, reportId, companyName, companyType) => {
+export const getBannerInfo = ({
+  monitorId,
+  reportId,
+  analysisReportId,
+  companyName,
+  companyType
+}) => {
   let url;
   if (monitorId) {
     url = `/api/monitor/${monitorId}/infobanner`;
   } else if (reportId) {
     url = `/api/report/infobanner?reportId=${reportId}`;
-  } else if (companyType) {
+  } else if (analysisReportId) {
+    url = `/api/analysisReport/infobanner?analysisReportId=${analysisReportId}`;
+  } else if (companyType === 'FREE') {
     url = `/api/free/infobanner?companyName=${encodeURI(companyName)}`;
-  } else {
-    url = `/api/report/infobanner?companyName=${encodeURI(companyName)}`;
   }
   return axios.get(url);
 };
@@ -30,7 +36,15 @@ export const getStockCode = ({ reportId, monitorId, analysisReportId }) => {
 export const toggleMonitorStatus = (monitorId, status) => {
   return axios.put(`/api/monitor/${monitorId}/status`, { status: status });
 };
-export const getReportModule = (module, monitorId, reportId, companyName, companyType, pagesInfo) => {
+export const getReportModule = (
+  module,
+  monitorId,
+  reportId,
+  analysisReportId,
+  companyName,
+  companyType,
+  pagesInfo
+) => {
   let url;
   if (companyType === 'MAIN') {
     if (monitorId) {
@@ -48,6 +62,14 @@ export const getReportModule = (module, monitorId, reportId, companyName, compan
         url = `/api/report/${reportId}/person/page?index=1&size=10`;
       } else {
         url = `/api/report/${module}?reportId=${reportId}`;
+      }
+    } else if (analysisReportId) {
+      if (module === 'trademark' || module === 'patent' || module === 'bidding') {
+        url = `/api/analysisReport/operation/${module}?analysisReportId=${analysisReportId}${module === 'patent' || module === 'trademark' ? '?index=' + pagesInfo.index + '&limit=' + pagesInfo.size : ''}`;
+      } else if (module === 'person/page') {
+        url = `/api/analysisReport/${analysisReportId}/person/page?index=1&size=10`;
+      } else {
+        url = `/api/analysisReport/${module}?analysisReportId=${analysisReportId}`;
       }
     }
   } else if (companyType === 'ASSOCIATE') {
@@ -100,7 +122,7 @@ export const checkPersonInfo = (url, params) => {
 export const getIdCard = (url) => {
   return axios.get(url);
 };
-export const changeAnnouncement = ({ stockType, monitorId, reportId }) => {
+export const changeAnnouncement = ({ stockType, monitorId, reportId, analysisReportId }) => {
   let url;
   if (monitorId) {
     if (stockType) {
@@ -114,6 +136,13 @@ export const changeAnnouncement = ({ stockType, monitorId, reportId }) => {
       url = `/api/report/stock/announcement?reportId=${reportId}&stockType=${stockType}`;
     } else {
       url = `/api/report/stock/announcement?reportId=${reportId}`;
+    }
+  }
+  if (analysisReportId) {
+    if (stockType) {
+      url = `/api/analysisReport/stock/announcement?analysisReportId=${analysisReportId}&stockType=${stockType}`;
+    } else {
+      url = `/api/analysisReport/stock/announcement?analysisReportId=${analysisReportId}`;
     }
   }
   return axios.get(url);

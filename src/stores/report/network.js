@@ -35,9 +35,9 @@ class NetworkStore {
   @action.bound switchLayout() {
     this.layout = this.layout === 'circle' ? 'force' : 'circle';
   }
-  @action.bound getReportModule(module, monitorId, reportId, companyName, companyType) {
+  @action.bound getReportModule(module, monitorId, reportId, analysisReportId, companyName, companyType) {
     this.isMount = true;
-    companyHomeApi.getReportModule(module, monitorId, reportId, companyName, companyType)
+    companyHomeApi.getReportModule(module, monitorId, reportId, analysisReportId, companyName, companyType)
       .then(action('get currentNetwork data', (resp) => {
         this.isLoading = false;
         this.currentNetwork = resp.data.currentNetwork;

@@ -8,6 +8,7 @@ class BannerStore {
   // banner
   @observable monitorId = '';
   @observable reportId = '';
+  @observable analysisReportId = '';
   @observable companyName = '';
   @observable companyType = '';
 
@@ -117,13 +118,14 @@ class BannerStore {
   @action.bound extendContact(key) {
     this.contactExtended = this.contactExtended === key ? '' : key;
   }
-  @action.bound getBannerInfo(monitorId, reportId, companyName, companyType) {
+  @action.bound getBannerInfo({ monitorId, reportId, analysisReportId, companyName, companyType }) {
     this.monitorId = monitorId;
     this.reportId = reportId;
+    this.analysisReportId = analysisReportId;
     this.companyName = companyName;
     this.companyType = companyType;
     this.isLoading = true;
-    companyHomeApi.getBannerInfo(monitorId, reportId, companyName, companyType)
+    companyHomeApi.getBannerInfo({ monitorId, reportId, analysisReportId, companyName, companyType })
       .then(action('get banner info...', (resp) => {
         this.companyName = resp.data.name;
         this.historyName = resp.data.bannerInfo.bannerInfo.historyName;

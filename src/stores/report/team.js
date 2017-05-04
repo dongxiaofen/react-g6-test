@@ -56,9 +56,9 @@ class TeamStore {
   // 离职意向趋势
   @observable leaveTrend = { Axis: [], data: [] };
 
-  @action.bound getReportModule(module, monitorId, reportId, companyName, companyType) {
+  @action.bound getReportModule(module, monitorId, reportId, analysisReportId, companyName, companyType) {
     this.isMount = true;
-    companyHomeApi.getReportModule(module, monitorId, reportId, companyName, companyType)
+    companyHomeApi.getReportModule(module, monitorId, reportId, analysisReportId, companyName, companyType)
       .then(action('get team data', (resp) => {
         const respData = resp.data;
         const recruitmentData = respData.recruitAndResumeResponse;
