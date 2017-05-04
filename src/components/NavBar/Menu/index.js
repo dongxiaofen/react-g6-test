@@ -4,15 +4,6 @@ import { browserHistory } from 'react-router';
 import styles from './index.less';
 
 function Menu({ routing }) {
-  // const config = [
-  //   {
-  //     parent: { module: '设置' },
-  //     children: [
-  //       { module: '账号设置', route: 'account' },
-  //     ],
-  //   },
-  // ];
-
   const config = [
     { parent: { module: '首页', route: 'myHomePage' } },
     {

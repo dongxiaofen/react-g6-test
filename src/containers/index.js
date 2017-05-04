@@ -28,4 +28,5 @@ export RelPerCheck from './report/relPerCheck';
 export AlertAnalysis from './report/alertAnalysis';
 export RuleCompany from './ruleCompany';
 export PersonReport from './personReport';
+export Collection from './collection';
 // append here from plop

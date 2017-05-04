@@ -11,9 +11,10 @@ export default class Network extends Component {
     networkStore: PropTypes.object
   };
   render() {
+    const {isLoading, error, layout, switchLayout} = this.props.networkStore;
     return (
       <div>
-        <CurrentNetwork isLoading={this.props.networkStore.isLoading} error={this.props.networkStore.error} layout={this.props.networkStore.layout} switchLayout={this.props.networkStore.switchLayout} />
+        <CurrentNetwork {...{isLoading, error, layout, switchLayout}} />
       </div>
     );
   }
