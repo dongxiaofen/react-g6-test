@@ -31,7 +31,7 @@ function Content({alertAnalysisStore}) {
         case 'COURT_NOTICE':
           return <Ktannouncement data={singleDetail} />;
         case 'CORP_ALTER':
-          return <ScopeAlter data={singleDetail} />;
+          return <ScopeAlter data={singleDetail} type={info.alertType}/>;
         case 'CORP_ABNORMAL':
           return <ErrorInfo data={singleDetail} />;
         case 'CORP_CHECK':
@@ -64,7 +64,7 @@ function Content({alertAnalysisStore}) {
         case 8:
           return <ErrorInfo data={detail} />;
         case 9:
-          return <ScopeAlter data={detail} />;
+          return <ScopeAlter data={detail} type={info.alertTyp}/>;
         case 10:
           return <Rule10 data={detail} />;
         case 11:

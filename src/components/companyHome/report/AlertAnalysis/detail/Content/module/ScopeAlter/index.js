@@ -2,6 +2,8 @@ import React, {PropTypes} from 'react';
 import { observer } from 'mobx-react';
 import SimpleCard from 'components/common/report/alertAnalysis/SimpleCard';
 function ScopeAlter({data, type}) {
+  const itemData = type === 'RULE' ? data.content : data.detail[0];
+  itemData.altDate = itemData.eventTime || itemData.altDate;
   const meta = {
     dict: 'alterList',
     body: [
