@@ -1,7 +1,7 @@
 import React, {PropTypes} from 'react';
 import { observer } from 'mobx-react';
 import SimpleCard from 'components/common/report/alertAnalysis/SimpleCard';
-function JudgeDoc({data}) {
+function JudgeDoc({data, type}) {
   const modifyLitiganti = (value)=> {
     if (value) {
       const newsData = value.map((item)=>{
@@ -22,7 +22,7 @@ function JudgeDoc({data}) {
       {'key': 'court', 'width': '6'},
       {'key': 'litigant', 'width': '12', modifyBlock: modifyLitiganti},
     ],
-    item: data.content,
+    item: type === 'RULE' ? data.content : data.detail[0],
   };
   return (
     <SimpleCard meta={meta} />
