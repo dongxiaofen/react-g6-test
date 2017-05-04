@@ -4,8 +4,8 @@ import styles from './index.less';
 
 function EventType({}) {
   return (
-    <div>
-
+    <div className={styles.box}>
+      EventType
     </div>
   );
 }
