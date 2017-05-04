@@ -13,7 +13,7 @@ function SearchBarTop({searchCompanyStore}) {
     searchKey,
     searchChange,
     handleEnter,
-    getCompanyList,
+    searchCompanyClick,
     searchTabStatus,
     searchTabMouseDown,
   } = searchCompanyStore;
@@ -31,7 +31,7 @@ function SearchBarTop({searchCompanyStore}) {
         searchKey={searchKey}
         searchChange={searchChange}
         handleEnter={handleEnter}
-        getCompanyList={getCompanyList} />
+        searchCompanyClick={searchCompanyClick} />
     </div>
   );
 }

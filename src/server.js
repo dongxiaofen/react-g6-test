@@ -157,56 +157,48 @@ app.use((req, res) => {
       } else {
         // writeDataToFile('renderProps', renderProps.components);
         // allStores.homeStore.isLogin = true;// 服务端初始化数据
-        // axios.get(config.backendApi + '/api/user/info')
-        //   .then((resp) => {
-        //     console.log(resp);
-        //   })
-        //   .catch((err) => {
-        //     console.log('err', err);
-        //   });
-        // agent.get(config.backendApi + '/api/user/info')
-        //     .set('Content-Type', 'application/json')
-        //     .set('scm-source', config.target === 'dianxin_prod' ? 'TEL_WEB' : 'SC_WEB')
-        //     .set('scm-token', req.cookies['scm-token'] || {})
-        //     .end(function (err, resp) {
-        //       console.log(resp.body);
-        //     })
+        axios.get(config.backendApi + '/api/user/info')
+          .then((resp) => {
+            /*获取用户信息*/
+            allStores.clientStore.userInfo = resp.data;
+            /*获取报告leftBar高亮*/
+            let reportActiveItem = '';
+            if (reqPathName.indexOf('companyHome')) {
+              const arr = reqPathName.split('/');
+              reportActiveItem = arr[arr.length - 1];
+            }
+            allStores.leftBarStore.activeItem = reportActiveItem;
+            /*获取报告leftBar高亮*/
 
-        /*获取报告leftBar高亮*/
-        let reportActiveItem = '';
-        if (reqPathName.indexOf('companyHome')) {
-          const arr = reqPathName.split('/');
-          reportActiveItem = arr[arr.length - 1];
-        }
-        allStores.leftBarStore.activeItem = reportActiveItem;
-        /*获取报告leftBar高亮*/
-
-        /*服务端注入RouterStore*/
-        const routingStore = new RouterStore();
-        routingStore.location = {
-          pathname: reqPathName,
-          query: getQueryObj(url.parse(req.url).query)
-        };
-        allStores.routing = routingStore;
-        const component = (
-          <Provider { ...allStores }>
-            <RouterContext {...renderProps} />
-          </Provider>
-        );
-        res.status(200);
-        global.navigator = { userAgent: req.headers['user-agent'] };
-        res.send('<!doctype html>\n' +
-          '<!-- Polyfills -->\n' +
-          '<!--[if lt IE 10]>\n' +
-          '<script src="https://as.alipayobjects.com/g/component/??console-polyfill/0.2.2/index.js,es5-shim/4.5.7/es5-shim.min.js,es5-shim/4.5.7/es5-sham.min.js,es6-shim/0.35.1/es6-sham.min.js,es6-shim/0.35.1/es6-shim.min.js,html5shiv/3.7.2/html5shiv.min.js,media-match/2.0.2/media.match.min.js"></script>\n' +
-          '<script src="https://raw.githubusercontent.com/inexorabletash/polyfill/master/typedarray.js"></script>\n' +
-          '<![endif]-->\n' +
-          '<!--[if lte IE 11]>\n' +
-          '<script src="https://as.alipayobjects.com/g/component/??es6-shim/0.35.1/es6-sham.min.js,es6-shim/0.35.1/es6-shim.min.js"></script>\n' +
-          '<![endif]-->\n' +
-          ReactDOM.renderToString(<Html reqPathName={reqPathName} isDev={__DEVELOPMENT__} assets={webpackIsomorphicTools.assets()} component={component} {...allStores} />));
+            /*服务端注入RouterStore*/
+            const routingStore = new RouterStore();
+            routingStore.location = {
+              pathname: reqPathName,
+              query: getQueryObj(url.parse(req.url).query)
+            };
+            allStores.routing = routingStore;
+            const component = (
+              <Provider { ...allStores }>
+                <RouterContext {...renderProps} />
+              </Provider>
+            );
+            res.status(200);
+            global.navigator = { userAgent: req.headers['user-agent'] };
+            res.send('<!doctype html>\n' +
+              '<!-- Polyfills -->\n' +
+              '<!--[if lt IE 10]>\n' +
+              '<script src="https://as.alipayobjects.com/g/component/??console-polyfill/0.2.2/index.js,es5-shim/4.5.7/es5-shim.min.js,es5-shim/4.5.7/es5-sham.min.js,es6-shim/0.35.1/es6-sham.min.js,es6-shim/0.35.1/es6-shim.min.js,html5shiv/3.7.2/html5shiv.min.js,media-match/2.0.2/media.match.min.js"></script>\n' +
+              '<script src="https://raw.githubusercontent.com/inexorabletash/polyfill/master/typedarray.js"></script>\n' +
+              '<![endif]-->\n' +
+              '<!--[if lte IE 11]>\n' +
+              '<script src="https://as.alipayobjects.com/g/component/??es6-shim/0.35.1/es6-sham.min.js,es6-shim/0.35.1/es6-shim.min.js"></script>\n' +
+              '<![endif]-->\n' +
+              ReactDOM.renderToString(<Html reqPathName={reqPathName} isDev={__DEVELOPMENT__} assets={webpackIsomorphicTools.assets()} component={component} {...allStores} />));
+          })
+          .catch((err) => {
+            console.log('userInfo err', err);
+          });
       }
-
     } else {
       res.status(404).send('Not found');
     }

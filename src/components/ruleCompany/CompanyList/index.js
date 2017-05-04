@@ -19,14 +19,14 @@ function CompanyList({ruleCompanyStore, uiStore}) {
         <div key={`${idx}list`} className={styles.single}>
           <Row>
             <Col width="6">
-              <CompanyName />
-              <ReportType />
+              <CompanyName data={obj} />
+              <ReportType data={obj} />
             </Col>
             <Col width="2">
-              <Time />
+              <Time data={obj} />
             </Col>
             <Col width="4">
-              <Numbers />
+              <Numbers data={obj} />
             </Col>
           </Row>
         </div>
@@ -54,5 +54,7 @@ export default loadingComp({
     imgCategory: 14,
     category: 2,
     module: '企业预警列表',
+    errCategory: 2,
+    error: props.ruleCompanyStore.companyList.length === 0,
   }),
 })(observer(CompanyList));
