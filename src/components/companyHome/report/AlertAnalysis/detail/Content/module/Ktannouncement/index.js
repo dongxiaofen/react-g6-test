@@ -18,7 +18,7 @@ function Ktannouncement({data}) {
       {'key': 'relevantDepartments', 'width': '12', 'modifyBlock': arrayToString},
       {'key': 'content', 'width': '12'}
     ],
-    item: data,
+    item: data.content,
   };
   return (
     <SimpleCard meta={meta} />

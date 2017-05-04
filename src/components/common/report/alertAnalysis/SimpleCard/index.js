@@ -13,6 +13,7 @@ function SimpleCard({meta}) {
       if (config.modifyBlock) {
         value = config.modifyBlock(item[config.key]);
       }
+      value = value || '--';
       if (config.blockShow) {
         output.push(
           <Col key={config.key} width={config.width} className={styles.col}>

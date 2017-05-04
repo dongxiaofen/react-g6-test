@@ -22,7 +22,7 @@ function JudgeDoc({data}) {
       {'key': 'court', 'width': '6'},
       {'key': 'litigant', 'width': '12', modifyBlock: modifyLitiganti},
     ],
-    item: data,
+    item: data.content,
   };
   return (
     <SimpleCard meta={meta} />

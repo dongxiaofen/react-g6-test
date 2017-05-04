@@ -3,7 +3,7 @@ import { observer, inject } from 'mobx-react';
 import styles from './index.less';
 function LeftBar({alertAnalysisStore}) {
   const moduleData = alertAnalysisStore.detailData;
-  const data = moduleData.detail.detail;
+  const data = moduleData.detail;
   const activeIndex = moduleData.activeIndex;
   const tabTop = moduleData.tabTop;
   const page = moduleData.page;
@@ -19,7 +19,7 @@ function LeftBar({alertAnalysisStore}) {
           className={itemCss}
           onClick={changeTab.bind(null, index)}
           >
-          <div className={styles.time}>{item.eventTime}</div>
+          <div className={styles.time}>{item.alterDt}</div>
         </div>
       );
     });

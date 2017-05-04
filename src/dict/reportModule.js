@@ -577,7 +577,8 @@ const config = {
     'announcementTime': '公告日期',
   },
   news: {
-    'title': '新闻标题'
+    'title': '新闻标题',
+    'alterDt': '发布日期',
   },
   stock: {
     'title': '公告标题'
