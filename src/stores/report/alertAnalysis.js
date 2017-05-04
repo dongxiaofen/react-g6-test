@@ -5,7 +5,7 @@ import axios from 'axios';
 import { companyHomeApi } from 'api';
 import uiStore from '../ui';
 import messageStore from '../message';
-import testData from './testData';
+// import testData from './testData';
 const CancelToken = axios.CancelToken;
 class AlertAnalysisStore {
   @observable isMount = false;
@@ -13,14 +13,9 @@ class AlertAnalysisStore {
   alertCancel = null;
   @observable listData = {};
   @observable detailData = {
-    info: {
-      'alertType': 'RULE',
-      'description': '发现该企业的关联公司2014年2月13日被银行等金融机构起诉',
-      'id': 2,
-      'ruleName': '新增风险关联',
-      'ruleTime': '2017-01-15'
-    },
-    detail: testData.rule13to31,
+    activeIndex: 0,
+    info: {},
+    detail: {},
   }
   @action.bound changeValue(key, value) {
     pathval.setPathValue(this, key, value);
@@ -36,6 +31,8 @@ class AlertAnalysisStore {
       .then(action('getAlertDetail_success', resp => {
         this.loadingId = -1;
         this.alertCancel = null;
+        this.detailData.detail = resp.data;
+        this.openDetailModal();
         console.log(resp);
       }))
       .catch(action('getAlertDetail_error', err => {
