@@ -7,7 +7,8 @@ function News({data}) {
     dict: 'news',
     body: [
       {'key': 'title', 'width': '12'},
-      {'key': 'alterDt', 'width': '6'},
+      {'key': 'alterDt', 'width': '12'},
+      {'key': 'detail', 'width': '12', keyType: 'detail'}
     ],
     item: data.content,
   };

@@ -579,6 +579,7 @@ const config = {
   news: {
     'title': '新闻标题',
     'alterDt': '发布日期',
+    'detail': '新闻详情', // 预警分析详情
   },
   stock: {
     'title': '公告标题'

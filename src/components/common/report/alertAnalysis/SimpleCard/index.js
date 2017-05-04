@@ -1,10 +1,11 @@
 import React, {PropTypes} from 'react';
-import { observer } from 'mobx-react';
+import { observer, inject} from 'mobx-react';
 import styles from './index.less';
 import {Col, Row} from 'components/common/layout';
 import DICT from 'dict/reportModule';
+import AnimateLoading from 'components/hoc/LoadingComp/AnimateLoading';
 
-function SimpleCard({meta}) {
+function SimpleCard({meta, alertAnalysisStore}) {
   const {item, body, dict} = meta;
   const createContent = ()=> {
     const output = [];
@@ -12,6 +13,13 @@ function SimpleCard({meta}) {
       let value = item[config.key];
       if (config.modifyBlock) {
         value = config.modifyBlock(item[config.key]);
+      }
+      if (config.keyType === 'detail') {
+        if (!alertAnalysisStore.detailData.html) {
+          value = <AnimateLoading />;
+        } else if (alertAnalysisStore.detailData.html !== '--') {
+          value = <div dangerouslySetInnerHTML={{__html: alertAnalysisStore.detailData.html}} ></div>;
+        }
       }
       value = value || '--';
       if (config.blockShow) {
@@ -42,4 +50,4 @@ function SimpleCard({meta}) {
 SimpleCard.propTypes = {
   foo: PropTypes.string,
 };
-export default observer(SimpleCard);
+export default inject('alertAnalysisStore')(observer(SimpleCard));
