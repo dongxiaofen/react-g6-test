@@ -89,19 +89,7 @@ export default class CircleNetworkGraph extends Component {
       .enter().append('circle')
       .attr('r', 12)
       .attr('class', (data) => {
-        let res;
-        if (data.show === 0) {
-          res = styles.hide;
-        } else if (data.category === 0) {
-          res = styles.mainCompany;
-        } else if (data.blackList && data.category !== 7) {
-          res = styles.blackListNodes;
-        } else if (data.status === 0) {
-          res = styles.cancelNodes;
-        } else {
-          res = styles[`category${data.category}`];
-        }
-        return res;
+        return (data.hide && styles.hide) || (data.category === 0 && styles.mainCompany) || (data.blackList && data.category !== 7 && styles.blackListNodes) || (data.status === 0 && styles.cancelNodes) || styles[`category${data.category}`];
       })
       .call(d3.drag()
         .on('start', this.dragstarted)
@@ -116,7 +104,7 @@ export default class CircleNetworkGraph extends Component {
       .enter()
       .append('text')
       .attr('class', (data) => {
-        if (data.show === 0) {
+        if (data.hide) {
           return styles.hide;
         }
         return styles.nodeText;
@@ -150,10 +138,10 @@ export default class CircleNetworkGraph extends Component {
       .attr('dx', 40)
       .attr('dy', -2)
       .attr('class', (data) => {
-        return data.showInfo ? styles.show : styles.hide;
+        return data.isFocus ? styles.show : styles.hide;
       })
       .attr('font-size', 8)
-      .attr('fill', '#aaa')
+      .attr('fill', '#3483e9')
       .attr('id', (data, idx) => { return 'edgelabel' + idx; });
 
 
@@ -174,11 +162,12 @@ export default class CircleNetworkGraph extends Component {
             node.isFocus = true;
           }
         });
-        // edgesData[0].showInfo = true;
-        this.reDraw();
+        this.focusRelatedLinks(focusNodeName);
+        // this.reDraw();
       }
     );
   }
+
   // 获取边的关系
   getLinkInfo = (data) => {
     const description = [];
@@ -295,6 +284,16 @@ export default class CircleNetworkGraph extends Component {
     });
     nodeAdded = false;
   }
+  // 高亮选中节点相关的边
+  focusRelatedLinks = (focusNodeName) => {
+    edgesData.map((link) => {
+      if (link.target.name === focusNodeName || link.source.name === focusNodeName) {
+        link.isFocus = true;
+      }else {
+        link.isFocus = false;
+      }
+    });
+  }
   ticked = () => {
     if (!saveNodeXY) { // 只跑一次,然后存到nodeXY
       this.getNodeXY();
@@ -317,41 +316,22 @@ export default class CircleNetworkGraph extends Component {
       .attr('x1', (data) => { return data.source.x; })
       .attr('y1', (data) => { return data.source.y; })
       .attr('x2', (data) => { return data.target.x; })
-      .attr('y2', (data) => { return data.target.y; });
+      .attr('y2', (data) => { return data.target.y; })
+      .attr('class', (data) => {
+        return (data.hide && styles.hide) || (data.isFocus && styles.focusLink) || styles.links;
+      });
 
     svgNodes
       .attr('cx', (data) => { return data.x; })
       .attr('cy', (data) => { return data.y; })
-      .attr('r', (data)=>{
+      .attr('r', (data) => {
         return data.isFocus ? 20 : 12;
       })
       .attr('class', (data) => {
-        let res;
-        if (data.show === 0) {
-          res = styles.hide;
-        } else if (data.isFocus) {
-          res = '';
-        } else if (data.category === 0) {
-          res = styles.mainCompany;
-        } else if (data.blackList && data.category !== 7) {
-          res = styles.blackListNodes;
-        } else if (data.status === 0) {
-          res = styles.cancelNodes;
-        } else {
-          res = styles[`category${data.category}`];
-        }
-        return res;
+        return (data.hide && styles.hide) || (data.isFocus && ' ') || (data.category === 0 && styles.mainCompany) || (data.blackList && data.category !== 7 && styles.blackListNodes) || (data.status === 0 && styles.cancelNodes) || styles[`category${data.category}`];
       })
       .attr('fill', (data) => {
-        let res;
-        if (data.blackList && data.category !== 7) {
-          res = 'url(#bling9)';
-        } else if (data.status === 0) {
-          res = 'url(#bling10)';
-        } else {
-          res = `url(#bling${data.category})`;
-        }
-        return data.isFocus ? res : '';
+        return (!data.isFocus && ' ') || (data.blackList && data.category !== 7 && 'url(#bling9)') || (data.status === 0 && 'url(#bling10)') || `url(#bling${data.category})`;
       });
 
     svgTexts
@@ -364,6 +344,9 @@ export default class CircleNetworkGraph extends Component {
         if (data.layer !== -1) {
           return data.y;
         }
+      })
+      .attr('class', (data) => {
+        return data.show === 0 ? styles.hide : styles.nodeText;
       });
 
     svgEdgepaths.attr('d', (data) => {
@@ -381,7 +364,7 @@ export default class CircleNetworkGraph extends Component {
       return 'rotate(0)';
     })
       .attr('class', (data) => {
-        return data.showInfo ? styles.show : styles.hide;
+        return data.isFocus ? styles.show : styles.hide;
       });
   }
   dragstarted = (data) => {
@@ -401,7 +384,7 @@ export default class CircleNetworkGraph extends Component {
 
   dragended = (data) => {
     if (!d3.event.active) simulation.alphaTarget(0);
-    if (!isDragging) {
+    if (!isDragging && data.category !== 0) {
       this.props.networkStore.focusNode(data.name);
       console.log(data, '单击');
     } else {
@@ -417,22 +400,6 @@ export default class CircleNetworkGraph extends Component {
     // const checkedArr = this.props.currentNetwork.getIn(['typeList', 'checkedArr']).toArray();
     // 连线
     svgEdges = svgEdges.data(simulation.force('link').links());
-    // update
-    svgEdges
-      .attr('class', (data) => {
-        let res;
-        if (data.show === 0) {
-          res = styles.hide;
-        } else if (data.focus === 1) {
-          res = styles.focusLink;
-        } else {
-          res = styles.links;
-        }
-        return res;
-      });
-    // .attr('marker-end', (data)=>{
-    //   return data.show === 1 ? 'url(#relativeArrow)' : 'url(#mainArrow)';
-    // });
     // enter
     svgEdges.enter()
       .append('line')
@@ -445,48 +412,6 @@ export default class CircleNetworkGraph extends Component {
 
     // 节点
     svgNodes = svgNodes.data(simulation.nodes());
-    // update
-    // svgNodes.attr('r', (data) => {
-    //   let res;
-    //   if (data.isFocus === 1) {
-    //     res = 20;
-    //   } else {
-    //     res = data.cateType === 0 ? 30 : 12;
-    //   }
-    //   return res;
-    // })
-    //   .attr('class', (data) => {
-    //     let res;
-    //     if (data.show === 0) {
-    //       res = styles.hide;
-    //     } else if (data.isFocus) {
-    //       res = '';
-    //     } else if (data.category === 0) {
-    //       res = styles.mainCompany;
-    //     } else if (data.blackList && data.category !== 7) {
-    //       res = styles.blackListNodes;
-    //     } else if (data.status === 0) {
-    //       res = styles.cancelNodes;
-    //     } else {
-    //       res = styles[`category${data.category}`];
-    //     }
-    //     return res;
-    //   })
-    //   .attr('fill', (data) => {
-    //     let res;
-    //     if (data.blackList && data.category !== 7) {
-    //       res = 'url(#bling9)';
-    //     } else if (data.status === 0) {
-    //       res = 'url(#bling10)';
-    //     } else {
-    //       res = `url(#bling${data.category})`;
-    //     }
-    //     return data.isFocus ? res : '';
-    //   })
-    //   .call(d3.drag()
-    //     .on('start', this.dragstarted)
-    //     .on('drag', this.dragged)
-    //     .on('end', this.dragended));
     // enter
     svgNodes.enter().append('circle')
       .attr('r', 12)
@@ -508,10 +433,6 @@ export default class CircleNetworkGraph extends Component {
 
     // 文字描述
     svgTexts = svgTexts.data(simulation.nodes());
-    // update
-    svgTexts.attr('class', (data) => {
-      return data.show === 0 ? styles.hide : styles.nodeText;
-    });
     // enter
     svgTexts.enter().append('text')
       .attr('class', styles.text)
@@ -528,6 +449,7 @@ export default class CircleNetworkGraph extends Component {
     svgTexts.exit().remove();
     simulation.restart();
   }
+
   render() {
     return (
       <div className={styles.svgBox}>
