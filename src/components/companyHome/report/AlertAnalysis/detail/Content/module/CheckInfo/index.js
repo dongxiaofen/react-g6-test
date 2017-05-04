@@ -1,6 +1,6 @@
 import React, {PropTypes} from 'react';
 import { observer } from 'mobx-react';
-
+import SimpleCard from 'components/common/report/alertAnalysis/SimpleCard';
 function CheckInfo({data}) {
   const meta = {
     dict: 'checkMessageList',
@@ -13,7 +13,7 @@ function CheckInfo({data}) {
   };
   return (
     <SimpleCard meta={meta} />
-  )
+  );
 }
 
 CheckInfo.propTypes = {

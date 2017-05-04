@@ -10,10 +10,10 @@ function JudgeDoc({data, type}) {
       });
       return newsData.join('；');
     }
-    return '无';
+    return '--';
   };
   const meta = {
-    dict: 'litigationAssets',
+    dict: 'judgeDoc',
     body: [
       {'key': 'title', 'width': '12'},
       {'key': 'identity', 'width': '6'},

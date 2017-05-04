@@ -24,7 +24,6 @@ function Content({alertAnalysisStore}) {
     const detailData = alertAnalysisStore.detailData;
     const info = detailData.info;
     const detail = detailData.detail;
-    console.log(info.alertType);
     if (info.alertType === 'RULE') {
       const singleDetail = detail[detailData.activeIndex];
       switch (singleDetail.pattern) {
@@ -53,12 +52,20 @@ function Content({alertAnalysisStore}) {
       }
     }else if (info.alertType === 'SYS_RULE') {
       let ruleId = detail.ruleId;
-      if (ruleId >= 13 && ruleId <= 31) {
+      if (ruleId === 1 || ruleId === 2 || ruleId === 5 || ruleId === 6) {
+        ruleId = 1;
+      }else if (ruleId === 3 || ruleId === 4) {
+        ruleId = 3;
+      } else if (ruleId >= 13 && ruleId <= 31) {
         ruleId = 13;
       }else if (ruleId >= 32 && ruleId <= 50) {
         ruleId = 32;
       }
       switch (ruleId) {
+        case 1:
+          return <JudgeDoc data={detail} type={info.alertTyp}/>;
+        case 3:
+          return <DishonestInfo data={detail} type={info.alertTyp}/>;
         case 7:
           return <Rule7 data={detail} />;
         case 8:

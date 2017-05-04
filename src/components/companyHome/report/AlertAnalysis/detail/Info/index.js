@@ -10,8 +10,8 @@ function Info({alertAnalysisStore}) {
   if (info.alertType === 'SYS_RULE') {
     detail = alertAnalysisStore.detailData.detail.detail[0];
     const type = detail.type;
-    hasRelation = info.alertType === 'RULE' && (type === 'judgeInfo' || type === 'dishonesty') && detail.relation;
-    relation = detail.relation && detail.relation.length > 1 ? `（${detail.relation.join('／')}）` : '';
+    hasRelation = info.alertType === 'SYS_RULE' && (type === 'judgeInfo' || type === 'dishonesty') && detail.relation;
+    relation = detail.relation && detail.relation.length > 0 ? `（${detail.relation.join('／')}）` : '';
   }
   return (
     <div className={styles.wrap}>

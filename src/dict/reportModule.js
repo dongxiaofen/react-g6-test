@@ -606,7 +606,7 @@ const config = {
   rule11: {
     companyName: '关联企业',
     relation: '关联关系',
-    eventTime: '变更日期',
+    altDate: '变更日期',
     altBe: '变更前',
     altAf: '变更后'
   },
