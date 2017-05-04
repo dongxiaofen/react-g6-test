@@ -6,7 +6,7 @@ import TypeList from './TypeList';
 import FormItem from 'components/lib/FormItem';
 import Input from 'components/lib/input';
 
-function CircleTypeList({ networkStore }) {
+function CircleTypeList({ networkStore, messageStore }) {
   const handleSearchChange = (evt) => {
     runInAction('searching network', ()=>{
       networkStore.searchKey = evt.target.value;
@@ -14,28 +14,19 @@ function CircleTypeList({ networkStore }) {
   };
   const handleSearch = (evt) => {
     if (evt.keyCode === 13) {
-      console.log(networkStore.searchKey);
-      networkStore.focusNode(networkStore.searchKey);
-      // const searchName = this.props.currentNetwork.get('searchKey');
-      // const nodesData = this.props.currentNetwork.get('currentNetwork').toJS().nodes;
-      // let searchNull = true;
-      // nodesData.map((node) => {
-      //   if (searchName !== '' && node.name.indexOf(searchName) >= 0 && node.category !== 0) {
-      //     searchNull = false;
-      //   }
-      // });
-      // if (searchNull) {
-      //   this.props.commonBoundAC.updateValue(['agreeModal', 'msgModal'], {
-      //     show: true,
-      //     msg: '搜索无结果'
-      //   }, 'NETWORK_UPDATE_VALUE');
-      // } else {
-      //   const nodeArr = Array.from(document.getElementsByClassName('ExpandNode'));
-      //   nodeArr.map((node) => {
-      //     node.className = `ExpandNode ${styles.nodeName}`;
-      //   });
-      //   this.props.networkBoundAC.searchNetwork(searchName);
-      // }
+      const searchKey = networkStore.searchKey;
+      const nodesData = networkStore.currentNetwork.nodes;
+      let searchNull = true;
+      nodesData.map((node) => {
+        if (searchKey !== '' && node.name.indexOf(searchKey) >= 0 && node.category !== 0) {
+          searchNull = false;
+        }
+      });
+      if (searchNull) {
+        messageStore.openMessage({type: 'info', content: '搜索无结果', duration: 1000});
+      }else {
+        networkStore.focusNode(networkStore.searchKey);
+      }
     }
   };
   return (
@@ -64,4 +55,4 @@ function CircleTypeList({ networkStore }) {
 CircleTypeList.propTypes = {
   foo: PropTypes.string,
 };
-export default inject('networkStore')(observer(CircleTypeList));
+export default inject('networkStore', 'messageStore')(observer(CircleTypeList));
