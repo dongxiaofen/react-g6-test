@@ -11,11 +11,12 @@ class DetailModalStore {
   }
 
   @action.bound openDetailModal(loader, title, closeAction) {
-    loader((_titleComp, _contentComp, _sourceComp) => {
+    loader((_titleComp, _contentComp, _sourceComp, _leftBarComp) => {
       runInAction(() => {
         this.titleComp = _titleComp;
         this.contentComp = _contentComp;
         if (_sourceComp) { this.sourceComp = _sourceComp; }
+        if (_leftBarComp) { this.leftBarComp = _leftBarComp; }
       });
     });
     this.visible = true;

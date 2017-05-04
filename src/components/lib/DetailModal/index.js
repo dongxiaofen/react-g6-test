@@ -11,6 +11,7 @@ export default class DetailModal extends Component {
     contentComp: PropTypes.func,
     sourceComp: PropTypes.func,
     closeAction: PropTypes.func,
+    leftBarComp: PropTypes.func
   };
 
   componentDidMount() {
@@ -79,6 +80,11 @@ export default class DetailModal extends Component {
               {this.props.titleComp ? <this.props.titleComp /> : null}
             </div>
             <div className={styles.line}></div>
+          </div>
+          <div ref="detail-modal-leftBar" className={styles.leftBar}>
+            {
+              this.props.leftBarComp ? <this.props.leftBarComp /> : null
+            }
           </div>
           <div ref="detail-modal-content" className={`clearfix ${styles.content}`}>
             {this.props.contentComp ? <this.props.contentComp /> : null}

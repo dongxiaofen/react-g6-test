@@ -5,9 +5,9 @@ import styles from './index.less';
 function Rule13To31({data}) {
   const modifyPolicy = (value)=> {
     const output = [];
-    value.map((itemData)=> {
+    value.map((itemData, idx)=> {
       output.push(
-        <p className={styles.policy}>
+        <p className={styles.policy} key={`policy${idx}`}>
           <a href={itemData.url} target="_blank">《{itemData.title}》</a>
         </p>
       );

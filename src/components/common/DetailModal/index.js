@@ -10,6 +10,7 @@ function _DetailModal({detailModalStore}) {
     titleComp,
     contentComp,
     sourceComp,
+    leftBarComp,
   } = detailModalStore;
   return (
     <div>
@@ -19,6 +20,7 @@ function _DetailModal({detailModalStore}) {
         titleComp={titleComp}
         contentComp={contentComp}
         sourceComp={sourceComp}
+        leftBarComp={leftBarComp}
         closeAction={closeAction}/>
     </div>
   );
