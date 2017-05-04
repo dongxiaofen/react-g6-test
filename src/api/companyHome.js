@@ -139,3 +139,17 @@ export const createMonitor = (params) => {
 export const getPersonName = (url) => {
   return axios.get(url);
 };
+// 获取评估分析列表
+export const getAlertAnalysisList = (monitorId, reportId, params) => {
+  let url;
+  if (monitorId) {
+    url = `/api/monitor/${monitorId}/alert/page`;
+  } else {
+    url = `/api/analysisReport/${reportId}/alert/page`;
+  }
+  return axios.get(url, {params: params});
+};
+// 获取评估分析列表详情
+export const getAlertDetail = (url, source) => {
+  return axios.get(url, {cancelToken: source.token});
+};

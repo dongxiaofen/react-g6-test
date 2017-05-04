@@ -6,6 +6,7 @@ import monitorListStore from './monitorList';
 import ruleStore from './rule';
 import ruleCompanyStore from './ruleCompany';
 import accountSettingStore from './accountSetting';
+import alertAnalysisStore from './report/alertAnalysis';
 import reportManageStore from './reportManage';
 
 class UiStore {
@@ -29,6 +30,13 @@ class UiStore {
       () => {
         document.body.scrollTop = 0;
         monitorListStore.getMainList();
+      }
+    );
+    reaction(
+      () => this.uiState.alertAnalysis.index,
+      () => {
+        const {monitorId, reportId} = bannerStore;
+        alertAnalysisStore.getAlertAnalysisList(monitorId, reportId);
       }
     );
     reaction(
@@ -111,6 +119,12 @@ class UiStore {
       totalElements: 0,
     },
     accountLoginRecord: {
+      index: 1,
+      size: 10,
+      totalElements: 0,
+    },
+
+    alertAnalysis: {
       index: 1,
       size: 10,
       totalElements: 0,
