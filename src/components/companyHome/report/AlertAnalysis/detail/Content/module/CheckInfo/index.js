@@ -1,12 +1,19 @@
 import React, {PropTypes} from 'react';
 import { observer } from 'mobx-react';
 
-function CheckInfo({}) {
+function CheckInfo({data}) {
+  const meta = {
+    dict: 'checkMessageList',
+    body: [
+      {'key': 'institution', 'width': '6'},
+      {'key': 'checkType', 'width': '6'},
+      {'key': 'checkResult', 'width': '12'}
+    ],
+    item: data.content,
+  };
   return (
-    <div>
-
-    </div>
-  );
+    <SimpleCard meta={meta} />
+  )
 }
 
 CheckInfo.propTypes = {
