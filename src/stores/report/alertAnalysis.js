@@ -10,7 +10,7 @@ class AlertAnalysisStore {
       'ruleName': '新增风险关联',
       'ruleTime': '2017-01-15'
     },
-    detail: testData.rule8,
+    detail: testData.rule13to31,
   }
   @action.bound openDetailModal() {
     const companyName = this.detailData.detail.companyName;
@@ -18,7 +18,9 @@ class AlertAnalysisStore {
       require.ensure([], (require)=>{
         cp(
           require('components/companyHome/report/AlertAnalysis/detail/Info'),
-          require('components/companyHome/report/AlertAnalysis/detail/Content')
+          require('components/companyHome/report/AlertAnalysis/detail/Content'),
+          null,
+          require('components/companyHome/report/AlertAnalysis/detail/LeftBar')
         );
       });
     }, `预警详情（${companyName}）`);

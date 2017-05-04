@@ -13,12 +13,21 @@ function SimpleCard({meta}) {
       if (config.modifyBlock) {
         value = config.modifyBlock(item[config.key]);
       }
-      output.push(
-        <Col key={config.key} width={config.width} className={styles.col}>
-          <span className={styles.key}>{DICT[dict][config.key]}：</span>
-          <span className={styles.value}>{value}</span>
-        </Col>
-      );
+      if (config.blockShow) {
+        output.push(
+          <Col key={config.key} width={config.width} className={styles.col}>
+            <div className={styles.blockKey}>{DICT[dict][config.key]}：</div>
+            <div className={styles.blockvalue}>{value}</div>
+          </Col>
+        );
+      } else {
+        output.push(
+          <Col key={config.key} width={config.width} className={styles.col}>
+            <span className={styles.key}>{DICT[dict][config.key]}：</span>
+            <span className={styles.value}>{value}</span>
+          </Col>
+        );
+      }
     });
     return output;
   };
