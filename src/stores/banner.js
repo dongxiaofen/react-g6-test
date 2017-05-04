@@ -274,6 +274,7 @@ class BannerStore {
     });
     this.isAllChecked = false;
     modalStore.visible = false;
+    modalStore.isCustomize = false;
   }
 }
 export default new BannerStore();

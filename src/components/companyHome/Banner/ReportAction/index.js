@@ -58,6 +58,7 @@ function ReportAction({ bannerStore, modalStore, payModalStore, routing }) {
       pactUrl: 'xxxxxx',
       pactName: '用户服务协议',
       confirmAction: updateHighOrDeepConfirmAction,
+      closeAction: modalStore.closeAction,
       loader: (cb) => {
         require.ensure([], (require) => {
           cb(require('./UpdateHighOrDeep'));
