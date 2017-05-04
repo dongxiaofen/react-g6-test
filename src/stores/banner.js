@@ -225,7 +225,24 @@ class BannerStore {
       }))
       .catch(action('createMonitor error', (err) => {
         console.log(err.response, '=====createMonitor error');
+        payModalStore.closeAction();
+        messageStore.openMessage({ content: err.response.data.message });
       }));
+  }
+
+  // 升级为监控
+  @action.bound updateToMonitor({ reportId, analysisReportId, time }) {
+    companyHomeApi.updateToMonitor({ reportId, analysisReportId, time })
+      .then(action('update to monitor', (resp) => {
+        payModalStore.closeAction();
+        messageStore.openMessage({ content: '成功创建监控' });
+        browserHistory.push(`/companyHome?monitorId=${resp.data.monitorId}&companyType=MAIN`);
+      }))
+      .catch((err) => {
+        console.log(err.response);
+        payModalStore.closeAction();
+        messageStore.openMessage({ content: err.response.data.message });
+      });
   }
 
   // 设置Pdf弹窗第一层级

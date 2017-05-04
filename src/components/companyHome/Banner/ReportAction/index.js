@@ -17,9 +17,17 @@ function ReportAction({ bannerStore, modalStore, payModalStore, routing }) {
   };
 
   const choiceOk = () => {
-    const companyName = routing.location.query.companyName;
-    const obj = { companyName: companyName, time: payModalStore.selectValue };
-    bannerStore.createMonitor(obj);
+    if (reportId || analysisReportId) {
+      bannerStore.updateToMonitor({
+        reportId: reportId,
+        analysisReportId: analysisReportId,
+        time: payModalStore.selectValue
+      });
+    } else {
+      const companyName = bannerStore.companyName;
+      const obj = { companyName: companyName, time: payModalStore.selectValue };
+      bannerStore.createMonitor(obj);
+    }
   };
 
   const openPayModal = () => {
@@ -48,7 +56,7 @@ function ReportAction({ bannerStore, modalStore, payModalStore, routing }) {
     if (reportId) {
       bannerStore.updateToAnalysisReport(reportId);
     } else {
-      const companyName = routing.location.query.companyName;
+      const companyName = bannerStore.companyName;
       const updateHighOrDeep = bannerStore.updateHighOrDeep;
       bannerStore.createReport(updateHighOrDeep.active, companyName);
     }

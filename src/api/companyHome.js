@@ -141,6 +141,21 @@ export const createMonitor = (params) => {
   return axios.post(`/api/monitor`, params);
 };
 
+// 升级监控
+export const updateToMonitor = ({ reportId, analysisReportId, time }) => {
+  let url;
+  const params = { time: time };
+  if (reportId) {
+    url = `/api/report/${reportId}/upgrade`;
+    params.reportId = reportId;
+  }
+  if (analysisReportId) {
+    url = `/api/analysisReport/${analysisReportId}/upgrade`;
+    params.analysisReportId = analysisReportId;
+  }
+  return axios.put(url, params);
+};
+
 // 添加/删除收藏
 export const addOrCancelCollection = ({ reportId, analysisReportId, monitorId, params }) => {
   let url;
