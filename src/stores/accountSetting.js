@@ -6,12 +6,14 @@ import uiStore from './ui';
 import clientStore from './client';
 import messageStore from './message';
 class AccountSettingStore {
+  // 账号树数据
   @observable tree = {
     searchInput: '',
     activeIndex: 0,
     activeId: -1,
     data: {},
   };
+  // 新增账号弹框数据
   @observable addModal = {
     visible: false,
     errorMsg: '',
@@ -59,7 +61,9 @@ class AccountSettingStore {
       },
     },
   };
+  // 账号基本信息数据
   @observable base = {};
+  // 修改密码弹框数据
   @observable pwdModal = {
     visible: false,
     errorMsg: '',
@@ -82,6 +86,7 @@ class AccountSettingStore {
       },
     }
   };
+  // 修改用户信息弹框数据
   @observable editModal = {
     visible: false,
     errorMsg: '',
@@ -125,6 +130,7 @@ class AccountSettingStore {
       },
     }
   };
+  // tab栏数据
   @observable tabs = {
     business: {
       reportAndMonitor: {},
@@ -366,13 +372,20 @@ class AccountSettingStore {
         this.tabs.loginRecord = {error: err.response.data, content: []};
       }));
   }
+  @action.bound resetTree() {
+    this.tree = {
+      searchInput: '',
+      activeIndex: 0,
+      activeId: -1,
+      data: {},
+    };
+  }
   @action.bound resetAddModal() {
     this.addModal = {
       visible: false,
       errorMsg: '',
       loading: false,
       form: {
-        errorMsg: '',
         email: {
           value: '',
           vdRule: 'vdEmail',
@@ -415,6 +428,9 @@ class AccountSettingStore {
         },
       },
     };
+  }
+  @action.bound resetBase() {
+    this.base = {};
   }
   @action.bound resetPwdModal() {
     this.pwdModal = {
@@ -485,17 +501,7 @@ class AccountSettingStore {
       }
     };
   }
-  @action.bound resetTree() {
-    this.tree.searchInput = '';
-    this.tree.activeIndex = 0;
-    this.tree.data = {};
-  }
-  @action.bound resetStore() {
-    this.resetAddModal();
-    this.resetPwdModal();
-    this.resetEditModal();
-    this.resetTree();
-    this.base = {};
+  @action.bound resetTabs() {
     this.tabs = {
       business: {
         reportAndMonitor: {},
@@ -508,6 +514,14 @@ class AccountSettingStore {
       summary: {},
       loginRecord: {},
     };
+  }
+  @action.bound resetStore() {
+    this.resetTree();
+    this.resetAddModal();
+    this.resetBase();
+    this.resetPwdModal();
+    this.resetEditModal();
+    this.resetTabs();
   }
 }
 
