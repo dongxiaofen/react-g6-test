@@ -10,8 +10,12 @@ function LoginRecord({accountSettingStore}) {
     {name: 'IP地址', key: 'address'},
   ];
   const data = accountSettingStore.tabs.loginRecord;
+  const loginCount = data.totalElements;
   return (
     <div className={styles.wrapper}>
+      <div className={styles.loginCount}>
+        {`总登录次数 ${loginCount || 0}`}
+      </div>
       <AccountTable
         module="accountLoginRecord"
         headData={head}

@@ -3,14 +3,17 @@ import { accountSettingApi } from 'api';
 import pathval from 'pathval';
 import Formater from 'helpers/formatTreeData';
 import uiStore from './ui';
+import clientStore from './client';
 import messageStore from './message';
 class AccountSettingStore {
+  // 账号树数据
   @observable tree = {
     searchInput: '',
     activeIndex: 0,
     activeId: -1,
     data: {},
   };
+  // 新增账号弹框数据
   @observable addModal = {
     visible: false,
     errorMsg: '',
@@ -58,7 +61,9 @@ class AccountSettingStore {
       },
     },
   };
+  // 账号基本信息数据
   @observable base = {};
+  // 修改密码弹框数据
   @observable pwdModal = {
     visible: false,
     errorMsg: '',
@@ -81,6 +86,7 @@ class AccountSettingStore {
       },
     }
   };
+  // 修改用户信息弹框数据
   @observable editModal = {
     visible: false,
     errorMsg: '',
@@ -124,6 +130,7 @@ class AccountSettingStore {
       },
     }
   };
+  // tab栏数据
   @observable tabs = {
     business: {
       reportAndMonitor: {},
@@ -176,7 +183,7 @@ class AccountSettingStore {
         this.pwdModal.loading = false;
         messageStore.openMessage({
           type: 'error',
-          content: err.response && err.response.data && err.response.data.message || '新增账号失败',
+          content: err.response && err.response.data && err.response.data.message || '修改密码失败',
         });
       }));
   }
@@ -189,49 +196,42 @@ class AccountSettingStore {
           type: 'info',
           content: '新增账号成功',
         });
-        accountSettingApi.getTreeList()
-          .then(action('getTreeList_success', resp => {
-            if (resp.data && resp.data.length > 0) {
-              const treeData = new Formater(resp);
-              treeData.formatData(null, null, 'cy@sc.cn');
-              this.tree.data = {content: treeData.formatResult};
-            } else {
-              this.tree.data = {error: {message: '暂无用户信息'}, content: []};
-            }
-          }))
-          .catch(action('getTreeList_error', err => {
-            this.tree.data = {error: err.response.data, content: []};
-          }));
+        this.getTreeList(true);
       }))
       .catch(action('addNewUser_error', err => {
+        this.addModal.loading = false;
         messageStore.openMessage({
           type: 'error',
           content: err.response && err.response.data && err.response.data.message || '新增账号失败',
         });
-        this.addModal.loading = false;
       }));
   }
-  @action.bound getTreeList() {
-    this.resetStore();
+  @action.bound getTreeList(afterAddUser) {
+    if (!afterAddUser) {
+      this.resetStore();
+    }
     accountSettingApi.getTreeList()
       .then(action('getTreeList_success', resp => {
         if (resp.data && resp.data.length > 0) {
           const treeData = new Formater(resp);
-          treeData.formatData(null, null, 'cy@sc.cn');
+          const userEmail = clientStore.userInfo.email;
+          treeData.formatData(null, null, userEmail);
           this.tree.data = {content: treeData.formatResult};
-          const uId = treeData.formatResult[0].id;
-          this.tree.activeId = uId;
-          this.getUserInfo(uId);
-          this.getReportAndMonitor(uId);
-          this.getProvince(uId);
-          this.getIndustry(uId);
-          this.getScale(uId);
-          this.getConsume(uId);
-          this.getRecharge(uId);
-          this.getSummary(uId);
-          this.getLoginRecord(uId);
+          if (!afterAddUser) {
+            const uId = treeData.formatResult[0].id;
+            this.tree.activeId = uId;
+            this.getUserInfo(uId);
+            this.getReportAndMonitor(uId);
+            this.getProvince(uId);
+            this.getIndustry(uId);
+            this.getScale(uId);
+            this.getConsume(uId);
+            this.getRecharge(uId);
+            this.getSummary(uId);
+            this.getLoginRecord(uId);
+          }
         } else {
-          this.tree.data = {error: {message: '暂无用户信息'}, content: []};
+          this.tree.data = {error: {message: '暂无账号信息'}, content: []};
         }
       }))
       .catch(action('getTreeList_error', err => {
@@ -248,7 +248,7 @@ class AccountSettingStore {
       }));
   }
   @action.bound getUserInfo(uId) {
-    this.base = {};
+    this.resetBase();
     accountSettingApi.getUserInfo(uId)
       .then(action('getUserInfo_success', resp => {
         this.base = {data: resp.data};
@@ -261,7 +261,9 @@ class AccountSettingStore {
     this.tabs.business.reportAndMonitor = {};
     accountSettingApi.getReportAndMonitor(uId)
       .then(action('getReportAndMonitor_success', resp => {
-        const noData = resp.data.monitorSatisic.length === 0 && resp.data.reportStatisic.length === 0;
+        const noData = Object.keys(resp.data).every(key => {
+          return resp.data[key].length === 0;
+        });
         this.tabs.business.reportAndMonitor = noData ? {error: {message: '暂无数据'}, data: []} : {data: resp.data};
       }))
       .catch(action('getReportAndMonitor_error', err => {
@@ -303,9 +305,8 @@ class AccountSettingStore {
         this.tabs.business.scale = {error: err.response.data, data: {}};
       }));
   }
-  @action.bound getConsume(userId) {
+  @action.bound getConsume(uId) {
     this.tabs.consume = {};
-    const uId = userId || this.base.data.id;
     const params = uiStore.uiState.accountConsume;
     delete params.totalElements;
     accountSettingApi.getConsume(uId, params)
@@ -318,9 +319,8 @@ class AccountSettingStore {
         this.tabs.consume = {error: err.response.data, page: []};
       }));
   }
-  @action.bound getRecharge(userId) {
+  @action.bound getRecharge(uId) {
     this.tabs.recharge = {};
-    const uId = userId || this.base.data.id;
     const params = uiStore.uiState.accountRecharge;
     delete params.totalElements;
     accountSettingApi.getRecharge(uId, params)
@@ -333,9 +333,8 @@ class AccountSettingStore {
         this.tabs.recharge = {error: err.response.data, content: []};
       }));
   }
-  @action.bound getSummary(userId) {
+  @action.bound getSummary(uId) {
     this.tabs.summary = {};
-    const uId = userId || this.base.data.id;
     const params = uiStore.uiState.accountSummary;
     delete params.totalElements;
     accountSettingApi.getSummary(uId, params)
@@ -348,9 +347,8 @@ class AccountSettingStore {
         this.tabs.summary = {error: err.response.data, page: []};
       }));
   }
-  @action.bound getLoginRecord(userId) {
+  @action.bound getLoginRecord(uId) {
     this.tabs.loginRecord = {};
-    const uId = userId || this.base.data.id;
     const params = uiStore.uiState.accountLoginRecord;
     delete params.totalElements;
     accountSettingApi.getLoginRecord(uId, params)
@@ -363,13 +361,20 @@ class AccountSettingStore {
         this.tabs.loginRecord = {error: err.response.data, content: []};
       }));
   }
+  @action.bound resetTree() {
+    this.tree = {
+      searchInput: '',
+      activeIndex: 0,
+      activeId: -1,
+      data: {},
+    };
+  }
   @action.bound resetAddModal() {
     this.addModal = {
       visible: false,
       errorMsg: '',
       loading: false,
       form: {
-        errorMsg: '',
         email: {
           value: '',
           vdRule: 'vdEmail',
@@ -412,6 +417,9 @@ class AccountSettingStore {
         },
       },
     };
+  }
+  @action.bound resetBase() {
+    this.base = {};
   }
   @action.bound resetPwdModal() {
     this.pwdModal = {
@@ -482,17 +490,7 @@ class AccountSettingStore {
       }
     };
   }
-  @action.bound resetTree() {
-    this.tree.searchInput = '';
-    this.tree.activeIndex = 0;
-    this.tree.data = {};
-  }
-  @action.bound resetStore() {
-    this.resetAddModal();
-    this.resetPwdModal();
-    this.resetEditModal();
-    this.resetTree();
-    this.base = {};
+  @action.bound resetTabs() {
     this.tabs = {
       business: {
         reportAndMonitor: {},
@@ -505,6 +503,15 @@ class AccountSettingStore {
       summary: {},
       loginRecord: {},
     };
+  }
+  @action.bound resetStore() {
+    this.resetTree();
+    this.resetAddModal();
+    this.resetBase();
+    this.resetPwdModal();
+    this.resetEditModal();
+    this.resetTabs();
+    uiStore.resetAccountPager();
   }
 }
 
