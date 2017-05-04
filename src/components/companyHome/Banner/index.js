@@ -40,7 +40,7 @@ export default class Banner extends Component {
     return (
       <div className={`clearfix ${styles.bannerInfoWrap}`}>
         <Container>
-          <div className="clearfix" style={{ position: 'relative' }}>
+          <div className={`clearfix ${styles.bannerContent}`}>
             <div className={styles.companyInfo}>
               <CompanyInfo />
             </div>

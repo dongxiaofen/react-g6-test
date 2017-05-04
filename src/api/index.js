@@ -10,4 +10,5 @@ export * as accountSettingApi from './accountSetting';
 export * as reportManageApi from './reportManage';
 export * as monitorStatisticsApi from './monitorStatistics';
 export * as personReportApi from './personReport';
+export * as collectionApi from './collection';
 // append here from plop

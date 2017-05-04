@@ -30,4 +30,5 @@ export networkStore from './report/network';
 export alertAnalysisStore from './report/alertAnalysis';
 export relPerCheckStore from './report/relPerCheck';
 export personReportStore from './personReport';
+export collectionStore from './collection';
 // append here from plop

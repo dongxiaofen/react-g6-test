@@ -139,3 +139,18 @@ export const createMonitor = (params) => {
 export const getPersonName = (url) => {
   return axios.get(url);
 };
+
+// 添加/删除收藏
+export const addOrCancelCollection = ({ reportId, analysisReportId, monitorId, params }) => {
+  let url;
+  if (reportId) {
+    url = `/api/report/${reportId}/collection`;
+  }
+  if (analysisReportId) {
+    url = `/api/analysisReport/${analysisReportId}/collection`;
+  }
+  if (monitorId) {
+    url = `/api/monitor/${monitorId}/collection`;
+  }
+  return axios.put(url, params);
+};

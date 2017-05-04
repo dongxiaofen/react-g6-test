@@ -23,6 +23,8 @@ class BannerStore {
   @observable refreshStatus = 'complete';
   @observable searchedCount = '';
   @observable lastModifiedTs = '';
+  @observable collection = false;
+  @observable mainStatus = '';
 
   // 上市代码
   @observable stockCode = '';
@@ -124,11 +126,13 @@ class BannerStore {
         this.riskInfo = resp.data.bannerInfo.bannerInfo.riskInfo;
         this.industryNames = resp.data.industryNames;
         this.bannerData = resp.data.bannerInfo.bannerInfo;
+        this.mainStatus = resp.data.mainStatus;
         this.monitorStatus = resp.data.monitorStatus;
         this.lastModifiedTs = resp.data.lastModifiedTs ? resp.data.lastModifiedTs : '无';
         this.refreshStatus = 'complete';
         this.searchedCount = resp.data.searchedCount;
         this.lastModifiedTs = resp.data.lastModifiedTs;
+        this.collection = resp.data.collection;
       }))
       .catch((err) => {
         console.log('banner出错', err);
@@ -275,6 +279,17 @@ class BannerStore {
     this.isAllChecked = false;
     modalStore.visible = false;
     modalStore.isCustomize = false;
+  }
+
+  // 添加/取消收藏
+  @action.bound addOrCancelCollection({ reportId, analysisReportId, monitorId, params }) {
+    companyHomeApi.addOrCancelCollection({ reportId, analysisReportId, monitorId, params })
+      .then(action('add or cancel collection', () => {
+        this.collection = false;
+      }))
+      .catch((err) => {
+        console.log(err.response);
+      });
   }
 }
 export default new BannerStore();
