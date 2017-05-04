@@ -3,8 +3,10 @@ import { observer } from 'mobx-react';
 import { browserHistory } from 'react-router';
 
 import styles from './index.less';
+import Pager from 'components/common/Pager';
+import { loadingComp } from 'components/hoc';
 
-function CardList({ collectionStore }) {
+function CardList({ collectionStore, uiStore }) {
   const viewCompany = (id, productType) => {
     let url;
     switch (productType) {
@@ -72,13 +74,30 @@ function CardList({ collectionStore }) {
     });
   };
   return (
-    <div className={styles}>
-      {collectionList()}
+    <div className="clearfix">
+      <div className={styles.cardList}>
+        {collectionList()}
+      </div>
+      <Pager
+        tData={collectionStore.resultContent}
+        module="collection"
+        uiStore={uiStore}
+        type="large" />
     </div>
   );
 }
 
 CardList.propTypes = {
   collectionStore: PropTypes.object,
+  uiStore: PropTypes.object,
 };
-export default observer(CardList);
+export default loadingComp({
+  mapDataToProps: props => ({
+    loading: props.collectionStore.isLoading,
+    imgCategory: 14,
+    category: 2,
+    errCategory: 2,
+    module: '收藏列表',
+    error: props.collectionStore.resultContent.length === 0,
+  })
+})(observer(CardList));

@@ -25,16 +25,19 @@ export default class Collection extends Component {
   }
 
   render() {
+    const collectionStore = this.props.collectionStore;
+    const uiStore = this.props.uiStore;
     return (
       <Container>
         <Row>
           <Col>
             <div className="clearfix">
               <h1 className={styles.title}>我的收藏</h1>
-              <Search collectionStore={this.props.collectionStore}
-                uiStore={this.props.uiStore} />
+              <Search collectionStore={collectionStore}
+                uiStore={uiStore} />
             </div>
-            <CardList collectionStore={this.props.collectionStore}/>
+            <CardList collectionStore={collectionStore}
+              uiStore={uiStore}/>
           </Col>
         </Row>
       </Container>

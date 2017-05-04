@@ -221,7 +221,6 @@ function ReportAction({ bannerStore, modalStore, payModalStore, routing }) {
     );
   };
 
-  console.log(bannerStore.collection, '------------------collection');
   return (
     <div className="clearfix">
       {bannerActionBtn()}

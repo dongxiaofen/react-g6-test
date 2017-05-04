@@ -285,7 +285,7 @@ class BannerStore {
   @action.bound addOrCancelCollection({ reportId, analysisReportId, monitorId, params }) {
     companyHomeApi.addOrCancelCollection({ reportId, analysisReportId, monitorId, params })
       .then(action('add or cancel collection', () => {
-        this.collection = false;
+        this.collection = !this.collection;
       }))
       .catch((err) => {
         console.log(err.response);
