@@ -96,6 +96,9 @@ class LoginStore {
           pathval.setPathValue(this, 'loginResult', {});
         }));
   }
+  @action combineServerData(data) {
+    this.isShowLogin = data.isShowLogin;
+  }
 
 }
 export default new LoginStore();

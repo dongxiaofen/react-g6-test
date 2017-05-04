@@ -47,7 +47,7 @@ function CircleTypeList({ networkStore, messageStore }) {
             autoComplete={false} />
         </FormItem>
       </div>
-      <TypeList />
+      <TypeList typeList={networkStore.typeList} toggleChecked={networkStore.toggleChecked} toggleCheckAll={networkStore.toggleCheckAll} />
     </div>
   );
 }

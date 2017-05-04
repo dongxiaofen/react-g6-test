@@ -167,6 +167,24 @@ export default class CircleNetworkGraph extends Component {
         this.focusRelatedLinks(focusNodeName);
       }
     );
+    // 监听类别筛选事件
+    reaction(
+      () => this.props.networkStore.typeList.checkedArr[0],
+      () => {
+        const checkedArr = this.props.networkStore.typeList.checkedArr;
+        const currentLevel = this.props.networkStore.currentLevel;
+        nodesData.map((node) => {
+          if (node.cateType !== 0) {
+            if (node.layer <= currentLevel) {
+              node.hide = this.isNodeShow(checkedArr, node.cateList);
+            } else {
+              node.hide = true;
+            }
+          }
+        });
+        console.log(nodesData);
+      }
+    );
   }
 
   // 获取边的关系
@@ -183,7 +201,17 @@ export default class CircleNetworkGraph extends Component {
     });
     return description.join(',');
   }
-
+  // 判断节点是否隐藏
+  isNodeShow = (checkeArr, cateList) => {// 返回0代表没有被勾选上
+    let index = -1;
+    for (const cate of cateList) {
+      if (checkeArr[cate - 1]) {
+        index = cate - 1;
+        break;
+      }
+    }
+    return index === -1 ? true : false;
+  }
   // 高亮选中节点相关的边
   focusRelatedLinks = (focusNodeName) => {
     edgesData.map((link) => {
@@ -249,7 +277,7 @@ export default class CircleNetworkGraph extends Component {
         }
       })
       .attr('class', (data) => {
-        return data.show === 0 ? styles.hide : styles.nodeText;
+        return data.hide ? styles.hide : styles.nodeText;
       });
 
     svgEdgepaths.attr('d', (data) => {
