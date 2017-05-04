@@ -11,6 +11,9 @@ export default class SearchCompany extends Component {
   static propTypes = {
     searchCompanyStore: PropTypes.object,
   }
+  componentWillUnmount() {
+    this.props.searchCompanyStore.resetData();
+  }
   render() {
     let searchBarDom = '';
     let topStyle = styles.top;

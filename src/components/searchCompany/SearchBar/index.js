@@ -14,7 +14,7 @@ function SearchBar({searchCompanyStore}) {
     searchChange,
     searchKey,
     handleEnter,
-    getCompanyList,
+    searchCompanyClick,
     getHistory,
     historyResult,
     historyClick,
@@ -32,7 +32,7 @@ function SearchBar({searchCompanyStore}) {
         searchKey={searchKey}
         searchChange={searchChange}
         handleEnter={handleEnter}
-        getCompanyList={getCompanyList} />
+        searchCompanyClick={searchCompanyClick} />
       <History
         getHistory={getHistory}
         historyClick={historyClick}

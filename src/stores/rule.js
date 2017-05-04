@@ -30,6 +30,9 @@ class RuleStore {
   @observable industryListOrg = [];
   // 行业选择停留效果
   @observable industryActive = '';
+  // 默认行业名与ID 行业提交值
+  @observable industry = '行业不限';
+  @observable industryId = '0';
 
   // 事件类型列表收起与展开
   @observable eventTypeShow = false;
@@ -65,9 +68,6 @@ class RuleStore {
   // @observable ruleCheckId = '';
   // 地区
   @observable area = '地区不限';
-  // 行业名与ID
-  @observable industry = '行业不限';
-  @observable industryId = '0';
   // 预警名称
   @observable name = '';
   // 规模
@@ -132,6 +132,16 @@ class RuleStore {
   // 存储当前操作的单条数据
   @action.bound setItemData(data) {
     this.itemData = data;
+  }
+  // 获取行业列表
+  @action.bound getIndustryList() {
+    ruleApi.getIndustryList()
+      .then(action('industryList', (resp) => {
+        this.industryList = resp.data;
+      }))
+      .catch(action('industryList error', (err) => {
+        console.log(err.response, '=====ruleList error');
+      }));
   }
   // 填写预警名称
   @action.bound changeName(evt) {
