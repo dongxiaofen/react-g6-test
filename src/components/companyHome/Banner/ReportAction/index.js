@@ -45,9 +45,13 @@ function ReportAction({ bannerStore, modalStore, payModalStore, routing }) {
   };
 
   const updateHighOrDeepConfirmAction = () => {
-    const companyName = routing.location.query.companyName;
-    const updateHighOrDeep = bannerStore.updateHighOrDeep;
-    bannerStore.createReport(updateHighOrDeep.active, companyName);
+    if (reportId) {
+      bannerStore.updateToAnalysisReport(reportId);
+    } else {
+      const companyName = routing.location.query.companyName;
+      const updateHighOrDeep = bannerStore.updateHighOrDeep;
+      bannerStore.createReport(updateHighOrDeep.active, companyName);
+    }
   };
   const openUpdateHighOrDeepModal = () => {
     modalStore.openCompModal({
@@ -60,9 +64,15 @@ function ReportAction({ bannerStore, modalStore, payModalStore, routing }) {
       confirmAction: updateHighOrDeepConfirmAction,
       closeAction: modalStore.closeAction,
       loader: (cb) => {
-        require.ensure([], (require) => {
-          cb(require('./UpdateHighOrDeep'));
-        });
+        if (reportId) {
+          require.ensure([], (require) => {
+            cb(require('./UpdateDeep'));
+          });
+        } else {
+          require.ensure([], (require) => {
+            cb(require('./UpdateHighOrDeep'));
+          });
+        }
       }
     });
   };

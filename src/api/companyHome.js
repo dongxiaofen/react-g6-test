@@ -131,6 +131,11 @@ export const createReport = (active, companyName) => {
   return axios.post(url, { companyName: companyName });
 };
 
+// 高级查询报告升级为深度分析报告
+export const updateToAnalysisReport = (reportId) => {
+  return axios.put(`/api/report/${reportId}/upgrade/analysisReport`, {reportId: reportId});
+};
+
 // 创建监控
 export const createMonitor = (params) => {
   return axios.post(`/api/monitor`, params);

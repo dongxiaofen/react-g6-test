@@ -180,7 +180,6 @@ class BannerStore {
     modalStore.confirmLoading = true;
     companyHomeApi.createReport(active, companyName)
       .then(action('create report', (resp) => {
-        console.log(resp.data);
         modalStore.confirmLoading = false;
         modalStore.closeAction();
         if (resp.data.reportId) {
@@ -195,6 +194,24 @@ class BannerStore {
       .catch((err) => {
         console.log(err);
         modalStore.confirmLoading = false;
+      });
+  }
+
+  // 高级查询报告升级为深度分析报告
+  @action.bound updateToAnalysisReport(reportId) {
+    modalStore.confirmLoading = true;
+    companyHomeApi.updateToAnalysisReport(reportId)
+      .then(action('update to analysis report', (resp) => {
+        modalStore.confirmLoading = false;
+        modalStore.closeAction();
+        messageStore.openMessage({ content: '深度分析报告创建成功' });
+        browserHistory.push(`/companyHome?analysisReportId=${resp.data.analysisReportId}&companyType=MAIN`);
+      }))
+      .catch((err) => {
+        console.log(err.response);
+        modalStore.confirmLoading = false;
+        modalStore.closeAction();
+        messageStore.openMessage({ content: err.response.data.message });
       });
   }
 
