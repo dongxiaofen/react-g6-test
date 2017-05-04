@@ -18,7 +18,9 @@ function TableList({alertAnalysisStore}) {
   };
   return (
     <div>
-      {createTable()}
+      <div>
+        {createTable()}
+      </div>
       <Pager module="alertAnalysis" type="small" />
     </div>
   );
