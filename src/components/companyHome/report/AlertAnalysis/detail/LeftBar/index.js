@@ -1,28 +1,57 @@
 import React, {PropTypes} from 'react';
-import { observer } from 'mobx-react';
-import { Tabs } from 'antd';
-const TabPane = Tabs.TabPane;
-
-function LeftBar({}) {
+import { observer, inject } from 'mobx-react';
+import styles from './index.less';
+function LeftBar({alertAnalysisStore}) {
+  const moduleData = alertAnalysisStore.detailData;
+  const data = moduleData.detail.detail;
+  const activeIndex = moduleData.activeIndex;
+  const tabTop = moduleData.tabTop;
+  const page = moduleData.page;
+  const changeTab = (index) => {
+    alertAnalysisStore.changeValue('detailData.activeIndex', index);
+  };
+  const createTabs = () => {
+    return data.map((item, index) => {
+      const itemCss = index === activeIndex ? styles.activeItem : styles.item;
+      return (
+        <div
+          key={index}
+          className={itemCss}
+          onClick={changeTab.bind(null, index)}
+          >
+          <div className={styles.time}>{item.eventTime}</div>
+        </div>
+      );
+    });
+  };
+  const prevClick = () => {
+    if (page <= 1) {
+      return false;
+    }
+    alertAnalysisStore.changeValue('detailData.page', page - 1);
+  };
+  const nextClick = () => {
+    if (page * 8 >= data.length) {
+      return false;
+    }
+    alertAnalysisStore.changeValue('detailData.page', page + 1);
+  };
+  const prevCss = page <= 1 ? styles.arrowUpDis : styles.arrowUp;
+  const nextCss = page * 8 >= data.length ? styles.arrowDownDis : styles.arrowDown;
   return (
-    <Tabs
-      defaultActiveKey="1"
-      tabPosition="left"
-      style={{ height: 220 }}>
-      <TabPane tab="Tab 1" key="1">Content of tab 1</TabPane>
-      <TabPane tab="Tab 2" key="2">Content of tab 2</TabPane>
-      <TabPane tab="Tab 3" key="3">Content of tab 3</TabPane>
-      <TabPane tab="Tab 4" key="4">Content of tab 4</TabPane>
-      <TabPane tab="Tab 5" key="5">Content of tab 5</TabPane>
-      <TabPane tab="Tab 6" key="6">Content of tab 6</TabPane>
-      <TabPane tab="Tab 7" key="7">Content of tab 7</TabPane>
-      <TabPane tab="Tab 8" key="8">Content of tab 8</TabPane>
-      <TabPane tab="Tab 9" key="9">Content of tab 9</TabPane>
-    </Tabs>
+    <div className={styles.tabBox}>
+      <i className={prevCss} onClick={prevClick}></i>
+      <div className={styles.overBox}>
+        <div className={styles.itemBox} style={{top: tabTop}}>
+          {createTabs()}
+        </div>
+      </div>
+      <i className={nextCss} onClick={nextClick}></i>
+    </div>
   );
 }
 
 LeftBar.propTypes = {
   foo: PropTypes.string,
 };
-export default observer(LeftBar);
+export default inject('alertAnalysisStore')(observer(LeftBar));
