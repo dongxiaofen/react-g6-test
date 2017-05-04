@@ -6,7 +6,7 @@ import styles from './index.less';
 function NewBusiness({accountSettingStore}) {
   const data = accountSettingStore.tabs.business.reportAndMonitor.data;
   const reportData = data.reportStatisic || [];
-  const analysisReportData = data.analysisReportStatistic || [];
+  const analysisReportData = data.analysisReportSatisic || [];
   const monitorData = data.monitorSatisic || [];
   const reportDate = reportData.map(item => item.date);
   const analysisReportDate = analysisReportData.map(item => item.date);
