@@ -196,7 +196,7 @@ app.use((req, res) => {
               ReactDOM.renderToString(<Html reqPathName={reqPathName} isDev={__DEVELOPMENT__} assets={webpackIsomorphicTools.assets()} component={component} {...allStores} />));
           })
           .catch((err) => {
-            console.log('userInfo err', err);
+            console.log('userInfo err', err.response.data);
           });
       }
     } else {

@@ -3,6 +3,7 @@ import { observer, inject } from 'mobx-react';
 import { toJS, reaction } from 'mobx';
 import styles from './index.less';
 import * as d3 from 'd3';
+import { getLayerCount, getRadiusArr, getInitNodeXY, getNewNodeXY } from 'helpers/svgTools';
 import bling1 from 'imgs/companyHome/network/1.gif';
 import bling2 from 'imgs/companyHome/network/2.gif';
 import bling3 from 'imgs/companyHome/network/3.gif';
@@ -13,6 +14,7 @@ import bling7 from 'imgs/companyHome/network/7.gif';
 import bling8 from 'imgs/companyHome/network/8.gif';
 import bling9 from 'imgs/companyHome/network/9.gif';
 import bling10 from 'imgs/companyHome/network/10.gif';
+const blingArr = [bling1, bling2, bling3, bling4, bling5, bling6, bling7, bling8, bling9, bling10];
 let nodesData;
 let edgesData;
 let svgEdges;
@@ -26,10 +28,10 @@ let isDragging = false;
 const layerCount = {}; // 存储各层的节点数
 const radiusArr = []; // 存储半径长度
 let nodeXY = {}; // 存储同心圆各节点坐标
+let saveNodeXY = false; // 标记坐标存储完成
 let centerNodeX;
 let centerNodeY;
 let nodeAdded = false;
-let saveNodeXY = false;
 
 @inject('networkStore')
 @observer
@@ -46,9 +48,9 @@ export default class CircleNetworkGraph extends Component {
     nodesData = graph.nodes;
     edgesData = graph.links;
     // 统计各层的节点数
-    this.getLayerCount(nodesData, layerCount);
+    getLayerCount(nodesData, layerCount);
     // 计算半径长度
-    this.getRadiusArr();
+    getRadiusArr(radiusArr, layerCount);
     // console.log('radiusArr', radiusArr, layerCount);
     zoom = d3.zoom();
     const svg = d3.select('svg')
@@ -181,124 +183,26 @@ export default class CircleNetworkGraph extends Component {
     });
     return description.join(',');
   }
-  // 获取最小半径公式
-  getRadius = (nodeCount, nodeRadius = 25) => {
-    return nodeRadius / Math.sin(Math.PI / nodeCount);
-  }
-  // 统计各层的节点数
-  getLayerCount = (nodesData2, layerCount2) => {
-    nodesData2.map((node) => {
-      if (layerCount2[node.layer] === undefined) {
-        layerCount2[node.layer] = 1;
-      } else {
-        layerCount2[node.layer]++;
-      }
-    });
-  }
-  // 计算半径长度
-  getRadiusArr = () => {
-    Object.keys(layerCount).map((key) => {
-      if (key > 0) {
-        const defaultRadius = key === '1' ? 150 : radiusArr[key - 2] + 100;
-        if (layerCount[key] === 1) { // 只有一个关联节点
-          radiusArr.push(defaultRadius);
-        } else {
-          radiusArr.push(Math.max(defaultRadius, this.getRadius(layerCount[key])));
-        }
-      }
-    });
-  }
-  // 获取所有节点坐标
-  getNodeXY = () => {
-    const idxObj = {};
-    Object.keys(layerCount).map((key) => {
-      if (key > 0) {
-        idxObj[key] = 0;
-      }
-    });
-    nodesData.forEach((node) => {
-      const nodeLayer = node.layer ? node.layer : 1;
-      if (nodeLayer === 0) {
-        node.x = centerNodeX;
-        node.y = centerNodeY;
-      } else {
-        const xy = {
-          x: radiusArr[nodeLayer - 1] * Math.cos(2 * idxObj[nodeLayer] * Math.PI / layerCount[nodeLayer]) + centerNodeX,
-          y: centerNodeY - radiusArr[nodeLayer - 1] * Math.sin(2 * idxObj[nodeLayer] * Math.PI / layerCount[nodeLayer])
-        };
-        node.x = xy.x;
-        node.y = xy.y;
-        nodeXY[node.index] = xy;
-        idxObj[nodeLayer]++;
-      }
-    });
-    saveNodeXY = true;
-  }
-  // 用户添加新节点后重新计算所有节点坐标
-  getNewNodeXY = () => {
-    // 重新计算层的节点数
-    const newLayerCount = {};
-    nodesData.map((node) => {
-      const nodeLayer = node.layer ? node.layer : 1;
-      if (newLayerCount[nodeLayer] === undefined) {
-        newLayerCount[nodeLayer] = 1;
-      } else {
-        newLayerCount[nodeLayer]++;
-      }
-    });
-    const idxObj = {};
-    Object.keys(newLayerCount).map((key) => {
-      if (key > 0) {
-        idxObj[key] = 0;
-      }
-    });
-    // 重新计算半径
-    const newRadiusArr = [];
-    Object.keys(newLayerCount).map((key) => {
-      if (key > 0) {
-        const defaultRadius = key === '1' ? 150 : newRadiusArr[key - 2] + 100;
-        if (newLayerCount[key] === 1) { // 只有一个关联节点
-          newRadiusArr.push(defaultRadius);
-        } else {
-          newRadiusArr.push(Math.max(defaultRadius, this.getRadius(newLayerCount[key])));
-        }
-      }
-    });
-    nodeXY = {};
-    nodesData.forEach((node) => {
-      const nodeLayer = node.layer ? node.layer : 1;
-      if (nodeLayer === 0) {
-        node.x = centerNodeX;
-        node.y = centerNodeY;
-      } else {
-        const xy = {
-          x: newRadiusArr[nodeLayer - 1] * Math.cos(2 * idxObj[nodeLayer] * Math.PI / newLayerCount[nodeLayer]) + centerNodeX,
-          y: centerNodeY - newRadiusArr[nodeLayer - 1] * Math.sin(2 * idxObj[nodeLayer] * Math.PI / newLayerCount[nodeLayer])
-        };
-        node.x = xy.x;
-        node.y = xy.y;
-        nodeXY[node.index] = xy;
-        idxObj[nodeLayer]++;
-      }
-    });
-    nodeAdded = false;
-  }
+
   // 高亮选中节点相关的边
   focusRelatedLinks = (focusNodeName) => {
     edgesData.map((link) => {
       if (link.target.name === focusNodeName || link.source.name === focusNodeName) {
         link.isFocus = true;
-      }else {
+      } else {
         link.isFocus = false;
       }
     });
   }
   ticked = () => {
     if (!saveNodeXY) { // 只跑一次,然后存到nodeXY
-      this.getNodeXY();
+      getInitNodeXY(nodeXY, layerCount, nodesData, radiusArr, centerNodeX, centerNodeY);
+      saveNodeXY = true;
     } else if (nodeAdded) { // 用户添加新节点
       console.log('添加节点后', nodesData);
-      this.getNewNodeXY();
+      nodeXY = {};
+      getNewNodeXY(nodesData, nodeXY, centerNodeX, centerNodeY);
+      nodeAdded = false;
     } else {
       nodesData.forEach((node) => {
         if (node.layer === 0) {
@@ -448,7 +352,6 @@ export default class CircleNetworkGraph extends Component {
     svgTexts.exit().remove();
     simulation.restart();
   }
-
   render() {
     return (
       <div className={styles.svgBox}>
@@ -474,36 +377,15 @@ export default class CircleNetworkGraph extends Component {
               orient="auto">
               <path d="M2,2 L10,6 L2,10 L6,6 L2,2" className={styles.arrow} />
             </marker>
-            <pattern id="bling1" patternUnits="objectBoundingBox" width="1" height="1">
-              <image xlinkHref={bling1} x="0" y="0" width="40" height="40" />
-            </pattern>
-            <pattern id="bling2" patternUnits="objectBoundingBox" width="1" height="1">
-              <image xlinkHref={bling2} x="0" y="0" width="40" height="40" />
-            </pattern>
-            <pattern id="bling3" patternUnits="objectBoundingBox" width="1" height="1">
-              <image xlinkHref={bling3} x="0" y="0" width="40" height="40" />
-            </pattern>
-            <pattern id="bling4" patternUnits="objectBoundingBox" width="1" height="1">
-              <image xlinkHref={bling4} x="0" y="0" width="40" height="40" />
-            </pattern>
-            <pattern id="bling5" patternUnits="objectBoundingBox" width="1" height="1">
-              <image xlinkHref={bling5} x="0" y="0" width="40" height="40" />
-            </pattern>
-            <pattern id="bling6" patternUnits="objectBoundingBox" width="1" height="1">
-              <image xlinkHref={bling6} x="0" y="0" width="40" height="40" />
-            </pattern>
-            <pattern id="bling7" patternUnits="objectBoundingBox" width="1" height="1">
-              <image xlinkHref={bling7} x="0" y="0" width="40" height="40" />
-            </pattern>
-            <pattern id="bling8" patternUnits="objectBoundingBox" width="1" height="1">
-              <image xlinkHref={bling8} x="0" y="0" width="40" height="40" />
-            </pattern>
-            <pattern id="bling9" patternUnits="objectBoundingBox" width="1" height="1">
-              <image xlinkHref={bling9} x="0" y="0" width="40" height="40" />
-            </pattern>
-            <pattern id="bling10" patternUnits="objectBoundingBox" width="1" height="1">
-              <image xlinkHref={bling10} x="0" y="0" width="40" height="40" />
-            </pattern>
+            {
+              new Array(10).fill(1).map((tmp, idx) => {
+                return (
+                  <pattern key={tmp + idx} id={`bling${idx + 1}`} patternUnits="objectBoundingBox" width="1" height="1">
+                    <image xlinkHref={blingArr[idx]} x="0" y="0" width="40" height="40" />
+                  </pattern>
+                );
+              })
+            }
           </defs>
         </svg>
       </div>
