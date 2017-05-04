@@ -12,6 +12,9 @@ function KeyValue({width,
                     arrayType,
                     inArray,
                     needHtmlParse}) {
+  const createMarkup = (data)=>{
+    return {__html: data};
+  };
   const getValue = (value)=>{
     let output;
     if (!value) {
@@ -42,12 +45,9 @@ function KeyValue({width,
       );
     }
     return output;
-  }
-  const createMarkup = (data)=>{
-    return {__html: data};
-  }
+  };
   return (
-    <div className={'col-md-' +width + ' ' + 'col-md-offset-' + offset + ' ' + styles[styleClass]}>
+    <div className={'col-md-' + width + ' ' + 'col-md-offset-' + offset + ' ' + styles[styleClass]}>
       <span className={styles[keyClass]}>{theKey}：</span>
       <span className={styles[valueClass]}>
             {getValue(theValue)}

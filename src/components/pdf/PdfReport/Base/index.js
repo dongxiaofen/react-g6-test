@@ -1,5 +1,5 @@
 import React, {PropTypes} from 'react';
-import { observer } from 'mobx-react';
+import { observer, inject } from 'mobx-react';
 import PdfTitle from 'components/common/pdf/PdfTitle';
 import RegisterInfo from '../Base/Info/RegisterInfo';
 import ShareHolder from '../Base/Info/ShareHolder';
@@ -11,9 +11,10 @@ import Office from '../Base/Foreign/Office';
 import AlterAnalysis from '../Base/Alter/AlterAnalysis';
 import AlterList from '../Base/Alter/AlterList';
 import YearReportList from '../Base/YearReport/YearReportList';
+import pathval from 'pathval';
 
 
-function Base({ judgeIsModuleExist }) {
+function Base({ judgeIsModuleExist, pdfStore }) {
   return (
     <div>
       {
@@ -21,10 +22,10 @@ function Base({ judgeIsModuleExist }) {
           ?
           <div>
             <PdfTitle module="基本信息" subModule="工商基本信息" />
-            <RegisterInfo {...this.props} />
-            <ShareHolder {...this.props} />
-            <PersonListData {...this.props} />
-            <FiliationList {...this.props} />
+            <RegisterInfo moduleData={pathval.getPathValue(pdfStore, 'report.corpDetail.basicList')} />
+            <ShareHolder moduleData = {pathval.getPathValue(pdfStore, 'report.corpDetail.shareHolderList')} />
+            <PersonListData moduleData={pathval.getPathValue(pdfStore, 'report.corpDetail.personList')} />
+            <FiliationList moduleData = {pathval.getPathValue(pdfStore, 'report.corpDetail.filiationList')} />
           </div>
           :
           ''
@@ -34,9 +35,9 @@ function Base({ judgeIsModuleExist }) {
           ?
           <div>
             <PdfTitle module="基本信息" subModule="对外投资任职" />
-            <Enterprise {...this.props} />
-            <Investment {...this.props} />
-            <Office {...this.props} />
+            <Enterprise moduleData = {pathval.getPathValue(pdfStore, 'report.corpDetail.entinvItemList')} />
+            <Investment moduleData = {pathval.getPathValue(pdfStore, 'report.corpDetail.frinvList')} />
+            <Office moduleData = {pathval.getPathValue(pdfStore, 'report.corpDetail.frPositionList')} />
           </div>
           :
           ''
@@ -46,8 +47,8 @@ function Base({ judgeIsModuleExist }) {
           ?
           <div>
             <PdfTitle module="基本信息" subModule="工商变更" />
-            <AlterAnalysis {...this.props} />
-            <AlterList {...this.props} />
+            <AlterAnalysis moduleData = {pathval.getPathValue(pdfStore, 'report.tendency.result[0].data')} />
+            <AlterList moduleData = {pathval.getPathValue(pdfStore, 'report.tendency.result[0].alterList')} />
           </div>
           :
           ''
@@ -57,7 +58,7 @@ function Base({ judgeIsModuleExist }) {
           ?
           <div>
             <PdfTitle module="基本信息" subModule="企业年报" />
-            <YearReportList {...this.props} />
+            <YearReportList moduleData = {pathval.getPathValue(pdfStore, 'report.corpDetail.yearReportList')} />
           </div>
           :
           ''
@@ -69,4 +70,4 @@ function Base({ judgeIsModuleExist }) {
 Base.propTypes = {
   judgeIsModuleExist: PropTypes.func,
 };
-export default observer(Base);
+export default inject('pdfStore')(observer(Base));

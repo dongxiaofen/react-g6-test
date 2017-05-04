@@ -4,36 +4,35 @@ import PdfSimpleKey from 'components/common/pdf/PdfSimpleKey';
 import PdfNotFound from 'components/common/pdf/PdfNotFound';
 import SecondTitle from 'components/common/pdf/SecondTitle';
 
-function AlterList({moduleData}) {
-  if (moduleData === null || moduleData.length === 0) {
+function WebSite({moduleData}) {
+  if (moduleData === undefined || moduleData.length === 0) {
     return (
       <div>
-        <SecondTitle module="变更信息"/>
+        <SecondTitle module="网站或网店信息"/>
         <PdfNotFound />
       </div>
     );
   }
   const data = {
     dataConfig: [
-      {'key': 'altItem', 'width': '6'},
-      {'key': 'altDate', 'width': '6'},
-      {'key': 'altBe', 'width': '12'},
-      {'key': 'altAf', 'width': '12'},
+      {'key': 'type', 'width': '4'},
+      {'key': 'name', 'width': '4'},
+      {'key': 'link', 'width': '4'},
     ],
-    item: moduleData.toJS(),
-    dict: 'alterList',
+    item: moduleData,
+    dict: 'yearWebsite',
     hasConfig: true,
-    type: 'array',
+    type: 'website',
   };
   return (
     <div>
-      <SecondTitle module="变更信息" />
+      <SecondTitle module="网站或网店信息" />
       <PdfSimpleKey {...data} />
     </div>
   );
 }
 
-AlterList.propTypes = {
+WebSite.propTypes = {
   moduleData: PropTypes.object,
 };
-export default observer(AlterList);
+export default observer(WebSite);

@@ -1,26 +1,28 @@
 import React, {PropTypes} from 'react';
 import { observer } from 'mobx-react';
 import styles from './index.less';
+import config from 'dict/reportModule';
 
 
-function PdfTable({ config, items, dict, decimal }) {
+function PdfTable({ dataConfig, items, dict, decimal }) {
+  console.info(items);
   const createTable = () => {
     const thead = [];
     const tbody = [];
     const thCon = [];
-    config.forEach(hItem => {
-      thCon.push(<th>{config[dict][hItem.key]}</th>);
+    dataConfig.forEach((hItem) => {
+      thCon.push(<th key={`${hItem.key}hiemvalue`}>{config[dict][hItem.key]}</th>);
     });
-    thead.push(<tr>{thCon}</tr>);
-    items.forEach(tbItem => {
+    thead.push(<tr key={`{hIndex}hiemvalue200`}>{thCon}</tr>);
+    items.forEach((tbItem, index) => {
       const trCon = [];
-      config.forEach(hItem => {
+      dataConfig.forEach(hItem => {
         let value = tbItem[hItem.key];
         if (value === undefined || value === '' || value === null) {
           value = '无';
         }
         // 是否需要保留小数
-        if (decimal === 'true') {
+        if (decimal) {
           let valueNew = '';
           // 判断是否为数字
           if (!isNaN(value)) {
@@ -29,12 +31,12 @@ function PdfTable({ config, items, dict, decimal }) {
           } else {
             valueNew = value;
           }
-          trCon.push(<td style={{width: hItem.width * 10 + '%'}}>{hItem.handle ? hItem.handle(valueNew) : valueNew}</td>);
+          trCon.push(<td key={`${hItem.key}hiemvaluetd1`} style={{width: hItem.width * 10 + '%'}}>{hItem.handle ? hItem.handle(valueNew) : valueNew}</td>);
         } else {
-          trCon.push(<td style={{width: hItem.width * 10 + '%'}}>{hItem.handle ? hItem.handle(value) : value}</td>);
+          trCon.push(<td key={`${hItem.key}hiemvaluetd2`} style={{width: hItem.width * 10 + '%'}}>{hItem.handle ? hItem.handle(value) : value}</td>);
         }
       });
-      tbody.push(<tr>{trCon}</tr>);
+      tbody.push(<tr key={`${index}hiemvaluetr`}>{trCon}</tr>);
     });
     return (
       <table className={styles.table}>
@@ -51,6 +53,8 @@ function PdfTable({ config, items, dict, decimal }) {
 }
 
 PdfTable.propTypes = {
+  dataConfig: PropTypes.array,
+  items: PropTypes.object,
   dict: PropTypes.string,
 };
 export default observer(PdfTable);

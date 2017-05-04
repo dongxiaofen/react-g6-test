@@ -1,16 +1,38 @@
 import React, {PropTypes} from 'react';
 import { observer } from 'mobx-react';
-// import styles from './index.less';
+import PdfTable from 'components/common/pdf/PdfTable';
+import PdfNotFound from 'components/common/pdf/PdfNotFound';
+import SecondTitle from 'components/common/pdf/SecondTitle';
 
-function ShareHolder({}) {
+function ShareHolder({ moduleData }) {
+  if (moduleData === null || moduleData.length === 0) {
+    return (
+      <div>
+        <SecondTitle module="注册信息"/>
+        <PdfNotFound />
+      </div>
+    );
+  }
+  const data = {
+    dataConfig: [
+      {'key': 'shareholderName', 'width': '4'},
+      {'key': 'subConam', 'width': '2'},
+      {'key': 'regCapCur', 'width': '1.2'},
+      {'key': 'fundedRatio', 'width': '1.4'},
+      {'key': 'conDate', 'width': '1.4'},
+    ],
+    items: moduleData,
+    dict: 'shareholder',
+  };
   return (
     <div>
-
+      <SecondTitle module="注册信息" />
+      <PdfTable {...data} />
     </div>
   );
 }
 
 ShareHolder.propTypes = {
-  foo: PropTypes.string,
+  moduleData: PropTypes.object,
 };
 export default observer(ShareHolder);

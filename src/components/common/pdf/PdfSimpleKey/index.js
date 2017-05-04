@@ -2,13 +2,13 @@ import React, {PropTypes} from 'react';
 import { observer } from 'mobx-react';
 import KeyValue from 'components/common/pdf/KeyValue';
 import styles from './index.less';
+import config from 'dict/reportModule';
 
-function PdfSimpleKey({dataConfig, item, dict, hasConfig}) {
+function PdfSimpleKey({dataConfig, item, type, dict, hasConfig}) {
   const createSimpleKey = () => {
     const output = [];
-    if (this.props.type === 'array') {
-      const currData = this.getCurrData();
-      currData.map((dataItem)=>{
+    if (type === 'array') {
+      item.map((dataItem, index)=>{
         const row = [];
         dataConfig.map((configItem)=>{
           const parentProps = {};
@@ -21,21 +21,29 @@ function PdfSimpleKey({dataConfig, item, dict, hasConfig}) {
             row.push(
               <KeyValue
                 {...parentProps}
+                key = {`${configItem.key}arrValue`}
                 theKey={hasConfig ? config[dict][configItem.key] : configItem.key}
                 theValue={configItem.handle ? configItem.handle(dataItem[configItem.key], dataItem) : dataItem[configItem.key]}
+                keyClass="key"
+                styleClass="styleClass"
+                valueClass="value"
                 width={configItem.width} />
             );
           }
         });
-        output.push(<div className={styles.single}>{row}</div>);
+        output.push(<div key={`${index}itemData`} className={styles.single}>{row}</div>);
       });
-    } else if (this.props.type === 'website') {
+    } else if (type === 'website') {
       item.forEach((websiteItem) => {
         dataConfig.map((configItem) => {
           output.push(
             <KeyValue
+              key = {`${configItem.key}websiteValue`}
               theKey={config[dict][configItem.key]}
               theValue={websiteItem[configItem.key]}
+              keyClass="key"
+              styleClass="styleClass"
+              valueClass="value"
               width={configItem.width} />
           );
         });
@@ -44,24 +52,30 @@ function PdfSimpleKey({dataConfig, item, dict, hasConfig}) {
       dataConfig.map((configItem)=>{
         output.push(
           <KeyValue
+            key = {`${configItem.key}objectValue`}
             theKey= {hasConfig ? config[dict][configItem.key] : configItem.key}
             theValue={configItem.handle ? configItem.handle(item[configItem.key]) : item[configItem.key]}
+            keyClass="key"
+            styleClass="styleClass"
+            valueClass="value"
             width={configItem.width} />
+
         );
       });
     }
     return output;
-  }
+  };
   return (
     <div className={styles.wrap}>
       {createSimpleKey()}
     </div>
   );
 }
-
 PdfSimpleKey.propTypes = {
-  config: PropTypes.object,
-  item: PropTypes.object,
+  dataConfig: PropTypes.array,
+  item: PropTypes.any,
   dict: PropTypes.string,
+  type: PropTypes.string,
+  hasConfig: PropTypes.bool,
 };
 export default observer(PdfSimpleKey);

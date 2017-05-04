@@ -4,32 +4,35 @@ import PdfTable from 'components/common/pdf/PdfTable';
 import PdfNotFound from 'components/common/pdf/PdfNotFound';
 import SecondTitle from 'components/common/pdf/SecondTitle';
 
-function PersonListData({ moduleData }) {
-  if (moduleData === null || moduleData.length === 0) {
+
+function ChangeRecord({moduleData}) {
+  if (moduleData === undefined || moduleData.length === 0) {
     return (
       <div>
-        <SecondTitle module="主要人员"/>
+        <SecondTitle module="修改记录"/>
         <PdfNotFound />
       </div>
     );
   }
   const data = {
     dataConfig: [
-      {'key': 'name', 'width': '4'},
-      {'key': 'position', 'width': '6'},
+      {'key': 'changedItem', 'width': '2'},
+      {'key': 'beforeChange', 'width': '3'},
+      {'key': 'afterChange', 'width': '3'},
+      {'key': 'time', 'width': '2'},
     ],
     items: moduleData,
-    dict: 'personList',
+    dict: 'yearChangeRecords',
   };
   return (
     <div>
-      <SecondTitle module="主要人员" />
+      <SecondTitle module="修改记录" />
       <PdfTable {...data} />
     </div>
   );
 }
 
-PersonListData.propTypes = {
+ChangeRecord.propTypes = {
   moduleData: PropTypes.object,
 };
-export default observer(PersonListData);
+export default observer(ChangeRecord);

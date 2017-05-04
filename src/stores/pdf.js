@@ -12,14 +12,22 @@ class PdfStore {
   @observable summary = {};
 
   @action.bound getOverviewData(id) {
+    // 获取摘要信息
     axios.get(`/api/pdf?monitorId=${id}&types=SUMMARY`)
       .then(action( (response) => {
         this.banner = response.data.banner;
         this.summary = response.data.summary;
-        console.log(response.data);
       }))
       .catch((error) => {
         console.log(error);
+      });
+    // 获取基本信息
+    axios.get(`api/monitor/${id}/corpDetail?timestamp`)
+      .then(action( (response) => {
+        this.report = response.data;
+      }))
+      .catch((err) => {
+        console.log(err);
       });
   }
 }
