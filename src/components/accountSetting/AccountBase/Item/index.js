@@ -18,7 +18,7 @@ function Item({name, keys, values, handle, none, unit}) {
         {name}
       </div>
       <div className={styles.values}>
-        {handle ? handle(newValue, keys) : newValue}{unit || ''}
+        {handle ? handle(newValue, keys) : newValue}{newValue !== '- -' && unit || ''}
       </div>
     </div>
   );

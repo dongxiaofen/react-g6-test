@@ -11,6 +11,7 @@ class BannerStore {
   @observable companyName = '';
   @observable companyType = '';
 
+  @observable isLoading = false;
   @observable hisNameVis = false;
   @observable contactVis = false;
   @observable historyName = [];
@@ -23,6 +24,8 @@ class BannerStore {
   @observable refreshStatus = 'complete';
   @observable searchedCount = '';
   @observable lastModifiedTs = '';
+  @observable collection = false;
+  @observable mainStatus = '';
 
   // 上市代码
   @observable stockCode = '';
@@ -89,6 +92,9 @@ class BannerStore {
 
   @observable isAllChecked = false;
 
+  // 添加/取消收藏loading
+  @observable collectionLoading = false;
+
 
   closeHisNamePopoverAlias = this.closeHisNamePopover;
   openHisNamePopoverAlias = this.openHisNamePopover;
@@ -116,22 +122,27 @@ class BannerStore {
     this.reportId = reportId;
     this.companyName = companyName;
     this.companyType = companyType;
+    this.isLoading = true;
     companyHomeApi.getBannerInfo(monitorId, reportId, companyName, companyType)
       .then(action('get banner info...', (resp) => {
-        console.log('banner结果', resp.data);
         this.companyName = resp.data.name;
         this.historyName = resp.data.bannerInfo.bannerInfo.historyName;
         this.riskInfo = resp.data.bannerInfo.bannerInfo.riskInfo;
         this.industryNames = resp.data.industryNames;
         this.bannerData = resp.data.bannerInfo.bannerInfo;
+        this.mainStatus = resp.data.mainStatus;
         this.monitorStatus = resp.data.monitorStatus;
         this.lastModifiedTs = resp.data.lastModifiedTs ? resp.data.lastModifiedTs : '无';
         this.refreshStatus = 'complete';
         this.searchedCount = resp.data.searchedCount;
         this.lastModifiedTs = resp.data.lastModifiedTs;
+        this.collection = resp.data.collection;
+
+        this.isLoading = false;
       }))
       .catch((err) => {
         console.log('banner出错', err);
+        this.isLoading = false;
       });
   }
   @action.bound toggleMonitorStatus(monitorId, status) {
@@ -274,6 +285,21 @@ class BannerStore {
     });
     this.isAllChecked = false;
     modalStore.visible = false;
+    modalStore.isCustomize = false;
+  }
+
+  // 添加/取消收藏
+  @action.bound addOrCancelCollection({ reportId, analysisReportId, monitorId, params }) {
+    this.collectionLoading = true;
+    companyHomeApi.addOrCancelCollection({ reportId, analysisReportId, monitorId, params })
+      .then(action('add or cancel collection', () => {
+        this.collection = !this.collection;
+        this.collectionLoading = false;
+      }))
+      .catch((err) => {
+        console.log(err.response);
+        this.collectionLoading = false;
+      });
   }
 }
 export default new BannerStore();

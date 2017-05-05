@@ -46,6 +46,7 @@ function hoc({mapDataToProps}) {
             break;
         }
       } else if (error) {
+        console.log('error', error);
         output = <ErrorText module={module} error={error} errCategory={errCategory} height={height} />;
       } else {
         output = <WrappedComponent {...props} />;
