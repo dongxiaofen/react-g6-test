@@ -5,7 +5,7 @@ import SecondTitle from 'components/common/pdf/SecondTitle';
 import PdfTable from 'components/common/pdf/PdfTable';
 
 function FiliationList({ moduleData }) {
-  if (moduleData === null || moduleData.length === 0) {
+  if (!moduleData || moduleData.length === 0) {
     return (
       <div>
         <SecondTitle module="分支机构"/>

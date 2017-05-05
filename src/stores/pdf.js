@@ -9,6 +9,7 @@ class PdfStore {
   @observable network = {};
   @observable company = {};
   @observable announcement = {};
+  @observable risk = {};
 
   // summary
   @observable summary = {};
@@ -45,6 +46,15 @@ class PdfStore {
       .then( action( (response) => {
         console.log(response);
         this.announcement = response.data;
+      }))
+      .catch((err) => {
+        console.log(err);
+      });
+    // 风险关系
+    axios.get(`/api/monitor/${id}/risk`)
+      .then( action( (response) => {
+        console.log(response);
+        this.risk = response.data;
       }))
       .catch((err) => {
         console.log(err);

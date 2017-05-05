@@ -54,7 +54,7 @@ function PdfTable({ dataConfig, items, dict, decimal }) {
 
 PdfTable.propTypes = {
   dataConfig: PropTypes.array,
-  items: PropTypes.object,
+  items: PropTypes.any,
   dict: PropTypes.string,
 };
 export default observer(PdfTable);

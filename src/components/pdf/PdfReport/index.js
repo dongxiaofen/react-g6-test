@@ -5,6 +5,7 @@ import Header from './Header';
 import Overview from './OverView';
 import Base from './Base';
 import Stock from './Stock';
+import Risk from './Risk';
 
 function PdfReport({}) {
   const judgeIsModuleExist = (module) => {
@@ -23,6 +24,7 @@ function PdfReport({}) {
           <Overview />
           <Base judgeIsModuleExist={judgeIsModuleExist} />
           <Stock judgeIsModuleExist={judgeIsModuleExist} />
+          <Risk judgeIsModuleExist={judgeIsModuleExist} />
         </Col>
       </Row>
     </Container>
