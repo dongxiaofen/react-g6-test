@@ -16,6 +16,7 @@ function LeftBar({alertAnalysisStore, routing}) {
   console.log(reportId, companyType);
   const changeTab = (index) => {
     alertAnalysisStore.changeValue('detailData.activeIndex', index);
+    alertAnalysisStore.resetHtml();
     const pattern = data[activeIndex].pattern;
     if (pattern === 'NEWS') {
       alertAnalysisStore.getNewsDetail(companyType, companyId);

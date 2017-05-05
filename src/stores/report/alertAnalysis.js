@@ -137,5 +137,20 @@ class AlertAnalysisStore {
       }, `预警详情（${companyName}）`);
     }
   }
+  @action.bound resetHtml() {
+    this.detailData.html = '';
+  }
+  @action.bound resetDetailData() {
+    this.detailData = {
+      activeIndex: 0,
+      page: 1,
+      tabTop: computed(function() {
+        return 0 - (this.page - 1) * 8 * 60;
+      }),
+      info: {},
+      detail: {},
+      html: '',
+    };
+  }
 }
 export default new AlertAnalysisStore();
