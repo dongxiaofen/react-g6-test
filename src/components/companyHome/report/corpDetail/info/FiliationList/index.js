@@ -2,6 +2,9 @@ import React, { PropTypes } from 'react';
 import { observer } from 'mobx-react';
 import { ModuleTitle, CommonTable } from 'components/common/report';
 function FiliationList({ filiationList, isLoading }) {
+  if (!filiationList) {
+    return null;
+  }
   const data = {
     meta: {
       body: [
@@ -14,17 +17,18 @@ function FiliationList({ filiationList, isLoading }) {
     },
     isLoading: isLoading,
     module: '分支机构',
-    error: filiationList.length === 0
+    error: filiationList && filiationList.length === 0
   };
   return (
     <div>
-      <ModuleTitle module="分支机构" count={filiationList.length} />
+      <ModuleTitle module="分支机构" count={filiationList ? filiationList.length : 0} />
       <CommonTable {...data} />
     </div>
   );
 }
 
 FiliationList.propTypes = {
-  foo: PropTypes.string,
+  filiationList: PropTypes.oneOfType([PropTypes.array, PropTypes.object]),
+  isLoading: PropTypes.bool,
 };
 export default observer(FiliationList);
