@@ -7,6 +7,7 @@ class PdfStore {
   @observable banner = {};
   @observable report = {};
   @observable network = {};
+  @observable company = {};
 
   // summary
   @observable summary = {};
@@ -22,9 +23,18 @@ class PdfStore {
         console.log(error);
       });
     // 获取基本信息
-    axios.get(`api/monitor/${id}/corpDetail?timestamp`)
+    axios.get(`api/monitor/${id}/corpDetail`)
       .then(action( (response) => {
         this.report = response.data;
+      }))
+      .catch((err) => {
+        console.log(err);
+      });
+    // 获取上市披露
+    axios.get(`/api/monitor/${id}/stock/company`)
+      .then( action( (response) => {
+        console.log(response);
+        this.company = response.data;
       }))
       .catch((err) => {
         console.log(err);

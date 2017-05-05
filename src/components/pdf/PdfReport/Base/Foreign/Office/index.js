@@ -14,7 +14,7 @@ function Office({moduleData}) {
     );
   }
   const data = {
-    config: [
+    dataConfig: [
       {'key': 'entName', 'width': '6'},
       {'key': 'entStatus', 'width': '6'},
       {'key': 'entType', 'width': '6'},

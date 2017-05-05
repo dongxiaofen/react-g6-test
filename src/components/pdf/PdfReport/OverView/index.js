@@ -145,10 +145,14 @@ function OverView({ pdfStore, clientStore, routing }) {
       <Summary {...yearReport} />
       {
         isStock ?
-          [<SecondTitle module="上市披露" />,
-            <hr className={styles.hrhr} />,
-            <Summary {...companySummary}/>,
-            <Summary {...companyAnnouncement} />]
+          [
+            <div key="thisIsSecondTitleObject">
+              <SecondTitle module="上市披露" />,
+              <hr className={styles.hrhr} />,
+              <Summary {...companySummary}/>,
+              <Summary {...companyAnnouncement} />
+            </div>
+          ]
           : ''
       }
       <SecondTitle module="风险信息" />
@@ -183,6 +187,8 @@ function OverView({ pdfStore, clientStore, routing }) {
 }
 
 OverView.propTypes = {
-  foo: PropTypes.string,
+  pdfStore: PropTypes.object,
+  clientStore: PropTypes.object,
+  routing: PropTypes.object,
 };
-export default inject('clientStore', 'routing')(observer(OverView));
+export default inject('clientStore', 'pdfStore', 'routing')(observer(OverView));

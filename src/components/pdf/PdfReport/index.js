@@ -1,11 +1,12 @@
 import React, {PropTypes} from 'react';
-import { observer, inject } from 'mobx-react';
+import { observer } from 'mobx-react';
 import {Container, Row, Col} from 'components/common/layout';
 import Header from './Header';
 import Overview from './OverView';
 import Base from './Base';
+import Stock from './Stock';
 
-function PdfReport({pdfStore}) {
+function PdfReport({}) {
   const judgeIsModuleExist = (module) => {
     const pdfModule = this.props.pdfModule;
     if (module === 'STOCK') {
@@ -19,8 +20,9 @@ function PdfReport({pdfStore}) {
       <Row>
         <Col width="12">
           <Header />
-          <Overview pdfStore={pdfStore} />
-          <Base pdfStore={pdfStore} judgeIsModuleExist={judgeIsModuleExist} />
+          <Overview />
+          <Base judgeIsModuleExist={judgeIsModuleExist} />
+          <Stock judgeIsModuleExist={judgeIsModuleExist} />
         </Col>
       </Row>
     </Container>
@@ -30,4 +32,4 @@ function PdfReport({pdfStore}) {
 PdfReport.propTypes = {
   foo: PropTypes.string,
 };
-export default inject('pdfStore')(observer(PdfReport));
+export default observer(PdfReport);

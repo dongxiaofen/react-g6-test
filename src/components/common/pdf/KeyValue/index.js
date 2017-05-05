@@ -62,7 +62,7 @@ KeyValue.propTypes = {
   keyClass: PropTypes.string,
   valueClass: PropTypes.string,
   theKey: PropTypes.string,
-  theValue: PropTypes.string,
+  theValue: PropTypes.any,
   styleClass: PropTypes.string,
   needHtmlParse: PropTypes.string,
   arrayType: PropTypes.string,
