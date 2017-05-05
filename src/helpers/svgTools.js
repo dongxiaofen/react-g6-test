@@ -99,3 +99,49 @@ export function getNewNodeXY(nodesData, nodeXY, centerNodeX, centerNodeY) {
     }
   });
 }
+// 判断节点是否隐藏
+export function isNodeShow(checkeArr, cateList) {// 返回0代表没有被勾选上
+  let index = -1;
+  for (const cate of cateList) {
+    if (checkeArr[cate - 1]) {
+      index = cate - 1;
+      break;
+    }
+  }
+  return index === -1 ? true : false;
+}
+
+// 根据node的显示状态更新link的显示状态
+export function updateLinksDisplay(nodes, links) {
+  links.map((link) => {
+    if (!nodes[nodes.findIndex((item) => item.name === link.source.name)].hide && !nodes[nodes.findIndex((item) => item.name === link.target.name)].hide) {
+      link.hide = false;
+    } else {
+      link.hide = true;
+    }
+  });
+}
+// 高亮选中节点相关的边
+export function focusRelatedLinks(focusNodeName, edgesData) {
+  edgesData.map((link) => {
+    if (link.target.name === focusNodeName || link.source.name === focusNodeName) {
+      link.isFocus = true;
+    } else {
+      link.isFocus = false;
+    }
+  });
+}
+// 获取边的关系
+export function getLinkInfo(data) {
+  const description = [];
+  const relation = data.name;
+  Object.keys(relation).map((key) => {
+    if (key === '股东' && data.invRatio !== -1) {
+      const invCurrency = (data.invCurrency === '人民币' || data.invCurrency === '') ? '万人民币' : data.invCurrency;
+      description.push(`${relation[key][0]}(投资金额: ${data.invConum + invCurrency},投资比例: ${data.invRatio.toFixed(2)}%)`);
+    } else {
+      description.push(`${key}(${relation[key][0]})`);
+    }
+  });
+  return description.join(',');
+}

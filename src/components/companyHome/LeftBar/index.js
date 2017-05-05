@@ -25,7 +25,7 @@ const barConf = [
     menuKey: 'network',
     children: [
       { menuText: '关联关系', menuKey: 'network', helpInfo: helpInfo1, contain: ['main', 'report'] },
-      { menuText: '风险关系', menuKey: 'blacklistNetwork', helpInfo: helpInfo1, contain: ['main', 'report'] },
+      { menuText: '风险关系', menuKey: 'blackNetwork', helpInfo: helpInfo1, contain: ['main', 'report'] },
     ],
     helpInfo: helpInfo1,
     contain: ['main', 'report'],
