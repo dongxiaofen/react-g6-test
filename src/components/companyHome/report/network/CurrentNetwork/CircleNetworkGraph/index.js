@@ -155,7 +155,6 @@ export default class CircleNetworkGraph extends Component {
       () => this.props.networkStore.focusNodeName,
       () => {
         const { focusNodeName } = this.props.networkStore;
-        console.log(focusNodeName);
         nodesData.map((node) => {
           node.isFocus = false;
         });
