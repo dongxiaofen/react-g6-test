@@ -1,4 +1,4 @@
-import { observable, action } from 'mobx';
+import { observable, action, runInAction } from 'mobx';
 import { browserHistory } from 'react-router';
 import {companyHomeApi} from 'api';
 import modalStore from './modal';
@@ -195,7 +195,11 @@ class BannerStore {
       }))
       .catch((err) => {
         console.log(err);
-        modalStore.confirmLoading = false;
+        runInAction(() => {
+          modalStore.confirmLoading = false;
+          messageStore.openMessage({ content: err.response.data.message });
+          modalStore.closeAction();
+        });
       });
   }
 
@@ -211,9 +215,31 @@ class BannerStore {
       }))
       .catch((err) => {
         console.log(err.response);
+        runInAction(() => {
+          modalStore.confirmLoading = false;
+          modalStore.closeAction();
+          messageStore.openMessage({ content: err.response.data.message });
+        });
+      });
+  }
+
+  // 刷新高级或者深度报告
+  @action.bound refreshHighOrDeep(reportId, analysisReportId) {
+    modalStore.confirmLoading = true;
+    companyHomeApi.refreshHighOrDeep(reportId, analysisReportId)
+      .then(action('refresh high or deep', (resp) => {
+        console.log(resp.data);
         modalStore.confirmLoading = false;
         modalStore.closeAction();
-        messageStore.openMessage({ content: err.response.data.message });
+        messageStore.openMessage({ content: '刷新成功' });
+      }))
+      .catch((err) => {
+        console.log(err.response);
+        runInAction(() => {
+          modalStore.confirmLoading = false;
+          modalStore.closeAction();
+          messageStore.openMessage({ content: err.response.data.message });
+        });
       });
   }
 
@@ -242,8 +268,26 @@ class BannerStore {
       }))
       .catch((err) => {
         console.log(err.response);
+        runInAction(() => {
+          payModalStore.closeAction();
+          messageStore.openMessage({ content: err.response.data.message });
+        });
+      });
+  }
+
+  // 监控续期
+  @action.bound renewalMonitor(monitorId, time) {
+    companyHomeApi.renewalMonitor(monitorId, time)
+      .then(action('renewal monitor', () => {
         payModalStore.closeAction();
-        messageStore.openMessage({ content: err.response.data.message });
+        messageStore.openMessage({ content: '续期成功' });
+      }))
+      .catch((err) => {
+        console.log(err.response);
+        runInAction(() => {
+          payModalStore.closeAction();
+          messageStore.openMessage({ content: err.response.data.message });
+        });
       });
   }
 
@@ -334,7 +378,10 @@ class BannerStore {
       }))
       .catch((err) => {
         console.log(err.response);
-        this.collectionLoading = false;
+        runInAction(() => {
+          this.collectionLoading = false;
+          messageStore.openMessage({ content: err.response.data.message });
+        });
       });
   }
 }

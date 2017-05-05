@@ -36,15 +36,7 @@ export const getStockCode = ({ reportId, monitorId, analysisReportId }) => {
 export const toggleMonitorStatus = (monitorId, status) => {
   return axios.put(`/api/monitor/${monitorId}/status`, { status: status });
 };
-export const getReportModule = (
-  module,
-  monitorId,
-  reportId,
-  analysisReportId,
-  companyName,
-  companyType,
-  pagesInfo
-) => {
+export const getReportModule = (module, monitorId, reportId, analysisReportId, companyName, companyType, pagesInfo) => {
   let url;
   if (companyType === 'MAIN') {
     if (monitorId) {
@@ -165,6 +157,14 @@ export const updateToAnalysisReport = (reportId) => {
   return axios.put(`/api/report/${reportId}/upgrade/analysisReport`, {reportId: reportId});
 };
 
+// 刷新高级报告或者深度报告
+export const refreshHighOrDeep = (reportId, analysisReportId) => {
+  const url = analysisReportId
+    ? `/api/analysisReport/${analysisReportId}`
+    : `/api/report/${reportId}`;
+  return axios.put(url);
+};
+
 // 创建监控
 export const createMonitor = (params) => {
   return axios.post(`/api/monitor`, params);
@@ -183,6 +183,11 @@ export const updateToMonitor = ({ reportId, analysisReportId, time }) => {
     params.analysisReportId = analysisReportId;
   }
   return axios.put(url, params);
+};
+
+// 监控续期
+export const renewalMonitor = (monitorId, time) => {
+  return axios.put(`/api/monitor/${monitorId}/renewal`, { time: time });
 };
 
 // 添加/删除收藏
