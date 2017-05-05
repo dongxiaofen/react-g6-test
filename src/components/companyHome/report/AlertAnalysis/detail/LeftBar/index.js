@@ -1,14 +1,26 @@
 import React, {PropTypes} from 'react';
 import { observer, inject } from 'mobx-react';
 import styles from './index.less';
-function LeftBar({alertAnalysisStore}) {
+function LeftBar({alertAnalysisStore, routing}) {
   const moduleData = alertAnalysisStore.detailData;
-  const data = moduleData.detail.detail;
+  const data = moduleData.detail;
   const activeIndex = moduleData.activeIndex;
   const tabTop = moduleData.tabTop;
   const page = moduleData.page;
+  const {monitorId, reportId} = routing.location.query;
+  let companyType = 'monitor';
+  const companyId = monitorId || reportId;
+  if (reportId) {
+    companyType = 'analysisReport';
+  }
   const changeTab = (index) => {
     alertAnalysisStore.changeValue('detailData.activeIndex', index);
+    const pattern = data[activeIndex].pattern;
+    if (pattern === 'NEWS') {
+      alertAnalysisStore.getNewsDetail(companyType, companyId);
+    } else if (pattern === 'JUDGMENT') {
+      alertAnalysisStore.getNewsDetail(companyType, companyId);
+    }
   };
   const createTabs = () => {
     return data.map((item, index) => {
@@ -19,7 +31,7 @@ function LeftBar({alertAnalysisStore}) {
           className={itemCss}
           onClick={changeTab.bind(null, index)}
           >
-          <div className={styles.time}>{item.eventTime}</div>
+          <div className={styles.time}>{item.alterDt}</div>
         </div>
       );
     });
@@ -54,4 +66,4 @@ function LeftBar({alertAnalysisStore}) {
 LeftBar.propTypes = {
   foo: PropTypes.string,
 };
-export default inject('alertAnalysisStore')(observer(LeftBar));
+export default inject('alertAnalysisStore', 'routing')(observer(LeftBar));

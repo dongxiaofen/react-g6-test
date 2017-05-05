@@ -3,7 +3,7 @@ import { observer, inject } from 'mobx-react';
 import styles from './index.less';
 
 function ReportAction({ bannerStore, modalStore, payModalStore, routing }) {
-  const {monitorId, reportId, companyType} = routing.location.query;
+  const { monitorId, reportId, analysisReportId, companyType } = routing.location.query;
   const operatMonitor = () => {
     if (bannerStore.monitorStatus === 'PAUSE' || bannerStore.monitorStatus === 'MONITOR') {
       if (bannerStore.monitorStatus === 'PAUSE') {
@@ -58,6 +58,7 @@ function ReportAction({ bannerStore, modalStore, payModalStore, routing }) {
       pactUrl: 'xxxxxx',
       pactName: '用户服务协议',
       confirmAction: updateHighOrDeepConfirmAction,
+      closeAction: modalStore.closeAction,
       loader: (cb) => {
         require.ensure([], (require) => {
           cb(require('./UpdateHighOrDeep'));
@@ -67,30 +68,24 @@ function ReportAction({ bannerStore, modalStore, payModalStore, routing }) {
   };
   const bannerActionBtn = () => {
     const outputBtn = [];
-
-    const _companyType = routing.location.query.companyType;
-    const _monitorId = routing.location.query.monitorId;
-    const _reportId = routing.location.query.reportId;
-    const _analysisReportId = routing.location.query.analysisReportId;
-
     const updateReport = <div key="btnUpdateReprot" className={styles.actionBtn} onClick={openUpdateHighOrDeepModal}>升级报告</div>;
     const addMonitor = <div key="btnAddMonitor" className={styles.actionBtn} onClick={openCreateMonitorModal}>加入监控</div>;
     const updateMonitor = <div key="btnUpdateMonitor" className={styles.actionBtn}>升级监控</div>;
     const monitorRenewal = <div key="btnRenewalMonitor" className={styles.actionBtn}>监控续期</div>;
-    switch (_companyType) {
+    switch (companyType) {
       case 'FREE':
         outputBtn.push(updateReport);
         outputBtn.push(addMonitor);
         break;
       case 'MAIN':
-        if (_reportId) {
+        if (reportId) {
           outputBtn.push(updateReport);
           outputBtn.push(addMonitor);
         }
-        if (_analysisReportId) {
+        if (analysisReportId) {
           outputBtn.push(addMonitor);
         }
-        if (_monitorId) {
+        if (monitorId) {
           outputBtn.push(monitorRenewal);
         }
         break;
@@ -103,7 +98,9 @@ function ReportAction({ bannerStore, modalStore, payModalStore, routing }) {
     }
     return (
       <div className="clearfix">
-        {outputBtn}
+        <div className={styles.actionBtnGroup}>
+          {outputBtn}
+        </div>
       </div>
     );
   };
@@ -165,12 +162,93 @@ function ReportAction({ bannerStore, modalStore, payModalStore, routing }) {
     );
   }
   console.log(leftTypeBtn, '-----------------leftTypeBtn');
+
+  const addOrCancelCollection = () => {
+    const params = { collection: !bannerStore.collection };
+    bannerStore.addOrCancelCollection({ reportId, analysisReportId, monitorId, params });
+  };
+
+  const collectionTextAction = () => {
+    let output = null;
+    const collection = bannerStore.collection;
+    const collectionText = collection ? '取消收藏' : '加入收藏';
+    if (bannerStore.isLoading) {
+      output = (
+        <div key="textAction1" className={styles.textAction}>
+          加载中...
+        </div>
+      );
+    } else {
+      if (bannerStore.collectionLoading) {
+        output = (
+          <div key="textAction1" className={styles.textAction}>
+            <i className="anticon anticon-spin anticon-loading"></i>
+            {collectionText}
+          </div>
+        );
+      } else {
+        output = (
+          <div key="textAction1" className={styles.textAction} onClick={addOrCancelCollection}>
+            <i className={collection ? 'fa fa-star' : 'fa fa-star-o'}></i>
+            {collectionText}
+          </div>
+        );
+      }
+    }
+    return output;
+  };
+
+  const bannerTextAction = () => {
+    const output = [];
+    const mainStatus = bannerStore.mainStatus;
+    const monitorStatus = bannerStore.monitorStatus;
+    const collectionAction = collectionTextAction();
+    const refreshReportAction = (
+      <div key="textAction2" className={styles.textAction}>
+        <i className="fa fa-refresh"></i>
+        刷新报告
+      </div>
+    );
+    const downloadPdfAction = (
+      <div key="textAction3" className={styles.textAction} onClick={openDownLoadPdf}>
+        <i className="fa fa-download"></i>
+        下载PDF
+      </div>
+    );
+    const monitorAction = (
+      <div key="textAction4" className={styles.textAction}>
+        <i className="fa fa-camera-retro" aria-hidden="true"></i>
+        {monitorStatus === 'MONITOR' ? '暂停监控' : '恢复监控'}
+      </div>
+    );
+    if (companyType === 'MAIN') {
+      output.push(collectionAction);
+      if (monitorId) {
+        output.push(monitorAction);
+      } else {
+        output.push(refreshReportAction);
+      }
+    } else {
+      if (mainStatus !== 'PAUSE') {
+        output.push(monitorAction);
+      }
+    }
+    if (companyType !== 'FREE') {
+      output.push(downloadPdfAction);
+    }
+    return (
+      <div className="clearfix">
+        <div className={styles.textActionGroup}>
+          {output}
+        </div>
+      </div>
+    );
+  };
+
   return (
-    <div className={`clearfix ${styles.actionBox}`}>
+    <div className="clearfix">
       {bannerActionBtn()}
-      <div style={{ cursor: 'pointer' }} onClick={openDownLoadPdf}>下载pdf</div>
-      {/* {leftTypeBtn} */}
-      {/* {monitorId && companyType === 'MAIN' ? <div className={styles.bannerAction} onClick={openPayModal.bind(this, 'recharge', 'continueMonitor', 'monitorModalStatus')}>续期</div> : ''} */}
+      {bannerTextAction()}
     </div>
   );
 }

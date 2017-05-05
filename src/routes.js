@@ -31,6 +31,7 @@ import {
     RuleCompany,
     PersonReport,
     BlackNetwork,
+    Collection,
 // first append here from plop
   } from 'containers';
 
@@ -82,6 +83,7 @@ export default (allStore) => {
       <Route path="personReport" component={ PersonReport } />
       <Route path="ruleList" component={ RuleList } />
       <Route path="ruleAdd" component={ RuleAdd } />
+      <Route path="collection" component={ Collection } />
       <Route path="ruleCompany" component={ RuleCompany } />
 {/* second append here from plop */}
     </Route>
