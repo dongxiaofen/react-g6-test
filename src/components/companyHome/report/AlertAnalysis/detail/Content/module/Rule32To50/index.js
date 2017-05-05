@@ -17,8 +17,13 @@ function Rule32To50({data}) {
   const meta = {
     dict: 'rule32to50',
     body: [
-      [{ 'key': 'companyName', colSpan: '1'}, { 'key': 'relation', colSpan: '1'}],
-      [{ 'key': 'policy', colSpan: '2', modifyBlock: modifyPolicy}],
+      [
+        { 'key': 'companyName', colSpan: '1', modifyType: 'companyName'},
+        { 'key': 'relation', colSpan: '1', modifyType: 'relationShip'}
+      ],
+      [
+        { 'key': 'policy', colSpan: '2', modifyBlock: modifyPolicy}
+      ],
     ],
     items: data.detail,
     maxCols: 3,
