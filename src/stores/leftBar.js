@@ -4,7 +4,7 @@ class LeftBarStore {
   @observable activeItem = 'corpDetail';
 
   @action.bound resetStore() {
-    this.activeMenu = 'report';
+    this.activeMenu = ['report'];
     this.activeItem = 'corpDetail';
   }
   @action combineServerData(data) {
