@@ -7,8 +7,9 @@ import Base from './Base';
 import Stock from './Stock';
 import Risk from './Risk';
 import News from './News';
+import Assets from './Assets';
 
-function PdfReport({}) {
+function PdfReport() {
   const judgeIsModuleExist = (module) => {
     const pdfModule = this.props.pdfModule;
     if (module === 'STOCK') {
@@ -27,6 +28,7 @@ function PdfReport({}) {
           <Stock judgeIsModuleExist={judgeIsModuleExist} />
           <Risk judgeIsModuleExist={judgeIsModuleExist} />
           <News judgeIsModuleExist={judgeIsModuleExist} />
+          <Assets judgeIsModuleExist={judgeIsModuleExist} />
         </Col>
       </Row>
     </Container>
@@ -34,6 +36,6 @@ function PdfReport({}) {
 }
 
 PdfReport.propTypes = {
-  foo: PropTypes.string,
+
 };
 export default observer(PdfReport);

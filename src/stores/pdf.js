@@ -11,6 +11,8 @@ class PdfStore {
   @observable announcement = {};
   @observable risk = {};
   @observable internet = {};
+  @observable trademark = {};
+  @observable patent = {};
 
   // summary
   @observable summary = {};
@@ -64,6 +66,22 @@ class PdfStore {
     axios.get(`/api/monitor/${id}/internet`)
       .then( action( (response) => {
         this.internet = response.data;
+      }))
+      .catch((err) => {
+        console.log(err);
+      });
+    // 商标
+    axios.get(`/api/monitor/${id}/operation/trademark`)
+      .then( action( (response) => {
+        this.trademark = response.data;
+      }))
+      .catch((err) => {
+        console.log(err);
+      });
+    // 专利
+    axios.get(`/api/monitor/${id}/operation/patent`)
+      .then( action( (response) => {
+        this.patent = response.data;
       }))
       .catch((err) => {
         console.log(err);
