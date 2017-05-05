@@ -106,7 +106,7 @@ function Menu({ routing }) {
         <div className={parentItemIsActive}>
           {parent.module}
           <span className={styles.parentIcon}>
-            <i className="fa fa-chevron-down"></i>
+            <i className="fa fa-angle-down"></i>
           </span>
         </div>;
       if (childrenOutput) {
