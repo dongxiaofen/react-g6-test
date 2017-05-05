@@ -1,14 +1,25 @@
 import React, { Component, PropTypes } from 'react';
-import { observer } from 'mobx-react';
+import { observer, inject } from 'mobx-react';
 import Banner from 'components/companyHome/Banner';
 import LeftBar from 'components/companyHome/LeftBar';
 import { Container, Row, Col } from 'components/common/layout';
 import styles from './index.less';
 
+@inject('uiStore', 'bannerStore', 'leftBarStore', 'corpDetailStore', 'riskStore', 'internetStore', 'assetsStore', 'teamStore', 'networkStore', 'blackNetworkStore', 'alertAnalysisStore', 'relPerCheckStore')
 @observer
 export default class CompanyHome extends Component {
   static propTypes = {
     children: PropTypes.object,
+    uiStore: PropTypes.object,
+    corpDetailStore: PropTypes.object,
+    riskStore: PropTypes.object,
+    internetStore: PropTypes.object,
+    assetsStore: PropTypes.object,
+    teamStore: PropTypes.object,
+    networkStore: PropTypes.object,
+    blackNetworkStore: PropTypes.object,
+    alertAnalysisStore: PropTypes.object,
+    relPerCheckStore: PropTypes.object,
   };
   componentWillUnmount() {
     console.log('CompanyHome componentWillUnmount', window.reportSourceCancel);
@@ -17,6 +28,11 @@ export default class CompanyHome extends Component {
       cancel();
     });
     // reset report store data
+    ['uiStore', 'bannerStore', 'leftBarStore', 'corpDetailStore', 'riskStore', 'internetStore', 'assetsStore', 'teamStore', 'networkStore', 'blackNetworkStore', 'alertAnalysisStore', 'relPerCheckStore'].map((key)=>{
+      if (this.props[key].resetStore) {
+        this.props[key].resetStore();
+      }
+    });
   }
   render() {
     return (

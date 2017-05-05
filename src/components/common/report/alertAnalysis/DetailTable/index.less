@@ -22,4 +22,21 @@
 }
 .value {
   float: left;
+  width: 70%;
+}
+.valueImpor {
+  composes: value;
+  color: @mdc-grey-900;
+}
+.companyName {
+  display: block;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  color: @mdc-blue-400;
+  text-decoration: underline;
+  &:hover {
+    color: @mdc-blue-400;
+    text-decoration: underline;
+  }
 }

@@ -61,7 +61,7 @@ export default class NavAction extends Component {
   }
 
   account() {
-    browserHistory.push('/account');
+    browserHistory.push('/accountSetting');
   }
 
   collection() {

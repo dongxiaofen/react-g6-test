@@ -1,4 +1,4 @@
-import { observable, action, reaction } from 'mobx';
+import { observable, action, reaction, extendObservable } from 'mobx';
 import pathval from 'pathval';
 import bannerStore from './banner';
 import assetsStore from './report/assets';
@@ -6,21 +6,23 @@ import monitorListStore from './monitorList';
 import ruleStore from './rule';
 import ruleCompanyStore from './ruleCompany';
 import accountSettingStore from './accountSetting';
+import alertAnalysisStore from './report/alertAnalysis';
 import reportManageStore from './reportManage';
+import collectionStore from './collection';
 
 class UiStore {
   constructor() {
     reaction(
       () => this.uiState.trademarkLists.index,
       () => {
-        const {monitorId, reportId, companyName, companyType} = bannerStore;
+        const { monitorId, reportId, companyName, companyType } = bannerStore;
         assetsStore.getTrademarkData(monitorId, reportId, companyName, companyType);
       }
     );
     reaction(
       () => this.uiState.patentInfo.index,
       () => {
-        const {monitorId, reportId, companyName, companyType} = bannerStore;
+        const { monitorId, reportId, companyName, companyType } = bannerStore;
         assetsStore.getPatentData(monitorId, reportId, companyName, companyType);
       }
     );
@@ -29,6 +31,13 @@ class UiStore {
       () => {
         document.body.scrollTop = 0;
         monitorListStore.getMainList();
+      }
+    );
+    reaction(
+      () => this.uiState.alertAnalysis.index,
+      () => {
+        const { monitorId, reportId } = bannerStore;
+        alertAnalysisStore.getAlertAnalysisList(monitorId, reportId);
       }
     );
     reaction(
@@ -70,8 +79,18 @@ class UiStore {
     reaction(
       () => this.uiState.reportManagePager.index,
       () => {
-        pathval.setPathValue(reportManageStore, 'list', {});
         reportManageStore.getReportList(this.uiState.reportManagePager);
+      }
+    );
+    reaction(
+      () => this.uiState.collection.index,
+      () => {
+        const collection = this.uiState.collection;
+        collectionStore.getCollectionPage({
+          companyName: collection.companyName,
+          index: collection.index,
+          size: collection.size
+        });
       }
     );
   }
@@ -111,6 +130,11 @@ class UiStore {
       totalElements: 0,
     },
     accountLoginRecord: {
+      index: 1,
+      size: 10,
+      totalElements: 0,
+    },
+    alertAnalysis: {
       index: 1,
       size: 10,
       totalElements: 0,
@@ -281,7 +305,13 @@ class UiStore {
     dishonesty: {
       index: 1,
       size: 5
-    }
+    },
+    collection: {
+      companyName: '',
+      index: 1,
+      size: 10,
+      totalElements: 0, // 服务端分页
+    },
   };
 
   @action.bound updateUiStore(keypath, value) {
@@ -301,6 +331,228 @@ class UiStore {
     this.uiState.accountRecharge = Object.assign({}, template);
     this.uiState.accountSummary = Object.assign({}, template);
     this.uiState.accountLoginRecord = Object.assign({}, template);
+  }
+  @action.bound resetStore() {
+    extendObservable(this, {
+      uiState: {
+        monitorList: {
+          searchInput: '',
+          sortDirection: {
+            start_tm: 'DESC',
+            expire_dt: 'DESC',
+            latestTs: 'DESC',
+          },
+          params: {
+            companyName: '',
+            sort: 'start_tm,DESC',
+            monitorStatus: '',
+          }
+        },
+        monitorListPager: {
+          index: 1,
+          size: 10,
+          totalElements: 0,
+        },
+        accountConsume: {
+          index: 1,
+          size: 10,
+          totalElements: 0,
+        },
+        accountRecharge: {
+          index: 1,
+          size: 10,
+          totalElements: 0,
+        },
+        accountSummary: {
+          index: 1,
+          size: 10,
+          totalElements: 0,
+        },
+        accountLoginRecord: {
+          index: 1,
+          size: 10,
+          totalElements: 0,
+        },
+        alertAnalysis: {
+          index: 1,
+          size: 10,
+          totalElements: 0,
+        },
+        ruleListPager: {
+          index: 1,
+          size: 10,
+          show: observable.map({})
+        },
+        ruleCompanyListPager: {
+          index: 1,
+          size: 10,
+          show: observable.map({})
+        },
+        shareholder: {
+          index: 1,
+          size: 4
+        },
+        personList: {
+          index: 1,
+          size: 4
+        },
+        filiationList: {
+          index: 1,
+          size: 10
+        },
+        entinvItemLists: {
+          index: 1,
+          size: 10,
+          show: observable.map({})
+        },
+        frinvList: {
+          index: 1,
+          size: 10,
+          show: observable.map({})
+        },
+        frPositionList: {
+          index: 1,
+          size: 10,
+          show: observable.map({})
+        },
+        alterList: {
+          index: 1,
+          size: 10,
+          show: observable.map({})
+        },
+        yearInvestor: {
+          index: 1,
+          size: 10,
+        },
+        yearWebsite: {
+          index: 1,
+          size: 10,
+        },
+        yearEquityChange: {
+          index: 1,
+          size: 10,
+        },
+        yearChangeRecords: {
+          index: 1,
+          size: 10,
+        },
+        trademarkLists: {
+          index: 1,
+          size: 10,
+          totalElements: 0, // 服务端分页
+        },
+        patentInfo: {
+          index: 1,
+          size: 10,
+          totalElements: 0, // 服务端分页
+          show: observable.map({}),
+        },
+        judgeDoc: {
+          index: 1,
+          size: 10,
+          show: observable.map({}),
+        },
+        courtAnnouncement: {
+          index: 1,
+          size: 10,
+          show: observable.map({}),
+        },
+        courtNotice: {
+          index: 1,
+          size: 10,
+          show: observable.map({}),
+        },
+        courtExecution: {
+          index: 1,
+          size: 10,
+        },
+        dishonestyList: {
+          index: 1,
+          size: 10,
+          show: observable.map({}),
+        },
+        litigationAssets: {
+          index: 1,
+          size: 10,
+          show: observable.map({}),
+        },
+        jyErrorData: {
+          index: 1,
+          size: 10,
+          show: observable.map({}),
+        },
+        checkMessage: {
+          index: 1,
+          size: 10,
+          show: observable.map({}),
+        },
+        taxPublicInfo: {
+          index: 1,
+          size: 10,
+          show: observable.map({}),
+        },
+        news: {
+          index: 1,
+          size: 10,
+          type: 'ALL',
+        },
+        biddingList: {
+          index: 1,
+          size: 10,
+        },
+        recentRecruitment: {
+          index: 1,
+          size: 10
+        },
+        reportManageList: {
+          reportStatus: 'report',
+        },
+        reportManagePager: {
+          index: 1,
+          size: 10,
+          totalElements: 0, // 服务端分页
+        },
+        relPerCheck: {
+          index: 1,
+          size: 10,
+          totalElements: 0, // 服务端分页
+        },
+        stockShareHolder: {
+          index: 1,
+          size: 10
+        },
+        stockCirculateShareHolder: {
+          index: 1,
+          size: 10
+        },
+        stockManagement: {
+          index: 1,
+          size: 20
+        },
+        stockAnnouncement: {
+          index: 1,
+          size: 10
+        },
+        personBlacklist: {
+          index: 1,
+          size: 10
+        },
+        executed: {
+          index: 1,
+          size: 10
+        },
+        dishonesty: {
+          index: 1,
+          size: 5
+        },
+        collection: {
+          companyName: '',
+          index: 1,
+          size: 10,
+          totalElements: 0, // 服务端分页
+        }
+      }
+    });
   }
 }
 export default new UiStore();

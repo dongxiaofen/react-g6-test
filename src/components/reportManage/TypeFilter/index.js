@@ -4,7 +4,7 @@ import styles from './index.less';
 function TypeFilter({ reportManageStore, uiStore }) {
   const filterConfig = [
     { name: '高级查询报告', status: 'report'},
-    { name: '深度评估报告', status: 'analysisReport'},
+    { name: '深度分析报告', status: 'analysisReport'},
   ];
   const changeFilter = (status) => {
     uiStore.updateUiStore('reportManageList.reportStatus', status);
