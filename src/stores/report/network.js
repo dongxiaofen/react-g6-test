@@ -34,7 +34,11 @@ class NetworkStore {
   @observable focusNodeName = '';
   @observable searchKey = '';
   @observable currentLevel = 1;
+  @observable showFullScreen = false;
 
+  @action.bound toggleFullScreen() {
+    this.showFullScreen = !this.showFullScreen;
+  }
   @action.bound focusNode(name) {
     this.focusNodeName = name;
     this.nodePanel.show = true;

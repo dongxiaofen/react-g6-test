@@ -24,6 +24,7 @@ let svgEdgelabels;
 let svgTexts;
 let simulation;
 let zoom;
+let svg;
 let isDragging = false;
 const layerCount = {}; // 存储各层的节点数
 const radiusArr = []; // 存储半径长度
@@ -40,7 +41,6 @@ export default class CircleNetworkGraph extends Component {
     svgWidth: PropTypes.number,
     svgHeight: PropTypes.number,
   };
-
   componentDidMount() {
     // console.log(toJS(this.props.networkStore), 'componentDidMount');
     const graph = toJS(this.props.networkStore.currentNetwork);
@@ -52,9 +52,9 @@ export default class CircleNetworkGraph extends Component {
     svgTools.getRadiusArr(radiusArr, layerCount);
     // console.log('radiusArr', radiusArr, layerCount);
     zoom = d3.zoom();
-    const svg = d3.select('svg')
+    svg = d3.select('svg')
       .call(zoom.on('zoom', () => {
-        // console.log(d3.event.transform);
+        console.log(d3.event.transform, 12312321);
         svg.attr('transform', `translate(${d3.event.transform.x}, ${d3.event.transform.y}) scale(${d3.event.transform.k})`);
       }))
       .append('g');
@@ -187,6 +187,7 @@ export default class CircleNetworkGraph extends Component {
       }
     );
   }
+
   ticked = () => {
     if (!saveNodeXY) { // 只跑一次,然后存到nodeXY
       svgTools.getInitNodeXY(nodeXY, layerCount, nodesData, radiusArr, centerNodeX, centerNodeY);
@@ -344,6 +345,33 @@ export default class CircleNetworkGraph extends Component {
     // exit
     svgTexts.exit().remove();
     simulation.restart();
+  }
+  static resumeSvg() {
+    // zoom.scale([1]);
+    // const svg = d3.select('svg g');
+    svg.call(zoom.transform, d3.zoomIdentity);
+    // zoom.translateBy(svg, 0, 0);
+    // svg.attr('transform', 'translate(0,0) scale(1)');
+    // nodesData.map((node)=>{
+    //   node.dragged = 0;
+    // });
+  }
+  static fullScreen() {
+    const tabContentWrap = d3.select('#tabContentWrap');
+    tabContentWrap.attr('class', `${tabContentWrap.attr('class')} ${styles.boxFullScreen}`);
+    const svgBox = d3.select('svg');
+    svgBox.attr('width', document.body.clientWidth * 3 / 4)
+      .attr('height', document.body.clientHeight - 100);
+  }
+  static exitFull() {
+    const oldSvgWidth = document.getElementById('reportContainer').offsetWidth * 3 / 5 - 15;
+    const oldSvgHeight = window.screen.height - 280;
+    const tabContentWrap = d3.select('#tabContentWrap');
+    const svgBox = d3.select('svg');
+    tabContentWrap.attr('class', tabContentWrap.attr('class').split(' ')[0]);
+    svgBox.attr('class', '')
+      .attr('width', oldSvgWidth)
+      .attr('height', oldSvgHeight);
   }
   render() {
     return (
