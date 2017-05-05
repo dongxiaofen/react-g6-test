@@ -15,7 +15,6 @@ import {
     About,
     CorpDetail,
     Risk,
-    TestModal,
     Internet,
     MonitorStatistics,
     AccountSetting,
@@ -74,7 +73,6 @@ export default (allStore) => {
       <Route path="solution" component={ Solution } />
       <Route path="about" component={ About } />
       {/* 测试modal用 */}
-      <Route path="testModal" component={TestModal } />
       <Route path="monitorStatistics" component={ MonitorStatistics } />
       <Route path="accountSetting" component={ AccountSetting } />
       <Route path="reportManage" component={ ReportManage } />
