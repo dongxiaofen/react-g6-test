@@ -89,5 +89,24 @@ class NetworkStore {
         this.isLoading = false;
       }));
   }
+  @action.bound resetStore() {
+    this.error = '';
+    this.isLoading = true;
+    this.isMount = false;
+    this.currentNetwork = {
+      nodes: []
+    };
+    this.monitorInfoList = [];
+    this.mainCompanyName = '';
+    this.layout = 'circle';
+    this.focusNodeName = '';
+    this.searchKey = '';
+    this.currentLevel = 1;
+    this.nodePanel.show = false;
+    this.typeList.labelArr = [];
+    this.typeList.countArr = [];
+    this.typeList.checkedArr = [];
+    this.typeList.checkedArrChanged = false;
+  }
 }
 export default new NetworkStore();
