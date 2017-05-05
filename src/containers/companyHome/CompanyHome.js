@@ -6,6 +6,9 @@ import { Container, Row, Col } from 'components/common/layout';
 import styles from './index.less';
 
 @inject(
+  'uiStore',
+  'bannerStore',
+  'leftBarStore',
   'corpDetailStore',
   'riskStore',
   'internetStore',
@@ -21,6 +24,7 @@ import styles from './index.less';
 export default class CompanyHome extends Component {
   static propTypes = {
     children: PropTypes.object,
+    uiStore: PropTypes.object,
     corpDetailStore: PropTypes.object,
     riskStore: PropTypes.object,
     internetStore: PropTypes.object,
@@ -39,6 +43,9 @@ export default class CompanyHome extends Component {
     });
     // reset report store data
     [
+      'uiStore',
+      'bannerStore',
+      'leftBarStore',
       'corpDetailStore',
       'riskStore',
       'internetStore',
