@@ -31,5 +31,6 @@ export ruleCompanyStore from './ruleCompany';
 export alertAnalysisStore from './report/alertAnalysis';
 export relPerCheckStore from './report/relPerCheck';
 export personReportStore from './personReport';
+export blackNetworkStore from './report/blackNetwork';
 export collectionStore from './collection';
 // append here from plop

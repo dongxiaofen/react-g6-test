@@ -3,7 +3,7 @@ import { observer, inject } from 'mobx-react';
 import { toJS, reaction } from 'mobx';
 import styles from './index.less';
 import * as d3 from 'd3';
-import { getLayerCount, getRadiusArr, getInitNodeXY, getNewNodeXY } from 'helpers/svgTools';
+import * as svgTools from 'helpers/svgTools';
 import bling1 from 'imgs/companyHome/network/1.gif';
 import bling2 from 'imgs/companyHome/network/2.gif';
 import bling3 from 'imgs/companyHome/network/3.gif';
@@ -32,7 +32,6 @@ let saveNodeXY = false; // 标记坐标存储完成
 let centerNodeX;
 let centerNodeY;
 let nodeAdded = false;
-
 @inject('networkStore')
 @observer
 export default class CircleNetworkGraph extends Component {
@@ -48,9 +47,9 @@ export default class CircleNetworkGraph extends Component {
     nodesData = graph.nodes;
     edgesData = graph.links;
     // 统计各层的节点数
-    getLayerCount(nodesData, layerCount);
+    svgTools.getLayerCount(nodesData, layerCount);
     // 计算半径长度
-    getRadiusArr(radiusArr, layerCount);
+    svgTools.getRadiusArr(radiusArr, layerCount);
     // console.log('radiusArr', radiusArr, layerCount);
     zoom = d3.zoom();
     const svg = d3.select('svg')
@@ -150,7 +149,7 @@ export default class CircleNetworkGraph extends Component {
     svgEdgelabels.append('textPath')
       .attr('xlink:href', (data, idx) => { return '#edgepath' + idx; })
       .style('pointer-events', 'none')
-      .text((data) => { return this.getLinkInfo(data); });
+      .text((data) => { return svgTools.getLinkInfo(data); });
     // 监听点击和搜索节点事件
     reaction(
       () => this.props.networkStore.focusNodeName,
@@ -164,72 +163,38 @@ export default class CircleNetworkGraph extends Component {
             node.isFocus = true;
           }
         });
-        this.focusRelatedLinks(focusNodeName);
+        svgTools.focusRelatedLinks(focusNodeName, edgesData);
+        simulation.restart();
       }
     );
     // 监听类别筛选事件
     reaction(
-      () => this.props.networkStore.typeList.checkedArr[0],
+      () => this.props.networkStore.typeList.checkedArrChanged,
       () => {
         const checkedArr = this.props.networkStore.typeList.checkedArr;
         const currentLevel = this.props.networkStore.currentLevel;
         nodesData.map((node) => {
           if (node.cateType !== 0) {
             if (node.layer <= currentLevel) {
-              node.hide = this.isNodeShow(checkedArr, node.cateList);
+              node.hide = svgTools.isNodeShow(checkedArr, node.cateList);
             } else {
               node.hide = true;
             }
           }
         });
-        console.log(nodesData);
+        svgTools.updateLinksDisplay(nodesData, edgesData);
+        simulation.restart();
       }
     );
   }
-
-  // 获取边的关系
-  getLinkInfo = (data) => {
-    const description = [];
-    const relation = data.name;
-    Object.keys(relation).map((key) => {
-      if (key === '股东' && data.invRatio !== -1) {
-        const invCurrency = (data.invCurrency === '人民币' || data.invCurrency === '') ? '万人民币' : data.invCurrency;
-        description.push(`${relation[key][0]}(投资金额: ${data.invConum + invCurrency},投资比例: ${data.invRatio.toFixed(2)}%)`);
-      } else {
-        description.push(`${key}(${relation[key][0]})`);
-      }
-    });
-    return description.join(',');
-  }
-  // 判断节点是否隐藏
-  isNodeShow = (checkeArr, cateList) => {// 返回0代表没有被勾选上
-    let index = -1;
-    for (const cate of cateList) {
-      if (checkeArr[cate - 1]) {
-        index = cate - 1;
-        break;
-      }
-    }
-    return index === -1 ? true : false;
-  }
-  // 高亮选中节点相关的边
-  focusRelatedLinks = (focusNodeName) => {
-    edgesData.map((link) => {
-      if (link.target.name === focusNodeName || link.source.name === focusNodeName) {
-        link.isFocus = true;
-      } else {
-        link.isFocus = false;
-      }
-    });
-  }
   ticked = () => {
     if (!saveNodeXY) { // 只跑一次,然后存到nodeXY
-      getInitNodeXY(nodeXY, layerCount, nodesData, radiusArr, centerNodeX, centerNodeY);
+      svgTools.getInitNodeXY(nodeXY, layerCount, nodesData, radiusArr, centerNodeX, centerNodeY);
       saveNodeXY = true;
     } else if (nodeAdded) { // 用户添加新节点
       console.log('添加节点后', nodesData);
       nodeXY = {};
-      getNewNodeXY(nodesData, nodeXY, centerNodeX, centerNodeY);
+      svgTools.getNewNodeXY(nodesData, nodeXY, centerNodeX, centerNodeY);
       nodeAdded = false;
     } else {
       nodesData.forEach((node) => {
