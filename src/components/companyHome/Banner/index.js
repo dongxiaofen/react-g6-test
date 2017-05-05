@@ -1,7 +1,7 @@
 import React, { Component, PropTypes } from 'react';
 import { observer, inject } from 'mobx-react';
 import styles from './index.less';
-import { Container } from 'components/common/layout';
+import { Container, Row, Col } from 'components/common/layout';
 import CompanyInfo from './CompanyInfo';
 import ReportAction from './ReportAction';
 
@@ -38,19 +38,23 @@ export default class Banner extends Component {
   }
   render() {
     return (
-      <div className={`clearfix ${styles.bannerInfoWrap}`}>
-        <Container>
-          <div className="clearfix" style={{ position: 'relative' }}>
-            <div className={styles.companyInfo}>
-              <CompanyInfo />
+      <Container>
+        <Row>
+          <Col>
+            <div className={`clearfix ${styles.bannerInfoWrap}`}>
+              <div className={`clearfix ${styles.bannerContent}`}>
+                <div className={styles.companyInfo}>
+                  <CompanyInfo />
+                </div>
+                <div className={styles.action}>
+                  <ReportAction bannerStore={this.props.bannerStore} />
+                </div>
+                {this.bannerCountAndDate()}
+              </div>
             </div>
-            <div className={styles.action}>
-              <ReportAction bannerStore={this.props.bannerStore} />
-            </div>
-            {this.bannerCountAndDate()}
-          </div>
-        </Container>
-      </div>
+          </Col>
+        </Row>
+      </Container>
     );
   }
 }

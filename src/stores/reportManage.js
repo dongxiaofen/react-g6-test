@@ -75,11 +75,13 @@ class ReportManageStore {
       .then(action('update to AnalysisReport', () => {
         modalStore.confirmLoading = false;
         modalStore.closeAction();
-        messageStore.openMessage({ type: 'info', content: '升级深度评估报告成功', duration: '1500' });
+        messageStore.openMessage({ type: 'info', content: '升级深度分析报告成功', duration: '1500' });
         this.getReportList(params);
       }))
       .catch((err) => {
         console.log(err.response);
+        modalStore.closeAction();
+        messageStore.openMessage({ type: 'warning', content: err.response.data.message, duration: '1500' });
         modalStore.confirmLoading = false;
       });
   }

@@ -15,7 +15,7 @@ class AlertAnalysisStore {
   @observable detailData = {
     activeIndex: 0,
     page: 1,
-    tabTop: computed(function() {
+    tabTop: computed(function tabTop() {
       return 0 - (this.page - 1) * 8 * 60;
     }),
     info: {},

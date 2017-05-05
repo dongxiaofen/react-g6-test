@@ -6,33 +6,24 @@ import styles from './index.less';
 function OperateInfo({baseInfo}) {
   const config = [
     {
-      name: '最近登录',
-      keys: 'lastLoginTs',
-    },
-    {
-      name: '登录次数',
-      keys: 'loginCount',
-      unit: '次',
-    },
-    {
-      name: '高级报告',
+      name: '高级查询报告',
       keys: 'reportCount',
       unit: '个',
     },
     {
-      name: '刷新报告',
-      keys: 'refreshReportCount',
-      unit: '次',
+      name: '深度评估报告',
+      keys: 'analysisReportCount',
+      unit: '个',
     },
     {
-      name: '创建监控',
+      name: '监控主体报告',
       keys: 'monitorCount',
       unit: '个',
     },
     {
-      name: '剩余点数',
-      keys: 'point',
-      none: baseInfo.data && baseInfo.data.parentUserId,
+      name: '个人核查',
+      keys: 'personCheckCount',
+      unit: '个',
     },
   ];
   let output = (
