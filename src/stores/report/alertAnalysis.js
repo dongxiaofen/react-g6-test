@@ -142,5 +142,12 @@ class AlertAnalysisStore {
       html: '',
     };
   }
+  @action.bound resetStore() {
+    this.isMount = false;
+    this.loadingId = -1;
+    this.alertCancel = null;
+    this.listData = {};
+    this.resetDetailData();
+  }
 }
 export default new AlertAnalysisStore();
