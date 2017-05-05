@@ -107,7 +107,7 @@ export default class EventType extends Component {
           <div
             className={styles.inputWrap}>
             <div
-              className={styles.text}>
+              className={this.props.ruleStore.eventTypeShow ? styles.textFocus : styles.text}>
               {this.props.ruleStore.eventTypeOne}
               {this.props.ruleStore.eventTypeTwo ? ' / ' + this.props.ruleStore.eventTypeTwo : ''}
               {this.props.ruleStore.eventTypeThree ? ' / ' + this.props.ruleStore.eventTypeThree : ''}
