@@ -45,7 +45,7 @@ function Industry({ruleStore}) {
             onBlur={ruleStore.IndustryShowStatus.bind(null, false)}
             value={ruleStore.industry}
             placeholder="请选择或搜索" />
-          <i className={ruleStore.industryShow ? styles.iconActive : styles.icon}></i>
+          <i className={ruleStore.industryShow ? styles.icon : styles.iconActive}></i>
         </div>
         <ul className={ruleStore.industryShow ? styles.list : styles.hidden}>
           {list}
