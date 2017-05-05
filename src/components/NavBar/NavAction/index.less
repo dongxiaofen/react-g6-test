@@ -84,19 +84,6 @@
   line-height: 26px;
   color: @mdc-blue-grey-200;
 }
-// .searchBoxOnFocus .searchIcon {
-//   background-image: url('imgs/navbar/search_hover.png');
-// }
-
-// .searchIcon{
-//   float: left;
-//   width: 20px;
-//   height: 20px;
-
-//   background-image: url('imgs/navbar/search.png');
-
-//   .transition-all;
-// }
 
 .iconStyle {
   position: relative;
@@ -116,32 +103,6 @@
   .transition-all;
 }
 
-.icon:hover + div {
-  visibility: visible;
-  opacity: 1;
-  top: 71px;
-}
-
-.appCode {
-  padding: 10px;
-  text-align: center;
-}
-
-.appCodeImg {
-  width: 120px;
-  height: 120px;
-
-  background-image: url('imgs/navbar/code.png');
-  background-size: 120px 120px;
-}
-
-.appCodeText {
-  margin-top: 10px;
-
-  font-size: 14px;
-  line-height: 14px;
-  color: @mdc-blue-grey-400;
-}
 
 .userInfo {
   padding: 20px;
@@ -189,25 +150,13 @@
   color: @mdc-blue-grey-400;
 }
 
-.userInfoIcon {
-  width: 28px;
-  height: 28px;
-  background-image: url('imgs/navbar/user.png');
+.downloadApp {
   &:hover {
-    background-image: url('imgs/navbar/user_hover.png');
-  }
-}
+    & + div {
+      top: 50px;
 
-.appCodeIcon {
-  background-image: url('imgs/navbar/app_code.png');
-  &:hover {
-    background-image: url('imgs/navbar/app_code_hover.png');
-  }
-}
-
-.exitIcon {
-  background-image: url('imgs/navbar/exit.png');
-  &:hover {
-    background-image: url('imgs/navbar/exit_hover.png');
+      opacity: 1;
+      visibility: visible;
+    }
   }
 }

@@ -18,8 +18,8 @@ function HoverBox({ width, left, children }) {
 }
 
 HoverBox.propTypes = {
-  width: PropTypes.string,
-  left: PropTypes.string,
+  width: PropTypes.oneOfType([PropTypes.nubmer, PropTypes.string]),
+  left: PropTypes.oneOfType([PropTypes.nubmer, PropTypes.string]),
   children: PropTypes.node,
 };
 export default observer(HoverBox);

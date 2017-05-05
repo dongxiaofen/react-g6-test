@@ -3,7 +3,7 @@ import { observer, inject } from 'mobx-react';
 import { browserHistory } from 'react-router';
 
 import styles from './index.less';
-// import HoverBox from './HoverBox';
+import HoverBox from './HoverBox';
 
 @inject('searchCompanyStore')@observer
 export default class NavAction extends Component {
@@ -38,9 +38,6 @@ export default class NavAction extends Component {
   }
 
   logout = () => {
-    this.setState({
-      showSetting: false,
-    });
     this.props.clientStore.loginOut();
   }
 
@@ -84,10 +81,13 @@ export default class NavAction extends Component {
             <i className="fa fa-search" aria-hidden="true"></i>
           </span>
         </div>
-        <div className={styles.menuBox}>
-          <span>
+        <div className={styles.menuBox} style={{ position: 'relative' }}>
+          <span className={styles.downloadApp}>
             <i className="fa fa-code-fork" aria-hidden="true"></i>下载APP
           </span>
+          <HoverBox width={100} left={0}>
+            <div>xxxxxxxx</div>
+          </HoverBox>
         </div>
         <div className={styles.menuBox}>
           <span onClick={this.account}>
