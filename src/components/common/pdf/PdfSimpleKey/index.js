@@ -31,7 +31,7 @@ function PdfSimpleKey({dataConfig, item, type, dict, hasConfig}) {
             );
           }
         });
-        output.push(<div key={`${index}itemData`} className={styles.single}>{row}</div>);
+        output.push(<div key={`${index}itemData0210`} className={styles.single}>{row}</div>);
       });
     } else if (type === 'website') {
       item.forEach((websiteItem) => {

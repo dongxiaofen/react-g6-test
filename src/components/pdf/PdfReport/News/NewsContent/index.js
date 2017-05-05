@@ -33,6 +33,6 @@ function NewsContent({moduleData}) {
 }
 
 NewsContent.propTypes = {
-  moduleData: PropTypes.array,
+  moduleData: PropTypes.object,
 };
 export default observer(NewsContent);

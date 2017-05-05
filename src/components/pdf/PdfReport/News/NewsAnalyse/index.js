@@ -43,6 +43,6 @@ function NewsAnalyse({moduleData}) {
 }
 
 NewsAnalyse.propTypes = {
-  moduleData: PropTypes.objectOrObservableObject,
+  moduleData: PropTypes.object,
 };
 export default observer(NewsAnalyse);

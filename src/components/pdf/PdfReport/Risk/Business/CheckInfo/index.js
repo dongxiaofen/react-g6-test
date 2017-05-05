@@ -34,6 +34,6 @@ function CheckInfo({moduleData}) {
 }
 
 CheckInfo.propTypes = {
-  moduleData: PropTypes.arrayOrObservableArray,
+  moduleData: PropTypes.object,
 };
 export default observer(CheckInfo);

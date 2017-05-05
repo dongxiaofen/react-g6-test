@@ -35,6 +35,6 @@ function OperateError({moduleData}) {
 }
 
 OperateError.propTypes = {
-  moduleData: PropTypes.array,
+  moduleData: PropTypes.object,
 };
 export default observer(OperateError);

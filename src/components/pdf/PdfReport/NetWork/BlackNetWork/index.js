@@ -43,6 +43,6 @@ function BlackNetWork({moduleData}) {
 }
 
 BlackNetWork.propTypes = {
-  moduleData: PropTypes.array,
+  moduleData: PropTypes.object,
 };
 export default observer(BlackNetWork);

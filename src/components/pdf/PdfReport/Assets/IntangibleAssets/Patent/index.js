@@ -43,6 +43,6 @@ function Patent({moduleData}) {
 }
 
 Patent.propTypes = {
-  moduleData: PropTypes.array,
+  moduleData: PropTypes.object,
 };
 export default observer(Patent);

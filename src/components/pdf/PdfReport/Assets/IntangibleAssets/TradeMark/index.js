@@ -45,6 +45,6 @@ function TradeMark({moduleData}) {
 }
 
 TradeMark.propTypes = {
-  moduleData: PropTypes.array,
+  moduleData: PropTypes.object,
 };
 export default observer(TradeMark);
