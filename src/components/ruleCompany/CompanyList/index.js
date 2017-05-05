@@ -36,7 +36,7 @@ function CompanyList({ruleCompanyStore, uiStore}) {
   return (
     <div className={styles.box}>
       {list}
-      <div>
+      <div className={styles.page}>
         <Pager tData={companyList} module="ruleCompanyListPager"
                uiStore={uiStore} type="large"/>
       </div>
