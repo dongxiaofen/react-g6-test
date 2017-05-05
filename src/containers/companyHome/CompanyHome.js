@@ -5,11 +5,12 @@ import LeftBar from 'components/companyHome/LeftBar';
 import { Container, Row, Col } from 'components/common/layout';
 import styles from './index.less';
 
-@inject('corpDetailStore', 'riskStore', 'internetStore', 'assetsStore', 'teamStore', 'networkStore', 'blackNetworkStore', 'alertAnalysisStore', 'relPerCheckStore')
+@inject('leftBarStore', 'corpDetailStore', 'riskStore', 'internetStore', 'assetsStore', 'teamStore', 'networkStore', 'blackNetworkStore', 'alertAnalysisStore', 'relPerCheckStore')
 @observer
 export default class CompanyHome extends Component {
   static propTypes = {
     children: PropTypes.object,
+    leftBarStore: PropTypes.object,
     corpDetailStore: PropTypes.object,
     riskStore: PropTypes.object,
     internetStore: PropTypes.object,
@@ -20,6 +21,17 @@ export default class CompanyHome extends Component {
     alertAnalysisStore: PropTypes.object,
     relPerCheckStore: PropTypes.object,
   };
+  componentWillMount() {
+    const leftBarStore = this.props.leftBarStore;
+    const barConf = leftBarStore.barConf;
+    barConf.forEach(item => {
+      item.children.forEach(child => {
+        if (child.menuKey === leftBarStore.activeItem) {
+          leftBarStore.activeMenu = [item.menuKey];
+        }
+      });
+    });
+  }
   componentWillUnmount() {
     console.log('CompanyHome componentWillUnmount', window.reportSourceCancel);
     // cancel pending api call
