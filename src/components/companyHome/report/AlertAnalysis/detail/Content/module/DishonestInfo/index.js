@@ -20,10 +20,10 @@ function DishonestInfo({data, type}) {
       {'key': 'gistId', 'width': '6'},
       {'key': 'courtName', 'width': '6'},
       {'key': 'gistUnit', 'width': '6'},
-      {'key': 'disruptTypeName', 'width': '6'},
+      {'key': 'disruptTypeName', 'width': '12'},
       {'key': 'duty', 'width': '12'}
     ],
-    item: type === 'RULE' ? data.content : data.detail[0],
+    item: type === 'RULE' ? data.content : data.detail[0].dishonesty,
   };
   return (
     <SimpleCard meta={meta} />

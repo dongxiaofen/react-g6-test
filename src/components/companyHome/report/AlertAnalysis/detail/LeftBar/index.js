@@ -13,13 +13,14 @@ function LeftBar({alertAnalysisStore, routing}) {
   if (reportId) {
     companyType = 'analysisReport';
   }
+  console.log(reportId, companyType);
   const changeTab = (index) => {
     alertAnalysisStore.changeValue('detailData.activeIndex', index);
     const pattern = data[activeIndex].pattern;
     if (pattern === 'NEWS') {
       alertAnalysisStore.getNewsDetail(companyType, companyId);
     } else if (pattern === 'JUDGMENT') {
-      alertAnalysisStore.getNewsDetail(companyType, companyId);
+      alertAnalysisStore.getJudgeDocDetail(companyType, companyId);
     }
   };
   const createTabs = () => {

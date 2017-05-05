@@ -21,6 +21,7 @@ function JudgeDoc({data, type}) {
       {'key': 'caseCode', 'width': '6'},
       {'key': 'court', 'width': '6'},
       {'key': 'litigant', 'width': '12', modifyBlock: modifyLitiganti},
+      {'key': 'detail', 'width': '12', keyType: 'detail'},
     ],
     item: type === 'RULE' ? data.content : data.detail[0],
   };

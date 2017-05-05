@@ -69,7 +69,7 @@ class AlertAnalysisStore {
     const getNewsDetailFunc = type === 'monitor' ? companyHomeApi.getAlertNewsMonitor(companyId, params) : companyHomeApi.getAlertNewsReport(params);
     getNewsDetailFunc
     .then(action('get news', resp=> {
-      this.detailData.html = resp.html;
+      this.detailData.html = resp.data.html;
     }))
     .catch(action('get news error', (error)=>{
       console.log('get news', error);
@@ -87,7 +87,7 @@ class AlertAnalysisStore {
     const getJudeDocDetailFunc = type === 'monitor' ? companyHomeApi.getAlertJudgeDocMonitor(companyId, params) : companyHomeApi.getAlertJudgeDocReport(params);
     getJudeDocDetailFunc
     .then(action('get judgeDoc', resp=> {
-      this.detailData.html = resp.detail;
+      this.detailData.html = resp.data.detail;
     }))
     .catch((error)=>{
       this.detailData.html = '--';
