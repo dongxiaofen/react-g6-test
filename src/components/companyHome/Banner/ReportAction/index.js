@@ -4,7 +4,7 @@ import styles from './index.less';
 
 function ReportAction({ bannerStore, modalStore, payModalStore, routing }) {
   const { monitorId, reportId, analysisReportId, companyType } = routing.location.query;
-
+  const monitorStatus = bannerStore.monitorStatus;
   /* 普通按钮 */
   const choiceOk = () => {
     if (reportId || analysisReportId) {
@@ -141,7 +141,7 @@ function ReportAction({ bannerStore, modalStore, payModalStore, routing }) {
   };
 
   const pauseOrRestoreMonitorConfirm = () => {
-    bannerStore.pauseOrRestoreMonitor(monitorId, !bannerStore.monitorStatus);
+    bannerStore.pauseOrRestoreMonitor(monitorId, monitorStatus === 'MONITOR' ? 'PAUSE' : 'MONITOR');
   };
 
   const pauseOrRestoreMonitorModal = () => {
@@ -206,10 +206,51 @@ function ReportAction({ bannerStore, modalStore, payModalStore, routing }) {
     return output;
   };
 
+  const pauseOrRestoreMonitorTextAction = () => {
+    let output = null;
+    // 判断bannerInfo数据是否请求回来了
+    if (bannerStore.isLoading) {
+      output = (
+        <div key="textAction4" className={styles.textAction}>
+          加载中...
+        </div>
+      );
+    } else {
+      // 当该监控是暂停监控状体时
+      if (monitorStatus === 'PAUSE') {
+        // 恢复按钮前面转菊花
+        if (bannerStore.reStoreLoading) {
+          output = (
+            <div key="textAction4" className={styles.textAction}>
+              <i className="anticon anticon-spin anticon-loading"></i>
+              恢复监控
+            </div>
+          );
+        } else {
+          // 恢复按钮的点击事件
+          output = (
+            <div key="textAction4" className={styles.textAction} onClick={pauseOrRestoreMonitorConfirm}>
+              <i className="fa fa-camera"></i>
+              恢复监控
+            </div>
+          );
+        }
+      } else {
+        // 暂停监控按钮
+        output = (
+          <div key="textAction4" className={styles.textAction} onClick={pauseOrRestoreMonitorModal}>
+            <i className="fa fa-camera-retro" aria-hidden="true"></i>
+            暂停监控
+          </div>
+        );
+      }
+    }
+    return output;
+  };
+
   const bannerTextAction = () => {
     const output = [];
     const mainStatus = bannerStore.mainStatus;
-    const monitorStatus = bannerStore.monitorStatus;
     const collectionAction = collectionTextAction();
     const refreshReportAction = (
       <div key="textAction2" className={styles.textAction} onClick={refreshHighOrDeepModal}>
@@ -223,22 +264,17 @@ function ReportAction({ bannerStore, modalStore, payModalStore, routing }) {
         下载PDF
       </div>
     );
-    const monitorAction = (
-      <div key="textAction4" className={styles.textAction} onClick={pauseOrRestoreMonitorModal}>
-        <i className="fa fa-camera-retro" aria-hidden="true"></i>
-        {monitorStatus === 'MONITOR' ? '暂停监控' : '恢复监控'}
-      </div>
-    );
+    const pauseOrRestoreMonitorAction = pauseOrRestoreMonitorTextAction();
     if (companyType === 'MAIN') {
       output.push(collectionAction);
       if (monitorId) {
-        output.push(monitorAction);
+        output.push(pauseOrRestoreMonitorAction);
       } else {
         output.push(refreshReportAction);
       }
     } else if (companyType === 'ASSOCIATE') {
       if (mainStatus !== 'PAUSE') {
-        output.push(monitorAction);
+        output.push(pauseOrRestoreMonitorAction);
       }
     }
     if (companyType !== 'FREE') {

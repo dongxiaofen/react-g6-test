@@ -96,6 +96,8 @@ class BannerStore {
   // 添加/取消收藏loading
   @observable collectionLoading = false;
 
+  // 恢复监控loading
+  @observable reStoreLoading = false;
 
   closeHisNamePopoverAlias = this.closeHisNamePopover;
   openHisNamePopoverAlias = this.openHisNamePopover;
@@ -291,18 +293,37 @@ class BannerStore {
       });
   }
 
+  // 恢复监控loading
+
+  reStoreLoadingAction(monitorStatus) {
+    if (monitorStatus === 'PAUSE') {
+      runInAction(() => {
+        this.reStoreLoading = true;
+      });
+    } else {
+      runInAction(() => {
+        this.reStoreLoading = false;
+      });
+    }
+  }
+
   // 暂停或恢复监控
   @action.bound pauseOrRestoreMonitor(monitorId, status) {
+    modalStore.confirmLoading = true;
+    this.reStoreLoadingAction(this.monitorStatus);
     companyHomeApi.pauseOrRestoreMonitor(monitorId, status)
       .then(action('pause or restore monitor', () => {
-        modalStore.cancelLoading = false;
+        modalStore.confirmLoading = false;
         modalStore.closeAction();
+        this.reStoreLoadingAction(this.monitorStatus);
+        this.monitorStatus = this.monitorStatus === 'MONITOR' ? 'PAUSE' : 'MONITOR';
         messageStore.openMessage({ content: '操作成功' });
       }))
       .catch((err) => {
         runInAction(() => {
           modalStore.confirmLoading = false;
           modalStore.closeAction();
+          this.reStoreLoadingAction(this.monitorStatus);
           messageStore.openMessage({ content: err.response.data.message });
         });
       });
