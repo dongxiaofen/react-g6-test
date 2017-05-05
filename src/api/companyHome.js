@@ -190,6 +190,11 @@ export const renewalMonitor = (monitorId, time) => {
   return axios.put(`/api/monitor/${monitorId}/renewal`, { time: time });
 };
 
+// 暂停或恢复监控
+export const pauseOrRestoreMonitor = (monitorId, status) => {
+  return axios.put(`/api/monitor/${monitorId}/status`, { status: status });
+};
+
 // 添加/删除收藏
 export const addOrCancelCollection = ({ reportId, analysisReportId, monitorId, params }) => {
   let url;

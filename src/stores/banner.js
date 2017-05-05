@@ -291,6 +291,23 @@ class BannerStore {
       });
   }
 
+  // 暂停或恢复监控
+  @action.bound pauseOrRestoreMonitor(monitorId, status) {
+    companyHomeApi.pauseOrRestoreMonitor(monitorId, status)
+      .then(action('pause or restore monitor', () => {
+        modalStore.cancelLoading = false;
+        modalStore.closeAction();
+        messageStore.openMessage({ content: '操作成功' });
+      }))
+      .catch((err) => {
+        runInAction(() => {
+          modalStore.confirmLoading = false;
+          modalStore.closeAction();
+          messageStore.openMessage({ content: err.response.data.message });
+        });
+      });
+  }
+
   // 设置Pdf弹窗第一层级
   @action.bound setPdfLevelOne(key, value, checked) {
     this.pdfDownloadConfig.levelOne[key].checked = checked;
