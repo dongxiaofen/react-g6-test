@@ -5,7 +5,6 @@ import config from 'dict/reportModule';
 
 
 function PdfTable({ dataConfig, items, dict, decimal }) {
-  console.info(items);
   const createTable = () => {
     const thead = [];
     const tbody = [];

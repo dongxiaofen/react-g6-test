@@ -13,6 +13,9 @@ class PdfStore {
   @observable internet = {};
   @observable trademark = {};
   @observable patent = {};
+  @observable bidding = {};
+  @observable network = {};
+  @observable blacklist = {};
 
   // summary
   @observable summary = {};
@@ -82,6 +85,30 @@ class PdfStore {
     axios.get(`/api/monitor/${id}/operation/patent`)
       .then( action( (response) => {
         this.patent = response.data;
+      }))
+      .catch((err) => {
+        console.log(err);
+      });
+    // 招投标
+    axios.get(`/api/monitor/${id}/operation/bidding`)
+      .then( action( (response) => {
+        this.bidding = response.data;
+      }))
+      .catch((err) => {
+        console.log(err);
+      });
+    // 网络图
+    axios.get(`/api/monitor/${id}/network`)
+      .then( action( (response) => {
+        this.network = response.data;
+      }))
+      .catch((err) => {
+        console.log(err);
+      });
+    // 黑名单
+    axios.get(`/api/monitor/${id}/network/blacklist`)
+      .then( action( (response) => {
+        this.blacklist = response.data;
       }))
       .catch((err) => {
         console.log(err);

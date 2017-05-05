@@ -8,6 +8,7 @@ import Stock from './Stock';
 import Risk from './Risk';
 import News from './News';
 import Assets from './Assets';
+import Network from './NetWork';
 
 function PdfReport() {
   const judgeIsModuleExist = (module) => {
@@ -29,6 +30,7 @@ function PdfReport() {
           <Risk judgeIsModuleExist={judgeIsModuleExist} />
           <News judgeIsModuleExist={judgeIsModuleExist} />
           <Assets judgeIsModuleExist={judgeIsModuleExist} />
+          <Network judgeIsModuleExist={judgeIsModuleExist} />
         </Col>
       </Row>
     </Container>
@@ -36,6 +38,6 @@ function PdfReport() {
 }
 
 PdfReport.propTypes = {
-
+  judgeIsModuleExist: PropTypes.func,
 };
 export default observer(PdfReport);

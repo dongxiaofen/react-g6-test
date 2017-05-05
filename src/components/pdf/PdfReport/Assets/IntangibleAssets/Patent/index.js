@@ -15,7 +15,7 @@ function Patent({moduleData}) {
   }
   const modifyClassFication = (key, value, rowData) => {
     return rowData.classificationNumber[key];
-  }
+  };
   const data = {
     dataConfig: [
       {'key': 'title', 'width': '6'},

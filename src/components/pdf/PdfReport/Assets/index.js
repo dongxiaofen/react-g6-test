@@ -30,7 +30,7 @@ function Assets({judgeIsModuleExist, clientStore, pdfStore}) {
         <PdfTitle module="经营信息" subModule="无形资产/招投标" />
         <TradeMark moduleData={pathval.getPathValue(pdfStore, 'trademark.content')} />
         <Patent moduleData={pathval.getPathValue(pdfStore, 'patent.content')} />
-        <Bidding {...this.props} />
+        <Bidding moduleData={pathval.getPathValue(pdfStore, 'bidding.content')} />
       </div>
     </div>
   );
