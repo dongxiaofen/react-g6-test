@@ -75,5 +75,19 @@ class StockStore {
     this.getAnnouncement('stock/announcement', monitorId, reportId, analysisReportId, companyName, companyType);
     this.getAnnouncementType('stock/announcement/type', monitorId, reportId, analysisReportId, companyName, companyType);
   }
+
+  @action.bound resetStore() {
+    this.isOverViewLoading = true;
+    this.announcementTypesLoading = true;
+    this.announcementDatasLoading = true;
+    this.isMount = false;
+    this.brief = {};
+    this.shareHolder = {};
+    this.circulateShareHolder = {};
+    this.management = [];
+    this.selectValue = '';
+    this.announcementTypes = [];
+    this.announcementDatas = [];
+  }
 }
 export default new StockStore();
