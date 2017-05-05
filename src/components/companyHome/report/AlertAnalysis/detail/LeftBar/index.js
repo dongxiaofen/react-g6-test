@@ -25,6 +25,9 @@ function LeftBar({alertAnalysisStore, routing}) {
     }
   };
   const createTabs = () => {
+    if (moduleData.info.alertType !== 'RULE') {
+      return null;
+    }
     return data.map((item, index) => {
       const itemCss = index === activeIndex ? styles.activeItem : styles.item;
       return (

@@ -24,7 +24,7 @@ class AlertAnalysisStore {
   @action.bound changeValue(key, value) {
     pathval.setPathValue(this, key, value);
   }
-  @action.bound getAlertDetail(url, companyType, companyId) {
+  @action.bound getAlertDetail(url, companyType, companyId, info) {
     if (this.alertCancel) {
       this.alertCancel();
       this.alertCancel = null;
@@ -37,6 +37,7 @@ class AlertAnalysisStore {
         this.loadingId = -1;
         this.alertCancel = null;
         this.detailData.detail = resp.data;
+        this.detailData.info = info;
         this.openDetailModal(this.detailData.info.alertType);
         if (this.detailData.info.alertType === 'RULE') {
           const pattern = this.detailData.detail[0].pattern;
@@ -115,27 +116,16 @@ class AlertAnalysisStore {
   }
   @action.bound openDetailModal(type) {
     const companyName = this.detailData.info.companyName;
-    if (type === 'SYS_RULE') {
-      detailModalStore.openDetailModal((cp)=>{
-        require.ensure([], (require)=>{
-          cp(
-            require('components/companyHome/report/AlertAnalysis/detail/Info'),
-            require('components/companyHome/report/AlertAnalysis/detail/Content'),
-          );
-        });
-      }, `预警详情（${companyName}）`);
-    } else {
-      detailModalStore.openDetailModal((cp)=>{
-        require.ensure([], (require)=>{
-          cp(
-            require('components/companyHome/report/AlertAnalysis/detail/Info'),
-            require('components/companyHome/report/AlertAnalysis/detail/Content'),
-            null,
-            require('components/companyHome/report/AlertAnalysis/detail/LeftBar')
-          );
-        });
-      }, `预警详情（${companyName}）`);
-    }
+    detailModalStore.openDetailModal((cp)=>{
+      require.ensure([], (require)=>{
+        cp(
+          require('components/companyHome/report/AlertAnalysis/detail/Info'),
+          require('components/companyHome/report/AlertAnalysis/detail/Content'),
+          null,
+          require('components/companyHome/report/AlertAnalysis/detail/LeftBar')
+        );
+      });
+    }, `预警详情（${companyName}）`);
   }
   @action.bound resetHtml() {
     this.detailData.html = '';
