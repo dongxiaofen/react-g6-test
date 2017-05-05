@@ -33,6 +33,7 @@ function TypeFilter({ reportManageStore, uiStore }) {
           className={cssName}
           onClick={changeFilter.bind(null, item.status)}>
           {item.name}
+          <div className={styles.bottomBorder}></div>
         </div>
       );
     });
