@@ -5,7 +5,7 @@ import LeftBar from 'components/companyHome/LeftBar';
 import { Container, Row, Col } from 'components/common/layout';
 import styles from './index.less';
 
-@inject('uiStore', 'corpDetailStore', 'riskStore', 'internetStore', 'assetsStore', 'teamStore', 'networkStore', 'blackNetworkStore', 'alertAnalysisStore', 'relPerCheckStore')
+@inject('uiStore', 'bannerStore', 'leftBarStore', 'corpDetailStore', 'riskStore', 'internetStore', 'assetsStore', 'teamStore', 'networkStore', 'blackNetworkStore', 'alertAnalysisStore', 'relPerCheckStore')
 @observer
 export default class CompanyHome extends Component {
   static propTypes = {
@@ -28,7 +28,7 @@ export default class CompanyHome extends Component {
       cancel();
     });
     // reset report store data
-    ['uiStore', 'corpDetailStore', 'riskStore', 'internetStore', 'assetsStore', 'teamStore', 'networkStore', 'blackNetworkStore', 'alertAnalysisStore', 'relPerCheckStore'].map((key)=>{
+    ['uiStore', 'bannerStore', 'leftBarStore', 'corpDetailStore', 'riskStore', 'internetStore', 'assetsStore', 'teamStore', 'networkStore', 'blackNetworkStore', 'alertAnalysisStore', 'relPerCheckStore'].map((key)=>{
       if (this.props[key].resetStore) {
         this.props[key].resetStore();
       }
