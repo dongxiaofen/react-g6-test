@@ -182,3 +182,7 @@ export const getAlertNewsReport = (params) => {
 export const getAlertJudgeDocReport = (params) => {
   return axios.get('/api/analysisReport/risk/judgeDoc', {params});
 };
+// 判断企业报告类型
+export const judgeReportType = (companyName) => {
+  return axios.get(`/api/common/status?companyName=${companyName}`);
+};

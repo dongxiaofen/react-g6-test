@@ -33,10 +33,14 @@ function Rule7({data}) {
   const meta = {
     dict: 'rule7',
     body: [
-      [{ 'key': 'companyName', colSpan: '1'}, { 'key': 'relation', colSpan: '1'}],
       [
-        { 'key': 'casesDis', colSpanHandle: modifyColSpan.bind(null, 'casesDis'), modifyBlock: modifyNumber},
-        {'key': 'casesLegal', colSpanHandle: modifyColSpan.bind(null, 'casesLegal'), modifyBlock: modifyNumber}],
+        { 'key': 'companyName', colSpan: '1', modifyType: 'companyName'},
+        { 'key': 'relation', colSpan: '1', modifyType: 'relationShip'}
+      ],
+      [
+        { 'key': 'casesDis', colSpanHandle: modifyColSpan.bind(null, 'casesDis'), modifyBlock: modifyNumber, keyType: 'important'},
+        {'key': 'casesLegal', colSpanHandle: modifyColSpan.bind(null, 'casesLegal'), modifyBlock: modifyNumber, keyType: 'important'}
+      ],
     ],
     maxCols: 2,
     items: detailData,

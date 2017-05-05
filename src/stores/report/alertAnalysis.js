@@ -24,6 +24,28 @@ class AlertAnalysisStore {
   @action.bound changeValue(key, value) {
     pathval.setPathValue(this, key, value);
   }
+  @action.bound routeToCompanyHome(companyName) {
+    companyHomeApi.judgeReportType(companyName)
+      .then(resp => {
+        const {reportId, monitorId} = resp.data;
+        const type = resp.data.monitorMapResponse && resp.data.monitorMapResponse.companyType;
+        let url;
+        if (monitorId && type === 'MAIN') {
+          url = `corpDetail?companyType=${type}&monitorId=${monitorId}`;
+        } else if (reportId) {
+          url = `corpDetail?companyType=MAIN&reportId=${reportId}`;
+        } else {
+          url = `corpDetail?companyName=${companyName}&companyType=FREE`;
+        }
+        window.open(url);
+      })
+      .catch(err => {
+        messageStore.openMessage({
+          type: 'error',
+          content: pathval.getPathValue(err, 'response.data.message') || '跳转失败，请重试'
+        });
+      });
+  }
   @action.bound getAlertDetail(url, companyType, companyId) {
     if (this.alertCancel) {
       this.alertCancel();
