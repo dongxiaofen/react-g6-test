@@ -231,14 +231,17 @@ class RiskHeadlinesStore {
     riskHeadlinesApi[api](monitorId, params)
     .then(action('detail', (resp)=>{
       this.detailModalData.info = info;
+      let detailType = '法务详情';
       if (type === 'bidding') {
         this.detailModalData.content = resp.data.result;
         this.detailModalData.source = info.content.website;
         this.detailModalData.url = info.content.url;
+        detailType = '经营详情';
       }else if (type === 'news') {
         this.detailModalData.content = resp.data.html;
         this.detailModalData.source = info.content.source;
         this.detailModalData.url = info.content.url;
+        detailType = '新闻详情';
       } else {
         this.detailModalData.content = resp.data.detail;
       }
@@ -258,7 +261,7 @@ class RiskHeadlinesStore {
             );
           }
         });
-      });
+      }, detailType);
     }))
     .catch(action('detail error', (error)=> {
       console.log(error, 'risk Detail');

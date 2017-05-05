@@ -114,7 +114,7 @@ class AlertAnalysisStore {
         this.listData = err.response && {error: err.response.data, content: []} || {error: {message: '暂无信息'}, content: []};
       }));
   }
-  @action.bound openDetailModal(type) {
+  @action.bound openDetailModal() {
     const companyName = this.detailData.info.companyName;
     detailModalStore.openDetailModal((cp)=>{
       require.ensure([], (require)=>{
