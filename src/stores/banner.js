@@ -5,6 +5,10 @@ import modalStore from './modal';
 import messageStore from './message';
 import payModalStore from './payModal';
 class BannerStore {
+  windowReload() {
+    window.location.reload();
+  }
+
   // banner
   @observable monitorId = '';
   @observable reportId = '';
@@ -187,12 +191,12 @@ class BannerStore {
         modalStore.confirmLoading = false;
         modalStore.closeAction();
         if (resp.data.reportId) {
-          messageStore.openMessage({ content: '高级查询报告创建成功' });
           browserHistory.push(`/companyHome?reportId=${resp.data.reportId}&companyType=MAIN`);
+          messageStore.openMessage({ content: '高级查询报告创建成功', callBack: this.windowReload });
         }
         if (resp.data.analysisReportId) {
-          messageStore.openMessage({ content: '深度分析报告创建成功' });
           browserHistory.push(`/companyHome?analysisReportId=${resp.data.analysisReportId}&companyType=MAIN`);
+          messageStore.openMessage({ content: '深度分析报告创建成功', callBack: this.windowReload });
         }
       }))
       .catch((err) => {
@@ -212,8 +216,8 @@ class BannerStore {
       .then(action('update to analysis report', (resp) => {
         modalStore.confirmLoading = false;
         modalStore.closeAction();
-        messageStore.openMessage({ content: '深度分析报告创建成功' });
         browserHistory.push(`/companyHome?analysisReportId=${resp.data.analysisReportId}&companyType=MAIN`);
+        messageStore.openMessage({ content: '深度分析报告创建成功', callBack: this.windowReload });
       }))
       .catch((err) => {
         console.log(err.response);
@@ -250,8 +254,8 @@ class BannerStore {
     companyHomeApi.createMonitor(obj)
       .then(action('create monitor', (resp) => {
         payModalStore.closeAction();
-        messageStore.openMessage({ content: '成功创建监控' });
         browserHistory.push(`/companyHome?monitorId=${resp.data.monitorId}&companyType=MAIN`);
+        messageStore.openMessage({ content: '成功创建监控', callBack: this.windowReload });
       }))
       .catch(action('createMonitor error', (err) => {
         console.log(err.response, '=====createMonitor error');
@@ -265,8 +269,8 @@ class BannerStore {
     companyHomeApi.updateToMonitor({ reportId, analysisReportId, time })
       .then(action('update to monitor', (resp) => {
         payModalStore.closeAction();
-        messageStore.openMessage({ content: '成功创建监控' });
         browserHistory.push(`/companyHome?monitorId=${resp.data.monitorId}&companyType=MAIN`);
+        messageStore.openMessage({ content: '成功创建监控', callBack: this.windowReload });
       }))
       .catch((err) => {
         console.log(err.response);
@@ -294,7 +298,6 @@ class BannerStore {
   }
 
   // 恢复监控loading
-
   reStoreLoadingAction(monitorStatus) {
     if (monitorStatus === 'PAUSE') {
       runInAction(() => {
