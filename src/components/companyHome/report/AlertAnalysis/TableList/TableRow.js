@@ -18,14 +18,17 @@ function TableRow({data, routing, alertAnalysisStore}) {
       SYS_RULE: 'sysRule'
     };
     let url;
+    let type;
     if (monitorId) {
       url = `/api/monitor/${monitorId}/alert/${ruleMap[alertType]}/${data.id}`;
+      type = 'monitor';
     } else {
       url = `/api/analysisReport/${reportId}/alert/${ruleMap[alertType]}/${data.id}`;
+      type = 'report';
     }
     alertAnalysisStore.changeValue('loadingId', data.id);
     alertAnalysisStore.changeValue('detailData.info', data);
-    alertAnalysisStore.getAlertDetail(url);
+    alertAnalysisStore.getAlertDetail(url, type, monitorId || reportId);
   };
   const alertTypeMap = {
     'RULE': '我的预警',
