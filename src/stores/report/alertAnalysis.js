@@ -52,6 +52,7 @@ class AlertAnalysisStore {
       this.alertCancel = null;
     }
     this.detailData.activeIndex = 0;
+    this.detailData.page = 1;
     const source = CancelToken.source();
     this.alertCancel = source.cancel;
     companyHomeApi.getAlertDetail(url, source)
@@ -158,6 +159,22 @@ class AlertAnalysisStore {
         });
       }, `预警详情（${companyName}）`);
     }
+  }
+  @action.bound resetStore() {
+    this.isMount = false;
+    this.loadingId = -1;
+    this.alertCancel = null;
+    this.listData = {};
+    this.detailData = {
+      activeIndex: 0,
+      page: 1,
+      tabTop: computed(function tabTop() {
+        return 0 - (this.page - 1) * 8 * 60;
+      }),
+      info: {},
+      detail: {},
+      html: '',
+    };
   }
 }
 export default new AlertAnalysisStore();
