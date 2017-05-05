@@ -1,11 +1,12 @@
 import React, {PropTypes} from 'react';
-import { observer } from 'mobx-react';
+import { observer, inject } from 'mobx-react';
 
 import { ModuleTitle, KvTable } from 'components/common/report';
-function Brief({ brief, isEmptyObject, isOverViewLoading }) {
+function Brief({ brief, isEmptyObject, isOverViewLoading, bannerStore }) {
   if (!isEmptyObject(brief)) {
     brief.issued_shares = brief.issued_shares ? (brief.issued_shares / 10000).toFixed(2) : '';
     brief.reg_cap = brief.reg_cap ? (brief.reg_cap / 10000).toFixed(2) : '';
+    brief.stockCode = bannerStore.stockCode;
   }
   const data = {
     meta: {
@@ -40,5 +41,6 @@ Brief.propTypes = {
   brief: PropTypes.object,
   isEmptyObject: PropTypes.func,
   isOverViewLoading: PropTypes.bool,
+  bannerStore: PropTypes.object,
 };
-export default observer(Brief);
+export default inject('bannerStore')(observer(Brief));
