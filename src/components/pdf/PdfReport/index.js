@@ -9,6 +9,7 @@ import Risk from './Risk';
 import News from './News';
 import Assets from './Assets';
 import Network from './NetWork';
+import Team from './Team';
 
 function PdfReport() {
   const judgeIsModuleExist = (module) => {
@@ -31,6 +32,7 @@ function PdfReport() {
           <News judgeIsModuleExist={judgeIsModuleExist} />
           <Assets judgeIsModuleExist={judgeIsModuleExist} />
           <Network judgeIsModuleExist={judgeIsModuleExist} />
+          <Team judgeIsModuleExist={judgeIsModuleExist} />
         </Col>
       </Row>
     </Container>

@@ -16,6 +16,7 @@ class PdfStore {
   @observable bidding = {};
   @observable network = {};
   @observable blacklist = {};
+  @observable team = {};
 
   // summary
   @observable summary = {};
@@ -109,6 +110,14 @@ class PdfStore {
     axios.get(`/api/monitor/${id}/network/blacklist`)
       .then( action( (response) => {
         this.blacklist = response.data;
+      }))
+      .catch((err) => {
+        console.log(err);
+      });
+    // 团队
+    axios.get(`/api/monitor/${id}/team`)
+      .then( action( (response) => {
+        this.team = response.data;
       }))
       .catch((err) => {
         console.log(err);
