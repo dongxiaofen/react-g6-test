@@ -577,7 +577,9 @@ const config = {
     'announcementTime': '公告日期',
   },
   news: {
-    'title': '新闻标题'
+    'title': '新闻标题',
+    'alterDt': '发布日期',
+    'detail': '新闻详情', // 预警分析详情
   },
   stock: {
     'title': '公告标题'
@@ -605,7 +607,7 @@ const config = {
   rule11: {
     companyName: '关联企业',
     relation: '关联关系',
-    eventTime: '变更日期',
+    altDate: '变更日期',
     altBe: '变更前',
     altAf: '变更后'
   },

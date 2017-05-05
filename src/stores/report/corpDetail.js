@@ -49,5 +49,20 @@ class CorpDetailStore {
   @action.bound setYearReport(item) {
     this.yearReportTab = item;
   }
+  @action.bound resetStore() {
+    this.isLoading = true;
+    this.isMount = false;
+    this.registerInfo = [];
+    this.shareHolderList = [];
+    this.personList = [];
+    this.filiationList = [];
+    this.entinvItemList = [];
+    this.frinvList = [];
+    this.frPositionList = [];
+    this.alterAnalysis = [];
+    this.alterList = [];
+    this.yearReportList = [];
+    this.yearReportTab = '';
+  }
 }
 export default new CorpDetailStore();
