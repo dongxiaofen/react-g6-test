@@ -38,6 +38,8 @@ export const getReportModule = (module, monitorId, reportId, companyName, compan
         url = `/api/monitor/${monitorId}/operation/${module}${module === 'trademark' || module === 'patent' ? '?index=' + pagesInfo.index + '&limit=' + pagesInfo.size : ''}`;
       } else if (module === 'person/page') {
         url = `/api/monitor/${monitorId}/person/page?index=1&size=10`;
+      } else if (module === 'blackNetwork') {
+        url = `/api/monitor/${monitorId}/network/blacklist`;
       } else {
         url = `/api/monitor/${monitorId}/${module}`;
       }
@@ -46,6 +48,8 @@ export const getReportModule = (module, monitorId, reportId, companyName, compan
         url = `/api/report/operation/${module}?reportId=${reportId}${module === 'patent' || module === 'trademark' ? '?index=' + pagesInfo.index + '&limit=' + pagesInfo.size : ''}`;
       } else if (module === 'person/page') {
         url = `/api/report/${reportId}/person/page?index=1&size=10`;
+      } else if (module === 'blackNetwork') {
+        url = `/api/monitor/${monitorId}/network/blacklist`;
       } else {
         url = `/api/report/${module}?reportId=${reportId}`;
       }
@@ -64,13 +68,13 @@ export const getReportModule = (module, monitorId, reportId, companyName, compan
   window.reportSourceCancel.push(source.cancel);
   return axios.get(url, { cancelToken: source.token });
 };
-export const getJudgeDetailMonitor = (monitorCompanyId, params)=> {
-  return axios.get(`/api/monitor/${monitorCompanyId}/risk/judgeDoc`, {params});
+export const getJudgeDetailMonitor = (monitorCompanyId, params) => {
+  return axios.get(`/api/monitor/${monitorCompanyId}/risk/judgeDoc`, { params });
 };
-export const getJudgeDetailReport = (params)=> {
-  return axios.get(`/api/report/risk/judgeDoc`, {params});
+export const getJudgeDetailReport = (params) => {
+  return axios.get(`/api/report/risk/judgeDoc`, { params });
 };
-export const getInternet = ({monitorId, reportId, companyName, companyType, params}, source) => {
+export const getInternet = ({ monitorId, reportId, companyName, companyType, params }, source) => {
   let url;
   if (companyType === 'MAIN') {
     if (monitorId) {
@@ -86,13 +90,13 @@ export const getInternet = ({monitorId, reportId, companyName, companyType, para
   return axios.get(url, { cancelToken: source.token, params: params });
 };
 export const getNewsDetail = (url, source) => {
-  return axios.get(url, {cancelToken: source.token});
+  return axios.get(url, { cancelToken: source.token });
 };
 export const getBiddingDetail = (url, source) => {
-  return axios.get(url, {cancelToken: source.token});
+  return axios.get(url, { cancelToken: source.token });
 };
-export const getPersonCheckInfo = ({monitorId, params}) => {
-  return axios.get(`/api/monitor/${monitorId}/person/page`, {params: params});
+export const getPersonCheckInfo = ({ monitorId, params }) => {
+  return axios.get(`/api/monitor/${monitorId}/person/page`, { params: params });
 };
 export const checkPersonInfo = (url, params) => {
   return axios.post(url, params);
@@ -164,9 +168,21 @@ export const getAlertAnalysisList = (monitorId, reportId, params) => {
   } else {
     url = `/api/analysisReport/${reportId}/alert/page`;
   }
-  return axios.get(url, {params: params});
+  return axios.get(url, { params: params });
 };
 // 获取评估分析列表详情
 export const getAlertDetail = (url, source) => {
-  return axios.get(url, {cancelToken: source.token});
+  return axios.get(url, { cancelToken: source.token });
+};
+export const getAlertNewsMonitor = (companyId, params)=> {
+  return axios.get(`/api/monitor/${companyId}/internet/detail`, {params});
+};
+export const getAlertJudgeDocMonitor = (companyId, params) => {
+  return axios.get(`/api/monitor/${companyId}/risk/judgeDoc`, {params});
+};
+export const getAlertNewsReport = (params) => {
+  return axios.get('/api/analysisReport/internet/detail', {params});
+};
+export const getAlertJudgeDocReport = (params) => {
+  return axios.get('/api/analysisReport/risk/judgeDoc', {params});
 };

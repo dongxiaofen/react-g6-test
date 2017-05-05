@@ -1,11 +1,20 @@
 import React, {PropTypes} from 'react';
-import { observer } from 'mobx-react';
+import { observer, inject} from 'mobx-react';
 import CONFIG from 'dict/reportModule';
 import styles from './index.less';
-
-function DetailTable({itemData, body, dict, rowIdx, hasNumber, maxCols}) {
+function DetailTable({itemData, body, dict, rowIdx, hasNumber, maxCols, routing, detailModalStore}) {
+  const redirectReport = (companyName)=> {
+    routing.history.push(`companyHome?companyName=${companyName}&companyType=FREE`);
+    detailModalStore.closeAction();
+  };
   const getValue = (config, value) => {
     let actValue = value;
+    if (config.modifyType === 'date') {
+      actValue = value.slice(0, 10);
+    }
+    if (config.modifyType === 'companyName') {
+      actValue = <a className={styles.companyName} onClick={redirectReport.bind(null, value)}>{value}</a>;
+    }
     if (config.modifyBlock) {
       actValue = config.modifyBlock(value, itemData);
     }
@@ -31,10 +40,11 @@ function DetailTable({itemData, body, dict, rowIdx, hasNumber, maxCols}) {
           const tdKid = [];
           configs[0].kids.forEach((kidConfig)=> {
             const colWidth = ((100 - 3.2) / maxCols) * kidConfig.colSpan;
+            const valueCss = kidConfig.keyType === 'important' ? styles.valueImpor : styles.value;
             tdKid.push(
               <td colSpan={kidConfig.colSpan} key={`${idx}-${kidIdx}-${kidConfig.key}`} style={{width: `${colWidth}%`}}>
                 <div className={styles.label}>{CONFIG[dict][kidConfig.key]}：</div>
-                <div className={styles.value}>{getValue(kidConfig, kidData[kidConfig.key])}</div>
+                <div className={valueCss}>{getValue(kidConfig, kidData[kidConfig.key])}</div>
               </td>);
           });
           output.push(
@@ -46,14 +56,14 @@ function DetailTable({itemData, body, dict, rowIdx, hasNumber, maxCols}) {
       } else {
         configs.forEach((config, index)=>{
           let colSpan = config.colSpan || 1;
-          console.log(colSpan);
           colSpan = config.colSpanHandle ? config.colSpanHandle(itemData[config.key], itemData) : colSpan;
           const colWidth = ((100 - 3.2) / maxCols) * colSpan;
+          const valueCss = config.keyType === 'important' ? styles.valueImpor : styles.value;
           if (colWidth > 0) {
             td.push(
               <td colSpan={colSpan} key={`${idx}-${index}`} style={{width: `${colWidth}%`}}>
                 <div className={styles.label}>{CONFIG[dict][config.key]}：</div>
-                <div className={styles.value}>{getValue(config, itemData[config.key])}</div>
+                <div className={valueCss}>{getValue(config, itemData[config.key])}</div>
               </td>);
           }
         });
@@ -83,4 +93,4 @@ function DetailTable({itemData, body, dict, rowIdx, hasNumber, maxCols}) {
 DetailTable.propTypes = {
   foo: PropTypes.string,
 };
-export default observer(DetailTable);
+export default inject('routing', 'detailModalStore')(observer(DetailTable));

@@ -93,5 +93,24 @@ class RelPerCheckStore {
         console.log(error.response.data);
       });
   }
+
+  @action.bound resetStore() {
+    this.personCheckInfoData = [];
+    this.idCardStatus = false;
+    this.relationship = false;
+    this.personName = false;
+    this.showId = observable.map({});
+    this.idCard = observable.map({});
+    this.showCheckModal = false;
+    this.isLoading = false;
+    this.relatedType = '';
+    this.relatedTypeModelStatus = false;
+    this.relatedName = '';
+    this.relatedNameModelStatus = false;
+    this.relatedNameData = [];
+    this.relatedIdCard = '';
+    this.relatedSubmit = false;
+    this.reloadMonitorId = '';
+  }
 }
 export default new RelPerCheckStore();
