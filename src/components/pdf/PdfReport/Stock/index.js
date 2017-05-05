@@ -31,8 +31,8 @@ function Stock({judgeIsModuleExist, pdfStore}) {
           ?
           <div>
             <PdfTitle module="上市披露" subModule="公司公告" />
-            <Statistics {...this.props}/>
-            <Bulletin {...this.props}/>
+            <Statistics moduleData={pathval.getPathValue(pdfStore, 'announcement.statistic')} />
+            <Bulletin moduleData={pathval.getPathValue(pdfStore, 'announcement.data')} />
           </div>
           :
           ''

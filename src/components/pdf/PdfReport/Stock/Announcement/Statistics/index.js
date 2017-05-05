@@ -5,8 +5,7 @@ import PdfSimpleKey from 'components/common/pdf/PdfSimpleKey';
 import SecondTitle from 'components/common/pdf/SecondTitle';
 
 function Statistics({moduleData}) {
-  // const moduleData = this.props.data.getIn(['report', 'stock', 'announcement', 'statistic']);
-  if (!moduleData || moduleData.size === 0) {
+  if (!moduleData || moduleData.length === 0) {
     return (
       <div>
         <SecondTitle module="公告统计表" />

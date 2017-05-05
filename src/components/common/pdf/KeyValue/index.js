@@ -57,7 +57,7 @@ function KeyValue({width,
 }
 
 KeyValue.propTypes = {
-  width: PropTypes.string,
+  width: PropTypes.any,
   offset: PropTypes.string,
   keyClass: PropTypes.string,
   valueClass: PropTypes.string,
