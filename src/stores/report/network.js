@@ -15,6 +15,7 @@ class NetworkStore {
         labelArr: [],
         countArr: [],
         checkedArr: [],
+        checkedArrChanged: false,
         allChecked: computed(function getAllChecked() {
           return toJS(this.checkedArr).every((item, idx) => item === true || this.countArr[idx] === 0);
         })
@@ -28,7 +29,6 @@ class NetworkStore {
     nodes: []
   };
   @observable monitorInfoList = [];
-  // @observable targetComp = {};
   @observable mainCompanyName = '';
   @observable layout = 'circle';
   @observable focusNodeName = '';
@@ -48,6 +48,7 @@ class NetworkStore {
   }
   @action.bound toggleChecked(idx) {
     this.typeList.checkedArr[idx] = !this.typeList.checkedArr[idx];
+    this.typeList.checkedArrChanged = !this.typeList.checkedArrChanged;
   }
   @action.bound toggleCheckAll() {
     if (this.typeList.allChecked) {
@@ -55,6 +56,7 @@ class NetworkStore {
     } else {
       this.typeList.checkedArr = [true, true, true, true, true, true, true, true];
     }
+    this.typeList.checkedArrChanged = !this.typeList.checkedArrChanged;
   }
   @action.bound getReportModule(module, monitorId, reportId, companyName, companyType) {
     this.isMount = true;
