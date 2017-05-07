@@ -6,10 +6,8 @@ import Area from './Area';
 import Scale from './Scale';
 
 function RangeContent({ruleStore}) {
-  const status = ruleStore.selectRange;
-  console.log(status);
   return (
-    <div className={styles.box}>
+    <div className={ruleStore.selectRange === 'range' ? styles.box : styles.hidden}>
       <Industry ruleStore={ruleStore} />
       <Area ruleStore={ruleStore} />
       <Scale ruleStore={ruleStore} />

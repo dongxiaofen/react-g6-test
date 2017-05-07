@@ -18,7 +18,7 @@
   width:260px;
   height:24px;
   // background-color: #fff;
-  border-bottom: 1px solid #64b5f6;
+  border-bottom: 1px solid #CFD8DC;
 }
 .searchWrap i {
   float: left;
@@ -26,7 +26,7 @@
   display: block;
   width: 16px;
   height: 16px;
-  background-image: url('../../../imgs/searchActive.png');
+  background-image: url('../../../imgs/searchDefault.png');
   background-size: auto;
   background-repeat: no-repeat;
 }
@@ -37,7 +37,19 @@
   line-height: 16px;
   width: 220px;
   font-size:14px;
-  color:#b0bec5;
+  color:#B0BEC5;
   letter-spacing:0;
   background: none;
+}
+.searchWrap:hover input,
+.searchWrap:focus input {
+  color: #607D8B;
+}
+.searchWrap:hover i,
+.searchWrap:focus i {
+  background-image: url('../../../imgs/searchActive.png');
+}
+.searchWrap:hover,
+.searchWrap:focus {
+  border-bottom: 1px solid #64b5f6;
 }
