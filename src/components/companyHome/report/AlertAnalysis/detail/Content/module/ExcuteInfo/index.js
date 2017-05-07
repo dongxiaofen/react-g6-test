@@ -3,7 +3,7 @@ import { observer } from 'mobx-react';
 import SimpleCard from 'components/common/report/alertAnalysis/SimpleCard';
 function ExcuteInfo({data}) {
   const meta = {
-    dict: 'litigationAssets',
+    dict: 'courtExecution',
     body: [
       {'key': 'pname', 'width': '6'},
       {'key': 'caseCode', 'width': '6'},
@@ -12,7 +12,7 @@ function ExcuteInfo({data}) {
       {'key': 'execMoney', 'width': '6'},
       {'key': 'caseCreateTime', 'width': '6'}
     ],
-    item: data,
+    item: data.content,
   };
   return (
     <SimpleCard meta={meta} />

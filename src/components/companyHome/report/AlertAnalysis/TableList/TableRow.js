@@ -27,8 +27,8 @@ function TableRow({data, routing, alertAnalysisStore}) {
       type = 'report';
     }
     alertAnalysisStore.changeValue('loadingId', data.id);
-    alertAnalysisStore.changeValue('detailData.info', data);
-    alertAnalysisStore.getAlertDetail(url, type, monitorId || reportId);
+    // alertAnalysisStore.changeValue('detailData.info', data);
+    alertAnalysisStore.getAlertDetail(url, type, monitorId || reportId, data);
   };
   return (
     <div className={styles.itemBox}>

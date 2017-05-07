@@ -24,7 +24,7 @@ class AlertAnalysisStore {
   @action.bound changeValue(key, value) {
     pathval.setPathValue(this, key, value);
   }
-  @action.bound getAlertDetail(url, companyType, companyId) {
+  @action.bound getAlertDetail(url, companyType, companyId, info) {
     if (this.alertCancel) {
       this.alertCancel();
       this.alertCancel = null;
@@ -37,6 +37,7 @@ class AlertAnalysisStore {
         this.loadingId = -1;
         this.alertCancel = null;
         this.detailData.detail = resp.data;
+        this.detailData.info = info;
         this.openDetailModal(this.detailData.info.alertType);
         if (this.detailData.info.alertType === 'RULE') {
           const pattern = this.detailData.detail[0].pattern;
@@ -69,7 +70,7 @@ class AlertAnalysisStore {
     const getNewsDetailFunc = type === 'monitor' ? companyHomeApi.getAlertNewsMonitor(companyId, params) : companyHomeApi.getAlertNewsReport(params);
     getNewsDetailFunc
     .then(action('get news', resp=> {
-      this.detailData.html = resp.html;
+      this.detailData.html = resp.data.html;
     }))
     .catch(action('get news error', (error)=>{
       console.log('get news', error);
@@ -87,7 +88,7 @@ class AlertAnalysisStore {
     const getJudeDocDetailFunc = type === 'monitor' ? companyHomeApi.getAlertJudgeDocMonitor(companyId, params) : companyHomeApi.getAlertJudgeDocReport(params);
     getJudeDocDetailFunc
     .then(action('get judgeDoc', resp=> {
-      this.detailData.html = resp.detail;
+      this.detailData.html = resp.data.detail;
     }))
     .catch((error)=>{
       this.detailData.html = '--';
@@ -113,29 +114,40 @@ class AlertAnalysisStore {
         this.listData = err.response && {error: err.response.data, content: []} || {error: {message: '暂无信息'}, content: []};
       }));
   }
-  @action.bound openDetailModal(type) {
+  @action.bound openDetailModal() {
     const companyName = this.detailData.info.companyName;
-    if (type === 'SYS_RULE') {
-      detailModalStore.openDetailModal((cp)=>{
-        require.ensure([], (require)=>{
-          cp(
-            require('components/companyHome/report/AlertAnalysis/detail/Info'),
-            require('components/companyHome/report/AlertAnalysis/detail/Content'),
-          );
-        });
-      }, `预警详情（${companyName}）`);
-    } else {
-      detailModalStore.openDetailModal((cp)=>{
-        require.ensure([], (require)=>{
-          cp(
-            require('components/companyHome/report/AlertAnalysis/detail/Info'),
-            require('components/companyHome/report/AlertAnalysis/detail/Content'),
-            null,
-            require('components/companyHome/report/AlertAnalysis/detail/LeftBar')
-          );
-        });
-      }, `预警详情（${companyName}）`);
-    }
+    detailModalStore.openDetailModal((cp)=>{
+      require.ensure([], (require)=>{
+        cp(
+          require('components/companyHome/report/AlertAnalysis/detail/Info'),
+          require('components/companyHome/report/AlertAnalysis/detail/Content'),
+          null,
+          require('components/companyHome/report/AlertAnalysis/detail/LeftBar')
+        );
+      });
+    }, `预警详情（${companyName}）`);
+  }
+  @action.bound resetHtml() {
+    this.detailData.html = '';
+  }
+  @action.bound resetDetailData() {
+    this.detailData = {
+      activeIndex: 0,
+      page: 1,
+      tabTop: computed(function() {
+        return 0 - (this.page - 1) * 8 * 60;
+      }),
+      info: {},
+      detail: {},
+      html: '',
+    };
+  }
+  @action.bound resetStore() {
+    this.isMount = false;
+    this.loadingId = -1;
+    this.alertCancel = null;
+    this.listData = {};
+    this.resetDetailData();
   }
 }
 export default new AlertAnalysisStore();
