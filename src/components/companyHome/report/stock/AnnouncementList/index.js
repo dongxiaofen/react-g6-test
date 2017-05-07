@@ -17,7 +17,8 @@ function AnnouncementList({
     const query = routing.location.query;
     const monitorId = query.monitorId;
     const reportId = query.reportId;
-    changeAnnouncement({ stockType, monitorId, reportId });
+    const analysisReportId = query.analysisReportId;
+    changeAnnouncement({ stockType, monitorId, reportId, analysisReportId });
     setSelectValue(stockType);
   };
   const selectOptionList = () => {
