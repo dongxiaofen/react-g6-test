@@ -3,14 +3,18 @@ import { observer, inject } from 'mobx-react';
 import styles from './index.less';
 
 function Status({bannerStore, routing}) {
-  const {monitorId, companyType} = routing.location.query;
+  const { monitorId, reportId, analysisReportId, companyType } = routing.location.query;
   const getNameAndConfig = () => {
     let reportName;
     if (companyType === 'MAIN') {
       if (monitorId) {
         reportName = '主体监控报告';
-      } else {
+      }
+      if (reportId) {
         reportName = '高级查询报告';
+      }
+      if (analysisReportId) {
+        reportName = '深度分析报告';
       }
     } else if (companyType === 'FREE') {
       reportName = '快速查询报告';
@@ -23,40 +27,40 @@ function Status({bannerStore, routing}) {
   if (monitorId && companyType === 'MAIN' && bannerStore.monitorStatus === 'MONITOR') {
     // 主体监控中
     leftType = (
-      <div className={styles.bannerType + ' ' + styles.bannerTypeMain}>
-        <i></i>
+      <div className={styles.bannerType}>
+        <i className="fa fa-flag"></i>
         <span>正在监控中</span>
       </div>
     );
   } else if (monitorId && companyType === 'MAIN' && bannerStore.monitorStatus === 'EXPIRED') {
     // 主体监控已到期
     leftType = (
-      <div className={styles.bannerType + ' ' + styles.bannerTypeNone}>
-        <i></i>
+      <div className={styles.bannerType}>
+        <i className="fa fa-flag-o"></i>
         <span>监控已到期</span>
       </div>
     );
   } else if (monitorId && companyType === 'MAIN' && bannerStore.monitorStatus === 'PAUSE') {
     // 主体监控已暂停
     leftType = (
-      <div className={styles.bannerType + ' ' + styles.bannerTypeNone}>
-        <i></i>
+      <div className={styles.bannerType}>
+        <i className="fa fa-flag-o"></i>
         <span>监控已暂停</span>
       </div>
     );
   } else if (monitorId && companyType === 'ASSOCIATE' && bannerStore.monitorStatus === 'MONITOR') {
     // 关联监控中
     leftType = (
-      <div className={styles.bannerType + ' ' + styles.bannerTypeAssociate}>
-        <i></i>
+      <div className={styles.bannerType}>
+        <i className="fa fa-flag"></i>
         <span>正在监控中</span>
       </div>
     );
   } else if (monitorId && companyType === 'ASSOCIATE' && bannerStore.monitorStatus === 'PAUSE') {
     // 关联监控中
     leftType = (
-      <div className={styles.bannerType + ' ' + styles.bannerTypeAssociateNo}>
-        <i></i>
+      <div className={styles.bannerType}>
+        <i className="fa fa-flag-o"></i>
         <span>监控已暂停</span>
       </div>
     );

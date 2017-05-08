@@ -24,13 +24,13 @@ function Search({ collectionStore, uiStore }) {
 
   return (
     <div className={styles.search}>
-      <i className="fa fa-search"></i>
       <input type="text"
         placeholder="输入企业名称"
         className={styles.input}
         value={collectionStore.searchValue}
         onKeyDown={searchKeyDownHandle}
         onChange={setSearchValue}/>
+      <i className="fa fa-search"></i>
     </div>
   );
 }

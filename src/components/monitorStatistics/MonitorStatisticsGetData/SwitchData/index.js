@@ -46,6 +46,7 @@ function SwitchData({ msStore, params }) {
             <div className={styles.swichDataDateRange}>
               <RangePicker
                 defaultValue={[moment(params.begin), moment(params.end)]}
+                allowClear={false}
                 format={'YYYY-MM-DD'}
                 disabledDate={disabledDate}
                 onChange={dateOnChange} />

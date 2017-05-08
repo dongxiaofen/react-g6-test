@@ -16,8 +16,8 @@ function RuleName({ruleStore}) {
             id="name"
             placeholder="例：工商信息（为了便于管理预警，请输入预警名称，不超过15字）" />
         </div>
-        <div className={ruleStore.submitType === true && ruleStore.name.length > 0 ? styles.validate : styles.none}>
-          预警名必填
+        <div className={ruleStore.submitType === true && ruleStore.name.length < 1 ? styles.validate : styles.none}>
+          预警名称必填
         </div>
       </div>
     </div>

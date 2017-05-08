@@ -4,16 +4,23 @@ import styles from './index.less';
 import EventType from './EventType';
 import TriggerNum from './TriggerNum';
 
-function RuleEvent({}) {
+function RuleEvent({ruleStore}) {
   return (
     <div className={styles.box}>
-      <EventType />
-      <TriggerNum />
+      <div className={styles.message}>
+        2.请设置事件预警规则
+      </div>
+      <div className={styles.content}>
+        <div className={styles.wrap}>
+          <EventType ruleStore={ruleStore} />
+          <TriggerNum ruleStore={ruleStore} />
+        </div>
+      </div>
     </div>
   );
 }
 
 RuleEvent.propTypes = {
-  foo: PropTypes.string,
+  ruleStore: PropTypes.object,
 };
 export default observer(RuleEvent);

@@ -17,11 +17,9 @@ function CardHeader({data, module, hasSecondType, cardType, modifyDate}) {
   const relation = rCompanyName && rCompanyName.length > 0 ? '关联' : '主体';
   const companyType = relation === '关联' ? styles.relatedType : styles.mainType;
   const companyName = rCompanyName && rCompanyName.length > 0 ? rCompanyName : itemData.mainMonitorCompanyName;
-  const firstType = `${itemData.dimGroupName.substr(0, 2)}详情`;
   if (cardType === 'modal') {
     return (
       <div>
-        <h2 className={styles.firstType}>{firstType}</h2>
         <div className="clearfix">
           <p className={styles.modalTypeName}>{typeName}</p>
           <div className={styles.modalDate}>

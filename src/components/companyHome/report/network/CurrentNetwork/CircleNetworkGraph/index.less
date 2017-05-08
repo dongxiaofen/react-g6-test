@@ -110,3 +110,19 @@
   stroke: none;
   fill: #365ebf;
 }
+@keyframes graphAnimate {
+  from{transform: scale(0, 0)}
+  to{transform: scale(1, 1)}
+}
+.boxFullScreen {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 2000;
+  animation: graphAnimate 1s;
+  background-color: @mdc-white-darker;
+  transition: all 1s;
+  padding-right: 20px;
+}

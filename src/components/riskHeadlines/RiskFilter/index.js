@@ -37,17 +37,16 @@ function RiskFilter({riskHeadlinesStore}) {
     const dimGroupType = riskHeadlinesStore.dimGroupType;
     const output = [];
     filterCig.forEach((item, idx)=>{
-      const disabled = dimGroupType.length <= 1 && item.checked === 1 ? true : false;
+      const disabled = dimGroupType.length <= 1 && item.checked ? true : false;
       output.push(
-        <div key={item.enumKey} className={styles.checkBox} key={`checkBox${idx}`}>
+        <div key={item.enumKey} className={styles.checkBox} key={`checkBox${idx}`} title={disabled ? '维度类型至少保留一个' : ''}>
           <Checkbox
             defaultChecked={item.checked}
             checked={item.checked}
             disabled={disabled}
             onChange={checkFilter}
             value={idx}
-            textCss={styles.text}
-            title={disabled === -1 ? '维度类型至少保留一个' : ''}>{item.name}</Checkbox>
+            textCss={styles.text}>{item.name}</Checkbox>
         </div>
       );
     });
@@ -63,7 +62,7 @@ function RiskFilter({riskHeadlinesStore}) {
   const filterParams = riskHeadlinesStore.filterParams;
   return (
     <div className={styles.wrap}>
-      <h2 className={styles.title}>每日监控</h2>
+      <h2 className={styles.title}>每日头条</h2>
       <div className={`${styles.row} clearfix`}>
         <span className={styles.label}>时间筛选</span>
         <div className={styles.date} id="riskRangePicker">

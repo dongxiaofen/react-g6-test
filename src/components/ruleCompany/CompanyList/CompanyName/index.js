@@ -25,15 +25,15 @@ function CompanyName({data}) {
   const link = () => {
     // 深度报告
     if (data.productType === 'ANALYSIS_REPORT') {
-      browserHistory.push(`/companyHome?analysisReportId=${data.companyId}&companyType=MAIN`);
+      browserHistory.push(`/companyHome/alertAnalysis?analysisReportId=${data.productId}&companyType=MAIN`);
     }
     // 高级报告
     if (data.productType === 'REPORT') {
-      browserHistory.push(`/companyHome?reportId=${data.companyId}&companyType=MAIN`);
+      browserHistory.push(`/companyHome/alertAnalysis?reportId=${data.productId}&companyType=MAIN`);
     }
     // 监控
     if (data.productType === 'MONITOR') {
-      browserHistory.push(`/companyHome?monitorId=${data.companyId}&companyType=MAIN`);
+      browserHistory.push(`/companyHome/alertAnalysis?monitorId=${data.productId}&companyType=MAIN`);
     }
   };
   return (

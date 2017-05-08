@@ -10,8 +10,8 @@ function hoc(module) {
       };
       componentDidMount() {
         if (!this.props[`${module}Store`].isMount) {
-          const { monitorId, reportId, companyName, companyType } = this.props.routing.location.query;
-          this.props[`${module}Store`].getReportModule(module, monitorId, reportId, companyName, companyType);
+          const { monitorId, reportId, analysisReportId, companyName, companyType } = this.props.routing.location.query;
+          this.props[`${module}Store`].getReportModule(module, monitorId, reportId, analysisReportId, companyName, companyType);
         }
       }
       render() {

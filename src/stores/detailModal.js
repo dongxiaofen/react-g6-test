@@ -5,9 +5,15 @@ class DetailModalStore {
   @observable titleComp;
   @observable contentComp;
   @observable sourceComp;
+  @observable leftBarComp;
 
   @action.bound closeAction() {
     this.visible = false;
+    this.titleComp = null;
+    this.contentComp = null;
+    this.sourceComp = null;
+    this.leftBarComp = null;
+    this.title = '';
   }
 
   @action.bound openDetailModal(loader, title, closeAction) {
@@ -15,8 +21,8 @@ class DetailModalStore {
       runInAction(() => {
         this.titleComp = _titleComp;
         this.contentComp = _contentComp;
-        if (_sourceComp) { this.sourceComp = _sourceComp; }
-        if (_leftBarComp) { this.leftBarComp = _leftBarComp; }
+        this.sourceComp = _sourceComp;
+        this.leftBarComp = _leftBarComp;
       });
     });
     this.visible = true;
