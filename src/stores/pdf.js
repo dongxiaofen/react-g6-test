@@ -22,6 +22,15 @@ class PdfStore {
   @observable summary = {};
 
   @action.bound getOverviewData(id) {
+    // 获取pdf
+    axios.get(`/api/pdf?monitorId=${id}&types=RISK_JUDGEMENT`)
+      .then(action( (response) => {
+        // this.risk = response.data.risk;
+        console.log(response);
+      }))
+      .catch((error) => {
+        console.log(error.response);
+      });
     // 获取摘要信息
     axios.get(`/api/pdf?monitorId=${id}&types=SUMMARY`)
       .then(action( (response) => {

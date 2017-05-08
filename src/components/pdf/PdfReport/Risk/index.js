@@ -22,7 +22,7 @@ function Risk({pdfStore}) {
         <CourtCount moduleData={pathval.getPathValue(pdfStore, 'risk.data.court.countCount')} />
         <CourtAnnouncement moduleData={pathval.getPathValue(pdfStore, 'risk.data.court.courtAnnouncement.data')} />
         <CourtNotice moduleData={pathval.getPathValue(pdfStore, 'risk.data.court.courtNotice.data')} />
-        <JudgeDoc moduleData={pathval.getPathValue(pdfStore, 'risk.data.court.courtNotice.data')} />
+        <JudgeDoc moduleData={pathval.getPathValue(pdfStore, 'risk.data.court.judgeDoc.data')} />
         <ExcutedInfo moduleData={pathval.getPathValue(pdfStore, 'risk.data.court.courtExecution.data')} />
         <DishonestyInfo moduleData={pathval.getPathValue(pdfStore, 'risk.data.court.dishonestyList.data')} />
         <LitigationAssets moduleData={pathval.getPathValue(pdfStore, 'risk.data.court.litigationAssets.data')} />

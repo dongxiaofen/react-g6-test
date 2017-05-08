@@ -1,3 +1,23 @@
-.box {
+@import "~sc-colors/index.less";
 
+.singleBox {
+  position: relative;
+  border: 1px solid @black11;
+  padding: 20px;
+  border-top: none;
+}
+.singleBox:first-child {
+  border-top: 1px solid @black11;
+}
+.singleBox:after {
+  content: '';
+  display: block;
+  clear: both;
+}
+.viewBtn {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  color: @blue2;
+  cursor: pointer;
 }
