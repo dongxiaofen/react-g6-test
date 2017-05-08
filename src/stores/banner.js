@@ -150,7 +150,9 @@ class BannerStore {
       }))
       .catch((err) => {
         console.log('banner出错', err);
-        this.isLoading = false;
+        runInAction(() => {
+          this.isLoading = false;
+        });
       });
   }
   @action.bound toggleMonitorStatus(monitorId, status) {
