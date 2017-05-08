@@ -268,12 +268,14 @@ function ReportAction({ bannerStore, modalStore, payModalStore, routing }) {
     if (companyType === 'MAIN') {
       output.push(collectionAction);
       if (monitorId) {
-        output.push(pauseOrRestoreMonitorAction);
+        if (monitorStatus !== 'EXPIRED') {
+          output.push(pauseOrRestoreMonitorAction);
+        }
       } else {
         output.push(refreshReportAction);
       }
     } else if (companyType === 'ASSOCIATE') {
-      if (mainStatus !== 'PAUSE') {
+      if (mainStatus !== 'PAUSE' && monitorStatus !== 'EXPIRED') {
         output.push(pauseOrRestoreMonitorAction);
       }
     }

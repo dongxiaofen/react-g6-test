@@ -11,7 +11,7 @@ function LegendBar({ networkStore, resumeSvg, fullScreen, exitFull }) {
   //   const swithLayout = () => {
   //     switchLayout();
   //   };
-  const { showFullScreen, totalLevel, selectLevel } = networkStore;
+  const { showFullScreen, totalLevel, selectLevel, currentLevel } = networkStore;
   const handleFullScreen = () => {
     fullScreen();
     this.props.networkStore.toggleFullScreen();
@@ -28,7 +28,7 @@ function LegendBar({ networkStore, resumeSvg, fullScreen, exitFull }) {
       {/* <a onClick={swithLayout}>切换</a> */}
       <div className={styles.legendAction}>
         <div className={`clearfix ${styles.levelSelect}`}>
-          <Select onChange={levelOnchange} defaultValue="1" width="100px">
+          <Select onChange={levelOnchange} value={`${currentLevel}`} defaultValue="1" width="100px">
             {
               new Array(totalLevel).fill(1).map((tmp, idx) => {
                 return (
@@ -43,6 +43,10 @@ function LegendBar({ networkStore, resumeSvg, fullScreen, exitFull }) {
         <a className={styles.fullBtn} onClick={!showFullScreen ? handleFullScreen : handleExitFull}>{!showFullScreen ? '全屏显示' : '退出全屏'} <img className={!showFullScreen ? styles.fullIcon : styles.exitIcon} src={!showFullScreen ? fullImg : exitFullImg} /></a>
         <a className={styles.resumeBtn} onClick={resumeSvg}>位置复原 <img className={styles.resumeIcon} src={resumeImg} /></a>
       </div>
+      <span className={styles.legendNotice}>
+        <span className={styles.legendBlacklist}></span> 高风险企业
+        <span className={styles.legendCancel}></span> 注销
+      </span>
     </div>
   );
 }

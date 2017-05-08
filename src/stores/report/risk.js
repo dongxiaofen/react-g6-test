@@ -39,10 +39,10 @@ class RiskStore {
     }
     return tabAct;
   }
-  @action.bound getReportModule(module, monitorId, reportId, analysisReportId, companyName, companyType) {
+  @action.bound getReportModule(params) {
     this.isMount = true;
     this.isLoading = true;
-    companyHomeApi.getReportModule(module, monitorId, reportId, analysisReportId, companyName, companyType)
+    companyHomeApi.getReportModule(params)
       .then(action('get risk data', (resp)=>{
         this.isLoading = false;
         this.court.courtData = resp.data.data.court;

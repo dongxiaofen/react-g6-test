@@ -23,9 +23,9 @@ class CorpDetailStore {
   // 选择年报
   @observable yearReportTab = '';
 
-  @action.bound getReportModule(module, monitorId, reportId, analysisReportId, companyName, companyType) {
+  @action.bound getReportModule(params) {
     this.isMount = true;
-    companyHomeApi.getReportModule(module, monitorId, reportId, analysisReportId, companyName, companyType)
+    companyHomeApi.getReportModule(params)
       .then(action('get corpDetail data', (resp) => {
         this.isLoading = false;
         this.registerInfo = resp.data.corpDetail.basicList;

@@ -75,12 +75,11 @@ function Contact({
   if (!flag) {
     return null;
   }
-  const iconCss = contactVis ? styles.contactIconUp : styles.contactIcon;
   return (
     <div className={styles.contactInfo}>
       <Popover
         visible={contactVis}
-        left="40px"
+        left="0px"
         top="25px"
         content={createInfo()}
         closePopover={closeContactPopoverAlias}
@@ -88,7 +87,7 @@ function Contact({
         id="contactInfo">
         <span className={`${styles.messageStyle}`}>
           基本联系信息
-          <i className={iconCss}></i>
+          <i className={`fa fa-angle-down ${contactVis ? styles.rotate : ''}`}></i>
         </span>
       </Popover>
     </div>

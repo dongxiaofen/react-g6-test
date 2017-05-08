@@ -8,7 +8,7 @@ export const getBannerInfo = ({
 }) => {
   let url;
   if (monitorId) {
-    url = `/api/monitor/${monitorId}/infobanner`;
+    url = `/api/monitor/${monitorId}/infobanner/xx`;
   } else if (reportId) {
     url = `/api/report/infobanner?reportId=${reportId}`;
   } else if (analysisReportId) {
@@ -36,7 +36,8 @@ export const getStockCode = ({ reportId, monitorId, analysisReportId }) => {
 export const toggleMonitorStatus = (monitorId, status) => {
   return axios.put(`/api/monitor/${monitorId}/status`, { status: status });
 };
-export const getReportModule = (module, monitorId, reportId, analysisReportId, companyName, companyType, pagesInfo) => {
+export const getReportModule = (params) => {
+  const {module, monitorId, reportId, analysisReportId, companyName, companyType, pagesInfo} = params;
   let url;
   if (companyType === 'MAIN') {
     if (monitorId) {
