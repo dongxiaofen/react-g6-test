@@ -46,6 +46,7 @@ function TableList({monitorListStore}) {
           <AddTr
             key={'addTr' + monitorId}
             data={mainItem}
+            index={mainIdx}
             monitorListStore={monitorListStore}
             />
         );

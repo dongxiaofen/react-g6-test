@@ -31,6 +31,11 @@ class MonitorListStore {
   @action.bound changeStatusInfo(params) {
     Object.assign(this.pauseInfo, params);
   }
+  @action.bound addRelatedCount(index) {
+    console.log(index, '--index');
+    const relatedCount = this.mainList.content[index].relatedCount;
+    this.mainList.content[index].relatedCount = relatedCount + 1;
+  }
   @action.bound getMainCount() {
     const {monitorStatus, companyName} = uiStore.uiState.monitorList.params;
     this.monitorCount = {};

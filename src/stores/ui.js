@@ -36,8 +36,8 @@ class UiStore {
     reaction(
       () => this.uiState.alertAnalysis.index,
       () => {
-        const { monitorId, reportId } = bannerStore;
-        alertAnalysisStore.getAlertAnalysisList(monitorId, reportId);
+        const { monitorId, analysisReportId } = bannerStore;
+        alertAnalysisStore.getAlertAnalysisList(monitorId, analysisReportId);
       }
     );
     reaction(

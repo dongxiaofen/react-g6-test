@@ -43,25 +43,25 @@ function ProvinceRank({accountSettingStore}) {
         <div style="box-shadow: 0 0 7px #ddd; padding: 15px 20px; background-color: #fff">
           <p style="text-align: center; padding-bottom: 10px;">
             <a style="color:#999999;">
-              ${ticket.name} ${ticket.value}家
+              ${ticket.name} ${ticket.value}
             </a>
           </p>
           <p style="text-align: left; padding-bottom: 6px;">
             <a style="color:#ffbd3d;">
-              <span style="padding-right: 15px">报告企业</span>
-              <span>${ticket.data.reportCount || 0}</span>家
+              <span style="padding-right: 15px">高级报告</span>
+              <span>${ticket.data.reportCount || 0}</span>
             </a>
           </p>
           <p style="text-align: left; padding-bottom: 6px;">
             <a style="color:#ffbd3d;">
-              <span style="padding-right: 15px">评估企业</span>
-              <span>${ticket.data.analysisReportCount || 0}</span>家
+              <span style="padding-right: 15px">深度报告</span>
+              <span>${ticket.data.analysisReportCount || 0}</span>
             </a>
           </p>
           <p style="text-align: left;">
             <a style="color:#ffbd3d;">
-              <span style="padding-right: 15px">监控企业</span>
-              <span>${ticket.data.companyCount || 0}</span>家
+              <span style="padding-right: 15px">监控报告</span>
+              <span>${ticket.data.companyCount || 0}</span>
             </a>
           </p>
         </div>`;
