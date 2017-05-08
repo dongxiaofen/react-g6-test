@@ -1,6 +1,7 @@
 import { observable, action } from 'mobx';
-const helpInfo1 = '创建高级查询报告或主体监控报告后，可查看该板块信息';
+const helpInfo1 = '创建高级查询报告、深度分析报告、主体监控报告后，可查看该板块信息';
 const helpInfo2 = '创建主体监控报告后，可查看该板块信息';
+const helpInfo3 = '创建深度分析报告、主体监控报告后，可查看该板块信息';
 class LeftBarStore {
   @observable activeMenu = ['report'];
   @observable activeItem = 'corpDetail';
@@ -34,10 +35,10 @@ class LeftBarStore {
       menuKey: 'trendAnalyse',
       children: [
         { menuText: '事件时间轴', menuKey: 'eventLine', helpInfo: helpInfo2, contain: ['main'] },
-        { menuText: '预警分析', menuKey: 'alertAnalysis', contain: ['main'] },
+        { menuText: '预警分析', menuKey: 'alertAnalysis', helpInfo: helpInfo3, contain: ['main', 'analysisReport'] },
       ],
       helpInfo: helpInfo2,
-      contain: ['main'],
+      contain: ['main', 'analysisReport'],
     },
     {
       menuText: '信息核查',
