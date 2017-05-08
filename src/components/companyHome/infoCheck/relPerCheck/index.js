@@ -18,7 +18,7 @@ function RelPerInfo({relPerCheckStore}) {
       relPerCheckStore.showCheckModal = false;
     });
   };
-  if (!relPerCheckStore.personCheckInfoData && relPerCheckStore.personCheckInfoData.length === 0) {
+  if (relPerCheckStore.personCheckInfoData && relPerCheckStore.personCheckInfoData.length === 0) {
     return (
       <div className={styles.noData}>
         <img className={styles.img} src={noData} />

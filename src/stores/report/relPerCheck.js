@@ -9,6 +9,11 @@ class RelPerCheckStore {
   @observable idCardStatus = false;
   @observable relationship = false;
   @observable personName = false;
+  // 输入框显示样式状态
+  @observable idCardShow = false;
+  @observable relationshipShow = false;
+  @observable personNameShow = false;
+
   showId = observable.map({});
   idCard = observable.map({});
   // 弹窗
@@ -112,6 +117,9 @@ class RelPerCheckStore {
     this.relatedIdCard = '';
     this.relatedSubmit = false;
     this.reloadMonitorId = '';
+    this.idCardShow = false;
+    this.relationshipShow = false;
+    this.personNameShow = false;
   }
 }
 export default new RelPerCheckStore();
