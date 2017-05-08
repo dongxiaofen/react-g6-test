@@ -5,6 +5,7 @@ function DetailHeader({internetStore}) {
   const {type, label, time, title} = internetStore.detailInfo;
   return (
     <div className={styles.header}>
+      <p className={styles.title}>新闻详情</p>
       <div className={styles.marginRow}>
         <span className={styles.type}>{type}</span>
         <span className={styles.label}>{label}</span>
