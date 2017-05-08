@@ -2,15 +2,16 @@ import React, {PropTypes} from 'react';
 import { observer } from 'mobx-react';
 import styles from './index.less';
 
-function FreeButton({modalStore, payModalStore, itemData, singleData, createMonitor, createReportType}) {
+function FreeButton({modalStore, payModalStore, itemData, singleData, createMonitor, createReportType, selectReportType}) {
   const reportOpen = () => {
+    selectReportType('analysis');
     const args = {
       title: '选择报告类型',
       isSingleBtn: true,
       isNeedBtn: true,
       confirmLoading: false,
       width: 570,
-      pointText: '创建报告即视为同意',
+      pointText: '选择报告即视为同意',
       pactUrl: 'xxxxxx',
       pactName: '用户服务协议',
       confirmAction: createReportType,
@@ -34,7 +35,7 @@ function FreeButton({modalStore, payModalStore, itemData, singleData, createMoni
       'width': '560px',
       'pactName': '用户服务协议',
       'pactUrl': '/',
-      'pointText': '创建报告即视为同意',
+      'pointText': '加入监控即视为同意',
       'callBack': choiceOk
     });
   };
@@ -57,5 +58,6 @@ FreeButton.propTypes = {
   singleData: PropTypes.func,
   createMonitor: PropTypes.func,
   createReportType: PropTypes.func,
+  selectReportType: PropTypes.func,
 };
 export default observer(FreeButton);

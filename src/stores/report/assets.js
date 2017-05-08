@@ -22,8 +22,10 @@ class AssetsStore {
   @observable patentLoading = true;
   @observable biddingLoading = true;
 
-  @action.bound getPatentData(monitorId, reportId, analysisReportId, companyName, companyType) {
-    companyHomeApi.getReportModule('patent', monitorId, reportId, analysisReportId, companyName, companyType, uiStore.uiState.patentInfo)
+  @action.bound getPatentData(params) {
+    params.module = 'patent';
+    params.pagesInfo = uiStore.uiState.patentInfo;
+    companyHomeApi.getReportModule(params)
       .then(action( (response) => {
         this.patentLoading = false;
         this.patentData = response.data.content;
@@ -34,8 +36,10 @@ class AssetsStore {
       }));
   }
 
-  @action.bound getTrademarkData(monitorId, reportId, analysisReportId, companyName, companyType) {
-    companyHomeApi.getReportModule('trademark', monitorId, reportId, analysisReportId, companyName, companyType, uiStore.uiState.trademarkLists)
+  @action.bound getTrademarkData(params) {
+    params.module = 'trademark';
+    params.pagesInfo = uiStore.uiState.trademarkLists;
+    companyHomeApi.getReportModule(params)
       .then(action( (response) => {
         this.trLoading = false;
         this.trademarkData = response.data.content;
@@ -46,8 +50,9 @@ class AssetsStore {
       }));
   }
 
-  @action.bound getBiddingData(monitorId, reportId, analysisReportId, companyName, companyType) {
-    companyHomeApi.getReportModule('bidding', monitorId, reportId, analysisReportId, companyName, companyType)
+  @action.bound getBiddingData(params) {
+    params.module = 'bidding';
+    companyHomeApi.getReportModule(params)
       .then(action( (response) => {
         this.biddingLoading = false;
         this.biddingData = response.data;
@@ -58,11 +63,11 @@ class AssetsStore {
       }));
   }
 
-  @action.bound getReportModule(module, monitorId, reportId, analysisReportId, companyName, companyType) {
+  @action.bound getReportModule(params) {
     this.isMount = true;
-    this.getBiddingData(monitorId, reportId, analysisReportId, companyName, companyType);
-    this.getPatentData(monitorId, reportId, analysisReportId, companyName, companyType);
-    this.getTrademarkData(monitorId, reportId, analysisReportId, companyName, companyType);
+    this.getBiddingData(params);
+    this.getPatentData(params);
+    this.getTrademarkData(params);
   }
 
   @action.bound getDetail(url, showDetail) {

@@ -36,7 +36,8 @@ export const getStockCode = ({ reportId, monitorId, analysisReportId }) => {
 export const toggleMonitorStatus = (monitorId, status) => {
   return axios.put(`/api/monitor/${monitorId}/status`, { status: status });
 };
-export const getReportModule = (module, monitorId, reportId, analysisReportId, companyName, companyType, pagesInfo) => {
+export const getReportModule = (params) => {
+  const {module, monitorId, reportId, analysisReportId, companyName, companyType, pagesInfo} = params;
   let url;
   if (companyType === 'MAIN') {
     if (monitorId) {
@@ -220,12 +221,12 @@ export const getPersonName = (url) => {
 };
 
 // 获取评估分析列表
-export const getAlertAnalysisList = (monitorId, reportId, params, source) => {
+export const getAlertAnalysisList = (monitorId, analysisReportId, params, source) => {
   let url;
   if (monitorId) {
     url = `/api/monitor/${monitorId}/alert/page`;
-  } else {
-    url = `/api/analysisReport/${reportId}/alert/page`;
+  } else if (analysisReportId) {
+    url = `/api/analysisReport/${analysisReportId}/alert/page`;
   }
   return axios.get(url, { params: params, cancelToken: source.token });
 };

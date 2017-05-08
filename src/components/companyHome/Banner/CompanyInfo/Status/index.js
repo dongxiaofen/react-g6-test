@@ -4,6 +4,7 @@ import styles from './index.less';
 
 function Status({bannerStore, routing}) {
   const { monitorId, reportId, analysisReportId, companyType } = routing.location.query;
+  const monitorStatus = bannerStore.monitorStatus;
   const getNameAndConfig = () => {
     let reportName;
     if (companyType === 'MAIN') {
@@ -24,7 +25,7 @@ function Status({bannerStore, routing}) {
     return reportName;
   };
   let leftType = '';
-  if (monitorId && companyType === 'MAIN' && bannerStore.monitorStatus === 'MONITOR') {
+  if (monitorId && companyType === 'MAIN' && monitorStatus === 'MONITOR') {
     // 主体监控中
     leftType = (
       <div className={styles.bannerType}>
@@ -32,7 +33,7 @@ function Status({bannerStore, routing}) {
         <span>正在监控中</span>
       </div>
     );
-  } else if (monitorId && companyType === 'MAIN' && bannerStore.monitorStatus === 'EXPIRED') {
+  } else if (monitorId && companyType === 'MAIN' && monitorStatus === 'EXPIRED') {
     // 主体监控已到期
     leftType = (
       <div className={styles.bannerType}>
@@ -40,7 +41,7 @@ function Status({bannerStore, routing}) {
         <span>监控已到期</span>
       </div>
     );
-  } else if (monitorId && companyType === 'MAIN' && bannerStore.monitorStatus === 'PAUSE') {
+  } else if (monitorId && companyType === 'MAIN' && monitorStatus === 'PAUSE') {
     // 主体监控已暂停
     leftType = (
       <div className={styles.bannerType}>
@@ -48,7 +49,7 @@ function Status({bannerStore, routing}) {
         <span>监控已暂停</span>
       </div>
     );
-  } else if (monitorId && companyType === 'ASSOCIATE' && bannerStore.monitorStatus === 'MONITOR') {
+  } else if (monitorId && companyType === 'ASSOCIATE' && monitorStatus === 'MONITOR') {
     // 关联监控中
     leftType = (
       <div className={styles.bannerType}>
@@ -56,12 +57,19 @@ function Status({bannerStore, routing}) {
         <span>正在监控中</span>
       </div>
     );
-  } else if (monitorId && companyType === 'ASSOCIATE' && bannerStore.monitorStatus === 'PAUSE') {
+  } else if (monitorId && companyType === 'ASSOCIATE' && monitorStatus === 'PAUSE') {
     // 关联监控中
     leftType = (
       <div className={styles.bannerType}>
         <i className="fa fa-flag-o"></i>
         <span>监控已暂停</span>
+      </div>
+    );
+  } else if (monitorId && companyType === 'ASSOCIATE' && monitorStatus === 'EXPIRED') {
+    leftType = (
+      <div className={styles.bannerType}>
+        <i className="fa fa-flag-o"></i>
+        <span>监控已到期</span>
       </div>
     );
   }

@@ -18,20 +18,19 @@ function HistoryName({hisNameVis, historyName, closeHisNamePopoverAlias, openHis
       return <div className={styles.historyName}><i className={styles.close} onClick={closeHisNamePopoverAlias}></i>{output}</div>;
     };
 
-    const iconCss = hisNameVis ? styles.hisNameIconUp : styles.hisNameIcon;
     return (
       <div className={styles.contactInfoHistory}>
         <Popover
           visible={hisNameVis}
-          left="40px"
-          top="30px"
+          left="0px"
+          top="25px"
           content={createHisNameItem()}
           closePopover={closeHisNamePopoverAlias}
           openPopover={openHisNamePopoverAlias}
           id="historyName">
           <span className={`${styles.historyNameBtn}`}>
             历史更名
-          <i className={iconCss}></i>
+            <i className={`fa fa-angle-down ${hisNameVis ? styles.rotate : ''}`}></i>
           </span>
         </Popover>
       </div>

@@ -67,9 +67,9 @@ class NetworkStore {
     }
     this.typeList.checkedArrChanged = !this.typeList.checkedArrChanged;
   }
-  @action.bound getReportModule(module, monitorId, reportId, analysisReportId, companyName, companyType) {
+  @action.bound getReportModule(params) {
     this.isMount = true;
-    companyHomeApi.getReportModule(module, monitorId, reportId, analysisReportId, companyName, companyType)
+    companyHomeApi.getReportModule(params)
       .then(action('get currentNetwork data', (resp) => {
         this.isLoading = false;
         this.currentNetwork = resp.data.currentNetwork;

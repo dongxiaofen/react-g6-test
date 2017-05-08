@@ -43,6 +43,10 @@ function LegendBar({ networkStore, resumeSvg, fullScreen, exitFull }) {
         <a className={styles.fullBtn} onClick={!showFullScreen ? handleFullScreen : handleExitFull}>{!showFullScreen ? '全屏显示' : '退出全屏'} <img className={!showFullScreen ? styles.fullIcon : styles.exitIcon} src={!showFullScreen ? fullImg : exitFullImg} /></a>
         <a className={styles.resumeBtn} onClick={resumeSvg}>位置复原 <img className={styles.resumeIcon} src={resumeImg} /></a>
       </div>
+      <span className={styles.legendNotice}>
+        <span className={styles.legendBlacklist}></span> 高风险企业
+        <span className={styles.legendCancel}></span> 注销
+      </span>
     </div>
   );
 }
