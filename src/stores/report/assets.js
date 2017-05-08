@@ -29,9 +29,9 @@ class AssetsStore {
         this.patentData = response.data.content;
         uiStore.uiState.patentInfo.totalElements = response.data.totalElements;
       }))
-      .catch((err) => {
-        console.log(err.response.data);
-      });
+      .catch(action( () => {
+        this.patentLoading = false;
+      }));
   }
 
   @action.bound getTrademarkData(monitorId, reportId, analysisReportId, companyName, companyType) {
@@ -41,9 +41,9 @@ class AssetsStore {
         this.trademarkData = response.data.content;
         uiStore.uiState.trademarkLists.totalElements = response.data.totalElements;
       }))
-      .catch((err) => {
-        console.log(err.response.data);
-      });
+      .catch(action( () => {
+        this.trLoading = false;
+      }));
   }
 
   @action.bound getBiddingData(monitorId, reportId, analysisReportId, companyName, companyType) {

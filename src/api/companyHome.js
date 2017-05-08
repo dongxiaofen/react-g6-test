@@ -51,7 +51,7 @@ export const getReportModule = (module, monitorId, reportId, analysisReportId, c
       }
     } else if (reportId) {
       if (module === 'trademark' || module === 'patent' || module === 'bidding') {
-        url = `/api/report/operation/${module}?reportId=${reportId}${module === 'patent' || module === 'trademark' ? '?index=' + pagesInfo.index + '&limit=' + pagesInfo.size : ''}`;
+        url = `/api/report/operation/${module}?reportId=${reportId}${module === 'patent' || module === 'trademark' ? '&index=' + pagesInfo.index + '&limit=' + pagesInfo.size : ''}`;
       } else if (module === 'person/page') {
         url = `/api/report/${reportId}/person/page?index=1&size=10`;
       } else if (module === 'blackNetwork') {
@@ -61,7 +61,7 @@ export const getReportModule = (module, monitorId, reportId, analysisReportId, c
       }
     } else if (analysisReportId) {
       if (module === 'trademark' || module === 'patent' || module === 'bidding') {
-        url = `/api/analysisReport/operation/${module}?analysisReportId=${analysisReportId}${module === 'patent' || module === 'trademark' ? '?index=' + pagesInfo.index + '&limit=' + pagesInfo.size : ''}`;
+        url = `/api/analysisReport/operation/${module}?analysisReportId=${analysisReportId}${module === 'patent' || module === 'trademark' ? '&index=' + pagesInfo.index + '&limit=' + pagesInfo.size : ''}`;
       } else if (module === 'person/page') {
         url = `/api/analysisReport/${analysisReportId}/person/page?index=1&size=10`;
       } else {
