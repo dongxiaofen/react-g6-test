@@ -62,6 +62,7 @@ class MonitorListStore {
     delete mainParams.totalElements;
     this.mainListCancel = source.cancel;
     this.mainList = {};
+    this.relationListStatus = observable.map({});
     monitorListApi.getMainList(mainParams, source)
       .then(action('getMainList_success', resp => {
         this.mainListCancel = null;
