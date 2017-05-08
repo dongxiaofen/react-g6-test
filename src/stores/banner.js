@@ -172,9 +172,10 @@ class BannerStore {
         this.stockCode = resp.data;
       }))
       .catch((err) => {
-        if (err.response.status !== 404) {
-          console.log('获取stockCode出错', err.response);
-        }
+        console.log(err);
+        // if (err.response.status !== 404) {
+        //   console.log('获取stockCode出错', err.response);
+        // }
       });
   }
 

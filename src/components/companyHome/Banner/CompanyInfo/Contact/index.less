@@ -57,39 +57,36 @@
     cursor: pointer;
   }
 }
-.contactIcon {
-  display: inline-block;
-  width: 15px;
-  height: 15px;
-  margin-right: 5px;
-  background-repeat: no-repeat;
-  background-size: 100% 100%;
-  vertical-align: text-top;
-  background-image: url('imgs/companyHome/downBanner2.png');
-  transition: all 0.1s;
-}
-.contactIconUp {
-  composes: contactIcon;
-  transform: rotate(180deg);
-}
 .contactInfo {
   float: left;
   margin-right: 36px;
 
   font-size: 14px;
   line-height: 14px;
+  height: 14px;
 }
+
 .messageStyle {
-  float: left;
+  display: block;
   font-size:14px;
   line-height: 14px;
   color: @mdc-blue-400;
   cursor: pointer;
-}
-.messageStyle i{
-  margin: 6px 0 0 3px;
-  width: 10px;
-  height: 5px;
 
-  color: @mdc-blue-400;
+  i {
+    margin-left: 3px;
+
+    color: @mdc-blue-400;
+
+    -webkit-transition: all .3s ease-in-out;
+       -moz-transition: all .3s ease-in-out;
+        -ms-transition: all .3s ease-in-out;
+         -o-transition: all .3s ease-in-out;
+            transition: all .3s ease-in-out;
+  }
+}
+
+.rotate{
+  -webkit-transform: rotate(180deg);
+  transform: rotate(180deg);
 }
