@@ -3,7 +3,7 @@ import { observer } from 'mobx-react';
 import { browserHistory } from 'react-router';
 import styles from './index.less';
 
-function CompanyName({data, leftBarStore}) {
+function CompanyName({data}) {
   // 公司名
   const name = data.companyName;
   // 类型
@@ -23,8 +23,6 @@ function CompanyName({data, leftBarStore}) {
   }
   // 跳转报告
   const link = () => {
-    const rute = {activeItem: 'alertAnalysis'};
-    leftBarStore.combineServerData.bind(this, rute);
     // 深度报告
     if (data.productType === 'ANALYSIS_REPORT') {
       browserHistory.push(`/companyHome/alertAnalysis?analysisReportId=${data.productId}&companyType=MAIN`);
@@ -52,6 +50,5 @@ function CompanyName({data, leftBarStore}) {
 
 CompanyName.propTypes = {
   data: PropTypes.object,
-  leftBarStore: PropTypes.object,
 };
 export default observer(CompanyName);

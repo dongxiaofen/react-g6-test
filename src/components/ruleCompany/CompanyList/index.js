@@ -10,7 +10,7 @@ import Numbers from './Numbers';
 import { loadingComp } from 'components/hoc';
 import Pager from 'components/common/Pager';
 
-function CompanyList({ruleCompanyStore, uiStore, leftBarStore}) {
+function CompanyList({ruleCompanyStore, uiStore}) {
   const {companyList} = ruleCompanyStore;
   const list = [];
   if (companyList && companyList.length > 0) {
@@ -19,9 +19,7 @@ function CompanyList({ruleCompanyStore, uiStore, leftBarStore}) {
         <div key={`${idx}list`} className={styles.single}>
           <Row>
             <Col width="6">
-              <CompanyName
-                leftBarStore={leftBarStore}
-                data={obj} />
+              <CompanyName data={obj} />
               <ReportType data={obj} />
             </Col>
             <Col width="2">
@@ -49,7 +47,6 @@ function CompanyList({ruleCompanyStore, uiStore, leftBarStore}) {
 CompanyList.propTypes = {
   ruleCompanyStore: PropTypes.object,
   uiStore: PropTypes.object,
-  leftBarStore: PropTypes.object,
 };
 export default loadingComp({
   mapDataToProps: props => ({
