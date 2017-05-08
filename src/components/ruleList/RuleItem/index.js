@@ -53,7 +53,7 @@ function RuleItem({ruleList, switchLoading, itemData, changeRuleStatus, setItemD
   return (
     <div className={styles.box}>
       {list}
-      <div>
+      <div className={styles.page}>
         <Pager tData={ruleList} module="ruleListPager"
                uiStore={uiStore} type="large"/>
       </div>

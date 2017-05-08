@@ -1,14 +1,20 @@
 import axios from 'axios';
-export const getBannerInfo = (monitorId, reportId, companyName, companyType) => {
+export const getBannerInfo = ({
+  monitorId,
+  reportId,
+  analysisReportId,
+  companyName,
+  companyType
+}) => {
   let url;
   if (monitorId) {
     url = `/api/monitor/${monitorId}/infobanner`;
   } else if (reportId) {
     url = `/api/report/infobanner?reportId=${reportId}`;
-  } else if (companyType) {
+  } else if (analysisReportId) {
+    url = `/api/analysisReport/infobanner?analysisReportId=${analysisReportId}`;
+  } else if (companyType === 'FREE') {
     url = `/api/free/infobanner?companyName=${encodeURI(companyName)}`;
-  } else {
-    url = `/api/report/infobanner?companyName=${encodeURI(companyName)}`;
   }
   return axios.get(url);
 };
@@ -30,7 +36,7 @@ export const getStockCode = ({ reportId, monitorId, analysisReportId }) => {
 export const toggleMonitorStatus = (monitorId, status) => {
   return axios.put(`/api/monitor/${monitorId}/status`, { status: status });
 };
-export const getReportModule = (module, monitorId, reportId, companyName, companyType, pagesInfo) => {
+export const getReportModule = (module, monitorId, reportId, analysisReportId, companyName, companyType, pagesInfo) => {
   let url;
   if (companyType === 'MAIN') {
     if (monitorId) {
@@ -52,6 +58,14 @@ export const getReportModule = (module, monitorId, reportId, companyName, compan
         url = `/api/monitor/${monitorId}/network/blacklist`;
       } else {
         url = `/api/report/${module}?reportId=${reportId}`;
+      }
+    } else if (analysisReportId) {
+      if (module === 'trademark' || module === 'patent' || module === 'bidding') {
+        url = `/api/analysisReport/operation/${module}?analysisReportId=${analysisReportId}${module === 'patent' || module === 'trademark' ? '?index=' + pagesInfo.index + '&limit=' + pagesInfo.size : ''}`;
+      } else if (module === 'person/page') {
+        url = `/api/analysisReport/${analysisReportId}/person/page?index=1&size=10`;
+      } else {
+        url = `/api/analysisReport/${module}?analysisReportId=${analysisReportId}`;
       }
     }
   } else if (companyType === 'ASSOCIATE') {
@@ -104,7 +118,7 @@ export const checkPersonInfo = (url, params) => {
 export const getIdCard = (url) => {
   return axios.get(url);
 };
-export const changeAnnouncement = ({ stockType, monitorId, reportId }) => {
+export const changeAnnouncement = ({ stockType, monitorId, reportId, analysisReportId }) => {
   let url;
   if (monitorId) {
     if (stockType) {
@@ -118,6 +132,13 @@ export const changeAnnouncement = ({ stockType, monitorId, reportId }) => {
       url = `/api/report/stock/announcement?reportId=${reportId}&stockType=${stockType}`;
     } else {
       url = `/api/report/stock/announcement?reportId=${reportId}`;
+    }
+  }
+  if (analysisReportId) {
+    if (stockType) {
+      url = `/api/analysisReport/stock/announcement?analysisReportId=${analysisReportId}&stockType=${stockType}`;
+    } else {
+      url = `/api/analysisReport/stock/announcement?analysisReportId=${analysisReportId}`;
     }
   }
   return axios.get(url);
@@ -135,9 +156,47 @@ export const createReport = (active, companyName) => {
   return axios.post(url, { companyName: companyName });
 };
 
+// 高级查询报告升级为深度分析报告
+export const updateToAnalysisReport = (reportId) => {
+  return axios.put(`/api/report/${reportId}/upgrade/analysisReport`, {reportId: reportId});
+};
+
+// 刷新高级报告或者深度报告
+export const refreshHighOrDeep = (reportId, analysisReportId) => {
+  const url = analysisReportId
+    ? `/api/analysisReport/${analysisReportId}`
+    : `/api/report/${reportId}`;
+  return axios.put(url);
+};
+
 // 创建监控
 export const createMonitor = (params) => {
   return axios.post(`/api/monitor`, params);
+};
+
+// 升级监控
+export const updateToMonitor = ({ reportId, analysisReportId, time }) => {
+  let url;
+  const params = { time: time };
+  if (reportId) {
+    url = `/api/report/${reportId}/upgrade`;
+    params.reportId = reportId;
+  }
+  if (analysisReportId) {
+    url = `/api/analysisReport/${analysisReportId}/upgrade`;
+    params.analysisReportId = analysisReportId;
+  }
+  return axios.put(url, params);
+};
+
+// 监控续期
+export const renewalMonitor = (monitorId, time) => {
+  return axios.put(`/api/monitor/${monitorId}/renewal`, { time: time });
+};
+
+// 暂停或恢复监控
+export const pauseOrRestoreMonitor = (monitorId, status) => {
+  return axios.put(`/api/monitor/${monitorId}/status`, { status: status });
 };
 
 // 添加/删除收藏
@@ -185,4 +244,8 @@ export const getAlertNewsReport = (params) => {
 };
 export const getAlertJudgeDocReport = (params) => {
   return axios.get('/api/analysisReport/risk/judgeDoc', {params});
+};
+// 判断企业报告类型
+export const judgeReportType = (companyName) => {
+  return axios.get(`/api/common/status?companyName=${companyName}`);
 };

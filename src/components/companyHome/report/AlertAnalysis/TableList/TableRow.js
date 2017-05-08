@@ -30,6 +30,11 @@ function TableRow({data, routing, alertAnalysisStore}) {
     // alertAnalysisStore.changeValue('detailData.info', data);
     alertAnalysisStore.getAlertDetail(url, type, monitorId || reportId, data);
   };
+  const alertTypeMap = {
+    'RULE': '我的预警',
+    'BLACKLIST': '系统预警',
+    'SYS_RULE': '系统预警',
+  };
   return (
     <div className={styles.itemBox}>
       <div className={styles.lineRow}>
@@ -37,7 +42,7 @@ function TableRow({data, routing, alertAnalysisStore}) {
           {data.ruleName}
         </span>
         <span className={styles.type}>
-          {data.alertType}
+          {alertTypeMap[data.alertType]}
         </span>
         <span
           className={styles.viewBtn}

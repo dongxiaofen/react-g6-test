@@ -4,33 +4,20 @@ import styles from './index.less';
 
 function ReportAction({ bannerStore, modalStore, payModalStore, routing }) {
   const { monitorId, reportId, analysisReportId, companyType } = routing.location.query;
-  const operatMonitor = () => {
-    if (bannerStore.monitorStatus === 'PAUSE' || bannerStore.monitorStatus === 'MONITOR') {
-      if (bannerStore.monitorStatus === 'PAUSE') {
-        const newStatus = bannerStore.monitorStatus === 'MONITOR' ? 'PAUSE' : 'MONITOR';
-        // this.props.commonBoundAC.updateValue(['actionStatus', 'monitorStatus'], true, 'REPORT_UPDATE_VALUE');
-        bannerStore.toggleMonitorStatus(monitorId, newStatus);
-      } else {
-        // this.props.commonBoundAC.updateValue(['changeMonitorStatus', 'visible'], true, 'REPORT_UPDATE_VALUE');
-      }
-    }
-  };
-
+  const monitorStatus = bannerStore.monitorStatus;
+  /* 普通按钮 */
   const choiceOk = () => {
-    const companyName = routing.location.query.companyName;
-    const obj = { companyName: companyName, time: payModalStore.selectValue };
-    bannerStore.createMonitor(obj);
-  };
-
-  const openPayModal = () => {
-    // payModalStore.openCompModal({
-    //   'modalType': 'createMonitor',
-    //   'width': '560px',
-    //   'pactName': '用户服务协议',
-    //   'pactUrl': '/',
-    //   'pointText': '创建报告即视为同意',
-    //   'callBack': choiceOk
-    // });
+    if (reportId || analysisReportId) {
+      bannerStore.updateToMonitor({
+        reportId: reportId,
+        analysisReportId: analysisReportId,
+        time: payModalStore.selectValue
+      });
+    } else {
+      const companyName = bannerStore.companyName;
+      const obj = { companyName: companyName, time: payModalStore.selectValue };
+      bannerStore.createMonitor(obj);
+    }
   };
 
   const openCreateMonitorModal = () => {
@@ -44,11 +31,31 @@ function ReportAction({ bannerStore, modalStore, payModalStore, routing }) {
     });
   };
 
-  const updateHighOrDeepConfirmAction = () => {
-    const companyName = routing.location.query.companyName;
-    const updateHighOrDeep = bannerStore.updateHighOrDeep;
-    bannerStore.createReport(updateHighOrDeep.active, companyName);
+  const renewalConfirm = () => {
+    bannerStore.renewalMonitor(monitorId, payModalStore.selectValue);
   };
+
+  const renewalMonitorModal = () => {
+    payModalStore.openCompModal({
+      'modalType': 'continueMonitor',
+      'width': '560px',
+      'pactName': '用户服务协议',
+      'pactUrl': '/',
+      'pointText': '创建报告即视为同意',
+      'callBack': renewalConfirm
+    });
+  };
+
+  const updateHighOrDeepConfirmAction = () => {
+    if (reportId) {
+      bannerStore.updateToAnalysisReport(reportId);
+    } else {
+      const companyName = bannerStore.companyName;
+      const updateHighOrDeep = bannerStore.updateHighOrDeep;
+      bannerStore.createReport(updateHighOrDeep.active, companyName);
+    }
+  };
+
   const openUpdateHighOrDeepModal = () => {
     modalStore.openCompModal({
       title: '升级报告',
@@ -58,11 +65,16 @@ function ReportAction({ bannerStore, modalStore, payModalStore, routing }) {
       pactUrl: 'xxxxxx',
       pactName: '用户服务协议',
       confirmAction: updateHighOrDeepConfirmAction,
-      closeAction: modalStore.closeAction,
       loader: (cb) => {
-        require.ensure([], (require) => {
-          cb(require('./UpdateHighOrDeep'));
-        });
+        if (reportId) {
+          require.ensure([], (require) => {
+            cb(require('./UpdateDeep'));
+          });
+        } else {
+          require.ensure([], (require) => {
+            cb(require('./UpdateHighOrDeep'));
+          });
+        }
       }
     });
   };
@@ -70,8 +82,8 @@ function ReportAction({ bannerStore, modalStore, payModalStore, routing }) {
     const outputBtn = [];
     const updateReport = <div key="btnUpdateReprot" className={styles.actionBtn} onClick={openUpdateHighOrDeepModal}>升级报告</div>;
     const addMonitor = <div key="btnAddMonitor" className={styles.actionBtn} onClick={openCreateMonitorModal}>加入监控</div>;
-    const updateMonitor = <div key="btnUpdateMonitor" className={styles.actionBtn}>升级监控</div>;
-    const monitorRenewal = <div key="btnRenewalMonitor" className={styles.actionBtn}>监控续期</div>;
+    const updateMonitor = <div key="btnUpdateMonitor" className={styles.actionBtn} onClick={openCreateMonitorModal}>升级监控</div>;
+    const monitorRenewal = <div key="btnRenewalMonitor" className={styles.actionBtn} onClick={renewalMonitorModal}>监控续期</div>;
     switch (companyType) {
       case 'FREE':
         outputBtn.push(updateReport);
@@ -105,10 +117,12 @@ function ReportAction({ bannerStore, modalStore, payModalStore, routing }) {
     );
   };
 
+  /* 文字按钮 */
+  const clearPdfConfigChecked = () => {
+    bannerStore.clearPdfConfigChecked();
+  };
+
   const openDownLoadPdf = () => {
-    const clearPdfConfigChecked = () => {
-      bannerStore.clearPdfConfigChecked();
-    };
     modalStore.openCompModal({
       width: 750,
       isCustomize: true,
@@ -121,51 +135,45 @@ function ReportAction({ bannerStore, modalStore, payModalStore, routing }) {
     });
   };
 
-  let monitorText = '';
-  let monitorCss = styles.bgOrange;
-  let refreshCss = styles.enable;
-  let refreshText = '刷新报告';
-  let leftTypeBtn = '';
-  if (bannerStore.monitorStatus === 'MONITOR') {
-    monitorText = companyType === 'ASSOCIATE' ? '暂停监控' : '暂停监控';
-  } else if (bannerStore.monitorStatus === 'PAUSE') {
-    monitorText = '恢复监控';
-  } else if (bannerStore.monitorStatus === false) {
-    monitorText = '获取中';
-    monitorCss = styles.disable;
-  } else if (bannerStore.monitorStatus === true) {
-    monitorText = '修改中';
-    monitorCss = styles.disable;
-  }
-  if (bannerStore.refreshStatus === 'loading') {
-    refreshCss = styles.disable;
-    refreshText = '请稍后';
-  }
-
-  if (monitorId && companyType === 'MAIN') {
-    leftTypeBtn = (
-      <div className={styles.bannerAction + ' ' + monitorCss} onClick={operatMonitor}>
-        <span>{monitorText}</span>
-      </div>
-    );
-  } else if (monitorId && companyType === 'ASSOCIATE') {
-    leftTypeBtn = (
-      <div className={styles.bannerAction + ' ' + monitorCss} onClick={operatMonitor}>
-        <span>{monitorText}</span>
-      </div>
-    );
-  } else if (reportId) {
-    leftTypeBtn = (
-      <div className={styles.bannerAction + ' ' + refreshCss} onClick={openPayModal.bind(this, 'refreshReport', 'updateReport', 'reportModalStatus')}>
-        <span>{refreshText}</span>
-      </div>
-    );
-  }
-  console.log(leftTypeBtn, '-----------------leftTypeBtn');
-
   const addOrCancelCollection = () => {
     const params = { collection: !bannerStore.collection };
     bannerStore.addOrCancelCollection({ reportId, analysisReportId, monitorId, params });
+  };
+
+  const pauseOrRestoreMonitorConfirm = () => {
+    bannerStore.pauseOrRestoreMonitor(monitorId, monitorStatus === 'MONITOR' ? 'PAUSE' : 'MONITOR');
+  };
+
+  const pauseOrRestoreMonitorModal = () => {
+    modalStore.openCompModal({
+      title: '暂停监控',
+      width: 440,
+      confirmAction: pauseOrRestoreMonitorConfirm,
+      cancelAction: modalStore.closeAction,
+      loader: (cb) => {
+        require.ensure([], (require) => {
+          cb(require('./PauseOrRestoreMonitor'));
+        });
+      }
+    });
+  };
+
+  const refreshHighOrDeepConfirm = () => {
+    bannerStore.refreshHighOrDeep(reportId, analysisReportId);
+  };
+
+  const refreshHighOrDeepModal = () => {
+    modalStore.openCompModal({
+      title: '刷新报告',
+      width: 420,
+      isSingleBtn: true,
+      confirmAction: refreshHighOrDeepConfirm,
+      loader: (cb) => {
+        require.ensure([], (require) => {
+          cb(require('./RefreshHighOrDeep'));
+        });
+      }
+    });
   };
 
   const collectionTextAction = () => {
@@ -198,13 +206,54 @@ function ReportAction({ bannerStore, modalStore, payModalStore, routing }) {
     return output;
   };
 
+  const pauseOrRestoreMonitorTextAction = () => {
+    let output = null;
+    // 判断bannerInfo数据是否请求回来了
+    if (bannerStore.isLoading) {
+      output = (
+        <div key="textAction4" className={styles.textAction}>
+          加载中...
+        </div>
+      );
+    } else {
+      // 当该监控是暂停监控状体时
+      if (monitorStatus === 'PAUSE') {
+        // 恢复按钮前面转菊花
+        if (bannerStore.reStoreLoading) {
+          output = (
+            <div key="textAction4" className={styles.textAction}>
+              <i className="anticon anticon-spin anticon-loading"></i>
+              恢复监控
+            </div>
+          );
+        } else {
+          // 恢复按钮的点击事件
+          output = (
+            <div key="textAction4" className={styles.textAction} onClick={pauseOrRestoreMonitorConfirm}>
+              <i className="fa fa-camera"></i>
+              恢复监控
+            </div>
+          );
+        }
+      } else {
+        // 暂停监控按钮
+        output = (
+          <div key="textAction4" className={styles.textAction} onClick={pauseOrRestoreMonitorModal}>
+            <i className="fa fa-camera-retro" aria-hidden="true"></i>
+            暂停监控
+          </div>
+        );
+      }
+    }
+    return output;
+  };
+
   const bannerTextAction = () => {
     const output = [];
     const mainStatus = bannerStore.mainStatus;
-    const monitorStatus = bannerStore.monitorStatus;
     const collectionAction = collectionTextAction();
     const refreshReportAction = (
-      <div key="textAction2" className={styles.textAction}>
+      <div key="textAction2" className={styles.textAction} onClick={refreshHighOrDeepModal}>
         <i className="fa fa-refresh"></i>
         刷新报告
       </div>
@@ -215,22 +264,17 @@ function ReportAction({ bannerStore, modalStore, payModalStore, routing }) {
         下载PDF
       </div>
     );
-    const monitorAction = (
-      <div key="textAction4" className={styles.textAction}>
-        <i className="fa fa-camera-retro" aria-hidden="true"></i>
-        {monitorStatus === 'MONITOR' ? '暂停监控' : '恢复监控'}
-      </div>
-    );
+    const pauseOrRestoreMonitorAction = pauseOrRestoreMonitorTextAction();
     if (companyType === 'MAIN') {
       output.push(collectionAction);
       if (monitorId) {
-        output.push(monitorAction);
+        output.push(pauseOrRestoreMonitorAction);
       } else {
         output.push(refreshReportAction);
       }
-    } else {
+    } else if (companyType === 'ASSOCIATE') {
       if (mainStatus !== 'PAUSE') {
-        output.push(monitorAction);
+        output.push(pauseOrRestoreMonitorAction);
       }
     }
     if (companyType !== 'FREE') {

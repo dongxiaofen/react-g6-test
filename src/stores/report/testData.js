@@ -139,31 +139,38 @@ const testData = {
     ]
   },
   'rule12': {
-    'id': 12324,
-    'ruleName': '较大比例关联公司发生工商状态注销',
+    'ruleType': 8,
     'ruleId': 12,
-    'time': '2017-04-19 11:46:07',
-    'companyName': '重庆小泉化工厂',
-    'ruleDescription': '检测该主体公司所有关联公司是否大部分(10%)都发生了工商登记注销',
+    'detailSummary': [
+      {
+        'numOfNetworkComp': 10,
+        'numOfCancelledComp': 6
+      }
+    ],
+    'ruleName': '较大比例关联公司发生工商状态注销',
     'detail': [
       {
+        'relation': [
+          '投资公司',
+          '投资公司'
+        ],
+        'type': 'saicInfoCheck',
         'statusType': '注销',
+        'companyName': '重庆不存在有限公司1'
+      },
+      {
         'relation': [
           '投资公司'
         ],
         'type': 'saicInfoCheck',
-        'companyName': '重庆市巴南区南泉镇乡镇企业投资合作社',
-      },
-      {
         'statusType': '注销',
-        'relation': [
-          '投资公司',
-          '**关系'
-        ],
-        'type': 'saicInfoCheck',
-        'companyName': '重庆**公司'
+        'companyName': '重庆不存在有限公司2'
       }
-    ]
+    ],
+    'companyName': '重庆不存在有限公司',
+    'ruleDescription': '检测该主体公司所有关联公司是否大部分(10%)都发生了工商登记注销',
+    'time': '2017-04-19 11:46:07',
+    'id': 113542
   },
   rule7: {
     'id': 12324,
