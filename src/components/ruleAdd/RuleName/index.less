@@ -39,10 +39,25 @@
   height: 22px;
   line-height: 22px;
   font-size:14px;
-  color:#bdbdbd;
+  color:#212121;
   letter-spacing:0;
   border-bottom: 1px solid #90caf9;
   background: none;
+  &::-webkit-input-placeholder {
+    color: #bdbdbd;
+  }
+
+  &:-moz-placeholder {
+    color: #bdbdbd;
+  }
+
+  &::-moz-placeholder {
+    color: #bdbdbd;
+  }
+
+  &:-ms-input-placeholder {
+    color: #bdbdbd;
+  }
 }
 .inputName:focus {
   color:#212121;

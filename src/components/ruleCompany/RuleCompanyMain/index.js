@@ -5,12 +5,13 @@ import CompanySearch from '../CompanySearch';
 import CompanyList from '../CompanyList';
 import {Container, Row, Col} from 'components/common/layout';
 
-@inject('ruleCompanyStore', 'uiStore')
+@inject('ruleCompanyStore', 'uiStore', 'leftBarStore')
 @observer
 export default class RuleCompanyMain extends Component {
   static propTypes = {
     ruleCompanyStore: PropTypes.object,
     uiStore: PropTypes.object,
+    leftBarStore: PropTypes.object,
   }
   componentDidMount() {
     this.props.ruleCompanyStore.getCompanyList();
@@ -31,7 +32,8 @@ export default class RuleCompanyMain extends Component {
             <Col>
               <CompanyList
                 ruleCompanyStore={this.props.ruleCompanyStore}
-                uiStore={this.props.uiStore} />
+                uiStore={this.props.uiStore}
+                leftBarStore={this.props.leftBarStore} />
             </Col>
           </Row>
         </Container>

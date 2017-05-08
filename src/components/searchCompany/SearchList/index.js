@@ -23,6 +23,7 @@ function SearchList({searchCompanyStore, modalStore, payModalStore}) {
     singleData,
     createMonitor,
     createReportType,
+    selectReportType,
     pageParams,
     getPageList,
     getFeedBack,
@@ -38,7 +39,8 @@ function SearchList({searchCompanyStore, modalStore, payModalStore}) {
           searchParameter={searchParameter}
           singleData={singleData}
           createMonitor={createMonitor}
-          createReportType={createReportType} />
+          createReportType={createReportType}
+          selectReportType={selectReportType} />
       </div>
     );
   });

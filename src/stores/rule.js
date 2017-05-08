@@ -149,11 +149,16 @@ class RuleStore {
       }))
       .catch(action('monitor error', (err) => {
         console.log(err.response, '=====monitor error');
+        this.companyData = [];
       }));
   }
   // 填写搜索
   @action.bound changeCompanyName(evt) {
     this.searchCompanyName = evt.target.value;
+    if (evt.target.value.length === 0) {
+      // 发送请求
+      this.getMonitorCompany();
+    }
   }
   // 搜索handleEnter
   @action.bound handleEnter(evt) {
@@ -371,7 +376,10 @@ class RuleStore {
   }
   // 发生次数
   @action.bound setAlterCount(evt) {
-    this.alterCount = evt.target.value.replace(/\D/g, '');
+    const text = evt.target.value.replace(/\D/g, '');
+    if (text !== '0') {
+      this.alterCount = text;
+    }
   }
   // 提交规则
   @action.bound createRule() {

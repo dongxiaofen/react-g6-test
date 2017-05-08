@@ -6,7 +6,7 @@ import Checkbox from 'antd/lib/checkbox';
 function Company({ruleStore}) {
   // 公司列表数据
   const companyListData = ruleStore.companyData;
-  const companyListDom = [];
+  let companyListDom = [];
   const selectData = ruleStore.companySelectData;
   if (companyListData && companyListData.length > 0) {
     companyListData.map((obj, idx)=>{
@@ -36,6 +36,14 @@ function Company({ruleStore}) {
         </div>
       );
     });
+  } else {
+    companyListDom = (
+      <div className={styles.leftSingle}>
+        <div className={styles.leftSingleText}>
+          搜索结果无数据
+        </div>
+      </div>
+    );
   }
   // 选中公司数据
   const companySelectData = ruleStore.companySelectData;
