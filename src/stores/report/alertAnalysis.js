@@ -172,21 +172,5 @@ class AlertAnalysisStore {
     this.listData = {};
     this.resetDetailData();
   }
-  @action.bound resetStore() {
-    this.isMount = false;
-    this.loadingId = -1;
-    this.alertCancel = null;
-    this.listData = {};
-    this.detailData = {
-      activeIndex: 0,
-      page: 1,
-      tabTop: computed(function tabTop() {
-        return 0 - (this.page - 1) * 8 * 60;
-      }),
-      info: {},
-      detail: {},
-      html: '',
-    };
-  }
 }
 export default new AlertAnalysisStore();
