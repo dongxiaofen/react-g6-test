@@ -116,6 +116,7 @@ export function updateLinksDisplay(nodes, links) {
   links.map((link) => {
     if (!nodes[nodes.findIndex((item) => item.name === link.source.name)].hide && !nodes[nodes.findIndex((item) => item.name === link.target.name)].hide) {
       link.hide = false;
+      link.isFocus = false;
     } else {
       link.hide = true;
     }
