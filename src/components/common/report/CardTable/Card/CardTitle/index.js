@@ -1,8 +1,8 @@
-import React, {PropTypes} from 'react';
+import React, { PropTypes } from 'react';
 import { observer } from 'mobx-react';
 import styles from './index.less';
 
-function CardTitle({meta, cData}) {
+function CardTitle({ meta, cData }) {
   if (!meta.title) {
     return null;
   }
@@ -23,9 +23,11 @@ function CardTitle({meta, cData}) {
     }
     const subTitle = [];
     meta.title.sub.map((title, idx) => {
-      subTitle.push(
-        <span className={styles.subTitle} key={title + idx}>{cData[title]}</span>
-      );
+      if (cData[title] !== 0) {
+        subTitle.push(
+          <span className={styles.subTitle} key={title + idx}>{cData[title]}</span>
+        );
+      }
     });
     return subTitle;
   };
