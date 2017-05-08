@@ -1,14 +1,10 @@
 @import '~sc-colors/index.less';
+
 .search {
   position: relative;
   float: right;
-  padding-left: 24px;
   margin-top: 30px;
   width: 260px;
-
-  line-height: 20px;
-
-  border-bottom: 1px solid #64b5f6;
 
   i {
     position: absolute;
@@ -16,16 +12,62 @@
     left: 0;
 
     font-size: 16px;
+    color: @mdc-grey-400;
+
+    -webkit-transition: color .3s ease-in-out;
+     -moz-transition: color .3s ease-in-out;
+      -ms-transition: color .3s ease-in-out;
+       -o-transition: color .3s ease-in-out;
+          transition: color .3s ease-in-out;
   }
 }
 
 .input {
+  padding-left: 24px;
   width: 100%;
 
   font-size: 14px;
   line-height: 20px;
-  color: @mdc-grey-400;
+  color: @mdc-blue-grey-500;
 
   background-color: transparent;
   border: none;
+  border-bottom: 1px solid @mdc-grey-400;
+
+  -webkit-transition: border-color .3s ease-in-out;
+     -moz-transition: border-color .3s ease-in-out;
+      -ms-transition: border-color .3s ease-in-out;
+       -o-transition: border-color .3s ease-in-out;
+          transition: border-color .3s ease-in-out;
+  
+  &:hover {
+    border-bottom-color: @mdc-blue-300;
+    & + i {
+      color: @mdc-blue-300;
+    }
+  }
+  
+  &:focus {
+    border-bottom-color: @mdc-blue-300;
+    & + i {
+      color: @mdc-blue-300;
+    }
+  }
+
+  &::-webkit-input-placeholder {
+    color: @mdc-grey-400;
+  }
+
+  &:-moz-placeholder {
+    color: @mdc-grey-400;
+  }
+
+  &::-moz-placeholder {
+    color: @mdc-grey-400;
+  }
+
+  &:-ms-input-placeholder {
+    color: @mdc-grey-400;
+  }
 }
+

@@ -33,7 +33,6 @@ function Filter({ reportManageStore, reportManagePager, status }) {
     <div className={styles.search}>
       {/* <div className={`clearfix ${styles.wrap} ${reportManageStore.focus ? styles.Active : ''}`}>
     </div> */}
-      <i className="fa fa-search"></i>
       <input className={styles.input}
         onKeyUp={keyUpEvent}
         onChange={inputName}
@@ -41,6 +40,7 @@ function Filter({ reportManageStore, reportManagePager, status }) {
         onBlur={setFocus.bind(this, false)}
         value={reportManageStore.companyName}
         placeholder="输入企业名称" />
+      <i className="fa fa-search"></i>
     </div>
   );
 }
