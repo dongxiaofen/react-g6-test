@@ -15,6 +15,7 @@ class BlackNetworkStore {
   @observable radioList = [];
   @observable modalFocusIdx = -1; // 弹窗idx
   @observable detailModalData = {};
+  @observable expandIdx = 0;
 
   @action.bound openDetailModal(idx, data) {
     this.modalFocusIdx = idx;
@@ -37,13 +38,13 @@ class BlackNetworkStore {
         this.blackNetwork = resp.data.result[0];
         this.mainCompanyName = resp.data.result[0].mainCompanyName;
         this.radioList = Array(resp.data.result[0].paths.length).fill(0);
-        this.radioList[0] = 1;
+        this.radioList[this.expandIdx] = 1;
         const pathsArr = resp.data.result[0].paths;
         this.blackList = pathsArr;
         this.blackNetwork.nodes.map((node) => {
-          if (pathsArr[0].relatedPaths.includes(node.name)) {
+          if (pathsArr[this.expandIdx].relatedPaths.includes(node.name)) {
             node.hide = false;
-            if (node.name === pathsArr[0].blackListNode) {
+            if (node.name === pathsArr[this.expandIdx].blackListNode) {
               node.isBlack = true;
             }
           } else {
@@ -51,7 +52,7 @@ class BlackNetworkStore {
           }
         });
         this.blackNetwork.links.map((link) => {
-          if (pathsArr[0].relatedPaths.includes(link.source) && pathsArr[0].relatedPaths.includes(link.target)) {
+          if (pathsArr[this.expandIdx].relatedPaths.includes(link.source) && pathsArr[this.expandIdx].relatedPaths.includes(link.target)) {
             link.hide = false;
           } else {
             link.hide = true;

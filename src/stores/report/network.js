@@ -45,7 +45,7 @@ class NetworkStore {
   }
   @action.bound focusNode(name) {
     this.focusNodeName = name;
-    this.nodePanel.show = true;
+    this.nodePanel.show = name === this.mainCompanyName ? false : true;
   }
   @action.bound closePanel() {
     this.nodePanel.show = false;
