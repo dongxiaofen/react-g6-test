@@ -11,9 +11,9 @@ class BlackNetworkStore {
     nodes: []
   };
 
-  @action.bound getReportModule(module, monitorId, reportId, companyName, companyType) {
+  @action.bound getReportModule(params) {
     this.isMount = true;
-    companyHomeApi.getReportModule(module, monitorId, reportId, companyName, companyType)
+    companyHomeApi.getReportModule(params)
       .then(action('get blackNetwork data', (resp) => {
         this.isLoading = false;
         this.blackNetwork = resp.data.result[0];
@@ -38,7 +38,7 @@ class BlackNetworkStore {
         });
       }))
       .catch(action('blackNetwork出错', (err) => {
-        console.log('blackNetwork出错', err.response.data);
+        console.log('blackNetwork出错', err);
         this.error = err.response.data;
         this.isLoading = false;
       }));
