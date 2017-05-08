@@ -58,6 +58,11 @@ class LeftBarStore {
       contain: ['main'],
     },
   ];
+
+  @action.bound resetStore() {
+    this.activeMenu = ['report'];
+    this.activeItem = 'corpDetail';
+  }
   @action combineServerData(data) {
     this.activeItem = data.activeItem;
   }
