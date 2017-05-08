@@ -8,7 +8,7 @@ export const getBannerInfo = ({
 }) => {
   let url;
   if (monitorId) {
-    url = `/api/monitor/${monitorId}/infobanner`;
+    url = `/api/monitor/${monitorId}/infobanner/xx`;
   } else if (reportId) {
     url = `/api/report/infobanner?reportId=${reportId}`;
   } else if (analysisReportId) {
