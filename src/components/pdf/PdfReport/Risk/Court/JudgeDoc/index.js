@@ -18,7 +18,7 @@ function JudgeDoc({moduleData}) {
   const createDocList = (data) => {
     const output = [];
     const dict = data.dict;
-    data.item.forEach(_item => {
+    data.item.forEach((_item, index) => {
       const single = [];
       data.dataConfig.forEach(configItem => {
         const parentProps = {};
@@ -27,6 +27,7 @@ function JudgeDoc({moduleData}) {
         }
         single.push(
             <KeyValue
+              key={`${configItem.key}judgeDoc`}
               {...parentProps}
               theKey={config[dict][configItem.key]}
               theValue={configItem.handle ? configItem.handle(_item[configItem.key], _item) : _item[configItem.key]}
@@ -37,7 +38,7 @@ function JudgeDoc({moduleData}) {
           );
       });
       output.push(
-        <div className={styles.singleBox}>
+        <div key={`${index}singleBox`} className={styles.singleBox}>
           {single}
         </div>
       );

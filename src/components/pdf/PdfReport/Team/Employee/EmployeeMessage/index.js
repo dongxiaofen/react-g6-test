@@ -31,6 +31,6 @@ function EmployeeMessage({ moduleData }) {
 }
 
 EmployeeMessage.propTypes = {
-  moduleData: PropTypes.array,
+  moduleData: PropTypes.object,
 };
 export default observer(EmployeeMessage);
