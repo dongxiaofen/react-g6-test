@@ -16,6 +16,11 @@ function RelPerInfo({relPerCheckStore}) {
   const closeModal = () => {
     runInAction('关闭弹窗', () => {
       relPerCheckStore.showCheckModal = false;
+      // 身份证号
+      relPerCheckStore.relatedIdCard = '';
+      relPerCheckStore.relatedName = '';
+      relPerCheckStore.relatedType = '';
+      relPerCheckStore.relatedSubmit = false;
     });
   };
   if (relPerCheckStore.personCheckInfoData && relPerCheckStore.personCheckInfoData.length === 0) {
