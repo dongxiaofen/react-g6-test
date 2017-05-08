@@ -37,7 +37,7 @@ class LeftBarStore {
         { menuText: '事件时间轴', menuKey: 'eventLine', helpInfo: helpInfo2, contain: ['main'] },
         { menuText: '预警分析', menuKey: 'alertAnalysis', helpInfo: helpInfo3, contain: ['main', 'analysisReport'] },
       ],
-      helpInfo: helpInfo2,
+      helpInfo: helpInfo3,
       contain: ['main', 'analysisReport'],
     },
     {
