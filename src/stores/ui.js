@@ -55,25 +55,29 @@ class UiStore {
     reaction(
       () => this.uiState.accountConsume.index,
       () => {
-        accountSettingStore.getConsume();
+        const uId = accountSettingStore.base.data.id;
+        accountSettingStore.getConsume(uId);
       }
     );
     reaction(
       () => this.uiState.accountRecharge.index,
       () => {
-        accountSettingStore.getRecharge();
+        const uId = accountSettingStore.base.data.id;
+        accountSettingStore.getRecharge(uId);
       }
     );
     reaction(
       () => this.uiState.accountSummary.index,
       () => {
-        accountSettingStore.getSummary();
+        const uId = accountSettingStore.base.data.id;
+        accountSettingStore.getSummary(uId);
       }
     );
     reaction(
-      () => this.uiState.accountLoginRecord.index,
+        () => this.uiState.accountLoginRecord.index,
       () => {
-        accountSettingStore.getLoginRecord();
+        const uId = accountSettingStore.base.data.id;
+        accountSettingStore.getLoginRecord(uId);
       }
     );
     reaction(
