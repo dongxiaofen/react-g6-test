@@ -24,6 +24,16 @@ function CompanyCard({riskHeadlinesStore, companyData}) {
     });
     return output;
   };
+  const hasMainEvents = ()=> {
+    let flag = false;
+    for (const item in config) {
+      if (companyData[item.key] > 0) {
+        flag = true;
+        break;
+      }
+    }
+    return flag;
+  };
   const monitorId = companyData.monitorId;
   const clickCompany = ()=> {
     riskHeadlinesStore.riskUpdateValue('companyList', 'active', monitorId);
@@ -55,10 +65,14 @@ function CompanyCard({riskHeadlinesStore, companyData}) {
     }
     return <span><i className="fa fa-angle-down" aria-hidden="true"></i>收起</span>;
   };
+  const hasEvents = hasMainEvents();
   return (
     <div className={styles.card}>
       <div className={`${styles.companyInfo} clearfix`}>
-        <p className={cssComName} onClick={clickCompany}>{companyData.companyName}</p>
+        {
+          hasEvents ? <p className={cssComName} onClick={clickCompany}>{companyData.companyName}</p>
+        : <p className={styles.companyNorm}>{companyData.companyName}</p>
+        }
         <div>{createLable()}</div>
         {
           companyData.relatedCompanyCount > 0 ?

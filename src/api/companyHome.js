@@ -8,7 +8,7 @@ export const getBannerInfo = ({
 }) => {
   let url;
   if (monitorId) {
-    url = `/api/monitor/${monitorId}/infobanner`;
+    url = `/api/monitor/${monitorId}/infobanner/xx`;
   } else if (reportId) {
     url = `/api/report/infobanner?reportId=${reportId}`;
   } else if (analysisReportId) {
@@ -220,14 +220,14 @@ export const getPersonName = (url) => {
 };
 
 // 获取评估分析列表
-export const getAlertAnalysisList = (monitorId, reportId, params) => {
+export const getAlertAnalysisList = (monitorId, reportId, params, source) => {
   let url;
   if (monitorId) {
     url = `/api/monitor/${monitorId}/alert/page`;
   } else {
     url = `/api/analysisReport/${reportId}/alert/page`;
   }
-  return axios.get(url, { params: params });
+  return axios.get(url, { params: params, cancelToken: source.token });
 };
 // 获取评估分析列表详情
 export const getAlertDetail = (url, source) => {

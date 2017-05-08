@@ -34,7 +34,15 @@ class NetworkStore {
   @observable focusNodeName = '';
   @observable searchKey = '';
   @observable currentLevel = 1;
+  @observable totalLevel = 1;
+  @observable showFullScreen = false;
 
+  @action.bound selectLevel(currentLevel) {
+    this.currentLevel = currentLevel;
+  }
+  @action.bound toggleFullScreen() {
+    this.showFullScreen = !this.showFullScreen;
+  }
   @action.bound focusNode(name) {
     this.focusNodeName = name;
     this.nodePanel.show = true;
@@ -67,22 +75,29 @@ class NetworkStore {
         this.currentNetwork = resp.data.currentNetwork;
         this.mainCompanyName = resp.data.companyName;
         this.monitorInfoList = resp.data.monitorInfoList;
-        // this.targetComp = resp.data.targetComp;
-
         const sumOfType = (sumSoFar, item) => {
           return sumSoFar + resp.data.targetComp[item].length;
         };
         networkType.map((type) => {
           const count = type.key.reduce(sumOfType, 0);
           const checked = count === 0 ? false : true;
-          // const expand = count === 0 ? -1 : 0;
-          // const focus = count === 0 ? -1 : 0;
           this.typeList.countArr.push(count);
           this.typeList.checkedArr.push(checked);
-          // focusArr.push(focus);
           this.typeList.labelArr.push(type.label);
-          // expandArr.push(expand);
         });
+        // 获取totalLevel
+        const layerCount = {};
+        resp.data.currentNetwork.nodes.map((node) => {
+          if (node.layer !== -1) {
+            const nodeLayer = node.layer ? node.layer : 1;
+            if (layerCount[nodeLayer] === undefined) {
+              layerCount[nodeLayer] = 1;
+            } else {
+              layerCount[nodeLayer]++;
+            }
+          }
+        });
+        this.totalLevel = Object.keys(layerCount).length;
       }))
       .catch(action('currentNetwork出错', (err) => {
         console.log('currentNetwork出错', err.response.data);

@@ -9,6 +9,9 @@ function SimpleCard({meta, alertAnalysisStore}) {
   const {item, body, dict} = meta;
   const createContent = ()=> {
     const output = [];
+    if (!item) {
+      return output;
+    }
     body.forEach((config) => {
       let value = item[config.key];
       if (config.modifyBlock) {

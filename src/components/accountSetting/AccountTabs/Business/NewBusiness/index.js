@@ -11,7 +11,7 @@ function NewBusiness({accountSettingStore}) {
   const reportDate = reportData.map(item => item.date);
   const analysisReportDate = analysisReportData.map(item => item.date);
   const monitorDate = monitorData.map(item => item.date);
-  const allDate = Array.from(new Set(reportDate.concat(analysisReportDate).concat(monitorDate)));
+  const allDate = Array.from(new Set(reportDate.concat(analysisReportDate).concat(monitorDate))).sort();
   const allReportData = allDate.map(date => {
     const matchData = reportData.find(item => {
       return item.date === date;
