@@ -93,5 +93,22 @@ class AssetsStore {
         }
       });
   }
+
+  @action.bound resetStore() {
+    this.trademarkData = [];
+    this.patentData = [];
+    this.biddingData = [];
+    this.isMount = false;
+      // 弹框标题数据||信息来源
+    this.titleData = {};
+      // 弹出框详情
+    this.bidMarkertContent = '';
+      // 取消请求
+    this.biddingDetailCancel = null;
+
+    this.trLoading = true;
+    this.patentLoading = true;
+    this.biddingLoading = true;
+  }
 }
 export default new AssetsStore();
