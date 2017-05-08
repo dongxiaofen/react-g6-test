@@ -1,6 +1,12 @@
 @import "~sc-colors/index.less";
 .policy {
   margin-bottom: 10px;
+  float: left;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  display: block;
+  width: 80%;
   a {
     color: @mdc-grey-700;
     text-decoration: underline;
@@ -8,4 +14,8 @@
       color: @mdc-grey-700;
     }
   }
+}
+.date {
+  float: right;
+  color: @mdc-grey-500;
 }

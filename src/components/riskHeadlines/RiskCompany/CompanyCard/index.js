@@ -26,7 +26,7 @@ function CompanyCard({riskHeadlinesStore, companyData}) {
   };
   const hasMainEvents = ()=> {
     let flag = false;
-    for (const item in config) {
+    for (const item of config) {
       if (companyData[item.key] > 0) {
         flag = true;
         break;

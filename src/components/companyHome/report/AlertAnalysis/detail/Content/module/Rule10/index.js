@@ -5,11 +5,20 @@ import styles from './index.less';
 function Rule10({data}) {
   const modifyPolicy = (value)=> {
     const output = [];
-    value.map((itemData, idx)=> {
+    const policy = value.sort((value1, value2)=>{
+      return value2.publishdate > value1.publishdate ? 1 : -1;
+    });
+    policy.map((itemData, idx)=> {
       output.push(
-        <p key={`policy${idx}`} className={styles.policy}>
-          <a href={itemData.url} target="_blank">《{itemData.title}》</a>
-        </p>
+        <div className="clearfix" key={`policy${idx}`}>
+          <p className={styles.policy}>
+            <a href={itemData.url} target="_blank">《{itemData.title}》</a>
+          </p>
+          <p className={styles.date}>
+            <span>发布日期：</span>
+            <span>{itemData.publishdate}</span>
+          </p>
+        </div>
       );
     });
     return output;
