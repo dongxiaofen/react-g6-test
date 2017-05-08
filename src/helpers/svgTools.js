@@ -110,7 +110,17 @@ export function isNodeShow(checkeArr, cateList) {// index === -1代表没有被�
   }
   return index === -1 ? false : true;
 }
-
+// 获取节点的颜色值
+export function getNodeColor(checkeArr, cateList) {// index === -1代表没有被勾选上
+  let index = -1;
+  for (const cate of cateList) {
+    if (checkeArr[cate - 1]) {
+      index = cate - 1;
+      break;
+    }
+  }
+  return index + 1;
+}
 // 根据node的显示状态更新link的显示状态
 export function updateLinksDisplay(nodes, links) {
   links.map((link) => {
