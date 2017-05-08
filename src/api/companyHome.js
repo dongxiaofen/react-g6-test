@@ -110,8 +110,13 @@ export const getNewsDetail = (url, source) => {
 export const getBiddingDetail = (url, source) => {
   return axios.get(url, { cancelToken: source.token });
 };
-export const getPersonCheckInfo = ({ monitorId, params }) => {
-  return axios.get(`/api/monitor/${monitorId}/person/page`, { params: params });
+export const getPersonCheckInfo = ({ monitorId, reportId, params }) => {
+  if (monitorId) {
+    return axios.get(`/api/monitor/${monitorId}/person/page`, { params: params });
+  }
+  if (reportId) {
+    return axios.get(`/api/report/${reportId}/person/page`, { params: params });
+  }
 };
 export const checkPersonInfo = (url, params) => {
   return axios.post(url, params);

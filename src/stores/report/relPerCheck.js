@@ -28,15 +28,16 @@ class RelPerCheckStore {
   @observable relatedIdCard = '';
   // 是否提交
   @observable relatedSubmit = false;
-  @observable reloadMonitorId = '';
+  @observable reloadMonitorId = {};
 
   @observable isMount = false;
-  @action.bound getReportModule(module, monitorId, reportId) {
+  @action.bound getReportModule({monitorId, reportId}) {
     this.getPersonName(monitorId, reportId);
-    companyHomeApi.getPersonCheckInfo({monitorId, 'params': uiStore.uiState.relPerCheck})
+    companyHomeApi.getPersonCheckInfo({monitorId, reportId, 'params': uiStore.uiState.relPerCheck})
       .then(action( (response) => {
-        this.reloadMonitorId = monitorId;
+        this.reloadMonitorId = {monitorId: monitorId, reportId: reportId};
         this.personCheckInfoData = response.data.content;
+        uiStore.uiState.relPerCheck.totalElements = response.data.totalElements;
       }))
       .catch(action( (error) => {
         console.log(error);
@@ -49,7 +50,7 @@ class RelPerCheckStore {
         this.isLoading = false;
         this.showCheckModal = false;
         messageStore.openMessage({type: 'info', content: '核查成功', duration: '1500'});
-        this.getReportModule('', this.reloadMonitorId);
+        this.getReportModule(this.reloadMonitorId);
       }))
       .catch(action( (error) => {
         this.isLoading = false;

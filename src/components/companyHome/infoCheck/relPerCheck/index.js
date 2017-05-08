@@ -13,15 +13,12 @@ function RelPerInfo({relPerCheckStore}) {
       relPerCheckStore.showCheckModal = true;
     });
   };
-  // const knowMsg = () => {
-  //   // props.commonBoundAC.updateValue(['relatedMsgModal', 'show'], false, 'REPORT_UPDATE_VALUE');
-  // };
   const closeModal = () => {
     runInAction('关闭弹窗', () => {
       relPerCheckStore.showCheckModal = false;
     });
   };
-  if (relPerCheckStore.personCheckInfoData && relPerCheckStore.personCheckInfoData.length === 0) {
+  if (!relPerCheckStore.personCheckInfoData && relPerCheckStore.personCheckInfoData.length === 0) {
     return (
       <div className={styles.noData}>
         <img className={styles.img} src={noData} />
