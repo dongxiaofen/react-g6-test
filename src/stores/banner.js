@@ -289,7 +289,7 @@ class BannerStore {
     companyHomeApi.renewalMonitor(monitorId, time)
       .then(action('renewal monitor', () => {
         payModalStore.closeAction();
-        messageStore.openMessage({ content: '续期成功' });
+        messageStore.openMessage({ content: '续期成功', callBack: this.windowReload });
       }))
       .catch((err) => {
         console.log(err.response);

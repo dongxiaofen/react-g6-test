@@ -19,9 +19,13 @@ import SiteAndJob from 'components/companyHome/report/team/SiteAndJob';
 export default class Team extends Component {
   static propTypes = {
     teamStore: PropTypes.object,
+    routing: PropTypes.object,
   }
+
   render() {
     const teamStore = this.props.teamStore;
+    const { reportId, analysisReportId } = this.props.routing.location.query;
+    const disabledTabPane = reportId || analysisReportId;
     return (
       <Tabs defaultActiveKey="招聘/员工背景">
         <TabPane tab="招聘/员工背景" key="招聘/员工背景">
@@ -43,7 +47,7 @@ export default class Team extends Component {
               isLoading={teamStore.isLoading} />
           </div>
         </TabPane>
-        <TabPane tab="团队监控分析" key="团队监控分析">
+        <TabPane tab="团队监控分析" key="团队监控分析" disabled={disabledTabPane}>
           <div>
             <ModuleTitle module="新增招聘地点/岗位" />
             <SiteAndJob
