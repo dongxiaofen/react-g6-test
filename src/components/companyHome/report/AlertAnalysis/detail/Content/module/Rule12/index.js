@@ -11,8 +11,8 @@ function Rule12({data}) {
     dict: 'rule12',
     body: [
       [{ 'key': 'detail', kids: [
-        {key: 'companyName', colSpan: '1'},
-        {key: 'relation', colSpan: '1', 'modifyBlock': modifyRealation},
+        {key: 'companyName', colSpan: '1', modifyType: 'companyName'},
+        {key: 'relation', colSpan: '1', modifyType: 'relationShip', 'modifyBlock': modifyRealation},
       ]
       }],
     ],
