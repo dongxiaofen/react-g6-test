@@ -75,6 +75,15 @@ export default class CircleNetworkGraph extends Component {
 
     simulation.force('link')
       .links(edgesData);
+    // 如果节点数超过50, 初始化只展示第一层节点
+    nodesData.map((node) => {
+      if (nodesData.length > 50) {
+        node.hide = node.firstLayer === 1 ? false : true;
+      } else {
+        node.hide = false;
+      }
+    });
+    svgTools.updateLinksDisplay(nodesData, edgesData);
     svgEdges = svg.append('g')
       .attr('class', styles.links)
       .selectAll('line')
@@ -176,7 +185,25 @@ export default class CircleNetworkGraph extends Component {
         nodesData.map((node) => {
           if (node.cateType !== 0) {
             if (node.layer <= currentLevel) {
-              node.hide = svgTools.isNodeShow(checkedArr, node.cateList);
+              node.hide = !svgTools.isNodeShow(checkedArr, node.cateList);
+            } else {
+              node.hide = true;
+            }
+          }
+        });
+        svgTools.updateLinksDisplay(nodesData, edgesData);
+        simulation.restart();
+      }
+    );
+    // 监听level选择变化
+    reaction(
+      () => this.props.networkStore.currentLevel,
+      () => {
+        const checkedArr = this.props.networkStore.typeList.checkedArr;
+        nodesData.map((node) => {
+          if (node.cateType !== 0) {
+            if (node.layer <= this.props.networkStore.currentLevel && svgTools.isNodeShow(checkedArr, node.cateList)) {
+              node.hide = false;
             } else {
               node.hide = true;
             }

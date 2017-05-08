@@ -100,7 +100,7 @@ export function getNewNodeXY(nodesData, nodeXY, centerNodeX, centerNodeY) {
   });
 }
 // 判断节点是否隐藏
-export function isNodeShow(checkeArr, cateList) {// 返回0代表没有被勾选上
+export function isNodeShow(checkeArr, cateList) {// index === -1代表没有被勾选上
   let index = -1;
   for (const cate of cateList) {
     if (checkeArr[cate - 1]) {
@@ -108,7 +108,7 @@ export function isNodeShow(checkeArr, cateList) {// 返回0代表没有被勾选
       break;
     }
   }
-  return index === -1 ? true : false;
+  return index === -1 ? false : true;
 }
 
 // 根据node的显示状态更新link的显示状态
