@@ -8,13 +8,13 @@ export const getBannerInfo = ({
 }) => {
   let url;
   if (monitorId) {
-    url = `/api/monitor/${monitorId}/infobanner`;
+    url = `/api/monitor/${monitorId}/infobanner/xx`;
   } else if (reportId) {
-    url = `/api/report/infobanner?reportId=${reportId}`;
+    url = `/api/report/infobanner/xx?reportId=${reportId}`;
   } else if (analysisReportId) {
-    url = `/api/analysisReport/infobanner?analysisReportId=${analysisReportId}`;
+    url = `/api/analysisReport/infobanner/xx?analysisReportId=${analysisReportId}`;
   } else if (companyType === 'FREE') {
-    url = `/api/free/infobanner?companyName=${encodeURI(companyName)}`;
+    url = `/api/free/infobanner/xx?companyName=${encodeURI(companyName)}`;
   }
   return axios.get(url);
 };
