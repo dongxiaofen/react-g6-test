@@ -56,7 +56,7 @@ export const getReportModule = (params) => {
       } else if (module === 'person/page') {
         url = `/api/report/${reportId}/person/page?index=1&size=10`;
       } else if (module === 'blackNetwork') {
-        url = `/api/monitor/${monitorId}/network/blacklist`;
+        url = `/api/report/network/blacklist?reportId=${reportId}`;
       } else {
         url = `/api/report/${module}?reportId=${reportId}`;
       }

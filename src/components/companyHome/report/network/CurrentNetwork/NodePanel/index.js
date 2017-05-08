@@ -20,8 +20,8 @@ function NodePanel({ networkStore }) {
     }
     return null;
   };
-  const goToBlackList = () => {
-    console.log(22);
+  const goToBlackList = (nodeName) => {
+    console.log(nodeName);
   };
   const getRiskInfo = () => {
     if (nodeData.blackList && nodeData.category !== 7) {
