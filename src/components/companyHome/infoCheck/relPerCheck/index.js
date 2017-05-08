@@ -13,9 +13,6 @@ function RelPerInfo({relPerCheckStore}) {
       relPerCheckStore.showCheckModal = true;
     });
   };
-  // const knowMsg = () => {
-  //   // props.commonBoundAC.updateValue(['relatedMsgModal', 'show'], false, 'REPORT_UPDATE_VALUE');
-  // };
   const closeModal = () => {
     runInAction('关闭弹窗', () => {
       relPerCheckStore.showCheckModal = false;
