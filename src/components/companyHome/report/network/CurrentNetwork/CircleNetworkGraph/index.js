@@ -75,14 +75,7 @@ export default class CircleNetworkGraph extends Component {
 
     simulation.force('link')
       .links(edgesData);
-    // 如果节点数超过50, 初始化只展示第一层节点
-    nodesData.map((node) => {
-      if (nodesData.length > 50) {
-        node.hide = node.firstLayer === 1 ? false : true;
-      } else {
-        node.hide = false;
-      }
-    });
+
     svgTools.updateLinksDisplay(nodesData, edgesData);
     svgEdges = svg.append('g')
       .attr('class', styles.links)

@@ -98,6 +98,15 @@ class NetworkStore {
           }
         });
         this.totalLevel = Object.keys(layerCount).length;
+        // 如果节点数超过50, 初始化只展示第一层节点
+        this.currentNetwork.nodes.map((node) => {
+          if (resp.data.currentNetwork.nodes.length > 50) {
+            node.hide = node.firstLayer === 1 ? false : true;
+          } else {
+            node.hide = false;
+          }
+        });
+        this.currentLevel = resp.data.currentNetwork.nodes.length > 50 ? 1 : Object.keys(layerCount).length;
       }))
       .catch(action('currentNetwork出错', (err) => {
         console.log('currentNetwork出错', err.response.data);
