@@ -12,7 +12,7 @@ function CourtAnnouncement({courtAnnouncement, regTime}) {
   const data = {
     meta: {
       body: [
-        {'key': 'type', 'width': '6'},
+        {'key': 'typeName', 'width': '6'},
         {'key': 'publishTime', 'width': '6', modifyText: regTime},
         {'key': 'identity', 'width': '6'},
         {'key': 'caseReason', 'width': '6'},
