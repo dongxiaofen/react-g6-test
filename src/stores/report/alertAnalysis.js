@@ -121,8 +121,13 @@ class AlertAnalysisStore {
   @action.bound getAlertAnalysisList(monitorId, reportId) {
     this.isMount = true;
     this.listData = {};
+    if (window.reportSourceCancel === undefined) {
+      window.reportSourceCancel = [];
+    }
+    const source = CancelToken.source();
+    window.reportSourceCancel.push(source.cancel);
     const {index, size} = uiStore.uiState.alertAnalysis;
-    companyHomeApi.getAlertAnalysisList(monitorId, reportId, {index, size})
+    companyHomeApi.getAlertAnalysisList(monitorId, reportId, {index, size}, source)
       .then(action('getAlert_success', resp => {
         let data = null;
         if (resp.data.content && resp.data.content.length > 0) {
