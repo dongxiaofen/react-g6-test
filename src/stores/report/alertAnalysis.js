@@ -27,13 +27,15 @@ class AlertAnalysisStore {
   @action.bound routeToCompanyHome(companyName) {
     companyHomeApi.judgeReportType(companyName)
       .then(resp => {
-        const {reportId, monitorId} = resp.data;
+        const {reportId, monitorId, analysisReportId} = resp.data;
         const type = resp.data.monitorMapResponse && resp.data.monitorMapResponse.companyType;
         let url;
         if (monitorId && type === 'MAIN') {
           url = `corpDetail?companyType=${type}&monitorId=${monitorId}`;
         } else if (reportId) {
           url = `corpDetail?companyType=MAIN&reportId=${reportId}`;
+        } else if (analysisReportId) {
+          url = `corpDetail?companyType=MAIN&analysisReportId=${analysisReportId}`;
         } else {
           url = `corpDetail?companyName=${companyName}&companyType=FREE`;
         }
@@ -118,7 +120,7 @@ class AlertAnalysisStore {
       console.log('get judgeDoc', error);
     });
   }
-  @action.bound getAlertAnalysisList(monitorId, reportId) {
+  @action.bound getAlertAnalysisList(monitorId, analysisReportId) {
     this.isMount = true;
     this.listData = {};
     if (window.reportSourceCancel === undefined) {
@@ -127,7 +129,7 @@ class AlertAnalysisStore {
     const source = CancelToken.source();
     window.reportSourceCancel.push(source.cancel);
     const {index, size} = uiStore.uiState.alertAnalysis;
-    companyHomeApi.getAlertAnalysisList(monitorId, reportId, {index, size}, source)
+    companyHomeApi.getAlertAnalysisList(monitorId, analysisReportId, {index, size}, source)
       .then(action('getAlert_success', resp => {
         let data = null;
         if (resp.data.content && resp.data.content.length > 0) {
