@@ -23,41 +23,21 @@
 .line {
   margin: 0 5px;
 }
+
 .historyName {
+  position: relative;
   width: 300px;
   padding: 20px;
-  position: relative;
   max-height: 333px;
   overflow: auto;
 }
-.hisNameIcon {
-  display: inline-block;
-  width: 15px;
-  height: 15px;
-  margin-right: 5px;
-  background-repeat: no-repeat;
-  background-size: 100% 100%;
-  vertical-align: text-top;
-  background-image: url('imgs/companyHome/downBanner.png');
-  transition: all 0.1s;
-}
-.hisNameIconUp {
-  composes: hisNameIcon;
-  transform: rotate(180deg);
-}
-.hisNameIcon {
-  display: inline-block;
-  width: 15px;
-  height: 15px;
-  margin-right: 5px;
-  background-repeat: no-repeat;
-  background-size: 100% 100%;
-  vertical-align: text-top;
-  background-image: url('imgs/companyHome/downBanner.png');
-  transition: all 0.1s;
-}
+
 .contactInfoHistory {
   float: left;
+  height: 14px;
+
+  font-size: 14px;
+  line-height: 14px;
 }
 .historyNameBtn {
   display: block;
@@ -68,9 +48,21 @@
   color: @mdc-blue-400;
 
   cursor: pointer;
+
+  i {
+    margin-left: 3px;
+
+    color: @mdc-blue-400;
+
+    -webkit-transition: all .3s ease-in-out;
+       -moz-transition: all .3s ease-in-out;
+        -ms-transition: all .3s ease-in-out;
+         -o-transition: all .3s ease-in-out;
+            transition: all .3s ease-in-out;
+  }
 }
-.historyNameBtn i{
-  margin: 5px 0 0 3px;
-  width: 10px;
-  height: 5px;
+
+.rotate{
+  -webkit-transform: rotate(180deg);
+  transform: rotate(180deg);
 }
