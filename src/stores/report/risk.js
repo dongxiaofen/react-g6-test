@@ -62,7 +62,7 @@ class RiskStore {
           require('components/companyHome/report/risk/Court/JudgeDoc/DetailCom/Content')
         );
       });
-    });
+    }, '法务详情');
   }
   @action.bound getJudgeDetailMonitor(monitorCompanyId, params, info) {
     companyHomeApi.getJudgeDetailMonitor(monitorCompanyId, params)
@@ -72,6 +72,7 @@ class RiskStore {
         this.openDetailModal();
       }))
       .catch((error)=>{
+        window.open(info.url, '_blank');
         console.log('risk error', error);
       });
   }
