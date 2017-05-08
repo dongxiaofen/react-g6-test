@@ -52,17 +52,17 @@ export const getReportModule = (params) => {
       }
     } else if (reportId) {
       if (module === 'trademark' || module === 'patent' || module === 'bidding') {
-        url = `/api/report/operation/${module}?reportId=${reportId}${module === 'patent' || module === 'trademark' ? '?index=' + pagesInfo.index + '&limit=' + pagesInfo.size : ''}`;
+        url = `/api/report/operation/${module}?reportId=${reportId}${module === 'patent' || module === 'trademark' ? '&index=' + pagesInfo.index + '&limit=' + pagesInfo.size : ''}`;
       } else if (module === 'person/page') {
         url = `/api/report/${reportId}/person/page?index=1&size=10`;
       } else if (module === 'blackNetwork') {
-        url = `/api/monitor/${monitorId}/network/blacklist`;
+        url = `/api/report/network/blacklist?reportId=${reportId}`;
       } else {
         url = `/api/report/${module}?reportId=${reportId}`;
       }
     } else if (analysisReportId) {
       if (module === 'trademark' || module === 'patent' || module === 'bidding') {
-        url = `/api/analysisReport/operation/${module}?analysisReportId=${analysisReportId}${module === 'patent' || module === 'trademark' ? '?index=' + pagesInfo.index + '&limit=' + pagesInfo.size : ''}`;
+        url = `/api/analysisReport/operation/${module}?analysisReportId=${analysisReportId}${module === 'patent' || module === 'trademark' ? '&index=' + pagesInfo.index + '&limit=' + pagesInfo.size : ''}`;
       } else if (module === 'person/page') {
         url = `/api/analysisReport/${analysisReportId}/person/page?index=1&size=10`;
       } else {
@@ -110,8 +110,13 @@ export const getNewsDetail = (url, source) => {
 export const getBiddingDetail = (url, source) => {
   return axios.get(url, { cancelToken: source.token });
 };
-export const getPersonCheckInfo = ({ monitorId, params }) => {
-  return axios.get(`/api/monitor/${monitorId}/person/page`, { params: params });
+export const getPersonCheckInfo = ({ monitorId, reportId, params }) => {
+  if (monitorId) {
+    return axios.get(`/api/monitor/${monitorId}/person/page`, { params: params });
+  }
+  if (reportId) {
+    return axios.get(`/api/report/${reportId}/person/page`, { params: params });
+  }
 };
 export const checkPersonInfo = (url, params) => {
   return axios.post(url, params);

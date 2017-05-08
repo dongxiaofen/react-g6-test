@@ -23,7 +23,7 @@ function CardTitle({ meta, cData }) {
     }
     const subTitle = [];
     meta.title.sub.map((title, idx) => {
-      if (cData[title] !== 0) {
+      if (cData[title].length !== 0) {
         subTitle.push(
           <span className={styles.subTitle} key={title + idx}>{cData[title]}</span>
         );
