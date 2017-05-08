@@ -14,6 +14,7 @@ class DetailModalStore {
     this.sourceComp = null;
     this.leftBarComp = null;
     this.title = '';
+    console.log('??????');
   }
 
   @action.bound openDetailModal(loader, title, closeAction) {
