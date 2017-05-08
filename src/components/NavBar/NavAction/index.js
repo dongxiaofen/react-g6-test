@@ -86,7 +86,7 @@ export default class NavAction extends Component {
             <i className="fa fa-code-fork" aria-hidden="true"></i>下载APP
           </span>
           <HoverBox width={100} left={0}>
-            <div>xxxxxxxx</div>
+            <div className={styles.code}></div>
           </HoverBox>
         </div>
         <div className={styles.menuBox}>
@@ -100,29 +100,6 @@ export default class NavAction extends Component {
             <i className="fa fa-sign-out" aria-hidden="true"></i>退出
           </span>
         </div>
-        {/* <div className={styles.iconStyle}>
-          <div className={`${styles.icon} ${styles.userInfoIcon}`}></div>
-          <HoverBox width="230px" left="-100px">
-            <div className={styles.userInfo}>
-              <div className={styles.userInfoText}>欢迎您回来：{userName ? userName : '--'}</div>
-              <div className={styles.userInfoBorder}></div>
-              <div className={`clearfix ${styles.userInfoText}`}>
-                <div className={styles.userInfoBlock}>账号：</div>
-                <div className={styles.userInfoBlock}>{userEmail}</div>
-              </div>
-            </div>
-          </HoverBox>
-        </div>
-        <div className={styles.iconStyle} onClick={this.logout}>
-          <div className={`${styles.icon} ${styles.exitIcon}`}></div>
-          <HoverBox width="66px" left="-26px">
-            <div className={styles.logout}>
-              <div className={styles.logoutText}>
-                退出登录
-              </div>
-            </div>
-          </HoverBox>
-        </div> */}
       </div>
     );
   }
