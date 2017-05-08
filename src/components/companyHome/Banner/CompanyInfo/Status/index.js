@@ -3,14 +3,18 @@ import { observer, inject } from 'mobx-react';
 import styles from './index.less';
 
 function Status({bannerStore, routing}) {
-  const {monitorId, companyType} = routing.location.query;
+  const { monitorId, reportId, analysisReportId, companyType } = routing.location.query;
   const getNameAndConfig = () => {
     let reportName;
     if (companyType === 'MAIN') {
       if (monitorId) {
         reportName = '主体监控报告';
-      } else {
+      }
+      if (reportId) {
         reportName = '高级查询报告';
+      }
+      if (analysisReportId) {
+        reportName = '深度分析报告';
       }
     } else if (companyType === 'FREE') {
       reportName = '快速查询报告';
