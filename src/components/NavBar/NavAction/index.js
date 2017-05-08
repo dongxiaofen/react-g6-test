@@ -5,7 +5,7 @@ import { browserHistory } from 'react-router';
 import styles from './index.less';
 import HoverBox from './HoverBox';
 
-@inject('searchCompanyStore')@observer
+@inject('searchCompanyStore', 'clientStore')@observer
 export default class NavAction extends Component {
   static propTypes = {
     clientStore: PropTypes.object,
@@ -85,7 +85,7 @@ export default class NavAction extends Component {
           <span className={styles.downloadApp}>
             <i className="fa fa-code-fork" aria-hidden="true"></i>下载APP
           </span>
-          <HoverBox width={100} left={0}>
+          <HoverBox width="100px" left="0px">
             <div className={styles.code}></div>
           </HoverBox>
         </div>

@@ -1,5 +1,4 @@
 import React, {PropTypes} from 'react';
-import { observer } from 'mobx-react';
 import styles from './index.less';
 
 function HoverBox({ width, left, children }) {
@@ -18,8 +17,8 @@ function HoverBox({ width, left, children }) {
 }
 
 HoverBox.propTypes = {
-  width: PropTypes.oneOfType([PropTypes.nubmer, PropTypes.string]),
-  left: PropTypes.oneOfType([PropTypes.nubmer, PropTypes.string]),
+  width: PropTypes.string,
+  left: PropTypes.string,
   children: PropTypes.node,
 };
-export default observer(HoverBox);
+export default HoverBox;
