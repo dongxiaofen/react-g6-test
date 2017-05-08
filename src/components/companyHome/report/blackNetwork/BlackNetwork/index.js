@@ -5,6 +5,7 @@ import ForceNetworkGraph from './ForceNetworkGraph';
 import { loadingComp } from 'components/hoc';
 import {Row, Col} from 'components/common/layout';
 import LegendBar from './LegendBar';
+import DetailList from './DetailList';
 
 function BlackNetwork({ }) {
   const svgWidth = document.getElementById('reportContainer').offsetWidth * 3 / 5 - 15;
@@ -16,7 +17,7 @@ function BlackNetwork({ }) {
         <ForceNetworkGraph {...{ svgWidth, svgHeight }} />
       </Col>
       <Col width="3">
-        {/* <DetailList /> */}
+        <DetailList />
       </Col>
     </Row>
   );

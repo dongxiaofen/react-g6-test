@@ -1,0 +1,156 @@
+@import '~sc-colors/index.less';
+
+.item {
+  height: 50px;
+  line-height: 50px;
+  border-top: 1px dashed #eeeeee;
+  border-bottom: 1px dashed #eeeeee;
+}
+.level {
+  width: 40px;
+  height: 20px;
+  line-height: 20px;
+  color: #999999;
+  background: #dadada;
+  font-size: 12px;
+  display: inline-block;
+  text-align: center;
+  margin-right: 10px;
+  margin-left: 5px;
+}
+.itemName {
+  font-size: 14px;
+  color: #666666;
+}
+.itemNameFocus {
+  font-size: 14px;
+  color: #333333;
+}
+.expand {
+  float: right;
+  color: #999999;
+}
+
+.detailBox {
+  position: relative;
+}
+.detail {
+  display: inline-block;
+  height: 25px;
+  line-height: 25px;
+  color: #999999;
+  font-size: 13px;
+  margin-left: 30px;
+  border-left: 1px solid #eeeeee;
+  padding-left: 20px;
+  &:hover{
+    color: #3483e9;
+  }
+}
+.detailFocus {
+  display: inline-block;
+  height: 25px;
+  line-height: 25px;
+  color: #3483e9;
+  font-size: 13px;
+  margin-left: 30px;
+  border-left: 1px solid #eeeeee;
+  padding-left: 20px;
+}
+.dot {
+  display: inline-block;
+  border-radius: 50%;
+  background: #999999;
+  width: 7px;
+  height: 7px;
+  position: absolute;
+  top: 9px;
+  left: 27px;
+}
+.dotFocus {
+  display: inline-block;
+  border-radius: 50%;
+  background: #3483e9;
+  width: 9px;
+  height: 9px;
+  position: absolute;
+  top: 7px;
+  left: 26px;
+}
+
+@media (max-width: 1400px) {
+  .tip {
+    height: 40px;
+    line-height: 40px;
+    padding-left: 5px;
+    background: #f4faff;
+    font-size: 12px;
+    color: #3483e9;
+    i {
+      font-size: 13px;
+    }
+  }
+  .level {
+    width: 30px;
+    height: 20px;
+    line-height: 20px;
+    color: #999999;
+    background: #dadada;
+    font-size: 12px;
+    display: inline-block;
+    text-align: center;
+    margin-right: 5px;
+    margin-left: 5px;
+  }
+  .itemName {
+    font-size: 13px;
+    color: #666666;
+  }
+  .itemNameFocus {
+    font-size: 13px;
+    color: #333333;
+  }
+  .detail {
+    display: inline-block;
+    height: 25px;
+    line-height: 25px;
+    color: #999999;
+    font-size: 12px;
+    margin-left: 12px;
+    border-left: 1px solid #eeeeee;
+    padding-left: 20px;
+    &:hover{
+      color: #3483e9;
+    }
+  }
+  .detailFocus {
+    display: inline-block;
+    height: 25px;
+    line-height: 25px;
+    color: #3483e9;
+    font-size: 12px;
+    margin-left: 12px;
+    border-left: 1px solid #eeeeee;
+    padding-left: 20px;
+  }
+  .dot {
+    display: inline-block;
+    border-radius: 50%;
+    background: #999999;
+    width: 7px;
+    height: 7px;
+    position: absolute;
+    top: 9px;
+    left: 9px;
+  }
+  .dotFocus {
+    display: inline-block;
+    border-radius: 50%;
+    background: #3483e9;
+    width: 9px;
+    height: 9px;
+    position: absolute;
+    top: 7px;
+    left: 8px;
+  }
+}
