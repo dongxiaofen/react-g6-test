@@ -1,6 +1,5 @@
 import React, { Component, PropTypes } from 'react';
 import { observer, inject } from 'mobx-react';
-import Popover from 'antd/lib/popover';
 
 import Tabs from 'antd/lib/tabs';
 const TabPane = Tabs.TabPane;
@@ -21,13 +20,6 @@ export default class Team extends Component {
   static propTypes = {
     teamStore: PropTypes.object,
     routing: PropTypes.object,
-  }
-
-  dealWithTabPane(disabledTabPane) {
-    if (disabledTabPane) {
-      return (<Popover content="xxxxxxxx" title="ssssss">团队监控分析</Popover>);
-    }
-    return '团队监控分析';
   }
 
   render() {
@@ -55,7 +47,7 @@ export default class Team extends Component {
               isLoading={teamStore.isLoading} />
           </div>
         </TabPane>
-        <TabPane tab={this.dealWithTabPane(disabledTabPane)} key="团队监控分析" disabled={disabledTabPane}>
+        <TabPane tab="团队监控分析" key="团队监控分析" disabled={disabledTabPane}>
           <div>
             <ModuleTitle module="新增招聘地点/岗位" />
             <SiteAndJob
