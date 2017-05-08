@@ -7,7 +7,7 @@ function KeyValue({theKey, theValue}) {
     <div>
       <span className={styles.key}>{theKey}：</span>
       <span className={styles.value}>
-        {theValue || '无'}
+        {theValue || '--'}
       </span>
     </div>
   );
