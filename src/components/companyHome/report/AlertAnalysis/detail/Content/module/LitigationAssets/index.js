@@ -11,7 +11,7 @@ function LitigationAssets({data}) {
       {'key': 'court', 'width': '12'},
       {'key': 'projectNotice', 'width': '12'},
     ],
-    item: data,
+    item: data.content,
   };
   return (
     <SimpleCard meta={meta} />

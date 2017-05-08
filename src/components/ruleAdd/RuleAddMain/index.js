@@ -16,11 +16,27 @@ export default class RuleAddMain extends Component {
 
   componentDidMount() {
     this.props.ruleStore.getIndustryList();
+    this.props.ruleStore.getTypeListCORP();
+    this.props.ruleStore.getTypeListLEGAL();
+    this.props.ruleStore.getTypeListNEWS();
+    this.props.ruleStore.getMonitorCompany();
+  }
+
+  componentWillUnmount() {
+    this.props.ruleStore.resetCreateRuleData();
+  }
+
+  eventToggle = (evt)=>{
+    this.props.ruleStore.eventToggle(false);
+    evt.stopPropagation();
   }
 
   render() {
     return (
-      <div className={styles.box}>
+      <div
+        tabIndex="1"
+        onClick={this.eventToggle.bind()}
+        className={styles.box}>
         <Container>
           <Row>
             <Col>

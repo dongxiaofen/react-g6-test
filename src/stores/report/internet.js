@@ -27,13 +27,13 @@ class InternetStore {
   @action.bound assignDetail(obj) {
     Object.assign(this.detailInfo, obj);
   }
-  @action.bound getReportModule(module, monitorId, reportId, companyName, companyType) {
+  @action.bound getReportModule(module, monitorId, reportId, analysisReportId, companyName, companyType) {
     this.isMount = true;
     this.analysis = {};
     this.statistic = {};
     this.newsData = {};
     const args = arguments;
-    companyHomeApi.getReportModule(module, monitorId, reportId, companyName, companyType)
+    companyHomeApi.getReportModule(module, monitorId, reportId, analysisReportId, companyName, companyType)
       .then(action('get internet data', (resp)=>{
         this.analysis = {data: resp.data.analysis};
         this.statistic = {data: resp.data.info.statistic};

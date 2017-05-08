@@ -4,10 +4,10 @@ import { runInAction } from 'mobx';
 import styles from './index.less';
 import Tooltip from 'antd/lib/tooltip';
 function LeftBar({ leftBarStore, bannerStore, routing }) {
-  const barConf = leftBarStore.barConf;
-  const { monitorId, reportId, companyName, companyType } = routing.location.query;
+  const { monitorId, reportId, analysisReportId, companyName, companyType } = routing.location.query;
   const activeMenu = leftBarStore.activeMenu;
   const stockCode = bannerStore.stockCode;
+  const barConf = leftBarStore.barConf;
   const getReportType = () => {
     // 一共四种报告 free, report, main, relation
     let reportType;
@@ -20,6 +20,9 @@ function LeftBar({ leftBarStore, bannerStore, routing }) {
     }
     if (reportId) {
       reportType = 'report';
+    }
+    if (analysisReportId) {
+      reportType = 'analysisReport';
     }
     if (companyName) {
       reportType = 'free';
