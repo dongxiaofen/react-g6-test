@@ -9,13 +9,14 @@ import LegendBar from './LegendBar';
 import NodePanel from './NodePanel';
 import CircleTypeList from './CircleTypeList';
 
-function CurrentNetwork({layout, swithLayout}) {
+function CurrentNetwork({layout}) {
   const svgWidth = document.getElementById('reportContainer').offsetWidth * 3 / 5 - 15;
   const svgHeight = window.screen.height - 280;
+  const {resumeSvg, fullScreen, exitFull} = CircleNetworkGraph;
   return (
     <Row>
       <Col width="9">
-        <LegendBar swithLayout={swithLayout} />
+        <LegendBar {...{resumeSvg, fullScreen, exitFull}} />
         <NodePanel />
         {
           layout === 'circle' ?
