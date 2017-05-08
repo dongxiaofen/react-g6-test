@@ -23,7 +23,7 @@ class PdfStore {
 
   @action.bound getOverviewData(id) {
     // 获取pdf
-    axios.get(`/api/pdf?monitorId=${id}&types=RISK_JUDGEMENT`)
+    axios.get(`/api/pdf?monitorId=${id}&types=RISK`)
       .then(action( (response) => {
         // this.risk = response.data.risk;
         console.log(response);
