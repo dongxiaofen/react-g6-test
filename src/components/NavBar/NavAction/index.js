@@ -70,8 +70,8 @@ export default class NavAction extends Component {
       <div className={`clearfix ${styles.wrap}`}>
         <div className={`clearfix ${styles.searchBox}`} ref="searchBox">
           <input
-            className={styles.searchInput}
             placeholder="请输入查询的公司..."
+            className={styles.searchInput}
             value={this.state.inputValue}
             onFocus={this.setFocus.bind(this, true)}
             onBlur={this.setFocus.bind(this, false)}

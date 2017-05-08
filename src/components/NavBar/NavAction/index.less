@@ -68,14 +68,26 @@
   width: 150px;
   height: 26px;
 
-  color: @blue8;
+  color: @mdc-blue-grey-500;
   line-height: 33px;
 
   background: transparent;
-}
 
-.searchInput:focus {
-  color: @mdc-blue-grey-500;
+  &::-webkit-input-placeholder {
+    color: @mdc-grey-400;
+  }
+
+  &:-moz-placeholder {
+    color: @mdc-grey-400;
+  }
+
+  &::-moz-placeholder {
+    color: @mdc-grey-400;
+  }
+
+  &:-ms-input-placeholder {
+    color: @mdc-grey-400;
+  }
 }
 
 .searchIcon {
