@@ -116,6 +116,7 @@ export function updateLinksDisplay(nodes, links) {
   links.map((link) => {
     if (!nodes[nodes.findIndex((item) => item.name === link.source.name)].hide && !nodes[nodes.findIndex((item) => item.name === link.target.name)].hide) {
       link.hide = false;
+      link.isFocus = false;
     } else {
       link.hide = true;
     }
@@ -131,10 +132,24 @@ export function focusRelatedLinks(focusNodeName, edgesData) {
     }
   });
 }
-// 获取边的关系
+// 网络图获取边的关系
 export function getLinkInfo(data) {
   const description = [];
   const relation = data.name;
+  Object.keys(relation).map((key) => {
+    if (key === '股东' && data.invRatio !== -1) {
+      const invCurrency = (data.invCurrency === '人民币' || data.invCurrency === '') ? '万人民币' : data.invCurrency;
+      description.push(`${relation[key][0]}(投资金额: ${data.invConum + invCurrency},投资比例: ${data.invRatio.toFixed(2)}%)`);
+    } else {
+      description.push(`${key}(${relation[key][0]})`);
+    }
+  });
+  return description.join(',');
+}
+// 风险关系获取边的关系
+export function getBlackLinkInfo(data) {
+  const description = [];
+  const relation = data.relation;
   Object.keys(relation).map((key) => {
     if (key === '股东' && data.invRatio !== -1) {
       const invCurrency = (data.invCurrency === '人民币' || data.invCurrency === '') ? '万人民币' : data.invCurrency;

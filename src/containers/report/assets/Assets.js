@@ -21,7 +21,6 @@ export default class Assets extends Component {
         <TabPane tab="无形资产/招投标" key="无形资产/招投标">
           <Trademark trademarkInfo={assetsStore.trademarkData}
                      isLoading={assetsStore.trLoading}
-                     error={false}
           />
           <Patent patentItemList={assetsStore.patentData} isLoading={assetsStore.patentLoading} />
           <Bidding biddingItemList={assetsStore.biddingData} isLoading={assetsStore.biddingLoading} />

@@ -68,19 +68,19 @@ function NewBusiness({accountSettingStore}) {
           <p style="text-align: left; padding-bottom: 6px;">
             <a style="color:#3483e9;">
               <span style="padding-right: 15px">${ticket[0].seriesName}</span>
-              <span>${ticket[0].value || 0}</span>家
+              <span>${ticket[0].value || 0}</span>
             </a>
           </p>
           <p style="text-align: left; padding-bottom: 6px;">
             <a style="color:#e08632;">
               <span style="padding-right: 15px">${ticket[1].seriesName}</span>
-              <span>${ticket[1].value || 0}</span>家
+              <span>${ticket[1].value || 0}</span>
             </a>
           </p>
           <p style="text-align: left;">
             <a style="color:#43bf77;">
               <span style="padding-right: 15px">${ticket[2].seriesName}</span>
-              <span>${ticket[2].value || 0}</span>家
+              <span>${ticket[2].value || 0}</span>
             </a>
           </p>
         </div>`;
@@ -137,7 +137,7 @@ function NewBusiness({accountSettingStore}) {
     },
     series: [
       {
-        name: '新增报告企业',
+        name: '新增高级报告',
         type: 'line',
         stack: '总量1',
         lineStyle: {
@@ -154,7 +154,7 @@ function NewBusiness({accountSettingStore}) {
         data: allReportData,
       },
       {
-        name: '新增评估企业',
+        name: '新增深度报告',
         type: 'line',
         stack: '总量2',
         lineStyle: {
@@ -171,7 +171,7 @@ function NewBusiness({accountSettingStore}) {
         data: allAnalysisReportData,
       },
       {
-        name: '新增监控企业',
+        name: '新增监控报告',
         type: 'line',
         stack: '总量3',
         lineStyle: {

@@ -36,7 +36,8 @@ export const getStockCode = ({ reportId, monitorId, analysisReportId }) => {
 export const toggleMonitorStatus = (monitorId, status) => {
   return axios.put(`/api/monitor/${monitorId}/status`, { status: status });
 };
-export const getReportModule = (module, monitorId, reportId, analysisReportId, companyName, companyType, pagesInfo) => {
+export const getReportModule = (params) => {
+  const {module, monitorId, reportId, analysisReportId, companyName, companyType, pagesInfo} = params;
   let url;
   if (companyType === 'MAIN') {
     if (monitorId) {
@@ -51,7 +52,7 @@ export const getReportModule = (module, monitorId, reportId, analysisReportId, c
       }
     } else if (reportId) {
       if (module === 'trademark' || module === 'patent' || module === 'bidding') {
-        url = `/api/report/operation/${module}?reportId=${reportId}${module === 'patent' || module === 'trademark' ? '?index=' + pagesInfo.index + '&limit=' + pagesInfo.size : ''}`;
+        url = `/api/report/operation/${module}?reportId=${reportId}${module === 'patent' || module === 'trademark' ? '&index=' + pagesInfo.index + '&limit=' + pagesInfo.size : ''}`;
       } else if (module === 'person/page') {
         url = `/api/report/${reportId}/person/page?index=1&size=10`;
       } else if (module === 'blackNetwork') {
@@ -61,7 +62,7 @@ export const getReportModule = (module, monitorId, reportId, analysisReportId, c
       }
     } else if (analysisReportId) {
       if (module === 'trademark' || module === 'patent' || module === 'bidding') {
-        url = `/api/analysisReport/operation/${module}?analysisReportId=${analysisReportId}${module === 'patent' || module === 'trademark' ? '?index=' + pagesInfo.index + '&limit=' + pagesInfo.size : ''}`;
+        url = `/api/analysisReport/operation/${module}?analysisReportId=${analysisReportId}${module === 'patent' || module === 'trademark' ? '&index=' + pagesInfo.index + '&limit=' + pagesInfo.size : ''}`;
       } else if (module === 'person/page') {
         url = `/api/analysisReport/${analysisReportId}/person/page?index=1&size=10`;
       } else {
@@ -109,8 +110,13 @@ export const getNewsDetail = (url, source) => {
 export const getBiddingDetail = (url, source) => {
   return axios.get(url, { cancelToken: source.token });
 };
-export const getPersonCheckInfo = ({ monitorId, params }) => {
-  return axios.get(`/api/monitor/${monitorId}/person/page`, { params: params });
+export const getPersonCheckInfo = ({ monitorId, reportId, params }) => {
+  if (monitorId) {
+    return axios.get(`/api/monitor/${monitorId}/person/page`, { params: params });
+  }
+  if (reportId) {
+    return axios.get(`/api/report/${reportId}/person/page`, { params: params });
+  }
 };
 export const checkPersonInfo = (url, params) => {
   return axios.post(url, params);
@@ -220,12 +226,12 @@ export const getPersonName = (url) => {
 };
 
 // 获取评估分析列表
-export const getAlertAnalysisList = (monitorId, reportId, params, source) => {
+export const getAlertAnalysisList = (monitorId, analysisReportId, params, source) => {
   let url;
   if (monitorId) {
     url = `/api/monitor/${monitorId}/alert/page`;
-  } else {
-    url = `/api/analysisReport/${reportId}/alert/page`;
+  } else if (analysisReportId) {
+    url = `/api/analysisReport/${analysisReportId}/alert/page`;
   }
   return axios.get(url, { params: params, cancelToken: source.token });
 };

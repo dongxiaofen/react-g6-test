@@ -172,9 +172,10 @@ class BannerStore {
         this.stockCode = resp.data;
       }))
       .catch((err) => {
-        if (err.response.status !== 404) {
-          console.log('获取stockCode出错', err.response);
-        }
+        console.log(err);
+        // if (err.response.status !== 404) {
+        //   console.log('获取stockCode出错', err.response);
+        // }
       });
   }
 
@@ -288,7 +289,7 @@ class BannerStore {
     companyHomeApi.renewalMonitor(monitorId, time)
       .then(action('renewal monitor', () => {
         payModalStore.closeAction();
-        messageStore.openMessage({ content: '续期成功' });
+        messageStore.openMessage({ content: '续期成功', callBack: this.windowReload });
       }))
       .catch((err) => {
         console.log(err.response);

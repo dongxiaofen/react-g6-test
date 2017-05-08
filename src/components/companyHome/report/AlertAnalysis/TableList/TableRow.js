@@ -12,7 +12,7 @@ function TableRow({data, routing, alertAnalysisStore}) {
       console.log(alertType, 'route to network');
       return false;
     }
-    const {monitorId, reportId} = routing.location.query;
+    const {monitorId, analysisReportId} = routing.location.query;
     const ruleMap = {
       RULE: 'rule',
       SYS_RULE: 'sysRule'
@@ -23,12 +23,12 @@ function TableRow({data, routing, alertAnalysisStore}) {
       url = `/api/monitor/${monitorId}/alert/${ruleMap[alertType]}/${data.id}`;
       type = 'monitor';
     } else {
-      url = `/api/analysisReport/${reportId}/alert/${ruleMap[alertType]}/${data.id}`;
+      url = `/api/analysisReport/${analysisReportId}/alert/${ruleMap[alertType]}/${data.id}`;
       type = 'report';
     }
     alertAnalysisStore.changeValue('loadingId', data.id);
     // alertAnalysisStore.changeValue('detailData.info', data);
-    alertAnalysisStore.getAlertDetail(url, type, monitorId || reportId, data);
+    alertAnalysisStore.getAlertDetail(url, type, monitorId || analysisReportId, data);
   };
   const alertTypeMap = {
     'RULE': '我的预警',

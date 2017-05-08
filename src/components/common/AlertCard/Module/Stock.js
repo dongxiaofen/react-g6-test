@@ -4,9 +4,9 @@ import BaseModule from '../BaseModule';
 import {observer} from 'mobx-react';
 function Stock({data, module}) {
   const viewDetail = ()=> {
-    let url = data.getIn(['content', 'baodaUrl']);
+    let url = data.content.baodaUrl;
     if (!url) {
-      url = dealWithDate(data.getIn(['content', 'title']));
+      url = dealWithDate(data.content.title);
     }
     window.open(url);
   };
@@ -19,7 +19,7 @@ function Stock({data, module}) {
     ],
     date: {
       label: '公告日期',
-      value: data.getIn(['content', 'announcementTime'])
+      value: data.content.announcementTime,
     },
     'handleBlock': true,
     'actionToUrl': true,
