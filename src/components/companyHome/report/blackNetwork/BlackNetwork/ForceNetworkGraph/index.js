@@ -26,6 +26,7 @@ export default class ForceNetworkGraph extends Component {
 
   componentDidMount() {
     console.log(toJS(this.props.blackNetworkStore), 'componentDidMount');
+    const mainCompanyName = this.props.blackNetworkStore.mainCompanyName;
     const graph = toJS(this.props.blackNetworkStore.blackNetwork);
     nodesData = graph.nodes;
     edgesData = graph.links;
@@ -53,21 +54,26 @@ export default class ForceNetworkGraph extends Component {
 
     simulation.force('link')
       .links(edgesData);
-
     svgEdges = svg.append('g')
-      .attr('class', styles.links)
       .selectAll('line')
       .data(edgesData)
-      .enter().append('line');
-    // .attr('stroke-width', (data) => { return Math.sqrt(data.value); });
+      .enter().append('line')
+      .attr('class', (data) => {
+        return !data.source.hide && !data.target.hide ? styles.links : styles.hide;
+      })
+      .attr('marker-end', () => {
+        return 'url(#relativeArrow)';
+      });
 
     svgNodes = svg.append('g')
       .attr('class', styles.nodes)
       .selectAll('circle')
       .data(nodesData)
       .enter().append('circle')
-      .attr('r', 5)
-      // .attr('fill', (data) => { return color(data.group); })
+      .attr('r', 12)
+      .attr('class', (data) => {
+        return (data.hide && styles.hide) || (data.isBlack && styles.blackListNodes) || (data.name === mainCompanyName && styles.mainCompany) || (data.type === 'networkCompany' && styles.relativeCompany) || (data.type === 'networkPerson' && styles.relativePerson) || styles.otherNode;
+      })
       .call(d3.drag()
         .on('start', this.dragstarted)
         .on('drag', this.dragged)
@@ -192,7 +198,20 @@ export default class ForceNetworkGraph extends Component {
   render() {
     return (
       <div>
-        <svg width={this.props.svgWidth} height={this.props.svgHeight} ></svg>
+        <svg width={this.props.svgWidth} height={this.props.svgHeight} >
+          <defs>
+            <marker id="relativeArrow"
+              markerUnits="userSpaceOnUse"
+              markerWidth="10"
+              markerHeight="10"
+              viewBox="0 0 12 12"
+              refX="30"
+              refY="6"
+              orient="auto">
+              <path d="M2,2 L10,6 L2,10 L6,6 L2,2" className={styles.arrow} />
+            </marker>
+          </defs>
+        </svg>
       </div>
     );
   }
