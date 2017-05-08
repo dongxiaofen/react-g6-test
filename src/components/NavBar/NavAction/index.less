@@ -61,6 +61,12 @@
 .searchBox{
   position: relative;
   width: 204px;
+
+  &:hover {
+    i {
+      color: @mdc-blue-300;
+    }
+  }
 }
 
 .searchInput{
@@ -88,6 +94,10 @@
   &:-ms-input-placeholder {
     color: @mdc-grey-400;
   }
+
+  &:focus + span i {
+    color: @mdc-blue-300;
+  }
 }
 
 .searchIcon {
@@ -95,6 +105,14 @@
   font-size: 16px;
   line-height: 26px;
   color: @mdc-blue-grey-200;
+
+  i {
+    -webkit-transition: color .3s ease-in-out;
+       -moz-transition: color .3s ease-in-out;
+        -ms-transition: color .3s ease-in-out;
+         -o-transition: color .3s ease-in-out;
+            transition: color .3s ease-in-out;
+  }
 }
 
 .iconStyle {

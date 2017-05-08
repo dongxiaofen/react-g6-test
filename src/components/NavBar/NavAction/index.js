@@ -15,26 +15,8 @@ export default class NavAction extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      focus: false,
       inputValue: '',
     };
-  }
-
-  setFocus = (bool) => {
-    const target = this.refs.searchBox;
-    const preClass = target.className;
-    let nextClass;
-    if (bool) {
-      nextClass = `${preClass} ${styles.searchBoxOnFocus}`;
-    } else {
-      const newPreClass = preClass.split(' ');
-      newPreClass.pop();
-      nextClass = newPreClass.join(' ');
-    }
-    target.className = nextClass;
-    this.setState({
-      focus: bool,
-    });
   }
 
   logout = () => {
@@ -73,8 +55,6 @@ export default class NavAction extends Component {
             placeholder="请输入查询的公司..."
             className={styles.searchInput}
             value={this.state.inputValue}
-            onFocus={this.setFocus.bind(this, true)}
-            onBlur={this.setFocus.bind(this, false)}
             onKeyUp={this.enterToSearch}
             onChange={this.inputChange} />
           <span className={styles.searchIcon}>
