@@ -3,7 +3,6 @@ import { companyHomeApi } from 'api';
 import axios from 'axios';
 const CancelToken = axios.CancelToken;
 import detailModalStore from '../detailModal';
-import messageStore from '../message';
 import pathval from 'pathval';
 class InternetStore {
   @observable isMount = false;
@@ -20,6 +19,7 @@ class InternetStore {
     title: '',
     source: '',
     html: '',
+    url: '',
   };
   @action.bound changeValue(keyPath, value) {
     pathval.setPathValue(this, keyPath, value);
@@ -96,10 +96,7 @@ class InternetStore {
         if (!axios.isCancel(err)) {
           this.newsDetailCancel = null;
           this.activeUrl = '';
-          messageStore.openMessage({
-            type: 'error',
-            content: pathval.getPathValue(err, 'response.data.message') || '获取新闻数据失败'
-          });
+          window.open(this.detailInfo.url);
         }
       }));
   }

@@ -16,7 +16,7 @@ function Table({data, routing, internetStore}) {
   };
   const viewNews = (item) => {
     const {createdAt, url} = item;
-    const {monitorId, reportId, companyName} = routing.location.query;
+    const {monitorId, reportId, analysisReportId, companyName} = routing.location.query;
     let getUrl;
     if (monitorId) {
       getUrl = `/api/monitor/${monitorId}/internet/detail?createdAt=${createdAt}&url=${url}`;
@@ -24,6 +24,8 @@ function Table({data, routing, internetStore}) {
       getUrl = `/api/report/internet/detail?reportId=${reportId}&createdAt=${createdAt}&url=${url}`;
     } else if (companyName) {
       getUrl = `/api/report/internet/detail?companyName=${encodeURI(companyName)}&createdAt=${createdAt}&url=${url}`;
+    } else if (analysisReportId) {
+      getUrl = `/api/report/internet/detail?analysisReportId=${analysisReportId}&createdAt=${createdAt}&url=${url}`;
     } else {
       return false;
     }
@@ -33,6 +35,7 @@ function Table({data, routing, internetStore}) {
       time: item.publishTime,
       title: item.title,
       source: item.source,
+      url: item.url,
     };
     internetStore.assignDetail(detail);
     internetStore.getNewsDetail(getUrl, url);
