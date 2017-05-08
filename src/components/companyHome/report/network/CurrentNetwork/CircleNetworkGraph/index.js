@@ -54,7 +54,7 @@ export default class CircleNetworkGraph extends Component {
     zoom = d3.zoom();
     svg = d3.select('svg')
       .call(zoom.on('zoom', () => {
-        console.log(d3.event.transform, 12312321);
+        // console.log(d3.event.transform, 12312321);
         svg.attr('transform', `translate(${d3.event.transform.x}, ${d3.event.transform.y}) scale(${d3.event.transform.k})`);
       }))
       .append('g');
