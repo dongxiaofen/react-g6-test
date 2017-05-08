@@ -3,6 +3,7 @@ import { observer } from 'mobx-react';
 import { loadingComp } from 'components/hoc';
 import Pager from 'components/common/Pager';
 import TableRow from './TableRow';
+import styles from './index.less';
 function TableList({alertAnalysisStore}) {
   const data = alertAnalysisStore.listData.content;
   const createTable = () => {
@@ -18,7 +19,7 @@ function TableList({alertAnalysisStore}) {
   };
   return (
     <div>
-      <div>
+      <div className={styles.tableList}>
         {createTable()}
       </div>
       <Pager module="alertAnalysis" type="small" />

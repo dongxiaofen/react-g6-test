@@ -40,9 +40,9 @@ function Content({alertAnalysisStore}) {
         case 'EXECUTE':
           return <ExcuteInfo data={singleDetail} />;
         case 'DISHONESTY':
-          return <DishonestInfo data={singleDetail}/>;
+          return <DishonestInfo data={singleDetail} type={info.alertType}/>;
         case 'JUDGMENT':
-          return <JudgeDoc data={singleDetail}/>;
+          return <JudgeDoc data={singleDetail} type={info.alertType}/>;
         case 'NEWS':
           return <News data={singleDetail}/>;
         case 'COURT_LITIGATION':
@@ -83,7 +83,7 @@ function Content({alertAnalysisStore}) {
         case 32:
           return <Rule32To50 data={detail} />;
         default:
-          return <div>12</div>;
+          return null;
       }
     }
   };

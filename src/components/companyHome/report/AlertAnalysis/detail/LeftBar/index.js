@@ -13,16 +13,21 @@ function LeftBar({alertAnalysisStore, routing}) {
   if (reportId) {
     companyType = 'analysisReport';
   }
+  console.log(reportId, companyType);
   const changeTab = (index) => {
     alertAnalysisStore.changeValue('detailData.activeIndex', index);
+    alertAnalysisStore.resetHtml();
     const pattern = data[activeIndex].pattern;
     if (pattern === 'NEWS') {
       alertAnalysisStore.getNewsDetail(companyType, companyId);
     } else if (pattern === 'JUDGMENT') {
-      alertAnalysisStore.getNewsDetail(companyType, companyId);
+      alertAnalysisStore.getJudgeDocDetail(companyType, companyId);
     }
   };
   const createTabs = () => {
+    if (moduleData.info.alertType !== 'RULE') {
+      return null;
+    }
     return data.map((item, index) => {
       const itemCss = index === activeIndex ? styles.activeItem : styles.item;
       return (

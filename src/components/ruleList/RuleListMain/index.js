@@ -17,6 +17,10 @@ export default class RuleListMain extends Component {
     this.props.ruleStore.getRuleList();
   }
 
+  componentWillUnmount() {
+    this.props.ruleStore.resetListData();
+  }
+
   render() {
     // 规则数据列表
     const ruleList = this.props.ruleStore.ruleList;

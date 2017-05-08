@@ -12,6 +12,7 @@ function JudgeDoc({data, type}) {
     }
     return '--';
   };
+  const keyType = type === 'RULE' ? 'detail' : 'normal';
   const meta = {
     dict: 'judgeDoc',
     body: [
@@ -21,8 +22,9 @@ function JudgeDoc({data, type}) {
       {'key': 'caseCode', 'width': '6'},
       {'key': 'court', 'width': '6'},
       {'key': 'litigant', 'width': '12', modifyBlock: modifyLitiganti},
+      {'key': 'detail', 'width': '12', keyType: keyType},
     ],
-    item: type === 'RULE' ? data.content : data.detail[0],
+    item: type === 'RULE' ? data.content : data.detail[0].judgeInfo,
   };
   return (
     <SimpleCard meta={meta} />
