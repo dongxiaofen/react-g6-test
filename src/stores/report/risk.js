@@ -72,6 +72,7 @@ class RiskStore {
         this.openDetailModal();
       }))
       .catch((error)=>{
+        window.open(info.url, '_blank');
         console.log('risk error', error);
       });
   }

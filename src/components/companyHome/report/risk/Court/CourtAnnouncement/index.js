@@ -5,7 +5,7 @@ import {CardTable } from 'components/common/report';
 function CourtAnnouncement({courtAnnouncement, regTime}) {
   const listMapToStr = (value)=>{
     if (typeof value === 'object') {
-      return value.join('；');
+      return value.join('； ') || '--';
     }
     return value || '--';
   };
