@@ -9,8 +9,10 @@
   clear: both;
 }
 .filterItem {
+  position: relative;
+  bottom: -1px;
   float: left;
-  padding: 0px 35px;
+  margin-right: 40px;
   padding-bottom: 13px;
   font-size: 14px;
   line-height: 1;
@@ -24,5 +26,5 @@
 .activeFilterItem {
   composes: filterItem;
   color: @mdc-blue-400;
-  border-bottom: 4px solid @mdc-blue-400;
+  border-bottom: 2px solid @mdc-blue-400;
 }

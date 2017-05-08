@@ -15,15 +15,15 @@ class UiStore {
     reaction(
       () => this.uiState.trademarkLists.index,
       () => {
-        const { monitorId, reportId, companyName, companyType } = bannerStore;
-        assetsStore.getTrademarkData(monitorId, reportId, companyName, companyType);
+        const { monitorId, reportId, analysisReportId, companyName, companyType} = bannerStore;
+        assetsStore.getTrademarkData(monitorId, reportId, analysisReportId, companyName, companyType);
       }
     );
     reaction(
       () => this.uiState.patentInfo.index,
       () => {
-        const { monitorId, reportId, companyName, companyType } = bannerStore;
-        assetsStore.getPatentData(monitorId, reportId, companyName, companyType);
+        const {monitorId, reportId, analysisReportId, companyName, companyType} = bannerStore;
+        assetsStore.getPatentData(monitorId, reportId, analysisReportId, companyName, companyType);
       }
     );
     reaction(

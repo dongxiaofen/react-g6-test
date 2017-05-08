@@ -2,10 +2,9 @@ import React, {PropTypes} from 'react';
 import { observer, inject} from 'mobx-react';
 import CONFIG from 'dict/reportModule';
 import styles from './index.less';
-function DetailTable({itemData, body, dict, rowIdx, hasNumber, maxCols, routing, detailModalStore}) {
+function DetailTable({itemData, body, dict, rowIdx, hasNumber, maxCols, alertAnalysisStore}) {
   const redirectReport = (companyName)=> {
-    routing.history.push(`companyHome?companyName=${companyName}&companyType=FREE`);
-    detailModalStore.closeAction();
+    alertAnalysisStore.routeToCompanyHome(companyName);
   };
   const getValue = (config, value) => {
     let actValue = value;
@@ -14,6 +13,9 @@ function DetailTable({itemData, body, dict, rowIdx, hasNumber, maxCols, routing,
     }
     if (config.modifyType === 'companyName') {
       actValue = <a className={styles.companyName} onClick={redirectReport.bind(null, value)}>{value}</a>;
+    }
+    if (config.modifyType === 'relationShip') {
+      actValue = value.join(' / ');
     }
     if (config.modifyBlock) {
       actValue = config.modifyBlock(value, itemData);
@@ -93,4 +95,4 @@ function DetailTable({itemData, body, dict, rowIdx, hasNumber, maxCols, routing,
 DetailTable.propTypes = {
   foo: PropTypes.string,
 };
-export default inject('routing', 'detailModalStore')(observer(DetailTable));
+export default inject('alertAnalysisStore')(observer(DetailTable));

@@ -13,13 +13,15 @@ function LeftBar({alertAnalysisStore, routing}) {
   if (reportId) {
     companyType = 'analysisReport';
   }
+  console.log(reportId, companyType);
   const changeTab = (index) => {
     alertAnalysisStore.changeValue('detailData.activeIndex', index);
+    alertAnalysisStore.resetHtml();
     const pattern = data[activeIndex].pattern;
     if (pattern === 'NEWS') {
       alertAnalysisStore.getNewsDetail(companyType, companyId);
     } else if (pattern === 'JUDGMENT') {
-      alertAnalysisStore.getNewsDetail(companyType, companyId);
+      alertAnalysisStore.getJudgeDocDetail(companyType, companyId);
     }
   };
   const createTabs = () => {
@@ -50,6 +52,9 @@ function LeftBar({alertAnalysisStore, routing}) {
   };
   const prevCss = page <= 1 ? styles.arrowUpDis : styles.arrowUp;
   const nextCss = page * 8 >= data.length ? styles.arrowDownDis : styles.arrowDown;
+  if (moduleData.info.alertType !== 'RULE') {
+    return null;
+  }
   return (
     <div className={styles.tabBox}>
       <i className={prevCss} onClick={prevClick}></i>

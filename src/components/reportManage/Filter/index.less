@@ -1,55 +1,73 @@
 @import '~sc-colors/index.less';
-.wrap{
+
+.search {
   position: relative;
   float: right;
-  margin-top: 22px;
+  margin-top: 30px;
+  width: 260px;
 
-  transition: all .3s;
-  &:hover{
-    .searchIcon{
-      color: @mdc-blue-200;
-    }
+  i {
+    position: absolute;
+    top: 2px;
+    left: 0;
+
+    font-size: 16px;
+    color: @mdc-grey-400;
+
+    -webkit-transition: color .3s ease-in-out;
+     -moz-transition: color .3s ease-in-out;
+      -ms-transition: color .3s ease-in-out;
+       -o-transition: color .3s ease-in-out;
+          transition: color .3s ease-in-out;
   }
 }
-.searchInput{
-  &:hover{
-    border: none;
-    border-bottom: 1px solid @mdc-blue-200;
-  }
-  &:focus{
-    border: none;
-    color: @mdc-blue-grey-200;
-  }
-  float: left;
-  width: 260px;
-  height: 35px;
-  padding-left: 20px;
+
+.input {
+  padding-left: 24px;
+  width: 100%;
 
   font-size: 14px;
-  color: @mdc-blue-grey-400;
+  line-height: 20px;
+  color: @mdc-blue-grey-500;
 
-  background: none;
+  background-color: transparent;
   border: none;
-  border-radius: 0;
-  border-bottom: 1px solid @mdc-blue-grey-100 ;
-}
+  border-bottom: 1px solid @mdc-grey-400;
 
-
-.searchIcon{
-  position: absolute;
-  left: 0;
-  top: 10px;
-
-  font-size: 16px;
-  color: @mdc-blue-grey-200;
-
-  cursor: pointer;
-}
-.Active{
-  .searchIcon{
-    color: @mdc-blue-200;
+  -webkit-transition: border-color .3s ease-in-out;
+     -moz-transition: border-color .3s ease-in-out;
+      -ms-transition: border-color .3s ease-in-out;
+       -o-transition: border-color .3s ease-in-out;
+          transition: border-color .3s ease-in-out;
+  
+  &:hover {
+    border-bottom-color: @mdc-blue-300;
+    & + i {
+      color: @mdc-blue-300;
+    }
   }
-  .searchInput{
-    border-bottom: 1px solid @mdc-blue-200 ;
+  
+  &:focus {
+    border-bottom-color: @mdc-blue-300;
+    & + i {
+      color: @mdc-blue-300;
+    }
+  }
+
+  &::-webkit-input-placeholder {
+    color: @mdc-grey-400;
+  }
+
+  &:-moz-placeholder {
+    color: @mdc-grey-400;
+  }
+
+  &::-moz-placeholder {
+    color: @mdc-grey-400;
+  }
+
+  &:-ms-input-placeholder {
+    color: @mdc-grey-400;
   }
 }
+

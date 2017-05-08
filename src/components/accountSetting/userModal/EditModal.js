@@ -68,7 +68,7 @@ function EditModal({accountSettingStore}) {
         name={actName}
         onChange={inputChange}
         onBlur={inputCheck}
-        value={formVal[actName].value}
+        value={formVal[actName].value.replace('- -', '')}
         placeholder={formVal[actName].placeholder}
         />
       <div className={errorBoxCss}>

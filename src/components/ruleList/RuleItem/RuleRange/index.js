@@ -10,6 +10,8 @@ function RuleRange({data}) {
     // 行业
     if (data.rule.industry && data.rule.industry.name) {
       industry = data.rule.industry.name + '，';
+    } else {
+      industry = '行业不限，';
     }
     // 地区
     if (data.rule.area) {

@@ -56,9 +56,9 @@ class TeamStore {
   // 离职意向趋势
   @observable leaveTrend = { Axis: [], data: [] };
 
-  @action.bound getReportModule(module, monitorId, reportId, companyName, companyType) {
+  @action.bound getReportModule(module, monitorId, reportId, analysisReportId, companyName, companyType) {
     this.isMount = true;
-    companyHomeApi.getReportModule(module, monitorId, reportId, companyName, companyType)
+    companyHomeApi.getReportModule(module, monitorId, reportId, analysisReportId, companyName, companyType)
       .then(action('get team data', (resp) => {
         const respData = resp.data;
         const recruitmentData = respData.recruitAndResumeResponse;
@@ -294,6 +294,30 @@ class TeamStore {
     this.siteAndJob.month = month;
     this.siteAndJob.yearIndex = _yearIndex;
     this.siteAndJob.detail = detail;
+  }
+
+  @action.bound resetStore() {
+    this.isLoading = true;
+    this.isMount = false;
+    this.companyInfo = {};
+    this.wageScale = [];
+    this.similarCompanyAvgSalary = '';
+    this.recruitment = { Axis: [], data: [] };
+    this.finishSchool = { Axis: [], data: [] };
+    this.majorInfo = { Axis: [], data: [] };
+    this.recentRecruitment = [];
+    this.siteAndJob = {
+      year: '',
+      years: [],
+      yearIndex: '',
+      month: '',
+      latestYear: '',
+      latestMonth: '',
+      detail: {},
+      data: {}
+    };
+    this.salaryAvgTrend = { Axis: [], data: [] };
+    this.leaveTrend = { Axis: [], data: [] };
   }
 }
 export default new TeamStore();

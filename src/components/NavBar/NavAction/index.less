@@ -61,6 +61,12 @@
 .searchBox{
   position: relative;
   width: 204px;
+
+  &:hover {
+    i {
+      color: @mdc-blue-300;
+    }
+  }
 }
 
 .searchInput{
@@ -68,14 +74,30 @@
   width: 150px;
   height: 26px;
 
-  color: @blue8;
+  color: @mdc-blue-grey-500;
   line-height: 33px;
 
   background: transparent;
-}
 
-.searchInput:focus {
-  color: @mdc-blue-grey-500;
+  &::-webkit-input-placeholder {
+    color: @mdc-grey-400;
+  }
+
+  &:-moz-placeholder {
+    color: @mdc-grey-400;
+  }
+
+  &::-moz-placeholder {
+    color: @mdc-grey-400;
+  }
+
+  &:-ms-input-placeholder {
+    color: @mdc-grey-400;
+  }
+
+  &:focus + span i {
+    color: @mdc-blue-300;
+  }
 }
 
 .searchIcon {
@@ -83,20 +105,15 @@
   font-size: 16px;
   line-height: 26px;
   color: @mdc-blue-grey-200;
+
+  i {
+    -webkit-transition: color .3s ease-in-out;
+       -moz-transition: color .3s ease-in-out;
+        -ms-transition: color .3s ease-in-out;
+         -o-transition: color .3s ease-in-out;
+            transition: color .3s ease-in-out;
+  }
 }
-// .searchBoxOnFocus .searchIcon {
-//   background-image: url('imgs/navbar/search_hover.png');
-// }
-
-// .searchIcon{
-//   float: left;
-//   width: 20px;
-//   height: 20px;
-
-//   background-image: url('imgs/navbar/search.png');
-
-//   .transition-all;
-// }
 
 .iconStyle {
   position: relative;
@@ -116,32 +133,6 @@
   .transition-all;
 }
 
-.icon:hover + div {
-  visibility: visible;
-  opacity: 1;
-  top: 71px;
-}
-
-.appCode {
-  padding: 10px;
-  text-align: center;
-}
-
-.appCodeImg {
-  width: 120px;
-  height: 120px;
-
-  background-image: url('imgs/navbar/code.png');
-  background-size: 120px 120px;
-}
-
-.appCodeText {
-  margin-top: 10px;
-
-  font-size: 14px;
-  line-height: 14px;
-  color: @mdc-blue-grey-400;
-}
 
 .userInfo {
   padding: 20px;
@@ -189,25 +180,21 @@
   color: @mdc-blue-grey-400;
 }
 
-.userInfoIcon {
-  width: 28px;
-  height: 28px;
-  background-image: url('imgs/navbar/user.png');
+.downloadApp {
   &:hover {
-    background-image: url('imgs/navbar/user_hover.png');
+    & + div {
+      top: 50px;
+
+      opacity: 1;
+      visibility: visible;
+    }
   }
 }
 
-.appCodeIcon {
-  background-image: url('imgs/navbar/app_code.png');
-  &:hover {
-    background-image: url('imgs/navbar/app_code_hover.png');
-  }
-}
+.code {
+  width: 100px;
+  height: 100px;
 
-.exitIcon {
-  background-image: url('imgs/navbar/exit.png');
-  &:hover {
-    background-image: url('imgs/navbar/exit_hover.png');
-  }
+  background-image: url('imgs/navbar/code.png');
+  background-size: 100px 100px;
 }
