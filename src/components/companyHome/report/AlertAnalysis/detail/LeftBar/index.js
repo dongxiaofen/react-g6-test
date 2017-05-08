@@ -25,9 +25,6 @@ function LeftBar({alertAnalysisStore, routing}) {
     }
   };
   const createTabs = () => {
-    if (moduleData.info.alertType !== 'RULE') {
-      return null;
-    }
     return data.map((item, index) => {
       const itemCss = index === activeIndex ? styles.activeItem : styles.item;
       return (
@@ -55,6 +52,9 @@ function LeftBar({alertAnalysisStore, routing}) {
   };
   const prevCss = page <= 1 ? styles.arrowUpDis : styles.arrowUp;
   const nextCss = page * 8 >= data.length ? styles.arrowDownDis : styles.arrowDown;
+  if (moduleData.info.alertType !== 'RULE') {
+    return null;
+  }
   return (
     <div className={styles.tabBox}>
       <i className={prevCss} onClick={prevClick}></i>

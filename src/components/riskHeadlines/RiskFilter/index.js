@@ -62,7 +62,7 @@ function RiskFilter({riskHeadlinesStore}) {
   const filterParams = riskHeadlinesStore.filterParams;
   return (
     <div className={styles.wrap}>
-      <h2 className={styles.title}>每日监控</h2>
+      <h2 className={styles.title}>每日头条</h2>
       <div className={`${styles.row} clearfix`}>
         <span className={styles.label}>时间筛选</span>
         <div className={styles.date} id="riskRangePicker">
