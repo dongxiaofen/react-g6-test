@@ -1,5 +1,6 @@
 import { observable, action } from 'mobx';
 import { collectionApi } from 'api';
+import messageStore from './message';
 import uiStore from './ui';
 class CollectionStore {
   @observable resultContent = [];
@@ -31,10 +32,12 @@ class CollectionStore {
           index: collection.index,
           size: collection.size
         });
+        messageStore.openMessage({ content: '成功取消收藏' });
       }))
-      .catch((err) => {
+      .catch(action('cancel collection err', (err) => {
         console.log(err.response);
-      });
+        messageStore.openMessage({ content: '取消失败' });
+      }));
   }
 
   // 设置searchValue
