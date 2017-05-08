@@ -288,7 +288,7 @@ export default class CircleNetworkGraph extends Component {
       return 'rotate(0)';
     })
       .attr('class', (data) => {
-        return data.isFocus ? styles.show : styles.hide;
+        return (data.hide && styles.hide) || (data.isFocus && styles.show) || styles.hide;
       });
   }
   dragstarted = (data) => {
