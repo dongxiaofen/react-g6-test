@@ -122,6 +122,7 @@ export default class Modal extends Component {
     if (this.props.pointText) {
       pointTextComp = (
         <div className={styles.pointText}>
+          <i className="fa fa-exclamation-circle"></i>
           {this.props.pointText}
           《<Link to={this.props.pactUrl}>{this.props.pactName}</Link>》
         </div>
