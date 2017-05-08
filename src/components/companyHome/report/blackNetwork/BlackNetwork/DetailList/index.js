@@ -4,14 +4,24 @@ import { observer, inject } from 'mobx-react';
 import styles from './index.less';
 import DetailItem from './DetailItem';
 
-function DetailList({blackNetworkStore}) {
+function DetailList({blackNetworkStore, detailModalStore}) {
   const {blackList, radioList, modalFocusIdx} = blackNetworkStore;
   const toggleExpand = (idx)=>{
     blackNetworkStore.toggleExpand(idx);
   };
   const showDetail = (index, item)=>{
     console.log(index, item);
-    blackNetworkStore.modalFocus(index);
+    blackNetworkStore.openDetailModal(index, item);
+    detailModalStore.openDetailModal(
+      (cb) => {
+        require.ensure([], (require) => {
+          cb(
+            require('./DetailTitle'),
+            require('./DetailModal')
+          );
+        });
+      }
+    );
   };
   return (
     <div className={styles.box}>
@@ -40,4 +50,4 @@ function DetailList({blackNetworkStore}) {
 DetailList.propTypes = {
   foo: PropTypes.string,
 };
-export default inject('blackNetworkStore')(observer(DetailList));
+export default inject('blackNetworkStore', 'detailModalStore')(observer(DetailList));

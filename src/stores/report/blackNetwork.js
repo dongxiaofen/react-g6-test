@@ -14,9 +14,11 @@ class BlackNetworkStore {
   @observable blackList = [];
   @observable radioList = [];
   @observable modalFocusIdx = -1; // 弹窗idx
+  @observable detailModalData = {};
 
-  @action.bound modalFocus(idx) {
+  @action.bound openDetailModal(idx, data) {
     this.modalFocusIdx = idx;
+    this.detailModalData = data;
   }
   @action.bound focusNode(name) {
     this.focusNodeName = name;
@@ -61,6 +63,20 @@ class BlackNetworkStore {
         this.error = err.response.data;
         this.isLoading = false;
       }));
+  }
+  @action.bound resetStore() {
+    this.error = '';
+    this.isLoading = true;
+    this.isMount = false;
+    this.mainCompanyName = '';
+    this.blackNetwork = {
+      nodes: []
+    };
+    this.focusNodeName = '';
+    this.blackList = [];
+    this.radioList = [];
+    this.modalFocusIdx = -1;
+    this.detailModalData = {};
   }
 }
 export default new BlackNetworkStore();
