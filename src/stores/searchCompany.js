@@ -318,19 +318,17 @@ class SearchCompanyStore {
           } else {
             // 公司规模全选后单选取消的那一项为选择的那一项 这块逻辑待确定
             if (key === 'scale') {
-              const value = obj.value[idx];
-              // const valIdx = this.filterSheet.filterResult[key].indexOf(value);
-              // this.filterSheet.filterResult[key].splice(valIdx, 1);
-              // this.filterSheet.filterStatus[key][idx] = false;
+              // const value = obj.value[idx];
               this.filterSheet.filterResult[key] = [];
-              this.filterSheet.filterResult[key].push(value);
+              // this.filterSheet.filterResult[key].push(value);
               const status = [];
-              this.filterSheet.filterStatus[key].map((val, num)=>{
-                if (num === idx) {
-                  status.push(val);
-                } else {
-                  status.push(false);
-                }
+              this.filterSheet.filterStatus[key].map(()=>{
+                status.push(false);
+                // if (num === idx) {
+                //   status.push(val);
+                // } else {
+                //   status.push(false);
+                // }
               });
               this.filterSheet.filterStatus[key] = status;
             } else {
