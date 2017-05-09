@@ -433,7 +433,7 @@ class MonitorStatisticsStore {
         {
           type: 'slider',
           yAxisIndex: 0,
-          right: '4%',
+          right: '2%',
           dataBackground: {
             areaStyle: {
               color: '#eeeeee',
