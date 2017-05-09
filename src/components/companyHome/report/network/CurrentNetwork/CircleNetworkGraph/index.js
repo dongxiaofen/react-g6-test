@@ -4,6 +4,7 @@ import { toJS, reaction } from 'mobx';
 import styles from './index.less';
 import * as d3 from 'd3';
 import * as svgTools from 'helpers/svgTools';
+import bling0 from 'imgs/companyHome/network/0.gif';
 import bling1 from 'imgs/companyHome/network/1.gif';
 import bling2 from 'imgs/companyHome/network/2.gif';
 import bling3 from 'imgs/companyHome/network/3.gif';
@@ -14,7 +15,7 @@ import bling7 from 'imgs/companyHome/network/7.gif';
 import bling8 from 'imgs/companyHome/network/8.gif';
 import bling9 from 'imgs/companyHome/network/9.gif';
 import bling10 from 'imgs/companyHome/network/10.gif';
-const blingArr = [bling1, bling2, bling3, bling4, bling5, bling6, bling7, bling8, bling9, bling10];
+const blingArr = [bling0, bling1, bling2, bling3, bling4, bling5, bling6, bling7, bling8, bling9, bling10];
 let nodesData;
 let edgesData;
 let svgEdges;
@@ -180,7 +181,7 @@ export default class CircleNetworkGraph extends Component {
         } else {
           nodesData.map((node) => {
             if (focusNodeName !== '' && node.name.indexOf(focusNodeName) >= 0 && node.category !== 0) {
-              nodesData[0].isFocus = true;
+              node.isFocus = true;
             }
           });
         }
@@ -438,9 +439,9 @@ export default class CircleNetworkGraph extends Component {
               <path d="M2,2 L10,6 L2,10 L6,6 L2,2" className={styles.arrow} />
             </marker>
             {
-              new Array(10).fill(1).map((tmp, idx) => {
+              new Array(11).fill(1).map((tmp, idx) => {
                 return (
-                  <pattern key={tmp + idx} id={`bling${idx + 1}`} patternUnits="objectBoundingBox" width="1" height="1">
+                  <pattern key={tmp + idx} id={`bling${idx}`} patternUnits="objectBoundingBox" width="1" height="1">
                     <image xlinkHref={blingArr[idx]} x="0" y="0" width="40" height="40" />
                   </pattern>
                 );
