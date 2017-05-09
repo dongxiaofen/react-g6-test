@@ -3,6 +3,7 @@ import { companyHomeApi } from 'api';
 import networkType from 'dict/networkType';
 import blackNetworkStore from './blackNetwork';
 import leftBarStore from '../leftBar';
+import { browserHistory } from 'react-router';
 
 class NetworkStore {
   constructor() {
@@ -40,9 +41,11 @@ class NetworkStore {
   @observable totalLevel = 1;
   @observable showFullScreen = false;
 
-  @action.bound jumpBlackNode(name) {
+  @action.bound jumpBlackNode(name, params) {
     blackNetworkStore.jumpNode = name;
+    // 修改导航高亮
     leftBarStore.activeItem = 'blackNetwork';
+    browserHistory.push(`/companyHome/blackNetwork${params}`);
   }
   @action.bound selectLevel(currentLevel) {
     this.currentLevel = currentLevel;

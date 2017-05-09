@@ -80,7 +80,7 @@ function Contact({
       <Popover
         visible={contactVis}
         left="0px"
-        top="25px"
+        top="10px"
         content={createInfo()}
         closePopover={closeContactPopoverAlias}
         openPopover={openContactPopoverAlias}
