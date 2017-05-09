@@ -166,11 +166,11 @@ class UiStore {
     },
     shareholder: {
       index: 1,
-      size: 4
+      size: 10
     },
     personList: {
       index: 1,
-      size: 4
+      size: 10
     },
     filiationList: {
       index: 1,
@@ -411,11 +411,11 @@ class UiStore {
         },
         shareholder: {
           index: 1,
-          size: 4
+          size: 10
         },
         personList: {
           index: 1,
-          size: 4
+          size: 10
         },
         filiationList: {
           index: 1,

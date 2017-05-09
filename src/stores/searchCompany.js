@@ -486,6 +486,12 @@ class SearchCompanyStore {
       }))
       .catch(action('createMonitor error', (err) => {
         console.log(err.response, '=====createMonitor error');
+        payModalStore.closeAction();
+        const text = {
+          type: 'warning',
+          content: err.response.data.message
+        };
+        messageStore.openMessage({ ...text });
       }));
   }
   // 分页

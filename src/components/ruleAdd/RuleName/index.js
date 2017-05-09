@@ -6,7 +6,7 @@ function RuleName({ruleStore}) {
   return (
     <div className={styles.box}>
       <div className={styles.tip}>
-        提示：为了准确将预警设置运用于你所监控的企业，建议结合业务经验，严禁和完整的填写
+        注：为了准确将预警运用于你所监控的企业，建议结合业务经验，合理、严谨和完整的填写预警
       </div>
       <div className={styles.nameWrap}>
         <div className={styles.nameContent}>
