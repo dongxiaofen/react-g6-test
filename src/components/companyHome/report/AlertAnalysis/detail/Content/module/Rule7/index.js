@@ -19,11 +19,19 @@ function Rule7({data}) {
     });
     return newsDetail;
   };
+  const setColSpan = (sel, other) => {
+    if (sel < 1) {
+      return 0;
+    } else if (other < 1) {
+      return 2;
+    }
+    return 1;
+  };
   const modifyColSpan = (key, value, obj) => {
     if (key === 'casesDis') {
-      return value > 1 ? 1 : 0;
+      return setColSpan(value, obj.casesLegal);
     } else if (key === 'casesLegal') {
-      return obj.casesDis > 1 ? 1 : 2;
+      return setColSpan(value, obj.casesDis);
     }
   };
   const modifyNumber = (value) => {
