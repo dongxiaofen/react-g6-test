@@ -1,4 +1,4 @@
-import { observable, action } from 'mobx';
+import { observable, action, runInAction } from 'mobx';
 import { companyHomeApi } from 'api';
 import uiStore from '../ui';
 
@@ -41,7 +41,9 @@ class StockStore {
       }))
       .catch((err) => {
         console.log(err.response);
-        this.isOverViewLoading = false;
+        runInAction(() => {
+          this.isOverViewLoading = false;
+        });
       });
   }
   // 上市公告-公告列表
@@ -54,7 +56,9 @@ class StockStore {
       }))
       .catch((err) => {
         console.log(err.response);
-        this.announcementDatasLoading = false;
+        runInAction(() => {
+          this.announcementDatasLoading = false;
+        });
       });
   }
   // 上市公告-公告列表-类型列表
@@ -80,7 +84,9 @@ class StockStore {
       }))
       .catch((err) => {
         console.log(err.response);
-        this.announcementDatasLoading = false;
+        runInAction(() => {
+          this.announcementDatasLoading = false;
+        });
       });
   }
 
