@@ -83,6 +83,7 @@ function ErrorText({ module, error, errCategory = 0, height }) {
     '高级查询报告列表': '未生成任何高级查询报告',
     '深度分析报告列表': '未生成任深度分析报告',
     '收藏列表': '您还没有收藏任何企业',
+    '监控列表': '抱歉，没有找到相关的结果',
   };
   switch (errCategory) {
     case 0:
