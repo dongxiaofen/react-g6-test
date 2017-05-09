@@ -20,7 +20,6 @@ function AlterList({alterList, isLoading}) {
     module: '变更信息',
     error: alterList.length === 0
   };
-  console.log(data);
   return (
     <div>
       <ModuleTitle module="变更信息" count={alterList.length} />

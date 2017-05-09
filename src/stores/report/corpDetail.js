@@ -38,11 +38,19 @@ class CorpDetailStore {
         // 对外投资任职-法人对外任职
         this.frPositionList = resp.data.corpDetail.frPositionList;
         // 工商变更-变更分析
-        this.alterAnalysis = resp.data.tendency.result[0].data;
+        if (resp.data.tendency && resp.data.tendency.result && resp.data.tendency.result[0] && resp.data.tendency.result[0].data) {
+          this.alterAnalysis = resp.data.tendency.result[0].data;
+        }
         // 工商变更-变更信息
-        this.alterList = resp.data.tendency.result[0].alterList;
+        if (resp.data.tendency && resp.data.tendency.result && resp.data.tendency.result[0] && resp.data.tendency.result[0].alterList) {
+          this.alterList = resp.data.tendency.result[0].alterList;
+        }
         // 企业年报
         this.yearReportList = resp.data.corpDetail.yearReportList;
+      }))
+      .catch(action('get corpDetail err', (err)=>{
+        this.isLoading = false;
+        console.log('get corpDetail err', err);
       }));
   }
   // 设置年报显示某年

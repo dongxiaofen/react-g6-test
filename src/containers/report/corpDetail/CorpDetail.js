@@ -30,9 +30,15 @@ import { batchReport } from 'components/hoc';
 @observer
 export default class CorpDetail extends Component {
   static propTypes = {
-    corpDetailStore: PropTypes.object
+    corpDetailStore: PropTypes.object,
+    routing: PropTypes.object,
   };
   render() {
+    const { companyType } = this.props.routing.location.query;
+    let disabledTabPane = '';
+    if (companyType === 'FREE') {
+      disabledTabPane = true;
+    }
     const corpDetailStore = this.props.corpDetailStore;
     const isLoading = corpDetailStore.isLoading;
     return (
@@ -42,9 +48,8 @@ export default class CorpDetail extends Component {
           <ShareHolder shareHolderList={corpDetailStore.shareHolderList} isLoading={isLoading} />
           <PersonList personList={corpDetailStore.personList} isLoading={isLoading} />
           <FiliationList filiationList={corpDetailStore.filiationList} isLoading={isLoading} />
-
         </TabPane>
-        <TabPane tab="对外投资任职" key="对外投资任职">
+        <TabPane disabled={disabledTabPane} tab="对外投资任职" key="对外投资任职">
           <Enterprise entinvItemList={corpDetailStore.entinvItemList} isLoading={isLoading} />
           <Investment frinvList={corpDetailStore.frinvList} isLoading={isLoading} />
           <Office frPositionList={corpDetailStore.frPositionList} isLoading={isLoading} />

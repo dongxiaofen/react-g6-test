@@ -89,7 +89,7 @@ class InternetStore {
               require('components/companyHome/report/internet/news/detail/DetailFooter')
             );
           });
-        });
+        }, '新闻详情');
         this.activeUrl = '';
       }))
       .catch(action('get internet detail error', err => {

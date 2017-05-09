@@ -9,14 +9,18 @@ function ShareAlter({yearReportList, yearReportTab, isLoading}) {
   if (yearReportList && yearReportList.length > 0) {
     if (yearReportTab && yearReportTab.length > 0) {
       yearReportList.map((obj)=>{
-        if (yearReportTab === obj.year) {
-          listData = obj.equityChangeInformations;
-          listNum = obj.equityChangeInformations.length;
+        if (obj.equityChangeInformations) {
+          if (yearReportTab === obj.year) {
+            listData = obj.equityChangeInformations;
+            listNum = obj.equityChangeInformations.length;
+          }
         }
       });
     } else {
-      listData = yearReportList[0].equityChangeInformations;
-      listNum = yearReportList[0].equityChangeInformations.length;
+      if (yearReportList[0] && yearReportList[0].equityChangeInformations) {
+        listData = yearReportList[0].equityChangeInformations;
+        listNum = yearReportList[0].equityChangeInformations.length;
+      }
     }
   }
   const data = {

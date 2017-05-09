@@ -9,14 +9,18 @@ function ChangeRecord({yearReportList, yearReportTab, isLoading}) {
   if (yearReportList && yearReportList.length > 0) {
     if (yearReportTab && yearReportTab.length > 0) {
       yearReportList.map((obj)=>{
-        if (yearReportTab === obj.year) {
-          listData = obj.changeRecords;
-          listNum = obj.changeRecords.length;
+        if (obj.changeRecords) {
+          if (yearReportTab === obj.year) {
+            listData = obj.changeRecords;
+            listNum = obj.changeRecords.length;
+          }
         }
       });
     } else {
-      listData = yearReportList[0].changeRecords;
-      listNum = yearReportList[0].changeRecords.length;
+      if (yearReportList[0] && yearReportList[0].changeRecords) {
+        listData = yearReportList[0].changeRecords;
+        listNum = yearReportList[0].changeRecords.length;
+      }
     }
   }
   const data = {
