@@ -48,9 +48,9 @@ class CorpDetailStore {
         // 企业年报
         this.yearReportList = resp.data.corpDetail.yearReportList;
       }))
-      .catch(action('get corpDetail error', (error)=>{
+      .catch(action('get corpDetail err', (err)=>{
         this.isLoading = false;
-        console.log('=====corpDetail error', error);
+        console.log('get corpDetail err', err);
       }));
   }
   // 设置年报显示某年

@@ -133,11 +133,14 @@ class BannerStore {
     this.isLoading = true;
     companyHomeApi.getBannerInfo({ monitorId, reportId, analysisReportId, companyName, companyType })
       .then(action('get banner info...', (resp) => {
+        const whatThisBannerInfo = resp.data.bannerInfo.bannerInfo;
         this.companyName = resp.data.name;
-        this.historyName = resp.data.bannerInfo.bannerInfo.historyName;
-        this.riskInfo = resp.data.bannerInfo.bannerInfo.riskInfo;
+        if (whatThisBannerInfo) {
+          this.historyName = whatThisBannerInfo.historyName;
+          this.riskInfo = whatThisBannerInfo.riskInfo;
+          this.bannerData = whatThisBannerInfo;
+        }
         this.industryNames = resp.data.industryNames;
-        this.bannerData = resp.data.bannerInfo.bannerInfo;
         this.mainStatus = resp.data.mainStatus;
         this.monitorStatus = resp.data.monitorStatus;
         this.lastModifiedTs = resp.data.lastModifiedTs ? resp.data.lastModifiedTs : '无';

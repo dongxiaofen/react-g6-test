@@ -84,18 +84,18 @@ function CheckModal({visible, width, closeAction, btnLoading, relPerCheckStore, 
       relPerCheckStore.relatedNameModelStatus = false;
     });
   };
-  const checkStatus = ({validate, errorTips, tips, isClick, isFocus}) => {
-    if (relPerCheckStore.relatedSubmit && validate) {
-      return (<div className={styles.validate}>{errorTips}</div>);
-    }
-    if (isFocus) {
-      return (<div className={styles.focusStyle}>{tips}</div>);
-    }
-    if (isClick) {
-      return (<div className={styles.normal}>{tips}</div>);
-    }
-    return <div className={styles.hiddenTittle}>{tips}</div>;
-  };
+  // const checkStatus = ({validate, errorTips, tips, isClick, isFocus}) => {
+  //   if (relPerCheckStore.relatedSubmit && validate) {
+  //     return (<div className={styles.validate}>{errorTips}</div>);
+  //   }
+  //   if (isFocus) {
+  //     return (<div className={styles.focusStyle}>{tips}</div>);
+  //   }
+  //   if (isClick) {
+  //     return (<div className={styles.normal}>{tips}</div>);
+  //   }
+  //   return <div className={styles.hiddenTittle}>{tips}</div>;
+  // };
   // 提交
   const submitClick = ()=>{
     // reportId
@@ -131,6 +131,7 @@ function CheckModal({visible, width, closeAction, btnLoading, relPerCheckStore, 
   if (relatedIdCard.length < 1) {
     idCardText = '身份证号码必填';
   }
+  console.log(idCardText);
   // 默认姓名数据
   const relatedNameData = relPerCheckStore.relatedNameData;
   const relatedNameDom = [];
@@ -160,24 +161,25 @@ function CheckModal({visible, width, closeAction, btnLoading, relPerCheckStore, 
       <div className={styles.contentWrap}>
         <div className={styles.content}>
           {
-            checkStatus({
-              tips: '关联关系',
-              validate: relPerCheckStore.relatedType.length < 1,
-              isClick: relPerCheckStore.relationshipShow,
-              isFocus: relPerCheckStore.relationship,
-              errorTips: '关联关系必填'})
+          //  checkStatus({
+          //    tips: '关联关系',
+          //    validate: relPerCheckStore.relatedType.length < 1,
+          //    isClick: relPerCheckStore.relationshipShow,
+          //    isFocus: relPerCheckStore.relationship,
+          //    errorTips: '关联关系必填'})
           }
           <div
             tabIndex="1"
             onFocus={onFocusRelatedType.bind(this)}
             className={styles.contentSingle}>
+            <div className={styles.normal}>关联关系</div>
             <input
               onChange={changeRelatedType.bind(this)}
               onBlur={onBlurRelated.bind(this, 'relationship')}
               onFocus={onFocusStyle.bind(this, 'relationship', 'relationshipShow')}
               className={relPerCheckStore.relatedSubmit === true && relPerCheckStore.relatedType.length < 1 ? styles.inputClassError : styles.inputClass}
               value={relatedType}
-              placeholder="关联关系" />
+              placeholder="" />
             <div className={relatedTypeModelStatus ? styles.listWrap : styles.hidden}>
               <ul>
                 <li onClick={clickHandle.bind(this, '实际控制人', 'type')}>实际控制人</li>
@@ -191,25 +193,26 @@ function CheckModal({visible, width, closeAction, btnLoading, relPerCheckStore, 
             </div>
           </div>
           {
-            checkStatus({
-              tips: '姓名',
-              validate: relPerCheckStore.relatedName.length < 1,
-              isClick: relPerCheckStore.personNameShow,
-              isFocus: relPerCheckStore.personName,
-              errorTips: '姓名必填'})
+            // checkStatus({
+            //   tips: '姓名',
+            //   validate: relPerCheckStore.relatedName.length < 1,
+            //   isClick: relPerCheckStore.personNameShow,
+            //   isFocus: relPerCheckStore.personName,
+            //   errorTips: '姓名必填'})
           }
           <div
             tabIndex="1"
             onFocus={onFocusRelatedName.bind(this)}
             className={styles.contentSingle}
             onBlur={onBlurRelated.bind(this)}>
+            <div className={styles.normal}>姓名</div>
             <input
               onChange={changeRelatedName.bind(this)}
               onBlur={onBlurStyle.bind(this, 'personName')}
               onFocus={onFocusStyle.bind(this, 'personName', 'personNameShow')}
               className={relPerCheckStore.relatedSubmit === true && relPerCheckStore.relatedName.length < 1 ? styles.inputClassError : styles.inputClass}
               value={relatedName}
-              placeholder="姓名" />
+              placeholder="" />
             <div className={relatedNameModelStatus ? styles.listWrap : styles.hidden}>
               <ul>
                 {relatedNameDom}
@@ -217,20 +220,23 @@ function CheckModal({visible, width, closeAction, btnLoading, relPerCheckStore, 
             </div>
           </div>
           {
-            checkStatus({
-              tips: '身份证号码',
-              validate: !idCardBool,
-              isClick: relPerCheckStore.idCardShow,
-              isFocus: relPerCheckStore.idCardStatus,
-              errorTips: idCardText})
+          //  checkStatus({
+          //    tips: '身份证号码',
+          //    validate: !idCardBool,
+          //    isClick: relPerCheckStore.idCardShow,
+          //    isFocus: relPerCheckStore.idCardStatus,
+          //    errorTips: idCardText})
           }
+          <div className={styles.contentSingle}>
+          <div>身份证号</div>
           <input
             className={relPerCheckStore.relatedSubmit === true && idCardBool === false ? styles.inputClassError : styles.inputClass}
             onChange={changeIdCard.bind(this)}
             onBlur={onBlurStyle.bind(this, 'idCardStatus')}
             onFocus={onFocusStyle.bind(this, 'idCardStatus', 'idCardShow')}
             value={relatedIdCard}
-            placeholder="身份证号" />
+            placeholder="" />
+          </div>
         </div>
       </div>
       </Modal>
