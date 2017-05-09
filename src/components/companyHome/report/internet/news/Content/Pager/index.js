@@ -16,6 +16,9 @@ function Pager({uiStore, internetStore, routing, total}) {
     };
     internetStore.getInternet(params);
   };
+  if (total <= 10) {
+    return null;
+  }
   return (
     <div style={{textAlign: 'right'}}>
       <Pagination
