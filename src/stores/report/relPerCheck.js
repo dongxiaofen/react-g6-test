@@ -34,8 +34,6 @@ class RelPerCheckStore {
   // 是否提交
   @observable relatedSubmit = false;
   @observable reloadMonitorId = {};
-
-  isMount
   @action.bound getReportModule({monitorId, reportId}) {
     this.isMount = true;
     this.getPersonName(monitorId, reportId);
