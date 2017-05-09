@@ -28,7 +28,7 @@ function LegendBar({ networkStore, resumeSvg, fullScreen, exitFull }) {
       {/* <a onClick={swithLayout}>切换</a> */}
       <div className={styles.legendAction}>
         <div className={`clearfix ${styles.levelSelect}`}>
-          <Select onChange={levelOnchange} value={`${currentLevel}`} defaultValue="1" width="100px">
+          <Select onChange={levelOnchange} value={`${currentLevel}`} width="100px">
             {
               new Array(totalLevel).fill(1).map((tmp, idx) => {
                 return (

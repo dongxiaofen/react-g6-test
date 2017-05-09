@@ -186,8 +186,8 @@ export default class DownloadPdf extends Component {
     return (
       <div className={styles.downloadModal}>
         <div className={styles.downloadTitleBox}>
-          <span className={styles.fileIcon}></span>
-          <span>{this.props.routing.location.query.companyName}</span>
+          <i className="fa fa-drupal" aria-hidden="true"></i>
+          <span>{this.props.bannerStore.companyName}</span>
         </div>
         <div className={styles.pdfDownModaBtnBox}>
           <div className={styles.selectAll}>
