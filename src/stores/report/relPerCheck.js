@@ -9,10 +9,7 @@ class RelPerCheckStore {
   @observable idCardStatus = false;
   @observable relationship = false;
   @observable personName = false;
-  // 标题
-  @observable idCardShow = true;
-  @observable relationshipShow = true;
-  @observable personNameShow = true;
+
 
   showId = observable.map({});
   idCard = observable.map({});
