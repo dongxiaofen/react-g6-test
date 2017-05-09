@@ -1,6 +1,9 @@
 import { observable, action, computed, extendObservable, toJS } from 'mobx';
 import { companyHomeApi } from 'api';
 import networkType from 'dict/networkType';
+import blackNetworkStore from './blackNetwork';
+import leftBarStore from '../leftBar';
+import { browserHistory } from 'react-router';
 
 class NetworkStore {
   constructor() {
@@ -28,6 +31,7 @@ class NetworkStore {
   @observable currentNetwork = {
     nodes: []
   };
+  @observable targetComp = {};
   @observable monitorInfoList = [];
   @observable mainCompanyName = '';
   @observable layout = 'circle';
@@ -37,6 +41,12 @@ class NetworkStore {
   @observable totalLevel = 1;
   @observable showFullScreen = false;
 
+  @action.bound jumpBlackNode(name, params) {
+    blackNetworkStore.jumpNode = name;
+    // 修改导航高亮
+    leftBarStore.activeItem = 'blackNetwork';
+    browserHistory.push(`/companyHome/blackNetwork${params}`);
+  }
   @action.bound selectLevel(currentLevel) {
     this.currentLevel = currentLevel;
   }
@@ -75,6 +85,7 @@ class NetworkStore {
         this.currentNetwork = resp.data.currentNetwork;
         this.mainCompanyName = resp.data.companyName;
         this.monitorInfoList = resp.data.monitorInfoList;
+        this.targetComp = resp.data.targetComp;
         const sumOfType = (sumSoFar, item) => {
           return sumSoFar + resp.data.targetComp[item].length;
         };
@@ -109,7 +120,7 @@ class NetworkStore {
         this.currentLevel = resp.data.currentNetwork.nodes.length > 50 ? 1 : Object.keys(layerCount).length;
       }))
       .catch(action('currentNetwork出错', (err) => {
-        console.log('currentNetwork出错', err.response.data);
+        console.log('currentNetwork出错', err);
         this.error = err.response.data;
         this.isLoading = false;
       }));
@@ -122,6 +133,7 @@ class NetworkStore {
       nodes: []
     };
     this.monitorInfoList = [];
+    this.targetComp = '';
     this.mainCompanyName = '';
     this.layout = 'circle';
     this.focusNodeName = '';
@@ -132,6 +144,29 @@ class NetworkStore {
     this.typeList.countArr = [];
     this.typeList.checkedArr = [];
     this.typeList.checkedArrChanged = false;
+  }
+  @action.bound resetSvg() {
+    this.layout = 'circle';
+    this.focusNodeName = '';
+    this.searchKey = '';
+    this.currentLevel = this.currentNetwork.nodes.length > 50 ? 1 : this.totalLevel;
+    this.nodePanel.show = false;
+    if (this.targetComp !== '') {
+      this.typeList.labelArr = [];
+      this.typeList.countArr = [];
+      this.typeList.checkedArr = [];
+      const sumOfType = (sumSoFar, item) => {
+        return sumSoFar + this.targetComp[item].length;
+      };
+      networkType.map((type) => {
+        const count = type.key.reduce(sumOfType, 0);
+        const checked = count === 0 ? false : true;
+        this.typeList.countArr.push(count);
+        this.typeList.checkedArr.push(checked);
+        this.typeList.labelArr.push(type.label);
+      });
+      this.typeList.checkedArrChanged = false;
+    }
   }
 }
 export default new NetworkStore();

@@ -69,12 +69,17 @@ class AlertAnalysisStore {
           if (pattern === 'NEWS') {
             this.getNewsDetail(companyType, companyId);
           } else if (pattern === 'JUDGMENT') {
-            this.getJudgeDocDetail(companyType, companyId);
+            this.getJudgeDocDetail(companyType, companyId, this.detailData.detail[this.detailData.activeIndex].content);
+          }
+        } else if (this.detailData.info.alertType === 'SYS_RULE') {
+          if (resp.data.detail[0].type === 'judgeInfo' && this.detailData.detail.detail[0].judgeInfo) {
+            this.getJudgeDocDetail(companyType, companyId, this.detailData.detail.detail[0].judgeInfo);
           }
         }
       }))
       .catch(action('getAlertDetail_error', err => {
         if (!axios.isCancel(err)) {
+          console.log(err, '===');
           this.loadingId = -1;
           this.alertCancel = null;
           messageStore.openMessage({
@@ -92,6 +97,7 @@ class AlertAnalysisStore {
     if (type !== 'monitor') {
       params.analysisReportId = companyId;
     }
+    this.detailData.html = '';
     const getNewsDetailFunc = type === 'monitor' ? companyHomeApi.getAlertNewsMonitor(companyId, params) : companyHomeApi.getAlertNewsReport(params);
     getNewsDetailFunc
     .then(action('get news', resp=> {
@@ -102,11 +108,11 @@ class AlertAnalysisStore {
       this.detailData.html = '--';
     }));
   }
-  @action.bound getJudgeDocDetail(type, companyId) {
-    const detailData = this.detailData.detail[this.detailData.activeIndex];
+  @action.bound getJudgeDocDetail(type, companyId, data) {
     const params = {};
-    params.docId = detailData.content.docId;
-    params.trailDate = detailData.content.trailDate;
+    params.docId = data.docId;
+    params.trailDate = data.trailDate;
+    this.detailData.html = '';
     if (type !== 'monitor') {
       params.analysisReportId = companyId;
     }
@@ -115,10 +121,10 @@ class AlertAnalysisStore {
     .then(action('get judgeDoc', resp=> {
       this.detailData.html = resp.data.detail;
     }))
-    .catch((error)=>{
-      this.detailData.html = '--';
+    .catch(action('doc error', (error)=>{
       console.log('get judgeDoc', error);
-    });
+      this.detailData.html = '--';
+    }));
   }
   @action.bound getAlertAnalysisList(monitorId, analysisReportId) {
     this.isMount = true;

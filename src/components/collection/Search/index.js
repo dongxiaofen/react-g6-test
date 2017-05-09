@@ -11,7 +11,7 @@ function Search({ collectionStore, uiStore }) {
     const collection = uiStore.uiState.collection;
     collectionStore.getCollectionPage({
       companyName: collection.companyName,
-      index: collection.index,
+      index: 1,
       size: collection.size
     });
   };

@@ -266,6 +266,8 @@ class RiskHeadlinesStore {
     .catch(action('detail error', (error)=> {
       console.log(error, 'risk Detail');
       this.detailLoading.set(info.eventId, false);
+      const url = info.content.url;
+      window.open(url, '_blank');
     }));
   }
   @action.bound riskUpdateValue(objName, keyPath, value) {

@@ -12,9 +12,10 @@ function NewsTabs({internetStore, uiStore, routing}) {
     if (type !== activeType) {
       uiStore.updateUiStore('news.type', type);
       uiStore.updateUiStore('news.index', 1);
-      const {monitorId, reportId, companyName, companyType} = routing.location.query;
+      const {monitorId, analysisReportId, reportId, companyName, companyType} = routing.location.query;
       const params = {
         monitorId,
+        analysisReportId,
         reportId,
         companyName,
         companyType,
