@@ -13,10 +13,8 @@ class MonitorStatisticsStore {
 
   isEmptyObject(obj, key) {
     const result = getPathValue(this[obj], key);
-    for (const name in result) {
-      if (obj.hasOwnProperty(name)) {
-        return false;
-      }
+    if (Object.keys(result).length) {
+      return false;
     }
     return true;
   }
@@ -435,7 +433,7 @@ class MonitorStatisticsStore {
         {
           type: 'slider',
           yAxisIndex: 0,
-          right: '4%',
+          right: '2%',
           dataBackground: {
             areaStyle: {
               color: '#eeeeee',
