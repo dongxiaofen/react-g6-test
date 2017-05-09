@@ -10,9 +10,9 @@ class RelPerCheckStore {
   @observable relationship = false;
   @observable personName = false;
   // 标题
-  @observable idCardShow = false;
-  @observable relationshipShow = false;
-  @observable personNameShow = false;
+  @observable idCardShow = true;
+  @observable relationshipShow = true;
+  @observable personNameShow = true;
 
   showId = observable.map({});
   idCard = observable.map({});
@@ -35,8 +35,9 @@ class RelPerCheckStore {
   @observable relatedSubmit = false;
   @observable reloadMonitorId = {};
 
-  @observable isMount = false;
+  isMount
   @action.bound getReportModule({monitorId, reportId}) {
+    this.isMount = true;
     this.getPersonName(monitorId, reportId);
     companyHomeApi.getPersonCheckInfo({monitorId, reportId, 'params': uiStore.uiState.relPerCheck})
       .then(action( (response) => {
@@ -132,6 +133,7 @@ class RelPerCheckStore {
     this.idCardShow = false;
     this.relationshipShow = false;
     this.personNameShow = false;
+    this.isMount = false;
   }
 }
 export default new RelPerCheckStore();
