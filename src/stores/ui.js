@@ -84,7 +84,11 @@ class UiStore {
     reaction(
       () => this.uiState.reportManagePager.index,
       () => {
-        reportManageStore.getReportList(this.uiState.reportManagePager);
+        if (this.uiState.reportManageList.reportStatus === 'report') {
+          reportManageStore.getReportList(this.uiState.reportManagePager);
+        } else {
+          reportManageStore.getAnalysisReportList(this.uiState.reportManagePager);
+        }
       }
     );
     reaction(

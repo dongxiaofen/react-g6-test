@@ -8,9 +8,9 @@ function AbnormalOperation({abnormalOperation}) {
       body: [
         {'key': 'abntime', 'width': '6'},
         {'key': 'retime', 'width': '6'},
+        {'key': 'specause', 'width': '6', hide: true},
         {'key': 'recause', 'width': '6', hide: true},
-        {'key': 'decorg', 'width': '6', hide: true},
-        {'key': 'specause', 'width': '12', hide: true}
+        {'key': 'decorg', 'width': '12', hide: true},
       ],
       isExpand: false,
       dict: 'jyErrorData',

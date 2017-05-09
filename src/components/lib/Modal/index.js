@@ -71,8 +71,8 @@ export default class Modal extends Component {
   render() {
     // 背景是否显示
     const modalBoxClassName = this.props.visible
-      ? `${styles.modal} ${styles.modalVisible}`
-      : `${styles.modal}`;
+      ? `${styles.modal} ${styles['vertical-center-modal']} ${styles.modalVisible}`
+      : `${styles.modal} ${styles['vertical-center-modal']}`;
     // 弹框是否显示
     const contentBoxClassName = this.props.visible
       ? `${styles.contentLayer} ${styles.visible}`
