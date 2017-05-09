@@ -27,9 +27,12 @@ function Bidding({biddingItemList, isLoading, detailModalStore, routing, assetsS
     if (routing.location.query.monitorId) {
       companyId = routing.location.query.monitorId;
       getUrl = `/api/monitor/${companyId}/operation/bidding/detail?announceId=${bar.announceID}`;
-    } else {
+    } else if (routing.location.query.reportId) {
       companyId = routing.location.query.reportId;
       getUrl = `/api/report/operation/bidding/detail?reportId=${companyId}&announceId=${bar.announceID}`;
+    } else if (routing.location.query.analysisReportId) {
+      companyId = routing.location.query.analysisReportId;
+      getUrl = `/api/analysisReport/operation/bidding/detail?analysisReportId=${companyId}&announceId=${bar.announceID}`;
     }
     assetsStore.getDetail(getUrl, showDetail);
   };
