@@ -1,4 +1,4 @@
-import { observable, action } from 'mobx';
+import { observable, action, runInAction } from 'mobx';
 import { reportManageApi } from 'api';
 import payModalStore from './payModal';
 import modalStore from './modal';
@@ -27,13 +27,18 @@ class ReportManageStore {
     this.isLoading = true;
     reportManageApi.getReportList(params)
       .then(action('get report page', (resp) => {
+        if (params.index === 1) {
+          uiStore.uiState.reportManagePager.index = 1;
+        }
         this.reportList = resp.data.content;
         uiStore.uiState.reportManagePager.totalElements = resp.data.totalElements;
         this.isLoading = false;
       }))
       .catch((err) => {
         console.log(err.response, '-----getReportList');
-        this.isLoading = false;
+        runInAction(() => {
+          this.isLoading = false;
+        });
       });
   }
 
@@ -41,13 +46,18 @@ class ReportManageStore {
     this.isLoading = true;
     reportManageApi.getAnalysisReportList(params)
       .then(action('get analysis report page', (resp) => {
+        if (params.index === 1) {
+          uiStore.uiState.reportManagePager.index = 1;
+        }
         this.reportList = resp.data.content;
         uiStore.uiState.reportManagePager.totalElements = resp.data.totalElements;
         this.isLoading = false;
       }))
       .catch((err) => {
         console.log(err.response, '--------getAnalysisReportList');
-        this.isLoading = false;
+        runInAction(() => {
+          this.isLoading = false;
+        });
       });
   }
 
