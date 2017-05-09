@@ -1,21 +1,33 @@
-import { observable, action } from 'mobx';
+import { observable, action, extendObservable, computed } from 'mobx';
 import { companyHomeApi } from 'api';
 
 class BlackNetworkStore {
+  constructor() {
+    extendObservable(this, {
+      expandIdx: computed(() => {
+        console.log('computed', this.jumpNode);
+        const tmp = this.blackNetwork.paths.findIndex((path) => path.blackListNode === this.jumpNode);
+        console.log('tmp', tmp);
+        return tmp > 0 ? tmp : 0;
+      })
+    });
+  }
+
   @observable error = '';
   @observable isLoading = true;
   @observable isMount = false;
 
   @observable mainCompanyName = '';
   @observable blackNetwork = {
-    nodes: []
+    nodes: [],
+    paths: []
   };
+  @observable jumpNode = '';
   @observable focusNodeName = '';
   @observable blackList = [];
   @observable radioList = [];
   @observable modalFocusIdx = -1; // 弹窗idx
   @observable detailModalData = {};
-  @observable expandIdx = 0;
 
   @action.bound openDetailModal(idx, data) {
     this.modalFocusIdx = idx;
