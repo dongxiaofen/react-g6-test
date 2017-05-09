@@ -33,6 +33,7 @@ let saveNodeXY = false; // 标记坐标存储完成
 let centerNodeX;
 let centerNodeY;
 let nodeAdded = false;
+
 @inject('networkStore')
 @observer
 export default class CircleNetworkGraph extends Component {
@@ -46,6 +47,20 @@ export default class CircleNetworkGraph extends Component {
     const graph = toJS(this.props.networkStore.currentNetwork);
     nodesData = graph.nodes;
     edgesData = graph.links;
+    let canRenderSvg = true;
+    edgesData.map((link)=>{
+      if (nodesData.findIndex((node) => node.name === link.source) < 0 || nodesData.findIndex((node) => node.name === link.target) < 0) {
+        canRenderSvg = false;
+        console.info('网络图link名字和node不对应', link);
+      }
+    });
+    nodesData.map((node) => {
+      if (node.layer === -1) {
+        // canRenderSvg = false;
+        console.info('网络图node的layer有-1', node);
+      }
+    });
+    console.log(canRenderSvg);
     // 统计各层的节点数
     svgTools.getLayerCount(nodesData, layerCount);
     // 计算半径长度
