@@ -1,7 +1,7 @@
 import React from 'react';
 import { observer, inject } from 'mobx-react';
 import styles from './index.less';
-function TableRow({data, routing, alertAnalysisStore}) {
+function TableRow({data, routing, alertAnalysisStore, networkStore}) {
   const loadingId = alertAnalysisStore.loadingId;
   const viewDetail = () => {
     if (loadingId === data.id) {
@@ -9,9 +9,7 @@ function TableRow({data, routing, alertAnalysisStore}) {
     }
     const alertType = data.alertType;
     if (alertType === 'BLACKLIST') {
-      // networkStore.jumpBlackNode(nodeName);
-      // routing.push(`/companyHome/blackNetwork${routing.location.search}`);
-      console.log(alertType, 'route to network');
+      networkStore.jumpBlackNode(data.companyName, routing.location.search);
       return false;
     }
     const {monitorId, analysisReportId} = routing.location.query;
