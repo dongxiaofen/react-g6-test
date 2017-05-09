@@ -5,7 +5,7 @@ import colseImg from 'imgs/close.png';
 import NodeType from './NodeType';
 import MonitorStatus from './MonitorStatus';
 
-function NodePanel({ networkStore }) {
+function NodePanel({ networkStore, routing }) {
   const { show, nodeData } = networkStore.nodePanel;
   const hidePanel = () => {
     networkStore.closePanel();
@@ -21,7 +21,8 @@ function NodePanel({ networkStore }) {
     return null;
   };
   const goToBlackList = (nodeName) => {
-    console.log(nodeName);
+    networkStore.jumpBlackNode(nodeName);
+    routing.push(`/companyHome/blackNetwork${routing.location.search}`);
   };
   const getRiskInfo = () => {
     if (nodeData.blackList && nodeData.category !== 7) {
@@ -57,4 +58,4 @@ function NodePanel({ networkStore }) {
 NodePanel.propTypes = {
   foo: PropTypes.string,
 };
-export default inject('networkStore')(observer(NodePanel));
+export default inject('networkStore', 'routing')(observer(NodePanel));
