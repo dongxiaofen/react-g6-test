@@ -50,9 +50,10 @@ class RiskStore {
         this.corpDetailPunish = resp.data.data.corpDetailPunish;
         this.taxList = resp.data.data.taxList;
       }))
-      .catch((error)=>{
+      .catch(action('risk error', (error)=>{
         console.log('risk error', error);
-      });
+        this.isLoading = false;
+      }));
   }
   openDetailModal() {
     detailModalStore.openDetailModal((cp)=>{
