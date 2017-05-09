@@ -342,6 +342,7 @@ class UiStore {
     this.uiState.accountRecharge = Object.assign({}, template);
     this.uiState.accountSummary = Object.assign({}, template);
     this.uiState.accountLoginRecord = Object.assign({}, template);
+    this.uiState.relPerCheck = Object.assign({}, template);
   }
   @action.bound resetStore() {
     extendObservable(this, {
@@ -375,6 +376,11 @@ class UiStore {
           totalElements: 0,
         },
         accountSummary: {
+          index: 1,
+          size: 10,
+          totalElements: 0,
+        },
+        relPerCheck: {
           index: 1,
           size: 10,
           totalElements: 0,
