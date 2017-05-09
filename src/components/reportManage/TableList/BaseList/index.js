@@ -30,7 +30,7 @@ function BaseList({
       'width': '560px',
       'pactName': '用户服务协议',
       'pactUrl': '/',
-      'pointText': '创建报告即视为同意',
+      'pointText': '加入监控即视为同意',
       'callBack': choiceOk
     });
   };

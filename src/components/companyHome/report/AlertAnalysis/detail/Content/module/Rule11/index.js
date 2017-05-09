@@ -5,7 +5,7 @@ function Rule11({data}) {
   const meta = {
     dict: 'rule11',
     body: [
-      [{ 'key': 'companyName', colSpan: '1', modifyType: 'companyName'}, { 'key': 'relation', colSpan: '2'}],
+      [{ 'key': 'companyName', colSpan: '1', modifyType: 'companyName'}, { 'key': 'relation', colSpan: '2', modifyType: 'relationShip'}],
       [{ 'key': 'capChangeInfo', kids: [
         {key: 'altBe', colSpan: '1'},
         {key: 'altAf', colSpan: '1', keyType: 'important'},

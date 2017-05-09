@@ -287,7 +287,7 @@ const config = {
   },
   // 开庭公告
   courtAnnouncement: {
-    'type': '公告类型',
+    'typeName': '公告类型',
     'publishTime': '公告时间',
     'court': '公告法院',
     'judgeTime': '开庭时间',

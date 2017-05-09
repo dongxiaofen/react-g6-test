@@ -110,7 +110,17 @@ export function isNodeShow(checkeArr, cateList) {// index === -1代表没有被�
   }
   return index === -1 ? false : true;
 }
-
+// 获取节点的颜色值
+export function getNodeColor(checkeArr, cateList) {// index === -1代表没有被勾选上
+  let index = -1;
+  for (const cate of cateList) {
+    if (checkeArr[cate - 1]) {
+      index = cate - 1;
+      break;
+    }
+  }
+  return index + 1;
+}
 // 根据node的显示状态更新link的显示状态
 export function updateLinksDisplay(nodes, links) {
   links.map((link) => {
@@ -132,7 +142,7 @@ export function focusRelatedLinks(focusNodeName, edgesData) {
     }
   });
 }
-// 获取边的关系
+// 网络图获取边的关系
 export function getLinkInfo(data) {
   const description = [];
   const relation = data.name;
@@ -143,6 +153,15 @@ export function getLinkInfo(data) {
     } else {
       description.push(`${key}(${relation[key][0]})`);
     }
+  });
+  return description.join(',');
+}
+// 风险关系获取边的关系
+export function getBlackLinkInfo(data) {
+  const description = [];
+  const relation = data.relation;
+  Object.keys(relation).map((key) => {
+    description.push(`${key}(${relation[key][0]})`);
   });
   return description.join(',');
 }

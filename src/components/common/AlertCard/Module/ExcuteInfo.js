@@ -3,7 +3,7 @@ import BaseModule from '../BaseModule';
 import {observer} from 'mobx-react';
 function ExcuteInfo({data, module}) {
   const modifyCaseState = (value)=>{
-    return value === '0' ? '无' : value;
+    return value === '0' ? '--' : value;
   };
   const moduleData = {
     'hideConfig': [

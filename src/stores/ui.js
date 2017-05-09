@@ -9,6 +9,7 @@ import accountSettingStore from './accountSetting';
 import alertAnalysisStore from './report/alertAnalysis';
 import reportManageStore from './reportManage';
 import collectionStore from './collection';
+import relPerCheckStore from './report/relPerCheck';
 
 class UiStore {
   constructor() {
@@ -95,6 +96,12 @@ class UiStore {
           index: collection.index,
           size: collection.size
         });
+      }
+    );
+    reaction(
+      () => this.uiState.relPerCheck.index,
+      () => {
+        relPerCheckStore.getReportModule(relPerCheckStore.reloadMonitorId);
       }
     );
   }
@@ -335,6 +342,7 @@ class UiStore {
     this.uiState.accountRecharge = Object.assign({}, template);
     this.uiState.accountSummary = Object.assign({}, template);
     this.uiState.accountLoginRecord = Object.assign({}, template);
+    this.uiState.relPerCheck = Object.assign({}, template);
   }
   @action.bound resetStore() {
     extendObservable(this, {
@@ -368,6 +376,11 @@ class UiStore {
           totalElements: 0,
         },
         accountSummary: {
+          index: 1,
+          size: 10,
+          totalElements: 0,
+        },
+        relPerCheck: {
           index: 1,
           size: 10,
           totalElements: 0,
@@ -512,11 +525,6 @@ class UiStore {
           reportStatus: 'report',
         },
         reportManagePager: {
-          index: 1,
-          size: 10,
-          totalElements: 0, // 服务端分页
-        },
-        relPerCheck: {
           index: 1,
           size: 10,
           totalElements: 0, // 服务端分页

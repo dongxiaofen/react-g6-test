@@ -6,14 +6,18 @@ import { ModuleTitle, KvTable } from 'components/common/report';
 function BaseInfo({yearReportList, yearReportTab, isLoading}) {
   let listData = {};
   if (yearReportList && yearReportList.length > 0) {
-    if (yearReportTab.length > 0) {
+    if (yearReportTab && yearReportTab.length > 0) {
       yearReportList.map((obj)=>{
-        if (yearReportTab === obj.year) {
-          listData = obj.baseInfo;
+        if (obj.baseInfo) {
+          if (yearReportTab === obj.year) {
+            listData = obj.baseInfo;
+          }
         }
       });
     } else {
-      listData = yearReportList[0].baseInfo;
+      if (yearReportList[0] && yearReportList[0].baseInfo) {
+        listData = yearReportList[0].baseInfo;
+      }
     }
   }
   const data = {
@@ -30,7 +34,7 @@ function BaseInfo({yearReportList, yearReportTab, isLoading}) {
     },
     isLoading: isLoading,
     module: '企业基本信息',
-    error: yearReportList.length === 0
+    error: yearReportList && yearReportList.length === 0
   };
   return (
     <div>

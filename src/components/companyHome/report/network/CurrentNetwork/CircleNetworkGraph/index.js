@@ -75,14 +75,7 @@ export default class CircleNetworkGraph extends Component {
 
     simulation.force('link')
       .links(edgesData);
-    // 如果节点数超过50, 初始化只展示第一层节点
-    nodesData.map((node) => {
-      if (nodesData.length > 50) {
-        node.hide = node.firstLayer === 1 ? false : true;
-      } else {
-        node.hide = false;
-      }
-    });
+
     svgTools.updateLinksDisplay(nodesData, edgesData);
     svgEdges = svg.append('g')
       .attr('class', styles.links)
@@ -167,11 +160,15 @@ export default class CircleNetworkGraph extends Component {
         nodesData.map((node) => {
           node.isFocus = false;
         });
-        nodesData.map((node) => {
-          if (focusNodeName !== '' && node.name.indexOf(focusNodeName) >= 0 && node.category !== 0) {
-            node.isFocus = true;
-          }
-        });
+        if (focusNodeName === this.props.networkStore.mainCompanyName) {
+          nodesData[0].isFocus = true;
+        } else {
+          nodesData.map((node) => {
+            if (focusNodeName !== '' && node.name.indexOf(focusNodeName) >= 0 && node.category !== 0) {
+              nodesData[0].isFocus = true;
+            }
+          });
+        }
         svgTools.focusRelatedLinks(focusNodeName, edgesData);
         simulation.restart();
       }
@@ -252,7 +249,7 @@ export default class CircleNetworkGraph extends Component {
         return data.isFocus ? 20 : 12;
       })
       .attr('class', (data) => {
-        return (data.hide && styles.hide) || (data.isFocus && ' ') || (data.category === 0 && styles.mainCompany) || (data.blackList && data.category !== 7 && styles.blackListNodes) || (data.status === 0 && styles.cancelNodes) || styles[`category${data.category}`];
+        return (data.hide && styles.hide) || (data.isFocus && ' ') || (data.category === 0 && styles.mainCompany) || (data.blackList && data.category !== 7 && styles.blackListNodes) || (data.status === 0 && styles.cancelNodes) || styles[`category${svgTools.getNodeColor(this.props.networkStore.typeList.checkedArr, data.cateList)}`];
       })
       .attr('fill', (data) => {
         return (!data.isFocus && ' ') || (data.blackList && data.category !== 7 && 'url(#bling9)') || (data.status === 0 && 'url(#bling10)') || `url(#bling${data.category})`;
@@ -308,7 +305,7 @@ export default class CircleNetworkGraph extends Component {
 
   dragended = (data) => {
     if (!d3.event.active) simulation.alphaTarget(0);
-    if (!isDragging && data.category !== 0) {
+    if (!isDragging) {
       this.props.networkStore.focusNode(data.name);
       console.log(data, '单击');
     } else {

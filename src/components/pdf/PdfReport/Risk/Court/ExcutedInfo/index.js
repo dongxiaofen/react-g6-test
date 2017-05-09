@@ -1,0 +1,41 @@
+import React, {PropTypes} from 'react';
+import { observer } from 'mobx-react';
+import PdfNotFound from 'components/common/pdf/PdfNotFound';
+import PdfSimpleKey from 'components/common/pdf/PdfSimpleKey';
+import SecondTitle from 'components/common/pdf/SecondTitle';
+
+function ExcutedInfo({moduleData}) {
+  if (!moduleData || moduleData.length === 0) {
+    return (
+      <div>
+        <SecondTitle module="被执行人信息" />
+        <PdfNotFound />
+      </div>
+    );
+  }
+  const data = {
+    dataConfig: [
+      {'key': 'pname', 'width': '6'},
+      {'key': 'caseCreateTime', 'width': '6'},
+      {'key': 'caseCode', 'width': '6'},
+      {'key': 'execCourtName', 'width': '6'},
+      {'key': 'caseState', 'width': '6'},
+      {'key': 'execMoney', 'width': '6'}
+    ],
+    item: moduleData,
+    dict: 'courtExecution',
+    hasConfig: true,
+    type: 'array',
+  };
+  return (
+    <div>
+      <SecondTitle module="被执行人信息" />
+      <PdfSimpleKey {...data} />
+    </div>
+  );
+}
+
+ExcutedInfo.propTypes = {
+  moduleData: PropTypes.object,
+};
+export default observer(ExcutedInfo);

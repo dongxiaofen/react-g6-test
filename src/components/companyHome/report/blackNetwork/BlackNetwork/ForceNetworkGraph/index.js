@@ -1,13 +1,14 @@
 import React, { Component, PropTypes } from 'react';
 import { observer, inject } from 'mobx-react';
-import { toJS } from 'mobx';
+import { toJS, reaction } from 'mobx';
 import styles from './index.less';
 import * as d3 from 'd3';
+import * as svgTools from 'helpers/svgTools';
 let nodesData;
 let edgesData;
 let svgEdges;
 let svgNodes;
-// let svgTexts;
+let svgTexts;
 let svgEdgepaths;
 let svgEdgelabels;
 let simulation;
@@ -78,7 +79,24 @@ export default class ForceNetworkGraph extends Component {
         .on('start', this.dragstarted)
         .on('drag', this.dragged)
         .on('end', this.dragended));
-
+    svgTexts = svg.selectAll('text')
+      .data(nodesData)
+      .enter()
+      .append('text')
+      .attr('class', (data) => {
+        return data.hide ? styles.hide : styles.text;
+      })
+      .attr('text-anchor', 'middle')
+      .attr('dy', () => {
+        return 25;
+      })
+      .text((data) => {         // 返回节点的名字
+        return data.name;
+      })
+      .call(d3.drag()
+        .on('start', this.dragstarted)
+        .on('drag', this.dragged)
+        .on('end', this.dragended));
     svgEdgepaths = svg.selectAll('.edgepath')
       .data(edgesData)
       .enter()
@@ -93,43 +111,38 @@ export default class ForceNetworkGraph extends Component {
       .enter()
       .append('text')
       .style('pointer-events', 'none')
-      .attr('dx', 8)
+      .attr('dx', 40)
       .attr('dy', -2)
       .attr('class', (data) => {
-        return data.index > 10 ? styles.show : styles.hide;
+        return data.isFocus ? styles.show : styles.hide;
       })
-      .attr('font-size', 10)
-      .attr('fill', '#aaa')
+      .attr('font-size', 8)
+      .attr('fill', '#3483e9')
       .attr('id', (data, idx) => { return 'edgelabel' + idx; });
 
 
     svgEdgelabels.append('textPath')
       .attr('xlink:href', (data, idx) => { return '#edgepath' + idx; })
       .style('pointer-events', 'none')
-      .text(() => { return 'label11111111111111111111111111 '; });
+      .text((data) => { return svgTools.getBlackLinkInfo(data); });
 
-    // svgNodes.append('title')
-    //   .text((data) => { console.log(data); return data.name; });
-
-    // svgTexts = svg.selectAll('text')
-    //   .data(nodesData)
-    //   .enter()
-    //   .append('text')
-    //   .attr('class', (data) => {
-    //     if (data.show === 0) {
-    //       return styles.hide;
-    //     }
-    //     return styles.text;
-    //   })
-    //   .attr('text-anchor', 'middle')
-    //   .attr('dy', (data) => {
-    //     console.log(data, data.x);
-    //     return data.cateType === 0 ? 45 : 25;
-    //   })
-    //   .text((data) => {         // 返回节点的名字
-    //     return data.name;
-    //   })
-    //   .call(d3.drag);
+    // 监听点击和搜索节点事件
+    reaction(
+      () => this.props.blackNetworkStore.focusNodeName,
+      () => {
+        const { focusNodeName } = this.props.blackNetworkStore;
+        nodesData.map((node) => {
+          node.isFocus = false;
+        });
+        nodesData.map((node) => {
+          if (focusNodeName !== '' && node.name.indexOf(focusNodeName) >= 0) {
+            node.isFocus = true;
+          }
+        });
+        svgTools.focusRelatedLinks(focusNodeName, edgesData);
+        simulation.restart();
+      }
+    );
   }
   ticked = () => {
     svgEdges
@@ -144,30 +157,19 @@ export default class ForceNetworkGraph extends Component {
 
     svgEdgepaths.attr('d', (data) => {
       const path = 'M ' + data.source.x + ' ' + data.source.y + ' L ' + data.target.x + ' ' + data.target.y;
-      // console.log(d)
       return path;
     });
 
-    svgEdgelabels.attr('transform', () => {
-      // if (data.target.x < data.source.x) {
-      //   bbox = this.getBBox();
-      //   rx = bbox.x + bbox.width / 2;
-      //   ry = bbox.y + bbox.height / 2;
-      //   return 'rotate(180 ' + rx + ' ' + ry + ')';
-      // }
-      return 'rotate(0)';
+    svgEdgelabels.attr('class', (data) => {
+      return (data.hide && styles.hide) || (data.isFocus && styles.show) || styles.hide;
     });
-    // svgTexts
-    //   .attr('x', (data) => {
-    //     if (data.layer !== -1) {
-    //       return data.x;
-    //     }
-    //   })
-    //   .attr('y', (data) => {
-    //     if (data.layer !== -1) {
-    //       return data.y;
-    //     }
-    //   });
+    svgTexts
+      .attr('x', (data) => {
+        return data.x;
+      })
+      .attr('y', (data) => {
+        return data.y;
+      });
   }
   dragstarted = (data) => {
     if (!d3.event.active) simulation.alphaTarget(0.3).restart();
@@ -186,6 +188,7 @@ export default class ForceNetworkGraph extends Component {
   dragended = (data) => {
     if (!d3.event.active) simulation.alphaTarget(0);
     if (!isDragging) {
+      this.props.blackNetworkStore.focusNode(data.name);
       console.log(data, '单击');
     } else {
       // console.log(data, '拖拽结束');

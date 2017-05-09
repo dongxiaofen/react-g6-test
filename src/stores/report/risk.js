@@ -50,9 +50,10 @@ class RiskStore {
         this.corpDetailPunish = resp.data.data.corpDetailPunish;
         this.taxList = resp.data.data.taxList;
       }))
-      .catch((error)=>{
+      .catch(action('risk error', (error)=>{
         console.log('risk error', error);
-      });
+        this.isLoading = false;
+      }));
   }
   openDetailModal() {
     detailModalStore.openDetailModal((cp)=>{
@@ -62,7 +63,7 @@ class RiskStore {
           require('components/companyHome/report/risk/Court/JudgeDoc/DetailCom/Content')
         );
       });
-    });
+    }, '法务详情');
   }
   @action.bound getJudgeDetailMonitor(monitorCompanyId, params, info) {
     companyHomeApi.getJudgeDetailMonitor(monitorCompanyId, params)
@@ -72,6 +73,7 @@ class RiskStore {
         this.openDetailModal();
       }))
       .catch((error)=>{
+        window.open(info.url, '_blank');
         console.log('risk error', error);
       });
   }

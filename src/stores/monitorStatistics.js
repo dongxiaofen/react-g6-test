@@ -1,4 +1,4 @@
-import { observable, action } from 'mobx';
+import { observable, action, runInAction } from 'mobx';
 import { getPathValue } from 'pathval';
 import axios from 'axios';
 import moment from 'moment';
@@ -13,10 +13,8 @@ class MonitorStatisticsStore {
 
   isEmptyObject(obj, key) {
     const result = getPathValue(this[obj], key);
-    for (const name in result) {
-      if (obj.hasOwnProperty(name)) {
-        return false;
-      }
+    if (Object.keys(result).length) {
+      return false;
     }
     return true;
   }
@@ -435,7 +433,7 @@ class MonitorStatisticsStore {
         {
           type: 'slider',
           yAxisIndex: 0,
-          right: '4%',
+          right: '2%',
           dataBackground: {
             areaStyle: {
               color: '#eeeeee',
@@ -1239,8 +1237,10 @@ class MonitorStatisticsStore {
       }))
       .catch((err) => {
         if (!axios.isCancel(err)) {
-          this.setErrorBody('statistic', err.response.data);
-          this.setLoading('statistic');
+          runInAction(() => {
+            this.setErrorBody('statistic', err.response.data);
+            this.setLoading('statistic');
+          });
         }
       });
     this.cancel.push(source.cancel);
@@ -1286,8 +1286,10 @@ class MonitorStatisticsStore {
       .catch((err) => {
         console.log(err);
         if (!axios.isCancel(err)) {
-          this.setErrorBody('changeTrend', err.response.data);
-          this.setLoading('changeTrend');
+          runInAction(() => {
+            this.setErrorBody('changeTrend', err.response.data);
+            this.setLoading('changeTrend');
+          });
         }
       });
     this.cancel.push(source.cancel);
@@ -1367,8 +1369,10 @@ class MonitorStatisticsStore {
       .catch((err) => {
         console.log(err);
         if (!axios.isCancel(err)) {
-          this.setErrorBody('provinceAll', err.response.data);
-          this.setLoading('provinceAll');
+          runInAction(() => {
+            this.setErrorBody('provinceAll', err.response.data);
+            this.setLoading('provinceAll');
+          });
         }
       });
     this.cancel.push(source.cancel);
@@ -1472,8 +1476,10 @@ class MonitorStatisticsStore {
       .catch((err) => {
         console.log(err);
         if (!axios.isCancel(err)) {
-          this.setErrorBody('province', err.response.data);
-          this.setLoading('province');
+          runInAction(() => {
+            this.setErrorBody('province', err.response.data);
+            this.setLoading('province');
+          });
         }
       });
     this.cancel.push(source.cancel);
@@ -1558,8 +1564,10 @@ class MonitorStatisticsStore {
       .catch((err) => {
         console.log(err);
         if (!axios.isCancel(err)) {
-          this.setErrorBody('industryStatistics', err.response.data);
-          this.setLoading('industryStatistics');
+          runInAction(() => {
+            this.setErrorBody('industryStatistics', err.response.data);
+            this.setLoading('industryStatistics');
+          });
         }
       });
     this.cancel.push(source.cancel);
@@ -1593,8 +1601,10 @@ class MonitorStatisticsStore {
       .catch((err) => {
         console.log(err);
         if (!axios.isCancel(err)) {
-          this.setErrorBody('industryTrend', err.response.data);
-          this.setLoading('industryTrend');
+          runInAction(() => {
+            this.setErrorBody('industryTrend', err.response.data);
+            this.setLoading('industryTrend');
+          });
         }
       });
     this.cancel.push(source.cancel);
@@ -1717,8 +1727,10 @@ class MonitorStatisticsStore {
       .catch((err) => {
         console.log(err);
         if (!axios.isCancel(err)) {
-          this.setErrorBody('headlines', err.response.data);
-          this.setLoading('headlines');
+          runInAction(() => {
+            this.setErrorBody('headlines', err.response.data);
+            this.setLoading('headlines');
+          });
         }
       });
     this.cancel.push(source.cancel);

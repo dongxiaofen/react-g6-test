@@ -9,6 +9,11 @@ class RelPerCheckStore {
   @observable idCardStatus = false;
   @observable relationship = false;
   @observable personName = false;
+  // 标题
+  @observable idCardShow = true;
+  @observable relationshipShow = true;
+  @observable personNameShow = true;
+
   showId = observable.map({});
   idCard = observable.map({});
   // 弹窗
@@ -28,15 +33,15 @@ class RelPerCheckStore {
   @observable relatedIdCard = '';
   // 是否提交
   @observable relatedSubmit = false;
-  @observable reloadMonitorId = '';
-
-  @observable isMount = false;
-  @action.bound getReportModule(module, monitorId, reportId) {
+  @observable reloadMonitorId = {};
+  @action.bound getReportModule({monitorId, reportId}) {
+    this.isMount = true;
     this.getPersonName(monitorId, reportId);
-    companyHomeApi.getPersonCheckInfo({monitorId, 'params': uiStore.uiState.relPerCheck})
+    companyHomeApi.getPersonCheckInfo({monitorId, reportId, 'params': uiStore.uiState.relPerCheck})
       .then(action( (response) => {
-        this.reloadMonitorId = monitorId;
+        this.reloadMonitorId = {monitorId: monitorId, reportId: reportId};
         this.personCheckInfoData = response.data.content;
+        uiStore.uiState.relPerCheck.totalElements = response.data.totalElements;
       }))
       .catch(action( (error) => {
         console.log(error);
@@ -48,11 +53,23 @@ class RelPerCheckStore {
       .then( action( () => {
         this.isLoading = false;
         this.showCheckModal = false;
+        this.relatedIdCard = '';
+        this.relatedName = '';
+        this.relatedType = '';
+        // 清空数据
+        this.idCardShow = false;
+        this.relationshipShow = false;
+        this.personNameShow = false;
+        this.relatedSubmit = false;
         messageStore.openMessage({type: 'info', content: '核查成功', duration: '1500'});
-        this.getReportModule('', this.reloadMonitorId);
+        this.getReportModule(this.reloadMonitorId);
       }))
       .catch(action( (error) => {
         this.isLoading = false;
+        this.relatedIdCard = '';
+        this.relatedName = '';
+        this.relatedType = '';
+        this.relatedSubmit = false;
         messageStore.openMessage({type: 'info', content: error.response.data, duration: '1500'});
       }));
   }
@@ -92,6 +109,29 @@ class RelPerCheckStore {
       .catch((error) => {
         console.log(error.response.data);
       });
+  }
+
+  @action.bound resetStore() {
+    this.personCheckInfoData = [];
+    this.idCardStatus = false;
+    this.relationship = false;
+    this.personName = false;
+    this.showId = observable.map({});
+    this.idCard = observable.map({});
+    this.showCheckModal = false;
+    this.isLoading = false;
+    this.relatedType = '';
+    this.relatedTypeModelStatus = false;
+    this.relatedName = '';
+    this.relatedNameModelStatus = false;
+    this.relatedNameData = [];
+    this.relatedIdCard = '';
+    this.relatedSubmit = false;
+    this.reloadMonitorId = '';
+    this.idCardShow = false;
+    this.relationshipShow = false;
+    this.personNameShow = false;
+    this.isMount = false;
   }
 }
 export default new RelPerCheckStore();
