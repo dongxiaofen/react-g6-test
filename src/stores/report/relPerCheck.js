@@ -9,7 +9,7 @@ class RelPerCheckStore {
   @observable idCardStatus = false;
   @observable relationship = false;
   @observable personName = false;
-  // 输入框显示样式状态
+  // 标题
   @observable idCardShow = false;
   @observable relationshipShow = false;
   @observable personNameShow = false;
@@ -54,11 +54,23 @@ class RelPerCheckStore {
       .then( action( () => {
         this.isLoading = false;
         this.showCheckModal = false;
+        this.relatedIdCard = '';
+        this.relatedName = '';
+        this.relatedType = '';
+        // 清空数据
+        this.idCardShow = false;
+        this.relationshipShow = false;
+        this.personNameShow = false;
+        this.relatedSubmit = false;
         messageStore.openMessage({type: 'info', content: '核查成功', duration: '1500'});
         this.getReportModule(this.reloadMonitorId);
       }))
       .catch(action( (error) => {
         this.isLoading = false;
+        this.relatedIdCard = '';
+        this.relatedName = '';
+        this.relatedType = '';
+        this.relatedSubmit = false;
         messageStore.openMessage({type: 'info', content: error.response.data, duration: '1500'});
       }));
   }

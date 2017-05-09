@@ -1,14 +1,14 @@
 import React from 'react';
-import { observer } from 'mobx-react';
+import { observer, inject} from 'mobx-react';
 import styles from '../index.less';
 import RiskTab from './RiskTab';
 import loadingComp from 'components/hoc/LoadingComp';
-function RiskInfo({riskHeadlinesStore, history}) {
+function RiskInfo({riskHeadlinesStore, routing}) {
   const events = riskHeadlinesStore.events;
   const isSubCom = events.companyType === 'SUB';
   const monitorId = events.info.monitorId;
   const viewReport = ()=> {
-    history.push(`/companyHome?monitorId=${monitorId}&companyType=${isSubCom ? 'ASSOCIATE' : 'MAIN'}`);
+    routing.history.push(`/companyHome?monitorId=${monitorId}&companyType=${isSubCom ? 'ASSOCIATE' : 'MAIN'}s`);
   };
   if (this.props.riskHeadlinesStore.events.info.error) {
     return <div></div>;
@@ -28,4 +28,4 @@ export default loadingComp({
   mapDataToProps: props => ({
     loading: Object.keys(props.riskHeadlinesStore.events.info).length > 0 ? false : true,
   }),
-})(observer(RiskInfo));
+})(inject('routing')(observer(RiskInfo)));
