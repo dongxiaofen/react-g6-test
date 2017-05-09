@@ -9,9 +9,15 @@
 .tabBase {
   cursor: pointer;
   user-select: none;
+  vertical-align: middle;;
 }
 .line {
-  padding: 0 25px;
+  display: inline-block;
+  margin: 0 15px;
+  height: 15px;
+  line-height: 15px;
+  vertical-align: middle;
+  border-right: 1px solid @mdc-blue-grey-200;
 }
 .tabWrap:last-of-type .line{
   display: none;

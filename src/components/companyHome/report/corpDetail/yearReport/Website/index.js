@@ -7,16 +7,20 @@ function Website({yearReportList, yearReportTab, isLoading}) {
   let listData = {};
   let listNum = 0;
   if (yearReportList && yearReportList.length > 0) {
-    if (yearReportTab.length > 0) {
+    if (yearReportTab && yearReportTab.length > 0) {
       yearReportList.map((obj)=>{
-        if (yearReportTab === obj.year) {
-          listData = obj.websiteList;
-          listNum = obj.websiteList.length;
+        if (obj.websiteList) {
+          if (yearReportTab === obj.year) {
+            listData = obj.websiteList;
+            listNum = obj.websiteList.length;
+          }
         }
       });
     } else {
-      listData = yearReportList[0].websiteList;
-      listNum = yearReportList[0].websiteList.length;
+      if (yearReportList[0] && yearReportList[0].websiteList) {
+        listData = yearReportList[0].websiteList;
+        listNum = yearReportList[0].websiteList.length;
+      }
     }
   }
   const data = {

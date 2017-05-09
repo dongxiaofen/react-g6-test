@@ -10,6 +10,15 @@ function MonitorStatus({ nodeData, monitorInfoList, routing }) {
   const viewReport = (reportId, type) => {
     location.href = type === 'MAIN' ? `/companyHome?reportId=${reportId}&companyType=${type}` : `/companyHome?companyName=${reportId}&companyType=${type}`;
   };
+  const monitorStatus = (value) => {
+    if (value.indexOf('MONITOR') >= 0) {
+      return (<span> 正在监控中</span>);
+    }
+    if (value.indexOf('EXPIRED') >= 0) {
+      return (<span> 监控已到期</span>);
+    }
+    return (<span> 监控已暂停</span>);
+  };
   const getMonitorStatus = () => {
     let output;
     if (nodeData.cateType === 2) {
@@ -52,7 +61,7 @@ function MonitorStatus({ nodeData, monitorInfoList, routing }) {
         output = (
           <div>
             <div className={styles.item}>
-              {monitorInfo.monitorStatus.indexOf('MONITOR') >= 0 ? <i className="fa fa-eye"> 正在监控中</i> : <i className="fa fa-eye-slash"> 已暂停监控</i>}
+              {monitorStatus(monitorInfo.monitorStatus)}
             </div>
             <div className={styles.actionBox}>
               <a className={styles.actionFlow} onClick={viewMonitor.bind(this, monitorInfo.monitorMapResponse.monitorId, monitorInfo.monitorMapResponse.companyType)}>查看主页</a>
