@@ -7,7 +7,7 @@ function ShareAlter({yearReportList, yearReportTab, isLoading}) {
   let listData = {};
   let listNum = 0;
   if (yearReportList && yearReportList.length > 0) {
-    if (yearReportTab.length > 0) {
+    if (yearReportTab && yearReportTab.length > 0) {
       yearReportList.map((obj)=>{
         if (yearReportTab === obj.year) {
           listData = obj.equityChangeInformations;

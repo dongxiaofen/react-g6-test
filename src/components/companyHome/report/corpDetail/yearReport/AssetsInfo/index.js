@@ -6,7 +6,7 @@ import { ModuleTitle, KvTable } from 'components/common/report';
 function AssetsInfo({yearReportList, yearReportTab, isLoading}) {
   let listData = {};
   if (yearReportList && yearReportList.length > 0) {
-    if (yearReportTab.length > 0) {
+    if (yearReportTab && yearReportTab.length > 0) {
       yearReportList.map((obj)=>{
         if (yearReportTab === obj.year) {
           listData = obj.assetsInfo;
@@ -29,7 +29,7 @@ function AssetsInfo({yearReportList, yearReportTab, isLoading}) {
     },
     isLoading: isLoading,
     module: '企业资产状况信息(单位：万元)',
-    error: yearReportList.length === 0
+    error: yearReportList && yearReportList.length === 0
   };
   return (
     <div>
