@@ -1,5 +1,6 @@
 import { observable, action } from 'mobx';
 import { companyHomeApi } from 'api';
+import uiStore from '../ui';
 
 class StockStore {
   isEmptyObject(obj) {
@@ -37,7 +38,11 @@ class StockStore {
         this.circulateShareHolder = resp.data.circulateShareHolder;
         this.management = resp.data.management;
         this.isOverViewLoading = false;
-      }));
+      }))
+      .catch((err) => {
+        console.log(err.response);
+        this.isOverViewLoading = false;
+      });
   }
   // 上市公告-公告列表
   @action.bound getAnnouncement(params) {
@@ -46,7 +51,11 @@ class StockStore {
       .then(action('get stock announcement', (resp) => {
         this.announcementDatas = resp.data.data;
         this.announcementDatasLoading = false;
-      }));
+      }))
+      .catch((err) => {
+        console.log(err.response);
+        this.announcementDatasLoading = false;
+      });
   }
   // 上市公告-公告列表-类型列表
   @action.bound getAnnouncementType(params) {
@@ -54,7 +63,10 @@ class StockStore {
     companyHomeApi.getReportModule(params)
       .then(action('get stock announcement type', (resp) => {
         this.announcementTypes = resp.data;
-      }));
+      }))
+      .catch((err) => {
+        console.log(err.response);
+      });
   }
 
   // 切换公告类型
@@ -64,7 +76,12 @@ class StockStore {
       .then(action('change announcement', (resp) => {
         this.announcementDatas = resp.data.data;
         this.announcementDatasLoading = false;
-      }));
+        uiStore.uiState.stockAnnouncement.index = 1;
+      }))
+      .catch((err) => {
+        console.log(err.response);
+        this.announcementDatasLoading = false;
+      });
   }
 
   // 设置selectValue
