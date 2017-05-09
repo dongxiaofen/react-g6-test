@@ -5,9 +5,10 @@ function Pager({uiStore, internetStore, routing, total}) {
   const pageParams = uiStore.uiState.news;
   const pageChange = (page) => {
     uiStore.updateUiStore('news.index', page);
-    const {monitorId, reportId, companyName, companyType} = routing.location.query;
+    const {monitorId, analysisReportId, reportId, companyName, companyType} = routing.location.query;
     const params = {
       monitorId,
+      analysisReportId,
       reportId,
       companyName,
       companyType,
