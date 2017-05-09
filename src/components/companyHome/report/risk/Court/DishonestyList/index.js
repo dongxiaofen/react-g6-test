@@ -6,13 +6,15 @@ function DishonestyList({dishonestyList, regTime}) {
   const data = {
     meta: {
       body: [
-        {'key': 'title', 'width': '12'},
-        {'key': 'releaseTime', 'width': '6', 'modifyText': regTime},
-        {'key': 'price', 'width': '6'},
-        {'key': 'category', 'width': '6', hide: 'true'},
-        {'key': 'status', 'width': '6', hide: 'true'},
-        {'key': 'court', 'width': '12', hide: 'true'},
-        {'key': 'projectNotice', 'width': '12', hide: 'true'}
+        {'key': 'caseCode', 'width': '6'},
+        {'key': 'gistId', 'width': '6'},
+        {'key': 'courtName', 'width': '6'},
+        {'key': 'gistUnit', 'width': '6'},
+        {'key': 'regDate', 'width': '6', 'modifyText': regTime},
+        {'key': 'publishDate', 'width': '6', 'modifyText': regTime},
+        {'key': 'disruptTypeName', 'width': '6'},
+        {'key': 'performance', 'width': '6'},
+        {'key': 'duty', 'width': '12', hide: true},
       ],
       isExpand: false,
       dict: 'dishonestyList',
