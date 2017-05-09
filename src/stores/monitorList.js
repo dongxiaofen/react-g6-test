@@ -102,17 +102,25 @@ class MonitorListStore {
     this.relationList.set(monitorId, null);
   }
   @action.bound changeStatus(params) {
-    const {monitorId, status, index, relation, mMonitorId} = params || this.pauseInfo;
+    const {monitorId, status, idx, relation, mMonitorId} = params || this.pauseInfo;
     this.switchLoading.set(monitorId, true);
     monitorListApi.changeMonitorStatus({monitorId, status})
       .then(action('changeStatus_success', resp => {
         if (relation === 'main') {
-          this.mainList.content[index] = Object.assign({}, this.mainList.content[index], resp.data.slice(-1)[0]);
-          this.relationList.set(monitorId, resp.data.slice(0, -1));
+          const {index, size, totalElements} = uiStore.uiState.monitorListPager;
+          let newIndex = index;
+          if (index === Math.ceil(totalElements / size) && totalElements % size === 1 && index !== 1) {
+            newIndex = index - 1;
+          }
+          uiStore.uiState.monitorListPager.index = newIndex;
+          this.getMainCount();
+          this.getMainList();
+          // this.mainList.content[index] = Object.assign({}, this.mainList.content[index], resp.data.slice(-1)[0]);
+          // this.relationList.set(monitorId, resp.data.slice(0, -1));
           this.pauseInfo.visible = false;
           this.pauseInfo.loading = false;
         } else {
-          this.relationList.get(mMonitorId)[index] = resp.data[0];
+          this.relationList.get(mMonitorId)[idx] = Object.assign({}, this.relationList.get(mMonitorId)[idx], resp.data[0]);
         }
         this.switchLoading.set(monitorId, false);
         messageStore.openMessage({
@@ -131,10 +139,18 @@ class MonitorListStore {
       }));
   }
   @action.bound renewalAction(params) {
-    const {monitorId, time, index, successCb, errorCb} = params;
+    const {monitorId, time, successCb, errorCb} = params;
     monitorListApi.renewal({monitorId, time})
       .then(action('renewal_success', resp => {
-        this.mainList.content[index] = Object.assign({}, this.mainList.content[index], resp.data);
+        const {index, size, totalElements} = uiStore.uiState.monitorListPager;
+        let newIndex = index;
+        if (index === Math.ceil(totalElements / size) && totalElements % size === 1 && index !== 1) {
+          newIndex = index - 1;
+        }
+        uiStore.uiState.monitorListPager.index = newIndex;
+        this.getMainCount();
+        this.getMainList();
+        // this.mainList.content[index] = Object.assign({}, this.mainList.content[index], resp.data);
         successCb(resp);
       }))
       .catch(action('renewal_error', err => {
