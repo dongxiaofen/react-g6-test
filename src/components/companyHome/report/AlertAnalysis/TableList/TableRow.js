@@ -9,6 +9,8 @@ function TableRow({data, routing, alertAnalysisStore}) {
     }
     const alertType = data.alertType;
     if (alertType === 'BLACKLIST') {
+      // networkStore.jumpBlackNode(nodeName);
+      // routing.push(`/companyHome/blackNetwork${routing.location.search}`);
       console.log(alertType, 'route to network');
       return false;
     }
@@ -58,4 +60,4 @@ function TableRow({data, routing, alertAnalysisStore}) {
     </div>
   );
 }
-export default inject('routing')(observer(TableRow));
+export default inject('routing', 'networkStore')(observer(TableRow));
