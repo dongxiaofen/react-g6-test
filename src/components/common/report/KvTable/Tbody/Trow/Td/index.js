@@ -10,7 +10,7 @@ function Td({position, type, value}) {
     tdWidth = position === 'left' ? '12%' : '90%';
   }
   return (
-    <td className={styles[position]} colSpan={type === 'full' && position === 'right' ? '3' : '1'} style={{width: tdWidth}}>{`${value}${position === 'left' ? ':' : ''}`}</td>
+    <td className={styles[position]} colSpan={type === 'full' && position === 'right' ? '3' : '1'} style={{width: tdWidth}}>{`${value}${position === 'left' ? '：' : ''}`}</td>
   );
 }
 
