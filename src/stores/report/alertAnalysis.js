@@ -72,7 +72,7 @@ class AlertAnalysisStore {
             this.getJudgeDocDetail(companyType, companyId, this.detailData.detail[this.detailData.activeIndex].content);
           }
         } else if (this.detailData.info.alertType === 'SYS_RULE') {
-          if (resp.data.detail[0].type === 'judgeInfo') {
+          if (resp.data.detail[0].type === 'judgeInfo' && this.detailData.detail.detail[0].judgeInfo) {
             this.getJudgeDocDetail(companyType, companyId, this.detailData.detail.detail[0].judgeInfo);
           }
         }
@@ -121,10 +121,10 @@ class AlertAnalysisStore {
     .then(action('get judgeDoc', resp=> {
       this.detailData.html = resp.data.detail;
     }))
-    .catch((error)=>{
-      this.detailData.html = '--';
+    .catch(action('doc error', (error)=>{
       console.log('get judgeDoc', error);
-    });
+      this.detailData.html = '--';
+    }));
   }
   @action.bound getAlertAnalysisList(monitorId, analysisReportId) {
     this.isMount = true;
