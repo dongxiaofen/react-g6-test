@@ -8,12 +8,16 @@ function AssetsInfo({yearReportList, yearReportTab, isLoading}) {
   if (yearReportList && yearReportList.length > 0) {
     if (yearReportTab && yearReportTab.length > 0) {
       yearReportList.map((obj)=>{
-        if (yearReportTab === obj.year) {
-          listData = obj.assetsInfo;
+        if (obj.assetsInfo) {
+          if (yearReportTab === obj.year) {
+            listData = obj.assetsInfo;
+          }
         }
       });
     } else {
-      listData = yearReportList[0].assetsInfo;
+      if (yearReportList[0] && yearReportList[0].assetsInfo) {
+        listData = yearReportList[0].assetsInfo;
+      }
     }
   }
   const data = {

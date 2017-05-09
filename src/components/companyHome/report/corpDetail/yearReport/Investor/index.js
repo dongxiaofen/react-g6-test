@@ -9,14 +9,18 @@ function Investor({yearReportList, yearReportTab, isLoading}) {
   if (yearReportList && yearReportList.length > 0) {
     if (yearReportTab && yearReportTab.length > 0) {
       yearReportList.map((obj)=>{
-        if (yearReportTab === obj.year) {
-          listData = obj.investorInformations;
-          listNum = obj.investorInformations.length;
+        if (obj.investorInformations) {
+          if (yearReportTab === obj.year) {
+            listData = obj.investorInformations;
+            listNum = obj.investorInformations.length;
+          }
         }
       });
     } else {
-      listData = yearReportList[0].investorInformations;
-      listNum = yearReportList[0].investorInformations.length;
+      if (yearReportList[0] && yearReportList[0].investorInformations) {
+        listData = yearReportList[0].investorInformations;
+        listNum = yearReportList[0].investorInformations.length;
+      }
     }
   }
   const data = {
