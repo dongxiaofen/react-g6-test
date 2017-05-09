@@ -20,7 +20,7 @@ export default loadingComp({
     loading: props.msStore.loadingGroup.headlines,
     category: 0,
     height: 450,
-    error: !props.msStore.isEmptyObject('errorBody', 'headlines') || !props.msStore.isEmptyObject('headlinesType', 'result'),
+    error: !props.msStore.isEmptyObject('errorBody', 'headlines') || props.msStore.isEmptyObject('headlinesType', 'result'),
     errCategory: 1,
   })
 })(observer(HeadlinesTypeChart));

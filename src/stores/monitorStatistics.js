@@ -13,10 +13,8 @@ class MonitorStatisticsStore {
 
   isEmptyObject(obj, key) {
     const result = getPathValue(this[obj], key);
-    for (const name in result) {
-      if (obj.hasOwnProperty(name)) {
-        return false;
-      }
+    if (Object.keys(result).length) {
+      return false;
     }
     return true;
   }
