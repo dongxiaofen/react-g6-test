@@ -84,6 +84,7 @@ function ErrorText({ module, error, errCategory = 0, height }) {
     '深度分析报告列表': '抱歉，没有找到相关的结果',
     '收藏列表': '抱歉，没有找到相关的结果',
     '监控列表': '抱歉，没有找到相关的结果',
+    '企业预警列表': '抱歉，没有找到相关的结果',
   };
   switch (errCategory) {
     case 0:
