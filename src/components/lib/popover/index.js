@@ -38,7 +38,7 @@ export default class Popover extends Component {
       <div id={this.props.id} className={styles.popover}>
         {this.props.children}
         <div className={`${styles.popoverCon} ${popoverCss}`} style={{left: this.props.left, top: this.props.top}}>
-          <div className={styles.triangle}></div>
+          {/* <div className={styles.triangle}></div> */}
           <div className={`${styles.popoverWrap}`}>
             {this.props.content}
           </div>

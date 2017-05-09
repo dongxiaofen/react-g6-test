@@ -6,7 +6,7 @@ function RuleName({ruleStore}) {
   return (
     <div className={styles.box}>
       <div className={styles.tip}>
-        提示：为了准确将预警设置运用于你所监控的企业，建议结合业务经验，严禁和完整的填写
+        注：为了准确将预警运用于你所监控的企业，建议结合业务经验，合理、严谨和完整的填写预警
       </div>
       <div className={styles.nameWrap}>
         <div className={styles.nameContent}>
@@ -14,7 +14,7 @@ function RuleName({ruleStore}) {
           <input
             onChange={ruleStore.changeName} value={ruleStore.name} className={styles.inputName}
             id="name"
-            placeholder="例：工商信息（为了便于管理预警，请输入预警名称，不超过15字）" />
+            placeholder="为了便于关联预警，请输入预警名称，例：工商信息" />
         </div>
         <div className={ruleStore.submitType === true && ruleStore.name.length < 1 ? styles.validate : styles.none}>
           预警名称必填

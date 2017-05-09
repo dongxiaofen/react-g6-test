@@ -89,11 +89,13 @@ export const getJudgeDetailMonitor = (monitorCompanyId, params) => {
 export const getJudgeDetailReport = (params) => {
   return axios.get(`/api/report/risk/judgeDoc`, { params });
 };
-export const getInternet = ({ monitorId, reportId, companyName, companyType, params }, source) => {
+export const getInternet = ({ monitorId, analysisReportId, reportId, companyName, companyType, params }, source) => {
   let url;
   if (companyType === 'MAIN') {
     if (monitorId) {
       url = `/api/monitor/${monitorId}/internet`;
+    } else if (analysisReportId) {
+      url = `/api/analysisReport/internet?analysisReportId=${analysisReportId}`;
     } else {
       url = `/api/report/internet?reportId=${reportId}`;
     }

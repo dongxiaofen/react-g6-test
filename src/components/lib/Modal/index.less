@@ -12,6 +12,25 @@
           transition: all @secend ease-in-out;
 }
 
+.vertical-center-modal {
+  text-align: center;
+  
+  &:before {
+    content: '';
+    display: inline-block;
+    height: 100%;
+    vertical-align: middle;
+    width: 0;
+  }
+
+  .contentLayer {
+    display: inline-block;
+    vertical-align: middle;
+    top: 0;
+    text-align: left;
+  }
+}
+
 .modal {
   position: fixed;
   top: 0;

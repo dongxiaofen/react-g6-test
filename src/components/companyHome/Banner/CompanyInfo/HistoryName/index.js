@@ -23,7 +23,7 @@ function HistoryName({hisNameVis, historyName, closeHisNamePopoverAlias, openHis
         <Popover
           visible={hisNameVis}
           left="0px"
-          top="25px"
+          top="10px"
           content={createHisNameItem()}
           closePopover={closeHisNamePopoverAlias}
           openPopover={openHisNamePopoverAlias}

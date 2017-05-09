@@ -82,6 +82,7 @@ export default loadingComp({
     error: props.monitorListStore.mainList.error,
     imgCategory: 13,
     category: 2,
+    errCategory: 2,
     module: '监控列表',
   }),
 })(observer(TableList));

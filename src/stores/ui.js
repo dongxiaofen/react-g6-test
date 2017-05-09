@@ -84,7 +84,11 @@ class UiStore {
     reaction(
       () => this.uiState.reportManagePager.index,
       () => {
-        reportManageStore.getReportList(this.uiState.reportManagePager);
+        if (this.uiState.reportManageList.reportStatus === 'report') {
+          reportManageStore.getReportList(this.uiState.reportManagePager);
+        } else {
+          reportManageStore.getAnalysisReportList(this.uiState.reportManagePager);
+        }
       }
     );
     reaction(
@@ -162,11 +166,11 @@ class UiStore {
     },
     shareholder: {
       index: 1,
-      size: 4
+      size: 10
     },
     personList: {
       index: 1,
-      size: 4
+      size: 10
     },
     filiationList: {
       index: 1,
@@ -407,11 +411,11 @@ class UiStore {
         },
         shareholder: {
           index: 1,
-          size: 4
+          size: 10
         },
         personList: {
           index: 1,
-          size: 4
+          size: 10
         },
         filiationList: {
           index: 1,

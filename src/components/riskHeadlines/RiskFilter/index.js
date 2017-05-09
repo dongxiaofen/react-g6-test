@@ -7,6 +7,7 @@ import styles from './index.less';
 import Input from 'components/lib/input';
 import {Checkbox} from 'antd';
 import moment from 'moment';
+moment.locale('zh-cn');
 function RiskFilter({riskHeadlinesStore}) {
   const disabledDate = (current)=> {
     return current && current.valueOf() > Date.now();
