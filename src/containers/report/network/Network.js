@@ -10,6 +10,9 @@ export default class Network extends Component {
   static propTypes = {
     networkStore: PropTypes.object
   };
+  componentWillUnmount() {
+    this.props.networkStore.resetSvg();
+  }
   render() {
     const {isLoading, error, layout} = this.props.networkStore;
     return (
