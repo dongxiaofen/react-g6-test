@@ -161,12 +161,7 @@ export function getBlackLinkInfo(data) {
   const description = [];
   const relation = data.relation;
   Object.keys(relation).map((key) => {
-    if (key === '股东' && data.invRatio !== -1) {
-      const invCurrency = (data.invCurrency === '人民币' || data.invCurrency === '') ? '万人民币' : data.invCurrency;
-      description.push(`${relation[key][0]}(投资金额: ${data.invConum + invCurrency},投资比例: ${data.invRatio.toFixed(2)}%)`);
-    } else {
-      description.push(`${key}(${relation[key][0]})`);
-    }
+    description.push(`${key}(${relation[key][0]})`);
   });
   return description.join(',');
 }
