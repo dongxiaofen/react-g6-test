@@ -21,8 +21,8 @@ function NodePanel({ networkStore, routing }) {
     return null;
   };
   const goToBlackList = (nodeName) => {
-    networkStore.jumpBlackNode(nodeName);
-    routing.push(`/companyHome/blackNetwork${routing.location.search}`);
+    networkStore.jumpBlackNode(nodeName, routing.location.search);
+    // routing.push(`/companyHome/blackNetwork${routing.location.search}`);
   };
   const getRiskInfo = () => {
     if (nodeData.blackList && nodeData.category !== 7) {
