@@ -15,7 +15,7 @@ function SimpleTabs({data, active, clickHandel}) {
       output.push(
         <p className={styles.tabWrap} key={`tab${idx}`} onClick={disabled ? null : clickHandel.bind(null, dataItem.key)}>
           <span className={tabCss}>{dataItem.number || dataItem.number === 0 ? `${text}（${dataItem.number}）` : text}</span>
-          <span className={styles.line}>|</span>
+          <span className={styles.line}></span>
         </p>
       );
     });

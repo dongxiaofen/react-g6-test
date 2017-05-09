@@ -68,7 +68,7 @@ function RiskFilter({riskHeadlinesStore}) {
         <div className={styles.date} id="riskRangePicker">
            <RangePicker
             style={{width: 205, border: 'none'}}
-            defaultValue={[moment(filterParams.from, 'YYYY-MM-DD'), moment(filterParams.to, 'YYYY-MM-DD')]}
+            value={[moment(filterParams.from, 'YYYY-MM-DD'), moment(filterParams.to, 'YYYY-MM-DD')]}
             disabledDate={disabledDate}
             format="YYYY-MM-DD"
             onChange={changeDate.bind(this)}
