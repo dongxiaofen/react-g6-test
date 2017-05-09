@@ -7,10 +7,10 @@ function AlterList({alterList, isLoading}) {
   const data = {
     meta: {
       body: [
-        { 'key': 'altItem', 'width': '8' },
-        { 'key': 'altDate', 'width': '4' },
-        { 'key': 'altBe', 'width': '8', 'hide': true },
-        { 'key': 'altAf', 'width': '4', 'hide': true },
+        { 'key': 'altItem', 'width': '6' },
+        { 'key': 'altDate', 'width': '6' },
+        { 'key': 'altBe', 'width': '6', 'hide': true },
+        { 'key': 'altAf', 'width': '6', 'hide': true },
       ],
       isExpand: false,
       dict: 'alterList',

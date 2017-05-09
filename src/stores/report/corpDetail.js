@@ -43,6 +43,10 @@ class CorpDetailStore {
         this.alterList = resp.data.tendency.result[0].alterList;
         // 企业年报
         this.yearReportList = resp.data.corpDetail.yearReportList;
+      }))
+      .catch(action('get corpDetail err', (err)=>{
+        this.isLoading = false;
+        console.log('get corpDetail err', err);
       }));
   }
   // 设置年报显示某年
