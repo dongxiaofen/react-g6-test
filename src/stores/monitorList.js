@@ -107,7 +107,7 @@ class MonitorListStore {
     monitorListApi.changeMonitorStatus({monitorId, status})
       .then(action('changeStatus_success', resp => {
         if (relation === 'main') {
-          this.mainList.content[index] = resp.data.slice(-1)[0];
+          this.mainList.content[index] = Object.assign({}, this.mainList.content[index], resp.data.slice(-1)[0]);
           this.relationList.set(monitorId, resp.data.slice(0, -1));
           this.pauseInfo.visible = false;
           this.pauseInfo.loading = false;
@@ -134,7 +134,7 @@ class MonitorListStore {
     const {monitorId, time, index, successCb, errorCb} = params;
     monitorListApi.renewal({monitorId, time})
       .then(action('renewal_success', resp => {
-        this.mainList.content[index] = resp.data;
+        this.mainList.content[index] = Object.assign({}, this.mainList.content[index], resp.data);
         successCb(resp);
       }))
       .catch(action('renewal_error', err => {
