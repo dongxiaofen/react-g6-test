@@ -99,24 +99,23 @@ function CheckModal({visible, width, closeAction, btnLoading, relPerCheckStore, 
   };
   // 提交
   const submitClick = ()=>{
-    // reportId
-    let reportId = '';
     const params = {
       id: relPerCheckStore.relatedIdCard,
       name: relPerCheckStore.relatedName,
       relationType: relPerCheckStore.relatedType,
     };
     let idCardBool = true;
+    const { monitorId, reportId, analysisReportId } = routing.location.query;
     if (reg.test(relPerCheckStore.relatedIdCard) === false) {
       idCardBool = false;
     }
     if (relPerCheckStore.relatedType.length > 0 && relPerCheckStore.relatedName.length > 0 && idCardBool) {
-      if (routing.location.query.monitorId) {
-        reportId = routing.location.query.monitorId;
-        relPerCheckStore.submitRelated(`/api/monitor/${reportId}/person`, params);
-      } else {
-        reportId = routing.location.query.reportId;
+      if (monitorId) {
+        relPerCheckStore.submitRelated(`/api/monitor/${monitorId}/person`, params);
+      } else if (reportId) {
         relPerCheckStore.submitRelated(`/api/report/${reportId}/person`, params);
+      }else if (analysisReportId) {
+        relPerCheckStore.submitRelated(`/api/analysisReport/${analysisReportId}/person`, params);
       }
     }
     runInAction('change relatedSubmit status', () => {
