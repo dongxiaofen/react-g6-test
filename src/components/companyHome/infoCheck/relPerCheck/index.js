@@ -21,6 +21,10 @@ function RelPerInfo({relPerCheckStore}) {
       relPerCheckStore.relatedName = '';
       relPerCheckStore.relatedType = '';
       relPerCheckStore.relatedSubmit = false;
+
+      relPerCheckStore.idCardShow = false;
+      relPerCheckStore.relationshipShow = false;
+      relPerCheckStore.personNameShow = false;
     });
   };
   if (relPerCheckStore.personCheckInfoData && relPerCheckStore.personCheckInfoData.length === 0) {

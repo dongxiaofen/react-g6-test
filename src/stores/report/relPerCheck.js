@@ -57,6 +57,10 @@ class RelPerCheckStore {
         this.relatedIdCard = '';
         this.relatedName = '';
         this.relatedType = '';
+        // 清空数据
+        this.idCardShow = false;
+        this.relationshipShow = false;
+        this.personNameShow = false;
         this.relatedSubmit = false;
         messageStore.openMessage({type: 'info', content: '核查成功', duration: '1500'});
         this.getReportModule(this.reloadMonitorId);
