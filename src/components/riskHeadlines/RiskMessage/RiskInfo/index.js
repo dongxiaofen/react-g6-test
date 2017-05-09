@@ -8,7 +8,7 @@ function RiskInfo({riskHeadlinesStore, routing}) {
   const isSubCom = events.companyType === 'SUB';
   const monitorId = events.info.monitorId;
   const viewReport = ()=> {
-    routing.history.push(`/companyHome?monitorId=${monitorId}&companyType=${isSubCom ? 'ASSOCIATE' : 'MAIN'}`);
+    routing.history.push(`/companyHome?monitorId=${monitorId}&companyType=${isSubCom ? 'ASSOCIATE' : 'MAIN'}s`);
   };
   if (this.props.riskHeadlinesStore.events.info.error) {
     return <div></div>;
