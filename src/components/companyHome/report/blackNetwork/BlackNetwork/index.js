@@ -30,6 +30,7 @@ export default loadingComp({
   mapDataToProps: props => ({
     loading: props.isLoading,
     category: 0,
-    error: props.error
+    error: props.error,
+    module: '风险关联图'
   })
 })(observer(BlackNetwork));

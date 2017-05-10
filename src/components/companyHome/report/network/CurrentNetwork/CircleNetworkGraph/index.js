@@ -49,7 +49,7 @@ export default class CircleNetworkGraph extends Component {
     nodesData = graph.nodes;
     edgesData = graph.links;
     let canRenderSvg = true;
-    edgesData.map((link)=>{
+    edgesData.map((link) => {
       if (nodesData.findIndex((node) => node.name === link.source) < 0 || nodesData.findIndex((node) => node.name === link.target) < 0) {
         canRenderSvg = false;
         console.info('网络图link名字和node不对应', link);
@@ -194,18 +194,20 @@ export default class CircleNetworkGraph extends Component {
       () => this.props.networkStore.typeList.checkedArrChanged,
       () => {
         const checkedArr = this.props.networkStore.typeList.checkedArr;
-        const currentLevel = this.props.networkStore.currentLevel;
-        nodesData.map((node) => {
-          if (node.cateType !== 0) {
-            if (node.layer <= currentLevel) {
-              node.hide = !svgTools.isNodeShow(checkedArr, node.cateList);
-            } else {
-              node.hide = true;
+        if (checkedArr.length > 0) {
+          const currentLevel = this.props.networkStore.currentLevel;
+          nodesData.map((node) => {
+            if (node.cateType !== 0) {
+              if (node.layer <= currentLevel) {
+                node.hide = !svgTools.isNodeShow(checkedArr, node.cateList);
+              } else {
+                node.hide = true;
+              }
             }
-          }
-        });
-        svgTools.updateLinksDisplay(nodesData, edgesData);
-        simulation.restart();
+          });
+          svgTools.updateLinksDisplay(nodesData, edgesData);
+          simulation.restart();
+        }
       }
     );
     // 监听level选择变化
@@ -226,6 +228,20 @@ export default class CircleNetworkGraph extends Component {
         simulation.restart();
       }
     );
+  }
+  componentWillUnmount() {
+    if (simulation) {
+      simulation.stop(); // 避免网络图数据异常不正常终止
+    }
+    nodesData = '';
+    // edgesData = '';
+    svgEdges = '';
+    svgNodes = '';
+    svgTexts = '';
+    isDragging = false;
+    zoom = '';
+    nodeAdded = false;
+    saveNodeXY = false;
   }
 
   ticked = () => {
