@@ -88,10 +88,10 @@ function CheckModal({visible, width, closeAction, btnLoading, relPerCheckStore, 
     const style = () => {
       if (isFocus) {
         return (styles.focusStyle);
-      }else if (value.length > 0) {
-        return (styles.normal);
       }else if (relPerCheckStore.relatedSubmit && validate) {
         return (styles.validate);
+      }else if (value.length > 0) {
+        return (styles.normal);
       }
       return '';
     };
