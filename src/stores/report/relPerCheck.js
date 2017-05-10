@@ -2,6 +2,7 @@ import { observable, action } from 'mobx';
 import { companyHomeApi } from 'api';
 import uiStore from '../ui';
 import messageStore from '../message';
+import axios from 'axios';
 
 class RelPerCheckStore {
   @observable personCheckInfoData = [];
@@ -32,9 +33,16 @@ class RelPerCheckStore {
   @observable relatedSubmit = false;
   @observable reloadMonitorId = {};
   @action.bound getReportModule({monitorId, reportId, analysisReportId}) {
+    // 设置axios取消事件
+    const CancelToken = axios.CancelToken;
+    const source = CancelToken.source();
+    if (window.reportSourceCancel === undefined) {
+      window.reportSourceCancel = [];
+    }
+    window.reportSourceCancel.push(source.cancel);
     this.isMount = true;
     this.getPersonName(monitorId, reportId, analysisReportId);
-    companyHomeApi.getPersonCheckInfo({monitorId, reportId, analysisReportId, 'params': uiStore.uiState.relPerCheck})
+    companyHomeApi.getPersonCheckInfo({monitorId, reportId, analysisReportId, 'params': uiStore.uiState.relPerCheck, source})
       .then(action( (response) => {
         this.reloadMonitorId = {monitorId: monitorId, reportId: reportId, analysisReportId: analysisReportId};
         this.personCheckInfoData = response.data.content;
