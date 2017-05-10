@@ -5,7 +5,7 @@ import KeyValue from './KeyValue';
 
 function CheckItem({itemData, routing, relPerCheckStore}) {
   const { match } = itemData;
-  const { monitorId, reportId } = routing.location.query;
+  const { monitorId, reportId, analysisReportId } = routing.location.query;
   const showId = relPerCheckStore.showId;
   const idCardArr = relPerCheckStore.idCard;
   const personCheckId = itemData.id;
@@ -15,8 +15,13 @@ function CheckItem({itemData, routing, relPerCheckStore}) {
   const cssStr = `${matchStr}_${showStr}`;
   const viewDetail = () => {
     if (match) {
-      const str = monitorId ? `?monitorId=${monitorId}&` : `?reportId=${reportId}&`;
-      window.open(`/personReport${str}personCheckId=${personCheckId}`);
+      if (monitorId) {
+        window.open(`/personReport?monitorId=${monitorId}&personCheckId=${personCheckId}`);
+      }else if (reportId) {
+        window.open(`/personReport?reportId=${reportId}&personCheckId=${personCheckId}`);
+      }else if (analysisReportId) {
+        window.open(`/personReport?analysisReportId=${analysisReportId}&personCheckId=${personCheckId}`);
+      }
     }
   };
   const showIdCard = (evt) => {
@@ -27,7 +32,7 @@ function CheckItem({itemData, routing, relPerCheckStore}) {
       relPerCheckStore.toggleExpand('idCard', personCheckId, '');
     } else {
       relPerCheckStore.toggleExpand('showId', personCheckId, true);
-      relPerCheckStore.getIdCard({monitorId, reportId, personCheckId});
+      relPerCheckStore.getIdCard({monitorId, reportId, analysisReportId, personCheckId});
     }
   };
   return (

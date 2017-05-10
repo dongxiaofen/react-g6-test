@@ -84,38 +84,38 @@ function CheckModal({visible, width, closeAction, btnLoading, relPerCheckStore, 
       relPerCheckStore.relatedNameModelStatus = false;
     });
   };
-  // const checkStatus = ({validate, errorTips, tips, isClick, isFocus}) => {
-  //   if (relPerCheckStore.relatedSubmit && validate) {
-  //     return (<div className={styles.validate}>{errorTips}</div>);
-  //   }
-  //   if (isFocus) {
-  //     return (<div className={styles.focusStyle}>{tips}</div>);
-  //   }
-  //   if (isClick) {
-  //     return (<div className={styles.normal}>{tips}</div>);
-  //   }
-  //   return <div className={styles.hiddenTittle}>{tips}</div>;
-  // };
+  const checkStatus = ({validate, errorTips, tips, isFocus, value, htmlFor}) => {
+    const style = () => {
+      if (isFocus) {
+        return (styles.focusStyle);
+      }else if (relPerCheckStore.relatedSubmit && validate) {
+        return (styles.validate);
+      }else if (value.length > 0) {
+        return (styles.normal);
+      }
+      return '';
+    };
+    return (<label htmlFor={htmlFor} className={`${styles.tips} ${style()}`}>{relPerCheckStore.relatedSubmit && validate ? errorTips : tips}</label>);
+  };
   // 提交
   const submitClick = ()=>{
-    // reportId
-    let reportId = '';
     const params = {
-      id: relPerCheckStore.relatedIdCard,
-      name: relPerCheckStore.relatedName,
-      relationType: relPerCheckStore.relatedType,
+      id: relPerCheckStore.relatedIdCard.replace(/(^\s*)|(\s*$)/g, ''),
+      name: relPerCheckStore.relatedName.replace(/(^\s*)|(\s*$)/g, ''),
+      relationType: relPerCheckStore.relatedType.replace(/(^\s*)|(\s*$)/g, ''),
     };
     let idCardBool = true;
+    const { monitorId, reportId, analysisReportId } = routing.location.query;
     if (reg.test(relPerCheckStore.relatedIdCard) === false) {
       idCardBool = false;
     }
     if (relPerCheckStore.relatedType.length > 0 && relPerCheckStore.relatedName.length > 0 && idCardBool) {
-      if (routing.location.query.monitorId) {
-        reportId = routing.location.query.monitorId;
-        relPerCheckStore.submitRelated(`/api/monitor/${reportId}/person`, params);
-      } else {
-        reportId = routing.location.query.reportId;
+      if (monitorId) {
+        relPerCheckStore.submitRelated(`/api/monitor/${monitorId}/person`, params);
+      } else if (reportId) {
         relPerCheckStore.submitRelated(`/api/report/${reportId}/person`, params);
+      }else if (analysisReportId) {
+        relPerCheckStore.submitRelated(`/api/analysisReport/${analysisReportId}/person`, params);
       }
     }
     runInAction('change relatedSubmit status', () => {
@@ -160,20 +160,21 @@ function CheckModal({visible, width, closeAction, btnLoading, relPerCheckStore, 
              confirmText= "核查">
       <div className={styles.contentWrap}>
         <div className={styles.content}>
-          {
-          //  checkStatus({
-          //    tips: '关联关系',
-          //    validate: relPerCheckStore.relatedType.length < 1,
-          //    isClick: relPerCheckStore.relationshipShow,
-          //    isFocus: relPerCheckStore.relationship,
-          //    errorTips: '关联关系必填'})
-          }
           <div
             tabIndex="1"
             onFocus={onFocusRelatedType.bind(this)}
             className={styles.contentSingle}>
-            <div className={styles.normal}>关联关系</div>
+            {
+              checkStatus({
+                tips: '关联关系',
+                validate: relPerCheckStore.relatedType.length < 1,
+                value: relPerCheckStore.relatedType,
+                isFocus: relPerCheckStore.relationship,
+                htmlFor: 'relation',
+                errorTips: '关联关系必填'})
+            }
             <input
+              id="relation"
               onChange={changeRelatedType.bind(this)}
               onBlur={onBlurRelated.bind(this, 'relationship')}
               onFocus={onFocusStyle.bind(this, 'relationship', 'relationshipShow')}
@@ -192,21 +193,22 @@ function CheckModal({visible, width, closeAction, btnLoading, relPerCheckStore, 
               </ul>
             </div>
           </div>
-          {
-            // checkStatus({
-            //   tips: '姓名',
-            //   validate: relPerCheckStore.relatedName.length < 1,
-            //   isClick: relPerCheckStore.personNameShow,
-            //   isFocus: relPerCheckStore.personName,
-            //   errorTips: '姓名必填'})
-          }
           <div
             tabIndex="1"
             onFocus={onFocusRelatedName.bind(this)}
             className={styles.contentSingle}
             onBlur={onBlurRelated.bind(this)}>
-            <div className={styles.normal}>姓名</div>
+            {
+              checkStatus({
+                tips: '姓名',
+                validate: relPerCheckStore.relatedName.length < 1,
+                isFocus: relPerCheckStore.personName,
+                htmlFor: 'forname',
+                value: relPerCheckStore.relatedName,
+                errorTips: '姓名必填'})
+            }
             <input
+              id="forname"
               onChange={changeRelatedName.bind(this)}
               onBlur={onBlurStyle.bind(this, 'personName')}
               onFocus={onFocusStyle.bind(this, 'personName', 'personNameShow')}
@@ -219,17 +221,18 @@ function CheckModal({visible, width, closeAction, btnLoading, relPerCheckStore, 
               </ul>
             </div>
           </div>
-          {
-          //  checkStatus({
-          //    tips: '身份证号码',
-          //    validate: !idCardBool,
-          //    isClick: relPerCheckStore.idCardShow,
-          //    isFocus: relPerCheckStore.idCardStatus,
-          //    errorTips: idCardText})
-          }
           <div className={styles.contentSingle}>
-          <div>身份证号</div>
+            {
+              checkStatus({
+                tips: '身份证号',
+                validate: !idCardBool,
+                htmlFor: 'idcard',
+                value: relPerCheckStore.relatedIdCard,
+                isFocus: relPerCheckStore.idCardStatus,
+                errorTips: idCardText})
+            }
           <input
+            id="idcard"
             className={relPerCheckStore.relatedSubmit === true && idCardBool === false ? styles.inputClassError : styles.inputClass}
             onChange={changeIdCard.bind(this)}
             onBlur={onBlurStyle.bind(this, 'idCardStatus')}

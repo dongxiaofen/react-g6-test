@@ -13,7 +13,6 @@ function LeftBar({alertAnalysisStore, routing}) {
   if (reportId) {
     companyType = 'analysisReport';
   }
-  console.log(reportId, companyType);
   const changeTab = (index) => {
     alertAnalysisStore.changeValue('detailData.activeIndex', index);
     alertAnalysisStore.resetHtml();
@@ -21,7 +20,7 @@ function LeftBar({alertAnalysisStore, routing}) {
     if (pattern === 'NEWS') {
       alertAnalysisStore.getNewsDetail(companyType, companyId);
     } else if (pattern === 'JUDGMENT') {
-      alertAnalysisStore.getJudgeDocDetail(companyType, companyId);
+      alertAnalysisStore.getJudgeDocDetail(companyType, companyId, data[activeIndex].content);
     }
   };
   const createTabs = () => {

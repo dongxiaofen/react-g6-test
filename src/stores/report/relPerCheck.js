@@ -2,6 +2,7 @@ import { observable, action } from 'mobx';
 import { companyHomeApi } from 'api';
 import uiStore from '../ui';
 import messageStore from '../message';
+import axios from 'axios';
 
 class RelPerCheckStore {
   @observable personCheckInfoData = [];
@@ -9,10 +10,7 @@ class RelPerCheckStore {
   @observable idCardStatus = false;
   @observable relationship = false;
   @observable personName = false;
-  // 标题
-  @observable idCardShow = true;
-  @observable relationshipShow = true;
-  @observable personNameShow = true;
+
 
   showId = observable.map({});
   idCard = observable.map({});
@@ -34,12 +32,19 @@ class RelPerCheckStore {
   // 是否提交
   @observable relatedSubmit = false;
   @observable reloadMonitorId = {};
-  @action.bound getReportModule({monitorId, reportId}) {
+  @action.bound getReportModule({monitorId, reportId, analysisReportId}) {
+    // 设置axios取消事件
+    const CancelToken = axios.CancelToken;
+    const source = CancelToken.source();
+    if (window.reportSourceCancel === undefined) {
+      window.reportSourceCancel = [];
+    }
+    window.reportSourceCancel.push(source.cancel);
     this.isMount = true;
-    this.getPersonName(monitorId, reportId);
-    companyHomeApi.getPersonCheckInfo({monitorId, reportId, 'params': uiStore.uiState.relPerCheck})
+    this.getPersonName(monitorId, reportId, analysisReportId);
+    companyHomeApi.getPersonCheckInfo({monitorId, reportId, analysisReportId, 'params': uiStore.uiState.relPerCheck, source})
       .then(action( (response) => {
-        this.reloadMonitorId = {monitorId: monitorId, reportId: reportId};
+        this.reloadMonitorId = {monitorId: monitorId, reportId: reportId, analysisReportId: analysisReportId};
         this.personCheckInfoData = response.data.content;
         uiStore.uiState.relPerCheck.totalElements = response.data.totalElements;
       }))
@@ -73,12 +78,14 @@ class RelPerCheckStore {
         messageStore.openMessage({type: 'info', content: error.response.data, duration: '1500'});
       }));
   }
-  @action.bound getIdCard({monitorId, reportId, personCheckId}) {
+  @action.bound getIdCard({monitorId, reportId, analysisReportId, personCheckId}) {
     let url;
     if (monitorId) {
       url = `/api/monitor/${monitorId}/person/cardId?personCheckId=${personCheckId}`;
-    } else {
+    }else if (reportId) {
       url = `/api/report/${reportId}/person/cardId?personCheckId=${personCheckId}`;
+    }else if (analysisReportId) {
+      url = `/api/analysisReport/${analysisReportId}/person/cardId?personCheckId=${personCheckId}`;
     }
     companyHomeApi.getIdCard(url)
       .then( action( (response) => {
@@ -95,13 +102,16 @@ class RelPerCheckStore {
     }
     this.idCard.set(personCheckId, value);
   }
-  @action.bound getPersonName(monitorId, reportId) {
+  @action.bound getPersonName(monitorId, reportId, analysisReportId) {
     let url;
     if (monitorId) {
       url = `/api/monitor/${monitorId}/person/names`;
-    }else {
-      url = `/api/monitor/${reportId}/person/names`;
+    }else if (reportId) {
+      url = `/api/report/${reportId}/person/names`;
+    }else if (analysisReportId) {
+      url = `/api/analysisReport/${analysisReportId}/person/names`;
     }
+
     companyHomeApi.getPersonName(url)
       .then(action((response) => {
         this.relatedNameData = response.data;

@@ -34,4 +34,5 @@ export personReportStore from './personReport';
 export pdfStore from './pdf';
 export blackNetworkStore from './report/blackNetwork';
 export collectionStore from './collection';
+export bidMarketStore from './bidMarket';
 // append here from plop
