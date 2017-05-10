@@ -22,9 +22,9 @@ function JobCard({data}) {
   const createCard = (origData) => {
     const output = [];
     const firstKey = origData.firstKey;
-    origData.items.map((itemData)=>{
+    origData.items.map((itemData, idx)=>{
       output.push(
-        <Col width="4">
+        <Col width="4" className={idx % 3 === 0 ? styles.clear : ''}>
           <div className={styles.itemWrap}>
             <div className={styles.firstItem}>
               <a href={itemData.url} target="_blank">
