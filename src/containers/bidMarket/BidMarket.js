@@ -5,6 +5,7 @@ import moment from 'moment';
 import styles from './index.less';
 import { Container, Row, Col } from 'components/common/layout';
 import SwitchData from 'components/bidMarket/SwitchData';
+import Info from 'components/bidMarket/Info';
 
 const _from = moment().subtract(29, 'days').format('YYYY-MM-DD');
 const _to = moment().format('YYYY-MM-DD');
@@ -43,7 +44,7 @@ export default class BidMarket extends Component {
       <Container>
         <Row>
           <Col>
-            <h4 className={styles.title}>招投标</h4>
+            <h2 className={styles.title}>招投标</h2>
             <SwitchData
               from={_from}
               to={_to}
@@ -62,6 +63,7 @@ export default class BidMarket extends Component {
             this is BidMarket
           </div>
         </Row>
+        <Info areaInfo={this.props.bidMarketStore.areaInfo} />
       </Container>
     );
   }

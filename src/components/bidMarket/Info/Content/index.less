@@ -1,0 +1,184 @@
+@import '~sc-colors/index.less';
+
+.transitionAll {
+  -webkit-transition: all ease-in-out .3s;
+     -moz-transition: all ease-in-out .3s;
+      -ms-transition: all ease-in-out .3s;
+       -o-transition: all ease-in-out .3s;
+          transition: all ease-in-out .3s;
+}
+
+.bid-market-col {
+  float: left;
+  width: 33.33333333%;
+  padding-left: 10px;
+  padding-right: 10px;
+}
+
+.bid-market-col-area-info {
+  margin-bottom: 20px;
+}
+@media (max-width: 1366px) {
+  .bid-market-col-area-info {
+    width: 50%;
+  }
+}
+
+.bid-market-col-bg {
+  position: relative;
+  padding-left: 20px;
+  padding-right: 20px;
+  padding-bottom: 25px;
+
+  background-color: @mdc-white-darker;
+  .box-shadow-block;
+  .transitionAll;
+
+  &:hover {
+    .box-shadow-block-click;
+  }
+}
+
+.bulletin-main-title {
+  padding-right: 10px;
+  margin-right: 10px;
+
+  font-size: 13px;
+  line-height: 13px;
+  font-weight: bold;
+  color: @blue2;
+
+  border-right: 1px solid @black12;
+}
+
+.bulletin-sub-title {
+  font-size: 13px;
+  line-height: 13px;
+  color: @black3;
+}
+
+.bidMarket-bulletin-title {
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+
+.bulletin-name,
+.bulletin-money,
+.bulletin-text1 {
+  margin-bottom: 15px;
+}
+
+.bulletin-money {
+  color: @red1;
+}
+
+.bulletin-name,
+.bulletin-url {
+  font-size: 13px;
+  line-height: 13px;
+  color: @black3;
+}
+
+.bulletin-name-title {
+  display: block;
+  float: left;
+}
+
+.bulletin-url {
+  display: block;
+  float:left;
+  width: 85%;
+
+  word-break: keep-all;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  text-decoration: underline;
+
+}
+.bulletin-url:hover {
+  color: @black3;
+  text-decoration: underline;
+}
+
+.bulletin-text1 {
+  font-size: 13px;
+  line-height: 13px;
+  color: @black5;
+}
+
+.bulletin-bottom-border {
+  width: 100%;
+  height: 1px;
+
+  background-color: @black12;
+}
+
+.bulletin-content-item {
+  margin-top: 20px;
+}
+
+.bulletin-text2 {
+  margin-bottom: 10px;
+
+  font-size: 13px;
+  line-height: 13px;
+  color: @black7;
+}
+
+.bulletin-text2 span{
+  display: block;
+  float: left;
+}
+.bulletin-text2 span:nth-of-type(2) {
+  width: 80%;
+
+  word-break: keep-all;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.bulletin-content-item .bulletin-text2:nth-of-type(2) {
+  margin-bottom: 0;
+}
+
+.bulletin-pagination {
+  text-align: center;
+}
+
+.bid-market-excel {
+  display: inline-block;
+  margin-left: 10px;
+
+  font-size: 13px;
+  line-height: 16px;
+  color: @black5;
+
+  cursor: pointer;
+}
+.bid-market-excel-img {
+  margin-top: -4px;
+  margin-right: 4px;
+}
+.bid-market-excel-text {
+  display: inline-block;
+
+  line-height: 16px;
+  text-decoration: underline;
+}
+
+@media (max-width: 1366px) {
+  .bid-market-col-rank {
+    margin-top: 20px;
+    width: 100%;
+  }
+
+  .bid-market-col-map-line {
+    width: 50%;
+  }
+}
+
+.text-underline {
+  text-decoration: underline;
+}

@@ -1,16 +1,25 @@
 import React, {PropTypes} from 'react';
 import { observer } from 'mobx-react';
+
 import styles from './index.less';
+import { Row, Col } from 'components/common/layout';
 
-function Info({}) {
+import Content from './Content';
+function Info({ areaInfo }) {
   return (
-    <div>
-
-    </div>
+    <Row>
+      <Col>
+        <h4 className={styles.infoTitle}>
+          重庆招投标信息
+          <span className={styles.infoTitleSub}>（最近部分信息）</span>
+        </h4>
+      </Col>
+      <Content areaInfo={ areaInfo } />
+    </Row>
   );
 }
 
 Info.propTypes = {
-  foo: PropTypes.string,
+  areaInfo: PropTypes.oneOfType([PropTypes.object, PropTypes.array]),
 };
 export default observer(Info);
