@@ -3,6 +3,8 @@ import { companyHomeApi } from 'api';
 import networkType from 'dict/networkType';
 import blackNetworkStore from './blackNetwork';
 import leftBarStore from '../leftBar';
+import modalStore from '../modal';
+import messageStore from '../message';
 import { browserHistory } from 'react-router';
 
 class NetworkStore {
@@ -41,6 +43,21 @@ class NetworkStore {
   @observable totalLevel = 1;
   @observable showFullScreen = false;
 
+  @action.bound monitorExistNode(monitorId, params) {
+    modalStore.confirmLoading = true;
+    companyHomeApi.monitorExistNode(monitorId, params)
+      .then(action('monitorExistNode', (resp)=>{
+        modalStore.confirmLoading = false;
+        modalStore.closeAction();
+        messageStore.openMessage({ content: '添加关联成功！' });
+        this.monitorInfoList = resp.data.monitorInfoList;
+      }))
+      .catch(action('monitorExistNode err', (err)=>{
+        modalStore.confirmLoading = false;
+        modalStore.closeAction();
+        messageStore.openMessage({ content: err.response.data.message, type: 'warning' });
+      }));
+  }
   @action.bound jumpBlackNode(name, params) {
     blackNetworkStore.jumpNode = name;
     // 修改导航高亮
