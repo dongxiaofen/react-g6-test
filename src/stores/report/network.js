@@ -50,11 +50,12 @@ class NetworkStore {
         modalStore.confirmLoading = false;
         modalStore.closeAction();
         messageStore.openMessage({ content: '添加关联成功！' });
+        this.monitorInfoList = resp.data.monitorInfoList;
       }))
       .catch(action('monitorExistNode err', (err)=>{
         modalStore.confirmLoading = false;
         modalStore.closeAction();
-        messageStore.openMessage({ content: '该企业无工商登记信息', type: 'warning' });
+        messageStore.openMessage({ content: err.response.data.message, type: 'warning' });
       }));
   }
   @action.bound jumpBlackNode(name, params) {

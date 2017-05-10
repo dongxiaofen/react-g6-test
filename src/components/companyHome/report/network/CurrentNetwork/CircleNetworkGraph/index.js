@@ -44,7 +44,7 @@ export default class CircleNetworkGraph extends Component {
     svgHeight: PropTypes.number,
   };
   componentDidMount() {
-    console.log({nodeXY, saveNodeXY}, 'currentnetwork didMount');
+    console.log({ nodeXY, saveNodeXY }, 'currentnetwork didMount');
     const graph = toJS(this.props.networkStore.currentNetwork);
     nodesData = graph.nodes;
     edgesData = graph.links;
@@ -215,17 +215,19 @@ export default class CircleNetworkGraph extends Component {
       () => this.props.networkStore.currentLevel,
       () => {
         const checkedArr = this.props.networkStore.typeList.checkedArr;
-        nodesData.map((node) => {
-          if (node.cateType !== 0) {
-            if (node.layer <= this.props.networkStore.currentLevel && svgTools.isNodeShow(checkedArr, node.cateList)) {
-              node.hide = false;
-            } else {
-              node.hide = true;
+        if (checkedArr.length > 0) {
+          nodesData.map((node) => {
+            if (node.cateType !== 0) {
+              if (node.layer <= this.props.networkStore.currentLevel && svgTools.isNodeShow(checkedArr, node.cateList)) {
+                node.hide = false;
+              } else {
+                node.hide = true;
+              }
             }
-          }
-        });
-        svgTools.updateLinksDisplay(nodesData, edgesData);
-        simulation.restart();
+          });
+          svgTools.updateLinksDisplay(nodesData, edgesData);
+          simulation.restart();
+        }
       }
     );
   }
