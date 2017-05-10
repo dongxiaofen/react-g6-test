@@ -68,7 +68,7 @@ function ActionWrap({data, mainData, index, relation, monitorListStore, payModal
       'width': '560px',
       'pactName': '用户服务协议',
       'pactUrl': '/',
-      'pointText': '创建报告即视为同意',
+      'pointText': '',
       'callBack': choiceOk
     });
   };
