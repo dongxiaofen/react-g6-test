@@ -5,7 +5,7 @@ import { CardTable, ModuleTitle } from 'components/common/report/';
 function Patent({patentItemList, isLoading}) {
   const cname = (value) => {
     if (value) {
-      return value.classificationNumber.cname || value.classificationNumber.cname.length === 0 ?
+      return value.classificationNumber.cname.length === 0 ?
         '--' :
         value.classificationNumber.cname;
     }
