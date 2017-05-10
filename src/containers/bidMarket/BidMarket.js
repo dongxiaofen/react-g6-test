@@ -6,8 +6,8 @@ import styles from './index.less';
 import { Container, Row, Col } from 'components/common/layout';
 import SwitchData from 'components/bidMarket/SwitchData';
 
-const _to = moment().format('YYYY-MM-DD');
 const _from = moment().subtract(29, 'days').format('YYYY-MM-DD');
+const _to = moment().format('YYYY-MM-DD');
 
 @inject('bidMarketStore')
 @observer
@@ -22,7 +22,9 @@ export default class BidMarket extends Component {
       to: _to,
       province: ''
     };
-    this.props.bidMarketStore.getAll(params);
+    const bidMarketStore = this.props.bidMarketStore;
+    bidMarketStore.getAll(params);
+    bidMarketStore.getInfo(params);
   }
 
   componentWillUnmount() {
@@ -36,12 +38,17 @@ export default class BidMarket extends Component {
   }
 
   render() {
+    const bidMarketStore = this.props.bidMarketStore;
     return (
       <Container>
         <Row>
           <Col>
             <h4 className={styles.title}>招投标</h4>
-            <SwitchData />
+            <SwitchData
+              from={_from}
+              to={_to}
+              params={bidMarketStore.params}
+              setParams={bidMarketStore.setParams}/>
           </Col>
         </Row>
         <Row>
