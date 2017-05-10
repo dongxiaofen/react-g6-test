@@ -3,10 +3,11 @@ import { observer } from 'mobx-react';
 import {CardTable } from 'components/common/report';
 function CourtNotice({courtNotice, regTime}) {
   const listMapToStr = (value)=>{
+    let newValue = value;
     if (typeof value === 'object') {
-      return value.join('；');
+      newValue = value.join('；');
     }
-    return value;
+    return newValue || '--';
   };
   const data = {
     meta: {
