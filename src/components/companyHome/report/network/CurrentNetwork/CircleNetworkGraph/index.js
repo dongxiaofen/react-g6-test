@@ -44,7 +44,7 @@ export default class CircleNetworkGraph extends Component {
     svgHeight: PropTypes.number,
   };
   componentDidMount() {
-    // console.log(toJS(this.props.networkStore), 'componentDidMount');
+    console.log({nodeXY, saveNodeXY}, 'currentnetwork didMount');
     const graph = toJS(this.props.networkStore.currentNetwork);
     nodesData = graph.nodes;
     edgesData = graph.links;
@@ -61,7 +61,7 @@ export default class CircleNetworkGraph extends Component {
         console.info('网络图node的layer有-1', node);
       }
     });
-    console.log(canRenderSvg);
+    console.log('canRenderSvg', canRenderSvg);
     // 统计各层的节点数
     svgTools.getLayerCount(nodesData, layerCount);
     // 计算半径长度
