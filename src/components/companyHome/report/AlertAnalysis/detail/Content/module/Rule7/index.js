@@ -42,7 +42,7 @@ function Rule7({data}) {
     dict: 'rule7',
     body: [
       [
-        { 'key': 'companyName', colSpan: '1', modifyType: 'companyName'},
+        { 'key': 'companyName', colSpan: '1', modifyType: 'companyName', keyType: 'block'},
         { 'key': 'relation', colSpan: '1', modifyType: 'relationShip'}
       ],
       [
