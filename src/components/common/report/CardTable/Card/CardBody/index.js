@@ -25,7 +25,7 @@ function CardBody({ meta, cData, isExpanded }) {
       if (isExpanded || !item.hide) {
         output.push(
           <Col key={item.key + idx} width={item.width} className={styles.col} >
-            <span className={styles.key}>{config[meta.dict][item.key]}: </span>
+            <span className={styles.key}>{config[meta.dict][item.key]}：</span>
             {getValue(item, cData[item.key])}
           </Col>
         );

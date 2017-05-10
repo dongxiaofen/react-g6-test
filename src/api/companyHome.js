@@ -37,7 +37,7 @@ export const toggleMonitorStatus = (monitorId, status) => {
   return axios.put(`/api/monitor/${monitorId}/status`, { status: status });
 };
 export const getReportModule = (params) => {
-  const {module, monitorId, reportId, analysisReportId, companyName, companyType, pagesInfo} = params;
+  const { module, monitorId, reportId, analysisReportId, companyName, companyType, pagesInfo } = params;
   let url;
   if (companyType === 'MAIN') {
     if (monitorId) {
@@ -65,6 +65,8 @@ export const getReportModule = (params) => {
         url = `/api/analysisReport/operation/${module}?analysisReportId=${analysisReportId}${module === 'patent' || module === 'trademark' ? '&index=' + pagesInfo.index + '&limit=' + pagesInfo.size : ''}`;
       } else if (module === 'person/page') {
         url = `/api/analysisReport/${analysisReportId}/person/page?index=1&size=10`;
+      } else if (module === 'blackNetwork') {
+        url = `/api/analysisReport/network/blacklist?analysisReportId=${analysisReportId}`;
       } else {
         url = `/api/analysisReport/${module}?analysisReportId=${analysisReportId}`;
       }
@@ -167,7 +169,7 @@ export const createReport = (active, companyName) => {
 
 // 高级查询报告升级为深度分析报告
 export const updateToAnalysisReport = (reportId) => {
-  return axios.put(`/api/report/${reportId}/upgrade/analysisReport`, {reportId: reportId});
+  return axios.put(`/api/report/${reportId}/upgrade/analysisReport`, { reportId: reportId });
 };
 
 // 刷新高级报告或者深度报告
@@ -242,17 +244,17 @@ export const getAlertAnalysisList = (monitorId, analysisReportId, params, source
 export const getAlertDetail = (url, source) => {
   return axios.get(url, { cancelToken: source.token });
 };
-export const getAlertNewsMonitor = (companyId, params)=> {
-  return axios.get(`/api/monitor/${companyId}/internet/detail`, {params});
+export const getAlertNewsMonitor = (companyId, params) => {
+  return axios.get(`/api/monitor/${companyId}/internet/detail`, { params });
 };
 export const getAlertJudgeDocMonitor = (companyId, params) => {
-  return axios.get(`/api/monitor/${companyId}/risk/judgeDoc`, {params});
+  return axios.get(`/api/monitor/${companyId}/risk/judgeDoc`, { params });
 };
 export const getAlertNewsReport = (params) => {
-  return axios.get('/api/analysisReport/internet/detail', {params});
+  return axios.get('/api/analysisReport/internet/detail', { params });
 };
 export const getAlertJudgeDocReport = (params) => {
-  return axios.get('/api/analysisReport/risk/judgeDoc', {params});
+  return axios.get('/api/analysisReport/risk/judgeDoc', { params });
 };
 // 判断企业报告类型
 export const judgeReportType = (companyName) => {
