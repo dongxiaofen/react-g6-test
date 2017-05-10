@@ -453,7 +453,7 @@ class RuleStore {
       .catch(action('createRule error', (err) => {
         const obj = {
           type: 'warning',
-          content: '预警创建失败'
+          content: err.response.data.message
         };
         messageStore.openMessage({ ...obj });
         console.log(err.response, '=====createRule error');
