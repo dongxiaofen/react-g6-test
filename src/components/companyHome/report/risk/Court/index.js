@@ -24,7 +24,7 @@ function Court({riskStore}) {
     riskStore.updateValue('court.tabAct', key);
   };
   const regTime = (value)=>{
-    return value ? value.slice(0, 10) : '无';
+    return value ? value.slice(0, 10) : '--';
   };
   const createModule = ()=> {
     switch (court.tabAct) {

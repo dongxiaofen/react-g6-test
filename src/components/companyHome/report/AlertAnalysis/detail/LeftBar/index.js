@@ -13,7 +13,6 @@ function LeftBar({alertAnalysisStore, routing}) {
   if (reportId) {
     companyType = 'analysisReport';
   }
-  console.log(reportId, companyType);
   const changeTab = (index) => {
     alertAnalysisStore.changeValue('detailData.activeIndex', index);
     alertAnalysisStore.resetHtml();
