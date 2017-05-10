@@ -126,7 +126,7 @@ export default class ForceNetworkGraph extends Component {
       .style('pointer-events', 'none')
       .text((data) => { return svgTools.getBlackLinkInfo(data); });
 
-    // 监听点击和搜索节点事件
+    // 监听点击节点事件
     reaction(
       () => this.props.blackNetworkStore.focusNodeName,
       () => {
@@ -143,17 +143,45 @@ export default class ForceNetworkGraph extends Component {
         simulation.restart();
       }
     );
+    // 监听expand事件
+    reaction(
+      () => this.props.blackNetworkStore.radioList,
+      () => {
+        if (this.props.blackNetworkStore.radioList.length > 0) {
+          const pathsArr = this.props.blackNetworkStore.blackNetwork.paths;
+          const expandIdx = this.props.blackNetworkStore.radioList.findIndex((radio) => radio === 1);
+          nodesData.map((node) => {
+            if (pathsArr[expandIdx].relatedPaths.includes(node.name)) {
+              node.hide = false;
+              if (node.name === pathsArr[expandIdx].blackListNode) {
+                node.isBlack = true;
+              }
+            } else {
+              node.hide = true;
+            }
+          });
+          svgTools.updateLinksDisplay(nodesData, edgesData);
+          simulation.restart();
+        }
+      }
+    );
   }
   ticked = () => {
     svgEdges
       .attr('x1', (data) => { return data.source.x; })
       .attr('y1', (data) => { return data.source.y; })
       .attr('x2', (data) => { return data.target.x; })
-      .attr('y2', (data) => { return data.target.y; });
+      .attr('y2', (data) => { return data.target.y; })
+      .attr('class', (data) => {
+        return (data.hide && styles.hide) || (data.isFocus && styles.focusLink) || styles.links;
+      });
 
     svgNodes
       .attr('cx', (data) => { return data.x; })
-      .attr('cy', (data) => { return data.y; });
+      .attr('cy', (data) => { return data.y; })
+      .attr('class', (data) => {
+        return (data.hide && styles.hide) || (data.isBlack && styles.blackListNodes) || (data.name === this.props.blackNetworkStore.mainCompanyName && styles.mainCompany) || (data.type === 'networkCompany' && styles.relativeCompany) || (data.type === 'networkPerson' && styles.relativePerson) || styles.otherNode;
+      });
 
     svgEdgepaths.attr('d', (data) => {
       const path = 'M ' + data.source.x + ' ' + data.source.y + ' L ' + data.target.x + ' ' + data.target.y;
@@ -169,6 +197,9 @@ export default class ForceNetworkGraph extends Component {
       })
       .attr('y', (data) => {
         return data.y;
+      })
+      .attr('class', (data) => {
+        return data.hide ? styles.hide : styles.text;
       });
   }
   dragstarted = (data) => {
@@ -200,7 +231,7 @@ export default class ForceNetworkGraph extends Component {
 
   render() {
     return (
-      <div>
+      <div className={styles.svgBox}>
         <svg width={this.props.svgWidth} height={this.props.svgHeight} >
           <defs>
             <marker id="relativeArrow"
