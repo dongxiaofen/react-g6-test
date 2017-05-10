@@ -1,6 +1,7 @@
 import React, {PropTypes} from 'react';
 import { observer } from 'mobx-react';
 import styles from './index.less';
+import { loadingComp } from 'components/hoc';
 
 function Content({ areaInfo }) {
   if (!areaInfo.length) {
@@ -73,4 +74,8 @@ function Content({ areaInfo }) {
 Content.propTypes = {
   areaInfo: PropTypes.oneOfType([PropTypes.object, PropTypes.array]),
 };
-export default observer(Content);
+export default loadingComp({ mapDataToProps: props => ({
+  loading: props.infoLoading,
+  module: '招投标信息',
+  error: props.areaInfo.length === 0
+})})(observer(Content));

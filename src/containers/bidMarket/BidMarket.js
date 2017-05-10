@@ -63,7 +63,7 @@ export default class BidMarket extends Component {
             this is BidMarket
           </div>
         </Row>
-        <Info areaInfo={this.props.bidMarketStore.areaInfo} />
+        <Info areaInfo={bidMarketStore.areaInfo} infoLoading={bidMarketStore.infoLoading} />
       </Container>
     );
   }

@@ -327,6 +327,11 @@ class UiStore {
       size: 10,
       totalElements: 0, // 服务端分页
     },
+    bidMarketInfo: {
+      index: 1,
+      size: 10,
+      totalElements: 0
+    }
   };
 
   @action.bound updateUiStore(keypath, value) {
@@ -566,6 +571,11 @@ class UiStore {
           index: 1,
           size: 10,
           totalElements: 0, // 服务端分页
+        },
+        bidMarketInfo: {
+          index: 1,
+          size: 10,
+          totalElements: 0
         }
       }
     });
