@@ -32,7 +32,7 @@ function Content({alertAnalysisStore}) {
         case 'CORP_ALTER':
           return <ScopeAlter data={singleDetail} type={info.alertType}/>;
         case 'CORP_ABNORMAL':
-          return <ErrorInfo data={singleDetail} />;
+          return <ErrorInfo data={singleDetail} type={info.alertType}/>;
         case 'CORP_CHECK':
           return <CheckInfo data={singleDetail} />;
         case 'COURT_ANNOUNCEMENT':
