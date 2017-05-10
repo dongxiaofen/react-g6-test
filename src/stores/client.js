@@ -19,7 +19,6 @@ class ClientStore {
       })
       .catch((err) => {
         console.log(err.response);
-        message.openMessage({ content: '退出失败' });
       });
   }
 }
