@@ -35,7 +35,6 @@ function CircleTypeList({ networkStore, messageStore }) {
         <FormItem
           labelCol="0"
           wrapperCol="1">
-          <i className={`fa fa-search ${styles.searchIcon}`} aria-hidden="true"></i>
           <Input
             id="search"
             type="text"
@@ -45,6 +44,7 @@ function CircleTypeList({ networkStore, messageStore }) {
             onKeyUp={handleSearch}
             className={styles.searchInput}
             autoComplete={false} />
+          <i className={`fa fa-search ${styles.searchIcon}`} aria-hidden="true"></i>
         </FormItem>
       </div>
       <TypeList typeList={networkStore.typeList} toggleChecked={networkStore.toggleChecked} toggleCheckAll={networkStore.toggleCheckAll} />
