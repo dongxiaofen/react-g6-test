@@ -20,12 +20,14 @@ function _Modal({modalStore}) {
     confirmWidth,
     closeAction,
     confirmAction,
-    cancelAction
+    cancelAction,
+    confirmDisable
   } = modalStore;
   return (
     <Modal
       visible={visible}
       width={width}
+      confirmDisable={confirmDisable}
       isNeedBtn={isNeedBtn}
       isCustomize={isCustomize}
       isSingleBtn={isSingleBtn}
