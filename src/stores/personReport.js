@@ -10,12 +10,14 @@ class PersonReportStore {
   @observable isLoading = true;
   @action.bound getCardId(params) {
     let url;
-    if (params.reportType === 'monitor') {
-      url = `/api/monitor/${params.companyId}/person/cardId`;
-    } else {
-      url = `/api/report/${params.companyId}/person/cardId`;
+    if (params.monitorId) {
+      url = `/api/monitor/${params.monitorId}/person/cardId?personCheckId=${params.personCheckId}`;
+    }else if (params.reportId) {
+      url = `/api/report/${params.reportId}/person/cardId?&personCheckId=${params.personCheckId}`;
+    }else if (params.analysisReportId) {
+      url = `/api/analysisReport/${params.analysisReportId}/person/cardId?personCheckId=${params.personCheckId}`;
     }
-    personReportApi.getCardId(url, params)
+    personReportApi.getCardId(url)
       .then( action( (response) => {
         this.idCard = response.data;
       }))
@@ -25,10 +27,12 @@ class PersonReportStore {
   }
   @action.bound getDetailInfo(params) {
     let url;
-    if (params.reportType === 'monitor') {
-      url = `/api/monitor/${params.companyId}/person`;
-    } else {
-      url = `/api/monitor/${params.companyId}/person`;
+    if (params.monitorId) {
+      url = `/api/monitor/${params.monitorId}/person`;
+    }else if (params.reportId) {
+      url = `/api/report/${params.reportId}/person`;
+    }else if (params.analysisReportId) {
+      url = `/api/analysisReport/${params.analysisReportId}/person`;
     }
     personReportApi.getDetailInfo(url, params)
       .then(action( (response) => {

@@ -18,11 +18,12 @@ export default class PersonReportBody extends Component {
     super();
   }
   componentDidMount() {
-    const query = this.props.routing.location.query;
+    const { monitorId, reportId, analysisReportId, personCheckId } = this.props.routing.location.query;
     this.params = {
-      reportType: query.monitorId ? 'monitor' : 'report',
-      companyId: query.monitorId || query.reportId,
-      personCheckId: query.personCheckId,
+      monitorId,
+      reportId,
+      analysisReportId,
+      personCheckId,
     };
     this.props.personReportStore.getDetailInfo(this.params);
   }
