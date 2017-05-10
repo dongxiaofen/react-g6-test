@@ -100,9 +100,9 @@ function CheckModal({visible, width, closeAction, btnLoading, relPerCheckStore, 
   // 提交
   const submitClick = ()=>{
     const params = {
-      id: relPerCheckStore.relatedIdCard,
-      name: relPerCheckStore.relatedName,
-      relationType: relPerCheckStore.relatedType,
+      id: relPerCheckStore.relatedIdCard.replace(/(^\s*)|(\s*$)/g, ''),
+      name: relPerCheckStore.relatedName.replace(/(^\s*)|(\s*$)/g, ''),
+      relationType: relPerCheckStore.relatedType.replace(/(^\s*)|(\s*$)/g, ''),
     };
     let idCardBool = true;
     const { monitorId, reportId, analysisReportId } = routing.location.query;
