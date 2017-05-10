@@ -37,11 +37,11 @@ class CollectionStore {
           index: collection.index,
           size: collection.size
         });
-        messageStore.openMessage({ content: '成功取消收藏' });
+        messageStore.openMessage({ content: '取消收藏成功' });
       }))
       .catch(action('cancel collection err', (err) => {
         console.log(err.response);
-        messageStore.openMessage({ content: '取消失败' });
+        messageStore.openMessage({ type: 'warning', content: '取消收藏失败' });
       }));
   }
 
