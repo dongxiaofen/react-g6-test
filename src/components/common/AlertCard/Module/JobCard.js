@@ -22,15 +22,23 @@ function JobCard({data}) {
   const createCard = (origData) => {
     const output = [];
     const firstKey = origData.firstKey;
-    origData.items.map((itemData)=>{
+    origData.items.map((itemData, idx)=>{
       output.push(
-        <Col width="4">
+        <Col width="4" className={idx % 3 === 0 ? styles.clear : ''}>
           <div className={styles.itemWrap}>
             <div className={styles.firstItem}>
-              <a href={itemData.url} target="_blank">
-                <span>{DICT[origData.dict][firstKey]}:</span>
-                <span>{itemData[firstKey] ? itemData[firstKey] : '无'}</span>
-              </a>
+              {
+                itemData.url ?
+                <a href={itemData.url} target="_blank">
+                  <span>{DICT[origData.dict][firstKey]}:</span>
+                  <span>{itemData[firstKey] ? itemData[firstKey] : '--'}</span>
+                </a>
+                :
+                <p>
+                  <span>{DICT[origData.dict][firstKey]}:</span>
+                  <span>{itemData[firstKey] ? itemData[firstKey] : '--'}</span>
+                </p>
+              }
             </div>
             {createItem(origData, itemData)}
           </div>
