@@ -33,6 +33,11 @@ function CheckItem({itemData, routing, relPerCheckStore}) {
     } else {
       relPerCheckStore.toggleExpand('showId', personCheckId, true);
       relPerCheckStore.getIdCard({monitorId, reportId, analysisReportId, personCheckId});
+      // 10s后自动隐藏身份证号码
+      setTimeout(() => {
+        relPerCheckStore.toggleExpand('showId', personCheckId, false);
+        relPerCheckStore.toggleExpand('idCard', personCheckId, '');
+      }, 10000);
     }
   };
   return (
