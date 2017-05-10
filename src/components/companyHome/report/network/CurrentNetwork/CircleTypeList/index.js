@@ -18,7 +18,7 @@ function CircleTypeList({ networkStore, messageStore }) {
       const nodesData = networkStore.currentNetwork.nodes;
       let searchNull = true;
       nodesData.map((node) => {
-        if (searchKey !== '' && node.name.indexOf(searchKey) >= 0 && node.category !== 0) {
+        if (searchKey !== '' && node.name === searchKey && node.category !== 0) {
           searchNull = false;
         }
       });
