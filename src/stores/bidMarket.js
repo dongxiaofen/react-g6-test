@@ -1,5 +1,6 @@
 import { observable, action } from 'mobx';
 import { bidMarketApi } from 'api';
+import uiStore from './ui';
 
 class BidMarketStore {
   @observable params = {};
@@ -32,6 +33,7 @@ class BidMarketStore {
     bidMarketApi.getInfo(params)
       .then(action('get info', (resp) => {
         this.areaInfo = resp.data.content;
+        uiStore.uiState.bidMarketInfo.totalElements = resp.data.totalElements;
         this.infoLoading = false;
       }))
       .catch(action('get info catch', (err) => {

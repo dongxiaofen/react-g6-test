@@ -5,7 +5,7 @@ import styles from './index.less';
 import { Row, Col } from 'components/common/layout';
 
 import Content from './Content';
-function Info({ areaInfo }) {
+function Info({ areaInfo, infoLoading }) {
   return (
     <Row>
       <Col>
@@ -14,7 +14,7 @@ function Info({ areaInfo }) {
           <span className={styles.infoTitleSub}>（最近部分信息）</span>
         </h4>
       </Col>
-      <Content areaInfo={ areaInfo } />
+      <Content areaInfo={areaInfo} infoLoading={infoLoading} />
     </Row>
   );
 }

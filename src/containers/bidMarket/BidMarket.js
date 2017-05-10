@@ -10,14 +10,16 @@ import Info from 'components/bidMarket/Info';
 const _from = moment().subtract(29, 'days').format('YYYY-MM-DD');
 const _to = moment().format('YYYY-MM-DD');
 
-@inject('bidMarketStore')
+@inject('bidMarketStore', 'uiStore')
 @observer
 export default class BidMarket extends Component {
   static propTypes = {
-    bidMarketStore: PropTypes.object
+    bidMarketStore: PropTypes.object,
+    uiStore: PropTypes.object
   }
 
   componentDidMount() {
+    const bidMarketInfo = this.props.uiStore.uiState.bidMarketInfo;
     const params = {
       from: _from,
       to: _to,
@@ -25,6 +27,8 @@ export default class BidMarket extends Component {
     };
     const bidMarketStore = this.props.bidMarketStore;
     bidMarketStore.getAll(params);
+    params.index = 1;
+    params.size = bidMarketInfo.size;
     bidMarketStore.getInfo(params);
   }
 
@@ -63,7 +67,7 @@ export default class BidMarket extends Component {
             this is BidMarket
           </div>
         </Row>
-        <Info areaInfo={this.props.bidMarketStore.areaInfo} />
+        <Info areaInfo={bidMarketStore.areaInfo} infoLoading={bidMarketStore.infoLoading} />
       </Container>
     );
   }

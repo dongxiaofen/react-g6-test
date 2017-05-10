@@ -39,9 +39,6 @@ function ReportAction({ bannerStore, modalStore, payModalStore, routing }) {
     payModalStore.openCompModal({
       'modalType': 'continueMonitor',
       'width': '560px',
-      'pactName': '用户服务协议',
-      'pactUrl': '/',
-      'pointText': '创建报告即视为同意',
       'callBack': renewalConfirm
     });
   };
