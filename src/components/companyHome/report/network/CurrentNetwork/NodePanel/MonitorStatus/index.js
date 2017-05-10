@@ -34,7 +34,6 @@ function MonitorStatus({ nodeData, monitorInfoList, routing, modalStore, network
       width: 440,
       confirmAction: handleCreateMonitor,
       cancelAction: modalStore.closeAction,
-      confirmDisable: true,
       loader: (cb) => {
         require.ensure([], (require) => {
           cb(require('./CreateMonitor'));

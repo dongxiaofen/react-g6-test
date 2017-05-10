@@ -172,21 +172,23 @@ export default class CircleNetworkGraph extends Component {
     reaction(
       () => this.props.networkStore.focusNodeName,
       () => {
-        const { focusNodeName } = this.props.networkStore;
-        nodesData.map((node) => {
-          node.isFocus = false;
-        });
-        if (focusNodeName === this.props.networkStore.mainCompanyName) {
-          nodesData[0].isFocus = true;
-        } else {
+        if (nodesData !== '') {
+          const { focusNodeName } = this.props.networkStore;
           nodesData.map((node) => {
-            if (focusNodeName !== '' && node.name.indexOf(focusNodeName) >= 0 && node.category !== 0) {
-              node.isFocus = true;
-            }
+            node.isFocus = false;
           });
+          if (focusNodeName === this.props.networkStore.mainCompanyName) {
+            nodesData[0].isFocus = true;
+          } else {
+            nodesData.map((node) => {
+              if (focusNodeName !== '' && node.name.indexOf(focusNodeName) >= 0 && node.category !== 0) {
+                node.isFocus = true;
+              }
+            });
+          }
+          svgTools.focusRelatedLinks(focusNodeName, edgesData);
+          simulation.restart();
         }
-        svgTools.focusRelatedLinks(focusNodeName, edgesData);
-        simulation.restart();
       }
     );
     // 监听类别筛选事件
@@ -194,7 +196,7 @@ export default class CircleNetworkGraph extends Component {
       () => this.props.networkStore.typeList.checkedArrChanged,
       () => {
         const checkedArr = this.props.networkStore.typeList.checkedArr;
-        if (checkedArr.length > 0) {
+        if (checkedArr.length > 0 && nodesData !== '') {
           const currentLevel = this.props.networkStore.currentLevel;
           nodesData.map((node) => {
             if (node.cateType !== 0) {
@@ -215,7 +217,7 @@ export default class CircleNetworkGraph extends Component {
       () => this.props.networkStore.currentLevel,
       () => {
         const checkedArr = this.props.networkStore.typeList.checkedArr;
-        if (checkedArr.length > 0) {
+        if (checkedArr.length > 0 && nodesData !== '') {
           nodesData.map((node) => {
             if (node.cateType !== 0) {
               if (node.layer <= this.props.networkStore.currentLevel && svgTools.isNodeShow(checkedArr, node.cateList)) {
@@ -244,11 +246,35 @@ export default class CircleNetworkGraph extends Component {
     zoom = '';
     nodeAdded = false;
     saveNodeXY = false;
+    nodeXY = {};
   }
 
   ticked = () => {
+    // console.log('tick', saveNodeXY);
     if (!saveNodeXY) { // 只跑一次,然后存到nodeXY
-      svgTools.getInitNodeXY(nodeXY, layerCount, nodesData, radiusArr, centerNodeX, centerNodeY);
+      const idxObj = {};
+      Object.keys(layerCount).map((key) => {
+        if (key > 0) {
+          idxObj[key] = 0;
+        }
+      });
+      nodesData.forEach((node) => {
+        const nodeLayer = node.layer ? node.layer : 1;
+        if (nodeLayer === 0) {
+          node.x = centerNodeX;
+          node.y = centerNodeY;
+        } else {
+          const xy = {
+            x: radiusArr[nodeLayer - 1] * Math.cos(2 * idxObj[nodeLayer] * Math.PI / layerCount[nodeLayer]) + centerNodeX,
+            y: centerNodeY - radiusArr[nodeLayer - 1] * Math.sin(2 * idxObj[nodeLayer] * Math.PI / layerCount[nodeLayer])
+          };
+          node.x = xy.x;
+          node.y = xy.y;
+          nodeXY[node.index] = xy;
+          idxObj[nodeLayer]++;
+        }
+      });
+      // svgTools.getInitNodeXY(nodeXY, layerCount, nodesData, radiusArr, centerNodeX, centerNodeY);
       saveNodeXY = true;
     } else if (nodeAdded) { // 用户添加新节点
       console.log('添加节点后', nodesData);
@@ -341,7 +367,7 @@ export default class CircleNetworkGraph extends Component {
     if (!d3.event.active) simulation.alphaTarget(0);
     if (!isDragging) {
       this.props.networkStore.focusNode(data.name);
-      console.log(data, '单击');
+      console.log(data, '单击', saveNodeXY);
     } else {
       // console.log(data, '拖拽结束');
     }
