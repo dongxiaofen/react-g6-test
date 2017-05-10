@@ -83,7 +83,8 @@ class BlackNetworkStore {
     this.isMount = false;
     this.mainCompanyName = '';
     this.blackNetwork = {
-      nodes: []
+      nodes: [],
+      paths: []
     };
     this.focusNodeName = '';
     this.blackList = [];
