@@ -14,6 +14,11 @@ function Banner({personReportStore, params}) {
   const clickIdCard = () => {
     if (idCard === '') {
       getIdCard();
+      setTimeout( () => {
+        runInAction('清除id', () => {
+          personReportStore.idCard = '';
+        });
+      }, 10000);
     } else {
       runInAction('清除id', () => {
         personReportStore.idCard = '';
