@@ -1,7 +1,6 @@
 import { observable, action } from 'mobx';
 import { browserHistory } from 'react-router';
 import { clientApi } from 'api';
-import message from './message';
 
 class ClientStore {
   @observable userInfo = {};
