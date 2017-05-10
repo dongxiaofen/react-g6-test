@@ -21,7 +21,7 @@ function LeftBar({alertAnalysisStore, routing}) {
     if (pattern === 'NEWS') {
       alertAnalysisStore.getNewsDetail(companyType, companyId);
     } else if (pattern === 'JUDGMENT') {
-      alertAnalysisStore.getJudgeDocDetail(companyType, companyId);
+      alertAnalysisStore.getJudgeDocDetail(companyType, companyId, data[activeIndex].content);
     }
   };
   const createTabs = () => {
