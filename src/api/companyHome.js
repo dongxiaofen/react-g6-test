@@ -260,3 +260,8 @@ export const getAlertJudgeDocReport = (params) => {
 export const judgeReportType = (companyName) => {
   return axios.get(`/api/common/status?companyName=${companyName}`);
 };
+
+// 关联图上创建关联监控
+export const monitorExistNode = (monitorCompanyId, params) => {
+  return axios.post(`/api/monitor/${monitorCompanyId}/network/link`, params);
+};
