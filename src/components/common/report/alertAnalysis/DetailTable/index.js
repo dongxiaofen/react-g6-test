@@ -60,7 +60,12 @@ function DetailTable({itemData, body, dict, rowIdx, hasNumber, maxCols, alertAna
           let colSpan = config.colSpan || 1;
           colSpan = config.colSpanHandle ? config.colSpanHandle(itemData[config.key], itemData) : colSpan;
           const colWidth = ((100 - 3.2) / maxCols) * colSpan;
-          const valueCss = config.keyType === 'important' ? styles.valueImpor : styles.value;
+          let valueCss = '';
+          if (config.keyType === 'important') {
+            valueCss = styles.valueImpor;
+          } else if (config.keyType === 'block') {
+            valueCss = styles.value;
+          }
           if (colWidth > 0) {
             td.push(
               <td colSpan={colSpan} key={`${idx}-${index}`} style={{width: `${colWidth}%`}}>
