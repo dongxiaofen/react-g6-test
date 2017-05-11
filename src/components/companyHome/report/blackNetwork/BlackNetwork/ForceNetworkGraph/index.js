@@ -26,7 +26,7 @@ export default class ForceNetworkGraph extends Component {
   };
 
   componentDidMount() {
-    console.log(toJS(this.props.blackNetworkStore), 'componentDidMount');
+    // console.log(toJS(this.props.blackNetworkStore), 'componentDidMount');
     const mainCompanyName = this.props.blackNetworkStore.mainCompanyName;
     const graph = toJS(this.props.blackNetworkStore.blackNetwork);
     nodesData = graph.nodes;
@@ -43,7 +43,7 @@ export default class ForceNetworkGraph extends Component {
     const height = d3.select('svg').attr('height');
 
     simulation = d3.forceSimulation()
-      .force('link', d3.forceLink().id((data) => { return data.name; }))
+      .force('link', d3.forceLink().id((data) => { return data.name; }).distance(150))
       .force('charge', d3.forceManyBody())
       .force('center', d3.forceCenter(width / 2, height / 2));
 
