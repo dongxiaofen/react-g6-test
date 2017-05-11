@@ -34,7 +34,7 @@ function Analysis({internetStore}) {
   const error = internetStore.analysis.error;
   if (error && error.errorCode === 404208) {
     output = <ErrorText error={{message: '暂无信息，平台正为您实时抓取新闻，请五分钟后再浏览'}} />;
-  } else if (error || isNull(data)) {
+  } else if (error || (data && isNull(data))) {
     output = <ErrorText module="新闻分析" errCategory={0} />;
   } else if (data) {
     output = <div className={styles.itemBox}>{newsAnalyse()}</div>;

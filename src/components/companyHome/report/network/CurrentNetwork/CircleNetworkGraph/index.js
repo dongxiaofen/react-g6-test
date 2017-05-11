@@ -27,13 +27,13 @@ let simulation;
 let zoom;
 let svg;
 let isDragging = false;
-const layerCount = {}; // 存储各层的节点数
-const radiusArr = []; // 存储半径长度
+let layerCount = {}; // 存储各层的节点数
+let radiusArr = []; // 存储半径长度
 let nodeXY = {}; // 存储同心圆各节点坐标
 let saveNodeXY = false; // 标记坐标存储完成
-let centerNodeX;
-let centerNodeY;
-let nodeAdded = false;
+let centerNodeX; // 中心节点X坐标
+let centerNodeY; // 中心节点Y坐标
+let nodeAdded = false; // 用户是否新增了节点
 
 @inject('networkStore')
 @observer
@@ -44,7 +44,7 @@ export default class CircleNetworkGraph extends Component {
     svgHeight: PropTypes.number,
   };
   componentDidMount() {
-    console.log({ nodeXY, saveNodeXY }, 'currentnetwork didMount');
+    // console.log({ nodeXY, saveNodeXY }, 'currentnetwork didMount');
     const graph = toJS(this.props.networkStore.currentNetwork);
     nodesData = graph.nodes;
     edgesData = graph.links;
@@ -235,10 +235,10 @@ export default class CircleNetworkGraph extends Component {
   }
   componentWillUnmount() {
     if (simulation) {
-      simulation.stop(); // 避免网络图数据异常不正常终止
+      simulation.stop(); // 停止网络图计算
     }
     nodesData = '';
-    // edgesData = '';
+    edgesData = '';
     svgEdges = '';
     svgNodes = '';
     svgTexts = '';
@@ -247,34 +247,14 @@ export default class CircleNetworkGraph extends Component {
     nodeAdded = false;
     saveNodeXY = false;
     nodeXY = {};
+    layerCount = {};
+    radiusArr = [];
   }
 
   ticked = () => {
     // console.log('tick', saveNodeXY);
     if (!saveNodeXY) { // 只跑一次,然后存到nodeXY
-      const idxObj = {};
-      Object.keys(layerCount).map((key) => {
-        if (key > 0) {
-          idxObj[key] = 0;
-        }
-      });
-      nodesData.forEach((node) => {
-        const nodeLayer = node.layer ? node.layer : 1;
-        if (nodeLayer === 0) {
-          node.x = centerNodeX;
-          node.y = centerNodeY;
-        } else {
-          const xy = {
-            x: radiusArr[nodeLayer - 1] * Math.cos(2 * idxObj[nodeLayer] * Math.PI / layerCount[nodeLayer]) + centerNodeX,
-            y: centerNodeY - radiusArr[nodeLayer - 1] * Math.sin(2 * idxObj[nodeLayer] * Math.PI / layerCount[nodeLayer])
-          };
-          node.x = xy.x;
-          node.y = xy.y;
-          nodeXY[node.index] = xy;
-          idxObj[nodeLayer]++;
-        }
-      });
-      // svgTools.getInitNodeXY(nodeXY, layerCount, nodesData, radiusArr, centerNodeX, centerNodeY);
+      svgTools.getInitNodeXY(nodeXY, layerCount, nodesData, radiusArr, centerNodeX, centerNodeY);
       saveNodeXY = true;
     } else if (nodeAdded) { // 用户添加新节点
       console.log('添加节点后', nodesData);
