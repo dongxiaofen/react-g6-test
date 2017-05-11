@@ -11,8 +11,8 @@ class LeftBarStore {
       }
     );
   }
-  @observable activeMenu = ['report'];
-  @observable activeItem = 'corpDetail';
+  @observable activeMenu = [];
+  @observable activeItem = '';
   barConf = [
     {
       menuText: '信息报告',
