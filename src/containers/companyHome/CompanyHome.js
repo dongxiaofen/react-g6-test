@@ -1,6 +1,6 @@
 import React, { Component, PropTypes } from 'react';
 import { observer, inject } from 'mobx-react';
-// import { runInAction } from 'mobx';
+import { runInAction } from 'mobx';
 import Banner from 'components/companyHome/Banner';
 import LeftBar from 'components/companyHome/LeftBar';
 import { Container, Row, Col } from 'components/common/layout';
@@ -42,14 +42,8 @@ export default class CompanyHome extends Component {
   componentWillMount() {
     const leftBarStore = this.props.leftBarStore;
     const module = this.props.routing.location.pathname.split('/')[2];
-    const barConf = leftBarStore.barConf;
-    barConf.forEach(item => {
-      item.children.forEach(child => {
-        if (child.menuKey === leftBarStore.activeItem) {
-          leftBarStore.activeMenu = [item.menuKey];
-          leftBarStore.activeItem = module;
-        }
-      });
+    runInAction('初始化报告二级目录', () => {
+      leftBarStore.activeItem = module;
     });
   }
   componentWillUnmount() {
