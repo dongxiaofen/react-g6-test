@@ -243,7 +243,7 @@ class BannerStore {
         console.log(resp.data);
         modalStore.confirmLoading = false;
         modalStore.closeAction();
-        messageStore.openMessage({ content: '刷新成功' });
+        messageStore.openMessage({ content: '刷新成功', callBack: this.windowReload });
       }))
       .catch((err) => {
         console.log(err.response);
@@ -266,7 +266,7 @@ class BannerStore {
       .catch(action('createMonitor error', (err) => {
         console.log(err.response, '=====createMonitor error');
         payModalStore.closeAction();
-        messageStore.openMessage({ content: err.response.data.message });
+        messageStore.openMessage({ type: 'warning', content: err.response.data.message });
       }));
   }
 
@@ -282,7 +282,7 @@ class BannerStore {
         console.log(err.response);
         runInAction(() => {
           payModalStore.closeAction();
-          messageStore.openMessage({ content: err.response.data.message });
+          messageStore.openMessage({ type: 'warning', content: err.response.data.message });
         });
       });
   }
@@ -298,7 +298,7 @@ class BannerStore {
         console.log(err.response);
         runInAction(() => {
           payModalStore.closeAction();
-          messageStore.openMessage({ content: err.response.data.message });
+          messageStore.openMessage({ type: 'warning', content: err.response.data.message });
         });
       });
   }
@@ -333,7 +333,7 @@ class BannerStore {
           modalStore.confirmLoading = false;
           modalStore.closeAction();
           this.reStoreLoadingAction(this.monitorStatus);
-          messageStore.openMessage({ content: err.response.data.message });
+          messageStore.openMessage({ type: 'warning', content: err.response.data.message });
         });
       });
   }
