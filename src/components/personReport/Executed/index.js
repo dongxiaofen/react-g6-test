@@ -28,7 +28,7 @@ function Executed({executedData, isLoading}) {
       dict: 'executed',
     },
     isLoading: isLoading,
-    module: '老赖记录',
+    module: '被执行人信息',
     error: executedData === undefined
   };
   return (
