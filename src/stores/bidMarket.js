@@ -30,6 +30,7 @@ class BidMarketStore {
 
   // 中标信息
   @action.bound getInfo(params) {
+    this.infoLoading = true;
     bidMarketApi.getInfo(params)
       .then(action('get info', (resp) => {
         this.areaInfo = resp.data.content;
@@ -40,6 +41,14 @@ class BidMarketStore {
         console.log(err);
         this.infoLoading = false;
       }));
+  }
+
+  // 重置数据
+  @action.bound resetStore() {
+    uiStore.uiState.bidMarketInfo.index = 1;
+    uiStore.uiState.bidMarketInfo.totalElements = 0;
+    this.params = {};
+    this.areaInfo = [];
   }
 }
 export default new BidMarketStore();
