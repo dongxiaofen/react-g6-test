@@ -3,7 +3,7 @@ import { observer } from 'mobx-react';
 import styles from './index.less';
 
 function Industry({ industryNames }) {
-  if (industryNames && industryNames.length === 0) {
+  if (!industryNames || industryNames.length === 0) {
     return null;
   }
   return (
