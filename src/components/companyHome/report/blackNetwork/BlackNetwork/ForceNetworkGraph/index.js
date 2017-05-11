@@ -26,7 +26,7 @@ export default class ForceNetworkGraph extends Component {
   };
 
   componentDidMount() {
-    console.log(toJS(this.props.blackNetworkStore), 'componentDidMount');
+    // console.log(toJS(this.props.blackNetworkStore), 'componentDidMount');
     const mainCompanyName = this.props.blackNetworkStore.mainCompanyName;
     const graph = toJS(this.props.blackNetworkStore.blackNetwork);
     nodesData = graph.nodes;
@@ -42,10 +42,8 @@ export default class ForceNetworkGraph extends Component {
     const width = d3.select('svg').attr('width');
     const height = d3.select('svg').attr('height');
 
-    // const color = d3.scaleOrdinal(d3.schemeCategory20);
-
     simulation = d3.forceSimulation()
-      .force('link', d3.forceLink().id((data) => { return data.name; }))
+      .force('link', d3.forceLink().id((data) => { return data.name; }).distance(150))
       .force('charge', d3.forceManyBody())
       .force('center', d3.forceCenter(width / 2, height / 2));
 
@@ -55,6 +53,12 @@ export default class ForceNetworkGraph extends Component {
 
     simulation.force('link')
       .links(edgesData);
+    // 第一次以后从关联关系跳转过来时， 更新expandIdx
+    const pathsArr = this.props.blackNetworkStore.blackNetwork.paths;
+    const expandIdx = this.props.blackNetworkStore.expandIdx;
+    svgTools.updateNodeByExpandIdx(pathsArr, expandIdx, nodesData);
+    svgTools.updateLinksDisplay(nodesData, edgesData);
+
     svgEdges = svg.append('g')
       .selectAll('line')
       .data(edgesData)
@@ -145,24 +149,12 @@ export default class ForceNetworkGraph extends Component {
     );
     // 监听expand事件
     reaction(
-      () => this.props.blackNetworkStore.radioList,
+      () => this.props.blackNetworkStore.expandIdx,
       () => {
-        if (this.props.blackNetworkStore.radioList.length > 0) {
-          const pathsArr = this.props.blackNetworkStore.blackNetwork.paths;
-          const expandIdx = this.props.blackNetworkStore.radioList.findIndex((radio) => radio === 1);
-          nodesData.map((node) => {
-            if (pathsArr[expandIdx].relatedPaths.includes(node.name)) {
-              node.hide = false;
-              if (node.name === pathsArr[expandIdx].blackListNode) {
-                node.isBlack = true;
-              }
-            } else {
-              node.hide = true;
-            }
-          });
-          svgTools.updateLinksDisplay(nodesData, edgesData);
-          simulation.restart();
-        }
+        const newExpandIdx = this.props.blackNetworkStore.expandIdx;
+        svgTools.updateNodeByExpandIdx(pathsArr, newExpandIdx, nodesData);
+        svgTools.updateLinksDisplay(nodesData, edgesData);
+        simulation.restart();
       }
     );
   }
