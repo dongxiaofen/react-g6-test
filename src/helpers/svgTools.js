@@ -165,3 +165,16 @@ export function getBlackLinkInfo(data) {
   });
   return description.join(',');
 }
+// 风险关联图根据expandIdx更新节点的显示
+export function updateNodeByExpandIdx(pathsArr, expandIdx, nodesData) {
+  nodesData.map((node) => {
+    if (pathsArr[expandIdx].relatedPaths.includes(node.name)) {
+      node.hide = false;
+      if (node.name === pathsArr[expandIdx].blackListNode) {
+        node.isBlack = true;
+      }
+    } else {
+      node.hide = true;
+    }
+  });
+}
