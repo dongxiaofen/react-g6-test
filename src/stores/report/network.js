@@ -33,7 +33,7 @@ class NetworkStore {
   @observable currentNetwork = {
     nodes: []
   };
-  @observable targetComp = {};
+  @observable targetComp = '';
   @observable monitorInfoList = [];
   @observable mainCompanyName = '';
   @observable layout = 'circle';
@@ -162,7 +162,7 @@ class NetworkStore {
     this.typeList.checkedArr = [];
     this.typeList.checkedArrChanged = false;
   }
-  @action.bound resetSvg() {
+  @action.bound resetSvg() { // 报告内路由切换时重置网络图状态
     this.layout = 'circle';
     this.focusNodeName = '';
     this.searchKey = '';
