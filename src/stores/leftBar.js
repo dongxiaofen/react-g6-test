@@ -1,8 +1,16 @@
-import { observable, action } from 'mobx';
+import { observable, action, reaction, runInAction } from 'mobx';
 const helpInfo1 = '创建高级查询报告、深度分析报告、主体监控报告后，可查看该板块信息';
 const helpInfo2 = '创建主体监控报告后，可查看该板块信息';
 const helpInfo3 = '创建深度分析报告、主体监控报告后，可查看该板块信息';
 class LeftBarStore {
+  constructor() {
+    reaction(
+      () => this.activeItem,
+      () => {
+        this.setMenuByItem();
+      }
+    );
+  }
   @observable activeMenu = ['report'];
   @observable activeItem = 'corpDetail';
   barConf = [
@@ -60,6 +68,20 @@ class LeftBarStore {
     },
   ];
 
+  @action.bound setMenuByItem() {
+    const barConf = this.barConf;
+    barConf.forEach(item => {
+      item.children.forEach(child => {
+        if (child.menuKey === this.activeItem) {
+          runInAction('切换报告runInAction一级目录', () => {
+            if (!this.activeMenu.includes(item.menuKey)) {
+              this.activeMenu.push(item.menuKey);
+            }
+          });
+        }
+      });
+    });
+  }
   @action.bound resetStore() {
     this.activeMenu = ['report'];
     this.activeItem = 'corpDetail';

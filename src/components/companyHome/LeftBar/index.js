@@ -40,13 +40,9 @@ function LeftBar({ leftBarStore, bannerStore, routing }) {
       }
     });
   };
-  const changeItem = (itemKey, menuKey, access) => {
-    console.log(itemKey, menuKey, access);
+  const changeItem = (itemKey, access) => {
     if (!access) return false;
     runInAction('切换报告二级目录', () => {
-      if (!activeMenu.includes(menuKey)) {
-        activeMenu.push(menuKey);
-      }
       leftBarStore.activeItem = itemKey;
     });
     routing.push({
@@ -83,7 +79,7 @@ function LeftBar({ leftBarStore, bannerStore, routing }) {
             <Tooltip key={itemObj.menuText + itemIdx} title={accessItem ? '' : itemObj.helpInfo} placement="right">
               <div
                 className={itemCss}
-                onClick={changeItem.bind(this, itemObj.menuKey, menuObj.menuKey, accessItem)}
+                onClick={changeItem.bind(this, itemObj.menuKey, accessItem)}
               >
                 {itemObj.menuText}
               </div>
