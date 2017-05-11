@@ -51,6 +51,15 @@
 
   span {
     cursor: pointer;
+    -webkit-transition: color .3s ease-in-out;
+       -moz-transition: color .3s ease-in-out;
+        -ms-transition: color .3s ease-in-out;
+         -o-transition: color .3s ease-in-out;
+            transition: color .3s ease-in-out;
+
+    &:hover {
+      color: @mdc-blue-400;
+    }
   }
 
   &:last-child {

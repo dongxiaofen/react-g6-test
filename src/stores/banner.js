@@ -353,15 +353,23 @@ class BannerStore {
   @action.bound setPdfLevelTwo(_levelOne, key, levelOneKey, checked) {
     const levelOne = this.pdfDownloadConfig.levelOne;
     const levelTwo = this.pdfDownloadConfig.levelTwo;
-    levelTwo[_levelOne][key].checked = checked;
-    const isAllChecked = levelTwo[_levelOne].every((item) => {
-      return item.checked === true;
-    });
-    if (isAllChecked) {
-      levelOne[levelOneKey].checked = true;
+    const isHasMonitor = window.location.href.includes('monitorId');
+    const levelTwoItem = levelTwo[_levelOne][key];
+    levelTwoItem.checked = checked;
+    if (levelTwoItem.value === 'TEAM_RECRUITMENT_RESUME') {
+      if (!isHasMonitor) {
+        levelOne[levelOneKey].checked = checked;
+      }
     } else {
-      levelOne[levelOneKey].checked = false;
-      this.isAllChecked = false;
+      const isAllChecked = levelTwo[_levelOne].every((item) => {
+        return item.checked === true;
+      });
+      if (isAllChecked) {
+        levelOne[levelOneKey].checked = true;
+      } else {
+        levelOne[levelOneKey].checked = false;
+        this.isAllChecked = false;
+      }
     }
   }
 

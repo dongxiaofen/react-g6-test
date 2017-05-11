@@ -27,6 +27,8 @@ export default class Modal extends Component {
     // loading
     cancelLoading: PropTypes.bool,
     confirmLoading: PropTypes.bool,
+    // disable
+    confirmDisable: PropTypes.bool,
   }
 
   componentDidMount() {
@@ -88,6 +90,7 @@ export default class Modal extends Component {
           {this.props.cancelText}
         </Button>
         <Button
+          disabled={this.props.confirmDisable}
           className={styles.confirmButton}
           btnType="primary"
           loading={this.props.confirmLoading}
@@ -99,6 +102,7 @@ export default class Modal extends Component {
     if (this.props.isSingleBtn) {
       btnComp = (
         <Button
+          disabled={this.props.confirmDisable}
           className={styles.confirmSingleButton}
           width={this.props.confirmWidth}
           btnType="primary"

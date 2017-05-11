@@ -7,7 +7,7 @@ function LegendBar({ }) {
     <div className={styles.box}>
       <div className={styles.tip}>
         <i className="fa fa-info-circle"></i>
-        &nbsp;点击连线,查看关联关系
+        &nbsp;点击节点,查看关联关系
           </div>
       <span className={styles.legendNotice}>
         <span className={styles.legendMain}></span> 主体公司

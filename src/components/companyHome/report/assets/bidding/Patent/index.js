@@ -5,7 +5,9 @@ import { CardTable, ModuleTitle } from 'components/common/report/';
 function Patent({patentItemList, isLoading}) {
   const cname = (value) => {
     if (value) {
-      return value.classificationNumber.cname;
+      return value.classificationNumber.cname.length === 0 ?
+        '--' :
+        value.classificationNumber.cname;
     }
   };
 
@@ -19,17 +21,16 @@ function Patent({patentItemList, isLoading}) {
     meta: {
       title: {
         main: 'title',
-        sub: ['applyDate']
       },
       body: [
-        { 'key': 'title', 'width': '6' },
         { 'key': 'classificationNumbercname', 'width': '6', 'modifyBlock': cname },
         { 'key': 'authPubDate', 'width': '6' },
         { 'key': 'authPubNum', 'width': '6' },
-        { 'key': 'applyDate', 'width': '6', 'hide': true },
+        { 'key': 'applyDate', 'width': '6' },
         { 'key': 'applyNum', 'width': '6', 'hide': true },
         { 'key': 'classificationNumberNumber', 'width': '6', 'modifyBlock': number, 'hide': true },
         { 'key': 'type', 'width': '6', 'hide': true },
+        { 'key': 'inventionPerson', 'width': '6', 'hide': true },
         { 'key': 'description', 'width': '12', 'hide': true },
       ],
       isExpand: false,

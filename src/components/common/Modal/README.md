@@ -32,6 +32,8 @@
 @param confirmLoading // 确定按钮loading，默认false
 @param cancelLoading // 取消按钮loading，默认false
 
+@param confirmDisable // 确认按钮的disable，默认false
+
 @param loader // 异步组件
 */
 

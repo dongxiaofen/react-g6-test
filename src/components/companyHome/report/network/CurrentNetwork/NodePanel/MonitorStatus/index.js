@@ -1,8 +1,9 @@
 import React, { PropTypes } from 'react';
 import { observer, inject } from 'mobx-react';
 import styles from './index.less';
+import networkType from 'dict/networkType';
 
-function MonitorStatus({ nodeData, monitorInfoList, routing }) {
+function MonitorStatus({ nodeData, monitorInfoList, routing, modalStore, networkStore }) {
   const monitorId = routing.location.query.monitorId;
   const viewMonitor = (id, type = 'MAIN') => {
     location.href = `/companyHome?monitorId=${id}&companyType=${type}`;
@@ -19,6 +20,27 @@ function MonitorStatus({ nodeData, monitorInfoList, routing }) {
     }
     return (<span> 监控已暂停</span>);
   };
+  const handleCreateMonitor = () => {
+    const params = {
+      name: nodeData.name,
+      type: networkType[networkType.findIndex((item) => item.id === nodeData.category)].subType,
+      position: 'NETWORK'
+    };
+    networkStore.monitorExistNode(monitorId, params);
+  };
+  const openCreateMonitorModal = () => {
+    modalStore.openCompModal({
+      title: '添加关联监控',
+      width: 440,
+      confirmAction: handleCreateMonitor,
+      cancelAction: modalStore.closeAction,
+      loader: (cb) => {
+        require.ensure([], (require) => {
+          cb(require('./CreateMonitor'));
+        });
+      }
+    });
+  };
   const getMonitorStatus = () => {
     let output;
     if (nodeData.cateType === 2) {
@@ -32,7 +54,7 @@ function MonitorStatus({ nodeData, monitorInfoList, routing }) {
                 <a onClick={viewReport.bind(this, nodeData.name, 'FREE')} className={styles.actionFlow}>
                   查看主页
               </a>
-                <a onClick={this.handleCreateMonitor} className={styles.actionFlow}>
+                <a onClick={openCreateMonitorModal} className={styles.actionFlow}>
                   关联监控
               </a>
               </div> :
@@ -82,4 +104,4 @@ function MonitorStatus({ nodeData, monitorInfoList, routing }) {
 MonitorStatus.propTypes = {
   foo: PropTypes.string,
 };
-export default inject('routing')(observer(MonitorStatus));
+export default inject('routing', 'modalStore', 'networkStore')(observer(MonitorStatus));

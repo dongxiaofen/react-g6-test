@@ -32,6 +32,7 @@ import {
     Pdf,
     BlackNetwork,
     Collection,
+    BidMarket,
 // first append here from plop
   } from 'containers';
 
@@ -85,6 +86,7 @@ export default (allStore) => {
       <Route path="pdf" component={ Pdf } />
       <Route path="collection" component={ Collection } />
       <Route path="ruleCompany" component={ RuleCompany } />
+      <Route path="bidMarket" component={ BidMarket } />
 {/* second append here from plop */}
     </Route>
   );

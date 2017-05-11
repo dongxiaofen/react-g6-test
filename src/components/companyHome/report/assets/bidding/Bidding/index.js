@@ -14,7 +14,8 @@ function Bidding({biddingItemList, isLoading, detailModalStore, routing, assetsS
             require('../bidMarket/BidMarketSource'),
           );
         });
-      }
+      },
+      '经营详情'
     );
   };
   const handleClick = (foo, bar) => {

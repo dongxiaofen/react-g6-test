@@ -114,13 +114,13 @@ export const getNewsDetail = (url, source) => {
 export const getBiddingDetail = (url, source) => {
   return axios.get(url, { cancelToken: source.token });
 };
-export const getPersonCheckInfo = ({ monitorId, reportId, analysisReportId, params }) => {
+export const getPersonCheckInfo = ({ monitorId, reportId, analysisReportId, params, source }) => {
   if (monitorId) {
-    return axios.get(`/api/monitor/${monitorId}/person/page`, { params: params });
+    return axios.get(`/api/monitor/${monitorId}/person/page`, { params: params, cancelToken: source.token });
   }else if (reportId) {
-    return axios.get(`/api/report/${reportId}/person/page`, { params: params });
+    return axios.get(`/api/report/${reportId}/person/page`, { params: params, cancelToken: source.token });
   }else if (analysisReportId) {
-    return axios.get(`/api/analysisReport/${analysisReportId}/person/page`, { params: params });
+    return axios.get(`/api/analysisReport/${analysisReportId}/person/page`, { params: params, cancelToken: source.token });
   }
 };
 export const checkPersonInfo = (url, params) => {
@@ -259,4 +259,9 @@ export const getAlertJudgeDocReport = (params) => {
 // 判断企业报告类型
 export const judgeReportType = (companyName) => {
   return axios.get(`/api/common/status?companyName=${companyName}`);
+};
+
+// 关联图上创建关联监控
+export const monitorExistNode = (monitorCompanyId, params) => {
+  return axios.post(`/api/monitor/${monitorCompanyId}/network/link`, params);
 };

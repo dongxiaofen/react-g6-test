@@ -19,13 +19,13 @@ function DetailItem({item, isExpand, idx, toggleExpand, showDetail, modalFocusId
     <div>
       <div className={styles.item}>
         <span className={styles.level}>{item.level}层</span>
-        <span className={isExpand === 0 ? styles.itemName : styles.itemNameFocus}>{document.getElementById('reportContainer') ? getTextOverflow(item.blackListNode) : ''}</span>
+        <span className={isExpand ? styles.itemNameFocus : styles.itemName}>{document.getElementById('reportContainer') ? getTextOverflow(item.blackListNode) : ''}</span>
         <a className={styles.expand} onClick={toggleExpand.bind(this, idx)} title={isExpand === 0 ? '展开' : ''}>
-          <i className={isExpand === 0 ? 'fa fa-angle-down' : 'fa fa-angle-up'}></i>
+          <i className={isExpand ? 'fa fa-angle-up' : 'fa fa-angle-down'}></i>
         </a>
       </div>
       {
-        isExpand === 0 ? '' :
+        isExpand ?
           item.disruptTypeList.map((obj, index) =>
             <Detail
               key={obj.type + index}
@@ -33,7 +33,7 @@ function DetailItem({item, isExpand, idx, toggleExpand, showDetail, modalFocusId
               index={index}
               modalFocusIdx={modalFocusIdx}
               showDetail={showDetail} />
-          )
+          ) : ''
       }
     </div>
   );

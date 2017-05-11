@@ -27,13 +27,13 @@ let simulation;
 let zoom;
 let svg;
 let isDragging = false;
-const layerCount = {}; // 存储各层的节点数
-const radiusArr = []; // 存储半径长度
+let layerCount = {}; // 存储各层的节点数
+let radiusArr = []; // 存储半径长度
 let nodeXY = {}; // 存储同心圆各节点坐标
 let saveNodeXY = false; // 标记坐标存储完成
-let centerNodeX;
-let centerNodeY;
-let nodeAdded = false;
+let centerNodeX; // 中心节点X坐标
+let centerNodeY; // 中心节点Y坐标
+let nodeAdded = false; // 用户是否新增了节点
 
 @inject('networkStore')
 @observer
@@ -44,12 +44,12 @@ export default class CircleNetworkGraph extends Component {
     svgHeight: PropTypes.number,
   };
   componentDidMount() {
-    // console.log(toJS(this.props.networkStore), 'componentDidMount');
+    // console.log({ nodeXY, saveNodeXY }, 'currentnetwork didMount');
     const graph = toJS(this.props.networkStore.currentNetwork);
     nodesData = graph.nodes;
     edgesData = graph.links;
     let canRenderSvg = true;
-    edgesData.map((link)=>{
+    edgesData.map((link) => {
       if (nodesData.findIndex((node) => node.name === link.source) < 0 || nodesData.findIndex((node) => node.name === link.target) < 0) {
         canRenderSvg = false;
         console.info('网络图link名字和node不对应', link);
@@ -61,7 +61,7 @@ export default class CircleNetworkGraph extends Component {
         console.info('网络图node的layer有-1', node);
       }
     });
-    console.log(canRenderSvg);
+    console.log('canRenderSvg', canRenderSvg);
     // 统计各层的节点数
     svgTools.getLayerCount(nodesData, layerCount);
     // 计算半径长度
@@ -172,21 +172,23 @@ export default class CircleNetworkGraph extends Component {
     reaction(
       () => this.props.networkStore.focusNodeName,
       () => {
-        const { focusNodeName } = this.props.networkStore;
-        nodesData.map((node) => {
-          node.isFocus = false;
-        });
-        if (focusNodeName === this.props.networkStore.mainCompanyName) {
-          nodesData[0].isFocus = true;
-        } else {
+        if (nodesData !== '') {
+          const { focusNodeName } = this.props.networkStore;
           nodesData.map((node) => {
-            if (focusNodeName !== '' && node.name.indexOf(focusNodeName) >= 0 && node.category !== 0) {
-              node.isFocus = true;
-            }
+            node.isFocus = false;
           });
+          if (focusNodeName === this.props.networkStore.mainCompanyName) {
+            nodesData[0].isFocus = true;
+          } else {
+            nodesData.map((node) => {
+              if (focusNodeName !== '' && node.name.indexOf(focusNodeName) >= 0 && node.category !== 0) {
+                node.isFocus = true;
+              }
+            });
+          }
+          svgTools.focusRelatedLinks(focusNodeName, edgesData);
+          simulation.restart();
         }
-        svgTools.focusRelatedLinks(focusNodeName, edgesData);
-        simulation.restart();
       }
     );
     // 监听类别筛选事件
@@ -194,18 +196,20 @@ export default class CircleNetworkGraph extends Component {
       () => this.props.networkStore.typeList.checkedArrChanged,
       () => {
         const checkedArr = this.props.networkStore.typeList.checkedArr;
-        const currentLevel = this.props.networkStore.currentLevel;
-        nodesData.map((node) => {
-          if (node.cateType !== 0) {
-            if (node.layer <= currentLevel) {
-              node.hide = !svgTools.isNodeShow(checkedArr, node.cateList);
-            } else {
-              node.hide = true;
+        if (checkedArr.length > 0 && nodesData !== '') {
+          const currentLevel = this.props.networkStore.currentLevel;
+          nodesData.map((node) => {
+            if (node.cateType !== 0) {
+              if (node.layer <= currentLevel) {
+                node.hide = !svgTools.isNodeShow(checkedArr, node.cateList);
+              } else {
+                node.hide = true;
+              }
             }
-          }
-        });
-        svgTools.updateLinksDisplay(nodesData, edgesData);
-        simulation.restart();
+          });
+          svgTools.updateLinksDisplay(nodesData, edgesData);
+          simulation.restart();
+        }
       }
     );
     // 监听level选择变化
@@ -213,22 +217,42 @@ export default class CircleNetworkGraph extends Component {
       () => this.props.networkStore.currentLevel,
       () => {
         const checkedArr = this.props.networkStore.typeList.checkedArr;
-        nodesData.map((node) => {
-          if (node.cateType !== 0) {
-            if (node.layer <= this.props.networkStore.currentLevel && svgTools.isNodeShow(checkedArr, node.cateList)) {
-              node.hide = false;
-            } else {
-              node.hide = true;
+        if (checkedArr.length > 0 && nodesData !== '') {
+          nodesData.map((node) => {
+            if (node.cateType !== 0) {
+              if (node.layer <= this.props.networkStore.currentLevel && svgTools.isNodeShow(checkedArr, node.cateList)) {
+                node.hide = false;
+              } else {
+                node.hide = true;
+              }
             }
-          }
-        });
-        svgTools.updateLinksDisplay(nodesData, edgesData);
-        simulation.restart();
+          });
+          svgTools.updateLinksDisplay(nodesData, edgesData);
+          simulation.restart();
+        }
       }
     );
   }
+  componentWillUnmount() {
+    if (simulation) {
+      simulation.stop(); // 停止网络图计算
+    }
+    nodesData = '';
+    edgesData = '';
+    svgEdges = '';
+    svgNodes = '';
+    svgTexts = '';
+    isDragging = false;
+    zoom = '';
+    nodeAdded = false;
+    saveNodeXY = false;
+    nodeXY = {};
+    layerCount = {};
+    radiusArr = [];
+  }
 
   ticked = () => {
+    // console.log('tick', saveNodeXY);
     if (!saveNodeXY) { // 只跑一次,然后存到nodeXY
       svgTools.getInitNodeXY(nodeXY, layerCount, nodesData, radiusArr, centerNodeX, centerNodeY);
       saveNodeXY = true;
@@ -323,7 +347,7 @@ export default class CircleNetworkGraph extends Component {
     if (!d3.event.active) simulation.alphaTarget(0);
     if (!isDragging) {
       this.props.networkStore.focusNode(data.name);
-      console.log(data, '单击');
+      console.log(data, '单击', saveNodeXY);
     } else {
       // console.log(data, '拖拽结束');
     }

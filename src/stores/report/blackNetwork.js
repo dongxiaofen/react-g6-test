@@ -1,16 +1,16 @@
-import { observable, action, extendObservable, computed } from 'mobx';
+import { observable, action, reaction } from 'mobx';
 import { companyHomeApi } from 'api';
 
 class BlackNetworkStore {
   constructor() {
-    extendObservable(this, {
-      expandIdx: computed(() => {
-        console.log('computed', this.jumpNode);
+    reaction(
+      () => this.jumpNode,
+      () => {
         const tmp = this.blackNetwork.paths.findIndex((path) => path.blackListNode === this.jumpNode);
-        console.log('tmp', tmp);
-        return tmp > 0 ? tmp : 0;
-      })
-    });
+        this.expandIdx = tmp > 0 ? tmp : this.expandIdx;
+        this.isJump = true;
+      }
+    );
   }
 
   @observable error = '';
@@ -22,11 +22,12 @@ class BlackNetworkStore {
     nodes: [],
     paths: []
   };
+  @observable isJump = false;
   @observable jumpNode = '';
+  @observable expandIdx = 0;
   @observable focusNodeName = '';
   @observable blackList = [];
-  @observable radioList = [];
-  @observable modalFocusIdx = -1; // 弹窗idx
+  @observable modalFocusIdx = -1; // 失信记录点击idx记录
   @observable detailModalData = {};
 
   @action.bound openDetailModal(idx, data) {
@@ -37,10 +38,9 @@ class BlackNetworkStore {
     this.focusNodeName = name;
   }
   @action.bound toggleExpand(idx) {
-    const resetRadioList = Array(this.radioList.length).fill(0);
-    resetRadioList[idx] = 1;
-    this.radioList = resetRadioList;
+    this.expandIdx = idx;
     this.modalFocusIdx = -1;
+    this.isJump = false;
   }
   @action.bound getReportModule(params) {
     this.isMount = true;
@@ -49,10 +49,13 @@ class BlackNetworkStore {
         this.isLoading = false;
         this.blackNetwork = resp.data.result[0];
         this.mainCompanyName = resp.data.result[0].mainCompanyName;
-        this.radioList = Array(resp.data.result[0].paths.length).fill(0);
-        this.radioList[this.expandIdx] = 1;
         const pathsArr = resp.data.result[0].paths;
         this.blackList = pathsArr;
+        // 判断是否从关联关系跳转过来
+        if (this.jumpNode !== '') {
+          const tmp = this.blackNetwork.paths.findIndex((path) => path.blackListNode === this.jumpNode);
+          this.expandIdx = tmp > 0 ? tmp : this.expandIdx;
+        }
         this.blackNetwork.nodes.map((node) => {
           if (pathsArr[this.expandIdx].relatedPaths.includes(node.name)) {
             node.hide = false;
@@ -88,7 +91,6 @@ class BlackNetworkStore {
     };
     this.focusNodeName = '';
     this.blackList = [];
-    this.radioList = [];
     this.modalFocusIdx = -1;
     this.detailModalData = {};
   }

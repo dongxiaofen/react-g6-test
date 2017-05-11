@@ -18,11 +18,11 @@ function Rule32To50({data}) {
     dict: 'rule32to50',
     body: [
       [
-        { 'key': 'companyName', colSpan: '1', modifyType: 'companyName'},
+        { 'key': 'companyName', colSpan: '1', modifyType: 'companyName', keyType: 'block'},
         { 'key': 'relation', colSpan: '1', modifyType: 'relationShip'}
       ],
       [
-        { 'key': 'policy', colSpan: '2', modifyBlock: modifyPolicy}
+        { 'key': 'policy', colSpan: '2', modifyBlock: modifyPolicy, keyType: 'block'}
       ],
     ],
     items: data.detail,

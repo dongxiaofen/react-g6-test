@@ -21,6 +21,7 @@ class ModalStore {
     this.pointText = '';
     this.pactUrl = '';
     this.pactName = '';
+    this.width = '440px';
   }
 
   // button text
@@ -34,6 +35,9 @@ class ModalStore {
 
   // 是否需要按钮
   @observable isNeedBtn = true;
+
+  // 确认按钮的disable
+  @observable confirmDisable = false;
 
   @observable compComponent = null;
 
@@ -54,6 +58,7 @@ class ModalStore {
     closeAction,
     cancelLoading,
     confirmLoading,
+    confirmDisable,
     loader
   }) {
     this.visible = true;
@@ -76,6 +81,8 @@ class ModalStore {
     // loading
     if (cancelLoading !== undefined) { this.cancelLoading = cancelLoading; }
     if (confirmLoading !== undefined) { this.confirmLoading = confirmLoading; }
+    // disable
+    if (confirmDisable) { this.confirmDisable = confirmDisable; }
     loader((comp) => {
       runInAction(() => {
         this.compComponent = comp;

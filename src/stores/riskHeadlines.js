@@ -94,6 +94,7 @@ class RiskHeadlinesStore {
     const newParams = {};
     newParams.to = params.to;
     newParams.from = params.from;
+    newParams.companyName = params.companyName;
     if (hasEvents) {
       this.riskUpdateValue('companyList', 'active', monitorId);
       this.getCompanyInfo(monitorId, newParams);
