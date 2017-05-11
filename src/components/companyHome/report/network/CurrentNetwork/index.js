@@ -17,7 +17,7 @@ function CurrentNetwork({layout}) {
     <Row>
       <Col width="9">
         <LegendBar {...{resumeSvg, fullScreen, exitFull}} />
-        <NodePanel />
+        <NodePanel exitFull={exitFull} />
         {
           layout === 'circle' ?
           <CircleNetworkGraph {...{svgWidth, svgHeight}} /> : <ForceNetworkGraph {...{svgWidth, svgHeight}} />
