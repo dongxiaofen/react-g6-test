@@ -83,7 +83,7 @@ function MonitorStatus({ nodeData, monitorInfoList, routing, modalStore, network
             </div>
           </div>
         );
-      } else if (monitorInfo.reportStatus === 'ANALYSIS_REPORT') {
+      } else if (monitorInfo.analysisReportStatus) {
         // 深度分析报告
         output = (
           <div>
