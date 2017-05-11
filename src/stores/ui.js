@@ -10,6 +10,7 @@ import alertAnalysisStore from './report/alertAnalysis';
 import reportManageStore from './reportManage';
 import collectionStore from './collection';
 import relPerCheckStore from './report/relPerCheck';
+import bidMarketStore from './bidMarket';
 
 class UiStore {
   constructor() {
@@ -106,6 +107,15 @@ class UiStore {
       () => this.uiState.relPerCheck.index,
       () => {
         relPerCheckStore.getReportModule(relPerCheckStore.reloadMonitorId);
+      }
+    );
+    reaction(
+      () => this.uiState.bidMarketInfo.index,
+      () => {
+        const params = bidMarketStore.params;
+        params.index = this.uiState.bidMarketInfo.index;
+        params.size = this.uiState.bidMarketInfo.size;
+        bidMarketStore.getInfo(params);
       }
     );
   }
@@ -329,7 +339,7 @@ class UiStore {
     },
     bidMarketInfo: {
       index: 1,
-      size: 10,
+      size: 9,
       totalElements: 0
     }
   };
@@ -574,7 +584,7 @@ class UiStore {
         },
         bidMarketInfo: {
           index: 1,
-          size: 10,
+          size: 9,
           totalElements: 0
         }
       }
