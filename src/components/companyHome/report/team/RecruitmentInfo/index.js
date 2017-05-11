@@ -1,6 +1,7 @@
 import React, {PropTypes} from 'react';
 import { observer } from 'mobx-react';
 import { toJS } from 'mobx';
+import Popover from 'antd/lib/popover';
 
 import styles from './index.less';
 import { Row } from 'components/common/layout';
@@ -159,9 +160,19 @@ function RecruitmentInfo({ teamStore }) {
           <div className={styles['info1-box-title']}>
             {item.title}
           </div>
-          <div className={styles['info1-box-content']}>
-            {teamStore.companyInfo[item.key]}
-          </div>
+          {
+            item.key === 'location'
+            ?
+            <Popover content={teamStore.companyInfo[item.key]}>
+              <div className={styles['info1-box-content']}>
+                {teamStore.companyInfo[item.key]}
+              </div>
+            </Popover>
+            :
+            <div className={styles['info1-box-content']}>
+              {teamStore.companyInfo[item.key]}
+            </div>
+          }
         </div>
       );
     });
