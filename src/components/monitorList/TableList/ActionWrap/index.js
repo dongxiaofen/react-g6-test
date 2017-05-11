@@ -24,7 +24,7 @@ function ActionWrap({data, mainData, index, relation, monitorListStore, payModal
         visible: true,
         monitorId,
         status: newStatus ? 'MONITOR' : 'PAUSE',
-        index,
+        idx: index,
         relation,
         mMonitorId: relation === 'relation' ? mainData.monitorId : monitorId,
       });
@@ -33,7 +33,7 @@ function ActionWrap({data, mainData, index, relation, monitorListStore, payModal
         visible: true,
         monitorId,
         status: newStatus ? 'MONITOR' : 'PAUSE',
-        index,
+        idx: index,
         relation,
         mMonitorId: relation === 'relation' ? mainData.monitorId : monitorId,
       });
