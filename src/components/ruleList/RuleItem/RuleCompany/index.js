@@ -22,10 +22,10 @@ function RuleCompany({data}) {
   return (
     <div className={styles.box}>
       <Popover placement="right" content={textAll}>
-        <span className={styles.riskLabel}>
+        <div className={styles.riskLabel}>
           <span>应用企业: {number}家</span>
           <i></i>
-        </span>
+        </div>
       </Popover>
     </div>
   );
