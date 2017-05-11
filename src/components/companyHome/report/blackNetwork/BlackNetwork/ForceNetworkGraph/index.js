@@ -71,7 +71,6 @@ export default class ForceNetworkGraph extends Component {
       });
 
     svgNodes = svg.append('g')
-      .attr('class', styles.nodes)
       .selectAll('circle')
       .data(nodesData)
       .enter().append('circle')

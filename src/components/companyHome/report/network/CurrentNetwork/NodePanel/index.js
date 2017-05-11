@@ -5,7 +5,7 @@ import colseImg from 'imgs/close.png';
 import NodeType from './NodeType';
 import MonitorStatus from './MonitorStatus';
 
-function NodePanel({ networkStore, routing }) {
+function NodePanel({ networkStore, routing, exitFull }) {
   const { show, nodeData } = networkStore.nodePanel;
   const hidePanel = () => {
     networkStore.closePanel();
@@ -21,6 +21,10 @@ function NodePanel({ networkStore, routing }) {
     return null;
   };
   const goToBlackList = (nodeName) => {
+    if (networkStore.showFullScreen) {
+      exitFull();
+      networkStore.toggleFullScreen();
+    }
     networkStore.jumpBlackNode(nodeName, routing.location.search);
     // routing.push(`/companyHome/blackNetwork${routing.location.search}`);
   };
