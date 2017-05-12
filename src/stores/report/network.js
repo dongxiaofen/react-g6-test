@@ -36,7 +36,7 @@ class NetworkStore {
   @observable targetComp = '';
   @observable monitorInfoList = [];
   @observable mainCompanyName = '';
-  @observable layout = 'force';
+  @observable layout = 'circle';
   @observable focusNodeName = '';
   @observable searchKey = '';
   @observable currentLevel = 1;
