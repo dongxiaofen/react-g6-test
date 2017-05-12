@@ -78,11 +78,13 @@ function CardList({ collectionStore, uiStore }) {
       <div className={styles.cardList}>
         {collectionList()}
       </div>
-      <Pager
-        tData={collectionStore.resultContent}
-        module="collection"
-        uiStore={uiStore}
-        type="large" />
+      <div className={styles.pager}>
+        <Pager
+          tData={collectionStore.resultContent}
+          module="collection"
+          uiStore={uiStore}
+          type="large" />
+      </div>
     </div>
   );
 }
