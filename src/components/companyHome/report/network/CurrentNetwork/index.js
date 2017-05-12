@@ -39,6 +39,6 @@ export default loadingComp({
     category: 0,
     error: props.error,
     // errCategory: 1,
-    module: '关联图'
+    // module: '关联图'
   })
 })(observer(CurrentNetwork));
