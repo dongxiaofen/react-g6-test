@@ -61,7 +61,7 @@ class LeftBarStore {
       menuText: '企业现勘',
       menuKey: 'corprationXk',
       children: [
-        { menuText: '现勘记录', menuKey: 'xkRecord', helpInfo: helpInfo2, contain: ['main'] },
+        { menuText: '现勘记录', menuKey: 'nowRecord', helpInfo: helpInfo2, contain: ['main'] },
       ],
       helpInfo: helpInfo2,
       contain: ['main'],
