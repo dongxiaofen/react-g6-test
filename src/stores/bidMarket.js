@@ -11,6 +11,8 @@ class BidMarketStore {
   @observable infoLoading = true;
   @observable detailLoading = false;
 
+  @observable trend = [];
+
   @observable areaInfo = [];
   @observable detailTitleData = {};
   @observable detailContent = '';
@@ -29,6 +31,20 @@ class BidMarketStore {
       .catch(action('get all catch', (err) => {
         console.log(err.response);
         this.mapLoading = false;
+      }));
+  }
+
+  // 变化趋势
+  @action.bound getTrend(params) {
+    this.trendLoading = true;
+    bidMarketApi.getTrend(params)
+      .then(action('get trend', (resp) => {
+        this.trend = resp.data.result;
+        this.trendLoading = false;
+      }))
+      .catch(action('get trend err', (err) => {
+        console.log(err);
+        this.trendLoading = false;
       }));
   }
 

@@ -113,42 +113,37 @@ class MonitorStatisticsStore {
 
   // 补全头条趋势分析时间
   dealWithDate2(begin, end, result) {
-    const analysisData = [];
-    let pointer;
-    const beginDate = moment(begin, 'YYYY-MM-DD');
-    result.forEach((item, idx) => {
-      const nowData = moment(item.date, 'YYYY-MM-DD');
-      if (idx === 0 && begin !== item.date) {
-        const startDay = Number(nowData.from(beginDate).split(' ')[1]);
-        analysisData.push({ date: beginDate.format('YYYY年MM月DD日') });
-        if (!isNaN(startDay)) {
-          for (let num = 0; num < startDay - 1; num++) {
-            analysisData.push({ date: beginDate.add(1, 'days').format('YYYY年MM月DD日') });
-          }
-        }
-      }
-      if (pointer) {
-        const fromDay = Number(nowData.from(pointer).split(' ')[1]);
-        if (!isNaN(fromDay)) {
-          for (let num = 0; num < fromDay - 1; num++) {
-            analysisData.push({ date: pointer.add(1, 'days').format('YYYY年MM月DD日') });
-          }
-        }
-      }
-      pointer = nowData;
-      const analysisItem = { date: nowData.format('YYYY年MM月DD日') };
-      Object.keys(item.countMap).forEach((key) => {
-        analysisItem[key.toLowerCase()] = item.countMap[key] || 0;
+    const compliteDate = [];
+    const rangeMomentDate = moment.range(moment(begin), moment(end)).toArray('days');
+    // 默认封装所有数据为0
+    rangeMomentDate.forEach((item) => {
+      compliteDate.push({
+        date: item.format('YYYY-MM-DD'),
+        all: 0,
+        corp: 0,
+        legal: 0,
+        news: 0,
+        operation: 0,
+        stock: 0,
+        team: 0
       });
-      analysisData.push(analysisItem);
-      if (idx === result.length - 1 && analysisData.length < 30) {
-        const days = 30 - analysisData.length;
-        for (let num = 0; num < days; num++) {
-          analysisData.push({ date: pointer.add(1, 'days').format('YYYY年MM月DD日') });
-        }
-      }
     });
-    return analysisData;
+    // 匹配有的数据，然后赋值进去
+    compliteDate.forEach((item) => {
+      result.forEach((detail) => {
+        if (detail.date === item.date) {
+          item.all = detail.countMap.ALL;
+          item.corp = detail.countMap.CORP;
+          item.legal = detail.countMap.LEGAL;
+          item.news = detail.countMap.NEWS;
+          item.operation = detail.countMap.OPERATION;
+          item.stock = detail.countMap.STOCK;
+          item.team = detail.countMap.TEAM;
+        }
+      });
+      item.date = moment(item.date).format('YYYY年MM月DD日');
+    });
+    return compliteDate;
   }
 
   @observable loadingGroup = {
