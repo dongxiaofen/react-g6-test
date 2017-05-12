@@ -26,6 +26,7 @@ let svgTexts;
 let simulation;
 let zoom;
 let svg;
+let group;
 let isDragging = false;
 let layerCount = {}; // 存储各层的节点数
 let radiusArr = []; // 存储半径长度
@@ -57,9 +58,9 @@ export default class CircleNetworkGraph extends Component {
     svg = d3.select('svg')
       .call(zoom.on('zoom', () => {
         // console.log(d3.event.transform, 12312321);
-        svg.attr('transform', `translate(${d3.event.transform.x}, ${d3.event.transform.y}) scale(${d3.event.transform.k})`);
-      }))
-      .append('g');
+        group.attr('transform', `translate(${d3.event.transform.x}, ${d3.event.transform.y}) scale(${d3.event.transform.k})`);
+      }));
+    group = svg.append('g');
     const width = d3.select('svg').attr('width');
     const height = d3.select('svg').attr('height');
     centerNodeX = width / 2;
@@ -79,7 +80,7 @@ export default class CircleNetworkGraph extends Component {
       .links(edgesData);
 
     svgTools.updateLinksDisplay(nodesData, edgesData);
-    svgEdges = svg.append('g')
+    svgEdges = group.append('g')
       .attr('class', styles.links)
       .selectAll('line')
       .data(edgesData)
@@ -87,7 +88,7 @@ export default class CircleNetworkGraph extends Component {
       .attr('marker-end', 'url(#mainArrow)');
     // .attr('stroke-width', (data) => { return Math.sqrt(data.value); });
 
-    svgNodes = svg.append('g')
+    svgNodes = group.append('g')
       .selectAll('circle')
       .data(nodesData)
       .enter().append('circle')
@@ -103,7 +104,7 @@ export default class CircleNetworkGraph extends Component {
     svgNodes.append('title')
       .text((data) => { return data.category === 0 ? data.name : '单击查看详情'; });
 
-    svgTexts = svg.selectAll('text')
+    svgTexts = group.selectAll('text')
       .data(nodesData)
       .enter()
       .append('text')
@@ -125,7 +126,7 @@ export default class CircleNetworkGraph extends Component {
         .on('drag', this.dragged)
         .on('end', this.dragended));
 
-    svgEdgepaths = svg.selectAll('.edgepath')
+    svgEdgepaths = group.selectAll('.edgepath')
       .data(edgesData)
       .enter()
       .append('path')
@@ -134,7 +135,7 @@ export default class CircleNetworkGraph extends Component {
       .attr('id', (data, idx) => { return 'edgepath' + idx; })
       .style('pointer-events', 'none');
 
-    svgEdgelabels = svg.selectAll('.edgelabel')
+    svgEdgelabels = group.selectAll('.edgelabel')
       .data(edgesData)
       .enter()
       .append('text')
