@@ -26,7 +26,7 @@ export default class ForceNetworkGraph extends Component {
   };
 
   componentDidMount() {
-    console.log(toJS(this.props.blackNetworkStore), 'componentDidMount');
+    // console.log(toJS(this.props.blackNetworkStore), 'componentDidMount');
     const mainCompanyName = this.props.blackNetworkStore.mainCompanyName;
     const graph = toJS(this.props.blackNetworkStore.blackNetwork);
     nodesData = graph.nodes;
@@ -43,7 +43,7 @@ export default class ForceNetworkGraph extends Component {
     const height = d3.select('svg').attr('height');
 
     simulation = d3.forceSimulation()
-      .force('link', d3.forceLink().id((data) => { return data.name; }))
+      .force('link', d3.forceLink().id((data) => { return data.name; }).distance(150))
       .force('charge', d3.forceManyBody())
       .force('center', d3.forceCenter(width / 2, height / 2));
 
@@ -71,7 +71,6 @@ export default class ForceNetworkGraph extends Component {
       });
 
     svgNodes = svg.append('g')
-      .attr('class', styles.nodes)
       .selectAll('circle')
       .data(nodesData)
       .enter().append('circle')
@@ -180,9 +179,19 @@ export default class ForceNetworkGraph extends Component {
       return path;
     });
 
-    svgEdgelabels.attr('class', (data) => {
+    svgEdgelabels.attr('transform', function autoRotate(data) {
+      if (data.target.x < data.source.x) {// 边上的文字自动转向
+        const bbox = this.getBBox();
+        const rx = bbox.x + bbox.width / 2;
+        const ry = bbox.y + bbox.height / 2;
+        return 'rotate(180 ' + rx + ' ' + ry + ')';
+      }
+      return 'rotate(0)';
+    })
+    .attr('class', (data) => {
       return (data.hide && styles.hide) || (data.isFocus && styles.show) || styles.hide;
     });
+
     svgTexts
       .attr('x', (data) => {
         return data.x;
