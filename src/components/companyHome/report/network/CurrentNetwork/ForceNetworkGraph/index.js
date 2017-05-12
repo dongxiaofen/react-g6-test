@@ -1,13 +1,26 @@
 import React, { Component, PropTypes } from 'react';
 import { observer, inject } from 'mobx-react';
-import { toJS } from 'mobx';
+import { toJS, reaction } from 'mobx';
 import styles from './index.less';
+import * as svgTools from 'helpers/svgTools';
 import * as d3 from 'd3';
+import bling0 from 'imgs/companyHome/network/0.gif';
+import bling1 from 'imgs/companyHome/network/1.gif';
+import bling2 from 'imgs/companyHome/network/2.gif';
+import bling3 from 'imgs/companyHome/network/3.gif';
+import bling4 from 'imgs/companyHome/network/4.gif';
+import bling5 from 'imgs/companyHome/network/5.gif';
+import bling6 from 'imgs/companyHome/network/6.gif';
+import bling7 from 'imgs/companyHome/network/7.gif';
+import bling8 from 'imgs/companyHome/network/8.gif';
+import bling9 from 'imgs/companyHome/network/9.gif';
+import bling10 from 'imgs/companyHome/network/10.gif';
+const blingArr = [bling0, bling1, bling2, bling3, bling4, bling5, bling6, bling7, bling8, bling9, bling10];
 let nodesData;
 let edgesData;
 let svgEdges;
 let svgNodes;
-// let svgTexts;
+let svgTexts;
 let svgEdgepaths;
 let svgEdgelabels;
 let simulation;
@@ -25,7 +38,6 @@ export default class ForceNetworkGraph extends Component {
   };
 
   componentDidMount() {
-    console.log(toJS(this.props.networkStore), 'componentDidMount');
     const graph = toJS(this.props.networkStore.currentNetwork);
     nodesData = graph.nodes;
     edgesData = graph.links;
@@ -40,10 +52,8 @@ export default class ForceNetworkGraph extends Component {
     const width = d3.select('svg').attr('width');
     const height = d3.select('svg').attr('height');
 
-    // const color = d3.scaleOrdinal(d3.schemeCategory20);
-
     simulation = d3.forceSimulation()
-      .force('link', d3.forceLink().id((data) => { return data.name; }))
+      .force('link', d3.forceLink().id((data) => { return data.name; }).distance(150))
       .force('charge', d3.forceManyBody())
       .force('center', d3.forceCenter(width / 2, height / 2));
 
@@ -58,16 +68,42 @@ export default class ForceNetworkGraph extends Component {
       .attr('class', styles.links)
       .selectAll('line')
       .data(edgesData)
-      .enter().append('line');
-    // .attr('stroke-width', (data) => { return Math.sqrt(data.value); });
+      .enter().append('line')
+      .attr('marker-end', 'url(#mainArrow)');
 
     svgNodes = svg.append('g')
-      .attr('class', styles.nodes)
       .selectAll('circle')
       .data(nodesData)
       .enter().append('circle')
-      .attr('r', 5)
-      // .attr('fill', (data) => { return color(data.group); })
+      .attr('r', 35)
+      .attr('class', (data) => {
+        return (data.hide && styles.hide) || (data.category === 0 && styles.mainCompany) || (data.blackList && data.category !== 7 && styles.blackListNodes) || (data.status === 0 && styles.cancelNodes) || styles[`category${data.category}`];
+      })
+      .call(d3.drag()
+        .on('start', this.dragstarted)
+        .on('drag', this.dragged)
+        .on('end', this.dragended));
+
+    svgNodes.append('title')
+      .text((data) => { return data.name; });
+
+    svgTexts = svg.selectAll('text')
+      .data(nodesData)
+      .enter()
+      .append('text')
+      .attr('class', (data) => {
+        if (data.hide) {
+          return styles.hide;
+        }
+        return styles.nodeText;
+      })
+      .attr('text-anchor', 'middle')
+      .attr('dy', (data) => {
+        return data.cateType === 0 ? 45 : 25;
+      })
+      .text((data) => {         // 返回节点的名字
+        return data.name;
+      })
       .call(d3.drag()
         .on('start', this.dragstarted)
         .on('drag', this.dragged)
@@ -87,81 +123,96 @@ export default class ForceNetworkGraph extends Component {
       .enter()
       .append('text')
       .style('pointer-events', 'none')
-      .attr('dx', 8)
+      .attr('dx', 40)
       .attr('dy', -2)
       .attr('class', (data) => {
-        return data.index > 10 ? styles.show : styles.hide;
+        return data.isFocus ? styles.show : styles.hide;
       })
-      .attr('font-size', 10)
-      .attr('fill', '#aaa')
+      .attr('font-size', 8)
+      .attr('fill', '#3483e9')
       .attr('id', (data, idx) => { return 'edgelabel' + idx; });
 
 
     svgEdgelabels.append('textPath')
       .attr('xlink:href', (data, idx) => { return '#edgepath' + idx; })
       .style('pointer-events', 'none')
-      .text(() => { return 'label11111111111111111111111111 '; });
+      .text((data) => { return svgTools.getLinkInfo(data); });
 
-    // svgNodes.append('title')
-    //   .text((data) => { console.log(data); return data.name; });
-
-    // svgTexts = svg.selectAll('text')
-    //   .data(nodesData)
-    //   .enter()
-    //   .append('text')
-    //   .attr('class', (data) => {
-    //     if (data.show === 0) {
-    //       return styles.hide;
-    //     }
-    //     return styles.text;
-    //   })
-    //   .attr('text-anchor', 'middle')
-    //   .attr('dy', (data) => {
-    //     console.log(data, data.x);
-    //     return data.cateType === 0 ? 45 : 25;
-    //   })
-    //   .text((data) => {         // 返回节点的名字
-    //     return data.name;
-    //   })
-    //   .call(d3.drag);
+    // 监听点击和搜索节点事件
+    reaction(
+      () => this.props.networkStore.focusNodeName,
+      () => {
+        if (nodesData !== '') {
+          const { focusNodeName } = this.props.networkStore;
+          nodesData.map((node) => {
+            node.isFocus = false;
+          });
+          if (focusNodeName === this.props.networkStore.mainCompanyName) {
+            nodesData[0].isFocus = true;
+          } else {
+            nodesData.map((node) => {
+              if (focusNodeName !== '' && node.name.indexOf(focusNodeName) >= 0 && node.category !== 0) {
+                node.isFocus = true;
+              }
+            });
+          }
+          svgTools.focusRelatedLinks(focusNodeName, edgesData);
+          simulation.restart();
+        }
+      }
+    );
   }
   ticked = () => {
     svgEdges
       .attr('x1', (data) => { return data.source.x; })
       .attr('y1', (data) => { return data.source.y; })
       .attr('x2', (data) => { return data.target.x; })
-      .attr('y2', (data) => { return data.target.y; });
+      .attr('y2', (data) => { return data.target.y; })
+      .attr('class', (data) => {
+        return (data.hide && styles.hide) || (data.isFocus && styles.focusLink) || styles.links;
+      });
 
     svgNodes
       .attr('cx', (data) => { return data.x; })
-      .attr('cy', (data) => { return data.y; });
+      .attr('cy', (data) => { return data.y; })
+      .attr('r', (data) => {
+        return data.isFocus ? 20 : 35;
+      })
+      .attr('class', (data) => {
+        return (data.hide && styles.hide) || (data.isFocus && ' ') || (data.category === 0 && styles.mainCompany) || (data.blackList && data.category !== 7 && styles.blackListNodes) || (data.status === 0 && styles.cancelNodes) || styles[`category${svgTools.getNodeColor(this.props.networkStore.typeList.checkedArr, data.cateList)}`];
+      })
+      .attr('fill', (data) => {
+        return (!data.isFocus && ' ') || (data.blackList && data.category !== 7 && 'url(#bling9)') || (data.status === 0 && 'url(#bling10)') || `url(#bling${data.category})`;
+      });
+
+    svgTexts
+      .attr('x', (data) => {
+        return data.x;
+      })
+      .attr('y', (data) => {
+        return data.y;
+      })
+      .attr('class', (data) => {
+        return data.hide ? styles.hide : styles.nodeText;
+      });
 
     svgEdgepaths.attr('d', (data) => {
       const path = 'M ' + data.source.x + ' ' + data.source.y + ' L ' + data.target.x + ' ' + data.target.y;
-      // console.log(d)
       return path;
     });
 
-    svgEdgelabels.attr('transform', () => {
-      // if (data.target.x < data.source.x) {
-      //   bbox = this.getBBox();
-      //   rx = bbox.x + bbox.width / 2;
-      //   ry = bbox.y + bbox.height / 2;
-      //   return 'rotate(180 ' + rx + ' ' + ry + ')';
-      // }
+    svgEdgelabels.attr('transform', function autoRotate(data) {
+      if (data.target.x < data.source.x) {// 边上的文字自动转向
+        const bbox = this.getBBox();
+        const rx = bbox.x + bbox.width / 2;
+        const ry = bbox.y + bbox.height / 2;
+        return 'rotate(180 ' + rx + ' ' + ry + ')';
+      }
       return 'rotate(0)';
-    });
-    // svgTexts
-    //   .attr('x', (data) => {
-    //     if (data.layer !== -1) {
-    //       return data.x;
-    //     }
-    //   })
-    //   .attr('y', (data) => {
-    //     if (data.layer !== -1) {
-    //       return data.y;
-    //     }
-    //   });
+    })
+      .attr('class', (data) => {
+        return (data.hide && styles.hide) || (data.isFocus && styles.show) || styles.hide;
+      });
   }
   dragstarted = (data) => {
     if (!d3.event.active) simulation.alphaTarget(0.3).restart();
@@ -181,6 +232,7 @@ export default class ForceNetworkGraph extends Component {
     if (!d3.event.active) simulation.alphaTarget(0);
     if (!isDragging) {
       console.log(data, '单击');
+      this.props.networkStore.focusNode(data.name);
     } else {
       // console.log(data, '拖拽结束');
     }
@@ -192,7 +244,29 @@ export default class ForceNetworkGraph extends Component {
   render() {
     return (
       <div>
-        <svg width={this.props.svgWidth} height={this.props.svgHeight} ></svg>
+        <svg width={this.props.svgWidth} height={this.props.svgHeight} >
+          <defs>
+            <marker id="mainArrow"
+              markerUnits="userSpaceOnUse"
+              markerWidth="10"
+              markerHeight="10"
+              viewBox="0 0 12 12"
+              refX="25"
+              refY="6"
+              orient="auto">
+              <path d="M2,2 L10,6 L2,10 L6,6 L2,2" className={styles.arrow} />
+            </marker>
+            {
+              new Array(11).fill(1).map((tmp, idx) => {
+                return (
+                  <pattern key={tmp + idx} id={`bling${idx}`} patternUnits="objectBoundingBox" width="1" height="1">
+                    <image xlinkHref={blingArr[idx]} x="0" y="0" width="40" height="40" />
+                  </pattern>
+                );
+              })
+            }
+          </defs>
+        </svg>
       </div>
     );
   }

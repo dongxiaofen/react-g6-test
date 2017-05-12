@@ -8,9 +8,6 @@ import Select from 'components/lib/Select';
 const Option = Select.Option;
 
 function LegendBar({ networkStore, resumeSvg, fullScreen, exitFull }) {
-  //   const swithLayout = () => {
-  //     switchLayout();
-  //   };
   const { showFullScreen, totalLevel, selectLevel, currentLevel } = networkStore;
   const handleFullScreen = () => {
     fullScreen();
@@ -25,7 +22,7 @@ function LegendBar({ networkStore, resumeSvg, fullScreen, exitFull }) {
   };
   return (
     <div className={styles.box}>
-      {/* <a onClick={swithLayout}>切换</a> */}
+      <a onClick={networkStore.switchLayout}>切换</a>
       <div className={styles.legendAction}>
         <div className={`clearfix ${styles.levelSelect}`}>
           <Select onChange={levelOnchange} value={`${currentLevel}`} width="100px">
