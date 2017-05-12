@@ -23,6 +23,10 @@ function SimpleCard({meta, alertAnalysisStore}) {
         } else if (alertAnalysisStore.detailData.html !== '--') {
           value = <div dangerouslySetInnerHTML={{__html: alertAnalysisStore.detailData.html}} ></div>;
         }
+      } else if (config.keyType === 'date') {
+        if (value) {
+          value = value.slice(0, 10);
+        }
       }
       value = value || '--';
       if (config.blockShow) {
