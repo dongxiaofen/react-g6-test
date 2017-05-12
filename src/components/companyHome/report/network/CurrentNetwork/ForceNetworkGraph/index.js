@@ -75,7 +75,7 @@ export default class ForceNetworkGraph extends Component {
       .selectAll('circle')
       .data(nodesData)
       .enter().append('circle')
-      .attr('r', 5)
+      .attr('r', 35)
       .attr('class', (data) => {
         return (data.hide && styles.hide) || (data.category === 0 && styles.mainCompany) || (data.blackList && data.category !== 7 && styles.blackListNodes) || (data.status === 0 && styles.cancelNodes) || styles[`category${data.category}`];
       })
@@ -85,7 +85,7 @@ export default class ForceNetworkGraph extends Component {
         .on('end', this.dragended));
 
     svgNodes.append('title')
-      .text((data) => { return data.category === 0 ? data.name : '单击查看详情'; });
+      .text((data) => { return data.name; });
 
     svgTexts = svg.selectAll('text')
       .data(nodesData)
@@ -176,7 +176,7 @@ export default class ForceNetworkGraph extends Component {
       .attr('cx', (data) => { return data.x; })
       .attr('cy', (data) => { return data.y; })
       .attr('r', (data) => {
-        return data.isFocus ? 20 : 12;
+        return data.isFocus ? 20 : 35;
       })
       .attr('class', (data) => {
         return (data.hide && styles.hide) || (data.isFocus && ' ') || (data.category === 0 && styles.mainCompany) || (data.blackList && data.category !== 7 && styles.blackListNodes) || (data.status === 0 && styles.cancelNodes) || styles[`category${svgTools.getNodeColor(this.props.networkStore.typeList.checkedArr, data.cateList)}`];
