@@ -11,7 +11,7 @@ function ScopeAlter({data, type}) {
     dict: 'alterList',
     body: [
       {'key': 'altItem', 'width': '12'},
-      {'key': 'altDate', 'width': '12'},
+      {'key': 'altDate', 'width': '12', keyType: 'date'},
       {'key': 'altAf', 'width': '12', modifyBlock: modifyHtml},
       {'key': 'altBe', 'width': '12', modifyBlock: modifyHtml}
     ],
