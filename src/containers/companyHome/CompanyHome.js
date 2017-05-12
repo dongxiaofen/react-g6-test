@@ -19,6 +19,7 @@ import styles from './index.less';
   'networkStore',
   'blackNetworkStore',
   'alertAnalysisStore',
+  'timeAxisStore',
   'relPerCheckStore',
   'stockStore'
 )
@@ -37,6 +38,7 @@ export default class CompanyHome extends Component {
     networkStore: PropTypes.object,
     blackNetworkStore: PropTypes.object,
     alertAnalysisStore: PropTypes.object,
+    timeAxisStore: PropTypes.object,
     relPerCheckStore: PropTypes.object,
   };
   componentWillMount() {
@@ -65,6 +67,7 @@ export default class CompanyHome extends Component {
       'networkStore',
       'blackNetworkStore',
       'alertAnalysisStore',
+      'timeAxisStore',
       'relPerCheckStore',
       'stockStore'
     ].map((key)=>{
