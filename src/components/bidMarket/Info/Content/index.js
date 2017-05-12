@@ -4,10 +4,24 @@ import styles from './index.less';
 import { loadingComp } from 'components/hoc';
 import Pager from 'components/common/Pager';
 
-function Content({ areaInfo, uiStore }) {
-  if (!areaInfo.length) {
-    return null;
-  }
+function Content({ areaInfo, uiStore, detailModalStore, getBidMarketDetail }) {
+  const openModal = () => {
+    detailModalStore.openDetailModal(
+      (cb) => {
+        require.ensure([], (require) => {
+          cb(
+            require('./DetailTitle'),
+            require('./DetailContent'),
+            require('./DetailSource'),
+          );
+        });
+      },
+      '招投标详情'
+    );
+  };
+  const getDetail = (announceID, key) => {
+    getBidMarketDetail(announceID, key, openModal);
+  };
   const areaInfoList = () => {
     return areaInfo.map((item, key) => {
       return (
@@ -22,11 +36,11 @@ function Content({ areaInfo, uiStore }) {
               </div>
               <div className={`clearfix ${styles['bulletin-name']}`}>
                 <span className={styles['bulletin-name-title']}>项目名称：</span>
-                <a className={styles['bulletin-url']}
-                  target="_blank"
-                  title={item.title}>
+                <span className={styles['bulletin-url']}
+                  title={item.title}
+                  onClick={getDetail.bind(null, item.announceID, key)}>
                   {item.title}
-                </a>
+                </span>
               </div>
               <div className={styles['bulletin-money']}>
                 中标金额：
@@ -87,9 +101,12 @@ function Content({ areaInfo, uiStore }) {
 
 Content.propTypes = {
   areaInfo: PropTypes.oneOfType([PropTypes.object, PropTypes.array]),
+  uiStore: PropTypes.object,
+  detailModalStore: PropTypes.object,
+  getBidMarketDetail: PropTypes.func,
 };
 export default loadingComp({ mapDataToProps: props => ({
   loading: props.infoLoading,
   module: '招投标信息',
   error: !props.areaInfo.length === 0
-})})(inject('uiStore')(observer(Content)));
+})})(inject('uiStore', 'detailModalStore')(observer(Content)));
