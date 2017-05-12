@@ -15,7 +15,11 @@
 }
 .statusTextBox {
   margin-top: 17px;
-  overflow: auto;
+}
+.statusTextBox:after {
+  content: '';
+  display: block;
+  clear: both;
 }
 .statusText {
   float: left;
