@@ -71,7 +71,7 @@ function MonitorStatus({ nodeData, monitorInfoList, routing, modalStore, network
       );
     } else {
       const monitorInfo = monitorInfoList[monitorInfoList.findIndex((item) => item.companyName === nodeData.name)];
-      if (monitorInfo.monitorMapResponse.companyType === 'MAIN' && monitorInfo.monitorMapResponse.monitorId) {
+      if (monitorInfo.monitorMapResponse && monitorInfo.monitorMapResponse.companyType === 'MAIN' && monitorInfo.monitorMapResponse.monitorId) {
         // 主体监控
         output = (
           <div>
@@ -107,7 +107,7 @@ function MonitorStatus({ nodeData, monitorInfoList, routing, modalStore, network
             </div>
           </div>
         );
-      } else if (monitorInfo.monitorMapResponse.companyType === 'ASSOCIATE' && monitorInfo.monitorMapResponse.monitorId) {
+      } else if (monitorInfo.monitorMapResponse && monitorInfo.monitorMapResponse.companyType === 'ASSOCIATE' && monitorInfo.monitorMapResponse.monitorId) {
         // 关联监控
         output = (
           <div>
