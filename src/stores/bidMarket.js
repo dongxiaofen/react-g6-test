@@ -1,6 +1,7 @@
 import { observable, action } from 'mobx';
 import { bidMarketApi } from 'api';
 import uiStore from './ui';
+import messageStore from './message';
 
 class BidMarketStore {
   @observable params = {};
@@ -8,8 +9,11 @@ class BidMarketStore {
   @observable trendLoading = true;
   @observable rankLoading = true;
   @observable infoLoading = true;
+  @observable detailLoading = false;
 
   @observable areaInfo = [];
+  @observable detailTitleData = {};
+  @observable detailContent = '';
 
   @action.bound setParams(params) {
     this.params = params;
@@ -40,6 +44,23 @@ class BidMarketStore {
       .catch(action('get info catch', (err) => {
         console.log(err);
         this.infoLoading = false;
+      }));
+  }
+
+  // 招投标信息详情
+  @action.bound getBidMarketDetail(announceId, key, openModal) {
+    this.detailLoading = true;
+    bidMarketApi.getBidMarketDetail(announceId)
+      .then(action('get bidMarket detail', (resp) => {
+        this.detailTitleData = this.areaInfo[key];
+        this.detailContent = resp.data.result;
+        this.detailLoading = false;
+        openModal();
+      }))
+      .catch(action('get bidMarket detail err', (err) => {
+        console.log(err);
+        messageStore.openMessage({ type: 'warning', content: '获取招投标详情失败' });
+        this.detailLoading = false;
       }));
   }
 
