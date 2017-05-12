@@ -1,0 +1,49 @@
+@import '~sc-colors/index.less';
+
+.box {
+  top: 45px;
+  left: 15px;
+  position: absolute;
+  width: 250px;
+  min-height: 90px;
+  background: @white1;
+  border: 1px @black12 solid;
+  padding: 10px;
+  text-align: center;
+  cursor: auto;
+  z-index: 1;
+}
+.nodeName {
+  margin: 5px 0;
+  color: @black4;
+  // font-size: 14px;
+}
+.blackLink {
+  text-decoration: underline;
+  display: inline-block;
+  color: @black1;
+}
+.close {
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  cursor: pointer;
+}
+
+.colseImg:hover {
+  -webkit-transform: rotateZ(180deg);
+     -moz-transform: rotateZ(180deg);
+      -ms-transform: rotateZ(180deg);
+       -o-transform: rotateZ(180deg);
+          transform: rotateZ(180deg);
+}
+
+.colseImg {
+  float: left;
+
+  -webkit-transition: all ease-in-out .3s;
+     -moz-transition: all ease-in-out .3s;
+      -ms-transition: all ease-in-out .3s;
+       -o-transition: all ease-in-out .3s;
+          transition: all ease-in-out .3s;
+}

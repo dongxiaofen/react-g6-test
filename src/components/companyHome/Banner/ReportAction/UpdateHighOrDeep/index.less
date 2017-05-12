@@ -1,0 +1,77 @@
+@import "~sc-colors/index.less";
+
+.wrap {
+  margin-top: 15px;
+}
+
+.btnGroup {
+  margin-bottom: 12px;
+}
+
+.btn {
+  position: relative;
+  width: 130px;
+
+  font-size: 14px;
+  line-height: 46px;
+  color: @mdc-grey-800;
+  text-align: center;
+
+  border:1px solid @black12;
+  cursor: pointer;
+
+  -webkit-transition: border-color .3s ease-in-out;
+     -moz-transition: border-color .3s ease-in-out;
+      -ms-transition: border-color .3s ease-in-out;
+       -o-transition: border-color .3s ease-in-out;
+          transition: border-color .3s ease-in-out;
+
+  &:first-child {
+    float: left;
+  }
+
+  &:last-child {
+    float: right;
+  }
+
+  &:hover {
+    width: 130px;
+    line-height: 44px;
+
+    border: 2px solid @mdc-blue-400;
+  }
+}
+
+.icon {
+  display: none;
+  position: absolute;
+  right: -1px;
+  bottom: -1px;
+  width: 14px;
+  height: 13px;
+
+  background-image: url('imgs/bannerInfo/yes.png');
+}
+
+.active {
+  width: 130px;
+  line-height: 44px;
+
+  background-color: #fff;
+  border: 2px solid @mdc-blue-400;
+
+  .icon {
+    display: block;
+  }
+}
+
+.text {
+  margin-bottom: 40px;
+
+  line-height: 18px;
+  color: @mdc-grey-600;
+
+  .textSub {
+    color: @mdc-blue-400;
+  }
+}

@@ -1,0 +1,75 @@
+@import '~sc-colors/index.less';
+
+.downloadBg {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  min-width: 1190px;
+  background-color: rgba(0, 0, 0, 0.8);
+  z-index: 1000;
+}
+
+.download {
+  position: absolute;
+  top:50%;
+  left:50%;
+
+  width: 500px;
+  height: 350px;
+  margin-left: -250px;
+  margin-top: -175px;
+
+  background-color: @white1;
+
+  border-radius: 4px;
+}
+
+.downloadClose {
+  position: absolute;
+  top: 15px;
+  right: 15px;
+
+  cursor: pointer;
+}
+
+.downloadColseImg:hover {
+  -webkit-transform: rotateZ(180deg);
+  -moz-transform: rotateZ(180deg);
+  -ms-transform: rotateZ(180deg);
+  -o-transform: rotateZ(180deg);
+  transform: rotateZ(180deg);
+}
+
+.downloadColseImg {
+  float: left;
+
+  -webkit-transition: all ease-in-out .3s;
+  -moz-transition: all ease-in-out .3s;
+  -ms-transition: all ease-in-out .3s;
+  -o-transition: all ease-in-out .3s;
+  transition: all ease-in-out .3s;
+}
+
+.downloadText{
+  margin-top: 50px;
+  margin-bottom: 35px;
+
+  text-align: center;
+  font-size: 18px;
+  line-height: 1em;
+}
+
+.downloadImg {
+  text-align: center;
+}
+
+.downloadImg img{
+  height: 197px;
+}
+
+.isVisible {
+  display: block;
+}

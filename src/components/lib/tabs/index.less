@@ -1,0 +1,39 @@
+.wrapper {
+  width: 100%;
+}
+.tabBarBox {
+  line-height: 1;
+  border-bottom: 1px solid #CFD8DC;
+}
+.tabBar {
+  display: inline-block;
+  margin-right: 25px;
+  padding: 0 20px 13px;
+  line-height: 1;
+  font-size: 14px;
+  color: #78909C;
+  border-bottom: 4px solid transparent;
+  cursor: pointer;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+.tabBarAct {
+  composes: tabBar;
+  border-bottom: 4px solid #42A5F5;
+}
+.tabBarDis {
+  composes: tabBar;
+  color: #B0BEC5;
+  cursor: not-allowed;
+}
+.tabConBox {
+  width: 100%;
+}
+.tabCon {
+  display: none;
+}
+.tabConAct {
+  display: block;
+}

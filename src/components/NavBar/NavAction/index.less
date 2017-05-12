@@ -1,0 +1,209 @@
+@import "~sc-colors/index.less";
+
+.transition-all(@second: .3s) {
+  -webkit-transform: translateZ(0);
+     -moz-transform: translateZ(0);
+       -o-transform: translateZ(0);
+          transform: translateZ(0);
+
+  -webkit-transition: all @second ease-in-out;
+     -moz-transition: all @second ease-in-out;
+       -o-transition: all @second ease-in-out;
+          transition: all @second ease-in-out;
+}
+
+.wrap{
+  float: right;
+  margin-top: 21px;
+  font-size: 14px;
+
+  & > div {
+    float: left;
+    height: 26px;
+    padding-left: 15px;
+    margin-right: 14px;
+
+    font-size: 14px;
+    color: @mdc-blue-grey-200;
+    line-height: 26px;
+    border-left: 1px solid @mdc-blue-grey-50;
+
+    &:first-child {
+      padding-left: 10px;
+    }
+
+    &:last-child {
+      span {
+        margin-right: 15px;
+
+        &:last-child {
+          margin-right: 0;
+        }
+      }
+    }
+  }
+}
+
+.menuBox {
+  i {
+    padding-right: 5px;
+  }
+
+  span {
+    cursor: pointer;
+    -webkit-transition: color .3s ease-in-out;
+       -moz-transition: color .3s ease-in-out;
+        -ms-transition: color .3s ease-in-out;
+         -o-transition: color .3s ease-in-out;
+            transition: color .3s ease-in-out;
+
+    &:hover {
+      color: @mdc-blue-400;
+    }
+  }
+
+  &:last-child {
+    margin-right: 0;
+  }
+}
+
+.searchBox{
+  position: relative;
+  width: 204px;
+
+  &:hover {
+    i {
+      color: @mdc-blue-300;
+    }
+  }
+}
+
+.searchInput{
+  float: left;
+  width: 150px;
+  height: 26px;
+
+  color: @mdc-blue-grey-500;
+  line-height: 33px;
+
+  background: transparent;
+
+  &::-webkit-input-placeholder {
+    color: @mdc-grey-400;
+  }
+
+  &:-moz-placeholder {
+    color: @mdc-grey-400;
+  }
+
+  &::-moz-placeholder {
+    color: @mdc-grey-400;
+  }
+
+  &:-ms-input-placeholder {
+    color: @mdc-grey-400;
+  }
+
+  &:focus + span i {
+    color: @mdc-blue-300;
+  }
+}
+
+.searchIcon {
+  float: right;
+  font-size: 16px;
+  line-height: 26px;
+  color: @mdc-blue-grey-200;
+
+  i {
+    -webkit-transition: color .3s ease-in-out;
+       -moz-transition: color .3s ease-in-out;
+        -ms-transition: color .3s ease-in-out;
+         -o-transition: color .3s ease-in-out;
+            transition: color .3s ease-in-out;
+  }
+}
+
+.iconStyle {
+  position: relative;
+  float: left;
+  margin-left: 30px;
+  line-height: 70px;
+}
+
+.icon {
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+
+  vertical-align: middle;
+  cursor: pointer;
+
+  .transition-all;
+}
+
+
+.userInfo {
+  padding: 20px;
+}
+
+.userInfoBorder {
+  height: 1px;
+  margin-top: 15px;
+  margin-bottom: 15px;
+  background-color: @mdc-blue-grey-50;
+}
+
+.userInfoText {
+  font-size: 14px;
+  line-height: 14px;
+  color: @mdc-blue-grey-400;
+}
+
+.userInfoText:last-child {
+  line-height: 16px;
+}
+
+.userInfoBlock {
+  float: left;
+}
+
+.userInfoBlock:first-child {
+  width: 42px;
+}
+.userInfoBlock:last-child {
+  width: 140px;
+  overflow: hidden;
+  white-space: nowrap;  
+  text-overflow: ellipsis; 
+}
+
+.logout {
+  text-align: center;
+}
+
+.logoutText
+{  
+  font-size: 14px;
+  line-height: 40px;
+  color: @mdc-blue-grey-400;
+}
+
+.downloadApp {
+  &:hover {
+    & + div {
+      top: 50px;
+
+      opacity: 1;
+      visibility: visible;
+    }
+  }
+}
+
+.code {
+  width: 100px;
+  height: 100px;
+
+  background-image: url('imgs/navbar/code.png');
+  background-size: 100px 100px;
+}

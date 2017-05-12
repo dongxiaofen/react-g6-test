@@ -1,0 +1,26 @@
+@import '~sc-colors/index.less';
+.contentWrap {
+  position: relative;
+  // z-index: 9;
+  // min-width: 1215px;
+  width: auto;
+  margin-top: 20px;
+  padding-bottom: 20px;
+}
+.contentWrap:after {
+  display: block;
+  content: '';
+  clear: both;
+}
+.leftTabWrap {
+  float: left;
+  width: 250px;
+  height: 100%;
+}
+.tabContentWrap {
+  // margin-left: 270px;
+  padding: 20px 10px;
+  background: @mdc-white-darker;
+  box-shadow: 0 2px 4px 0 rgba(176, 190, 197, 0.5);
+  // overflow: hidden;
+}

@@ -1,6 +1,6 @@
 import React, {Component, PropTypes} from 'react';
 import ReactDOM from 'react-dom/server';
-import serialize from 'serialize-javascript';
+// import serialize from 'serialize-javascript';
 import Helmet from 'react-helmet';
 import {toJS} from 'mobx';
 /**
@@ -18,6 +18,7 @@ export default class Html extends Component {
     component: PropTypes.node,
     pdfDown: PropTypes.string,
     isDev: PropTypes.bool,
+    reqPathName: PropTypes.string,
   };
   prepareStore(allStore) {
     const keyArr = Object.keys(allStore);
@@ -26,6 +27,9 @@ export default class Html extends Component {
       output[key] = toJS(allStore[key]);
     });
     return output;
+  }
+  isFirstLoad() {
+    return this.props.pdfDown === '1' || this.props.reqPathName === '/';
   }
   render() {
     const {assets, component, ...allStore} = this.props;
@@ -43,19 +47,13 @@ export default class Html extends Component {
           <meta name="viewport" content="width=device-width, initial-scale=1" />
           <meta httpEquiv="content-type" content="text/html;charset=utf-8" />
           {/* styles (will be present only in production with webpack extract text plugin) */}
-          <link href="../vendors/fonts/material-icons.css"
-            rel="stylesheet" type="text/css" charSet="UTF-8"/>
+
           <link href="../vendors/css/font-awesome.css"
-            rel="stylesheet" type="text/css" charSet="UTF-8"/>
-          <link href="../vendors/css/reset.css"
             rel="stylesheet" type="text/css" charSet="UTF-8"/>
           <link href="../vendors/css/antd.css"
             rel="stylesheet" type="text/css" charSet="UTF-8"/>
-          <link href="../vendors/css/bootstrap.css"
+          <link href="../vendors/css/preload.css"
             rel="stylesheet" type="text/css" charSet="UTF-8"/>
-          <link href="../vendors/css/common.css"
-            rel="stylesheet" type="text/css" charSet="UTF-8"/>
-
           {
             Object.keys(assets.styles).map((style, key) =>
             <link href={assets.styles[style]} key={key}
@@ -71,9 +69,9 @@ export default class Html extends Component {
 
         </head>
         <body>
-          <div id="content" dangerouslySetInnerHTML={{__html: content}}/>
+          <div id="content" style={{height: '100%'}} dangerouslySetInnerHTML={{__html: content}}/>
           {this.props.pdfDown === '1' ? '' :
-            <script dangerouslySetInnerHTML={{__html: `window.__data=${serialize(stores)};`}} charSet="UTF-8"/>
+            <script dangerouslySetInnerHTML={{__html: `window.__data=${JSON.stringify(stores)};`}} charSet="UTF-8"/>
           }
           {this.props.pdfDown === '1' ? '' :
             <script src={assets.javascript['common.js']} charSet="UTF-8"/>
@@ -81,6 +79,13 @@ export default class Html extends Component {
 
           {this.props.pdfDown === '1' ? '' :
             <script src={assets.javascript.main} charSet="UTF-8"/>
+          }
+
+          {this.isFirstLoad() ? '' :
+            <script src="../vendors/js/echarts_v3_3_2.min.js"></script>
+          }
+          {this.isFirstLoad() ? '' :
+            <script src="../vendors/js/map/china.min.js"></script>
           }
         </body>
       </html>

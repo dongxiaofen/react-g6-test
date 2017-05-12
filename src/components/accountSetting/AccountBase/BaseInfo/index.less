@@ -1,0 +1,65 @@
+@import '~sc-colors/index.less';
+.wrapper {
+  float: left;
+  width: 65%;
+  padding-right: 10px;
+}
+.infoBox {
+  height: 176px;
+  padding: 20px;
+  font-size: 14px;
+  background: @mdc-white-darker;
+  box-shadow:0 2px 4px 0 rgba(176,190,197,0.50);
+}
+.baseTitle {
+  font-size: 14px;
+  line-height: 1;
+  color: @mdc-blue-grey-500;
+}
+.animateBox {
+  margin-top: 40px;
+}
+.changePwd {
+  float: right;
+  color: @mdc-blue-400;
+  text-decoration: underline;
+  cursor: pointer;
+}
+.editDisable {
+  margin-left: 38px;
+}
+.editBox {
+  margin-left: 38px;
+  border-bottom: 1px solid transparent;
+}
+.editBox:hover {
+  .editBtn {
+    opacity: 1;
+  }
+  border-bottom: 1px solid @mdc-blue-grey-100;
+}
+.editBtn {
+  float: right;
+  display: inline-block;
+  width: 58px;
+  height: 20px;
+  margin-top: -6px;
+  padding-left: 20px;
+  line-height: 20px;
+  color: @mdc-blue-grey-300;
+  cursor: pointer;
+  background-image: url(imgs/account/edit.png);
+  background-repeat: no-repeat;
+  background-position: 7px 4px;
+  opacity: 0;
+  transition: all .3s;
+}
+.editBtn:hover {
+  background-color: @mdc-blue-grey-50;
+}
+@media screen and (max-width: 1440px) {
+  .wrapper {
+    width: 100%;
+    padding: 0;
+  }
+}

@@ -1,0 +1,43 @@
+@import "~sc-colors/index.less";
+.table {
+  width: 100%;
+  border: 1px solid @mdc-grey-200;
+  color: @mdc-grey-700;
+  font-size: 14px;
+  line-height: 1em;
+  table-layout: fixed;
+  th,td {
+    border: 1px solid @mdc-grey-200;
+  }
+  td {
+    line-height: 1.5;
+    padding: 5px;
+  }
+}
+.number {
+  text-align: center;
+  background: @mdc-grey-50;
+  width: 3.2%;
+}
+.label {
+  float: left;
+}
+.value {
+  width: 80%;
+  float: left;
+}
+.valueImpor {
+  color: @mdc-grey-900;
+}
+.companyName {
+  display: block;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  color: @mdc-blue-400;
+  text-decoration: underline;
+  &:hover {
+    color: @mdc-blue-400;
+    text-decoration: underline;
+  }
+}

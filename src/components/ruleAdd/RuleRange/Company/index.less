@@ -1,0 +1,170 @@
+.box {
+  float: left;
+  width: 100%;
+  margin: 25px 0 35px 0;
+  padding: 0 0 0 21px;
+}
+.left {
+  float: left;
+  width: 370px;
+  height: 310px;
+}
+.title {
+  float: left;
+  width: 100%;
+  height: 30px;
+  font-size:14px;
+  color:#757575;
+  letter-spacing:0;
+}
+.title span {
+  color: #E53935;
+}
+.leftContent {
+  float: left;
+  border:1px solid #eeeeee;
+  width:368px;
+  height:278px;
+}
+.searchWrap {
+  float: left;
+  width: 100%;
+  height: 36px;
+  border-bottom:1px solid #eeeeee;
+}
+.searchWrap i {
+  float: left;
+  margin: 10px 0px 0 10px;
+  display: block;
+  width: 16px;
+  height: 16px;
+  background-image: url('../../../../imgs/searchCompany/search2.png');
+  background-size: auto;
+  background-repeat: no-repeat;
+}
+.searchWrap input {
+  float: left;
+  margin: 3px 0 0 10px;
+  width: 300px;
+  height: 30px;
+  font-size:14px;
+  color:#212121;
+  letter-spacing:0;
+  outline: none;
+  &::-webkit-input-placeholder {
+    color: #bdbdbd;
+  }
+
+  &:-moz-placeholder {
+    color: #bdbdbd;
+  }
+
+  &::-moz-placeholder {
+    color: #bdbdbd;
+  }
+
+  &:-ms-input-placeholder {
+    color: #bdbdbd;
+  }
+}
+.searchWrap input:focus {
+  color:#212121;
+}
+.leftList {
+  float: left;
+  width: 100%;
+  height: 220px;
+  padding: 10px 0 10px 0;
+  margin-top: 10px;
+  overflow-y: auto;
+}
+.leftSingle {
+  float: left;
+  width: 100%;
+  height: 36px;
+  line-height: 36px;
+  position: relative;
+}
+.leftSingle:hover {
+  background:rgba(227,242,253,0.15);
+}
+.leftSingle label > span:last-child {
+  display: none;
+}
+.leftSingle label > span > span {
+  border-radius: 0px;
+}
+.leftSingleText {
+  float: left;
+  width: 325px;
+  height: 36px;
+  line-height: 36px;
+  padding-left: 10px;
+  font-size:14px;
+  color:#616161;
+  letter-spacing:0;
+  overflow: hidden;
+}
+.chk {
+  position: absolute;
+  right: 0px;
+  width: 36px;
+  height: 36px;
+  padding-left: 10px;
+}
+.right {
+  float: left;
+  margin: 0 0 0 20px;
+  width: 370px;
+  height: 310px;
+}
+.rightContent {
+  float: left;
+  border:1px solid #eeeeee;
+  width:368px;
+  height:278px;
+  padding: 10px 0;
+}
+.rightList {
+  float: left;
+  width: 100%;
+  height: 100%;
+  overflow-y: auto;
+}
+.rightSingle {
+  float: left;
+  width: 100%;
+  height: 36px;
+  line-height: 36px;
+}
+.rightSingleText {
+  float: left;
+  width: 325px;
+  height: 36px;
+  line-height: 36px;
+  padding-left: 10px;
+  font-size:14px;
+  color:#212121;
+  letter-spacing:0;
+  overflow: hidden;
+}
+.close {
+  float: right;
+  margin: 13px 10px 0 10px;
+  display: none;
+  width: 10px;
+  height: 10px;
+  background-image: url('../../../../imgs/searchCompany/close.png');
+  background-size: auto;
+  background-repeat: no-repeat;
+  cursor: pointer;
+}
+.rightSingle:hover {
+  background:rgba(227,242,253,0.15);
+}
+.rightSingle:hover .close {
+  display: block;
+}
+.hidden {
+  display: none;
+}

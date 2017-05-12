@@ -1,0 +1,39 @@
+@import "~sc-colors/index.less";
+.tabWrap {
+  display: block;
+  float: left;
+  font-size: 14px;
+  line-height: 1em;
+  color: @mdc-blue-grey-200;
+}
+.tabBase {
+  cursor: pointer;
+  user-select: none;
+  vertical-align: middle;;
+}
+.line {
+  display: inline-block;
+  margin: 0 15px;
+  height: 15px;
+  line-height: 15px;
+  vertical-align: middle;
+  border-right: 1px solid @mdc-blue-grey-200;
+}
+.tabWrap:last-of-type .line{
+  display: none;
+}
+.tab {
+  composes: tabBase;
+  &:hover {
+    color: @mdc-blue-400;
+  }
+}
+.tabDis {
+  composes: tabBase;
+  color: @mdc-blue-grey-100;
+  cursor: not-allowed;
+}
+.tabActive {
+  composes: tabBase;
+  color: @mdc-blue-400;
+}

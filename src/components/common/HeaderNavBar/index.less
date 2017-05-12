@@ -1,0 +1,149 @@
+@import '~sc-colors/index.less';
+.header-navbar {
+  position: fixed;
+  width: 100%;
+  padding-left: 40px;
+  padding-right: 40px;
+
+  border-bottom: 1px solid rgba(52, 131, 233, .3);
+  z-index: 1;
+
+  -webkit-transition: all .3s ease-in-out;
+  -moz-transition: all .3s ease-in-out;
+  -ms-transition: all .3s ease-in-out;
+  -o-transition: all .3s ease-in-out;
+  transition: all .3s ease-in-out;
+}
+.logo {
+  width: 180px;
+  height: 45px;
+  margin-top: 6px;
+
+  background-image: url('imgs/homePage/header_logo_1.png');
+
+  -webkit-transition: all .3s ease-in-out;
+  -moz-transition: all .3s ease-in-out;
+  -ms-transition: all .3s ease-in-out;
+  -o-transition: all .3s ease-in-out;
+  transition: all .3s ease-in-out;
+}
+.header-navbar-content {
+  float: right;
+}
+.header-navbar-content li {
+  float: left;
+  margin-bottom: 0;
+  padding-left: 20px;
+  padding-right: 20px;
+  list-style: none;
+}
+.header-navbar-menuBD {
+  position: absolute;
+  left: 0;
+  bottom: -1px;
+  width: 100%;
+  height: 3px;
+  background-color: #fff;
+
+  -webkit-transform: scaleX(0);
+  -moz-transform: scaleX(0);
+  -ms-transform: scaleX(0);
+  -o-transform: scaleX(0);
+  transform: scaleX(0);
+
+  -webkit-transition: all .3s ease-in-out;
+  -moz-transition: all .3s ease-in-out;
+  -ms-transition: all .3s ease-in-out;
+  -o-transition: all .3s ease-in-out;
+  transition: all .3s ease-in-out;
+}
+.header-navbar-content li a{
+  display: block;
+  position: relative;
+  padding-top: 20px;
+  padding-bottom: 20px;
+
+  color: @white1;
+
+  -webkit-transition: all .3s ease-in-out;
+  -moz-transition: all .3s ease-in-out;
+  -ms-transition: all .3s ease-in-out;
+  -o-transition: all .3s ease-in-out;
+  transition: all .3s ease-in-out;
+}
+.header-navbar-content a:hover .header-navbar-menuBD {
+  -webkit-transform: scaleX(1);
+  -moz-transform: scaleX(1);
+  -ms-transform: scaleX(1);
+  -o-transform: scaleX(1);
+  transform: scaleX(1);
+}
+.active .header-navbar-menuBD{
+  -webkit-transform: scaleX(1);
+  -moz-transform: scaleX(1);
+  -ms-transform: scaleX(1);
+  -o-transform: scaleX(1);
+  transform: scaleX(1);
+}
+.header-navbar-menu{
+  float: left;
+  margin-bottom: 0;
+}
+.header-navbar-btnGroup {
+  float: right;
+  margin-top: 14px;
+  margin-left: 20px;
+}
+.header-navbar-btnGroup button {
+  width: 100px;
+  height: 32px;
+  padding: 0;
+}
+
+.download-app, .login {
+  font-size: 16px;
+  text-align: center;
+  line-height: 28px;
+  color: @white1;
+
+  border: 2px solid @white1;
+  background: transparent;
+
+}
+.download-app{
+  margin-right: 15px;
+
+  -webkit-transition: all .3s ease-in-out;
+  -moz-transition: all .3s ease-in-out;
+  -ms-transition: all .3s ease-in-out;
+  -o-transition: all .3s ease-in-out;
+  transition: all .3s ease-in-out;
+}
+.login {
+  background-color: @blue2;
+  border-color: @blue2;
+}
+
+.header-navbar-scroll {
+  background-color: @white1;
+  border-bottom-color: @black1_20;
+}
+.header-navbar-scroll li a {
+  color: @black7;
+}
+.header-navbar-scroll .header-navbar-menuBD {
+  background-color: @blue2;
+}
+.header-navbar-scroll li a:hover {
+  color: @blue2;
+}
+.header-navbar-scroll li.active a {
+  color: @blue2;
+}
+.header-navbar-scroll .download-app{
+  color: @black8;
+  border-color: @black8;
+}
+.header-navbar-scroll .logo {
+  background-image: url('imgs/homePage/header_logo_2.png');
+}

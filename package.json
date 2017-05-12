@@ -50,7 +50,7 @@
       "env": {
         "NODE_PATH": "./src",
         "NODE_ENV": "development",
-        "PORT": 9000,
+        "PORT": 9100,
         "APIPORT": 3030,
         "target": "local",
         "backendApi": "http://192.168.31.116:6060"
@@ -61,7 +61,7 @@
       "env": {
         "UV_THREADPOOL_SIZE": 100,
         "NODE_PATH": "./src",
-        "PORT": 9000,
+        "PORT": 9100,
         "APIPORT": 3030
       }
     },
@@ -143,7 +143,7 @@
     }
   },
   "dependencies": {
-    "antd": "^2.9.0",
+    "antd": "^2.9.3",
     "axios": "0.15.3",
     "babel-core": "6.10.4",
     "babel-loader": "6.2.1",
@@ -163,15 +163,18 @@
     "compression": "1.6.0",
     "cookie-parser": "1.4.3",
     "crypto-js": "3.1.4",
-    "d3": "3.5.17",
+    "d3": "4.8.0",
     "echarts": "3.3.2",
     "express": "4.13.3",
     "express-session": "1.12.1",
     "file-loader": "0.8.5",
     "flow-bin": "^0.43.0",
     "fs": "0.0.1-security",
+    "fundebug-javascript": "^0.0.6",
+    "fundebug-nodejs": "^0.0.6",
     "graceful-fs": "4.1.11",
     "gsap": "1.19.0",
+    "history": "3.2.1",
     "hoist-non-react-statics": "1.0.3",
     "lodash": "4.17.4",
     "material-design-icons": "^3.0.1",
@@ -179,11 +182,13 @@
     "mobx": "3.1.0",
     "mobx-react": "4.1.0",
     "mobx-react-devtools": "4.2.11",
+    "mobx-react-router": "3.1.2",
     "moment": "2.17.1",
     "moment-range": "2.2.0",
     "morgan": "1.8.1",
     "node-uuid": "1.4.7",
     "object-assign": "4.1.1",
+    "pathval": "^1.1.0",
     "plop": "1.7.4",
     "pretty-error": "1.2.0",
     "react": "15.4.2",
@@ -192,6 +197,7 @@
     "react-helmet": "2.3.0",
     "react-router": "3.0.2",
     "react-tap-event-plugin": "^2.0.1",
+    "sc-colors": "^1.0.0",
     "scroll-behavior": "0.3.2",
     "serialize-javascript": "1.1.2",
     "serve-favicon": "2.3.0",

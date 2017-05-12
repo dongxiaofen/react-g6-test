@@ -4,19 +4,28 @@
 import 'babel-polyfill';
 import React from 'react';
 import ReactDOM from 'react-dom';
-import useScroll from 'scroll-behavior/lib/useStandardScroll';
+// import useScroll from 'scroll-behavior/lib/useStandardScroll';
 import { Router, browserHistory } from 'react-router';
 import getRoutes from './routes';
+// import fundebug from 'fundebug-javascript';
 import axios from 'axios';
 import Uuid from 'node-uuid';
 import { Provider } from 'mobx-react';
-import { useStrict } from 'mobx';
 import combineServerData from 'helpers/combineServerData';
 import * as allStore from 'stores';
-import injectTapEventPlugin from 'react-tap-event-plugin';
-import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
-import getMuiTheme from 'material-ui/styles/getMuiTheme';
-import { green400 } from 'material-ui/styles/colors';
+import { useStrict, runInAction } from 'mobx';
+import { RouterStore, syncHistoryWithStore } from 'mobx-react-router';
+// import { useStrict, spy } from 'mobx';
+// // 全局监听action
+// spy((event) => {
+//   if (event.type === 'action') {
+//     console.log(`event.name ${event.name} with args: ${event.arguments}`, event);
+//   }
+// });
+// if (module.hot) {
+//   module.hot.accept();
+// }
+
 // import ReactUpdates from 'react-dom/lib/ReactUpdates';
 // import ReactDefaultBatchingStrategy from 'react-dom/lib/ReactDefaultBatchingStrategy';
 // let isHandlingError = false;
@@ -47,15 +56,26 @@ import { green400 } from 'material-ui/styles/colors';
 // };
 // ReactUpdates.injection.injectBatchingStrategy(ReactTryCatchBatchingStrategy);
 // Needed for onTouchTap
-injectTapEventPlugin();
+// fundebug.apikey = '45f943a4862476f1895ca38d28def3231ea03ca1e4c94320476f52019f29560f';
+// fundebug.notify('Test', 'Hello xx Fundebug!');
+const routingStore = new RouterStore();
 combineServerData(allStore, window.__data);
-const history = useScroll(() => browserHistory)();
+// const history = useScroll(() => browserHistory)();
+const history = syncHistoryWithStore(browserHistory, routingStore);
 const dest = document.getElementById('content');
 useStrict(true);
 axios.interceptors.request.use((axiosConfig) => {
   // Do something before request is sent
   axiosConfig.headers['sc-id'] = `web-${Uuid.v4()}`;
   axiosConfig.headers['scm-source'] = 'SC_WEB';
+  axiosConfig.headers['Cache-Control'] = 'no-cache';
+  if (!axiosConfig.params) {
+    axiosConfig.params = {
+      timestamp: new Date().getTime()
+    };
+  }else {
+    axiosConfig.params.timestamp = new Date().getTime();
+  }
   return axiosConfig;
 }, (error) => {
   console.log('request error', error);
@@ -66,9 +86,12 @@ axios.interceptors.response.use((response) => {
 }, (error) => {
   // Do something with request error
   console.log('error', error);
+  if (axios.isCancel(error)) {
+    return Promise.reject(error);
+  }
   if (error.response.data.errorCode === 401006 || error.response.data.errorCode === 401007) {
-    allStore.modalStore.openTextModal('登录超时', '请重新登录', ()=>{
-      allStore.homeStore.postLogin();
+    runInAction('显示登录框', () => {
+      allStore.loginStore.isShowLogin = true;
     });
     // allStore.modalStore.openAsyncModal((callback) => {
     //   require.ensure([], (require) => {
@@ -76,22 +99,15 @@ axios.interceptors.response.use((response) => {
     //   });
     // });
   } else if (error.response.status === 502) {
-    allStore.modalStore.openTextModal('后端正在部署', '请稍后');
+    allStore.messageStore.openMessage({type: 'warning', content: '后端正在部署', duration: 5000});
   }
   return Promise.reject(error);
 });
-const muiTheme = getMuiTheme({
-  userAgent: false,
-  raisedButton: {
-    secondaryTextColor: green400,
-  },
-});
+allStore.routing = routingStore;
 ReactDOM.render(
-  <MuiThemeProvider muiTheme={getMuiTheme(muiTheme)}>
-    <Provider { ...allStore }>
-      <Router routes={getRoutes()} history={history} />
-    </Provider>
-  </MuiThemeProvider>,
+  <Provider { ...allStore }>
+    <Router routes={getRoutes(allStore)} history={history} />
+  </Provider>,
   dest
 );
 if (process.env.NODE_ENV !== 'production') {
@@ -101,12 +117,3 @@ if (process.env.NODE_ENV !== 'production') {
     console.error('Server-side React render was discarded. Make sure that your initial render does not contain any client-side code.');
   }
 }
-// 全局监听action
-// spy((event) => {
-//   if (event.type === 'action') {
-//     console.log(`event.name ${event.name} with args: ${event.arguments}`, event);
-//   }
-// });
-// if (module.hot) {
-//   module.hot.accept();
-// }

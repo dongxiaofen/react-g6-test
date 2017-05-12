@@ -1,0 +1,172 @@
+.transitionAll(@secend) {
+  -webkit-transform: translateZ(0);
+     -moz-transform: translateZ(0);
+      -ms-transform: translateZ(0);
+       -o-transform: translateZ(0);
+          transform: translateZ(0);
+
+  -webkit-transition: all @secend ease-in-out;
+     -moz-transition: all @secend ease-in-out;
+      -ms-transition: all @secend ease-in-out;
+       -o-transition: all @secend ease-in-out;
+          transition: all @secend ease-in-out;
+}
+
+.vertical-center-modal {
+  text-align: center;
+  
+  &:before {
+    content: '';
+    display: inline-block;
+    height: 100%;
+    vertical-align: middle;
+    width: 0;
+  }
+
+  .contentLayer {
+    display: inline-block;
+    vertical-align: middle;
+    top: 0;
+    text-align: left;
+  }
+}
+
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+
+  overflow: auto;
+  z-index: 1500;
+  background-color: rgba(0, 0, 0, 0.6);
+
+  opacity: 0;
+  visibility: hidden;
+
+  .transitionAll(.3s);
+}
+.modalVisible {
+  opacity: 1;
+  visibility: visible;
+}
+
+.contentLayer {
+  position: relative;
+  top: 30%;
+  padding: 40px 70px;
+  margin-left: auto;
+  margin-right: auto;
+
+  background-color: #ffffff;
+  visibility: hidden;
+  box-shadow: 0 2px 13px 3px rgba(0,0,0,0.20);
+  opacity: 0;
+
+  -webkit-transition: opactiy,visibility .3s ease-in-out;
+     -moz-transition: opactiy,visibility .3s ease-in-out;
+      -ms-transition: opactiy,visibility .3s ease-in-out;
+       -o-transition: opactiy,visibility .3s ease-in-out;
+          transition: opactiy,visibility .3s ease-in-out;
+}
+
+.visible {
+  opacity: 1;
+  visibility: visible;
+}
+
+.title {
+  margin-top: 15px;
+  margin-bottom: 25px;
+
+  font-size: 20px;
+  line-height: 20px;
+  color: #424242;
+  text-align: center;
+}
+
+.closeBtn {
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  width: 12px;
+  height: 13px;
+
+  color: #999999;
+
+  background-image: url('imgs/modal/modal_close.png');
+  cursor: pointer;
+
+  .transitionAll(.3s);
+
+  &:hover {
+    -webkit-transform: rotateZ(180deg);
+       -moz-transform: rotateZ(180deg);
+         -o-transform: rotateZ(180deg);
+            transform: rotateZ(180deg);
+  }
+}
+
+.iconBox {
+  text-align: center;
+}
+.baseIcon{
+  display: inline-block;
+  width: 50px;
+  height: 50px;
+}
+.infoIcon {
+  .baseIcon;
+  background-image: url('imgs/modal/info.png');
+}
+.successIcon {
+  .baseIcon;
+  background-image: url('imgs/modal/success.png');
+}
+
+.buttonBox {
+  text-align: center;
+}
+
+.button {
+  width: 46.42%;
+  height: 46px;
+  line-height: 46px;
+}
+
+.cancelBtn {
+  float: left;
+  .button;
+}
+
+.confirmButton {
+  float: right;
+  .button;
+}
+
+.confirmSingleButton {
+  .button;
+  width: 100%;
+}
+
+.pointText {
+  margin-top: 15px;
+
+  font-size: 14px;
+  line-height: 14px;
+  color: #b0bec5;
+  text-align: center;
+
+  a {
+    font-size: 14px;
+    line-height: 14px;
+    color: #548fc2;
+    text-decoration: underline;
+  }
+
+  i {
+    margin-right: 6px;
+    color: #90caf9;
+  }
+}

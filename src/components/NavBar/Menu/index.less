@@ -1,0 +1,151 @@
+@import "~sc-colors/index.less";
+
+.transition-all(@second: .3s) {
+  -webkit-transform: translateZ(0);
+     -moz-transform: translateZ(0);
+       -o-transform: translateZ(0);
+          transform: translateZ(0);
+
+  -webkit-transition: all @second ease-in-out;
+     -moz-transition: all @second ease-in-out;
+       -o-transition: all @second ease-in-out;
+          transition: all @second ease-in-out;
+}
+
+.rotate(@rotate: 180deg) {
+  -webkit-transform: rotate(180deg);
+     -moz-transform: rotate(180deg);
+       -o-transform: rotate(180deg);
+          transform: rotate(180deg);
+}
+
+.logo {
+  float: left;
+  margin-right: 15px;
+
+  line-height: 70px;
+  text-align: center;
+}
+
+.logoImg {
+  display: inline-block;
+  width: 50px;
+  height: 50px;
+
+  background-image: url('imgs/navbar/logo.png');
+  vertical-align: middle;
+}
+
+.navbar-menu {
+  float: left;
+}
+
+.navbar-action {
+  float: right;
+}
+
+.navbarItem{
+  position: relative;
+  float: left;
+}
+
+.navbarItem:hover .childBox {
+  display: block;
+}
+
+.childBox{
+  position: absolute;
+  top: 111px;
+  left: 0;
+  width: 102px;
+  padding-top: 5px;
+  padding-bottom: 5px;
+
+  text-align: center;
+
+  background-color: @mdc-white-darker;
+  white-space: nowrap;
+  z-index: 1;
+
+  visibility: hidden;
+  opacity: 0;
+
+  .box-shadow-dropDown;
+  .transition-all;
+}
+
+.parentItem,
+.childItem,
+.childItemActive
+{
+  font-size: 16px;
+  line-height: 16px;
+  color: @mdc-blue-grey-500;
+
+  cursor: pointer;
+
+  .transition-all;
+}
+
+.childItem,
+.childItemActive
+{
+  font-size: 14px;
+  line-height: 40px;
+}
+
+.childItem:hover,
+{
+  color: @mdc-blue-grey-700;
+  background-color: @black13;
+}
+
+.childItemActive {
+  color: @mdc-white-darker;
+  background-color: @mdc-blue-400;
+}
+
+.parentItem {
+  padding-left: 28px;
+  padding-right: 28px;
+
+  line-height: 70px;
+}
+
+.parentIcon {
+  display: inline-block;
+  margin-left: 6px;
+
+  font-size: 15px;
+  line-height: 70px;
+  color: @mdc-blue-grey-300;
+  font-weight: normal;
+  .transition-all;
+}
+
+.parentItem:hover {
+  color: @mdc-blue-400;
+}
+
+.parentItemHover .parentItem {
+  color: @mdc-blue-400;
+}
+.parentItemHover .parentIcon {
+  .rotate;
+}
+
+.parentItemHover .childBox {
+  visibility: visible;
+  opacity: 1;
+  top: 71px;
+}
+
+.parentItemActive {
+  .parentItem;
+  color: @mdc-blue-400;
+  font-weight: bold;
+}
+
+.parentItemActive .parentIcon {
+  .rotate;
+}

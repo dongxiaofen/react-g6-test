@@ -1,0 +1,141 @@
+@import "~sc-colors/index.less";
+
+.downloadModal{
+  margin-left: -60px;
+  margin-right: -60px;
+}
+.downloadTitleBox{
+  font-size: 16px;
+  color: @black4;
+  line-height: 1;
+
+  i {
+    margin-right: 10px;
+
+    font-size: 30px
+  }
+}
+
+.selectAll{
+  float: left;
+  margin-top: 5px;
+}
+.pdfDownModaBtnBox{
+  margin-top: 20px;
+  padding: 10px;
+
+  border-top: 1px solid @black12;
+  border-bottom: 1px solid @black12;
+  overflow: hidden;
+}
+.pdfDownModaBtn{
+  float: right;
+  width: 80px;
+  text-align: right;
+  padding-right: 20px;
+  height: 30px;
+  line-height: 30px;
+  font-size: 13px;
+  color: @blue2;
+  border: 1px solid @blue3;
+  cursor: pointer;
+}
+.pdfDownModaBtnDisable{
+  .pdfDownModaBtn;
+  cursor: not-allowed;
+}
+.margin {
+  margin-top: 10px;
+}
+
+.download-container {
+  width: 100%;
+}
+.download-container::before,
+.download-container::after,
+.download-row::before,
+.download-row::after
+{
+  display: table;
+  content: '';
+  line-height: 0;
+}
+.download-container::after,
+.download-row::after
+{
+  clear: both;
+}
+.download-row {
+  margin-left: -10px;
+  margin-right: -10px;
+  width: 100%;
+}
+.download-container,
+.download-col-4,
+.download-col-5
+{
+  padding-left: 10px;
+  padding-right: 10px;
+}
+.download-col-4 {
+  float: left;
+  width: 25%;
+}
+.download-col-5 {
+  float: left;
+  width: 20%;
+}
+.download-item {
+  padding-top: 20px;
+  padding-bottom: 18px;
+
+  border-bottom: 1px dashed @black12;
+}
+.download-item:hover {
+  background-color: @blue7;
+}
+
+.download-item-title {
+  padding-left: 10px;
+}
+
+.download-item-title2 {
+  margin-top: 15px;
+  padding-left: 10px;
+}
+
+.download-content {
+  height: 520px;
+  padding-top: 20px;
+  padding-bottom: 20px;
+
+  overflow: hidden;
+}
+
+.download-close-btn {
+  top: 22px;
+}
+
+.all-text {
+  color: @blue2!important;
+  font-weight: bold;
+}
+
+.levelOne-css {
+  color: @black4!important;
+}
+
+.download-content-box {
+  height: 374px;
+  overflow-y: auto;
+}
+
+.tip-info {
+  position: relative;
+  top: 2px;
+  left: 20px;
+
+  font-size: 13px;
+  line-height: 14px;
+  color: @red1;
+}

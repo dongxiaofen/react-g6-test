@@ -1,0 +1,30 @@
+@import '~sc-colors/index.less';
+.wrapper {
+  border-bottom: 1px solid @mdc-blue-grey-100;
+  width: 100%;
+}
+.wrapper:after {
+  content: '';
+  display: block;
+  clear: both;
+}
+.filterItem {
+  position: relative;
+  bottom: -1px;
+  float: left;
+  margin-right: 40px;
+  padding-bottom: 13px;
+  font-size: 14px;
+  line-height: 1;
+  color: @mdc-blue-grey-400;
+  cursor: pointer;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+.activeFilterItem {
+  composes: filterItem;
+  color: @mdc-blue-400;
+  border-bottom: 2px solid @mdc-blue-400;
+}

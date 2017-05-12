@@ -1,0 +1,25 @@
+@import '~sc-colors/index.less';
+.table-common {
+  padding: 18px 10px;
+
+  font-size: 14px;
+  // line-height: 14px;
+  color: @mdc-grey-700;
+  word-break: break-all;
+  border: 1px solid @mdc-blue-grey-50;
+}
+.table {
+  width: 100%;
+  tbody {
+    td {
+      .table-common;
+    }
+  }
+}
+// .box {
+//   border-left: 1px solid @mdc-blue-grey-50;
+//   border-top: 1px solid @mdc-blue-grey-50;
+//   width: 100%;
+//   font-size: 14px;
+//   color: @mdc-grey-700
+// }

@@ -1,0 +1,82 @@
+@import '~sc-colors/index.less';
+
+.box {
+  min-height: 40px;
+  line-height: 40px;
+  border: 1px solid @black12;
+  padding:0 20px 0 10px;
+  background: @black15;
+}
+.legendAction {
+  display: inline-block;
+  height: 24px;
+}
+.optBtn {
+  color: @black5;
+  height: 20px;
+  line-height: 20px;
+  padding: 0 15px;
+  text-align: center;
+  float: right;
+  margin: 10px 10px 0 -5px;
+  &:hover {
+    color: @black5;
+  }
+}
+
+.fullBtn {
+  composes: optBtn;
+  // border-left: 1px solid @black12;
+}
+.resumeBtn {
+  composes: optBtn;
+}
+
+.fullIcon {
+  height: 11px;
+  width: 12px;
+  margin-bottom: 3px;
+}
+.exitIcon {
+  height: 11px;
+  width: 11px;
+  margin-bottom: 3px;
+}
+.resumeIcon {
+  height: 10px;
+  width: 12px;
+  margin-bottom: 3px;
+}
+
+.levelSelect {
+  float: right;
+  margin-top: 10px;
+  & > div {
+    float: left;
+  }
+
+  &:last-child {
+    margin-left: 50px;
+  }
+}
+
+.legendNotice {
+  color: @black5;
+  float: right;
+}
+.legendCancel {
+  margin-left: 10px;
+  display: inline-block;
+  border-radius: 50%;
+  background: #bbbbbb;
+  width: 8px;
+  height: 8px;
+}
+.legendBlacklist {
+  margin-left: 10px;
+  display: inline-block;
+  border-radius: 50%;
+  background: #000;
+  width: 8px;
+  height: 8px;
+}

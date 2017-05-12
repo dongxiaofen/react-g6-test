@@ -1,0 +1,45 @@
+@import '~sc-colors/index.less';
+
+.bgWrap{
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background: @black13;
+  z-index: -1;
+}
+.title{
+  float: left;
+  margin: 30px 0 26px 0;
+  color: @mdc-blue-grey-800;
+  font-size: 20px;
+  line-height: 20px;
+}
+.filterWrap{
+  float: right;
+  margin-top: 16px;
+}
+.table{
+  float: left;
+  width: 75%;
+  padding-right: 40px;
+}
+.fastCreate{
+  float: right;
+  width: 25%;
+}
+.alert{
+  color: @bg;
+  cursor: pointer;
+}
+@media screen and (max-width: 1450px) {
+  .title{
+    font-size: 18px;
+    line-height: 18px;
+  }
+}
+
+.listArea {
+  margin-top: 20px;
+}

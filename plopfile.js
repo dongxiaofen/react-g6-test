@@ -14,6 +14,7 @@ module.exports = function (plop) {
     store: 'plop-templates/store.js',
     containerIndex: 'plop-templates/containerIndex.js',
     containerComp: 'plop-templates/containerComp.js',
+    api: 'plop-templates/api.js',
   }
   var createContainerIndex = {
     type: 'add',
@@ -25,7 +26,16 @@ module.exports = function (plop) {
     path: 'src/containers/{{directory}}/{{pascalCase directory}}.js',
     templateFile: files.containerComp
   };
-
+  var createContainer2Index = {
+    type: 'add',
+    path: 'src/containers/report/{{directory}}/index.js',
+    templateFile: files.containerIndex
+  };
+  var createContainer2Comp = {
+    type: 'add',
+    path: 'src/containers/report/{{directory}}/{{pascalCase directory}}.js',
+    templateFile: files.containerComp
+  };
   var createLess = {
     type: 'add',
     path: 'src/components/{{directory}}/{{pascalCase name}}/index.less',
@@ -48,6 +58,11 @@ module.exports = function (plop) {
     path: 'src/components/hoc/{{pascalCase name}}/index.js',
     templateFile: files.sfhoc
   };
+  var createApi = {
+    type: 'add',
+    path: 'src/api/{{name}}.js',
+    templateFile: files.api
+  };
   var createES6Hoc = {
     type: 'add',
     path: 'src/components/hoc/{{pascalCase name}}/index.js',
@@ -55,7 +70,7 @@ module.exports = function (plop) {
   };
   var createStore = {
     type: 'add',
-    path: 'src/stores/{{name}}.js',
+    path: 'src/stores{{directory}}/{{name}}.js',
     templateFile: files.store
   };
   var modifySfCompLess = {
@@ -67,14 +82,14 @@ module.exports = function (plop) {
   var modifyES6CompLess = {
     type: 'modify',
     path: 'src/components/{{directory}}/{{pascalCase name}}/index.js',
-    pattern: /(import React, { Component, PropTypes } from 'react';)/gi,
-    template: 'import React, { Component, PropTypes } from \'react\';\r\nimport styles from \'./index.less\';'
+    pattern: /(import { observer } from 'mobx-react';)/gi,
+    template: 'import { observer } from \'mobx-react\';\r\nimport styles from \'./index.less\';'
   };
   var modifyStoreIndex = {
     type: 'modify',
     path: 'src/stores/index.js',
     pattern: /(\/\/ append here from plop)/gi,
-    template: 'export {{name}}Store from \'./{{name}}\';\n// append here from plop'
+    template: 'export {{name}}Store from \'.{{directory}}{{name}}\';\n// append here from plop'
   };
   var modifyHocIndex = {
     type: 'modify',
@@ -82,11 +97,23 @@ module.exports = function (plop) {
     pattern: /(\/\/ append here from plop)/gi,
     template: 'export {{camelCase name}} from \'./{{pascalCase name}}\';\n// append here from plop'
   };
+  var modifyApiIndex = {
+    type: 'modify',
+    path: 'src/api/index.js',
+    pattern: /(\/\/ append here from plop)/gi,
+    template: 'export * as {{name}}Api from \'./{{name}}\';\n// append here from plop'
+  };
   var modifyContainerIndex = {
     type: 'modify',
     path: 'src/containers/index.js',
     pattern: /(\/\/ append here from plop)/gi,
     template: 'export {{pascalCase directory}} from \'./{{directory}}\';\n// append here from plop'
+  };
+  var modifyContainer2Index = {
+    type: 'modify',
+    path: 'src/containers/index.js',
+    pattern: /(\/\/ append here from plop)/gi,
+    template: 'export {{pascalCase directory}} from \'./report/{{directory}}\';\n// append here from plop'
   };
   var modifyRoute1 = {
     type: 'modify',
@@ -98,7 +125,13 @@ module.exports = function (plop) {
     type: 'modify',
     path: 'src/routes.js',
     pattern: /({\/\* second append here from plop \*\/})/gi,
-    template: '      <Route path="/{{directory}}" component={ {{pascalCase directory}} } />\n{/* second append here from plop */}'
+    template: '      <Route path="{{directory}}" component={ {{pascalCase directory}} } />\n{/* second append here from plop */}'
+  };
+  var modifyRoute3 = {
+    type: 'modify',
+    path: 'src/routes.js',
+    pattern: /({\/\* third append here from plop \*\/})/gi,
+    template: '        <Route path="{{directory}}" component={ {{pascalCase directory}} } />\n{/* third append here from plop */}'
   };
   /* Questions */
   var getDirectory = {
@@ -110,6 +143,28 @@ module.exports = function (plop) {
         return true;
       }
       return 'directory is required';
+    }
+  };
+  var getStoreDirectory = {
+    type: 'input',
+    name: 'directory',
+    message: 'What is the directory? eg: / or /report',
+    validate: function (value) {
+      if ((/.+/).test(value)) {
+        return true;
+      }
+      return 'directory is required';
+    }
+  };
+  var getApiName = {
+    type: 'input',
+    name: 'name',
+    message: 'What is the api name? eg: login',
+    validate: function (value) {
+      if ((/.+/).test(value)) {
+        return true;
+      }
+      return 'name is required';
     }
   };
   var getComponentName = {
@@ -156,14 +211,19 @@ module.exports = function (plop) {
     prompts: [getDirectory, getComponentName],
     actions: [createES6Comp]
   });
-  plop.setGenerator('Container', {
-    description: 'Container',
+  plop.setGenerator('Container default', {
+    description: '一级路由Container',
     prompts: [getDirectory],
     actions: [createContainerIndex, createContainerComp, modifyContainerIndex, modifyRoute1, modifyRoute2]
   });
+  plop.setGenerator('Container for report module', {
+    description: '二级路由Container',
+    prompts: [getDirectory],
+    actions: [createContainer2Index, createContainer2Comp, modifyContainer2Index, modifyRoute1, modifyRoute3]
+  });
   plop.setGenerator('Store', {
     description: 'Store',
-    prompts: [getStoreName],
+    prompts: [getStoreDirectory, getStoreName],
     actions: [createStore, modifyStoreIndex]
   });
   plop.setGenerator('hoc sf', {
@@ -175,6 +235,11 @@ module.exports = function (plop) {
     description: 'es6类型高阶组件',
     prompts: [getComponentName],
     actions: [createES6Hoc, modifyHocIndex]
+  });
+  plop.setGenerator('api', {
+    description: 'api接口',
+    prompts: [getApiName],
+    actions: [createApi, modifyApiIndex]
   });
 };
 
