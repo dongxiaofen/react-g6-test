@@ -85,7 +85,6 @@ export default class CircleNetworkGraph extends Component {
       .data(edgesData)
       .enter().append('line')
       .attr('marker-end', 'url(#mainArrow)');
-    // .attr('stroke-width', (data) => { return Math.sqrt(data.value); });
 
     svgNodes = svg.append('g')
       .selectAll('circle')
