@@ -17,11 +17,13 @@ function TableList({ listData, status, uiStore }) {
             : null
         }
       </div>
-      <Pager
-        tData={listData}
-        module="reportManagePager"
-        uiStore={uiStore}
-        type="large" />
+      <div className={styles.pager}>
+        <Pager
+          tData={listData}
+          module="reportManagePager"
+          uiStore={uiStore}
+          type="large" />
+      </div>
     </div>
   );
 }
