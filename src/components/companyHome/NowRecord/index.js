@@ -16,7 +16,7 @@ export default class NowRecordMain extends Component {
     this.props.nowRecordStore.getNowRecordList(monitorId);
   }
   componentWillUnmount() {
-    this.props.nowRecordStore.resetData();
+    this.props.nowRecordStore.resetStore();
   }
   render() {
     return (

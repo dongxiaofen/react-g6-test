@@ -16,7 +16,7 @@ function NowRecordImg({nowRecordStore}) {
     case 3:
       transformStyle = styles.transformC;
       break;
-    case 4:
+    case 0:
       transformStyle = styles.transformD;
       break;
     default:
@@ -40,7 +40,10 @@ function NowRecordImg({nowRecordStore}) {
         <div className={styles.showBd}></div>
         <div className={styles.showCon}>
           <div className={styles.imgBox}>
-            <img className={styles.showImg + ' ' + transformStyle} alt="" src={'data:image/png;base64,' + nowRecordStore.imgTxt} />
+            <img
+              className={styles.showImg + ' ' + transformStyle}
+              alt=""
+              src={'data:image/png;base64,' + nowRecordStore.imgTxt} />
           </div>
           <div className={styles.topInput}>
             <div className={styles.topCenter}>

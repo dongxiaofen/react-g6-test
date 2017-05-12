@@ -1,8 +1,10 @@
 import React, {PropTypes} from 'react';
 import { observer } from 'mobx-react';
 import styles from './index.less';
+import { loadingComp } from 'components/hoc';
+import Pager from 'components/common/Pager';
 
-function NowRecordList({nowRecordStore}) {
+function NowRecordList({nowRecordStore, uiStore}) {
   // 点击图片事件
   const imgClick = (idx, img, id) => {
     nowRecordStore.imgContent(idx, img, id);
@@ -60,11 +62,25 @@ function NowRecordList({nowRecordStore}) {
       <div className={styles.wrapCon}>
         {listDom}
       </div>
+      <div className={styles.page}>
+        <Pager tData={dataList} module="nowRecordPager"
+               uiStore={uiStore} type="large"/>
+      </div>
     </div>
   );
 }
 
 NowRecordList.propTypes = {
   nowRecordStore: PropTypes.object,
+  uiStore: PropTypes.object,
 };
-export default observer(NowRecordList);
+export default loadingComp({
+  mapDataToProps: props => ({
+    loading: props.nowRecordStore.loading === true ? true : false,
+    imgCategory: 14,
+    category: 2,
+    module: '现勘列表',
+    errCategory: 2,
+    error: props.nowRecordStore.dataList.length === 0,
+  }),
+})(observer(NowRecordList));

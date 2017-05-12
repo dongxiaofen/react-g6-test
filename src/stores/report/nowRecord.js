@@ -1,6 +1,8 @@
 import { observable, action } from 'mobx';
 import {companyHomeApi} from 'api';
 import uiStore from '../ui';
+import axios from 'axios';
+const CancelToken = axios.CancelToken;
 class NowRecordStore {
   // 数据列表
   @observable dataList = [];
@@ -16,9 +18,20 @@ class NowRecordStore {
   @observable transform = 0;
   // loading
   @observable loading = false;
+  // 公司id
+  @observable monitorId = '';
 
   // 获取列表
   @action.bound getNowRecordList(monitorId) {
+    if (window.reportSourceCancel === undefined) {
+      window.reportSourceCancel = [];
+    }
+    const source = CancelToken.source();
+    window.reportSourceCancel.push(source.cancel);
+    // 获取公司id
+    if (monitorId) {
+      this.monitorId = monitorId;
+    }
     // 打开loading
     this.loading = true;
     const params = {
@@ -26,14 +39,14 @@ class NowRecordStore {
       size: uiStore.uiState.nowRecordPager.size,
     };
     // 获取列表数据
-    companyHomeApi.getNowRecordList(monitorId, params)
+    companyHomeApi.getNowRecordList(this.monitorId, params, source)
       .then(action('nowRecordList list', (resp) => {
         const listAll = [];
         let singleData = {};
         // 拿到返回值后循环获取每条数据的img
         if (resp.data.content && resp.data.content.length > 0) {
           resp.data.content.map((obj)=>{
-            companyHomeApi.getNowRecordPictures(obj.surveyId)
+            companyHomeApi.getNowRecordPictures(obj.surveyId, source)
               .then(action('img list', (respImg) => {
                 // 将单条数据和单条数据所属的img拼接
                 singleData = {item: obj, pictures: respImg.data};
@@ -77,6 +90,7 @@ class NowRecordStore {
     this.imgIndex = id;
     this.listImgNum = idx;
     this.show = true;
+    // console.log(this.imgTxt, '======img');
   }
 
   // 上一张
@@ -87,7 +101,7 @@ class NowRecordStore {
       // 图片序号
       this.imgIndex = this.imgIndex - 1;
       // 大图内容
-      this.imgTxt = this.dataList[this.listImgNum].pictures[this.imgIndex - 1];
+      this.imgTxt = this.dataList[this.listImgNum].pictures[this.imgIndex];
     } else {
       // 提示已经是第一张
     }
@@ -102,7 +116,7 @@ class NowRecordStore {
       // 图片序号
       this.imgIndex = this.imgIndex + 1;
       // 大图内容
-      this.imgTxt = this.dataList[this.listImgNum].pictures[this.imgIndex + 1];
+      this.imgTxt = this.dataList[this.listImgNum].pictures[this.imgIndex];
     } else {
       // 提示已经是最后一张
     }
@@ -115,14 +129,14 @@ class NowRecordStore {
   }
   // 旋转大图
   @action.bound transformImg() {
-    if (this.transform === 4) {
+    if (this.transform === 3) {
       this.transform = 0;
     } else {
       this.transform = this.transform + 1;
     }
   }
   // 重置数据
-  @action.bound resetData() {
+  @action.bound resetStore() {
     // 数据列表
     this.dataList = [];
     // 大图是否显示
@@ -137,6 +151,8 @@ class NowRecordStore {
     this.transform = 0;
     // loading
     this.loading = false;
+    // 公司id
+    this.monitorId = '';
   }
 }
 export default new NowRecordStore();
