@@ -74,11 +74,13 @@ function Content({ areaInfo, uiStore }) {
       <div className="clearfix">
         {areaInfoList()}
       </div>
-      <Pager
-        tData={areaInfo}
-        module="bidMarketInfo"
-        uiStore={uiStore}
-        type="large" />
+      <div className={styles.pager}>
+        <Pager
+          tData={areaInfo}
+          module="bidMarketInfo"
+          uiStore={uiStore}
+          type="large" />
+      </div>
     </div>
   );
 }
