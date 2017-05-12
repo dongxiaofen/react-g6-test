@@ -21,6 +21,7 @@ class ModalStore {
     this.pointText = '';
     this.pactUrl = '';
     this.pactName = '';
+    this.width = '440px';
   }
 
   // button text

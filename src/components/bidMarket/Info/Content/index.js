@@ -89,5 +89,5 @@ Content.propTypes = {
 export default loadingComp({ mapDataToProps: props => ({
   loading: props.infoLoading,
   module: '招投标信息',
-  error: props.areaInfo.length === 0
+  error: !props.areaInfo.length === 0
 })})(inject('uiStore')(observer(Content)));

@@ -33,7 +33,7 @@ class NetworkStore {
   @observable currentNetwork = {
     nodes: []
   };
-  @observable targetComp = {};
+  @observable targetComp = '';
   @observable monitorInfoList = [];
   @observable mainCompanyName = '';
   @observable layout = 'circle';
@@ -46,13 +46,13 @@ class NetworkStore {
   @action.bound monitorExistNode(monitorId, params) {
     modalStore.confirmLoading = true;
     companyHomeApi.monitorExistNode(monitorId, params)
-      .then(action('monitorExistNode', (resp)=>{
+      .then(action('monitorExistNode', (resp) => {
         modalStore.confirmLoading = false;
         modalStore.closeAction();
         messageStore.openMessage({ content: '添加关联成功！' });
         this.monitorInfoList = resp.data.monitorInfoList;
       }))
-      .catch(action('monitorExistNode err', (err)=>{
+      .catch(action('monitorExistNode err', (err) => {
         modalStore.confirmLoading = false;
         modalStore.closeAction();
         messageStore.openMessage({ content: err.response.data.message, type: 'warning' });
@@ -99,46 +99,67 @@ class NetworkStore {
     companyHomeApi.getReportModule(params)
       .then(action('get currentNetwork data', (resp) => {
         this.isLoading = false;
-        this.currentNetwork = resp.data.currentNetwork;
-        this.mainCompanyName = resp.data.companyName;
-        this.monitorInfoList = resp.data.monitorInfoList;
-        this.targetComp = resp.data.targetComp;
-        const sumOfType = (sumSoFar, item) => {
-          return sumSoFar + resp.data.targetComp[item].length;
-        };
-        networkType.map((type) => {
-          const count = type.key.reduce(sumOfType, 0);
-          const checked = count === 0 ? false : true;
-          this.typeList.countArr.push(count);
-          this.typeList.checkedArr.push(checked);
-          this.typeList.labelArr.push(type.label);
+        let canRenderSvg = true;
+        resp.data.currentNetwork.links.map((link) => {
+          if (resp.data.currentNetwork.nodes.findIndex((node) => node.name === link.source) < 0 || resp.data.currentNetwork.nodes.findIndex((node) => node.name === link.target) < 0) {
+            canRenderSvg = false;
+            console.info('网络图link名字和node不对应', link);
+          }
         });
-        // 获取totalLevel
-        const layerCount = {};
         resp.data.currentNetwork.nodes.map((node) => {
-          if (node.layer !== -1) {
-            const nodeLayer = node.layer ? node.layer : 1;
-            if (layerCount[nodeLayer] === undefined) {
-              layerCount[nodeLayer] = 1;
-            } else {
-              layerCount[nodeLayer]++;
+          if (node.layer === -1) {
+            // canRenderSvg = false;
+            console.info('网络图node的layer有-1', node);
+          }
+        });
+        if (!canRenderSvg || resp.data.currentNetwork.nodes[0].layer === undefined) {
+          this.error = {
+            message: '网络图数据异常, 请联系管理员'
+          };
+        } else {
+          this.currentNetwork = resp.data.currentNetwork;
+          this.mainCompanyName = resp.data.companyName;
+          this.monitorInfoList = resp.data.monitorInfoList;
+          this.targetComp = resp.data.targetComp;
+          const sumOfType = (sumSoFar, item) => {
+            return sumSoFar + resp.data.targetComp[item].length;
+          };
+          networkType.map((type) => {
+            const count = type.key.reduce(sumOfType, 0);
+            const checked = count === 0 ? false : true;
+            this.typeList.countArr.push(count);
+            this.typeList.checkedArr.push(checked);
+            this.typeList.labelArr.push(type.label);
+          });
+          // 获取totalLevel
+          const layerCount = {};
+          resp.data.currentNetwork.nodes.map((node) => {
+            if (node.layer !== -1) {
+              const nodeLayer = node.layer ? node.layer : 1;
+              if (layerCount[nodeLayer] === undefined) {
+                layerCount[nodeLayer] = 1;
+              } else {
+                layerCount[nodeLayer]++;
+              }
             }
-          }
-        });
-        this.totalLevel = Object.keys(layerCount).length;
-        // 如果节点数超过50, 初始化只展示第一层节点
-        this.currentNetwork.nodes.map((node) => {
-          if (resp.data.currentNetwork.nodes.length > 50) {
-            node.hide = node.firstLayer === 1 ? false : true;
-          } else {
-            node.hide = false;
-          }
-        });
-        this.currentLevel = resp.data.currentNetwork.nodes.length > 50 ? 1 : Object.keys(layerCount).length;
+          });
+          this.totalLevel = Object.keys(layerCount).length;
+          // 如果节点数超过50, 初始化只展示第一层节点
+          this.currentNetwork.nodes.map((node) => {
+            if (resp.data.currentNetwork.nodes.length > 50) {
+              node.hide = node.firstLayer === 1 ? false : true;
+            } else {
+              node.hide = false;
+            }
+          });
+          this.currentLevel = resp.data.currentNetwork.nodes.length > 50 ? 1 : Object.keys(layerCount).length;
+        }
       }))
       .catch(action('currentNetwork出错', (err) => {
         console.log('currentNetwork出错', err);
-        this.error = err.response.data;
+        this.error = {
+          message: '暂无信息，可能存在时间相对滞后或未公示情况，仅供参考'
+        };
         this.isLoading = false;
       }));
   }
@@ -162,7 +183,7 @@ class NetworkStore {
     this.typeList.checkedArr = [];
     this.typeList.checkedArrChanged = false;
   }
-  @action.bound resetSvg() {
+  @action.bound resetSvg() { // 报告内路由切换时重置网络图状态
     this.layout = 'circle';
     this.focusNodeName = '';
     this.searchKey = '';

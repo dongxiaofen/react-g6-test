@@ -8,6 +8,9 @@ function MonitorStatus({ nodeData, monitorInfoList, routing, modalStore, network
   const viewMonitor = (id, type = 'MAIN') => {
     location.href = `/companyHome?monitorId=${id}&companyType=${type}`;
   };
+  const viewAnaReport = (analysisReportId, type) => {
+    location.href = `/companyHome?analysisReportId=${analysisReportId}&companyType=${type}`;
+  };
   const viewReport = (reportId, type) => {
     location.href = type === 'MAIN' ? `/companyHome?reportId=${reportId}&companyType=${type}` : `/companyHome?companyName=${reportId}&companyType=${type}`;
   };
@@ -45,7 +48,7 @@ function MonitorStatus({ nodeData, monitorInfoList, routing, modalStore, network
     let output;
     if (nodeData.cateType === 2) {
       output = '';
-    } else if (monitorInfoList.findIndex((item) => item.companyName === nodeData.name) < 0) {
+    } else if (monitorInfoList.findIndex((item) => item.companyName === nodeData.name) < 0) { // 不在监控列表中
       output = (
         <div>
           {
@@ -68,18 +71,8 @@ function MonitorStatus({ nodeData, monitorInfoList, routing, modalStore, network
       );
     } else {
       const monitorInfo = monitorInfoList[monitorInfoList.findIndex((item) => item.companyName === nodeData.name)];
-      if (monitorInfo.monitorMapResponse === undefined || (monitorInfo.reportId && monitorInfo.monitorMapResponse.companyType !== 'MAIN')) { // 报告类型
-        output = (
-          <div>
-            <div className={styles.item}>
-              已生成报告
-            </div>
-            <div className={styles.actionBox}>
-              <a className={styles.actionFlow} onClick={viewReport.bind(this, monitorInfo.reportId, 'MAIN')}>查看主页</a>
-            </div>
-          </div>
-        );
-      } else { // 监控类型
+      if (monitorInfo.monitorMapResponse && monitorInfo.monitorMapResponse.companyType === 'MAIN' && monitorInfo.monitorMapResponse.monitorId) {
+        // 主体监控
         output = (
           <div>
             <div className={styles.item}>
@@ -87,6 +80,42 @@ function MonitorStatus({ nodeData, monitorInfoList, routing, modalStore, network
             </div>
             <div className={styles.actionBox}>
               <a className={styles.actionFlow} onClick={viewMonitor.bind(this, monitorInfo.monitorMapResponse.monitorId, monitorInfo.monitorMapResponse.companyType)}>查看主页</a>
+            </div>
+          </div>
+        );
+      } else if (monitorInfo.analysisReportStatus) {
+        // 深度分析报告
+        output = (
+          <div>
+            <div className={styles.item}>
+              已创建深度分析报告
+            </div>
+            <div className={styles.actionBox}>
+              <a className={styles.actionFlow} onClick={viewAnaReport.bind(this, monitorInfo.analysisReportId, 'MAIN')}>查看主页</a>
+            </div>
+          </div>
+        );
+      } else if (monitorInfo.reportStatus === 'REPORT') {
+        // 高级报告
+        output = (
+          <div>
+            <div className={styles.item}>
+              已创建高级查询报告
+            </div>
+            <div className={styles.actionBox}>
+              <a className={styles.actionFlow} onClick={viewReport.bind(this, monitorInfo.reportId, 'MAIN')}>查看主页</a>
+            </div>
+          </div>
+        );
+      } else if (monitorInfo.monitorMapResponse && monitorInfo.monitorMapResponse.companyType === 'ASSOCIATE' && monitorInfo.monitorMapResponse.monitorId) {
+        // 关联监控
+        output = (
+          <div>
+            <div className={styles.item}>
+              {monitorStatus(monitorInfo.monitorStatus)}
+            </div>
+            <div className={styles.actionBox}>
+              <a className={styles.actionFlow} onClick={viewMonitor.bind(this, monitorInfo.monitorMapResponse.monitorId, 'ASSOCIATE')}>查看主页</a>
             </div>
           </div>
         );

@@ -164,7 +164,7 @@ class TeamStore {
             if (recruitmentInfoData && recruitmentInfoData.length > 0) {
               recruitmentInfoData = recruitmentInfoData.map((item) => {
                 const obj = {};
-                obj.category = item.category;
+                obj.category = item.jobTitle;
                 obj.salaryText = item.salaryText ? item.salaryText : '无';
                 obj.address = item.address ? item.address : '无';
                 obj.requireNum = item.requireNum ? item.requireNum : '无';

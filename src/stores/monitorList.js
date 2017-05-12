@@ -15,7 +15,7 @@ class MonitorListStore {
     loading: false,
     monitorId: '',
     status: '',
-    index: '',
+    idx: '',
     relation: '',
     mMonitorId: '',
   };

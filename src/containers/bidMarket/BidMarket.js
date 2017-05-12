@@ -30,16 +30,11 @@ export default class BidMarket extends Component {
     params.index = 1;
     params.size = bidMarketInfo.size;
     bidMarketStore.getInfo(params);
+    bidMarketStore.setParams(params);
   }
 
   componentWillUnmount() {
-    const params = {
-      from: _from,
-      to: _to,
-      province: '',
-      city: '',
-    };
-    this.props.bidMarketStore.setParams(params);
+    this.props.bidMarketStore.resetStore();
   }
 
   render() {
@@ -67,7 +62,10 @@ export default class BidMarket extends Component {
             this is BidMarket
           </div>
         </Row>
-        <Info areaInfo={bidMarketStore.areaInfo} infoLoading={bidMarketStore.infoLoading} />
+        <Info
+          params={bidMarketStore.params}
+          areaInfo={bidMarketStore.areaInfo}
+          infoLoading={bidMarketStore.infoLoading} />
       </Container>
     );
   }
