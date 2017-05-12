@@ -52,7 +52,6 @@ class BidMarketStore {
     this.detailLoading = true;
     bidMarketApi.getBidMarketDetail(announceId)
       .then(action('get bidMarket detail', (resp) => {
-        console.log(resp);
         this.detailTitleData = this.areaInfo[key];
         this.detailContent = resp.data.result;
         this.detailLoading = false;

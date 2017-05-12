@@ -1,16 +1,18 @@
 import React, {PropTypes} from 'react';
-import { observer } from 'mobx-react';
+import { observer, inject } from 'mobx-react';
 import styles from './index.less';
 
-function DetailSource({}) {
+function DetailSource({ bidMarketStore }) {
   return (
-    <div className={styles}>
-      this is soruce
+    <div className={styles.sourceHasUrl}>
+      <a href={bidMarketStore.detailTitleData.url} target="_bank">
+        <span>查看信息来源</span>
+      </a>
     </div>
   );
 }
 
 DetailSource.propTypes = {
-  foo: PropTypes.string,
+  bidMarketStore: PropTypes.object,
 };
-export default observer(DetailSource);
+export default inject('bidMarketStore')(observer(DetailSource));

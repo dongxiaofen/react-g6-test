@@ -1,16 +1,16 @@
 import React, {PropTypes} from 'react';
-import { observer } from 'mobx-react';
+import { observer, inject } from 'mobx-react';
 import styles from './index.less';
 
-function DetailContent({}) {
+function DetailContent({ bidMarketStore }) {
   return (
-    <div className={styles}>
-      this is content
+    <div className={styles.content}>
+      <div dangerouslySetInnerHTML={{ __html: bidMarketStore.detailContent }}></div>
     </div>
   );
 }
 
 DetailContent.propTypes = {
-  foo: PropTypes.string,
+  bidMarketStore: PropTypes.object,
 };
-export default observer(DetailContent);
+export default inject('bidMarketStore')(observer(DetailContent));
