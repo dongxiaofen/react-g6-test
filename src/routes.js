@@ -27,6 +27,7 @@ import {
     Network,
     RelPerCheck,
     AlertAnalysis,
+    TimeAxis,
     RuleCompany,
     PersonReport,
     Pdf,
@@ -71,6 +72,7 @@ export default (allStore) => {
         <Route path="network" component={ Network } />
         <Route path="relPerCheck" component={ RelPerCheck } />
         <Route path="alertAnalysis" component={ AlertAnalysis } />
+        <Route path="timeAxis" component={ TimeAxis } />
         <Route path="blackNetwork" component={ BlackNetwork } />
 {/* third append here from plop */}
       </Route>

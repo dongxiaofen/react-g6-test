@@ -22,6 +22,7 @@ export RuleAdd from './ruleAdd';
 export Stock from './report/stock';
 export Network from './report/network';
 export RelPerCheck from './report/relPerCheck';
+export TimeAxis from './report/timeAxis';
 export AlertAnalysis from './report/alertAnalysis';
 export RuleCompany from './ruleCompany';
 export PersonReport from './personReport';

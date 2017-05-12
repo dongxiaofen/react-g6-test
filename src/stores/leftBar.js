@@ -42,7 +42,7 @@ class LeftBarStore {
       menuText: '趋势分析',
       menuKey: 'trendAnalyse',
       children: [
-        { menuText: '事件时间轴', menuKey: 'eventLine', helpInfo: helpInfo2, contain: ['main'] },
+        { menuText: '事件时间轴', menuKey: 'timeAxis', helpInfo: helpInfo2, contain: ['main'] },
         { menuText: '预警分析', menuKey: 'alertAnalysis', helpInfo: helpInfo3, contain: ['main', 'analysisReport'] },
       ],
       helpInfo: helpInfo3,
