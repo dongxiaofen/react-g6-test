@@ -57,7 +57,7 @@ export default class ForceNetworkGraph extends Component {
 
     simulation = d3.forceSimulation()
       .force('link', d3.forceLink().id((data) => { return data.name; }).distance(150))
-      .force('charge', d3.forceManyBody())
+      .force('charge', d3.forceManyBody().strength(-400))
       .force('center', d3.forceCenter(width / 2, height / 2));
 
     simulation
