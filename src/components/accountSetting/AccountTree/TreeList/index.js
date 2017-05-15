@@ -9,6 +9,7 @@ function TreeList({accountSettingStore, uiStore}) {
   const activeIndex = moduleData.activeIndex;
   const getUserData = (uId, level) => {
     uiStore.resetAccountPager();
+    accountSettingStore.changeValue('tabs.activeKey', '业务统计');
     accountSettingStore.getUserInfo(uId);
     accountSettingStore.getReportAndMonitor(uId);
     accountSettingStore.getProvince(uId);

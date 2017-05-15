@@ -5,7 +5,7 @@ import AccountTable from '../AccountTable';
 import styles from './index.less';
 function Consume({accountSettingStore}) {
   const timeMap = accountSettingStore.timeMap;
-  const baseInfo = accountSettingStore.base.data;
+  const consumeType = accountSettingStore.getActiveTreeValue('consumeType');
   const consumeTypeMap = accountSettingStore.consumeTypeMap;
   const handleConsumeInfo = (value, item) => {
     const nameStr = item.companyName ? `企业：${item.companyName}` : '';
@@ -21,7 +21,7 @@ function Consume({accountSettingStore}) {
     {name: '消费编号', key: 'seqNum'},
     {name: '消费类型', key: 'consumeOperationType', handle: handleConsumeType},
     {name: '操作时间', key: 'opTime'},
-    {name: '消费点数', key: 'consume', none: baseInfo.consumeType !== 'POINT'},
+    {name: '消费点数', key: 'consume', none: consumeType !== 'POINT'},
     {name: '消费内容', key: 'consumeInfo', handle: handleConsumeInfo},
   ];
   const totalConsume = accountSettingStore.tabs.consume.totalConsume;

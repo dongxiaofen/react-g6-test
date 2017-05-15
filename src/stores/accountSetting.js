@@ -158,6 +158,7 @@ class AccountSettingStore {
   };
   // tab栏数据
   @observable tabs = {
+    activeKey: '业务统计',
     business: {
       reportAndMonitor: {},
       province: {},
@@ -171,6 +172,11 @@ class AccountSettingStore {
   };
   @action.bound changeValue(key, value) {
     pathval.setPathValue(this, key, value);
+  }
+  @action.bound getActiveTreeValue(name) {
+    if (this.tree.data.content) {
+      return this.tree.data.content[this.tree.activeIndex][name];
+    }
   }
   @action.bound editInfo(url, name, params) {
     this.editModal.loading = true;
@@ -521,6 +527,7 @@ class AccountSettingStore {
   }
   @action.bound resetTabs() {
     this.tabs = {
+      activeKey: '业务统计',
       business: {
         reportAndMonitor: {},
         province: {},
