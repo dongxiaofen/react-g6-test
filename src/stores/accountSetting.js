@@ -6,6 +6,32 @@ import uiStore from './ui';
 import clientStore from './client';
 import messageStore from './message';
 class AccountSettingStore {
+  timeMap = {
+    ONE_MONTH: '1个月',
+    TWO_MONTH: '2个月',
+    THREE_MONTH: '3个月',
+    FOUR_MONTH: '4个月',
+    FIVE_MONTH: '5个月',
+    SIX_MONTH: '6个月',
+    SEVEN_MONTH: '7个月',
+    EIGHT_MONTH: '8个月',
+    NINE_MONTH: '9个月',
+    ONE_YEAR: '1年',
+  };
+  consumeTypeMap = {
+    REPORT_MAIN: '高级查询报告',
+    REPORT_REFRESH: '刷新高级查询报告',
+    REPORT_TO_MONITOR: '高级查询报告转监控',
+    ANALYSIS_REPORT_MAIN: '深度分析报告',
+    ANALYSIS_REPORT_REFRESH: '刷新深度分析报告',
+    ANALYSIS_REPORT_TO_MONITOR: '深度分析报告转监控',
+    REPORT_TO_ANALYSIS_REPORT: '高级查询报告升级为深度分析报告',
+    MONITOR_MAIN: '主体监控报告',
+    MONITOR_MAIN_RENEWAL: '主体监控续费',
+    PERSON_CHECK: '个人核查',
+    TEST_: '税务核查',
+    TEST__: '快速查询报告',
+  };
   // 账号树数据
   @observable tree = {
     searchInput: '',
@@ -219,6 +245,7 @@ class AccountSettingStore {
           this.tree.data = {content: treeData.formatResult};
           if (!afterAddUser) {
             const uId = treeData.formatResult[0].id;
+            const pId = treeData.formatResult[0].parentUserId;
             this.tree.activeId = uId;
             this.getUserInfo(uId);
             this.getReportAndMonitor(uId);
@@ -226,8 +253,10 @@ class AccountSettingStore {
             this.getIndustry(uId);
             this.getScale(uId);
             this.getConsume(uId);
-            this.getRecharge(uId);
-            this.getSummary(uId);
+            if (!pId) {
+              this.getRecharge(uId);
+              this.getSummary(uId);
+            }
             this.getLoginRecord(uId);
           }
         } else {

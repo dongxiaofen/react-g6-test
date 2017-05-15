@@ -6,9 +6,11 @@ function AccountTable({headData, bodyData, module}) {
   const createHead = () => {
     const head = [];
     headData.forEach(item => {
-      head.push(
-        <th key={item.key}>{item.name}</th>
-      );
+      if (!item.none) {
+        head.push(
+          <th key={item.key}>{item.name}</th>
+        );
+      }
     });
     return <tr>{head}</tr>;
   };
@@ -17,13 +19,15 @@ function AccountTable({headData, bodyData, module}) {
     bodyData.forEach((bodyItem, idx) => {
       const trItem = [];
       headData.forEach(headItem => {
-        const handle = headItem.handle;
-        const value = bodyItem[headItem.key];
-        trItem.push(
-          <td key={headItem.key}>
-            {handle ? handle(value, bodyItem) : value}
-          </td>
-        );
+        if (!headItem.none) {
+          const handle = headItem.handle;
+          const value = bodyItem[headItem.key];
+          trItem.push(
+            <td key={headItem.key}>
+              {handle ? handle(value, bodyItem) : value}
+            </td>
+          );
+        }
       });
       body.push(<tr key={module + idx}>{trItem}</tr>);
     });

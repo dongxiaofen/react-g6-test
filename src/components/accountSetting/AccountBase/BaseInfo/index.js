@@ -86,12 +86,12 @@ function BaseInfo({accountSettingStore}) {
       {
         name: '套餐有效期',
         keys: 'lastLoginTs',
-        none: baseInfo.data.consumeType !== 'FEESET' ? true : false,
+        none: baseInfo.data.consumeType !== 'FEESET' || baseInfo.data.parentUserId ? true : false,
       },
       {
         name: '剩余点数',
         keys: 'point',
-        none: baseInfo.data.consumeType !== 'POINT' ? true : false,
+        none: baseInfo.data.consumeType !== 'POINT' || baseInfo.data.parentUserId ? true : false,
         handle: addUnit.bind(null, '点'),
       },
     ];
@@ -107,11 +107,9 @@ function BaseInfo({accountSettingStore}) {
     });
   }
   return (
-    <div className={styles.wrapper}>
-      <div className={styles.infoBox}>
-        <h2 className={styles.baseTitle}>基本信息</h2>
-        {output}
-      </div>
+    <div className={styles.infoBox}>
+      <h2 className={styles.baseTitle}>基本信息</h2>
+      {output}
       <PwdModal />
       <EditModal />
     </div>

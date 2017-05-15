@@ -12,6 +12,7 @@ function Item({name, keys, values, handle, none, unit, feeset, remainValue}) {
   if (none) {
     return null;
   }
+  const newRemain = Number(remainValue);
   return (
     <div className={styles.wrapper}>
       <div className={styles.keys}>
@@ -20,7 +21,7 @@ function Item({name, keys, values, handle, none, unit, feeset, remainValue}) {
       <div className={styles.values}>
         {handle ? handle(newValue, keys) : newValue}
         {newValue !== '- -' && unit || ''}
-        {feeset ? ` / 剩余 ${Number(remainValue)} ${unit}` : ''}
+        {feeset ? ` / 剩余 ${isNaN(newRemain) ? 0 : newRemain} ${unit}` : ''}
       </div>
     </div>
   );
