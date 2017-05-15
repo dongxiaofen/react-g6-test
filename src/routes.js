@@ -34,6 +34,7 @@ import {
     Collection,
     BidMarket,
     NowRecord,
+    UserAgreement,
 // first append here from plop
   } from 'containers';
 
@@ -89,6 +90,7 @@ export default (allStore) => {
       <Route path="collection" component={ Collection } />
       <Route path="ruleCompany" component={ RuleCompany } />
       <Route path="bidMarket" component={ BidMarket } />
+      <Route path="userAgreement" component={ UserAgreement } />
 {/* second append here from plop */}
     </Route>
   );
