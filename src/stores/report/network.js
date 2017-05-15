@@ -206,5 +206,6 @@ class NetworkStore {
       this.typeList.checkedArrChanged = false;
     }
   }
+
 }
 export default new NetworkStore();

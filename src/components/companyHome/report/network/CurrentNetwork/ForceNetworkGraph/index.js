@@ -30,6 +30,8 @@ let zoom;
 let isDragging = false;
 let svg;
 let group;
+let clickTime = '';
+let timer = null;
 
 @inject('networkStore')
 @observer
@@ -321,8 +323,23 @@ export default class ForceNetworkGraph extends Component {
   dragended = (data) => {
     if (!d3.event.active) simulation.alphaTarget(0);
     if (!isDragging) {
-      console.log(data, '单击');
-      this.props.networkStore.focusNode(data.name);
+      if (clickTime) {
+        console.log(timer);
+        if (timer) {
+          clearTimeout(timer);
+        }
+        clickTime = '';
+        console.log('双击');
+      } else {
+        const date = new Date();
+        clickTime = date;
+        console.log('单击11');
+        timer = setTimeout(()=>{
+          this.props.networkStore.focusNode(data.name);
+          console.log('单击');
+          clickTime = '';
+        }, 300);
+      }
     } else {
       // console.log(data, '拖拽结束');
     }
