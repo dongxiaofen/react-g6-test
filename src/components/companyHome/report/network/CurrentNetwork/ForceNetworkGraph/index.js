@@ -52,7 +52,7 @@ export default class ForceNetworkGraph extends Component {
       .call(zoom.on('zoom', () => {
         group.attr('transform', `translate(${d3.event.transform.x}, ${d3.event.transform.y}) scale(${d3.event.transform.k})`);
       }))
-      .on('dblclick.zoom', null);
+      .on('dblclick.zoom', ()=>{});
     group = svg.append('g').attr('id', 'whole');
     const width = d3.select('svg').attr('width');
     const height = d3.select('svg').attr('height');
@@ -324,7 +324,6 @@ export default class ForceNetworkGraph extends Component {
     if (!d3.event.active) simulation.alphaTarget(0);
     if (!isDragging) {
       if (clickTime) {// 双击
-        console.log('???');
         if (timer) {
           clearTimeout(timer);
         }
@@ -335,7 +334,7 @@ export default class ForceNetworkGraph extends Component {
         timer = setTimeout(()=>{
           this.props.networkStore.focusNode(data.name);
           clickTime = '';
-        }, 300);
+        }, 150);
       }
     } else {
       // console.log(data, '拖拽结束');
