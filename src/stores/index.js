@@ -36,4 +36,6 @@ export blackNetworkStore from './report/blackNetwork';
 export collectionStore from './collection';
 export bidMarketStore from './bidMarket';
 export accountProfileStore from './accountProfile';
+export forceNetworkStore from './report/forceNetwork';
+export nowRecordStore from './report/nowRecord';
 // append here from plop

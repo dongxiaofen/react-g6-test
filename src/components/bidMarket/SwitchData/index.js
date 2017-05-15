@@ -5,6 +5,7 @@ import DatePicker from 'antd/lib/date-picker';
 
 import styles from './index.less';
 import Select from 'components/lib/Select';
+import cityName from 'helpers/cityName';
 
 const { RangePicker } = DatePicker;
 const Option = Select.Option;
@@ -21,14 +22,24 @@ function SwitchData({ from, to, params, setParams }) {
     });
   };
 
+  const selectList = () => {
+    const output = [];
+    output.push(<Option value="" key="bidMarketSelectKey0">全国</Option>);
+    cityName.forEach((item, key) => {
+      output.push(
+        <Option value={item} key={`bidMarketSelectKey${key + 1}`}>{item}</Option>
+      );
+    });
+    return output;
+  };
+
   return (
     <div className={`clearfix ${styles.switchData}`}>
       <div className={`clearfix ${styles.province}`}>
         <span className={styles.title}>地区：</span>
         <div className={styles.content}>
           <Select>
-            <Option value="">全国</Option>
-            <Option value="重庆">重庆</Option>
+            {selectList()}
           </Select>
         </div>
       </div>

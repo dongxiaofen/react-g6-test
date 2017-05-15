@@ -6,6 +6,7 @@ import styles from './index.less';
 import { Container, Row, Col } from 'components/common/layout';
 import SwitchData from 'components/bidMarket/SwitchData';
 import Info from 'components/bidMarket/Info';
+import Trend from 'components/bidMarket/Trend';
 
 const _from = moment().subtract(29, 'days').format('YYYY-MM-DD');
 const _to = moment().format('YYYY-MM-DD');
@@ -27,6 +28,7 @@ export default class BidMarket extends Component {
     };
     const bidMarketStore = this.props.bidMarketStore;
     bidMarketStore.getAll(params);
+    bidMarketStore.getTrend(params);
     params.index = 1;
     params.size = bidMarketInfo.size;
     bidMarketStore.getInfo(params);
@@ -53,16 +55,26 @@ export default class BidMarket extends Component {
         </Row>
         <Row>
           <div className={styles.itemBlock}>
-            this is BidMarket
+            <div className={styles.itemBlockBG}>
+              this is BidMarket
+            </div>
           </div>
           <div className={styles.itemBlock}>
-            this is BidMarket
+            <div className={styles.itemBlockBG}>
+              <Trend />
+            </div>
           </div>
           <div className={styles.itemBlock}>
-            this is BidMarket
+            <div className={styles.itemBlockBG}>
+              this is BidMarket
+            </div>
           </div>
         </Row>
-        <Info areaInfo={bidMarketStore.areaInfo} infoLoading={bidMarketStore.infoLoading} />
+        <Info
+          params={bidMarketStore.params}
+          areaInfo={bidMarketStore.areaInfo}
+          infoLoading={bidMarketStore.infoLoading}
+          getBidMarketDetail={bidMarketStore.getBidMarketDetail} />
       </Container>
     );
   }

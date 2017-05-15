@@ -6,6 +6,7 @@ import styles from './index.less';
 function Menu({ routing }) {
   const config = [
     { parent: { module: '首页', route: 'accountProfile' } },
+    { parent: { module: '查询', route: 'searchCompany' } },
     {
       parent: { module: '头条' },
       children: [
@@ -16,7 +17,6 @@ function Menu({ routing }) {
     {
       parent: { module: '企业' },
       children: [
-        { module: '企业查询', route: 'searchCompany' },
         { module: '报告列表', route: 'reportManage' },
         { module: '监控列表', route: 'monitorList' },
       ]

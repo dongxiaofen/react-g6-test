@@ -9,7 +9,7 @@ function TableHead({}) {
       <div className={`${styles.title} pull-left`}>
         <i className={`pull-left ${styles.warning_icon01} ${styles.nav_icon}`}></i>
         <div className={`${styles.nav_text} pull-left`}>
-          <span className={styles.company}>最新预警企业</span>
+          <span className={styles.company}>最新预警企业 </span>
           <span className={styles.number}>TOP10</span>
         </div>
       </div>

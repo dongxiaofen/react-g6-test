@@ -14,8 +14,6 @@ class PayModalStore {
     // 报告转监控是否显示
     @observable reportToMonitorStatus = false;
     // 弹窗类型
-    // 生成报告 createReport
-    // 刷新报告 updateReport
     // 创建监控 createMonitor
     // 转为监控 turnMonitor
     // 监控续费 continueMonitor
@@ -45,24 +43,25 @@ class PayModalStore {
     @observable width = '560px';
 
     @observable callBack = null;
+    // 是否是套餐用户的监控续期
+    @observable isComboRenewal = false;
 
     @action.bound closeAction() {
       this.visible = false;
       this.btnLoading = false;
       this.selectValue = 'ONE_YEAR';
+      this.isComboRenewal = false;
     }
 
-    @action.bound openCompModal({ modalType, width, pactName, pactUrl, pointText, callBack }) {
+    @action.bound openCompModal({ modalType, width, pactName, pactUrl, pointText, isComboRenewal, callBack }) {
       this.visible = true;
       this.pactName = pactName;
       this.pactUrl = pactUrl;
       this.pointText = pointText;
       this.modalType = modalType;
       this.callBack = callBack;
+      if (isComboRenewal !== undefined) { this.isComboRenewal = isComboRenewal;}
       switch (modalType) {
-        case 'createReport':
-          this.tittle = '创建报告';
-          break;
         case 'continueMonitor':
           this.tittle = '监控续期';
           break;

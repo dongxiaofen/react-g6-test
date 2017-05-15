@@ -10,6 +10,7 @@ import alertAnalysisStore from './report/alertAnalysis';
 import reportManageStore from './reportManage';
 import collectionStore from './collection';
 import relPerCheckStore from './report/relPerCheck';
+import nowRecordStore from './report/nowRecord';
 import bidMarketStore from './bidMarket';
 
 class UiStore {
@@ -52,6 +53,12 @@ class UiStore {
       () => this.uiState.ruleCompanyListPager.index,
       () => {
         ruleCompanyStore.getCompanyList();
+      }
+    );
+    reaction(
+      () => this.uiState.nowRecordPager.index,
+      () => {
+        nowRecordStore.getNowRecordList();
       }
     );
     reaction(
@@ -170,6 +177,11 @@ class UiStore {
       show: observable.map({})
     },
     ruleCompanyListPager: {
+      index: 1,
+      size: 10,
+      show: observable.map({})
+    },
+    nowRecordPager: {
       index: 1,
       size: 10,
       show: observable.map({})
@@ -420,6 +432,11 @@ class UiStore {
           show: observable.map({})
         },
         ruleCompanyListPager: {
+          index: 1,
+          size: 10,
+          show: observable.map({})
+        },
+        nowRecordPager: {
           index: 1,
           size: 10,
           show: observable.map({})
