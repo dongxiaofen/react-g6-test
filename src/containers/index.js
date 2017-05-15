@@ -30,4 +30,5 @@ export BlackNetwork from './report/blackNetwork';
 export Collection from './collection';
 export BidMarket from './bidMarket';
 export NowRecord from './report/nowRecord';
+export Tax from './report/tax';
 // append here from plop

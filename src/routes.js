@@ -34,6 +34,7 @@ import {
     Collection,
     BidMarket,
     NowRecord,
+    Tax,
 // first append here from plop
   } from 'containers';
 
@@ -74,6 +75,7 @@ export default (allStore) => {
         <Route path="alertAnalysis" component={ AlertAnalysis } />
         <Route path="blackNetwork" component={ BlackNetwork } />
         <Route path="nowRecord" component={ NowRecord } />
+        <Route path="tax" component={ Tax } />
 {/* third append here from plop */}
       </Route>
       <Route path="solution" component={ Solution } />

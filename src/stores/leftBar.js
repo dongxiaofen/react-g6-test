@@ -20,6 +20,7 @@ class LeftBarStore {
       children: [
         { menuText: '企业基本信息', menuKey: 'corpDetail', helpInfo: helpInfo1, contain: ['main', 'analysisReport', 'report', 'relation', 'free'] },
         { menuText: '上市披露', menuKey: 'stock', helpInfo: helpInfo1, contain: ['main', 'analysisReport', 'report'] },
+        { menuText: '税务信息', menuKey: 'tax', helpInfo: helpInfo1, contain: ['main', 'analysisReport', 'report'] },
         { menuText: '风险信息', menuKey: 'risk', helpInfo: helpInfo1, contain: ['main', 'analysisReport', 'report', 'relation', 'free'] },
         { menuText: '新闻信息', menuKey: 'internet', helpInfo: helpInfo1, contain: ['main', 'analysisReport', 'report', 'relation', 'free'] },
         { menuText: '经营信息', menuKey: 'assets', helpInfo: helpInfo1, contain: ['main', 'analysisReport', 'report'] },
