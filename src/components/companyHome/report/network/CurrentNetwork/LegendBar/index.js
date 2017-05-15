@@ -22,7 +22,6 @@ function LegendBar({ networkStore, resumeSvg, fullScreen, exitFull }) {
   };
   return (
     <div className={styles.box}>
-      <a onClick={networkStore.switchLayout}>切换</a>
       <div className={styles.legendAction}>
         <div className={`clearfix ${styles.levelSelect}`}>
           <Select onChange={levelOnchange} value={`${currentLevel}`} width="100px">
