@@ -271,3 +271,11 @@ export const judgeReportType = (companyName) => {
 export const monitorExistNode = (monitorCompanyId, params) => {
   return axios.post(`/api/monitor/${monitorCompanyId}/network/link`, params);
 };
+
+// 现勘记录
+export const getNowRecordList = (id, params, source) => {
+  return axios.get('/api/survey/' + id + '/page', {params: params, cancelToken: source.token});
+};
+export const getNowRecordPictures = (id, source) => {
+  return axios.get('/api/survey/' + id + '/pictures', { cancelToken: source.token });
+};

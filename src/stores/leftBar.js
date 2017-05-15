@@ -21,7 +21,7 @@ class LeftBarStore {
         { menuText: '企业基本信息', menuKey: 'corpDetail', helpInfo: helpInfo1, contain: ['main', 'analysisReport', 'report', 'relation', 'free'] },
         { menuText: '上市披露', menuKey: 'stock', helpInfo: helpInfo1, contain: ['main', 'analysisReport', 'report'] },
         { menuText: '风险信息', menuKey: 'risk', helpInfo: helpInfo1, contain: ['main', 'analysisReport', 'report', 'relation', 'free'] },
-        { menuText: '新闻信息', menuKey: 'internet', helpInfo: helpInfo1, contain: ['main', 'analysisReport', 'report', 'relation'] },
+        { menuText: '新闻信息', menuKey: 'internet', helpInfo: helpInfo1, contain: ['main', 'analysisReport', 'report', 'relation', 'free'] },
         { menuText: '经营信息', menuKey: 'assets', helpInfo: helpInfo1, contain: ['main', 'analysisReport', 'report'] },
         { menuText: '团队信息', menuKey: 'team', helpInfo: helpInfo1, contain: ['main', 'analysisReport', 'report'] },
       ],
@@ -62,7 +62,7 @@ class LeftBarStore {
       menuText: '企业现勘',
       menuKey: 'corprationXk',
       children: [
-        { menuText: '现勘记录', menuKey: 'xkRecord', helpInfo: helpInfo2, contain: ['main'] },
+        { menuText: '现勘记录', menuKey: 'nowRecord', helpInfo: helpInfo2, contain: ['main'] },
       ],
       helpInfo: helpInfo2,
       contain: ['main'],
