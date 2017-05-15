@@ -14,4 +14,5 @@ export * as personReportApi from './personReport';
 export * as collectionApi from './collection';
 export * as ruleCompanyApi from './ruleCompany';
 export * as bidMarketApi from './bidMarket';
+export * as highRiskCorpApi from './highRiskCorp';
 // append here from plop

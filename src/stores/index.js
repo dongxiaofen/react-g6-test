@@ -36,4 +36,5 @@ export pdfStore from './pdf';
 export blackNetworkStore from './report/blackNetwork';
 export collectionStore from './collection';
 export bidMarketStore from './bidMarket';
+export highRiskCorpStore from './highRiskCorp';
 // append here from plop

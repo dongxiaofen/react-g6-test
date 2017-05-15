@@ -30,4 +30,5 @@ export Pdf from './pdf';
 export BlackNetwork from './report/blackNetwork';
 export Collection from './collection';
 export BidMarket from './bidMarket';
+export HighRiskCorp from './highRiskCorp';
 // append here from plop
