@@ -18,7 +18,7 @@ export const getScale = (uId) => {
   return axios.get(`/api/user/sub/${uId}/statistic/scale/xx`);
 };
 export const getAlertCorp = (uId, params) => {
-  return axios.get(`/api/user/sub/${uId}/alertType`, {params});
+  return axios.get(`/api/user/sub/${uId}/alert`, {params});
 };
 export const getConsume = (uId, params) => {
   return axios.get(`/api/user/sub/${uId}/consume`, {params});

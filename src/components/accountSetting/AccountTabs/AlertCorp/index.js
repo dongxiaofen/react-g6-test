@@ -2,6 +2,7 @@ import React from 'react';
 import { observer, inject } from 'mobx-react';
 import { browserHistory } from 'react-router';
 import { loadingComp } from 'components/hoc';
+import Pager from 'components/common/Pager';
 import styles from './index.less';
 function AlertCorp({accountSettingStore, searchCompanyStore}) {
   const moduleData = accountSettingStore.tabs.alertCorp;
@@ -25,6 +26,7 @@ function AlertCorp({accountSettingStore, searchCompanyStore}) {
           );
         })
       }
+      <Pager module="accountAlertCorp" type="small" />
     </div>
   );
 }
