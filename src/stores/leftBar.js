@@ -55,6 +55,7 @@ class LeftBarStore {
       menuKey: 'infoCheck',
       children: [
         {menuText: '关联人核查', menuKey: 'relPerCheck', helpInfo: helpInfo1, contain: ['main', 'analysisReport', 'report']},
+        {menuText: '税务核查', menuKey: 'taxCheck', helpInfo: helpInfo1, contain: ['main', 'analysisReport', 'report']},
       ],
       helpInfo: helpInfo1,
       contain: ['main', 'analysisReport', 'analysisReport', 'report'],
