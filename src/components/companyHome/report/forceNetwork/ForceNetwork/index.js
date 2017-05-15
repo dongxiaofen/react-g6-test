@@ -6,7 +6,7 @@ import LegendBar from './LegendBar';
 import ForceNetworkGraph from './ForceNetworkGraph';
 
 function ForceNetwork({}) {
-  const svgWidth = document.getElementById('reportContainer').offsetWidth - 15;
+  const svgWidth = document.getElementById('tabContentWrap').offsetWidth - 20;
   const svgHeight = window.screen.height - 280;
   return (
     <Row>
