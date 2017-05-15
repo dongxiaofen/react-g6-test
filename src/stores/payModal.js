@@ -60,9 +60,6 @@ class PayModalStore {
       this.modalType = modalType;
       this.callBack = callBack;
       switch (modalType) {
-        case 'createReport':
-          this.tittle = '创建报告';
-          break;
         case 'continueMonitor':
           this.tittle = '监控续期';
           break;

@@ -19,18 +19,18 @@ function _PayModal({payModalStore}) {
 } = payModalStore;
   return (
     <PayModal
+      tittle={tittle}
+      width={width}
       visible={visible}
+      modalType={modalType}
       pointText={pointText}
       pactUrl={pactUrl}
       pactName={pactName}
-      tittle={tittle}
-      modalType={modalType}
-      closeAction={closeAction}
-      width={width}
-      selectValue={selectValue}
       choiceClick={choiceClick}
-      btnLoading={btnLoading}
       confirmAction={confirmAction}
+      closeAction={closeAction}
+      selectValue={selectValue}
+      btnLoading={btnLoading}
     />
   );
 }

@@ -8,6 +8,7 @@ class ClientStore {
 
   @action.bound combineServerData(data) {
     this.userInfo = data.userInfo;
+    console.log(this.userInfo, '----------------------------userInfo');
   }
 
   @action.bound loginOut() {
