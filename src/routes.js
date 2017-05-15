@@ -33,6 +33,7 @@ import {
     BlackNetwork,
     Collection,
     BidMarket,
+    ForceNetwork,
     NowRecord,
     Tax,
 // first append here from plop
@@ -74,6 +75,7 @@ export default (allStore) => {
         <Route path="relPerCheck" component={ RelPerCheck } />
         <Route path="alertAnalysis" component={ AlertAnalysis } />
         <Route path="blackNetwork" component={ BlackNetwork } />
+        <Route path="forceNetwork" component={ ForceNetwork } />
         <Route path="nowRecord" component={ NowRecord } />
         <Route path="tax" component={ Tax } />
 {/* third append here from plop */}

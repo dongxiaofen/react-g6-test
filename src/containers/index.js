@@ -29,6 +29,7 @@ export Pdf from './pdf';
 export BlackNetwork from './report/blackNetwork';
 export Collection from './collection';
 export BidMarket from './bidMarket';
+export ForceNetwork from './report/forceNetwork';
 export NowRecord from './report/nowRecord';
 export Tax from './report/tax';
 // append here from plop

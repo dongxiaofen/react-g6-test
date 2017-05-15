@@ -21,40 +21,43 @@ let edgesData;
 let svgEdges;
 let svgNodes;
 let svgTexts;
+let svgTexts2;
+let svgTexts3;
 let svgEdgepaths;
 let svgEdgelabels;
 let simulation;
 let zoom;
 let isDragging = false;
+let svg;
+let group;
 
-
-@inject('networkStore')
+@inject('forceNetworkStore')
 @observer
 export default class ForceNetworkGraph extends Component {
   static propTypes = {
-    networkStore: PropTypes.object,
+    forceNetworkStore: PropTypes.object,
     svgWidth: PropTypes.number,
     svgHeight: PropTypes.number
   };
 
   componentDidMount() {
-    const graph = toJS(this.props.networkStore.currentNetwork);
+    const graph = toJS(this.props.forceNetworkStore.forceNetwork);
     nodesData = graph.nodes;
     edgesData = graph.links;
 
     zoom = d3.zoom();
-    const svg = d3.select('svg')
+    svg = d3.select('svg')
       .call(zoom.on('zoom', () => {
-        // console.log(d3.event.transform);
-        svg.attr('transform', `translate(${d3.event.transform.x}, ${d3.event.transform.y}) scale(${d3.event.transform.k})`);
-      }))
-      .append('g');
+        // console.log(d3.event.transform, 12312321);
+        group.attr('transform', `translate(${d3.event.transform.x}, ${d3.event.transform.y}) scale(${d3.event.transform.k})`);
+      }));
+    group = svg.append('g').attr('id', 'whole');
     const width = d3.select('svg').attr('width');
     const height = d3.select('svg').attr('height');
 
     simulation = d3.forceSimulation()
       .force('link', d3.forceLink().id((data) => { return data.name; }).distance(150))
-      .force('charge', d3.forceManyBody())
+      .force('charge', d3.forceManyBody().strength(-400))
       .force('center', d3.forceCenter(width / 2, height / 2));
 
     simulation
@@ -64,14 +67,16 @@ export default class ForceNetworkGraph extends Component {
     simulation.force('link')
       .links(edgesData);
 
-    svgEdges = svg.append('g')
-      .attr('class', styles.links)
+    svgEdges = group.append('g')
+      .attr('id', 'lines')
       .selectAll('line')
       .data(edgesData)
       .enter().append('line')
+      .attr('class', styles.links)
       .attr('marker-end', 'url(#mainArrow)');
 
-    svgNodes = svg.append('g')
+    svgNodes = group.append('g')
+      .attr('id', 'nodes')
       .selectAll('circle')
       .data(nodesData)
       .enter().append('circle')
@@ -87,7 +92,9 @@ export default class ForceNetworkGraph extends Component {
     svgNodes.append('title')
       .text((data) => { return data.name; });
 
-    svgTexts = svg.selectAll('text')
+    svgTexts = group.append('g')
+      .attr('id', 'texts')
+      .selectAll('text')
       .data(nodesData)
       .enter()
       .append('text')
@@ -99,17 +106,77 @@ export default class ForceNetworkGraph extends Component {
       })
       .attr('text-anchor', 'middle')
       .attr('dy', (data) => {
-        return data.cateType === 0 ? 45 : 25;
+        return data.name.length < 4 ? '0em' : '-1em';
       })
       .text((data) => {         // 返回节点的名字
-        return data.name;
+        return data.name.substring(0, 3);
       })
       .call(d3.drag()
         .on('start', this.dragstarted)
         .on('drag', this.dragged)
         .on('end', this.dragended));
 
-    svgEdgepaths = svg.selectAll('.edgepath')
+    svgTexts2 = group.append('g')
+      .attr('id', 'texts2')
+      .selectAll('text')
+      .data(nodesData)
+      .enter()
+      .append('text')
+      .attr('class', (data) => {
+        if (data.hide) {
+          return styles.hide;
+        }
+        return styles.nodeText;
+      })
+      .attr('text-anchor', 'middle')
+      .attr('dy', () => {
+        return '1em';
+      })
+      .text((data) => {         // 返回节点的名字
+        return data.name.substring(3, 8);
+      })
+      .call(d3.drag()
+        .on('start', this.dragstarted)
+        .on('drag', this.dragged)
+        .on('end', this.dragended));
+
+    svgTexts3 = group.append('g')
+      .attr('id', 'texts3')
+      .selectAll('text')
+      .data(nodesData)
+      .enter()
+      .append('text')
+      .attr('class', (data) => {
+        if (data.hide) {
+          return styles.hide;
+        }
+        return styles.nodeText;
+      })
+      .attr('text-anchor', 'middle')
+      .attr('dy', () => {
+        return '2em';
+      })
+      .text((data) => {         // 返回节点的名字
+        return data.name.length > 8 ? '...' : '';
+      })
+      .call(d3.drag()
+        .on('start', this.dragstarted)
+        .on('drag', this.dragged)
+        .on('end', this.dragended));
+
+    svgTexts
+      .append('title')
+      .text((data) => { return data.name; });
+    svgTexts2
+      .append('title')
+      .text((data) => { return data.name; });
+    svgTexts3
+      .append('title')
+      .text((data) => { return data.name; });
+
+    svgEdgepaths = group.append('g')
+      .attr('id', 'linePaths')
+      .selectAll('.edgepath')
       .data(edgesData)
       .enter()
       .append('path')
@@ -118,7 +185,9 @@ export default class ForceNetworkGraph extends Component {
       .attr('id', (data, idx) => { return 'edgepath' + idx; })
       .style('pointer-events', 'none');
 
-    svgEdgelabels = svg.selectAll('.edgelabel')
+    svgEdgelabels = group.append('g')
+      .attr('id', 'lineLabels')
+      .selectAll('.edgelabel')
       .data(edgesData)
       .enter()
       .append('text')
@@ -140,14 +209,14 @@ export default class ForceNetworkGraph extends Component {
 
     // 监听点击和搜索节点事件
     reaction(
-      () => this.props.networkStore.focusNodeName,
+      () => this.props.forceNetworkStore.focusNodeName,
       () => {
         if (nodesData !== '') {
-          const { focusNodeName } = this.props.networkStore;
+          const { focusNodeName } = this.props.forceNetworkStore;
           nodesData.map((node) => {
             node.isFocus = false;
           });
-          if (focusNodeName === this.props.networkStore.mainCompanyName) {
+          if (focusNodeName === this.props.forceNetworkStore.mainCompanyName) {
             nodesData[0].isFocus = true;
           } else {
             nodesData.map((node) => {
@@ -179,13 +248,34 @@ export default class ForceNetworkGraph extends Component {
         return data.isFocus ? 20 : 35;
       })
       .attr('class', (data) => {
-        return (data.hide && styles.hide) || (data.isFocus && ' ') || (data.category === 0 && styles.mainCompany) || (data.blackList && data.category !== 7 && styles.blackListNodes) || (data.status === 0 && styles.cancelNodes) || styles[`category${svgTools.getNodeColor(this.props.networkStore.typeList.checkedArr, data.cateList)}`];
+        return (data.hide && styles.hide) || (data.isFocus && ' ') || (data.category === 0 && styles.mainCompany) || (data.blackList && data.category !== 7 && styles.blackListNodes) || (data.status === 0 && styles.cancelNodes) || styles[`category${data.category}`];
       })
       .attr('fill', (data) => {
         return (!data.isFocus && ' ') || (data.blackList && data.category !== 7 && 'url(#bling9)') || (data.status === 0 && 'url(#bling10)') || `url(#bling${data.category})`;
       });
 
     svgTexts
+      .attr('x', (data) => {
+        return data.x;
+      })
+      .attr('y', (data) => {
+        return data.y;
+      })
+      .attr('class', (data) => {
+        return data.hide ? styles.hide : styles.nodeText;
+      });
+    svgTexts2
+      .attr('x', (data) => {
+        return data.x;
+      })
+      .attr('y', (data) => {
+        return data.y;
+      })
+      .attr('class', (data) => {
+        return data.hide ? styles.hide : styles.nodeText;
+      });
+
+    svgTexts3
       .attr('x', (data) => {
         return data.x;
       })
@@ -232,7 +322,7 @@ export default class ForceNetworkGraph extends Component {
     if (!d3.event.active) simulation.alphaTarget(0);
     if (!isDragging) {
       console.log(data, '单击');
-      this.props.networkStore.focusNode(data.name);
+      this.props.forceNetworkStore.focusNode(data.name);
     } else {
       // console.log(data, '拖拽结束');
     }

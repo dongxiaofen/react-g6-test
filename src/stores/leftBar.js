@@ -33,6 +33,7 @@ class LeftBarStore {
       menuText: '关联网络',
       menuKey: 'network',
       children: [
+        { menuText: '全网关系', menuKey: 'forceNetwork', helpInfo: helpInfo1, contain: ['main', 'analysisReport', 'report'] },
         { menuText: '关联关系', menuKey: 'network', helpInfo: helpInfo1, contain: ['main', 'analysisReport', 'report'] },
         { menuText: '风险关系', menuKey: 'blackNetwork', helpInfo: helpInfo1, contain: ['main', 'analysisReport', 'report'] },
       ],
