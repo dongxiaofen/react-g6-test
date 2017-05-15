@@ -1,16 +1,19 @@
 import React, {PropTypes} from 'react';
-import { observer } from 'mobx-react';
-import styles from './index.less';
+import { observer, inject } from 'mobx-react';
 
-function Trend({}) {
+import styles from './index.less';
+import Chart from './Chart';
+
+function Trend({ bidMarketStore }) {
   return (
     <div className={styles}>
       this is trend
+      <Chart trend={bidMarketStore.trend} />
     </div>
   );
 }
 
 Trend.propTypes = {
-  foo: PropTypes.string,
+  bidMarketStore: PropTypes.object,
 };
-export default observer(Trend);
+export default inject('bidMarketStore')(observer(Trend));
