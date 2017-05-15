@@ -28,9 +28,15 @@ function Consume({accountSettingStore}) {
   const data = accountSettingStore.tabs.consume.page;
   return (
     <div className={styles.wrapper}>
-      <div className={styles.totalConsume}>
-        {`总消费点数 ${totalConsume || 0} 点`}
-      </div>
+      {
+        consumeType === 'POINT'
+        ?
+        <div className={styles.totalConsume}>
+          {`总消费点数 ${totalConsume || 0} 点`}
+        </div>
+        :
+        null
+      }
       <AccountTable
         module="accountConsume"
         headData={head}

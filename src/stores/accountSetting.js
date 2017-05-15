@@ -165,6 +165,7 @@ class AccountSettingStore {
       industry: {},
       scale: {},
     },
+    alertCorp: {},
     consume: {},
     recharge: {},
     summary: {},
@@ -338,6 +339,20 @@ class AccountSettingStore {
       }))
       .catch(action('getScale_error', err => {
         this.tabs.business.scale = {error: err.response.data, data: {}};
+      }));
+  }
+  @action.bound getAlertCorp(uId) {
+    this.tabs.alertCorp = {};
+    const params = uiStore.uiState.accountAlertCorp;
+    delete params.totalElements;
+    accountSettingApi.getAlertCorp(uId, params)
+      .then(action('getAlertCorp_success', resp => {
+        const noData = resp.data.content === undefined || resp.data.content.content.length === 0;
+        this.tabs.alertCorp = noData ? {error: {message: '未发现预警企业'}, content: []} : resp.data;
+        uiStore.updateUiStore('accountAlertCorp.totalElements', resp.data.content.totalElements);
+      }))
+      .catch(action('getAlertCorp_error', err => {
+        this.tabs.alertCorp = {error: err.response.data, content: []};
       }));
   }
   @action.bound getConsume(uId) {

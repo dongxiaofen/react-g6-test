@@ -5,7 +5,7 @@ import AccountTable from '../AccountTable';
 import styles from './index.less';
 function Summary({accountSettingStore}) {
   const timeMap = accountSettingStore.timeMap;
-  const baseInfo = accountSettingStore.base.data;
+  const consumeType = accountSettingStore.getActiveTreeValue('consumeType');
   const consumeTypeMap = accountSettingStore.consumeTypeMap;
   const handleConsumeInfo = (value, item) => {
     const nameStr = item.companyName ? `企业：${item.companyName}` : '';
@@ -24,7 +24,7 @@ function Summary({accountSettingStore}) {
     {name: '消费编号', key: 'seqNum'},
     {name: '消费类型', key: 'consumeOperationType', handle: handleConsumeType},
     {name: '操作时间', key: 'opTime'},
-    {name: '消费点数', key: 'consume', none: baseInfo.consumeType !== 'POINT'},
+    {name: '消费点数', key: 'consume', none: consumeType !== 'POINT'},
     {name: '消费内容', key: 'consumeInfo', handle: handleConsumeInfo},
     {name: '操作人', key: 'operatorName', handle: handleName},
   ];
@@ -32,9 +32,15 @@ function Summary({accountSettingStore}) {
   const data = accountSettingStore.tabs.summary.page;
   return (
     <div className={styles.wrapper}>
-      <div className={styles.totalConsume}>
-        {`所有帐号总消费点数 ${totalConsume || 0} 点`}
-      </div>
+      {
+        consumeType === 'POINT'
+        ?
+        <div className={styles.totalConsume}>
+          {`所有帐号总消费点数 ${totalConsume || 0} 点`}
+        </div>
+        :
+        null
+      }
       <AccountTable
         module="accountSummary"
         headData={head}
