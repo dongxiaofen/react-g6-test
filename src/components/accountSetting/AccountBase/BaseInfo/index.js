@@ -91,7 +91,7 @@ function BaseInfo({accountSettingStore}) {
       {
         name: '剩余点数',
         keys: 'point',
-        none: baseInfo.data.consumeType !== 'POINT' ? false : false,
+        none: baseInfo.data.consumeType !== 'POINT' ? true : false,
         handle: addUnit.bind(null, '点'),
       },
     ];

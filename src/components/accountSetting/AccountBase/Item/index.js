@@ -1,7 +1,7 @@
 import React from 'react';
 import { observer } from 'mobx-react';
 import styles from './index.less';
-function Item({name, keys, values, handle, none, unit}) {
+function Item({name, keys, values, handle, none, unit, feeset, remainValue}) {
   const formatValue = () => {
     if (values === '' || values === undefined) {
       return '- -';
@@ -18,7 +18,9 @@ function Item({name, keys, values, handle, none, unit}) {
         {name}
       </div>
       <div className={styles.values}>
-        {handle ? handle(newValue, keys) : newValue}{newValue !== '- -' && unit || ''}
+        {handle ? handle(newValue, keys) : newValue}
+        {newValue !== '- -' && unit || ''}
+        {feeset ? ` / 剩余 ${Number(remainValue)} ${unit}` : ''}
       </div>
     </div>
   );
