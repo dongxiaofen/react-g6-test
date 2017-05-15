@@ -82,6 +82,27 @@ class LeftBarStore {
       });
     });
   }
+  @action.bound getReportType(routing) {
+    const { monitorId, reportId, analysisReportId, companyName, companyType } = routing.location.query;
+    let reportType;
+    if (monitorId) {
+      if (companyType === 'MAIN') {
+        reportType = 'main'; // 主体监控报告
+      } else {
+        reportType = 'relation'; // 监控关联报告
+      }
+    }
+    if (reportId) {
+      reportType = 'report'; // 高级报告
+    }
+    if (analysisReportId) {
+      reportType = 'analysisReport'; // 深度分析报告
+    }
+    if (companyName) {
+      reportType = 'free'; // 免费报告
+    }
+    return reportType;
+  }
   @action.bound resetStore() {
     this.activeMenu = ['report'];
     this.activeItem = 'corpDetail';
