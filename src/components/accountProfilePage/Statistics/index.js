@@ -1,17 +1,17 @@
 import React, {PropTypes} from 'react';
 import { observer } from 'mobx-react';
 // import styles from './index.less';
-import Statistics from '../Statistics';
+import SingeInfo from './SingeInfo';
 
-function MyAccount({}) {
+function Statistics({}) {
   return (
     <div>
-      <Statistics />
+      <SingeInfo />
     </div>
   );
 }
 
-MyAccount.propTypes = {
+Statistics.propTypes = {
   foo: PropTypes.string,
 };
-export default observer(MyAccount);
+export default observer(Statistics);

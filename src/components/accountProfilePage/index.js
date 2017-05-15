@@ -10,16 +10,11 @@ import {Col, Row, Container} from 'components/common/layout';
 @observer
 export default class AccountProfileBody extends Component {
   static propTypes = {
-    myHomePageStore: PropTypes.object,
+    accountProfileStore: PropTypes.object,
   };
-  // componentWillMount() {
-  //   const pageParams = {
-  //     index: 1,
-  //     size: 10,
-  //   };
-  //   this.props.myHomePageStore.getAlert(pageParams);
-  //   this.props.myHomePageStore.getStatistic();
-  // }
+  componentWillMount() {
+    this.props.accountProfileStore.getAcconutPageInfo();
+  }
   render() {
     return (
       <Container>

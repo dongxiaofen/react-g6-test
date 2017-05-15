@@ -5,7 +5,7 @@ import styles from './index.less';
 
 function Menu({ routing }) {
   const config = [
-    { parent: { module: '首页', route: 'myHomePage' } },
+    { parent: { module: '首页', route: 'accountProfile' } },
     {
       parent: { module: '头条' },
       children: [
