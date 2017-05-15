@@ -23,7 +23,11 @@ function MyAccount({accountProfileStore}) {
   return (
     <div className={styles.top}>
       <Statistics {...statistics} />
-      <Tables />
+      <div className="clearfix">
+        <Tables className="" />
+        <Tables className={styles.gap} />
+        <Tables className="" />
+      </div>
     </div>
   );
 }

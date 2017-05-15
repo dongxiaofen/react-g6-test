@@ -1,12 +1,12 @@
 import React, {PropTypes} from 'react';
 import { observer } from 'mobx-react';
-// import styles from './index.less';
+import styles from './index.less';
 import TableHead from './TableHead';
 import TableBody from './TableBody';
 
-function Tables({}) {
+function Tables({className}) {
   return (
-    <div>
+    <div className={`${className} ${styles.table_box}`}>
       <TableHead />
       <TableBody />
     </div>
@@ -14,6 +14,6 @@ function Tables({}) {
 }
 
 Tables.propTypes = {
-  foo: PropTypes.string,
+  className: PropTypes.string,
 };
 export default observer(Tables);
