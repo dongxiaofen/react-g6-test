@@ -14,9 +14,6 @@ export default class Risk extends Component {
   static propTypes = {
     riskStore: PropTypes.object
   };
-  componentWillUnmount() {
-    this.props.riskStore.resetStore();
-  }
   render() {
     const riskStore = this.props.riskStore;
     return (

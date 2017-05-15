@@ -103,6 +103,7 @@ class RiskStore {
     this.resetData('court.tabAct', 'str');
     this.resetData('corpDetailPunish', 'obj');
     this.resetData('taxList', 'ary');
+    this.court.hasCourtData = true;
     this.isLoading = true;
     this.isMount = false;
   }
