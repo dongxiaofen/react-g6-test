@@ -2,7 +2,7 @@ import React, { PropTypes } from 'react';
 import { observer, inject } from 'mobx-react';
 import styles from './index.less';
 
-function ReportAction({ bannerStore, modalStore, payModalStore, routing }) {
+function ReportAction({ bannerStore, modalStore, payModalStore, routing, clientStore }) {
   const { monitorId, reportId, analysisReportId, companyType } = routing.location.query;
   const monitorStatus = bannerStore.monitorStatus;
   /* 普通按钮 */
@@ -36,11 +36,18 @@ function ReportAction({ bannerStore, modalStore, payModalStore, routing }) {
   };
 
   const renewalMonitorModal = () => {
-    payModalStore.openCompModal({
+    let config = {
       'modalType': 'continueMonitor',
       'width': '560px',
       'callBack': renewalConfirm
-    });
+    };
+    if (clientStore.userInfo.consumeType === 'FEESET') {
+      config = {
+        'isComboRenewal': true,
+        'callBack': renewalConfirm
+      };
+    }
+    payModalStore.openCompModal({ ...config });
   };
 
   const updateHighOrDeepConfirmAction = () => {
@@ -300,6 +307,7 @@ ReportAction.propTypes = {
   bannerStore: PropTypes.object,
   modalStore: PropTypes.object,
   payModalStore: PropTypes.object,
+  clientStore: PropTypes.object,
   routing: PropTypes.object,
 };
-export default inject('routing', 'modalStore', 'payModalStore')(observer(ReportAction));
+export default inject('routing', 'modalStore', 'payModalStore', 'clientStore')(observer(ReportAction));
