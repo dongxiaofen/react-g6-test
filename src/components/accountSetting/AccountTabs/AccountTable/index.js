@@ -8,7 +8,7 @@ function AccountTable({headData, bodyData, module}) {
     headData.forEach(item => {
       if (!item.none) {
         head.push(
-          <th key={item.key}>{item.name}</th>
+          <th width={item.width} key={item.key}>{item.name}</th>
         );
       }
     });
