@@ -50,7 +50,6 @@ export default class ForceNetworkGraph extends Component {
     zoom = d3.zoom();
     svg = d3.select('svg')
       .call(zoom.on('zoom', () => {
-        // console.log(d3.event.transform, 12312321);
         group.attr('transform', `translate(${d3.event.transform.x}, ${d3.event.transform.y}) scale(${d3.event.transform.k})`);
       }));
     group = svg.append('g').attr('id', 'whole');
@@ -323,20 +322,16 @@ export default class ForceNetworkGraph extends Component {
   dragended = (data) => {
     if (!d3.event.active) simulation.alphaTarget(0);
     if (!isDragging) {
-      if (clickTime) {
-        console.log(timer);
+      if (clickTime) {// 双击
         if (timer) {
           clearTimeout(timer);
         }
         clickTime = '';
-        console.log('双击');
       } else {
         const date = new Date();
         clickTime = date;
-        console.log('单击11');
         timer = setTimeout(()=>{
           this.props.networkStore.focusNode(data.name);
-          console.log('单击');
           clickTime = '';
         }, 300);
       }
