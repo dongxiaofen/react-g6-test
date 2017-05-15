@@ -72,8 +72,8 @@ class AlertAnalysisStore {
             this.getJudgeDocDetail(companyType, companyId, this.detailData.detail[this.detailData.activeIndex].content);
           }
         } else if (this.detailData.info.alertType === 'SYS_RULE') {
-          if (resp.data.detail[0].type === 'judgeInfo' && this.detailData.detail.detail[0].judgeInfo) {
-            this.getJudgeDocDetail(companyType, companyId, this.detailData.detail.detail[0].judgeInfo);
+          if (resp.data[0].detail[0].type === 'judgeInfo' && this.detailData.detail[0].detail[0].judgeInfo) {
+            this.getJudgeDocDetail(companyType, companyId, this.detailData.detail[0].detail[0].judgeInfo);
           }
         }
       }))

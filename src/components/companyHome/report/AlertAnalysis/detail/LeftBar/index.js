@@ -16,12 +16,24 @@ function LeftBar({alertAnalysisStore, routing}) {
   const changeTab = (index) => {
     alertAnalysisStore.changeValue('detailData.activeIndex', index);
     alertAnalysisStore.resetHtml();
-    const pattern = data[activeIndex].pattern;
-    if (pattern === 'NEWS') {
-      alertAnalysisStore.getNewsDetail(companyType, companyId);
-    } else if (pattern === 'JUDGMENT') {
-      alertAnalysisStore.getJudgeDocDetail(companyType, companyId, data[activeIndex].content);
+    if (moduleData.info.alertType === 'RULE') {
+      const pattern = data[activeIndex].pattern;
+      if (pattern === 'NEWS') {
+        alertAnalysisStore.getNewsDetail(companyType, companyId);
+      } else if (pattern === 'JUDGMENT') {
+        alertAnalysisStore.getJudgeDocDetail(companyType, companyId, data[activeIndex].content);
+      }
+    } else {
+      if (data[activeIndex].detail[0].type === 'judgeInfo' && data[activeIndex].detail[0].judgeInfo) {
+        alertAnalysisStore.getJudgeDocDetail(companyType, companyId, data[activeIndex].detail[0].judgeInfo);
+      }
     }
+  };
+  const modifyDate = (item)=> {
+    if (moduleData.info.alertType === 'RULE') {
+      return item.alterDt;
+    }
+    return item.time.slice(0, 10);
   };
   const createTabs = () => {
     return data.map((item, index) => {
@@ -32,7 +44,7 @@ function LeftBar({alertAnalysisStore, routing}) {
           className={itemCss}
           onClick={changeTab.bind(null, index)}
           >
-          <div className={styles.time}>{item.alterDt}</div>
+          <div className={styles.time}>{modifyDate(item)}</div>
         </div>
       );
     });
@@ -51,7 +63,7 @@ function LeftBar({alertAnalysisStore, routing}) {
   };
   const prevCss = page <= 1 ? styles.arrowUpDis : styles.arrowUp;
   const nextCss = page * 8 >= data.length ? styles.arrowDownDis : styles.arrowDown;
-  if (moduleData.info.alertType !== 'RULE') {
+  if (data.length < 2) {
     return null;
   }
   return (

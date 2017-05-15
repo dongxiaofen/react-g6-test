@@ -232,6 +232,17 @@ export default class ForceNetworkGraph extends Component {
         }
       }
     );
+    // 监听聚焦事件
+    reaction(
+      () => this.props.forceNetworkStore.dbFocalNode,
+      () => {
+        // const { dbFocalNode } = this.props.forceNetworkStore;
+        nodesData.map((node) => {
+          node.isActive = 0;
+        });
+        simulation.restart();
+      }
+    );
   }
   ticked = () => {
     svgEdges
@@ -247,10 +258,14 @@ export default class ForceNetworkGraph extends Component {
       .attr('cx', (data) => { return data.x; })
       .attr('cy', (data) => { return data.y; })
       .attr('r', (data) => {
+        if (data.isActive === 0) {
+          return 10;
+        }
         return data.isFocus ? 20 : 35;
       })
       .attr('class', (data) => {
-        return (data.hide && styles.hide) || (data.isFocus && ' ') || (data.category === 0 && styles.mainCompany) || (data.blackList && data.category !== 7 && styles.blackListNodes) || (data.status === 0 && styles.cancelNodes) || styles[`category${data.category}`];
+        console.log(data.isActive, styles.noActive);
+        return (data.hide && styles.hide) || (data.isFocus && ' ') || (data.isActive === 0 && styles.noActive) || (data.category === 0 && styles.mainCompany) || (data.blackList && data.category !== 7 && styles.blackListNodes) || (data.status === 0 && styles.cancelNodes) || styles[`category${data.category}`];
       })
       .attr('fill', (data) => {
         return (!data.isFocus && ' ') || (data.blackList && data.category !== 7 && 'url(#bling9)') || (data.status === 0 && 'url(#bling10)') || `url(#bling${data.category})`;
@@ -327,8 +342,8 @@ export default class ForceNetworkGraph extends Component {
         if (timer) {
           clearTimeout(timer);
         }
-        console.log(data);
         clickTime = '';
+        this.props.forceNetworkStore.setFocalNode(data);
       } else {
         const date = new Date();
         clickTime = date;
