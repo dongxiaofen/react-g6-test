@@ -2,7 +2,20 @@ import { observable, action } from 'mobx';
 import { accountProfileApi } from 'api';
 
 class AccountProfileStore {
-  @observable a = 4;
+  @observable ownWarningStatisticsData = {
+    'alertCompanyCount': 3,
+    'alertCount': 33,
+    'monitorCount': 33,
+    'reportCount': 33
+  };
+
+  @observable subWarningStatisticsData = {
+    'alertCompanyCount': 8,
+    'alertCount': 30,
+    'monitorCount': 30,
+    'reportCount': 56
+  };
+
   @action.bound getAcconutPageInfo() {
     this.getOwnWarningStatistics();
     this.getSubWarningStatistics();

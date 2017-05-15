@@ -4,6 +4,7 @@ import { Tabs } from 'antd';
 const TabPane = Tabs.TabPane;
 import SubAccount from './SubAccount';
 import MyAccount from './MyAccount';
+import styles from './index.less';
 import {Col, Row, Container} from 'components/common/layout';
 
 @inject('accountProfileStore')
@@ -18,7 +19,7 @@ export default class AccountProfileBody extends Component {
   render() {
     return (
       <Container>
-        <Row>
+        <Row className={styles.mTop}>
           <Col width="12">
             <Tabs defaultActiveKey="1">
               <TabPane tab="我的账号" key="1">
