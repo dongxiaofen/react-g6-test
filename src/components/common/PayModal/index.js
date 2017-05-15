@@ -5,23 +5,25 @@ import PayModal from 'components/lib/PayModal';
 function _PayModal({payModalStore}) {
   const {
   visible,
+  tittle,
+  width,
+  isComboRenewal,
   pointText,
   pactUrl,
   modalType,
-  tittle,
   pactName,
+  confirmAction,
   closeAction,
-  width,
   selectValue,
   btnLoading,
   choiceClick,
-  confirmAction,
 } = payModalStore;
   return (
     <PayModal
       tittle={tittle}
       width={width}
       visible={visible}
+      isComboRenewal={isComboRenewal}
       modalType={modalType}
       pointText={pointText}
       pactUrl={pactUrl}
@@ -37,6 +39,7 @@ function _PayModal({payModalStore}) {
 
 _PayModal.propTypes = {
   visible: PropTypes.bool,
+  isComboRenewal: PropTypes.bool,
   pointText: PropTypes.string,
   pactUrl: PropTypes.string,
   tittle: PropTypes.string,

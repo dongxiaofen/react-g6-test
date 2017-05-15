@@ -5,18 +5,18 @@ import Modal from 'components/lib/Modal';
 
 function PayModal({
   clientStore,
+  visible,
+  tittle,
+  width,
+  isComboRenewal,
+  selectValue,
   confirmAction,
-  btnLoading,
   closeAction,
+  btnLoading,
   pointText,
   pactUrl,
   pactName,
-  visible,
-  tittle,
-  modalType,
-  width,
   choiceClick,
-  selectValue,
 }) {
   // 生成报告或转为监控
   const payClick = () => {
@@ -63,7 +63,7 @@ function PayModal({
     });
   };
 
-  const modalConfig = {
+  let modalConfig = {
     title: tittle,
     width: width,
     visible: visible,
@@ -79,19 +79,32 @@ function PayModal({
     pactName: pactName,
   };
 
-  // modal内容
-  let modalContent = '';
-  // 监控模块
-  if (modalType === 'createMonitor'
-      || modalType === 'turnMonitor'
-      || modalType === 'continueMonitor') {
-    modalContent = modalBtnList();
+  let modalContent = modalBtnList();
+  if (clientStore.userInfo.consumeType === 'FEESET') {
+    modalConfig = {
+      title: isComboRenewal ? '监控续期（1年）' : tittle,
+      width: 420,
+      visible: visible,
+      isNeedBtn: true,
+      isSingleBtn: true,
+      confirmText: '确定',
+      closeAction: closeModal,
+      confirmAction: payClick,
+      confirmLoading: btnLoading,
+      pointText: pointText,
+      pactUrl: pactUrl,
+      pactName: pactName,
+    };
+    if (isComboRenewal) {
+      modalContent = null;
+    } else {
+      modalContent = <div className={styles.modalText}>即将创建主体监控报告，监控周期为<span className={styles.modalTextSub}>1年</span></div>;
+    }
   }
-  console.log(clientStore.userInfo.consumeType, '-------clientStoreclientStoreclientStore');
   return (
     <div>
       <Modal {...modalConfig}>
-        <div className={`clearfix ${styles.wrap}`}>
+        <div className={`clearfix ${styles.wrap}`} style={{ marginBottom: isComboRenewal ? 0 : 30 }}>
           {modalContent}
         </div>
       </Modal>
@@ -109,6 +122,7 @@ PayModal.propTypes = {
   pactUrl: PropTypes.string,
   pactName: PropTypes.string,
   visible: PropTypes.bool,
+  isComboRenewal: PropTypes.bool,
   tittle: PropTypes.string,
   modalType: PropTypes.string,
   width: PropTypes.string,
