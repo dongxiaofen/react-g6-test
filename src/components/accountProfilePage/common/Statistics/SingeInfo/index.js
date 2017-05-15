@@ -3,7 +3,7 @@ import { observer } from 'mobx-react';
 import styles from './index.less';
 
 
-function SingeInfo({title, count}) {
+function SingeInfo({title, count, unit}) {
   return (
     <div className={styles.singeBox}>
       <h2 className={styles.title}>{title}
@@ -11,7 +11,7 @@ function SingeInfo({title, count}) {
       </h2>
       <div className={styles.count}>
         {count}
-        <span className={styles.unit}>家</span>
+        <span className={styles.unit}>{unit}</span>
       </div>
     </div>
   );
