@@ -14,10 +14,10 @@ export default class Network extends Component {
     this.props.networkStore.resetSvg();
   }
   render() {
-    const {isLoading, error, layout} = this.props.networkStore;
+    const {isLoading, error} = this.props.networkStore;
     return (
       <div>
-        <CurrentNetwork {...{isLoading, error, layout}} />
+        <CurrentNetwork {...{isLoading, error}} />
       </div>
     );
   }

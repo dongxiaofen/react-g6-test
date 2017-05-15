@@ -33,17 +33,17 @@ let group;
 let clickTime = '';
 let timer = null;
 
-@inject('networkStore')
+@inject('forceNetworkStore')
 @observer
 export default class ForceNetworkGraph extends Component {
   static propTypes = {
-    networkStore: PropTypes.object,
+    forceNetworkStore: PropTypes.object,
     svgWidth: PropTypes.number,
     svgHeight: PropTypes.number
   };
 
   componentDidMount() {
-    const graph = toJS(this.props.networkStore.currentNetwork);
+    const graph = toJS(this.props.forceNetworkStore.forceNetwork);
     nodesData = graph.nodes;
     edgesData = graph.links;
 
@@ -211,14 +211,14 @@ export default class ForceNetworkGraph extends Component {
 
     // 监听点击和搜索节点事件
     reaction(
-      () => this.props.networkStore.focusNodeName,
+      () => this.props.forceNetworkStore.focusNodeName,
       () => {
         if (nodesData !== '') {
-          const { focusNodeName } = this.props.networkStore;
+          const { focusNodeName } = this.props.forceNetworkStore;
           nodesData.map((node) => {
             node.isFocus = false;
           });
-          if (focusNodeName === this.props.networkStore.mainCompanyName) {
+          if (focusNodeName === this.props.forceNetworkStore.mainCompanyName) {
             nodesData[0].isFocus = true;
           } else {
             nodesData.map((node) => {
@@ -250,7 +250,7 @@ export default class ForceNetworkGraph extends Component {
         return data.isFocus ? 20 : 35;
       })
       .attr('class', (data) => {
-        return (data.hide && styles.hide) || (data.isFocus && ' ') || (data.category === 0 && styles.mainCompany) || (data.blackList && data.category !== 7 && styles.blackListNodes) || (data.status === 0 && styles.cancelNodes) || styles[`category${svgTools.getNodeColor(this.props.networkStore.typeList.checkedArr, data.cateList)}`];
+        return (data.hide && styles.hide) || (data.isFocus && ' ') || (data.category === 0 && styles.mainCompany) || (data.blackList && data.category !== 7 && styles.blackListNodes) || (data.status === 0 && styles.cancelNodes) || styles[`category${data.category}`];
       })
       .attr('fill', (data) => {
         return (!data.isFocus && ' ') || (data.blackList && data.category !== 7 && 'url(#bling9)') || (data.status === 0 && 'url(#bling10)') || `url(#bling${data.category})`;
@@ -327,14 +327,16 @@ export default class ForceNetworkGraph extends Component {
         if (timer) {
           clearTimeout(timer);
         }
+        console.log(data);
         clickTime = '';
       } else {
         const date = new Date();
         clickTime = date;
         timer = setTimeout(()=>{
-          this.props.networkStore.focusNode(data.name);
+          console.log('单击', data);
+          // this.props.forceNetworkStore.focusNode(data.name);
           clickTime = '';
-        }, 150);
+        }, 300);
       }
     } else {
       // console.log(data, '拖拽结束');

@@ -55,13 +55,19 @@ export default class BidMarket extends Component {
         </Row>
         <Row>
           <div className={styles.itemBlock}>
-            this is BidMarket
+            <div className={styles.itemBlockBG}>
+              this is BidMarket
+            </div>
           </div>
           <div className={styles.itemBlock}>
-            <Trend />
+            <div className={styles.itemBlockBG}>
+              <Trend />
+            </div>
           </div>
           <div className={styles.itemBlock}>
-            this is BidMarket
+            <div className={styles.itemBlockBG}>
+              this is BidMarket
+            </div>
           </div>
         </Row>
         <Info

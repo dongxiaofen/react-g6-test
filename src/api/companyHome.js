@@ -47,6 +47,8 @@ export const getReportModule = (params) => {
         url = `/api/monitor/${monitorId}/person/page?index=1&size=10`;
       } else if (module === 'blackNetwork') {
         url = `/api/monitor/${monitorId}/network/blacklist`;
+      } else if (module === 'forceNetwork') {
+        url = `/api/monitor/${monitorId}/network`;
       } else {
         url = `/api/monitor/${monitorId}/${module}`;
       }
@@ -57,6 +59,8 @@ export const getReportModule = (params) => {
         url = `/api/report/${reportId}/person/page?index=1&size=10`;
       } else if (module === 'blackNetwork') {
         url = `/api/report/network/blacklist?reportId=${reportId}`;
+      } else if (module === 'forceNetwork') {
+        url = `/api/report/network?reportId=${reportId}`;
       } else {
         url = `/api/report/${module}?reportId=${reportId}`;
       }
@@ -67,6 +71,8 @@ export const getReportModule = (params) => {
         url = `/api/analysisReport/${analysisReportId}/person/page?index=1&size=10`;
       } else if (module === 'blackNetwork') {
         url = `/api/analysisReport/network/blacklist?analysisReportId=${analysisReportId}`;
+      } else if (module === 'forceNetwork') {
+        url = `/api/analysisReport/network?analysisReportId=${analysisReportId}`;
       } else {
         url = `/api/analysisReport/${module}?analysisReportId=${analysisReportId}`;
       }
@@ -117,9 +123,9 @@ export const getBiddingDetail = (url, source) => {
 export const getPersonCheckInfo = ({ monitorId, reportId, analysisReportId, params, source }) => {
   if (monitorId) {
     return axios.get(`/api/monitor/${monitorId}/person/page`, { params: params, cancelToken: source.token });
-  }else if (reportId) {
+  } else if (reportId) {
     return axios.get(`/api/report/${reportId}/person/page`, { params: params, cancelToken: source.token });
-  }else if (analysisReportId) {
+  } else if (analysisReportId) {
     return axios.get(`/api/analysisReport/${analysisReportId}/person/page`, { params: params, cancelToken: source.token });
   }
 };

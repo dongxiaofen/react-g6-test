@@ -3,7 +3,7 @@ import { observer, inject } from 'mobx-react';
 import Switch from 'components/lib/switch';
 import Modal from 'components/lib/Modal';
 import styles from './index.less';
-function ActionWrap({data, mainData, index, relation, monitorListStore, payModalStore, messageStore}) {
+function ActionWrap({ data, mainData, index, relation, monitorListStore, payModalStore, messageStore, clientStore }) {
   const monitorId = relation === 'main' ? data.monitorId : data.monitorCompanyType.monitorId;
   const status = data.status;
   const switchLoading = monitorListStore.switchLoading.get(monitorId);
@@ -63,14 +63,18 @@ function ActionWrap({data, mainData, index, relation, monitorListStore, payModal
     });
   };
   const recharge = () => {
-    payModalStore.openCompModal({
+    let config = {
       'modalType': 'continueMonitor',
       'width': '560px',
-      'pactName': '用户服务协议',
-      'pactUrl': '/',
-      'pointText': '',
       'callBack': choiceOk
-    });
+    };
+    if (clientStore.userInfo.consumeType === 'FEESET') {
+      config = {
+        'isComboRenewal': true,
+        'callBack': choiceOk
+      };
+    }
+    payModalStore.openCompModal({ ...config });
   };
   return (
     <div className={styles.wrapper}>
@@ -95,4 +99,4 @@ function ActionWrap({data, mainData, index, relation, monitorListStore, payModal
   );
 }
 
-export default inject('payModalStore', 'messageStore')(observer(ActionWrap));
+export default inject('payModalStore', 'messageStore', 'clientStore')(observer(ActionWrap));
