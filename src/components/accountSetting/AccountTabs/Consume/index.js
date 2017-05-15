@@ -18,9 +18,9 @@ function Consume({accountSettingStore}) {
     return consumeTypeMap[value];
   };
   const head = [
-    {name: '消费编号', key: 'seqNum'},
-    {name: '消费类型', key: 'consumeOperationType', handle: handleConsumeType},
-    {name: '操作时间', key: 'opTime'},
+    {name: '消费编号', key: 'seqNum', width: '15%'},
+    {name: '消费类型', key: 'consumeOperationType', width: '15%', handle: handleConsumeType},
+    {name: '操作时间', key: 'opTime', width: '15%'},
     {name: '消费点数', key: 'consume', none: consumeType !== 'POINT'},
     {name: '消费内容', key: 'consumeInfo', handle: handleConsumeInfo},
   ];
