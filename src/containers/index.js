@@ -31,4 +31,5 @@ export Collection from './collection';
 export BidMarket from './bidMarket';
 export NowRecord from './report/nowRecord';
 export UserAgreement from './userAgreement';
+export Disclaimer from './disclaimer';
 // append here from plop

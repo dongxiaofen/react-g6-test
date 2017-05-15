@@ -35,6 +35,7 @@ import {
     BidMarket,
     NowRecord,
     UserAgreement,
+    Disclaimer,
 // first append here from plop
   } from 'containers';
 
@@ -91,6 +92,7 @@ export default (allStore) => {
       <Route path="ruleCompany" component={ RuleCompany } />
       <Route path="bidMarket" component={ BidMarket } />
       <Route path="userAgreement" component={ UserAgreement } />
+      <Route path="disclaimer" component={ Disclaimer } />
 {/* second append here from plop */}
     </Route>
   );
