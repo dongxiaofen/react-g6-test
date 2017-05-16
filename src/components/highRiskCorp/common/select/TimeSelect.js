@@ -3,8 +3,9 @@ import { observer, inject } from 'mobx-react';
 import Select from 'components/lib/Select';
 const Option = Select.Option;
 import styles from './index.less';
-function RegCapSelect({highRiskCorpStore, module, timeSelect, onChange}) {
+function TimeSelect({highRiskCorpStore, module, yearSelect, rangeSelect, onChange}) {
   const selectValue = highRiskCorpStore[module].params.timeRange;
+  const timeSelect = module === 'enterpriseIncrement' ? yearSelect : rangeSelect;
   const createOption = () => {
     const output = [];
     timeSelect.map((item, key) => {
@@ -26,26 +27,31 @@ function RegCapSelect({highRiskCorpStore, module, timeSelect, onChange}) {
     onChange(params);
   };
   return (
-    <div className={styles.selectLine}>
-      <span className={styles.label}>地区</span>
-      <Select
-        className={styles.selectBox}
-        defaultValue={selectValue}
-        onChange={selectChange}
-        value={selectValue}
-        >
-        {createOption()}
-      </Select>
-    </div>
+    <Select
+      width="80px"
+      className={styles.selectBox}
+      defaultValue={selectValue}
+      onChange={selectChange}
+      value={selectValue}
+      >
+      {createOption()}
+    </Select>
   );
 }
-RegCapSelect.defaultProps = {
-  timeSelect: [
+TimeSelect.defaultProps = {
+  rangeSelect: [
     {key: '近一个月', value: '近一个月'},
     {key: '近三个月', value: '近三个月'},
     {key: '近半年', value: '近半年'},
     {key: '近一年', value: '近一年'},
     {key: '全部', value: '全部'},
   ],
+  yearSelect: [
+    {key: '2017年', value: '2017'},
+    {key: '2016年', value: '2016'},
+    {key: '2015年', value: '2015'},
+    {key: '2014年', value: '2014'},
+    {key: '2013年', value: '2013'},
+  ],
 };
-export default inject('highRiskCorpStore')(observer(RegCapSelect));
+export default inject('highRiskCorpStore')(observer(TimeSelect));
