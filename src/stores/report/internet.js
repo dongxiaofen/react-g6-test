@@ -40,10 +40,11 @@ class InternetStore {
         this.newsData = {data: resp.data.info.data};
       }))
       .catch(action('get internet data error', err => {
+        const time = 5 * 60 * 1000;
         if (pathval.getPathValue(err, 'response.data.errorCode') === 404208) {
           setTimeout(() => {
             this.getReportModule(...args);
-          }, 5 * 60 * 1000);
+          }, time);
         }
         this.analysis = {error: err.response.data};
         this.statistic = {error: err.response.data};
