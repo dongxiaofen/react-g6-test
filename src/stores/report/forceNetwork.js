@@ -37,7 +37,7 @@ class ForceNetworkStore {
       'esDate': '2014-07-14',
       'firstLayer': 0
     });
-    this.expandNetwork.links.push({
+    this.expandNetwork.links = this.expandNetwork.links.concat([{
       'target': '杭州誉存科技有限公司',
       'invConum': -1,
       'state': 0,
@@ -51,7 +51,23 @@ class ForceNetworkStore {
           '执行董事'
         ]
       }
-    });
+    },
+    {
+      'target': '杭州誉存科技有限公司',
+      'invConum': -1,
+      'state': 0,
+      'current': 1,
+      'source': '綦江县红益建材厂',
+      'invRatio': -1,
+      'linkCate': 0,
+      'property': 2,
+      'name': {
+        '高管': [
+          '执行董事'
+        ]
+      }
+    }]);
+    // this.expandNetwork.links.push();
     this.expandNetwork.change = !this.expandNetwork.change;
   }
   @action.bound focusNode(name) {

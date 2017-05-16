@@ -98,8 +98,8 @@ export default class ForceNetworkGraph extends Component {
       () => this.props.forceNetworkStore.expandNetwork.change,
       () => {
         const { nodes, links } = this.props.forceNetworkStore.expandNetwork;
-        nodesData.push(toJS(nodes[0]));
-        edgesData.push(toJS(links[0]));
+        nodesData = nodesData.concat(toJS(nodes));
+        edgesData = edgesData.concat(toJS(links));
         this.reDraw();
       }
     );
