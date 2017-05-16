@@ -5,6 +5,7 @@ import moment from 'moment';
 import styles from './index.less';
 import { Container, Row, Col } from 'components/common/layout';
 import SwitchData from 'components/bidMarket/SwitchData';
+import Area from 'components/bidMarket/Area';
 import Info from 'components/bidMarket/Info';
 import Trend from 'components/bidMarket/Trend';
 import Rank from 'components/bidMarket/Rank';
@@ -54,7 +55,7 @@ export default class BidMarket extends Component {
         <Row>
           <div className={styles.itemBlock}>
             <div className={styles.itemBlockBG}>
-              this is BidMarket
+              <Area />
             </div>
           </div>
           <div className={styles.itemBlock}>
