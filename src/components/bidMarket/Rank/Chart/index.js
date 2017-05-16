@@ -86,6 +86,9 @@ function Chart({ rank, tabSwitchIndex, setSwitchTab }) {
   const tabSwitchOnClick = (key) => {
     setSwitchTab(key);
   };
+  const echartOnClick = (val) => {
+    console.log(val, '--------------------val');
+  };
   return (
     <div className={styles.wrap}>
       <div className={styles['bar-tab']}>
@@ -106,7 +109,11 @@ function Chart({ rank, tabSwitchIndex, setSwitchTab }) {
       </div>
       {
         rank.data.length
-          ? <BaseChart chartId="bidMarketRank" height="500px" option={option} />
+          ? <BaseChart
+              chartId="bidMarketRank"
+              height="500px"
+              option={option}
+              clickAction={echartOnClick} />
           : <ErrorText {...errorConfig} />
       }
     </div>

@@ -62,7 +62,9 @@ class BidMarketStore {
 
   // 全国分布
   @action.bound getAll(params) {
-    bidMarketApi.getAll(params)
+    const { from, to } = params;
+    this.mapLoading = true;
+    bidMarketApi.getAll({ from: from, to: to })
       .then(action('get all', (resp) => {
         console.log(resp.data, '--------getAll');
         this.mapLoading = false;
@@ -75,8 +77,9 @@ class BidMarketStore {
 
   // 变化趋势
   @action.bound getTrend(params) {
+    const { from, to, province, city } = params;
     this.trendLoading = true;
-    bidMarketApi.getTrend(params)
+    bidMarketApi.getTrend({ from, to, province, city })
       .then(action('get trend', (resp) => {
         const result = resp.data.result;
         if (result.length > 0) {
@@ -110,8 +113,9 @@ class BidMarketStore {
 
   // 中标金额总量排行
   @action.bound getRank(params) {
+    const { from, to, province, city } = params;
     this.rankLoading = true;
-    bidMarketApi.getRank(params)
+    bidMarketApi.getRank({ from, to, province, city })
       .then(action('get rank', (resp) => {
         const rank = resp.data;
         const topWinners = rank.topWinners;
