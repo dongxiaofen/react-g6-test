@@ -14,7 +14,7 @@ export const getBannerInfo = ({
   } else if (analysisReportId) {
     url = `/api/analysisReport/infobanner?analysisReportId=${analysisReportId}`;
   } else if (companyType === 'FREE') {
-    url = `/api/free/infobanner?companyName=${encodeURI(companyName)}`;
+    url = `/api/free/xx/infobanner?companyName=${encodeURI(companyName)}`;
   }
   return axios.get(url);
 };
@@ -80,7 +80,7 @@ export const getReportModule = (params) => {
   } else if (companyType === 'ASSOCIATE') {
     url = `/api/monitor/${monitorId}/${module}`;
   } else if (companyType === 'FREE') {
-    url = `/api/free/${module}?companyName=${encodeURI(companyName)}`;
+    url = `/api/free/xx/${module}?companyName=${encodeURI(companyName)}`;
   }
   // 设置axios取消事件
   const CancelToken = axios.CancelToken;
@@ -110,7 +110,7 @@ export const getInternet = ({ monitorId, analysisReportId, reportId, companyName
   } else if (companyType === 'ASSOCIATE') {
     url = `/api/monitor/${monitorId}/internet`;
   } else if (companyType === 'FREE') {
-    url = `/api/free/internet?companyName=${encodeURI(companyName)}`;
+    url = `/api/free/xx/internet?companyName=${encodeURI(companyName)}`;
   }
   return axios.get(url, { cancelToken: source.token, params: params });
 };

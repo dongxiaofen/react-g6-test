@@ -36,6 +36,8 @@ import {
     AccountProfile,
     ForceNetwork,
     NowRecord,
+    UserAgreement,
+    Disclaimer,
     Tax,
     TaxCheck,
 // first append here from plop
@@ -96,6 +98,8 @@ export default (allStore) => {
       <Route path="collection" component={ Collection } />
       <Route path="ruleCompany" component={ RuleCompany } />
       <Route path="bidMarket" component={ BidMarket } />
+      <Route path="userAgreement" component={ UserAgreement } />
+      <Route path="disclaimer" component={ Disclaimer } />
       <Route path="accountProfile" component={ AccountProfile } />
 {/* second append here from plop */}
     </Route>

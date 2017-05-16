@@ -84,7 +84,6 @@ class BannerStore {
       ],
       'NEWS': [],
       'OPERATION': [
-        { label: '企业综合信息', value: 'OPERATION_TEL', checked: false },
         { label: '招投标', value: 'OPERATION_BIDDING', checked: false },
         { label: '专利', value: 'OPERATION_PATENT', checked: false },
         { label: '商标', value: 'OPERATION_TRADEMARK', checked: false },
