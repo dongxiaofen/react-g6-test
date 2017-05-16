@@ -4,12 +4,17 @@ import styles from './index.less';
 import TaxCheckItem from './TaxCheckItem';
 import Button from 'components/lib/button';
 import noData from 'imgs/tax/bd.png';
-@inject('taxCheckStore', 'uiStore')
+@inject('routing', 'taxCheckStore', 'uiStore')
 @observer
 export default class TaxCheckList extends Component {
   static propTypes = {
+    routing: PropTypes.object,
     taxCheckStore: PropTypes.object,
     uiStore: PropTypes.object,
+  }
+  componentDidMount() {
+    const { monitorId } = this.props.routing.location.query;
+    this.props.taxCheckStore.getMonitorId(monitorId);
   }
   componentWillUnmount() {
     this.props.taxCheckStore.resetStore();
@@ -37,7 +42,9 @@ export default class TaxCheckList extends Component {
               核查结果提示：<span>税务核查金额和实际金额误差在5%以内时即“匹配”，超过5%即“不匹配”</span>
             </span>
           </div>
-          <TaxCheckItem taxCheckStore={this.props.taxCheckStore} />
+          <TaxCheckItem
+            taxCheckStore={this.props.taxCheckStore}
+            uiStore={this.props.uiStore} />
         </div>
       );
     }
