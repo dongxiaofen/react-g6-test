@@ -25,6 +25,8 @@ class AccountProfileStore {
   @observable ownLowestScore = [];
   @observable subLowestScore = [];
 
+  @observable subAccount10Data = [];
+
   @action.bound getAcconutPageInfo() {
     this.getOwnWarningStatistics();
     this.getSubWarningStatistics();
@@ -34,6 +36,17 @@ class AccountProfileStore {
     this.getOwnLowestScore();
     this.getOwnNewest();
     this.getSubNewest();
+    this.getSubAccount10();
+  }
+
+  @action.bound getSubAccount10() {
+    accountProfileApi.subAccount10()
+      .then(action( (response) => {
+        this.subAccount10Data = response.data;
+      }))
+      .catch(action( (err) => {
+        console.log(err.response.data);
+      }));
   }
 
   @action.bound getOwnWarningStatistics() {

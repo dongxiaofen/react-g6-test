@@ -49,3 +49,8 @@ export const subWorningAccount10 = () => {
 export const subNewestRule = () => {
   return axios.get('/api/user/index/xx/sub/newestRule');
 };
+
+// 下属子账号
+export const subAccount10 = () => {
+  return axios.get('/api/user/index/xx/sub/account10');
+};

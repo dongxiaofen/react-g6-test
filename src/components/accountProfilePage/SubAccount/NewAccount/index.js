@@ -1,19 +1,19 @@
 import React, {PropTypes} from 'react';
-import { observer } from 'mobx-react';
+import { observer, inject } from 'mobx-react';
 import styles from './index.less';
+import NewAccountHeader from './NewAccountHeader';
+import NewAccountBody from './NewAccountBody';
 
-function NewAccount({}) {
+function NewAccount({accountProfileStore}) {
   return (
-    <div>
-      <div className={`${styles.header} clearfix`}>
-        <i className={`${styles.account_icon_warning} pull-left`}></i>
-        <h2 className="pull-left">最新预警账号</h2>
-      </div>
+    <div className={styles.newAcconut_box}>
+      <NewAccountHeader />
+      <NewAccountBody data={accountProfileStore.subAccount10Data} />
     </div>
   );
 }
 
 NewAccount.propTypes = {
-  foo: PropTypes.string,
+  accountProfileStore: PropTypes.object,
 };
-export default observer(NewAccount);
+export default inject('accountProfileStore')(observer(NewAccount));
