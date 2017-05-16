@@ -13,6 +13,12 @@ function OperateInfo({baseInfo}) {
   if (data) {
     const config = [
       {
+        name: '快速查询报告',
+        keys: 'freeReportNum',
+        remainKey: '',
+        unit: '个',
+      },
+      {
         name: '高级查询报告',
         keys: 'reportCount',
         remainKey: '',
