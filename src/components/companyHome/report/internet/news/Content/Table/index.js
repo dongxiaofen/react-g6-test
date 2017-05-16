@@ -16,14 +16,14 @@ function Table({data, routing, internetStore}) {
   };
   const viewNews = (item) => {
     const {createdAt, url} = item;
-    const {monitorId, reportId, analysisReportId, companyName} = routing.location.query;
+    const { monitorId, reportId, analysisReportId, companyType} = routing.location.query;
     let getUrl;
     if (monitorId) {
       getUrl = `/api/monitor/${monitorId}/internet/detail?createdAt=${createdAt}&url=${url}`;
     } else if (reportId) {
       getUrl = `/api/report/internet/detail?reportId=${reportId}&createdAt=${createdAt}&url=${url}`;
-    } else if (companyName) {
-      getUrl = `/api/report/internet/detail?companyName=${encodeURI(companyName)}&createdAt=${createdAt}&url=${url}`;
+    } else if (companyType === 'FREE') {
+      getUrl = `/api/free/xx/internet/detail?createdAt=${createdAt}&url=${url}`;
     } else if (analysisReportId) {
       getUrl = `/api/report/internet/detail?analysisReportId=${analysisReportId}&createdAt=${createdAt}&url=${url}`;
     } else {

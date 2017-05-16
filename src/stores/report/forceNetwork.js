@@ -8,7 +8,55 @@ class ForceNetworkStore {
     nodes: []
   };
   @observable mainCompanyName = '';
+  @observable expandNetwork = {
+    nodes: [],
+    links: [],
+    change: false
+  };
+  @observable focusNodeName = '';
 
+  @action.bound expand() {
+    this.expandNetwork.nodes = [];
+    this.expandNetwork.links = [];
+    this.expandNetwork.nodes.push({
+      'category': 4,
+      'status': 1,
+      'layer': 1,
+      'keyCate': 0,
+      'name': '杭州誉存科技有限公司',
+      'degree': 1,
+      'cateType': 1,
+      'caseRecord': [],
+      'pdfPrint': 0,
+      'blackList': false,
+      'state': 0,
+      'linkedNodes': [],
+      'cateList': [
+        4
+      ],
+      'esDate': '2014-07-14',
+      'firstLayer': 0
+    });
+    this.expandNetwork.links.push({
+      'target': '杭州誉存科技有限公司',
+      'invConum': -1,
+      'state': 0,
+      'current': 1,
+      'source': '重庆贝牛网络科技有限公司綦江分公司',
+      'invRatio': -1,
+      'linkCate': 0,
+      'property': 2,
+      'name': {
+        '高管': [
+          '执行董事'
+        ]
+      }
+    });
+    this.expandNetwork.change = !this.expandNetwork.change;
+  }
+  @action.bound focusNode(name) {
+    this.focusNodeName = name;
+  }
   @action.bound getReportModule(params) {
     this.isMount = true;
     companyHomeApi.getReportModule(params)
@@ -32,7 +80,6 @@ class ForceNetworkStore {
             message: '网络图数据异常, 请联系管理员'
           };
         } else {
-          console.log(resp.data.currentNetwork, 12111111111111);
           this.forceNetwork = resp.data.currentNetwork;
           this.mainCompanyName = resp.data.companyName;
         }
