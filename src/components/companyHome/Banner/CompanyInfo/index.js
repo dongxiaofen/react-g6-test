@@ -7,6 +7,7 @@ import RiskLabel from './RiskLabel';
 import Industry from './Industry';
 import Contact from './Contact';
 import Status from './Status';
+import Score from './Score';
 // import ReportAction from './ReportAction';
 
 function CompanyInfo({ bannerStore }) {
@@ -14,6 +15,7 @@ function CompanyInfo({ bannerStore }) {
     <div className={`clearfix ${styles.companyBox}`}>
       <div className="clearfix">
         <CompanyName companyName={bannerStore.companyName} />
+        <Score score={bannerStore.Score} />
         <RiskLabel riskInfo={bannerStore.riskInfo} />
       </div>
       <div className={`clearfix ${styles.baseInfo}`}>

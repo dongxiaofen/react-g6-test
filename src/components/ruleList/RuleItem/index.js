@@ -77,5 +77,7 @@ export default loadingComp({
     imgCategory: 14,
     category: 2,
     module: '预警列表',
+    errCategory: 2,
+    error: props.ruleList.length === 0,
   }),
 })(observer(RuleItem));
