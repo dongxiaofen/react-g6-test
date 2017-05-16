@@ -5,7 +5,11 @@ export const getAll = (params) => {
 };
 
 export const getTrend = (params) => {
-  return axios.get(`/api/market/bidding/trend`, { params: params });
+  return axios.get('/api/market/bidding/trend', { params: params });
+};
+
+export const getRank = (params) => {
+  return axios.get('/api/market/bidding/area/rank', { params: params });
 };
 
 export const getInfo = (params) => {

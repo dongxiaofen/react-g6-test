@@ -37,6 +37,15 @@ class BidMarketStore {
 
   @observable trend = { axis: [], amountData: [], countData: [] };
 
+  @observable tabSwitchIndex = 'winners';
+  @observable rank = {
+    axis: [],
+    data: [],
+    winners: { axis: [], data: [] },
+    purchasers: { axis: [], data: [] },
+    agents: { axis: [], data: [] },
+  }
+
   @observable areaInfo = [];
   @observable detailTitleData = {};
   @observable detailContent = '';
@@ -86,6 +95,68 @@ class BidMarketStore {
       }));
   }
 
+  // 设置中标金额总量排行switch
+  @action.bound setSwitchTab(key) {
+    this.tabSwitchIndex = key;
+    this.rank.axis = this.rank[key].axis;
+    this.rank.data = this.rank[key].data;
+  }
+
+  // 中标金额总量排行
+  @action.bound getRank(params) {
+    this.rankLoading = true;
+    bidMarketApi.getRank(params)
+      .then(action('get rank', (resp) => {
+        const rank = resp.data;
+        const topWinners = rank.topWinners;
+        const topPurchasers = rank.topPurchasers;
+        const topAgents = rank.topAgents;
+        if (topWinners && topWinners.length > 0) {
+          const axis = [];
+          const data = [];
+          topWinners.reverse().forEach((item) => {
+            axis.push(item.amount + '万元');
+            data.push({
+              name: item.winner,
+              value: item.amount,
+            });
+          });
+          this.rank.axis = axis;
+          this.rank.data = data;
+          this.rank.winners = { axis: axis, data: data };
+        }
+        if (topPurchasers && topPurchasers.length > 0) {
+          const axis = [];
+          const data = [];
+          topPurchasers.reverse().forEach((item) => {
+            axis.push(item.amount + '万元');
+            data.push({
+              name: item.purchaser,
+              value: item.amount,
+            });
+          });
+          this.rank.purchasers = { axis: axis, data: data };
+        }
+        if (topAgents && topAgents.length > 0) {
+          const axis = [];
+          const data = [];
+          topAgents.reverse().forEach((item) => {
+            axis.push(item.amount + '万元');
+            data.push({
+              name: item.agent,
+              value: item.amount,
+            });
+          });
+          this.rank.agents = { axis: axis, data: data };
+        }
+        this.rankLoading = false;
+      }))
+      .catch(action('get rank catch', (err) => {
+        console.log(err, '-------------------------err');
+        this.rankLoading = false;
+      }));
+  }
+
   // 中标信息
   @action.bound getInfo(params) {
     this.infoLoading = true;
@@ -122,7 +193,19 @@ class BidMarketStore {
   @action.bound resetStore() {
     uiStore.uiState.bidMarketInfo.index = 1;
     uiStore.uiState.bidMarketInfo.totalElements = 0;
+
     this.params = {};
+
+    this.trend = { axis: [], amountData: [], countData: [] };
+
+    this.tabSwitchIndex = 'winners';
+    this.rank = {
+      axis: [],
+      data: [],
+      winners: { axis: [], data: [] },
+      purchasers: { axis: [], data: [] },
+      agents: { axis: [], data: [] },
+    };
     this.areaInfo = [];
   }
 }
