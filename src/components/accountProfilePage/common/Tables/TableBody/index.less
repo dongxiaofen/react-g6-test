@@ -17,11 +17,20 @@
   padding-left: 6px;
 }
 .flag{
-  border: 1px solid #aaa;
   border-radius: 999px;
-  padding: 0 6px;
+  padding: 2px 6px;
+  margin-left: 8px;
 }
-.warningDate{
+.monitor{
+  color: #87bfa4;
+  background-color: #e7f2ed;
+}
+.Depth{
+  background-color: #87bfa4;
+  color: @white1;
+}
+.warning_date{
+
 }
 .date{
   padding: 35px 20px 0 0;
@@ -35,4 +44,45 @@
     }
   }
   border-top: 1px solid @black12;
+}
+.has_warning_counts{
+  padding: 20px 15px 0 0;
+  text-align: right;
+  .discript{
+
+  }
+  .count_text {
+    font-size: 12px;
+  }
+  .count{
+    font-size: 14px;
+    padding: 4px 10px;
+    border-radius: 999px;
+    margin-left: 8px;
+  }
+  .date_time{
+    padding-top: 8px;
+    color: @mdc-grey-400;
+  }
+}
+
+// 两种状态综合分与预警次数
+
+.warning_count{
+  .count{
+    background-color: #bebf87;
+    color: @white1;
+  }
+  .count_text{
+    color: #bebf87;
+  }
+}
+.comprehensive{
+  .count{
+    background-color: #79a2b8;
+    color: @white1;
+  }
+  .count_text{
+    color: #79a2b8;
+  }
 }

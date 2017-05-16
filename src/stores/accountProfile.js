@@ -16,6 +16,15 @@ class AccountProfileStore {
     'reportCount': 56
   };
 
+  @observable ownWarningCompnay = [];
+  @observable subWarningCompnay = [];
+
+  @observable ownHighRisk = [];
+  @observable subHighRisk = [];
+
+  @observable ownLowestScore = [];
+  @observable subLowestScore = [];
+
   @action.bound getAcconutPageInfo() {
     this.getOwnWarningStatistics();
     this.getSubWarningStatistics();
@@ -50,7 +59,7 @@ class AccountProfileStore {
   @action.bound getOwnNewest() {
     accountProfileApi.ownNewest()
       .then(action( (response) => {
-        console.log(response.data);
+        this.ownWarningCompnay = response.data;
       }))
       .catch(action( (err) => {
         console.log(err.response.data);
@@ -60,7 +69,7 @@ class AccountProfileStore {
   @action.bound getSubNewest() {
     accountProfileApi.subNewest()
       .then(action( (response) => {
-        console.log(response.data);
+        this.subWarningCompnay = response.data;
       }))
       .catch(action( (err) => {
         console.log(err.response.data);
@@ -70,7 +79,7 @@ class AccountProfileStore {
   @action.bound getOwnHightRisk() {
     accountProfileApi.ownHightRisk()
       .then(action( (response) => {
-        console.log(response.data);
+        this.ownHighRisk = response.data;
       }))
       .catch(action( (err) => {
         console.log(err.response.data);
@@ -80,7 +89,7 @@ class AccountProfileStore {
   @action.bound getSubHightRisk() {
     accountProfileApi.subHightRisk()
       .then(action( (response) => {
-        console.log(response.data);
+        this.subHighRisk = response.data;
       }))
       .catch(action( (err) => {
         console.log(err.response.data);
@@ -90,7 +99,7 @@ class AccountProfileStore {
   @action.bound getOwnLowestScore() {
     accountProfileApi.ownLowestScore()
       .then(action( (response) => {
-        console.log(response.data);
+        this.ownLowestScore = response.data;
       }))
       .catch(action( (err) => {
         console.log(err.response.data);
@@ -100,7 +109,7 @@ class AccountProfileStore {
   @action.bound getSubLowestScore() {
     accountProfileApi.subLowestScore()
       .then(action( (response) => {
-        console.log(response.data);
+        this.subLowestScore = response.data;
       }))
       .catch(action( (err) => {
         console.log(err.response.data);

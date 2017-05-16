@@ -22,12 +22,12 @@ export const subNewest = () => {
 
 // 我的风险企业
 export const ownHightRisk = () => {
-  return axios.get('/api/user/index/xx/own/hightRisk10');
+  return axios.get('/api/user/index/xx/own/highRisk10');
 };
 
 // 下属风险企业
 export const subHightRisk = () => {
-  return axios.get('/api/user/index/xx/sub/hightRisk10');
+  return axios.get('/api/user/index/xx/sub/highRisk10');
 };
 
 // 我的综合评分
