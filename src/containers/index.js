@@ -32,4 +32,6 @@ export BidMarket from './bidMarket';
 export AccountProfile from './accountProfile';
 export ForceNetwork from './report/forceNetwork';
 export NowRecord from './report/nowRecord';
+export Tax from './report/tax';
+export TaxCheck from './report/taxCheck';
 // append here from plop

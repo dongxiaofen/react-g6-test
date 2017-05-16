@@ -21,7 +21,9 @@ import styles from './index.less';
   'alertAnalysisStore',
   'relPerCheckStore',
   'nowRecordStore',
-  'stockStore'
+  'stockStore',
+  'taxStore',
+  'taxCheckStore'
 )
 @observer
 export default class CompanyHome extends Component {
@@ -40,6 +42,8 @@ export default class CompanyHome extends Component {
     alertAnalysisStore: PropTypes.object,
     relPerCheckStore: PropTypes.object,
     nowRecordStore: PropTypes.object,
+    taxStore: PropTypes.object,
+    taxCheckStore: PropTypes.object,
   };
   componentWillMount() {
     const leftBarStore = this.props.leftBarStore;
@@ -69,7 +73,9 @@ export default class CompanyHome extends Component {
       'alertAnalysisStore',
       'relPerCheckStore',
       'stockStore',
-      'nowRecordStore'
+      'nowRecordStore',
+      'taxStore',
+      'taxCheckStore'
     ].map((key)=>{
       if (this.props[key].resetStore) {
         this.props[key].resetStore();

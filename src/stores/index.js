@@ -38,4 +38,6 @@ export bidMarketStore from './bidMarket';
 export accountProfileStore from './accountProfile';
 export forceNetworkStore from './report/forceNetwork';
 export nowRecordStore from './report/nowRecord';
+export taxStore from './report/tax';
+export taxCheckStore from './report/taxCheck';
 // append here from plop
