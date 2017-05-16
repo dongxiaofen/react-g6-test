@@ -6,14 +6,13 @@ import styles from './index.less';
 function TimeSelect({highRiskCorpStore, module, yearSelect, rangeSelect, onChange}) {
   const selectValue = highRiskCorpStore[module].params.timeRange;
   const timeSelect = module === 'enterpriseIncrement' ? yearSelect : rangeSelect;
+  const cssName = module === 'enterpriseIncrement' ? 'timeSelct' : 'rangeSelect';
   const createOption = () => {
     const output = [];
     timeSelect.map((item, key) => {
       output.push(
         <Option
           key={key}
-          optionStyle={{fontSize: '16px'}}
-          actOptionStyle={{fontSize: '16px', color: '#fff', background: '#3483e9'}}
           value={item.value} >
           {item.key}
         </Option>
@@ -29,7 +28,7 @@ function TimeSelect({highRiskCorpStore, module, yearSelect, rangeSelect, onChang
   return (
     <Select
       width="90px"
-      className={styles.selectBoxNoLine}
+      className={styles[cssName]}
       defaultValue={selectValue}
       onChange={selectChange}
       value={selectValue}
