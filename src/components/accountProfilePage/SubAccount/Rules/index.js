@@ -22,6 +22,6 @@ function Rules({accountProfileStore}) {
 }
 
 Rules.propTypes = {
-  foo: PropTypes.string,
+  accountProfileStore: PropTypes.object,
 };
 export default inject('accountProfileStore')(observer(Rules));
