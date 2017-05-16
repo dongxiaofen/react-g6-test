@@ -10,6 +10,8 @@ import alertAnalysisStore from './report/alertAnalysis';
 import reportManageStore from './reportManage';
 import collectionStore from './collection';
 import relPerCheckStore from './report/relPerCheck';
+import nowRecordStore from './report/nowRecord';
+import taxCheckStore from './report/taxCheck';
 import bidMarketStore from './bidMarket';
 
 class UiStore {
@@ -59,6 +61,18 @@ class UiStore {
       () => {
         const uId = accountSettingStore.base.data.id;
         accountSettingStore.getAlertCorp(uId);
+      }
+    );
+    reaction(
+      () => this.uiState.nowRecordPager.index,
+      () => {
+        nowRecordStore.getNowRecordList();
+      }
+    );
+    reaction(
+      () => this.uiState.taxCheckPager.index,
+      () => {
+        taxCheckStore.getTaxCheckList();
       }
     );
     reaction(
@@ -182,6 +196,16 @@ class UiStore {
       show: observable.map({})
     },
     ruleCompanyListPager: {
+      index: 1,
+      size: 10,
+      show: observable.map({})
+    },
+    nowRecordPager: {
+      index: 1,
+      size: 10,
+      show: observable.map({})
+    },
+    taxCheckPager: {
       index: 1,
       size: 10,
       show: observable.map({})
@@ -438,6 +462,16 @@ class UiStore {
           show: observable.map({})
         },
         ruleCompanyListPager: {
+          index: 1,
+          size: 10,
+          show: observable.map({})
+        },
+        nowRecordPager: {
+          index: 1,
+          size: 10,
+          show: observable.map({})
+        },
+        taxCheckPager: {
           index: 1,
           size: 10,
           show: observable.map({})

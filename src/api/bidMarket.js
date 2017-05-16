@@ -4,6 +4,10 @@ export const getAll = (params) => {
   return axios.get('/api/market/bidding/country', { params: params });
 };
 
+export const getTrend = (params) => {
+  return axios.get(`/api/market/bidding/trend`, { params: params });
+};
+
 export const getInfo = (params) => {
   return axios.get('/api/market/bidding/area/info', { params: params });
 };

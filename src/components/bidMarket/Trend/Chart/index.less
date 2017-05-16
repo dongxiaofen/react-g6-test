@@ -1,0 +1,39 @@
+@import '~sc-colors/index.less';
+
+.trend-marked {
+  position: absolute;
+  top: 35px;
+}
+
+.trend-marked-item {
+  float: left;
+  margin-right: 20px;
+  width: 65px;
+
+  &:first-child {
+    .trend-marked-block {
+      background-color: #c23531;
+    }
+  }
+
+  &:last-child {
+    .trend-marked-block {
+      background-color: #55979F;
+    }
+  }
+}
+
+.trend-marked-block {
+  float: left;
+  width: 6px;
+  height: 3px;
+  margin-right: 8px;
+  margin-top: 7px;
+
+  z-index: 1;
+}
+
+.trend-marked-text {
+  font-size: 12px;
+  color: @black7;
+}

@@ -14,7 +14,7 @@ export const getBannerInfo = ({
   } else if (analysisReportId) {
     url = `/api/analysisReport/infobanner?analysisReportId=${analysisReportId}`;
   } else if (companyType === 'FREE') {
-    url = `/api/free/infobanner?companyName=${encodeURI(companyName)}`;
+    url = `/api/free/xx/infobanner?companyName=${encodeURI(companyName)}`;
   }
   return axios.get(url);
 };
@@ -47,6 +47,8 @@ export const getReportModule = (params) => {
         url = `/api/monitor/${monitorId}/person/page?index=1&size=10`;
       } else if (module === 'blackNetwork') {
         url = `/api/monitor/${monitorId}/network/blacklist`;
+      } else if (module === 'forceNetwork') {
+        url = `/api/monitor/${monitorId}/network`;
       } else {
         url = `/api/monitor/${monitorId}/${module}`;
       }
@@ -57,6 +59,8 @@ export const getReportModule = (params) => {
         url = `/api/report/${reportId}/person/page?index=1&size=10`;
       } else if (module === 'blackNetwork') {
         url = `/api/report/network/blacklist?reportId=${reportId}`;
+      } else if (module === 'forceNetwork') {
+        url = `/api/report/network?reportId=${reportId}`;
       } else {
         url = `/api/report/${module}?reportId=${reportId}`;
       }
@@ -67,6 +71,8 @@ export const getReportModule = (params) => {
         url = `/api/analysisReport/${analysisReportId}/person/page?index=1&size=10`;
       } else if (module === 'blackNetwork') {
         url = `/api/analysisReport/network/blacklist?analysisReportId=${analysisReportId}`;
+      } else if (module === 'forceNetwork') {
+        url = `/api/analysisReport/network?analysisReportId=${analysisReportId}`;
       } else {
         url = `/api/analysisReport/${module}?analysisReportId=${analysisReportId}`;
       }
@@ -74,7 +80,7 @@ export const getReportModule = (params) => {
   } else if (companyType === 'ASSOCIATE') {
     url = `/api/monitor/${monitorId}/${module}`;
   } else if (companyType === 'FREE') {
-    url = `/api/free/${module}?companyName=${encodeURI(companyName)}`;
+    url = `/api/free/xx/${module}?companyName=${encodeURI(companyName)}`;
   }
   // 设置axios取消事件
   const CancelToken = axios.CancelToken;
@@ -104,7 +110,7 @@ export const getInternet = ({ monitorId, analysisReportId, reportId, companyName
   } else if (companyType === 'ASSOCIATE') {
     url = `/api/monitor/${monitorId}/internet`;
   } else if (companyType === 'FREE') {
-    url = `/api/free/internet?companyName=${encodeURI(companyName)}`;
+    url = `/api/free/xx/internet?companyName=${encodeURI(companyName)}`;
   }
   return axios.get(url, { cancelToken: source.token, params: params });
 };
@@ -117,9 +123,9 @@ export const getBiddingDetail = (url, source) => {
 export const getPersonCheckInfo = ({ monitorId, reportId, analysisReportId, params, source }) => {
   if (monitorId) {
     return axios.get(`/api/monitor/${monitorId}/person/page`, { params: params, cancelToken: source.token });
-  }else if (reportId) {
+  } else if (reportId) {
     return axios.get(`/api/report/${reportId}/person/page`, { params: params, cancelToken: source.token });
-  }else if (analysisReportId) {
+  } else if (analysisReportId) {
     return axios.get(`/api/analysisReport/${analysisReportId}/person/page`, { params: params, cancelToken: source.token });
   }
 };
@@ -264,4 +270,17 @@ export const judgeReportType = (companyName) => {
 // 关联图上创建关联监控
 export const monitorExistNode = (monitorCompanyId, params) => {
   return axios.post(`/api/monitor/${monitorCompanyId}/network/link`, params);
+};
+
+// 现勘记录
+export const getNowRecordList = (id, params, source) => {
+  return axios.get('/api/survey/' + id + '/page', {params: params, cancelToken: source.token});
+};
+export const getNowRecordPictures = (id, source) => {
+  return axios.get('/api/survey/' + id + '/pictures', { cancelToken: source.token });
+};
+
+// 税务核查列表
+export const getTaxCheckList = (id, params, source) => {
+  return axios.get('/api/monitor/' + id + '/taxCheck/page', {params: params, cancelToken: source.token});
 };
