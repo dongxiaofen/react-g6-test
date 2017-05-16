@@ -1,7 +1,7 @@
 import React from 'react';
 import { observer, inject } from 'mobx-react';
 import Select from 'components/lib/Select';
-const Options = Select.Options;
+const Option = Select.Option;
 import cityName from 'helpers/cityName';
 import styles from './index.less';
 function AreaSelect({highRiskCorpStore, module, onChange}) {
@@ -9,15 +9,15 @@ function AreaSelect({highRiskCorpStore, module, onChange}) {
   const createOption = () => {
     const output = [];
     output.push(
-      <Options value="全部">
+      <Option value="全部" key="全国">
         全国
-      </Options>
+      </Option>
     );
     cityName.map((item, key) => {
       output.push(
-        <Options value={item} key={key}>
+        <Option value={item} key={key}>
           {item}
-        </Options>
+        </Option>
       );
     });
     return output;
@@ -26,7 +26,7 @@ function AreaSelect({highRiskCorpStore, module, onChange}) {
     const params = Object.assign({}, highRiskCorpStore[module].params, {area: value});
     highRiskCorpStore.changeValue(`${module}.params.area`, value);
     onChange(params);
-  }
+  };
   return (
     <div className={styles.selectLine}>
       <span className={styles.label}>地区</span>
@@ -42,4 +42,4 @@ function AreaSelect({highRiskCorpStore, module, onChange}) {
   );
 }
 
-export inject('highRiskCorpStore')(observer(AreaSelect));
+export default inject('highRiskCorpStore')(observer(AreaSelect));

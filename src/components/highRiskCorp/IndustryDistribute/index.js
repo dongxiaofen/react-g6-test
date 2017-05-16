@@ -1,11 +1,15 @@
-import React, {Component, PropTypes} from 'react';
+import React from 'react';
+import { observer, inject } from 'mobx-react';
 import { loadingComp } from 'components/hoc';
-import ActionBox from '../common/ActionBox';
+import loadingBoxHoc from '../common/loadingBoxHoc';
 import Chart from 'components/common/Charts/ResizeChart';
 import styles from './index.less';
 function IndustryDistribute({highRiskCorpStore}) {
   const moduleData = highRiskCorpStore.industryDistribute.data.indus_dist_list;
   const countNum = highRiskCorpStore.industryDistribute.data.total_cnt_indus;
+  const formatData = () => {
+    return moduleData.map(obj => ({value: obj.count, name: obj.industry}));
+  };
   const chartOption = {
     series: [
       {
@@ -35,40 +39,33 @@ function IndustryDistribute({highRiskCorpStore}) {
         },
         radius: ['45%', '60%'],
         center: ['45%', '50%'],
-        data: formatData(moduleData),
+        data: formatData(),
       },
     ],
   };
-  getIndustry = (params) => {
-    highRiskCorpStore.getIndustry(params);
-  };
-  formatData = (data) => {
-    return data.toArray().map(obj => ({value: obj.get('count'), name: obj.get('industry')}));
-  };
   return (
-    <ActionBox
-      module="industryDistribute"
-      onChange={getIndustry}
-      >
-      <div className={styles.chartBox}>
-        <Chart
-          chartId="industryDistribute"
-          height="434"
-          option={chartOption} />
-        <div className={styles.countLayer}>
-          <div className={styles.num}>{countNum}</div>
-          <span className={styles.numLabel}>高风险企业</span>
-        </div>
+    <div className={styles.chartBox}>
+      <Chart
+        chartId="industryDistribute"
+        height="434"
+        option={chartOption} />
+      <div className={styles.countLayer}>
+        <div className={styles.num}>{countNum}</div>
+        <span className={styles.numLabel}>高风险企业</span>
       </div>
-    </ActionBox>
+    </div>
   );
 }
-export inject('highRiskCorpStore')(loadingComp({
-  mapDataToProps: props => ({
-    loading: props.highRiskCorpStore.industryDistribute.data.indus_dist_list === undefined ? true : false,
-    error: props.highRiskCorpStore.industryDistribute.data.error,
-    height: 500,
-    errCategory: 1,
-    category: 0,
-  }),
-})(observer(IndustryDistribute)));
+export default inject('highRiskCorpStore')(
+  loadingBoxHoc('industryDistribute')(
+    loadingComp({
+      mapDataToProps: props => ({
+        loading: props.highRiskCorpStore.industryDistribute.data.indus_dist_list === undefined ? true : false,
+        error: props.highRiskCorpStore.industryDistribute.data.error,
+        height: 434,
+        errCategory: 1,
+        category: 0,
+      }),
+    })(observer(IndustryDistribute))
+  )
+);

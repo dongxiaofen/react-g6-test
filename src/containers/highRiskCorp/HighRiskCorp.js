@@ -3,6 +3,10 @@ import { inject, observer } from 'mobx-react';
 import mobx from 'mobx';
 import { Container } from 'components/common/layout';
 import CountTitle from 'components/highRiskCorp/CountTitle';
+import IndustryDistribute from 'components/highRiskCorp/IndustryDistribute';
+import LatestEnterprise from 'components/highRiskCorp/LatestEnterprise';
+import EnterpriseIncrement from 'components/highRiskCorp/EnterpriseIncrement';
+import AreaDistribute from 'components/highRiskCorp/AreaDistribute';
 @inject('highRiskCorpStore')
 @observer
 export default class HighRiskCorp extends Component {
@@ -22,6 +26,10 @@ export default class HighRiskCorp extends Component {
     return (
       <Container>
         <CountTitle />
+        <IndustryDistribute />
+        <LatestEnterprise />
+        <EnterpriseIncrement />
+        <AreaDistribute />
       </Container>
     );
   }

@@ -1,9 +1,11 @@
 import React from 'react';
 import { observer, inject } from 'mobx-react';
-import IndustrySelect from '../select';
-import AreaSelect from './select';
-import RegCapSelect from './select';
-import TimeSelect from './select';
+import {
+  IndustrySelect,
+  AreaSelect,
+  RegCapSelect,
+  TimeSelect
+} from '../select';
 import styles from './index.less';
 const titleMap = {
   'industryDistribute': '高风险企业行业分布',
@@ -25,13 +27,13 @@ function ActionBox(props) {
           <h3 className={styles.title}>{title}</h3>
           {hasTimeSelect.includes(module) ?
             <div className={styles.timeBox}>
-              <TimeSelect />
-            </div> : ''}
+              <TimeSelect {...props} />
+            </div> : null}
         </div>
         <div className="clearfix">
-          {hasIndustrySelect.includes(module) ? <IndustrySelect /> : ''}
-          {hasAreaSelect.includes(module) ? <AreaSelect /> : ''}
-          {hasRegCapSelect.includes(module) ? <RegCapSelect /> : ''}
+          {hasIndustrySelect.includes(module) ? <IndustrySelect {...props} /> : null}
+          {hasAreaSelect.includes(module) ? <AreaSelect {...props} /> : null}
+          {hasRegCapSelect.includes(module) ? <RegCapSelect {...props} /> : null}
         </div>
       </div>
       <hr className={styles.headerLine} />
@@ -41,4 +43,4 @@ function ActionBox(props) {
     </div>
   );
 }
-export inject('highRiskCorpStore')(observer(ActionBox));
+export default inject('highRiskCorpStore')(observer(ActionBox));

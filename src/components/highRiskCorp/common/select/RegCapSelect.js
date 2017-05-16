@@ -1,7 +1,7 @@
 import React from 'react';
 import { observer, inject } from 'mobx-react';
 import Select from 'components/lib/Select';
-const Options = Select.Options;
+const Option = Select.Option;
 import styles from './index.less';
 function RegCapSelect({highRiskCorpStore, module, regCapSelect, onChange}) {
   const selectValue = highRiskCorpStore[module].params.regCap;
@@ -9,9 +9,9 @@ function RegCapSelect({highRiskCorpStore, module, regCapSelect, onChange}) {
     const output = [];
     regCapSelect.map((item, key) => {
       output.push(
-        <Options value={item.value} key={key}>
+        <Option value={item.value} key={key}>
           {item.key}
-        </Options>
+        </Option>
       );
     });
     return output;
@@ -20,7 +20,7 @@ function RegCapSelect({highRiskCorpStore, module, regCapSelect, onChange}) {
     const params = Object.assign({}, highRiskCorpStore[module].params, {regCap: value});
     highRiskCorpStore.changeValue(`${module}.params.regCap`, value);
     onChange(params);
-  }
+  };
   return (
     <div className={styles.selectLine}>
       <span className={styles.label}>地区</span>
@@ -46,4 +46,4 @@ RegCapSelect.defaultProps = {
     {key: '全部', value: '全部'},
   ],
 };
-export inject('highRiskCorpStore')(observer(RegCapSelect));
+export default inject('highRiskCorpStore')(observer(RegCapSelect));

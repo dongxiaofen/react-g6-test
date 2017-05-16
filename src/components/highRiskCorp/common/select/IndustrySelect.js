@@ -1,18 +1,18 @@
 import React from 'react';
 import { observer, inject } from 'mobx-react';
 import Select from 'components/lib/Select';
-const Options = Select.Options;
+const Option = Select.Option;
 import industryConf from 'helpers/industry';
 import styles from './index.less';
-function IndustrySelect({highRiskCorpStore, module, areaChange, industrySelect, onChange}) {
+function IndustrySelect({highRiskCorpStore, module, industrySelect, onChange}) {
   const selectValue = highRiskCorpStore[module].params.industry;
   const createOption = () => {
     const output = [];
     industrySelect.map((item, key) => {
       output.push(
-        <Options value={item.value} key={key}>
+        <Option value={item.value} key={key}>
           {item.key}
-        </Options>
+        </Option>
       );
     });
     return output;
@@ -44,4 +44,4 @@ function convertIndutry(data) {
 IndustrySelect.defaultProps = {
   industrySelect: [{key: '全部', value: '全部'}].concat(convertIndutry(industryConf)),
 };
-export inject('highRiskCorpStore')(observer(IndustrySelect));
+export default inject('highRiskCorpStore')(observer(IndustrySelect));

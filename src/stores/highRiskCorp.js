@@ -76,17 +76,16 @@ class HighRiskCorpStore {
   }
   @action.bound getIncrement() {
     this.enterpriseIncrement.data = {};
-    const params = this.enterpriseIncrement.params;
-    params.year = params.timeRange;
+    const params = Object.assign({}, this.enterpriseIncrement.params, {year: this.enterpriseIncrement.params.timeRange});
     delete params.timeRange;
     highRiskCorpApi.getIncrement(params)
       .then(action('getIncrement', resp => {
-        const noData = !resp.data || (!resp.data.blacklist_dist_list && !resp.data.event_dist_list) || (resp.data.blacklist_dist_list.length === 0 && resp.data.event_dist_list.length === 0);
-        this.enterpriseIncrement.data = noData ? {error: {message: '暂无信息'}, blacklist_dist_list: [], event_dist_list: []} : resp.data;
+        const noData = !resp.data || !resp.data.blacklist_dist_list || Object.keys(resp.data.blacklist_dist_list).every(item => item.count === 0) || resp.data.blacklist_dist_list.length === 0;
+        this.enterpriseIncrement.data = noData ? {error: {message: '暂无信息'}, blacklist_dist_list: []} : resp.data;
       }))
       .catch('getIncrement', err => {
         console.log(err);
-        this.enterpriseIncrement.data = {error: err.response.data, blacklist_dist_list: [], event_dist_list: []};
+        this.enterpriseIncrement.data = {error: err.response.data, blacklist_dist_list: []};
       });
   }
   @action.bound getArea() {
