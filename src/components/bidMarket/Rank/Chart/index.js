@@ -1,4 +1,5 @@
 import React, {PropTypes} from 'react';
+import { browserHistory } from 'react-router';
 import { observer } from 'mobx-react';
 import { toJS } from 'mobx';
 import styles from './index.less';
@@ -6,7 +7,7 @@ import BaseChart from 'components/common/Charts/BaseChart';
 import { loadingComp } from 'components/hoc';
 import ErrorText from 'components/common/ErrorText';
 
-function Chart({ rank, tabSwitchIndex, setSwitchTab }) {
+function Chart({ rank, tabSwitchIndex, setSwitchTab, searchTabClick, searchChange, getCompanyList }) {
   const switchConfig = [
     { title: '中标单位', key: 'winners' },
     { title: '招标单位', key: 'purchasers' },
@@ -87,7 +88,11 @@ function Chart({ rank, tabSwitchIndex, setSwitchTab }) {
     setSwitchTab(key);
   };
   const echartOnClick = (val) => {
-    console.log(val, '--------------------val');
+    const obj = { target: { value: val.data.name } };
+    searchTabClick('COMPANY_NAME');
+    searchChange(obj);
+    getCompanyList();
+    browserHistory.push(`/searchCompany`);
   };
   return (
     <div className={styles.wrap}>
@@ -125,6 +130,9 @@ Chart.propTypes = {
   rankLoading: PropTypes.bool,
   rank: PropTypes.object,
   setSwitchTab: PropTypes.func,
+  searchTabClick: PropTypes.func,
+  searchChange: PropTypes.func,
+  getCompanyList: PropTypes.func,
 };
 export default loadingComp({
   mapDataToProps: props => ({

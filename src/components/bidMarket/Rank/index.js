@@ -3,7 +3,7 @@ import { observer, inject } from 'mobx-react';
 import styles from './index.less';
 import Chart from './Chart';
 
-function Rank({ bidMarketStore }) {
+function Rank({ bidMarketStore, searchCompanyStore }) {
   const params = bidMarketStore.params;
   const province = params.province;
   const city = params.city;
@@ -24,12 +24,16 @@ function Rank({ bidMarketStore }) {
         rank={bidMarketStore.rank}
         rankLoading={bidMarketStore.rankLoading}
         tabSwitchIndex={bidMarketStore.tabSwitchIndex}
-        setSwitchTab={bidMarketStore.setSwitchTab} />
+        setSwitchTab={bidMarketStore.setSwitchTab}
+        searchTabClick={searchCompanyStore.searchTabClick}
+        searchChange={searchCompanyStore.searchChange}
+        getCompanyList={searchCompanyStore.getCompanyList} />
     </div>
   );
 }
 
 Rank.propTypes = {
   bidMarketStore: PropTypes.object,
+  searchCompanyStore: PropTypes.object,
 };
-export default inject('bidMarketStore')(observer(Rank));
+export default inject('bidMarketStore', 'searchCompanyStore')(observer(Rank));
