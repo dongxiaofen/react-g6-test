@@ -1,16 +1,15 @@
 import React, {PropTypes} from 'react';
 import { observer } from 'mobx-react';
-import styles from './index.less';
+import CommonList from '../CommonList';
 
-function HitRules({}) {
-  return (
-    <div>
-
-    </div>
-  );
+function HitRules({data}) {
+  const config = {
+    data,
+  };
+  return <CommonList {...config} />;
 }
 
 HitRules.propTypes = {
-  foo: PropTypes.string,
+  foo: PropTypes.object,
 };
 export default observer(HitRules);

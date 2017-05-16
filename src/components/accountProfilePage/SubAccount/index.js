@@ -3,6 +3,7 @@ import { observer, inject } from 'mobx-react';
 import styles from './index.less';
 import Statistics from '../common/Statistics';
 import NewAccount from './NewAccount';
+import Rules from './Rules';
 import Tables from '../common/Tables';
 
 function SubAccount({ accountProfileStore }) {
@@ -58,7 +59,12 @@ function SubAccount({ accountProfileStore }) {
           <Tables config = {lowScoreCompnay} className="" />
         </div>
         <div className="clearfix">
-          <NewAccount />
+          <div className={`${styles.newAccount} pull-left`}>
+            <NewAccount />
+          </div>
+          <div className={`${styles.rules} pull-left`}>
+            <Rules />
+          </div>
         </div>
       </div>
     </div>

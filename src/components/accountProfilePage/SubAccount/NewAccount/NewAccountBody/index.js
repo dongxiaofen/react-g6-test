@@ -8,11 +8,13 @@ function NewAccountBody({data}) {
     if (data) {
       data.map( (itemData, index) => {
         arrList = [...arrList,
-          <li key={`${index}newAccount`} className={`${styles.list_item} clearfix`}>
-            <div className={`${styles.user} pull-left`}>{`所属账号：${itemData.userName}（${itemData.email}）`}</div>
-            <div className={`${styles.date} pull-right`}>
-              <p>最新预警日期</p>
-              <p>{itemData.alertDt}</p>
+          <li key={`${index}newAccount`} className={`${styles.list_item}`}>
+            <div className={`${styles.marginRL} clearfix`}>
+              <div className={`${styles.user} pull-left`}>{`所属账号：${itemData.userName}（${itemData.email}）`}</div>
+              <div className={`${styles.date} pull-right`}>
+                <p>最新预警日期</p>
+                <p>{itemData.alertDt}</p>
+              </div>
             </div>
           </li>
         ];

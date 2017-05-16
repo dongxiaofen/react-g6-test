@@ -1,6 +1,6 @@
 import React, { Component, PropTypes } from 'react';
 import { inject, observer} from 'mobx-react';
-import { Tabs } from 'antd';
+import Tabs from 'antd/lib/tabs';
 const TabPane = Tabs.TabPane;
 import SubAccount from './SubAccount';
 import MyAccount from './MyAccount';

@@ -26,6 +26,34 @@ class AccountProfileStore {
   @observable subLowestScore = [];
 
   @observable subAccount10Data = [];
+  @observable subNewestRuleData = [
+    {
+      'alertType': 'RULE',
+      'count': 10,
+      'ruleName': '张三',
+      'ruleTime': '2017-05-15'
+    },
+    {
+      'alertType': 'RULE',
+      'count': 20,
+      'ruleName': '阿虎',
+      'ruleTime': '2017-05-15'
+    }
+  ];
+  @observable subFrequentRuleData = [
+    {
+      'alertType': 'RULE',
+      'count': 10,
+      'ruleName': '张三',
+      'ruleTime': '2017-05-15'
+    },
+    {
+      'alertType': 'RULE',
+      'count': 36,
+      'ruleName': '李四',
+      'ruleTime': '2017-05-15'
+    }
+  ];
 
   @action.bound getAcconutPageInfo() {
     this.getOwnWarningStatistics();
@@ -37,10 +65,31 @@ class AccountProfileStore {
     this.getOwnNewest();
     this.getSubNewest();
     this.getSubAccount10();
+    // this.getSubNewestRule();
+    // this.getFrequentRule();
+  }
+  @action.bound getFrequentRule() {
+    accountProfileApi.frequentRule()
+      .then(action( (response) => {
+        this.subFrequentRuleData = response.data;
+      }))
+      .catch(action( (err) => {
+        console.log(err.response.data);
+      }));
+  }
+
+  @action.bound getSubNewestRule() {
+    accountProfileApi.subNewestRule()
+      .then(action( (response) => {
+        this.subNewestRuleData = response.data;
+      }))
+      .catch(action( (err) => {
+        console.log(err.response.data);
+      }));
   }
 
   @action.bound getSubAccount10() {
-    accountProfileApi.subAccount10()
+    accountProfileApi.subWorningAccount10()
       .then(action( (response) => {
         this.subAccount10Data = response.data;
       }))

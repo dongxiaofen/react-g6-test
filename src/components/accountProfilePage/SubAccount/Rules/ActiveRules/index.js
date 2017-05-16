@@ -1,16 +1,15 @@
 import React, {PropTypes} from 'react';
 import { observer } from 'mobx-react';
-import styles from './index.less';
+import CommonList from '../CommonList';
 
-function ActiveRules({}) {
-  return (
-    <div>
-
-    </div>
-  );
+function ActiveRules({data}) {
+  const config = {
+    data,
+  };
+  return <CommonList {...config} />;
 }
 
 ActiveRules.propTypes = {
-  foo: PropTypes.string,
+  foo: PropTypes.object,
 };
 export default observer(ActiveRules);

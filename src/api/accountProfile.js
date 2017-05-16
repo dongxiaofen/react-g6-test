@@ -50,7 +50,12 @@ export const subNewestRule = () => {
   return axios.get('/api/user/index/xx/sub/newestRule');
 };
 
-// 下属子账号
-export const subAccount10 = () => {
-  return axios.get('/api/user/index/xx/sub/account10');
+// 下属子最新预警账号
+// export const subAccount10 = () => {
+//   return axios.get('/api/user/index/xx/sub/account10');
+// };
+
+// 下属子账号最活跃规则
+export const frequentRule = () => {
+  return axios.get('/api/user/index/xx/sub/frequentRule');
 };
