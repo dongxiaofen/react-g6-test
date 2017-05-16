@@ -6,21 +6,8 @@ import styles from './index.less';
 function CompanyName({data}) {
   // 公司名
   const name = data.companyName;
-  // 类型
-  let type = '';
-  switch (data.productType) {
-    case 'ANALYSIS_REPORT':
-      type = '深度评估报告';
-      break;
-    case 'REPORT':
-      type = '高级评估报告';
-      break;
-    case 'MONITOR':
-      type = '主体监控报告';
-      break;
-    default:
-      break;
-  }
+  // 分数
+  const type = 80;
   // 跳转报告
   const link = () => {
     // 深度报告
@@ -42,7 +29,7 @@ function CompanyName({data}) {
         {name}
       </div>
       <div className={styles.type}>
-        {type}
+        综合分{type}
       </div>
     </div>
   );
