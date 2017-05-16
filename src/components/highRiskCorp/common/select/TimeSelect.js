@@ -28,11 +28,12 @@ function TimeSelect({highRiskCorpStore, module, yearSelect, rangeSelect, onChang
   };
   return (
     <Select
-      width="80px"
-      className={styles.selectBox}
+      width="90px"
+      className={styles.selectBoxNoLine}
       defaultValue={selectValue}
       onChange={selectChange}
       value={selectValue}
+      noIcon
       >
       {createOption()}
     </Select>

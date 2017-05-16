@@ -1,6 +1,9 @@
 import React, { PropTypes, Component } from 'react';
 const chartFunc = {};
 const resizeArr = [
+  'industryDistribute',
+  'enterpriseIncrement',
+  'areaDistribute',
   'newBusiness',
   'provinceRank',
   'industryDist',

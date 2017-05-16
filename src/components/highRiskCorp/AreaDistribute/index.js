@@ -42,7 +42,7 @@ function AreaDistribute({highRiskCorpStore}) {
     const output = [];
     for (let idx = range - 1; idx >= 0; idx--) {
       output.push(
-        <div>
+        <div key={idx}>
           <span className={styles.icon} style={{backgroundColor: colors[idx]}}></span>
           {setRangeMap(minMaxResult.max, range, idx)}
         </div>

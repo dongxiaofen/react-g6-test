@@ -7,6 +7,7 @@ export default class Select extends Component {
     onChange: PropTypes.func,
     defaultValue: PropTypes.string,
     className: PropTypes.string,
+    noIcon: PropTypes.bool,
     children: PropTypes.node,
   };
   static defaultProps = {
@@ -90,7 +91,7 @@ export default class Select extends Component {
           <span>
             {this.state.valueConfig[this.state.value]}
           </span>
-          <i className="fa fa-angle-down"></i>
+          {this.props.noIcon || <i className="fa fa-angle-down"></i>}
         </div>
         <ul className={styles.selectMenu}>
           {this.createItem()}
@@ -107,6 +108,7 @@ export class Option extends Component {
     changeAct: PropTypes.func,
     initValueConfig: PropTypes.func,
     selectValue: PropTypes.node,
+    defaultCss: PropTypes.string,
   }
   componentDidMount() {
     this.props.initValueConfig(this.props.value, this.props.children);
