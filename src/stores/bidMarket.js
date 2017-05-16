@@ -29,7 +29,7 @@ class BidMarketStore {
     return compliteDate;
   }
 
-  @observable params = {};
+  @observable params = { province: '' };
   @observable mapLoading = false;
   @observable trendLoading = false;
   @observable rankLoading = false;
@@ -51,7 +51,13 @@ class BidMarketStore {
   @observable detailContent = '';
 
   @action.bound setParams(params) {
+    params.index = 1;
+    // uiStore.uiState.bidMarketInfo.index = 1;
     this.params = params;
+    this.getAll(params);
+    this.getTrend(params);
+    this.getRank(params);
+    this.getInfo(params);
   }
 
   // 全国分布
@@ -194,7 +200,11 @@ class BidMarketStore {
     uiStore.uiState.bidMarketInfo.index = 1;
     uiStore.uiState.bidMarketInfo.totalElements = 0;
 
-    this.params = {};
+    this.params = { province: '' };
+    this.mapLoading = false;
+    this.trendLoading = false;
+    this.rankLoading = false;
+    this.infoLoading = false;
 
     this.trend = { axis: [], amountData: [], countData: [] };
 
@@ -207,6 +217,8 @@ class BidMarketStore {
       agents: { axis: [], data: [] },
     };
     this.areaInfo = [];
+    this.detailTitleData = {};
+    this.detailContent = '';
   }
 }
 export default new BidMarketStore();
