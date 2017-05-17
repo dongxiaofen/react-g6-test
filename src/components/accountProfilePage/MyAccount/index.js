@@ -5,15 +5,6 @@ import Statistics from '../common/Statistics';
 import Tables from '../common/Tables';
 
 function MyAccount({accountProfileStore}) {
-  // 'comprehensive' || 'warning'
-  // const config = {
-  //   hasScore: true,
-  //   dateType: 'singeLine',
-  //   data:[],
-  //   hasFlag: true
-  //   companyType: ''
-  // };
-
   const statistics = {
     titleData: {
       'alertCompanyCount': '预警企业',
@@ -37,6 +28,9 @@ function MyAccount({accountProfileStore}) {
     companyType: 'warningCompnay',
     tip: '系统选取您账号下最新预警的10家企业，仅供参考',
     title: '最新预警企业',
+    isLoading: accountProfileStore.ownWarningCompnayIsLoading,
+    error: accountProfileStore.ownWarningCompnay.length === 0,
+    module: '',
   };
   const riskCompnay = {
     hasScore: true,
@@ -46,6 +40,9 @@ function MyAccount({accountProfileStore}) {
     companyType: 'riskCompnay',
     tip: '系统选取您账号下预警次数最多的10家企业，仅供参考',
     title: '风险企业',
+    isLoading: accountProfileStore.ownRiskCompnayIsLoading,
+    error: accountProfileStore.ownHighRisk.length === 0,
+    module: '',
   };
   const lowScoreCompnay = {
     hasScore: false,
@@ -55,6 +52,9 @@ function MyAccount({accountProfileStore}) {
     companyType: 'lowScoreCompnay',
     tip: '系统选取您账号下评分最低的10家企业，仅供参考',
     title: '综合评分最低企业',
+    isLoading: accountProfileStore.ownLowScoreCompnayIsLoading,
+    error: accountProfileStore.ownLowestScore.length === 0,
+    module: '',
   };
   return (
     <div className={styles.top}>

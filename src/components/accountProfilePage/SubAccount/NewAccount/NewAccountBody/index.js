@@ -1,5 +1,6 @@
 import React, {PropTypes} from 'react';
 import { observer } from 'mobx-react';
+import { loadingComp } from 'components/hoc';
 import styles from './index.less';
 
 function NewAccountBody({data}) {
@@ -32,4 +33,11 @@ function NewAccountBody({data}) {
 NewAccountBody.propTypes = {
   data: PropTypes.object,
 };
-export default observer(NewAccountBody);
+export default loadingComp({
+  mapDataToProps: props => ({
+    loading: props.isLoading,
+    category: 0,
+    error: props.error,
+    module: props.module
+  })
+})(observer(NewAccountBody));

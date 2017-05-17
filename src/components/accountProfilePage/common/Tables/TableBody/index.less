@@ -29,9 +29,6 @@
   background-color: #87bfa4;
   color: @white1;
 }
-.warning_date{
-
-}
 .date{
   padding: 35px 20px 0 0;
   color: #539e76;
@@ -43,20 +40,20 @@
       color: @mdc-blue-300;
     }
   }
+  &:last-child{
+    margin-bottom: 20px;
+  }
   border-bottom: 1px dashed @black12;
 }
 .has_warning_counts{
   padding: 20px 15px 0 0;
   text-align: right;
-  .discript{
-
-  }
   .count_text {
     font-size: 12px;
   }
   .count{
     font-size: 14px;
-    padding: 4px 10px;
+    padding: 2px 10px;
     border-radius: 999px;
     margin-left: 8px;
   }
@@ -72,6 +69,9 @@
   .count{
     background-color: #bebf87;
     color: @white1;
+    display: inline-block;
+    width: 42px;
+    text-align: center;
   }
   .count_text{
     color: #bebf87;
@@ -81,6 +81,9 @@
   .count{
     background-color: #79a2b8;
     color: @white1;
+    display: inline-block;
+    width: 42px;
+    text-align: center;
   }
   .count_text{
     color: #79a2b8;

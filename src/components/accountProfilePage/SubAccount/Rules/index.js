@@ -11,10 +11,14 @@ function Rules({accountProfileStore}) {
     <div className={styles.rules_box}>
       <Tabs defaultActiveKey="1" tabBarStyle={{paddingTop: '15px', paddingLeft: '18px'}}>
         <TabPane tab="最新命中预警" key="1">
-          <HitRules data={accountProfileStore.subNewestRuleData} />
+          <div className={styles.hit_rules}>
+            <HitRules data={accountProfileStore.subNewestRuleData} />
+          </div>
         </TabPane>
         <TabPane tab="近期最活跃规则" key="2">
-          <ActiveRules data={accountProfileStore.subFrequentRuleData} />
+          <div className={styles.active_rules}>
+            <ActiveRules data={accountProfileStore.subFrequentRuleData} />
+          </div>
         </TabPane>
       </Tabs>
     </div>

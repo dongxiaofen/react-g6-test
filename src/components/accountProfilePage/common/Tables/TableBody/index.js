@@ -1,6 +1,7 @@
 import React, {PropTypes} from 'react';
 import { observer, inject } from 'mobx-react';
 import styles from './index.less';
+import { loadingComp } from 'components/hoc';
 
 
 function TableBody({ hasScore, dateType, data, hasFlag, routing }) {
@@ -48,7 +49,7 @@ function TableBody({ hasScore, dateType, data, hasFlag, routing }) {
   };
 
   return (
-    <div>
+    <div className={styles.body_box}>
       {createList()}
     </div>
   );
@@ -57,4 +58,11 @@ function TableBody({ hasScore, dateType, data, hasFlag, routing }) {
 TableBody.propTypes = {
   className: PropTypes.string,
 };
-export default inject('routing')(observer(TableBody));
+export default loadingComp({
+  mapDataToProps: props => ({
+    loading: props.isLoading,
+    category: 0,
+    error: props.error,
+    module: props.module
+  })
+})(inject('routing')(observer(TableBody)));

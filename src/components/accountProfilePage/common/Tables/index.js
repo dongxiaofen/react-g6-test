@@ -8,7 +8,9 @@ function Tables({className, config}) {
   return (
     <div className={`${className} ${styles.table_box}`}>
       <TableHead {...config} />
-      <TableBody {...config} />
+      <div className={`${config.isLoading || config.error ? styles.mTop : styles.item_body_box}`}>
+        <TableBody {...config} />
+      </div>
     </div>
   );
 }

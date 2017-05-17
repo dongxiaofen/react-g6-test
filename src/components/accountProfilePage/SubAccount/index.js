@@ -30,6 +30,9 @@ function SubAccount({ accountProfileStore }) {
     companyType: 'warningCompnay',
     tip: '系统选取您账号下最新预警的10家企业，仅供参考',
     title: '最新预警企业',
+    isLoading: accountProfileStore.subWarningCompnayIsLoading,
+    error: accountProfileStore.subWarningCompnay.length === 0,
+    module: '',
   };
   const riskCompnay = {
     hasScore: true,
@@ -39,6 +42,9 @@ function SubAccount({ accountProfileStore }) {
     companyType: 'riskCompnay',
     tip: '系统选取您账号下预警次数最多的10家企业，仅供参考',
     title: '风险企业',
+    isLoading: accountProfileStore.subRiskCompnayIsLoading,
+    error: accountProfileStore.subHighRisk.length === 0,
+    module: '',
   };
   const lowScoreCompnay = {
     hasScore: false,
@@ -48,6 +54,9 @@ function SubAccount({ accountProfileStore }) {
     companyType: 'lowScoreCompnay',
     tip: '系统选取您账号下评分最低的10家企业，仅供参考',
     title: '综合评分最低企业',
+    isLoading: accountProfileStore.subLowScoreCompnayIsLoading,
+    error: accountProfileStore.subLowestScore.length === 0,
+    module: '',
   };
   return (
     <div className={styles.top}>

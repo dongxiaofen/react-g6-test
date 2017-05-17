@@ -55,6 +55,18 @@ class AccountProfileStore {
     }
   ];
 
+  // 加载状态
+  @observable ownWarningCompnayIsLoading = true;
+  @observable ownRiskCompnayIsLoading = true;
+  @observable ownLowScoreCompnayIsLoading = true;
+
+  @observable subWarningCompnayIsLoading = true;
+  @observable subRiskCompnayIsLoading = true;
+  @observable subLowScoreCompnayIsLoading = true;
+
+
+  @observable newAccount10IsLoading = true;
+
   @action.bound getAcconutPageInfo() {
     this.getOwnWarningStatistics();
     this.getSubWarningStatistics();
@@ -92,8 +104,10 @@ class AccountProfileStore {
     accountProfileApi.subWorningAccount10()
       .then(action( (response) => {
         this.subAccount10Data = response.data;
+        this.newAccount10IsLoading = false;
       }))
       .catch(action( (err) => {
+        this.newAccount10IsLoading = false;
         console.log(err.response.data);
       }));
   }
@@ -122,8 +136,10 @@ class AccountProfileStore {
     accountProfileApi.ownNewest()
       .then(action( (response) => {
         this.ownWarningCompnay = response.data;
+        this.ownWarningCompnayIsLoading = false;
       }))
       .catch(action( (err) => {
+        this.ownWarningCompnayIsLoading = false;
         console.log(err.response.data);
       }));
   }
@@ -132,8 +148,10 @@ class AccountProfileStore {
     accountProfileApi.subNewest()
       .then(action( (response) => {
         this.subWarningCompnay = response.data;
+        this.subWarningCompnayIsLoading = false;
       }))
       .catch(action( (err) => {
+        this.subWarningCompnayIsLoading = false;
         console.log(err.response.data);
       }));
   }
@@ -142,8 +160,10 @@ class AccountProfileStore {
     accountProfileApi.ownHightRisk()
       .then(action( (response) => {
         this.ownHighRisk = response.data;
+        this.ownRiskCompnayIsLoading = false;
       }))
       .catch(action( (err) => {
+        this.ownRiskCompnayIsLoading = false;
         console.log(err.response.data);
       }));
   }
@@ -152,8 +172,10 @@ class AccountProfileStore {
     accountProfileApi.subHightRisk()
       .then(action( (response) => {
         this.subHighRisk = response.data;
+        this.subRiskCompnayIsLoading = false;
       }))
       .catch(action( (err) => {
+        this.subRiskCompnayIsLoading = false;
         console.log(err.response.data);
       }));
   }
@@ -162,8 +184,10 @@ class AccountProfileStore {
     accountProfileApi.ownLowestScore()
       .then(action( (response) => {
         this.ownLowestScore = response.data;
+        this.ownLowScoreCompnayIsLoading = false;
       }))
       .catch(action( (err) => {
+        this.ownLowScoreCompnayIsLoading = false;
         console.log(err.response.data);
       }));
   }
@@ -172,8 +196,10 @@ class AccountProfileStore {
     accountProfileApi.subLowestScore()
       .then(action( (response) => {
         this.subLowestScore = response.data;
+        this.subLowScoreCompnayIsLoading = false;
       }))
       .catch(action( (err) => {
+        this.subLowScoreCompnayIsLoading = false;
         console.log(err.response.data);
       }));
   }
