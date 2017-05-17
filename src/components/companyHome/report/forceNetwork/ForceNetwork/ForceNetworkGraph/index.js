@@ -328,7 +328,7 @@ export default class ForceNetworkGraph extends Component {
         return (!data.isFocus && ' ') || (data.blackList && data.category !== 7 && 'url(#bling9)') || (data.status === 0 && 'url(#bling10)') || `url(#bling${data.category})`;
       })
       .transition()
-      .duration(200)
+      .duration(100)
       .attr('r', (data) => {
         if (data.isActive === 0) {
           return 10;
