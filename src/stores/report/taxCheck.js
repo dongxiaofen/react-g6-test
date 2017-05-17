@@ -1,9 +1,13 @@
 import { observable, action } from 'mobx';
+import pathval from 'pathval';
 import {companyHomeApi} from 'api';
 import axios from 'axios';
 const CancelToken = axios.CancelToken;
 import uiStore from '../ui';
 class TaxCheckStore {
+  @observable selectConf = [
+    {year: '2016', taxIndex: 'A类某某某', input: ''},
+  ];
   // 核查列表数据 假数据
   @observable taxListData = [
     // {
@@ -89,6 +93,22 @@ class TaxCheckStore {
   // monitorId
   @observable monitorId = '';
 
+  @action.bound addSelectItem() {
+    this.selectConf.push({
+      year: '',
+      taxIndex: '',
+      input: '',
+    });
+  }
+  @action.bound deleteSelectItem(index) {
+    this.selectConf = this.selectConf.filter((item, idx) => {
+      console.log(index, idx);
+      return idx !== index;
+    });
+  }
+  @action.bound changeValue(path, value) {
+    pathval.setPathValue(this, path, value);
+  }
   // 获取列表数据
   @action.bound getTaxCheckList() {
     if (window.reportSourceCancel === undefined) {

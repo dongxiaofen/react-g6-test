@@ -4,13 +4,14 @@ import styles from './index.less';
 import TaxCheckItem from './TaxCheckItem';
 import Button from 'components/lib/button';
 import noData from 'imgs/tax/bd.png';
-@inject('routing', 'taxCheckStore', 'uiStore')
+@inject('routing', 'taxCheckStore', 'uiStore', 'modalStore')
 @observer
 export default class TaxCheckList extends Component {
   static propTypes = {
     routing: PropTypes.object,
     taxCheckStore: PropTypes.object,
     uiStore: PropTypes.object,
+    modalStore: PropTypes.object,
   }
   componentDidMount() {
     const { monitorId } = this.props.routing.location.query;
@@ -20,7 +21,21 @@ export default class TaxCheckList extends Component {
     this.props.taxCheckStore.resetStore();
   }
   handleClick = () => {
-    // 弹窗窗口等操作
+    this.props.modalStore.openCompModal({
+      title: '税务核查',
+      width: '695px',
+      isSingleBtn: true,
+      confirmText: '核查',
+      confirmWidth: 280,
+      pointText: '核查即视为同意',
+      pactUrl: '',
+      pactName: '用户服务协议',
+      loader: (cb) => {
+        require.ensure([], (require) => {
+          cb(require('../TaxCheckModal'));
+        }, 'TaxCheckModal');
+      },
+    });
   }
   render() {
     const taxListData = this.props.taxCheckStore.taxListData;
