@@ -32,7 +32,7 @@ function Menu({ routing }) {
       parent: { module: '市场' },
       children: [
         { module: '招投标', route: 'bidMarket' },
-        { module: '资产交易', route: 'poorAssets' },
+        { module: '资产交易', route: 'assetTransaction' },
         { module: '风险企业', route: 'blackList' },
       ],
     },
