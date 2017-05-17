@@ -1,6 +1,7 @@
 import React, {PropTypes} from 'react';
 import { observer } from 'mobx-react';
 import { toJS } from 'mobx';
+import { loadingComp } from 'components/hoc';
 
 import styles from './index.less';
 import BaseChart from 'components/common/Charts/BaseChart';
@@ -168,7 +169,17 @@ function Chart({ trend }) {
     ]
   };
   return (
-    <div className={styles}>
+    <div>
+      <div className={`clearfix ${styles['trend-marked']}`}>
+        <div className={`clearfix ${styles['trend-marked-item']}`}>
+          <div className={styles['trend-marked-block']}></div>
+          <div className={styles['trend-marked-text']}>中标金额</div>
+        </div>
+        <div className={`clearfix ${styles['trend-marked-item']}`}>
+          <div className={styles['trend-marked-block']}></div>
+          <div className={styles['trend-marked-text']}>中标数量</div>
+        </div>
+      </div>
       <BaseChart chartId="bidMarketTrend" height="500px" option={option} />
     </div>
   );
@@ -176,5 +187,14 @@ function Chart({ trend }) {
 
 Chart.propTypes = {
   trend: PropTypes.object,
+  trendLoading: PropTypes.bool,
 };
-export default observer(Chart);
+export default loadingComp({
+  mapDataToProps: props => ({
+    loading: props.trendLoading,
+    category: 0,
+    height: 500,
+    error: props.trend.amountData.length === 0 && props.trend.countData.length === 0,
+    errCategory: 1,
+  })
+})(observer(Chart));

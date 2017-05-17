@@ -10,6 +10,7 @@ class ForceNetworkStore {
     nodes: []
   };
   @observable mainCompanyName = '';
+  @observable dbFocalNode = {};
   @observable expandNetwork = {
     nodes: [],
     links: [],
@@ -86,25 +87,26 @@ class ForceNetworkStore {
       .then(action('get forceNetwork data', (resp) => {
         this.isLoading = false;
         let canRenderSvg = true;
-        resp.data.currentNetwork.links.map((link) => {
-          if (resp.data.currentNetwork.nodes.findIndex((node) => node.name === link.source) < 0 || resp.data.currentNetwork.nodes.findIndex((node) => node.name === link.target) < 0) {
+        resp.data.links.map((link) => {
+          if (resp.data.nodes.findIndex((node) => node.id === link.source) < 0 || resp.data.nodes.findIndex((node) => node.id === link.target) < 0) {
             canRenderSvg = false;
             console.info('网络图link名字和node不对应', link);
           }
         });
-        resp.data.currentNetwork.nodes.map((node) => {
+        resp.data.nodes.map((node) => {
           if (node.layer === -1) {
             // canRenderSvg = false;
             console.info('网络图node的layer有-1', node);
           }
         });
-        if (!canRenderSvg || resp.data.currentNetwork.nodes[0].layer === undefined) {
+        if (!canRenderSvg || resp.data.nodes[0].layer === undefined) {
           this.error = {
             message: '网络图数据异常, 请联系管理员'
           };
         } else {
-          this.forceNetwork = resp.data.currentNetwork;
-          this.mainCompanyName = resp.data.companyName;
+          this.forceNetwork.nodes = resp.data.nodes;
+          this.forceNetwork.links = resp.data.links;
+          this.mainCompanyName = resp.data.nodes[0].name;
         }
       }))
       .catch(action('forceNetwork出错', (err) => {
@@ -114,6 +116,9 @@ class ForceNetworkStore {
         };
         this.isLoading = false;
       }));
+  }
+  @action.bound setFocalNode(node) {
+    this.dbFocalNode = node;
   }
 }
 export default new ForceNetworkStore();

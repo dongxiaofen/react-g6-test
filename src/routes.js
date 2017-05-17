@@ -33,8 +33,13 @@ import {
     BlackNetwork,
     Collection,
     BidMarket,
+    AccountProfile,
     ForceNetwork,
     NowRecord,
+    UserAgreement,
+    Disclaimer,
+    Tax,
+    TaxCheck,
 // first append here from plop
   } from 'containers';
 
@@ -76,6 +81,8 @@ export default (allStore) => {
         <Route path="blackNetwork" component={ BlackNetwork } />
         <Route path="forceNetwork" component={ ForceNetwork } />
         <Route path="nowRecord" component={ NowRecord } />
+        <Route path="tax" component={ Tax } />
+        <Route path="taxCheck" component={ TaxCheck } />
 {/* third append here from plop */}
       </Route>
       <Route path="solution" component={ Solution } />
@@ -91,6 +98,9 @@ export default (allStore) => {
       <Route path="collection" component={ Collection } />
       <Route path="ruleCompany" component={ RuleCompany } />
       <Route path="bidMarket" component={ BidMarket } />
+      <Route path="userAgreement" component={ UserAgreement } />
+      <Route path="disclaimer" component={ Disclaimer } />
+      <Route path="accountProfile" component={ AccountProfile } />
 {/* second append here from plop */}
     </Route>
   );

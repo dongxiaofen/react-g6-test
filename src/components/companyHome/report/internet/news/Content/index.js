@@ -6,6 +6,7 @@ import AnimateLoading from 'components/hoc/LoadingComp/AnimateLoading';
 import NewsTabs from './NewsTabs';
 import Table from './Table';
 import Pager from './Pager';
+import styles from './index.less';
 function Content({internetStore}) {
   const data = internetStore.newsData.data;
   let output;
@@ -28,9 +29,17 @@ function Content({internetStore}) {
   }
   return (
     <div>
-      <ModuleTitle module="新闻分析" />
-      <NewsTabs internetStore={internetStore} />
-      {output}
+      <div className="clearfix">
+        <div className={styles.title}>
+          <ModuleTitle module="新闻分析" />
+        </div>
+        <div className={styles.tabs}>
+          <NewsTabs internetStore={internetStore} />
+        </div>
+      </div>
+      <div>
+        {output}
+      </div>
     </div>
   );
 }

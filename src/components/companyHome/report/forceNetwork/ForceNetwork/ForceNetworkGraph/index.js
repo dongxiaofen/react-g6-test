@@ -31,7 +31,9 @@ let zoom;
 let isDragging = false;
 let svg;
 let group;
-
+let clickTime = '';
+let timer = null;
+// let dblclikTimer = null;
 @inject('forceNetworkStore')
 @observer
 export default class ForceNetworkGraph extends Component {
@@ -48,9 +50,9 @@ export default class ForceNetworkGraph extends Component {
     zoom = d3.zoom();
     svg = d3.select('svg')
       .call(zoom.on('zoom', () => {
-        // console.log(d3.event.transform, 12312321);
         group.attr('transform', `translate(${d3.event.transform.x}, ${d3.event.transform.y}) scale(${d3.event.transform.k})`);
-      }));
+      }))
+      .on('dblclick.zoom', ()=>{});
     group = svg.append('g').attr('id', 'whole');
     const width = d3.select('svg').attr('width');
     const height = d3.select('svg').attr('height');
@@ -58,7 +60,7 @@ export default class ForceNetworkGraph extends Component {
       .force('charge', d3.forceManyBody().strength(-500))
       .force('center', d3.forceCenter(width / 2, height / 2))
       .force('link', d3.forceLink(edgesData).id((data) => { return data.name; }).distance(150))
-      // .force('collide', d3.forceCollide(58).iterations(16))
+      // .force('collide', d3.forceCollide(58).iterations(16).radius((data)=>{ return data.isActive === 0 ? 20 : 70;}))
       .force('x', d3.forceX(0))
       .force('y', d3.forceY(0))
       .on('tick', this.ticked);
@@ -104,6 +106,23 @@ export default class ForceNetworkGraph extends Component {
         this.reDraw();
       }
     );
+    // 监听聚焦事件
+    reaction(
+      () => this.props.forceNetworkStore.dbFocalNode,
+      () => {
+        const { dbFocalNode } = this.props.forceNetworkStore;
+        nodesData.map((node) => {
+          if (node.name === dbFocalNode.name) {
+            node.isActive = 1;
+          } else if (svgTools.findOneLevelNodes(node, dbFocalNode.OneLevelLinkedNodes)) {
+            node.isActive = 2;
+          } else {
+            node.isActive = 0;
+          }
+        });
+        this.dblclickNode(dbFocalNode);
+      }
+    );
   }
   // 当有元素变动的时候重绘关联图
   reDraw = () => {
@@ -112,7 +131,7 @@ export default class ForceNetworkGraph extends Component {
     svgNodes.exit().remove();
     svgNodes = svgNodes.enter()
       .append('circle')
-      .attr('r', 50)
+      .attr('r', 35)
       .attr('class', (data) => {
         return (data.hide && styles.hide) || (data.category === 0 && styles.mainCompany) || (data.blackList && data.category !== 7 && styles.blackListNodes) || (data.status === 0 && styles.cancelNodes) || styles[`category${data.category}`];
       })
@@ -234,37 +253,98 @@ export default class ForceNetworkGraph extends Component {
     simulation.force('link').links(edgesData);
     simulation.alpha(1).restart();
   }
+  dblclickNode = ()=> {
+    simulation.stop();
+    svgNodes
+      .transition()
+      .duration(2000)
+      .attr('r', (data)=>{
+        if (data.isActive === 0) {
+          return 10;
+        }
+        return 35;
+      });
+    // if (dblclikTimer) {
+    //   clearTimeout(dblclikTimer);
+    // }
+    simulation
+      .force('charge', d3.forceManyBody().strength((data)=>{
+        if (data.isActive === 0) {
+          return -100;
+        }
+        return -1000;
+      }))
+      .force('link', d3.forceLink(edgesData).id((data) => { return data.name; }).distance((data)=>{
+        if (data.target.isActive === 0 || data.source.isActive === 0) {
+          return 90;
+        }
+        return 150;
+      }))
+      .restart();
+    // forceLink.distance(90).initialize(svgNodes);
+    // dblclikTimer = setTimeout(()=>{
+    //   // forceLink.distance(90).initialize(svgNodes);
+    //   simulation
+    //     .force('charge', d3.forceManyBody().strength((data)=>{
+    //       if (data.isActive === 0) {
+    //         return -100;
+    //       }
+    //       return -1000;
+    //     }))
+    //     .force('link', d3.forceLink(edgesData).id((data) => { return data.name; }).distance((data)=>{
+    //       if (data.target.isActive === 0 || data.source.isActive === 0) {
+    //         return 90;
+    //       }
+    //       return 150;
+    //     }))
+    //     .restart();
+    // }, 1000);
+  }
   ticked = () => {
-    console.log('tick');
     svgNodes
       .attr('cx', (data) => { return data.x; })
       .attr('cy', (data) => { return data.y; })
-      .attr('r', (data) => {
-        return data.isFocus ? 20 : 50;
-      })
       .attr('class', (data) => {
-        return (data.hide && styles.hide) || (data.isFocus && ' ') || (data.category === 0 && styles.mainCompany) || (data.blackList && data.category !== 7 && styles.blackListNodes) || (data.status === 0 && styles.cancelNodes) || styles[`category${data.category}`];
+        return (data.hide && styles.hide) || (data.isFocus && ' ') || (data.isActive === 0 && styles.noActive) || (data.category === 0 && styles.mainCompany) || (data.blackList && data.category !== 7 && styles.blackListNodes) || (data.status === 0 && styles.cancelNodes) || styles[`category${data.category}`];
       })
       .attr('fill', (data) => {
         return (!data.isFocus && ' ') || (data.blackList && data.category !== 7 && 'url(#bling9)') || (data.status === 0 && 'url(#bling10)') || `url(#bling${data.category})`;
+      })
+      .attr('r', (data) => {
+        if (data.isActive === 0) {
+          return 10;
+        }
+        return data.isFocus ? 20 : 35;
       });
 
     svgEdges
       .attr('x1', (data) => { return data.source.x; })
       .attr('y1', (data) => { return data.source.y; })
       .attr('x2', (data) => { return data.target.x; })
-      .attr('y2', (data) => { return data.target.y; });
+      .attr('y2', (data) => { return data.target.y; })
+      .attr('class', (data)=> {
+        return ((data.source.isActive === 0 || data.target.isActive === 0) && styles.lineNoActive) || styles.links;
+      });
 
     svgTexts1
       .attr('x', (data) => { return data.x; })
-      .attr('y', (data) => { return data.y; });
+      .attr('y', (data) => { return data.y; })
+      .attr('class', (data)=> {
+        return data.isActive === 0 ? styles.hide : styles.nodeText;
+      });
     svgTexts2
       .attr('x', (data) => { return data.x; })
-      .attr('y', (data) => { return data.y; });
+      .attr('y', (data) => { return data.y; })
+      .attr('class', (data)=> {
+        return data.isActive === 0 ? styles.hide : styles.nodeText;
+      });
 
     svgTexts3
       .attr('x', (data) => { return data.x; })
-      .attr('y', (data) => { return data.y; });
+      .attr('y', (data) => { return data.y; })
+      .attr('class', (data)=> {
+        return data.isActive === 0 ? styles.hide : styles.nodeText;
+      });
 
     svgEdgepaths
       .attr('d', (data) => {
@@ -300,14 +380,29 @@ export default class ForceNetworkGraph extends Component {
   dragended = (data) => {
     if (!d3.event.active) simulation.alphaTarget(0);
     if (!isDragging) {
-      console.log(data, '单击');
-      this.props.forceNetworkStore.focusNode(data.name);
+      if (clickTime) {// 双击
+        if (timer) {
+          clearTimeout(timer);
+        }
+        clickTime = '';
+        this.props.forceNetworkStore.setFocalNode(data);
+        data.fx = null;
+        data.fx = null;
+      } else {
+        const date = new Date();
+        clickTime = date;
+        timer = setTimeout(()=>{
+          console.log('单击', data);
+          this.props.forceNetworkStore.focusNode(data.name);
+          clickTime = '';
+        }, 300);
+      }
     } else {
       // console.log(data, '拖拽结束');
     }
     isDragging = false;
     // data.fx = null;
-    // data.fy = null;
+    // data.fx = null;;
   }
   render() {
     return (
