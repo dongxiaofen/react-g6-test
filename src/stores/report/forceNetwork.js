@@ -1,5 +1,7 @@
 import { observable, action } from 'mobx';
 import { companyHomeApi } from 'api';
+import { browserHistory } from 'react-router';
+
 class ForceNetworkStore {
   @observable error = '';
   @observable isLoading = true;
@@ -14,7 +16,12 @@ class ForceNetworkStore {
     change: false
   };
   @observable focusNodeName = '';
+  @observable isExpandSaved = true;
 
+  @action.bound saveNetwork(nextLocation) {
+    this.isExpandSaved = true;
+    browserHistory.push(nextLocation.pathname + nextLocation.search);
+  }
   @action.bound expand() {
     this.expandNetwork.nodes = [];
     this.expandNetwork.links = [];
@@ -67,8 +74,8 @@ class ForceNetworkStore {
         ]
       }
     }]);
-    // this.expandNetwork.links.push();
     this.expandNetwork.change = !this.expandNetwork.change;
+    this.isExpandSaved = false;
   }
   @action.bound focusNode(name) {
     this.focusNodeName = name;

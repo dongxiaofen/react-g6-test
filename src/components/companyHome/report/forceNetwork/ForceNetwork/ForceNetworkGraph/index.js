@@ -4,6 +4,7 @@ import { toJS, reaction } from 'mobx';
 import styles from './index.less';
 import * as svgTools from 'helpers/svgTools';
 import * as d3 from 'd3';
+
 import bling0 from 'imgs/companyHome/network/0.gif';
 import bling1 from 'imgs/companyHome/network/1.gif';
 import bling2 from 'imgs/companyHome/network/2.gif';
