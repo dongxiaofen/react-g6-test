@@ -3,6 +3,8 @@ import moment from 'moment';
 import { bidMarketApi } from 'api';
 import uiStore from './ui';
 import messageStore from './message';
+import areaLanLon from 'helpers/areaLanLon';
+import bidMarketMapColor from 'helpers/bidMarketMapColor';
 
 class BidMarketStore {
   // 补全时间
@@ -29,11 +31,128 @@ class BidMarketStore {
     return compliteDate;
   }
 
+  // 处理一级城市坐标
+  dealWithCountyLanLon(item) {
+    for (let idx = 0; idx < areaLanLon.length; idx++) {
+      if (item.shortName === areaLanLon[idx].shortName) {
+        return [
+          areaLanLon[idx].lon,
+          areaLanLon[idx].lat,
+          item.count,
+          item.amount,
+          areaLanLon[idx].layer
+        ];
+      }
+    }
+  }
+
+  // 处理二级城市坐标
+  dealWithAreaLanLon(province, item) {
+    let subRegion;
+    for (let idx = 0; idx < areaLanLon.length; idx++) {
+      if (areaLanLon[idx].shortName === province) {
+        subRegion = areaLanLon[idx].subRegion;
+        break;
+      }
+    }
+    for (let idx = 0; idx < subRegion.length; idx++) {
+      if (subRegion[idx].name === item.city) {
+        return [
+          subRegion[idx].lon,
+          subRegion[idx].lat,
+          item.count,
+          item.amount,
+          subRegion[idx].layer
+        ];
+      }
+    }
+  }
+
+  // 处理地图分组
+  dealWithGroup(arr) {
+    // 处理分组增量
+    const dealWithGroupIncrement = (groupNum, maxData) => {
+      let increment = parseInt(maxData / groupNum, 10);
+      const incrementDigit = increment % 10;
+      if (incrementDigit < 5) {
+        increment = increment + 5 - incrementDigit;
+      } else if (incrementDigit >= 5) {
+        increment = increment + 10 - incrementDigit;
+      }
+      return increment;
+    };
+
+    // 处理分组区间
+    const dealWithGroupInterval = (groupNum, groupIncrement) => {
+      const outputInterval = [];
+      let increment = 0;
+      outputInterval.push(increment);
+      outputInterval.push(increment + groupIncrement);
+      increment += groupIncrement;
+      for (let idx = 2; idx <= groupNum; idx++) {
+        outputInterval.push(increment + 1);
+        outputInterval.push(increment + groupIncrement);
+        increment += groupIncrement;
+      }
+      return outputInterval;
+    };
+
+    let groupNum = 1;
+    let groupIncrement = 0;
+    let interval;
+
+    // 取出最大的值
+    const arrSort = arr.sort((prev, next) => { return next.count - prev.count; });
+    let maxData;
+    if (arrSort.length > 1) {
+      maxData = arrSort[0].shortName !== '省级'
+            && arrSort[0].shortName !== '市级' ?
+                arrSort[0].count :
+                arrSort[1].count;
+    } else {
+      maxData = arrSort[0].count;
+    }
+
+    // 根据最大值来设置要分几个组
+    if (maxData > 30 && maxData <= 100) {
+      groupNum = 3;
+    } else if (maxData > 100) {
+      groupNum = 5;
+    }
+
+    // 计算分组的增量
+    if (groupNum !== 1) {
+      groupIncrement = dealWithGroupIncrement(groupNum, maxData);
+      interval = dealWithGroupInterval(groupNum, groupIncrement);
+    } else {
+      interval = [0, maxData + (10 - maxData % 10)];
+    }
+    return interval;
+  }
+
+  // 处理地图圆圈大小和颜色
+  dealWithSymbol(itemCount, groupInterval, type) {
+    const size = [20, 25, 30, 35, 40];
+    const length = groupInterval.length / 2;
+    let index = 0;
+    for (let idx = 0; idx < length; idx++) {
+      index = idx * 2;
+      if (itemCount >= groupInterval[index]
+        && itemCount <= groupInterval[index + 1] ) {
+        return type === 'size' ? size[idx] : bidMarketMapColor[idx];
+      }
+    }
+  }
+
   @observable params = { province: '' };
-  @observable mapLoading = false;
+  @observable areaLoading = false;
   @observable trendLoading = false;
   @observable rankLoading = false;
   @observable infoLoading = false;
+
+  @observable area = { data: [] };
+  @observable mapName = 'china';
+  @observable subText = '';
 
   @observable trend = { axis: [], amountData: [], countData: [] };
 
@@ -50,29 +169,108 @@ class BidMarketStore {
   @observable detailTitleData = {};
   @observable detailContent = '';
 
+  // 设置全国请求
   @action.bound setParams(params) {
     params.index = 1;
     // uiStore.uiState.bidMarketInfo.index = 1;
     this.params = params;
-    this.getAll(params);
+    this.getDistribution(params);
     this.getTrend(params);
     this.getRank(params);
     this.getInfo(params);
   }
 
-  // 全国分布
-  @action.bound getAll(params) {
-    const { from, to } = params;
-    this.mapLoading = true;
-    bidMarketApi.getAll({ from: from, to: to })
-      .then(action('get all', (resp) => {
-        console.log(resp.data, '--------getAll');
-        this.mapLoading = false;
-      }))
-      .catch(action('get all catch', (err) => {
-        console.log(err.response);
-        this.mapLoading = false;
-      }));
+  // 设置二级城市或地区请求
+  @action.bound setParamsCity(params) {
+    params.index = 1;
+    this.params = params;
+    this.getTrend(params);
+    this.getRank(params);
+    this.getInfo(params);
+  }
+
+  // 全国分布和地区分布
+  @action.bound getDistribution(params) {
+    const { from, to, province, city } = params;
+    const mapItemConfig = (color) => {
+      return {
+        itemStyle: {
+          normal: {
+            color: color,
+            borderColor: color,
+            borderWidth: 1,
+            opacity: 0.5,
+          },
+          emphasis: {
+            color: color,
+            borderColor: color,
+            borderWidth: 1,
+            opacity: 0.7,
+          }
+        }
+      };
+    };
+    this.areaLoading = true;
+    if (province) {
+      bidMarketApi.getArea({ from, to, province, city })
+        .then(action('get area', (resp) => {
+          console.log(resp.data);
+          let areaGroupInterval = [];
+          let subText = '';
+          const mapData = [];
+          const result = resp.data.result;
+          if (result.length > 0) {
+            areaGroupInterval = this.dealWithGroup(result);
+            result.forEach((item) => {
+              const color = this.dealWithSymbol(item.count, areaGroupInterval, 'color');
+              if (item.shortName !== '市级' && item.shortName !== '省级') {
+                mapData.push({
+                  name: item.shortName,
+                  value: this.dealWithAreaLanLon(province, item),
+                  symbolSize: this.dealWithSymbol(item.count, areaGroupInterval, 'size'),
+                  ...mapItemConfig(color)
+                });
+              } else {
+                subText = '，其中' + item.shortName + item.count + '家';
+              }
+            });
+            this.mapName = province;
+            this.area.data = mapData;
+            this.subText = subText;
+          }
+          this.areaLoading = false;
+        }))
+        .catch(action('get area catch', (err) => {
+          console.log(err);
+          this.areaLoading = false;
+        }));
+    } else {
+      bidMarketApi.getCountry({ from: from, to: to })
+        .then(action('get all', (resp) => {
+          const result = resp.data.result;
+          if (result && result.length > 0) {
+            let allGroupInterval = [];
+            const mapData = [];
+            allGroupInterval = this.dealWithGroup(result);
+            result.forEach((item) => {
+              const color = this.dealWithSymbol(item.count, allGroupInterval, 'color');
+              mapData.push({
+                name: item.shortName,
+                value: this.dealWithCountyLanLon(item),
+                symbolSize: this.dealWithSymbol(item.count, allGroupInterval, 'size'),
+                ...mapItemConfig(color)
+              });
+            });
+            this.mapName = 'china';
+            this.area.data = mapData;
+          }
+          this.areaLoading = false;
+        }))
+        .catch(action('get all catch', (err) => {
+          console.log(err.response);
+          this.areaLoading = false;
+        }));
+    }
   }
 
   // 变化趋势
@@ -205,7 +403,7 @@ class BidMarketStore {
     uiStore.uiState.bidMarketInfo.totalElements = 0;
 
     this.params = { province: '' };
-    this.mapLoading = false;
+    this.areaLoading = false;
     this.trendLoading = false;
     this.rankLoading = false;
     this.infoLoading = false;

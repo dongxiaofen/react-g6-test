@@ -1,7 +1,11 @@
 import axios from 'axios';
 
-export const getAll = (params) => {
+export const getCountry = (params) => {
   return axios.get('/api/market/bidding/country', { params: params });
+};
+
+export const getArea = (params) => {
+  return axios.get('/api/market/bidding/area', { params: params });
 };
 
 export const getTrend = (params) => {
