@@ -14,6 +14,7 @@ class BannerStore {
   @observable reportId = '';
   @observable analysisReportId = '';
   @observable companyName = '';
+  @observable score = '';
   @observable companyType = '';
 
   @observable isLoading = false;
@@ -83,7 +84,6 @@ class BannerStore {
       ],
       'NEWS': [],
       'OPERATION': [
-        { label: '企业综合信息', value: 'OPERATION_TEL', checked: false },
         { label: '招投标', value: 'OPERATION_BIDDING', checked: false },
         { label: '专利', value: 'OPERATION_PATENT', checked: false },
         { label: '商标', value: 'OPERATION_TRADEMARK', checked: false },
@@ -135,6 +135,7 @@ class BannerStore {
       .then(action('get banner info...', (resp) => {
         const whatThisBannerInfo = resp.data.bannerInfo.bannerInfo;
         this.companyName = resp.data.name;
+        this.score = resp.data.score;
         if (whatThisBannerInfo) {
           this.historyName = whatThisBannerInfo.historyName;
           this.riskInfo = whatThisBannerInfo.riskInfo;
@@ -443,6 +444,7 @@ class BannerStore {
     this.monitorId = '';
     this.reportId = '';
     this.companyName = '';
+    this.score = '';
     this.companyType = '';
     this.isLoading = false;
     this.hisNameVis = false;

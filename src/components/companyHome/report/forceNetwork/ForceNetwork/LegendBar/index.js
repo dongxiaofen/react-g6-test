@@ -1,11 +1,14 @@
 import React, {PropTypes} from 'react';
-import { observer } from 'mobx-react';
+import { observer, inject } from 'mobx-react';
 import styles from './index.less';
 
-function LegendBar({}) {
+function LegendBar({forceNetworkStore}) {
+  const expand = () => {
+    forceNetworkStore.expand();
+  };
   return (
     <div className={styles.box}>
-      LegendBar
+      <a onClick={expand}>拓展节点</a>
     </div>
   );
 }
@@ -13,4 +16,4 @@ function LegendBar({}) {
 LegendBar.propTypes = {
   foo: PropTypes.string,
 };
-export default observer(LegendBar);
+export default inject('forceNetworkStore')(observer(LegendBar));
