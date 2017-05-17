@@ -3,8 +3,8 @@ import AsyncComponent from 'components/common/AsyncComponent';
 
 const loader = (cb) => {
   require.ensure([], (require) => {
-    cb(require('./TrendAnalysis'));
-  }, 'TrendAnalysis');
+    cb(require('./TimeAxis'));
+  }, 'TimeAxis');
 };
 
 export default (props) =>

@@ -28,7 +28,8 @@
 .select {
   position: relative;
   width: 206px;
-
+  vertical-align: middle;
+  display: inline-block;
   &:hover {
     cursor: pointer;
   }
@@ -44,12 +45,12 @@
   line-height: @selectInputHeight;
 
   border-bottom: 1px solid #42a5f5;
-  
+
   i {
-    position: relative;
+    position: absolute;
     top: 50%;
-    float: right;
-    margin-top: -5px;
+    right: 0;
+    margin-top: -6px;
     .transitionAll;
     .transformRotate(0deg);
   }
@@ -62,7 +63,7 @@
 .selectMenu {
   display: none;
   position: absolute;
-  width: 100%;
+  min-width: 100%;
   max-height: 210px;
   margin-top: 1px;
   background-color: #ffffff;
@@ -72,20 +73,16 @@
   li {
     height: @selectMenuLiHeight;
     padding: 0 10px;
-
     line-height: @selectMenuLiHeight;
     color: @defaultColor;
-
     cursor: pointer;
-
+    white-space: nowrap;
     .transitionAll;
-
     &:hover {
       color: #455a64;
       background-color: #f5f5f5;
     }
   }
-
   .selectMenuActive {
     color: #42a5f5;
   }
@@ -96,6 +93,6 @@
     .transformRotate(180deg);
   }
   .selectMenu {
-    display: block;
+    display: inline-block;
   }
 }
