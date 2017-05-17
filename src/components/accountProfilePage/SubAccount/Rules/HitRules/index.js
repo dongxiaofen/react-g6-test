@@ -1,15 +1,20 @@
 import React, {PropTypes} from 'react';
 import { observer } from 'mobx-react';
 import CommonList from '../CommonList';
+import { loadingComp } from 'components/hoc';
 
 function HitRules({data}) {
-  const config = {
-    data,
-  };
-  return <CommonList {...config} />;
+  return <CommonList data={data} />;
 }
 
 HitRules.propTypes = {
   foo: PropTypes.object,
 };
-export default observer(HitRules);
+export default loadingComp({
+  mapDataToProps: props => ({
+    loading: props.isLoading,
+    category: 0,
+    error: props.error,
+    module: props.module
+  })
+})(observer(HitRules));
