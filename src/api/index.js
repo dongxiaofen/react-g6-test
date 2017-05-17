@@ -15,4 +15,5 @@ export * as collectionApi from './collection';
 export * as ruleCompanyApi from './ruleCompany';
 export * as bidMarketApi from './bidMarket';
 export * as accountProfileApi from './accountProfile';
+export * as assetTransactionApi from './assetTransaction';
 // append here from plop
