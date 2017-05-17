@@ -284,3 +284,8 @@ export const getNowRecordPictures = (id, source) => {
 export const getTaxCheckList = (id, params, source) => {
   return axios.get('/api/monitor/' + id + '/taxCheck/page', {params: params, cancelToken: source.token});
 };
+
+// 税务列表
+export const getTaxList = (id, source) => {
+  return axios.get('/api/monitor/' + id + '/tax', {cancelToken: source.token});
+};

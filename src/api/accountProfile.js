@@ -49,3 +49,33 @@ export const subWorningAccount10 = () => {
 export const subNewestRule = () => {
   return axios.get('/api/user/index/xx/sub/newestRule');
 };
+
+// 我的新增业务统计
+export const getMyNewBusinessData = () => {
+  return axios.get('/api/user/index/xx/own/increase');
+};
+
+// 我的地域分布
+export const getMyProvinceRank = () => {
+  return axios.get('/api/user/index/xx/own/province');
+};
+
+// 我的地域分布
+export const getMyIndustryDist = () => {
+  return axios.get('/api/user/index/xx/own/industry');
+};
+
+// 下属新增业务统计
+export const getSubNewBusinessData = () => {
+  return axios.get('/api/user/index/xx/sub/increase');
+};
+
+// 下属地域分布
+export const getSubProvinceRank = () => {
+  return axios.get('/api/user/index/xx/sub/province');
+};
+
+// 下属行业分布
+export const getSubIndustryDist = () => {
+  return axios.get('/api/user/index/xx/sub/industry');
+};
