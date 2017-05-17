@@ -51,7 +51,7 @@ function Content({alertAnalysisStore}) {
           return null;
       }
     }else if (info.alertType === 'SYS_RULE') {
-      let ruleId = detail.ruleId;
+      let ruleId = detail[detailData.activeIndex].ruleId;
       if (ruleId === 1 || ruleId === 2 || ruleId === 5 || ruleId === 6) {
         ruleId = 1;
       }else if (ruleId === 3 || ruleId === 4) {
@@ -63,25 +63,25 @@ function Content({alertAnalysisStore}) {
       }
       switch (ruleId) {
         case 1:
-          return <JudgeDoc data={detail} type={info.alertTyp}/>;
+          return <JudgeDoc data={detail[detailData.activeIndex]} type={info.alertTyp}/>;
         case 3:
-          return <DishonestInfo data={detail} type={info.alertTyp}/>;
+          return <DishonestInfo data={detail[detailData.activeIndex]} type={info.alertTyp}/>;
         case 7:
-          return <Rule7 data={detail} />;
+          return <Rule7 data={detail[detailData.activeIndex]} />;
         case 8:
-          return <ErrorInfo data={detail} />;
+          return <ErrorInfo data={detail[detailData.activeIndex]} type={info.alertTyp}/>;
         case 9:
-          return <ScopeAlter data={detail} type={info.alertTyp}/>;
+          return <ScopeAlter data={detail[detailData.activeIndex]} type={info.alertTyp}/>;
         case 10:
-          return <Rule10 data={detail} />;
+          return <Rule10 data={detail[detailData.activeIndex]} />;
         case 11:
-          return <Rule11 data={detail} />;
+          return <Rule11 data={detail[detailData.activeIndex]} />;
         case 12:
-          return <Rule12 data={detail} />;
+          return <Rule12 data={detail[detailData.activeIndex]} />;
         case 13:
-          return <Rule13To31 data={detail} />;
+          return <Rule13To31 data={detail[detailData.activeIndex]} />;
         case 32:
-          return <Rule32To50 data={detail} />;
+          return <Rule32To50 data={detail[detailData.activeIndex]} />;
         default:
           return null;
       }

@@ -8,6 +8,7 @@ class ForceNetworkStore {
     nodes: []
   };
   @observable mainCompanyName = '';
+  @observable dbFocalNode = {};
   @observable expandNetwork = {
     nodes: [],
     links: [],
@@ -91,6 +92,9 @@ class ForceNetworkStore {
         };
         this.isLoading = false;
       }));
+  }
+  @action.bound setFocalNode(node) {
+    this.dbFocalNode = node;
   }
 }
 export default new ForceNetworkStore();
