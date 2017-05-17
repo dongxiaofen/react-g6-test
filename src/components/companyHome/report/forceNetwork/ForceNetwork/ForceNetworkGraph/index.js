@@ -302,22 +302,6 @@ export default class ForceNetworkGraph extends Component {
     return false;
   }
   dblclickNode = ()=> {
-    simulation.stop();
-    svgNodes
-      .transition()
-      .duration(1000)
-      .attr('r', (data)=>{
-        if (data.isActive === 0) {
-          return 10;
-        }
-        return 35;
-      })
-      .attr('class', (data) => {
-        return (data.hide && styles.hide) || (data.isFocus && ' ') || (data.isActive === 0 && styles.noActive) || (data.category === 0 && styles.mainCompany) || (data.blackList && data.category !== 7 && styles.blackListNodes) || (data.status === 0 && styles.cancelNodes) || styles[`category${data.category}`];
-      });
-    // if (dblclikTimer) {
-    //   clearTimeout(dblclikTimer);
-    // }
     simulation
       .force('charge', d3.forceManyBody().strength((data)=>{
         if (data.isActive === 0) {
@@ -332,24 +316,6 @@ export default class ForceNetworkGraph extends Component {
         return 150;
       }))
       .restart();
-    // forceLink.distance(90).initialize(svgNodes);
-    // dblclikTimer = setTimeout(()=>{
-    //   // forceLink.distance(90).initialize(svgNodes);
-    //   simulation
-    //     .force('charge', d3.forceManyBody().strength((data)=>{
-    //       if (data.isActive === 0) {
-    //         return -100;
-    //       }
-    //       return -1000;
-    //     }))
-    //     .force('link', d3.forceLink(edgesData).id((data) => { return data.name; }).distance((data)=>{
-    //       if (data.target.isActive === 0 || data.source.isActive === 0) {
-    //         return 90;
-    //       }
-    //       return 150;
-    //     }))
-    //     .restart();
-    // }, 1000);
   }
   ticked = () => {
     svgNodes
@@ -361,6 +327,8 @@ export default class ForceNetworkGraph extends Component {
       .attr('fill', (data) => {
         return (!data.isFocus && ' ') || (data.blackList && data.category !== 7 && 'url(#bling9)') || (data.status === 0 && 'url(#bling10)') || `url(#bling${data.category})`;
       })
+      .transition()
+      .duration(200)
       .attr('r', (data) => {
         if (data.isActive === 0) {
           return 10;
@@ -381,20 +349,20 @@ export default class ForceNetworkGraph extends Component {
       .attr('x', (data) => { return data.x; })
       .attr('y', (data) => { return data.y; })
       .attr('class', (data)=> {
-        return data.isActive === 0 ? styles.hide : styles.nodeText;
+        return data.isActive === 0 ? styles.hideText : styles.nodeText;
       });
     svgTexts2
       .attr('x', (data) => { return data.x; })
       .attr('y', (data) => { return data.y; })
       .attr('class', (data)=> {
-        return data.isActive === 0 ? styles.hide : styles.nodeText;
+        return data.isActive === 0 ? styles.hideText : styles.nodeText;
       });
 
     svgTexts3
       .attr('x', (data) => { return data.x; })
       .attr('y', (data) => { return data.y; })
       .attr('class', (data)=> {
-        return data.isActive === 0 ? styles.hide : styles.nodeText;
+        return data.isActive === 0 ? styles.hideText : styles.nodeText;
       });
 
     svgEdgepaths

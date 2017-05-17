@@ -18,6 +18,12 @@
   -webkit-transition-duration: 2s;
   -webkit-transition-timing-function: ease;
 }
+.trans1 {
+  opacity: 1;
+  -webkit-transition-property: opacity;
+  -webkit-transition-duration: 0.5s;
+  -webkit-transition-timing-function: ease;
+}
 .show {
   // display: block;
   opacity: 1;
@@ -39,7 +45,11 @@
   composes: trans;
   font-size: 12px;
 }
-
+.hideText {
+  fill: white;
+  opacity: 0;
+  composes: trans1;
+}
 .arrow {
   fill: #e5e5e5;
 }
@@ -157,7 +167,4 @@
 }
 .lineNoActive {
   stroke: #EEEFF3;
-}
-.textHide {
-  opacity: 0;
 }
