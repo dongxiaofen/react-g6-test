@@ -36,7 +36,7 @@ function TaxUp({taxStore}) {
         <div className={styles.titleText}>
           成长能力指标
         </div>
-        <Popover placement="right" content={textAll}>
+        <Popover placement="rightTop" content={textAll}>
           <i className={styles.icon}></i>
         </Popover>
       </div>
