@@ -54,7 +54,9 @@ function Area({ bidMarketStore }) {
       </h4>
       <Chart
         mapName={bidMarketStore.mapName}
+        subText={bidMarketStore.subText}
         params={bidMarketStore.params}
+        groupInterval={bidMarketStore.groupInterval}
         areaLoading={bidMarketStore.areaLoading}
         area={bidMarketStore.area}
         setParams={bidMarketStore.setParams}

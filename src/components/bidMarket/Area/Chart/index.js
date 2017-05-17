@@ -4,22 +4,11 @@ import { toJS } from 'mobx';
 import styles from './index.less';
 import BaseChart from 'components/common/Charts/BaseChart';
 import { loadingComp } from 'components/hoc';
+import bidMarketMapColor from 'helpers/bidMarketMapColor';
 
-function Chart({ params, mapName, area, setParams, setParamsCity }) {
-  const switchMapOnClick = (item) => {
-    const _params = toJS(params);
-    if (item.componentType === 'series') {
-      const layer = item.value[4];
-      if (layer === 2) {
-        _params.city = item.name;
-        setParamsCity(_params);
-      } else {
-        _params.province = item.name;
-        _params.city = '';
-        setParams(_params);
-      }
-    }
-  };
+function Chart({ subText, groupInterval, params, mapName, area, setParams, setParamsCity }) {
+  const _subText = params.province ? '分布区县' : '分布省市';
+  const areaDataLength = area.data.length;
   const option = {
     tooltip: {
       backgroundColor: '#ffffff',
@@ -92,8 +81,78 @@ function Chart({ params, mapName, area, setParams, setParamsCity }) {
       },
     ]
   };
+  const switchMapOnClick = (item) => {
+    const _params = toJS(params);
+    if (item.componentType === 'series') {
+      const layer = item.value[4];
+      if (layer === 2) {
+        _params.city = item.name;
+        setParamsCity(_params);
+      } else {
+        _params.province = item.name;
+        _params.city = '';
+        setParams(_params);
+      }
+    }
+  };
+  const dealWithGroupColor = () => {
+    const output = [];
+    const length = groupInterval.length / 2;
+    let index = 0;
+    for (let idx = 0; idx < length; idx++) {
+      index = idx * 2;
+      output.push(
+        <div key={idx} className="clearfix" style={{ marginBottom: '10px' }}>
+          <div
+            className={styles['bidMarketMap-round']}
+            style={{ backgroundColor: bidMarketMapColor[idx] }}></div>
+          <div className={styles['bidMarketMap-round-text']}>
+            {`${groupInterval[index]}-${groupInterval[index + 1]}家`}
+          </div>
+        </div>
+      );
+    }
+    return output.reverse();
+  };
+  const bottomText = () => {
+    if (areaDataLength) {
+      return (
+        <div className={styles['bidMarket-tips-block']}>
+          <div className={styles['bidMarket-tips']}>
+            {
+              params.province
+              ?
+              <span>
+                <i
+                  className="fa fa-exclamation-circle"
+                  style={{
+                    marginLeft: '10px',
+                    marginRight: '4px',
+                    fontSize: '14px'
+                  }}></i>
+                点击图中高亮地区（区/县），查看该地区数据变化
+              </span>
+              : null
+            }
+          </div>
+        </div>
+      );
+    }
+    return null;
+  };
   return (
-    <div className={styles}>
+    <div>
+      <div className={styles['bidMarketMap-sub-title']}>
+        {_subText + areaDataLength + '个' + subText}
+      </div>
+      {
+        areaDataLength
+          ? <div className={styles['bidMarketMap-interval']}>
+              {dealWithGroupColor()}
+            </div>
+          : null
+      }
+      {bottomText()}
       <BaseChart
         chartId="bidMarketArea"
         height="500px"
@@ -106,7 +165,9 @@ function Chart({ params, mapName, area, setParams, setParamsCity }) {
 Chart.propTypes = {
   areaLoading: PropTypes.bool,
   mapName: PropTypes.string,
+  subText: PropTypes.string,
   params: PropTypes.object,
+  groupInterval: PropTypes.object,
   area: PropTypes.object,
   setParams: PropTypes.func,
   setParamsCity: PropTypes.func,

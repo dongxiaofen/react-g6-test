@@ -151,6 +151,7 @@ class BidMarketStore {
   @observable infoLoading = false;
 
   @observable area = { data: [] };
+  @observable groupInterval = [];
   @observable mapName = 'china';
   @observable subText = '';
 
@@ -210,11 +211,11 @@ class BidMarketStore {
         }
       };
     };
+    this.subText = '';
     this.areaLoading = true;
     if (province) {
       bidMarketApi.getArea({ from, to, province, city })
         .then(action('get area', (resp) => {
-          console.log(resp.data);
           let areaGroupInterval = [];
           let subText = '';
           const mapData = [];
@@ -234,6 +235,7 @@ class BidMarketStore {
                 subText = '，其中' + item.shortName + item.count + '家';
               }
             });
+            this.groupInterval = areaGroupInterval;
             this.mapName = province;
             this.area.data = mapData;
             this.subText = subText;
@@ -262,6 +264,7 @@ class BidMarketStore {
               });
             });
             this.mapName = 'china';
+            this.groupInterval = allGroupInterval;
             this.area.data = mapData;
           }
           this.areaLoading = false;
@@ -407,6 +410,11 @@ class BidMarketStore {
     this.trendLoading = false;
     this.rankLoading = false;
     this.infoLoading = false;
+
+    this.area = { data: [] };
+    this.groupInterval = [];
+    this.mapName = 'china';
+    this.subText = '';
 
     this.trend = { axis: [], amountData: [], countData: [] };
 
