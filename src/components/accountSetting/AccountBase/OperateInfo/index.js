@@ -4,50 +4,67 @@ import AnimateLoading from 'components/hoc/LoadingComp/AnimateLoading';
 import Item from '../Item';
 import styles from './index.less';
 function OperateInfo({baseInfo}) {
-  const config = [
-    {
-      name: '高级查询报告',
-      keys: 'reportCount',
-      unit: '个',
-    },
-    {
-      name: '深度评估报告',
-      keys: 'analysisReportCount',
-      unit: '个',
-    },
-    {
-      name: '监控主体报告',
-      keys: 'monitorCount',
-      unit: '个',
-    },
-    {
-      name: '个人核查',
-      keys: 'personCheckCount',
-      unit: '个',
-    },
-  ];
+  const data = baseInfo.data;
   let output = (
     <div className={styles.animateBox}>
       <AnimateLoading />
     </div>
   );
-  if (baseInfo.data) {
+  if (data) {
+    const config = [
+      {
+        name: '快速查询报告',
+        keys: 'freeReportNum',
+        remainKey: '',
+        unit: '个',
+      },
+      {
+        name: '高级查询报告',
+        keys: 'reportCount',
+        remainKey: '',
+        unit: '个',
+      },
+      {
+        name: '深度评估报告',
+        keys: 'analysisReportCount',
+        remainKey: '',
+        unit: '个',
+      },
+      {
+        name: '监控主体报告',
+        keys: 'monitorCount',
+        remainKey: '',
+        unit: '个',
+      },
+      {
+        name: '个人核查',
+        keys: 'personCheckCount',
+        remainKey: '',
+        unit: '个',
+      },
+      {
+        name: '税务核查指标',
+        keys: 'taxCheckCount',
+        remainKey: '',
+        unit: '个',
+      },
+    ];
     const content = config.map((item, idx) => {
       return (
         <Item
           key={idx}
           {...item}
-          values={baseInfo.data[item.keys]} />
+          remainValue={data[item.remainKey]}
+          feeset={data.consumeType === 'FEESET' && !data.parentUserId}
+          values={data[item.keys]} />
       );
     });
     output = content;
   }
   return (
-    <div className={styles.wrapper}>
-      <div className={styles.infoBox}>
-        <h2 className={styles.operateTitle}>操作记录</h2>
-        {output}
-      </div>
+    <div className={styles.infoBox}>
+      <h2 className={styles.operateTitle}>操作记录</h2>
+      {output}
     </div>
   );
 }

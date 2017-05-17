@@ -2,19 +2,23 @@ import React from 'react';
 import { observer } from 'mobx-react';
 import { loadingComp } from 'components/hoc';
 import styles from './index.less';
-function TreeList({accountSettingStore, uiStore}) {
+function TreeList({accountSettingStore, uiStore, clientStore}) {
   const moduleData = accountSettingStore.tree;
   const data = moduleData.data.content;
   const searchInput = moduleData.searchInput.trim();
-  const activeIndex = moduleData.activeIndex;
+  const userEmail = clientStore.userInfo.email;
   const getUserData = (uId, level) => {
     uiStore.resetAccountPager();
+    accountSettingStore.changeValue('tabs.activeKey', '业务统计');
     accountSettingStore.getUserInfo(uId);
     accountSettingStore.getReportAndMonitor(uId);
     accountSettingStore.getProvince(uId);
     accountSettingStore.getIndustry(uId);
     accountSettingStore.getScale(uId);
     accountSettingStore.getConsume(uId);
+    if (userEmail !== moduleData.data.content[moduleData.activeIndex].email) {
+      accountSettingStore.getAlertCorp(uId);
+    }
     if (level === 0) {
       accountSettingStore.getRecharge(uId);
       accountSettingStore.getSummary(uId);
@@ -26,7 +30,7 @@ function TreeList({accountSettingStore, uiStore}) {
     if (level !== 0) {
       accountSettingStore.changeValue(`tree.data.content[${idx}].extend`, !extendVal);
     }
-    if (activeIndex !== idx) {
+    if (moduleData.activeIndex !== idx) {
       accountSettingStore.changeValue(`tree.activeIndex`, idx);
       accountSettingStore.changeValue(`tree.activeId`, uId);
       getUserData(uId, level);

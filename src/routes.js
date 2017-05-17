@@ -27,12 +27,14 @@ import {
     Network,
     RelPerCheck,
     AlertAnalysis,
+    TimeAxis,
     RuleCompany,
     PersonReport,
     Pdf,
     BlackNetwork,
     Collection,
     BidMarket,
+    HighRiskCorp,
     AccountProfile,
     ForceNetwork,
     NowRecord,
@@ -79,6 +81,7 @@ export default (allStore) => {
         <Route path="network" component={ Network } />
         <Route path="relPerCheck" component={ RelPerCheck } />
         <Route path="alertAnalysis" component={ AlertAnalysis } />
+        <Route path="timeAxis" component={ TimeAxis } />
         <Route path="blackNetwork" component={ BlackNetwork } />
         <Route path="forceNetwork" component={ ForceNetwork } />
         <Route path="nowRecord" component={ NowRecord } />
@@ -99,6 +102,7 @@ export default (allStore) => {
       <Route path="collection" component={ Collection } />
       <Route path="ruleCompany" component={ RuleCompany } />
       <Route path="bidMarket" component={ BidMarket } />
+      <Route path="highRiskCorp" component={ HighRiskCorp } />
       <Route path="userAgreement" component={ UserAgreement } />
       <Route path="disclaimer" component={ Disclaimer } />
       <Route path="accountProfile" component={ AccountProfile } />

@@ -24,6 +24,10 @@ function BaseInfo({accountSettingStore}) {
       </div>
     );
   };
+  const addUnit = (unit, value) => {
+    if (value === '- -') return value;
+    return value + ' ' + unit;
+  };
   const editUserInfo = (name, values) => {
     accountSettingStore.changeValue('editModal.actName', name);
     accountSettingStore.changeValue(`editModal.form.${name}.value`, values);
@@ -41,38 +45,6 @@ function BaseInfo({accountSettingStore}) {
       </div>
     );
   };
-  const config = [
-    {
-      name: '账号',
-      keys: 'email',
-      handle: handleEmail,
-    },
-    {
-      name: '姓名',
-      keys: 'contact',
-      handle: handleEdit,
-    },
-    {
-      name: '职务',
-      keys: 'contactPosition',
-      handle: handleEdit,
-    },
-    {
-      name: '部门',
-      keys: 'department',
-      handle: handleEdit,
-    },
-    {
-      name: '电话',
-      keys: 'phone',
-      handle: handleEdit,
-    },
-    {
-      name: '邮箱',
-      keys: 'contactEmail',
-      handle: handleEdit,
-    },
-  ];
   let output = (
     <div
       className={styles.animateBox}>
@@ -80,21 +52,64 @@ function BaseInfo({accountSettingStore}) {
     </div>
   );
   if (baseInfo.data) {
+    const config = [
+      {
+        name: '账号',
+        keys: 'email',
+        handle: handleEmail,
+      },
+      {
+        name: '姓名',
+        keys: 'contact',
+        handle: handleEdit,
+      },
+      {
+        name: '职务',
+        keys: 'contactPosition',
+        handle: handleEdit,
+      },
+      {
+        name: '部门',
+        keys: 'department',
+        handle: handleEdit,
+      },
+      {
+        name: '电话',
+        keys: 'phone',
+        handle: handleEdit,
+      },
+      {
+        name: '邮箱',
+        keys: 'contactEmail',
+        handle: handleEdit,
+      },
+      {
+        name: '套餐有效期',
+        keys: 'lastLoginTs',
+        none: baseInfo.data.consumeType !== 'FEESET' || baseInfo.data.parentUserId ? true : false,
+      },
+      {
+        name: '剩余点数',
+        keys: 'point',
+        none: baseInfo.data.consumeType !== 'POINT' || baseInfo.data.parentUserId ? true : false,
+        handle: addUnit.bind(null, '点'),
+      },
+    ];
     output = config.map((item, idx) => {
-      return (
-        <Item
-          key={idx}
-          {...item}
-          values={baseInfo.data[item.keys]} />
-      );
+      if (!item.none) {
+        return (
+          <Item
+            key={idx}
+            {...item}
+            values={baseInfo.data[item.keys]} />
+        );
+      }
     });
   }
   return (
-    <div className={styles.wrapper}>
-      <div className={styles.infoBox}>
-        <h2 className={styles.baseTitle}>基本信息</h2>
-        {output}
-      </div>
+    <div className={styles.infoBox}>
+      <h2 className={styles.baseTitle}>基本信息</h2>
+      {output}
       <PwdModal />
       <EditModal />
     </div>

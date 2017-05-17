@@ -1,0 +1,64 @@
+.selectLine {
+  float: left;
+  margin-right: 30px;
+  height: 25px;
+}
+.selectLine:last-of-type {
+  margin-right: 0;
+}
+.label {
+  display: inline-block;
+  margin-right: 5px;
+  line-height: 25px;
+  font-size: 13px;
+  color: #666666;
+  vertical-align: middle;
+}
+.selectBox {
+  padding-right: 10px;
+  margin-right: 0;
+  height: 25px;
+  line-height: 25px;
+  border-bottom: 1px solid #80b3ef;
+  vertical-align: middle;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+}
+.selectBoxNoLine {
+  composes: selectBox;
+  color: #3483e9;
+  font-size: 16px;
+  text-align: center;
+  border-bottom: none;
+}
+.timeSelct {
+  composes: selectBoxNoLine;
+}
+.rangeSelect {
+  composes: selectBoxNoLine;
+}
+.rangeSelect + ul > li,
+.timeSelct + ul > li {
+  height: 34px;
+  line-height: 34px;
+  padding: 0 15px;
+  font-size: 16px;
+}
+.timeSelct + ul > li {
+  padding: 0 20px;
+}
+.industrySelect {
+  margin-right: 0;
+  height: 25px;
+  border-bottom: 1px solid #80b3ef;
+}
+.timeSelect {
+  composes: selectBox;
+  border-bottom: none;
+  margin-right: -10px;
+}
+.timeInputCss {
+  font-size: 16px;
+  color: #3483e9;
+}

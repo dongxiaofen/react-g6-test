@@ -4,18 +4,13 @@ import { loadingComp } from 'components/hoc';
 import AccountTable from '../AccountTable';
 import styles from './index.less';
 function Recharge({accountSettingStore}) {
-  const handleSource = (value) => {
-    return value === 'ADMIN' ? '后台充值' : value;
-  };
-  const handleMoney = (value) => {
-    return value || '- -';
+  const handleDetail = (value, item) => {
+    return '等待api' + item.detail;
   };
   const head = [
-    {name: '充值编号', key: 'seqNum'},
-    {name: '充值方式', key: 'source', handle: handleSource},
-    {name: '支付金额', key: 'money', handle: handleMoney},
-    {name: '充值点数', key: 'point'},
-    {name: '操作时间', key: 'opTime'},
+    {name: '充值编号', key: 'seqNum', width: '25%'},
+    {name: '操作时间', key: 'opTime', width: '25%'},
+    {name: '充值详情', key: 'detail', handle: handleDetail},
   ];
   const data = accountSettingStore.tabs.recharge;
   return (

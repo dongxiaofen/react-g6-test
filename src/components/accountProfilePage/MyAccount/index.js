@@ -3,6 +3,7 @@ import { observer, inject } from 'mobx-react';
 import styles from './index.less';
 import Statistics from '../common/Statistics';
 import Tables from '../common/Tables';
+// import NewBusiness from '../common/NewBusiness';
 
 function MyAccount({accountProfileStore}) {
   const statistics = {
@@ -27,6 +28,9 @@ function MyAccount({accountProfileStore}) {
         <Tables className="" />
         <Tables className={styles.gap} />
         <Tables className="" />
+        {/* <div className={styles.newBusiness}>
+          <NewBusiness newBusinessData={accountProfileStore.myNewBusinessData} />
+        </div> */}
       </div>
     </div>
   );

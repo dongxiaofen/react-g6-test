@@ -48,7 +48,7 @@ export const getReportModule = (params) => {
       } else if (module === 'blackNetwork') {
         url = `/api/monitor/${monitorId}/network/blacklist`;
       } else if (module === 'forceNetwork') {
-        url = `/api/monitor/${monitorId}/network`;
+        url = `/api/monitor/${monitorId}/expendNetwork`;
       } else {
         url = `/api/monitor/${monitorId}/${module}`;
       }
@@ -60,7 +60,7 @@ export const getReportModule = (params) => {
       } else if (module === 'blackNetwork') {
         url = `/api/report/network/blacklist?reportId=${reportId}`;
       } else if (module === 'forceNetwork') {
-        url = `/api/report/network?reportId=${reportId}`;
+        url = `/api/report/expendNetwork?reportId=${reportId}`;
       } else {
         url = `/api/report/${module}?reportId=${reportId}`;
       }
@@ -72,7 +72,7 @@ export const getReportModule = (params) => {
       } else if (module === 'blackNetwork') {
         url = `/api/analysisReport/network/blacklist?analysisReportId=${analysisReportId}`;
       } else if (module === 'forceNetwork') {
-        url = `/api/analysisReport/network?analysisReportId=${analysisReportId}`;
+        url = `/api/analysisReport/expendNetwork?analysisReportId=${analysisReportId}`;
       } else {
         url = `/api/analysisReport/${module}?analysisReportId=${analysisReportId}`;
       }
@@ -283,4 +283,9 @@ export const getNowRecordPictures = (id, source) => {
 // 税务核查列表
 export const getTaxCheckList = (id, params, source) => {
   return axios.get('/api/monitor/' + id + '/taxCheck/page', {params: params, cancelToken: source.token});
+};
+
+// 税务列表
+export const getTaxList = (id, source) => {
+  return axios.get('/api/monitor/' + id + '/tax', {cancelToken: source.token});
 };

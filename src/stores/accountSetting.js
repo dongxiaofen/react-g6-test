@@ -6,6 +6,32 @@ import uiStore from './ui';
 import clientStore from './client';
 import messageStore from './message';
 class AccountSettingStore {
+  timeMap = {
+    ONE_MONTH: '1个月',
+    TWO_MONTH: '2个月',
+    THREE_MONTH: '3个月',
+    FOUR_MONTH: '4个月',
+    FIVE_MONTH: '5个月',
+    SIX_MONTH: '6个月',
+    SEVEN_MONTH: '7个月',
+    EIGHT_MONTH: '8个月',
+    NINE_MONTH: '9个月',
+    ONE_YEAR: '1年',
+  };
+  consumeTypeMap = {
+    REPORT_MAIN: '高级查询报告',
+    REPORT_REFRESH: '刷新高级查询报告',
+    REPORT_TO_MONITOR: '高级查询报告转监控',
+    ANALYSIS_REPORT_MAIN: '深度分析报告',
+    ANALYSIS_REPORT_REFRESH: '刷新深度分析报告',
+    ANALYSIS_REPORT_TO_MONITOR: '深度分析报告转监控',
+    REPORT_TO_ANALYSIS_REPORT: '高级查询报告升级为深度分析报告',
+    MONITOR_MAIN: '主体监控报告',
+    MONITOR_MAIN_RENEWAL: '主体监控续费',
+    PERSON_CHECK: '个人核查',
+    TEST_: '税务核查',
+    TEST__: '快速查询报告',
+  };
   // 账号树数据
   @observable tree = {
     searchInput: '',
@@ -132,12 +158,14 @@ class AccountSettingStore {
   };
   // tab栏数据
   @observable tabs = {
+    activeKey: '业务统计',
     business: {
       reportAndMonitor: {},
       province: {},
       industry: {},
       scale: {},
     },
+    alertCorp: {},
     consume: {},
     recharge: {},
     summary: {},
@@ -145,6 +173,14 @@ class AccountSettingStore {
   };
   @action.bound changeValue(key, value) {
     pathval.setPathValue(this, key, value);
+  }
+  @action.bound getErrMsg(err) {
+    return pathval.getPathValue(err, 'response.data.message');
+  }
+  @action.bound getActiveTreeValue(name) {
+    if (this.tree.data.content) {
+      return this.tree.data.content[this.tree.activeIndex][name];
+    }
   }
   @action.bound editInfo(url, name, params) {
     this.editModal.loading = true;
@@ -165,7 +201,7 @@ class AccountSettingStore {
         this.editModal.loading = false;
         messageStore.openMessage({
           type: 'error',
-          content: err.response && err.response.data && err.response.data.message || '修改失败',
+          content: this.getErrMsg(err) || '修改失败',
         });
       }));
   }
@@ -183,7 +219,7 @@ class AccountSettingStore {
         this.pwdModal.loading = false;
         messageStore.openMessage({
           type: 'error',
-          content: err.response && err.response.data && err.response.data.message || '修改密码失败',
+          content: this.getErrMsg(err) || '修改密码失败',
         });
       }));
   }
@@ -202,7 +238,7 @@ class AccountSettingStore {
         this.addModal.loading = false;
         messageStore.openMessage({
           type: 'error',
-          content: err.response && err.response.data && err.response.data.message || '新增账号失败',
+          content: this.getErrMsg(err) || '新增账号失败',
         });
       }));
   }
@@ -219,6 +255,7 @@ class AccountSettingStore {
           this.tree.data = {content: treeData.formatResult};
           if (!afterAddUser) {
             const uId = treeData.formatResult[0].id;
+            const pId = treeData.formatResult[0].parentUserId;
             this.tree.activeId = uId;
             this.getUserInfo(uId);
             this.getReportAndMonitor(uId);
@@ -226,8 +263,10 @@ class AccountSettingStore {
             this.getIndustry(uId);
             this.getScale(uId);
             this.getConsume(uId);
-            this.getRecharge(uId);
-            this.getSummary(uId);
+            if (!pId) {
+              this.getRecharge(uId);
+              this.getSummary(uId);
+            }
             this.getLoginRecord(uId);
           }
         } else {
@@ -305,6 +344,21 @@ class AccountSettingStore {
         this.tabs.business.scale = {error: err.response.data, data: {}};
       }));
   }
+  @action.bound getAlertCorp(uId) {
+    this.tabs.alertCorp = {};
+    const params = uiStore.uiState.accountAlertCorp;
+    delete params.totalElements;
+    accountSettingApi.getAlertCorp(uId, params)
+      .then(action('getAlertCorp_success', resp => {
+        const noData = !resp.data || resp.data.content === undefined || resp.data && resp.data.content.content.length === 0;
+        this.tabs.alertCorp = noData ? {error: {message: '暂无预警企业'}, content: []} : resp.data;
+        uiStore.updateUiStore('accountAlertCorp.totalElements', pathval.getPathValue(resp, 'data.content.totalElements') || 0);
+      }))
+      .catch(action('getAlertCorp_error', err => {
+        console.log('getAlertCorp_error', err);
+        this.tabs.alertCorp = {error: err.response.data, content: []};
+      }));
+  }
   @action.bound getConsume(uId) {
     this.tabs.consume = {};
     const params = uiStore.uiState.accountConsume;
@@ -313,7 +367,7 @@ class AccountSettingStore {
       .then(action('getConsume_success', resp => {
         const noData = resp.data.page === undefined || resp.data.page.content.length === 0;
         this.tabs.consume = noData ? {error: {message: '暂无消费记录'}, page: []} : resp.data;
-        uiStore.updateUiStore('accountConsume.totalElements', resp.data.page.totalElements);
+        uiStore.updateUiStore('accountConsume.totalElements', pathval.getPathValue(resp, 'data.page.totalElements') || 0);
       }))
       .catch(action('getConsume_error', err => {
         this.tabs.consume = {error: err.response.data, page: []};
@@ -327,7 +381,7 @@ class AccountSettingStore {
       .then(action('getRecharge_success', resp => {
         const noData = resp.data.content === undefined || resp.data.content.length === 0;
         this.tabs.recharge = noData ? {error: {message: '暂无充值记录'}, content: []} : resp.data;
-        uiStore.updateUiStore('accountRecharge.totalElements', resp.data.totalElements);
+        uiStore.updateUiStore('accountRecharge.totalElements', pathval.getPathValue(resp, 'data.totalElements') || 0);
       }))
       .catch(action('getRecharge_error', err => {
         this.tabs.recharge = {error: err.response.data, content: []};
@@ -341,7 +395,7 @@ class AccountSettingStore {
       .then(action('getSummary_success', resp => {
         const noData = resp.data.page === undefined || resp.data.page.content.length === 0;
         this.tabs.summary = noData ? {error: {message: '暂无消费记录'}, page: []} : resp.data;
-        uiStore.updateUiStore('accountSummary.totalElements', resp.data.page.totalElements);
+        uiStore.updateUiStore('accountSummary.totalElements', pathval.getPathValue(resp, 'data.page.totalElements') || 0);
       }))
       .catch(action('getSummary_error', err => {
         this.tabs.summary = {error: err.response.data, page: []};
@@ -355,7 +409,7 @@ class AccountSettingStore {
       .then(action('getLoginRecord_success', resp => {
         const noData = resp.data.content === undefined || resp.data.content.length === 0;
         this.tabs.loginRecord = noData ? {error: {message: '暂无登录记录'}, content: []} : resp.data;
-        uiStore.updateUiStore('accountLoginRecord.totalElements', resp.data.totalElements);
+        uiStore.updateUiStore('accountLoginRecord.totalElements', pathval.getPathValue(resp, 'data.totalElements') || 0);
       }))
       .catch(action('getLoginRecord_error', err => {
         this.tabs.loginRecord = {error: err.response.data, content: []};
@@ -492,6 +546,7 @@ class AccountSettingStore {
   }
   @action.bound resetTabs() {
     this.tabs = {
+      activeKey: '业务统计',
       business: {
         reportAndMonitor: {},
         province: {},
@@ -499,6 +554,7 @@ class AccountSettingStore {
         scale: {},
       },
       consume: {},
+      alertCorp: {},
       recharge: {},
       summary: {},
       loginRecord: {},
