@@ -284,3 +284,12 @@ export const getNowRecordPictures = (id, source) => {
 export const getTaxCheckList = (id, params, source) => {
   return axios.get('/api/monitor/' + id + '/taxCheck/page', {params: params, cancelToken: source.token});
 };
+export const addTaxCheck = (monitorId, analysisReportId, params) => {
+  let url;
+  if (monitorId) {
+    url = `/api/monitor/${monitorId}/taxCheck`;
+  } else if (analysisReportId) {
+    url = `/api/analysisReport/${analysisReportId}/taxCheck`;
+  }
+  return axios.post(url, params);
+};
