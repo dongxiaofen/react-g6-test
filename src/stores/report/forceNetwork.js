@@ -7,7 +7,8 @@ class ForceNetworkStore {
   @observable isLoading = true;
   @observable isMount = false;
   @observable forceNetwork = {
-    nodes: []
+    nodes: [],
+    links: []
   };
   @observable mainCompanyName = '';
   @observable dbFocalNode = {};
@@ -93,12 +94,12 @@ class ForceNetworkStore {
             console.info('网络图link名字和node不对应', link);
           }
         });
-        resp.data.nodes.map((node) => {
-          if (node.layer === -1) {
-            // canRenderSvg = false;
-            console.info('网络图node的layer有-1', node);
-          }
-        });
+        // resp.data.nodes.map((node) => {
+        //   if (node.layer === -1) {
+        //     // canRenderSvg = false;
+        //     console.info('网络图node的layer有-1', node);
+        //   }
+        // });
         if (!canRenderSvg || resp.data.nodes[0].layer === undefined) {
           this.error = {
             message: '网络图数据异常, 请联系管理员'
