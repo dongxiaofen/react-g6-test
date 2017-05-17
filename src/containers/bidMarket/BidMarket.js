@@ -48,6 +48,7 @@ export default class BidMarket extends Component {
             <SwitchData
               from={_from}
               to={_to}
+              cancels={bidMarketStore.cancels}
               params={bidMarketStore.params}
               setParams={bidMarketStore.setParams}/>
           </Col>

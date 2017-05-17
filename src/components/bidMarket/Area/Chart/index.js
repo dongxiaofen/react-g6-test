@@ -6,7 +6,7 @@ import BaseChart from 'components/common/Charts/BaseChart';
 import { loadingComp } from 'components/hoc';
 import bidMarketMapColor from 'helpers/bidMarketMapColor';
 
-function Chart({ subText, groupInterval, params, mapName, area, setParams, setParamsCity }) {
+function Chart({ subText, groupInterval, params, cancels, mapName, area, setParams, setParamsCity }) {
   const _subText = params.province ? '分布区县' : '分布省市';
   const areaDataLength = area.data.length;
   const option = {
@@ -82,6 +82,11 @@ function Chart({ subText, groupInterval, params, mapName, area, setParams, setPa
     ]
   };
   const switchMapOnClick = (item) => {
+    if (cancels && cancels.length) {
+      cancels.forEach((cancel) => {
+        cancel();
+      });
+    }
     const _params = toJS(params);
     if (item.componentType === 'series') {
       const layer = item.value[4];
@@ -167,6 +172,7 @@ Chart.propTypes = {
   mapName: PropTypes.string,
   subText: PropTypes.string,
   params: PropTypes.object,
+  cancels: PropTypes.array,
   groupInterval: PropTypes.object,
   area: PropTypes.object,
   setParams: PropTypes.func,

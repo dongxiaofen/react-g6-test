@@ -6,6 +6,12 @@ import Chart from './Chart';
 
 function Area({ bidMarketStore }) {
   const titleOnClick = (val) => {
+    const cancels = bidMarketStore.cancels;
+    if (cancels && cancels.length) {
+      cancels.forEach((cancel) => {
+        cancel();
+      });
+    }
     const params = toJS(bidMarketStore.params);
     params.province = val;
     params.city = '';
@@ -56,6 +62,7 @@ function Area({ bidMarketStore }) {
         mapName={bidMarketStore.mapName}
         subText={bidMarketStore.subText}
         params={bidMarketStore.params}
+        cancels={bidMarketStore.cancels}
         groupInterval={bidMarketStore.groupInterval}
         areaLoading={bidMarketStore.areaLoading}
         area={bidMarketStore.area}

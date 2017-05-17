@@ -1,5 +1,6 @@
 import { observable, action } from 'mobx';
 import moment from 'moment';
+import axios from 'axios';
 import { bidMarketApi } from 'api';
 import uiStore from './ui';
 import messageStore from './message';
@@ -7,6 +8,9 @@ import areaLanLon from 'helpers/areaLanLon';
 import bidMarketMapColor from 'helpers/bidMarketMapColor';
 
 class BidMarketStore {
+  constructor() {
+    this.cancels = [];
+  }
   // 补全时间
   dealWithDate(_from, to, result) {
     const compliteDate = [];
@@ -192,6 +196,7 @@ class BidMarketStore {
 
   // 全国分布和地区分布
   @action.bound getDistribution(params) {
+    const source = axios.CancelToken.source();
     const { from, to, province, city } = params;
     const mapItemConfig = (color) => {
       return {
@@ -214,7 +219,7 @@ class BidMarketStore {
     this.subText = '';
     this.areaLoading = true;
     if (province) {
-      bidMarketApi.getArea({ from, to, province, city })
+      bidMarketApi.getArea({ params: { from, to, province, city }, cancelToken: source.token })
         .then(action('get area', (resp) => {
           let areaGroupInterval = [];
           let subText = '';
@@ -244,10 +249,12 @@ class BidMarketStore {
         }))
         .catch(action('get area catch', (err) => {
           console.log(err);
-          this.areaLoading = false;
+          if (!axios.isCancel(err)) {
+            this.areaLoading = false;
+          }
         }));
     } else {
-      bidMarketApi.getCountry({ from: from, to: to })
+      bidMarketApi.getCountry({ params: { from: from, to: to }, cancelToken: source.token })
         .then(action('get all', (resp) => {
           const result = resp.data.result;
           if (result && result.length > 0) {
@@ -271,16 +278,20 @@ class BidMarketStore {
         }))
         .catch(action('get all catch', (err) => {
           console.log(err.response);
-          this.areaLoading = false;
+          if (!axios.isCancel(err)) {
+            this.areaLoading = false;
+          }
         }));
     }
+    this.cancels.push(source.cancel);
   }
 
   // 变化趋势
   @action.bound getTrend(params) {
+    const source = axios.CancelToken.source();
     const { from, to, province, city } = params;
     this.trendLoading = true;
-    bidMarketApi.getTrend({ from, to, province, city })
+    bidMarketApi.getTrend({ params: { from, to, province, city }, cancelToken: source.token })
       .then(action('get trend', (resp) => {
         const result = resp.data.result;
         if (result.length > 0) {
@@ -301,8 +312,11 @@ class BidMarketStore {
       }))
       .catch(action('get trend err', (err) => {
         console.log(err);
-        this.trendLoading = false;
+        if (!axios.isCancel(err)) {
+          this.trendLoading = false;
+        }
       }));
+    this.cancels.push(source.cancel);
   }
 
   // 设置中标金额总量排行switch
@@ -314,9 +328,10 @@ class BidMarketStore {
 
   // 中标金额总量排行
   @action.bound getRank(params) {
+    const source = axios.CancelToken.source();
     const { from, to, province, city } = params;
     this.rankLoading = true;
-    bidMarketApi.getRank({ from, to, province, city })
+    bidMarketApi.getRank({ params: { from, to, province, city }, cancelToken: source.token })
       .then(action('get rank', (resp) => {
         const rank = resp.data;
         const topWinners = rank.topWinners;
@@ -364,14 +379,18 @@ class BidMarketStore {
       }))
       .catch(action('get rank catch', (err) => {
         console.log(err, '-------------------------err');
-        this.rankLoading = false;
+        if (!axios.isCancel(err)) {
+          this.rankLoading = false;
+        }
       }));
+    this.cancels.push(source.cancel);
   }
 
   // 中标信息
   @action.bound getInfo(params) {
+    const source = axios.CancelToken.source();
     this.infoLoading = true;
-    bidMarketApi.getInfo(params)
+    bidMarketApi.getInfo({ params: params, cancelToken: source.token })
       .then(action('get info', (resp) => {
         this.areaInfo = resp.data.content;
         uiStore.uiState.bidMarketInfo.totalElements = resp.data.totalElements;
@@ -379,8 +398,11 @@ class BidMarketStore {
       }))
       .catch(action('get info catch', (err) => {
         console.log(err);
-        this.infoLoading = false;
+        if (!axios.isCancel(err)) {
+          this.infoLoading = false;
+        }
       }));
+    this.cancels.push(source.cancel);
   }
 
   // 招投标信息详情
@@ -402,6 +424,8 @@ class BidMarketStore {
 
   // 重置数据
   @action.bound resetStore() {
+    this.cancels = [];
+
     uiStore.uiState.bidMarketInfo.index = 1;
     uiStore.uiState.bidMarketInfo.totalElements = 0;
 

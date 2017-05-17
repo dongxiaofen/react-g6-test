@@ -10,13 +10,18 @@ import cityName from 'helpers/cityName';
 
 const { RangePicker } = DatePicker;
 const Option = Select.Option;
-function SwitchData({ from, to, params, setParams }) {
+function SwitchData({ from, to, params, cancels, setParams }) {
   const province = params.province;
   const disabledDate = (current) => {
     return current && current.valueOf() > Date.now();
   };
 
   const dateOnChange = (dateString, dateTime) => {
+    if (cancels && cancels.length) {
+      cancels.forEach((cancel) => {
+        cancel();
+      });
+    }
     const obj = toJS(params);
     obj.from = dateTime[0];
     obj.to = dateTime[1];
@@ -24,6 +29,11 @@ function SwitchData({ from, to, params, setParams }) {
   };
 
   const selectOnChange = (val) => {
+    if (cancels && cancels.length) {
+      cancels.forEach((cancel) => {
+        cancel();
+      });
+    }
     const obj = toJS(params);
     obj.province = val;
     setParams(obj);
@@ -71,6 +81,7 @@ function SwitchData({ from, to, params, setParams }) {
 SwitchData.propTypes = {
   from: PropTypes.string,
   to: PropTypes.string,
+  cancels: PropTypes.array,
   params: PropTypes.object,
   setParams: PropTypes.func,
 };
