@@ -4,6 +4,7 @@ import { toJS, reaction } from 'mobx';
 import styles from './index.less';
 import * as svgTools from 'helpers/svgTools';
 import * as d3 from 'd3';
+
 import bling0 from 'imgs/companyHome/network/0.gif';
 import bling1 from 'imgs/companyHome/network/1.gif';
 import bling2 from 'imgs/companyHome/network/2.gif';
@@ -100,8 +101,8 @@ export default class ForceNetworkGraph extends Component {
       () => this.props.forceNetworkStore.expandNetwork.change,
       () => {
         const { nodes, links } = this.props.forceNetworkStore.expandNetwork;
-        nodesData.push(toJS(nodes[0]));
-        edgesData.push(toJS(links[0]));
+        nodesData = nodesData.concat(toJS(nodes));
+        edgesData = edgesData.concat(toJS(links));
         this.reDraw();
       }
     );
@@ -113,7 +114,7 @@ export default class ForceNetworkGraph extends Component {
         nodesData.map((node) => {
           if (node.name === dbFocalNode.name) {
             node.isActive = 1;
-          } else if (this.findOneLevelNodes(node, dbFocalNode.OneLevelLinkedNodes)) {
+          } else if (svgTools.findOneLevelNodes(node, dbFocalNode.OneLevelLinkedNodes)) {
             node.isActive = 2;
           } else {
             node.isActive = 0;
@@ -247,73 +248,21 @@ export default class ForceNetworkGraph extends Component {
       .style('pointer-events', 'none')
       .text((data) => { return svgTools.getLinkInfo(data); });
 
-    // // 监听点击和搜索节点事件
-    // reaction(
-    //   () => this.props.forceNetworkStore.focusNodeName,
-    //   () => {
-    //     if (nodesData !== '') {
-    //       const { focusNodeName } = this.props.forceNetworkStore;
-    //       nodesData.map((node) => {
-    //         node.isFocus = false;
-    //       });
-    //       if (focusNodeName === this.props.forceNetworkStore.mainCompanyName) {
-    //         nodesData[0].isFocus = true;
-    //       } else {
-    //         nodesData.map((node) => {
-    //           if (focusNodeName !== '' && node.name.indexOf(focusNodeName) >= 0 && node.category !== 0) {
-    //             node.isFocus = true;
-    //           }
-    //         });
-    //       }
-    //       svgTools.focusRelatedLinks(focusNodeName, edgesData);
-    //       simulation.restart();
-    //     }
-    //   }
-    // );
-    // // 监听聚焦事件
-    // reaction(
-    //   () => this.props.forceNetworkStore.dbFocalNode,
-    //   () => {
-    //     const { dbFocalNode } = this.props.forceNetworkStore;
-    //     nodesData.map((node) => {
-    //       if (node.name === dbFocalNode.name) {
-    //         node.isActive = 1;
-    //       } else if (this.findOneLevelNodes(node, dbFocalNode.OneLevelLinkedNodes)) {
-    //         node.isActive = 2;
-    //       } else {
-    //         node.isActive = 0;
-    //       }
-    //     });
-    //     this.dblclickNode(dbFocalNode);
-    //   }
-    // );
-
     // Update and restart the simulation.
     simulation.nodes(nodesData);
     simulation.force('link').links(edgesData);
     simulation.alpha(1).restart();
   }
-  findOneLevelNodes = (node, ary)=> {
-    for (const nodeItem of ary) {
-      if (nodeItem === node.name) {
-        return true;
-      }
-    }
-    return false;
-  }
   dblclickNode = ()=> {
     simulation.stop();
     svgNodes
       .transition()
-      .duration(1000)
+      .duration(2000)
       .attr('r', (data)=>{
         if (data.isActive === 0) {
           return 10;
         }
         return 35;
-      })
-      .attr('class', (data) => {
-        return (data.hide && styles.hide) || (data.isFocus && ' ') || (data.isActive === 0 && styles.noActive) || (data.category === 0 && styles.mainCompany) || (data.blackList && data.category !== 7 && styles.blackListNodes) || (data.status === 0 && styles.cancelNodes) || styles[`category${data.category}`];
       });
     // if (dblclikTimer) {
     //   clearTimeout(dblclikTimer);
@@ -444,7 +393,7 @@ export default class ForceNetworkGraph extends Component {
         clickTime = date;
         timer = setTimeout(()=>{
           console.log('单击', data);
-          // this.props.forceNetworkStore.focusNode(data.name);
+          this.props.forceNetworkStore.focusNode(data.name);
           clickTime = '';
         }, 300);
       }
