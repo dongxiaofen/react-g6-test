@@ -4,31 +4,9 @@ import { runInAction } from 'mobx';
 import styles from './index.less';
 import Tooltip from 'antd/lib/tooltip';
 function LeftBar({ leftBarStore, bannerStore, routing }) {
-  const { monitorId, reportId, analysisReportId, companyName, companyType } = routing.location.query;
   const activeMenu = leftBarStore.activeMenu;
   const stockCode = bannerStore.stockCode;
   const barConf = leftBarStore.barConf;
-  const getReportType = () => {
-    // 一共四种报告 free, report, main, relation
-    let reportType;
-    if (monitorId) {
-      if (companyType === 'MAIN') {
-        reportType = 'main';
-      } else {
-        reportType = 'relation';
-      }
-    }
-    if (reportId) {
-      reportType = 'report';
-    }
-    if (analysisReportId) {
-      reportType = 'analysisReport';
-    }
-    if (companyName) {
-      reportType = 'free';
-    }
-    return reportType;
-  };
   const changeMenu = (menuKey, access) => {
     if (!access) return false;
     runInAction('切换报告一级目录', () => {
@@ -52,7 +30,7 @@ function LeftBar({ leftBarStore, bannerStore, routing }) {
   };
   const geneBar = () => {
     const menuRow = [];
-    const reportType = getReportType();
+    const reportType = leftBarStore.getReportType(routing);
     barConf.forEach((menuObj) => {
       const accessMenu = menuObj.contain.includes(reportType);
       const arrowCss = activeMenu.includes(menuObj.menuKey) ? styles.arrow + ` ${styles.arrowAnim}` : styles.arrow;

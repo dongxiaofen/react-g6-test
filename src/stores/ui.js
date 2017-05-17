@@ -57,6 +57,13 @@ class UiStore {
       }
     );
     reaction(
+      () => this.uiState.accountAlertCorp.index,
+      () => {
+        const uId = accountSettingStore.base.data.id;
+        accountSettingStore.getAlertCorp(uId);
+      }
+    );
+    reaction(
       () => this.uiState.nowRecordPager.index,
       () => {
         nowRecordStore.getNowRecordList();
@@ -149,6 +156,11 @@ class UiStore {
       }
     },
     monitorListPager: {
+      index: 1,
+      size: 10,
+      totalElements: 0,
+    },
+    accountAlertCorp: {
       index: 1,
       size: 10,
       totalElements: 0,
@@ -381,6 +393,7 @@ class UiStore {
       size: 10,
       totalElements: 0,
     };
+    this.uiState.accountAlertCorp = Object.assign({}, template);
     this.uiState.accountConsume = Object.assign({}, template);
     this.uiState.accountRecharge = Object.assign({}, template);
     this.uiState.accountSummary = Object.assign({}, template);
@@ -404,6 +417,11 @@ class UiStore {
           }
         },
         monitorListPager: {
+          index: 1,
+          size: 10,
+          totalElements: 0,
+        },
+        accountAlertCorp: {
           index: 1,
           size: 10,
           totalElements: 0,

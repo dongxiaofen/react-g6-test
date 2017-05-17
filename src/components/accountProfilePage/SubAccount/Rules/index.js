@@ -19,7 +19,7 @@ function Rules({accountProfileStore}) {
   };
   return (
     <div className={styles.rules_box}>
-      <Tabs defaultActiveKey="1" tabBarStyle={{paddingTop: '15px', paddingLeft: '18px', paddingBottom: 0}}>
+      <Tabs defaultActiveKey="1" tabBarStyle={{paddingTop: '15px', paddingLeft: '18px', marginBottom: 0}}>
         <TabPane tab="最新命中预警" key="1">
           <div className={`${hitRuleConfig.isLoading || hitRuleConfig.error ? styles.hit_rules_err : styles.hit_rules }`}>
             <HitRules {...hitRuleConfig} />

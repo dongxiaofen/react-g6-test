@@ -5,7 +5,7 @@ import Title from 'components/accountSetting/Title';
 import AccountTree from 'components/accountSetting/AccountTree';
 import AccountBase from 'components/accountSetting/AccountBase';
 import AccountTabs from 'components/accountSetting/AccountTabs';
-@inject('accountSettingStore', 'uiStore')
+@inject('accountSettingStore', 'uiStore', 'clientStore')
 @observer
 export default class AccountSetting extends Component {
   static propTypes = {

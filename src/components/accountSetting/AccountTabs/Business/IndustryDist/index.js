@@ -1,7 +1,7 @@
 import React from 'react';
 import { observer } from 'mobx-react';
 import { loadingComp } from 'components/hoc';
-import Chart from 'components/common/echarts/ResizeChart';
+import Chart from 'components/common/Charts/ResizeChart';
 import styles from './index.less';
 function IndustryDist({accountSettingStore}) {
   const data = accountSettingStore.tabs.business.industry.content;
