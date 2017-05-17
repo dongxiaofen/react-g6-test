@@ -1,11 +1,15 @@
 import React, {PropTypes} from 'react';
 import { observer, inject } from 'mobx-react';
+import { toJS } from 'mobx';
 import styles from './index.less';
 import Chart from './Chart';
 
 function Area({ bidMarketStore }) {
   const titleOnClick = (val) => {
-    console.log(val, '--------val');
+    const params = toJS(bidMarketStore.params);
+    params.province = val;
+    params.city = '';
+    bidMarketStore.setParams(params);
   };
   const params = bidMarketStore.params;
   const province = params.province;
