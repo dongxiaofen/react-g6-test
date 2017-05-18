@@ -22,12 +22,12 @@ export const subNewest = () => {
 
 // 我的风险企业
 export const ownHightRisk = () => {
-  return axios.get('/api/user/index/xx/own/hightRisk10');
+  return axios.get('/api/user/index/xx/own/highRisk10');
 };
 
 // 下属风险企业
 export const subHightRisk = () => {
-  return axios.get('/api/user/index/xx/sub/hightRisk10');
+  return axios.get('/api/user/index/xx/sub/highRisk10');
 };
 
 // 我的综合评分
@@ -50,6 +50,11 @@ export const subNewestRule = () => {
   return axios.get('/api/user/index/xx/sub/newestRule');
 };
 
+
+// 下属子账号最活跃规则
+export const frequentRule = () => {
+  return axios.get('/api/user/index/xx/sub/frequentRule');
+};
 // 我的新增业务统计
 export const getMyNewBusinessData = () => {
   return axios.get('/api/user/index/xx/own/increase');
@@ -79,3 +84,4 @@ export const getSubProvinceRank = () => {
 export const getSubIndustryDist = () => {
   return axios.get('/api/user/index/xx/sub/industry');
 };
+
