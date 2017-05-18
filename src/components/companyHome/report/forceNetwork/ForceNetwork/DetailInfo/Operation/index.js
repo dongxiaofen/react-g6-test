@@ -7,12 +7,10 @@ function Operation({forceNetworkStore, routing}) {
   const getShortPath = ()=>{
     if (forceNetworkStore.focalNode) {
       const {monitorId} = routing.location.query;
-      const {nodes, links} = forceNetworkStore.forceNetwork;
-      const params = {};
-      params.source = forceNetworkStore.centerNode.id;
-      params.target = forceNetworkStore.focalNode.id;
-      params.currentNetwork = svgTools.getNodesAndLinks(nodes, links);
-      forceNetworkStore.getShortPath(monitorId, params);
+      const source = forceNetworkStore.centerNode.id;
+      const target = forceNetworkStore.focalNode.id;
+      const currentNetwork = svgTools.getCurrentNodesLinks(forceNetworkStore.forceNetwork);
+      forceNetworkStore.getShortPath(monitorId, {source, target, currentNetwork});
     }
   };
   return (
