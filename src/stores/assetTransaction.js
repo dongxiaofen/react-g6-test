@@ -2,6 +2,8 @@ import { observable, action } from 'mobx';
 import axios from 'axios';
 import moment from 'moment';
 import { assetTransactionApi } from 'api';
+import uiStore from './ui';
+import { setPathValue } from 'pathval';
 
 class AssetTransactionStore {
   constructor() {
@@ -59,6 +61,17 @@ class AssetTransactionStore {
     return compliteDate;
   }
 
+  @observable assetLocalParams = {
+    assignorType: '',
+    region: '',
+    assetGt: '',
+    assetLt: '',
+    assetType: '',
+  }
+  @observable assetLocalData = [];
+  @observable assetLocalDetail = {};
+  @observable assetLocalLoading = false;
+
   @observable tradeTrendParams = {
     region: '',
     startDate: '',
@@ -68,6 +81,38 @@ class AssetTransactionStore {
   @observable auctionData = [];
   @observable transactionData = [];
   @observable tradeTrendLoading = false;
+
+  @action.bound setAssetLocalParams(path, value) {
+    setPathValue(this.assetLocalParams, path, value);
+  }
+
+  @action.bound getAssetLocal(params) {
+    const source = axios.CancelToken.source();
+    this.assetLocalLoading = true;
+    assetTransactionApi.getAssetLocal({ params: params, cancelToken: source.token })
+      .then(action('get asset local', (resp) => {
+        this.assetLocalData = resp.data.data;
+        uiStore.uiState.assetLocal.totalElements = resp.data.pageTotal;
+        this.assetLocalLoading = false;
+      }))
+      .catch(action('get asset local catch', (err) => {
+        if (!axios.isCancel(err)) {
+          console.log(err);
+          this.assetLocalLoading = false;
+        }
+      }));
+  }
+
+  @action.bound getAssetLocalDetail(params, openDetailModal) {
+    assetTransactionApi.getAssetLocalDetail(params)
+      .then(action('get assset local detail', (resp) => {
+        this.assetLocalDetail = resp.data;
+        openDetailModal();
+      }))
+      .catch(action('get asset local detail catch', (err) => {
+        console.log(err);
+      }));
+  }
 
   @action.bound setTradeTrendParams(params) {
     this.tradeTrendParams = params;
@@ -94,6 +139,10 @@ class AssetTransactionStore {
           this.tradeTrendLoading = false;
         }
       }));
+  }
+
+  @action.bound resetStore() {
+    console.log('asset resetStore');
   }
 }
 export default new AssetTransactionStore();

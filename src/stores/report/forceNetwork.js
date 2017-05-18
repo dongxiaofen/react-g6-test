@@ -1,6 +1,8 @@
-import { observable, action } from 'mobx';
+import { observable, action, toJS } from 'mobx';
 import { companyHomeApi } from 'api';
+import bannerStore from '../banner';
 import { browserHistory } from 'react-router';
+import * as svgTools from 'helpers/svgTools';
 
 class ForceNetworkStore {
   @observable error = '';
@@ -17,9 +19,15 @@ class ForceNetworkStore {
     links: [],
     change: false
   };
-  @observable focusNodeName = '';
+  @observable focalNode = {};
   @observable isExpandSaved = true;
-
+  @observable shortestPahth = [];
+  @observable centerNode = {
+    id: '',
+  };
+  @observable nodeInfo = {
+    company: {},
+  }
   @action.bound saveNetwork(nextLocation) {
     this.isExpandSaved = true;
     browserHistory.push(nextLocation.pathname + nextLocation.search);
@@ -27,60 +35,47 @@ class ForceNetworkStore {
   @action.bound expand() {
     this.expandNetwork.nodes = [];
     this.expandNetwork.links = [];
-    this.expandNetwork.nodes.push({
-      'category': 4,
-      'status': 1,
-      'layer': 1,
-      'keyCate': 0,
-      'name': '杭州誉存科技有限公司',
-      'degree': 1,
-      'cateType': 1,
-      'caseRecord': [],
-      'pdfPrint': 0,
-      'blackList': false,
-      'state': 0,
-      'linkedNodes': [],
-      'cateList': [
-        4
-      ],
-      'esDate': '2014-07-14',
-      'firstLayer': 0
-    });
-    this.expandNetwork.links = this.expandNetwork.links.concat([{
-      'target': '杭州誉存科技有限公司',
-      'invConum': -1,
-      'state': 0,
-      'current': 1,
-      'source': '重庆贝牛网络科技有限公司綦江分公司',
-      'invRatio': -1,
-      'linkCate': 0,
-      'property': 2,
-      'name': {
-        '高管': [
-          '执行董事'
-        ]
-      }
-    },
-    {
-      'target': '杭州誉存科技有限公司',
-      'invConum': -1,
-      'state': 0,
-      'current': 1,
-      'source': '綦江县红益建材厂',
-      'invRatio': -1,
-      'linkCate': 0,
-      'property': 2,
-      'name': {
-        '高管': [
-          '执行董事'
-        ]
-      }
-    }]);
-    this.expandNetwork.change = !this.expandNetwork.change;
-    this.isExpandSaved = false;
+    const source = 'B4D4425824F00FB3055281E3B5DFA95AB37BBF74FB02A49C607478C115A94BDF';
+    const target = '4D6D56FEB192CE7FF96EACB57001D69EA2BF36FE67AFE4A2ADE8D0383939D72D';
+    const currentNetwork = toJS(svgTools.getCurrentNodesLinks(this.forceNetwork));
+    console.log({target, source, currentNetwork});
+    companyHomeApi.expandNetwork(bannerStore.monitorId, {target, source, currentNetwork})
+      .then(action('get expand data', (resp) => {
+        console.log(resp);
+      }))
+      .catch(action('get expand出错', (err) => {
+        console.log('get expand出错', err);
+      }));
+    // this.expandNetwork.nodes.push({
+    //   hide: true,
+    //   'layer': 1,
+    //   'id': '3C6E9F1B195ECD56BEBE7AD301281FABFE18147CF8BCDDDA1FB9A8C02A2179B1',
+    //   'name': '重庆预存大数据',
+    //   'degree': 1,
+    //   'cateType': 1,
+    // });
+    // this.expandNetwork.links = this.expandNetwork.links.concat([{
+    //   hide: true,
+    //   'target': '3C6E9F1B195ECD56BEBE7AD301281FABFE18147CF8BCDDDA1FB9A8C02A2179B1',
+    //   'lineType': 3,
+    //   'source': '6E130A9157DFD30DCC1EF0CFDF8FE7136BE994FD0CEA769F83AC6CD0938BC96E',
+    // },
+    // {
+    //   hide: true,
+    //   'target': '3C6E9F1B195ECD56BEBE7AD301281FABFE18147CF8BCDDDA1FB9A8C02A2179B1',
+    //   'lineType': 3,
+    //   'source': '31F8E5035EACAABDCB950A6E17257F204A429561BFB7CC063D741DD356A8A5A6',
+    // }]);
+    // setTimeout(action('test', () => {
+    //   this.expandNetwork.nodes = [];
+
+    //   this.expandNetwork.change = !this.expandNetwork.change;
+    // }), 2000);
+    // this.expandNetwork.change = !this.expandNetwork.change;
+    // this.isExpandSaved = false;
   }
-  @action.bound focusNode(name) {
-    this.focusNodeName = name;
+  @action.bound focusNode(node) {
+    this.focalNode = node;
   }
   @action.bound getReportModule(params) {
     this.isMount = true;
@@ -89,17 +84,19 @@ class ForceNetworkStore {
         this.isLoading = false;
         let canRenderSvg = true;
         resp.data.currentNetwork.links.map((link) => {
+          link.hide = true;
           if (resp.data.currentNetwork.nodes.findIndex((node) => node.id === link.source) < 0 || resp.data.currentNetwork.nodes.findIndex((node) => node.id === link.target) < 0) {
             canRenderSvg = false;
             console.info('网络图link名字和node不对应', link);
           }
         });
-        // resp.data.currentNetwork.nodes.map((node) => {
-        //   if (node.layer === -1) {
-        //     // canRenderSvg = false;
-        //     console.info('网络图node的layer有-1', node);
-        //   }
-        // });
+        resp.data.currentNetwork.nodes.map((node) => {
+          node.hide = true;
+          if (node.layer === -1) {
+            // canRenderSvg = false;
+            // console.info('网络图node的layer有-1', node);
+          }
+        });
         if (!canRenderSvg || resp.data.currentNetwork.nodes[0].layer === undefined) {
           this.error = {
             message: '网络图数据异常, 请联系管理员'
@@ -107,6 +104,7 @@ class ForceNetworkStore {
         } else {
           this.forceNetwork = resp.data.currentNetwork;
           this.mainCompanyName = resp.data.currentNetwork.companyName;
+          this.centerNode.id = resp.data.source;
         }
       }))
       .catch(action('forceNetwork出错', (err) => {
@@ -119,6 +117,24 @@ class ForceNetworkStore {
   }
   @action.bound setFocalNode(node) {
     this.dbFocalNode = node;
+  }
+  @action.bound getShortPath(monitorId, params) {
+    companyHomeApi.getShortPath(monitorId, params)
+      .then(action('get short path', (resp)=>{
+        this.shortestPahth = resp.data;
+      }))
+      .catch(action((error)=>{
+        console.log('getShortPathk出错', error);
+      }));
+  }
+  @action.bound getCompNodeInfo(monitorId, params) {
+    companyHomeApi.getCompNodeInfo(monitorId, params)
+    .then(action('getCompNodeInfo', (resp)=>{
+      this.nodeInfo.company = resp.data;
+    }))
+    .catch(action((error)=>{
+      console.log('getCompNodeInfo出错', error);
+    }));
   }
 }
 export default new ForceNetworkStore();
