@@ -15,7 +15,7 @@ function CompanyInfo({ bannerStore }) {
     <div className={`clearfix ${styles.companyBox}`}>
       <div className="clearfix">
         <CompanyName companyName={bannerStore.companyName} />
-        <Score score={bannerStore.score.toString()} />
+        {bannerStore.score ? <Score score={bannerStore.score.toString()} /> : ''}
         <RiskLabel riskInfo={bannerStore.riskInfo} />
       </div>
       <div className={`clearfix ${styles.baseInfo}`}>
