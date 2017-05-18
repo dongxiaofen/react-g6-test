@@ -77,7 +77,7 @@ function SaleAssets({ data, swiperImg, setAssetLocalSwiperImg }) {
     _data.pictures.forEach((imgSrc, index) => {
       const cssName = swiperImg.activeImg === index ? styles.navWrapActive : styles.navWrap;
       output.push(
-        <div className={`${sizeCss} ${cssName}`}>
+        <div key={`assetLocalDetailImgNavKey${index}`} className={`${sizeCss} ${cssName}`}>
           <img src={imgSrc} onClick={changeImg.bind(this, index)} />
         </div>
       );
@@ -87,9 +87,9 @@ function SaleAssets({ data, swiperImg, setAssetLocalSwiperImg }) {
 
   const createInfo = (_data, dataConfig) => {
     const output = [];
-    dataConfig.forEach((item) => {
+    dataConfig.forEach((item, key) => {
       output.push(
-        <div className={`${styles.row} clearfix`}>
+        <div key={`assetLocalDetailInfoKey${key}`} className={`${styles.row} clearfix`}>
           <span className={styles.label}>{item.label}：</span>
           <span className={styles.value}>{_data[item.key] || '无'}</span>
         </div>
@@ -122,8 +122,8 @@ function SaleAssets({ data, swiperImg, setAssetLocalSwiperImg }) {
             :
             <div className={styles.imgSwiper}>
               <div className={styles.imgWrap}>
-                <i className={styles.prev} onClick={swiperImgOnClick.bind(this, 'prev')}></i>
-                <i className={styles.next} onClick={swiperImgOnClick.bind(this, 'next')}></i>
+                <i className={`fa fa-angle-left ${styles.prev}`} onClick={swiperImgOnClick.bind(this, 'prev')}></i>
+                <i className={`fa fa-angle-right ${styles.next}`} onClick={swiperImgOnClick.bind(this, 'next')}></i>
                 <div className={styles.imgContent}>
                   <div className={styles.imgInner} style={{ width: innerWidth, transform: `translateX(${swiperImg.bgImgDistance}px)` }}>
                     {createImg()}
