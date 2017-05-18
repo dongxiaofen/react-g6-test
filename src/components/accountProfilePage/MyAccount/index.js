@@ -21,13 +21,49 @@ function MyAccount({accountProfileStore}) {
     },
     data: accountProfileStore.ownWarningStatisticsData,
   };
+  const warningCompnay = {
+    hasScore: true,
+    dateType: 'singeLine',
+    data: accountProfileStore.ownWarningCompnay,
+    hasFlag: true,
+    companyType: 'warningCompnay',
+    tip: '系统选取您账号下最新预警的10家企业，仅供参考',
+    title: '最新预警企业',
+    isLoading: accountProfileStore.ownWarningCompnayIsLoading,
+    error: accountProfileStore.ownWarningCompnay.length === 0,
+    module: '',
+  };
+  const riskCompnay = {
+    hasScore: true,
+    dateType: 'warning',
+    data: accountProfileStore.ownHighRisk,
+    hasFlag: false,
+    companyType: 'riskCompnay',
+    tip: '系统选取您账号下预警次数最多的10家企业，仅供参考',
+    title: '风险企业',
+    isLoading: accountProfileStore.ownRiskCompnayIsLoading,
+    error: accountProfileStore.ownHighRisk.length === 0,
+    module: '',
+  };
+  const lowScoreCompnay = {
+    hasScore: false,
+    dateType: 'comprehensive',
+    data: accountProfileStore.ownLowestScore,
+    hasFlag: false,
+    companyType: 'lowScoreCompnay',
+    tip: '系统选取您账号下评分最低的10家企业，仅供参考',
+    title: '综合评分最低企业',
+    isLoading: accountProfileStore.ownLowScoreCompnayIsLoading,
+    error: accountProfileStore.ownLowestScore.length === 0,
+    module: '',
+  };
   return (
     <div className={styles.top}>
       <Statistics {...statistics} />
       <div className="clearfix">
-        <Tables className="" />
-        <Tables className={styles.gap} />
-        <Tables className="" />
+        <Tables config = {warningCompnay} className="" />
+        <Tables config = {riskCompnay} className={styles.gap} />
+        <Tables config = {lowScoreCompnay} className="" />
         {/* <div className={styles.newBusiness}>
           <NewBusiness newBusinessData={accountProfileStore.myNewBusinessData} />
         </div> */}

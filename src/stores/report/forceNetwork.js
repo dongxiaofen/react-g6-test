@@ -1,20 +1,29 @@
 import { observable, action } from 'mobx';
 import { companyHomeApi } from 'api';
+import { browserHistory } from 'react-router';
+
 class ForceNetworkStore {
   @observable error = '';
   @observable isLoading = true;
   @observable isMount = false;
   @observable forceNetwork = {
-    nodes: []
+    nodes: [],
+    links: []
   };
   @observable mainCompanyName = '';
+  @observable dbFocalNode = {};
   @observable expandNetwork = {
     nodes: [],
     links: [],
     change: false
   };
   @observable focusNodeName = '';
+  @observable isExpandSaved = true;
 
+  @action.bound saveNetwork(nextLocation) {
+    this.isExpandSaved = true;
+    browserHistory.push(nextLocation.pathname + nextLocation.search);
+  }
   @action.bound expand() {
     this.expandNetwork.nodes = [];
     this.expandNetwork.links = [];
@@ -37,7 +46,7 @@ class ForceNetworkStore {
       'esDate': '2014-07-14',
       'firstLayer': 0
     });
-    this.expandNetwork.links.push({
+    this.expandNetwork.links = this.expandNetwork.links.concat([{
       'target': '杭州誉存科技有限公司',
       'invConum': -1,
       'state': 0,
@@ -51,8 +60,24 @@ class ForceNetworkStore {
           '执行董事'
         ]
       }
-    });
+    },
+    {
+      'target': '杭州誉存科技有限公司',
+      'invConum': -1,
+      'state': 0,
+      'current': 1,
+      'source': '綦江县红益建材厂',
+      'invRatio': -1,
+      'linkCate': 0,
+      'property': 2,
+      'name': {
+        '高管': [
+          '执行董事'
+        ]
+      }
+    }]);
     this.expandNetwork.change = !this.expandNetwork.change;
+    this.isExpandSaved = false;
   }
   @action.bound focusNode(name) {
     this.focusNodeName = name;
@@ -64,24 +89,24 @@ class ForceNetworkStore {
         this.isLoading = false;
         let canRenderSvg = true;
         resp.data.currentNetwork.links.map((link) => {
-          if (resp.data.currentNetwork.nodes.findIndex((node) => node.name === link.source) < 0 || resp.data.currentNetwork.nodes.findIndex((node) => node.name === link.target) < 0) {
+          if (resp.data.currentNetwork.nodes.findIndex((node) => node.id === link.source) < 0 || resp.data.currentNetwork.nodes.findIndex((node) => node.id === link.target) < 0) {
             canRenderSvg = false;
             console.info('网络图link名字和node不对应', link);
           }
         });
-        resp.data.currentNetwork.nodes.map((node) => {
-          if (node.layer === -1) {
-            // canRenderSvg = false;
-            console.info('网络图node的layer有-1', node);
-          }
-        });
+        // resp.data.currentNetwork.nodes.map((node) => {
+        //   if (node.layer === -1) {
+        //     // canRenderSvg = false;
+        //     console.info('网络图node的layer有-1', node);
+        //   }
+        // });
         if (!canRenderSvg || resp.data.currentNetwork.nodes[0].layer === undefined) {
           this.error = {
             message: '网络图数据异常, 请联系管理员'
           };
         } else {
           this.forceNetwork = resp.data.currentNetwork;
-          this.mainCompanyName = resp.data.companyName;
+          this.mainCompanyName = resp.data.currentNetwork.companyName;
         }
       }))
       .catch(action('forceNetwork出错', (err) => {
@@ -91,6 +116,9 @@ class ForceNetworkStore {
         };
         this.isLoading = false;
       }));
+  }
+  @action.bound setFocalNode(node) {
+    this.dbFocalNode = node;
   }
 }
 export default new ForceNetworkStore();

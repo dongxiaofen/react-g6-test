@@ -44,7 +44,7 @@ class LeftBarStore {
       menuText: '趋势分析',
       menuKey: 'trendAnalyse',
       children: [
-        { menuText: '事件时间轴', menuKey: 'eventLine', helpInfo: helpInfo2, contain: ['main'] },
+        { menuText: '事件时间轴', menuKey: 'timeAxis', helpInfo: helpInfo2, contain: ['main'] },
         { menuText: '预警分析', menuKey: 'alertAnalysis', helpInfo: helpInfo3, contain: ['main', 'analysisReport'] },
       ],
       helpInfo: helpInfo3,
@@ -84,6 +84,27 @@ class LeftBarStore {
         }
       });
     });
+  }
+  @action.bound getReportType(routing) {
+    const { monitorId, reportId, analysisReportId, companyName, companyType } = routing.location.query;
+    let reportType;
+    if (monitorId) {
+      if (companyType === 'MAIN') {
+        reportType = 'main'; // 主体监控报告
+      } else {
+        reportType = 'relation'; // 监控关联报告
+      }
+    }
+    if (reportId) {
+      reportType = 'report'; // 高级报告
+    }
+    if (analysisReportId) {
+      reportType = 'analysisReport'; // 深度分析报告
+    }
+    if (companyName) {
+      reportType = 'free'; // 免费报告
+    }
+    return reportType;
   }
   @action.bound resetStore() {
     this.activeMenu = ['report'];

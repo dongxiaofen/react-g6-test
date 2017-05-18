@@ -41,13 +41,19 @@ export default class CorpDetail extends Component {
     }
     const corpDetailStore = this.props.corpDetailStore;
     const isLoading = corpDetailStore.isLoading;
+    const errType = {
+      '403223': '套餐个数不够',
+      '403222': '账号过期',
+      '403204': '点数不够',
+      // '403202': '该企业无工商登记信息',
+    };
     return (
       <Tabs defaultActiveKey="工商基本信息">
         <TabPane tab="工商基本信息" key="工商基本信息">
-          <RegisterInfo registerInfo={corpDetailStore.registerInfo} isLoading={isLoading} />
-          <ShareHolder shareHolderList={corpDetailStore.shareHolderList} isLoading={isLoading} />
-          <PersonList personList={corpDetailStore.personList} isLoading={isLoading} />
-          <FiliationList filiationList={corpDetailStore.filiationList} isLoading={isLoading} />
+          <RegisterInfo registerInfo={corpDetailStore.registerInfo} errText={corpDetailStore.errData.errorCode ? errType[corpDetailStore.errData.errorCode] : null} isLoading={isLoading} />
+          <ShareHolder shareHolderList={corpDetailStore.shareHolderList} errText={corpDetailStore.errData.errorCode ? errType[corpDetailStore.errData.errorCode] : null} isLoading={isLoading} />
+          <PersonList personList={corpDetailStore.personList} errText={corpDetailStore.errData.errorCode ? errType[corpDetailStore.errData.errorCode] : null} isLoading={isLoading} />
+          <FiliationList filiationList={corpDetailStore.filiationList} errText={corpDetailStore.errData.errorCode ? errType[corpDetailStore.errData.errorCode] : null} isLoading={isLoading} />
         </TabPane>
         <TabPane disabled={disabledTabPane} tab="对外投资任职" key="对外投资任职">
           <Enterprise entinvItemList={corpDetailStore.entinvItemList} isLoading={isLoading} />
@@ -55,8 +61,8 @@ export default class CorpDetail extends Component {
           <Office frPositionList={corpDetailStore.frPositionList} isLoading={isLoading} />
         </TabPane>
         <TabPane tab="工商变更" key="工商变更">
-          <AlterAnalysis alterAnalysis={corpDetailStore.alterAnalysis} isLoading={isLoading} />
-          <AlterList alterList={corpDetailStore.alterList} isLoading={isLoading} />
+          <AlterAnalysis alterAnalysis={corpDetailStore.alterAnalysis} errText={corpDetailStore.errData.errorCode ? errType[corpDetailStore.errData.errorCode] : null} isLoading={isLoading} />
+          <AlterList alterList={corpDetailStore.alterList} errText={corpDetailStore.errData.errorCode ? errType[corpDetailStore.errData.errorCode] : null} isLoading={isLoading} />
         </TabPane>
         <TabPane tab="企业年报" key="企业年报">
           <Tab

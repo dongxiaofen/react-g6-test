@@ -29,8 +29,16 @@
   composes: trans;
 }
 .links {
-  stroke: #999;
-  stroke-opacity: 0.6;
+  stroke: #333;
+  stroke-width: 1.5px;
+  fill: none;
+  composes: trans;
+}
+.dashLinks{
+  stroke-dasharray: 10,10;
+  stroke: #333;
+  stroke-width: 1.5px;
+  fill: none;
   composes: trans;
 }
 .nodeText {
@@ -151,4 +159,13 @@
   background-color: @mdc-white-darker;
   transition: all 1s;
   padding-right: 20px;
+}
+.noActive {
+  fill: #CFD0D4;
+}
+.lineNoActive {
+  stroke: #EEEFF3;
+}
+.textHide {
+  opacity: 0;
 }
