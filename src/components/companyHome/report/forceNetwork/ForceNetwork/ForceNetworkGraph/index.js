@@ -60,9 +60,9 @@ export default class ForceNetworkGraph extends Component {
       .force('charge', d3.forceManyBody().strength(-500))
       .force('center', d3.forceCenter(width / 2, height / 2))
       .force('link', d3.forceLink(edgesData).id((data) => { return data.id; }).distance(150))
-      .force('collide', d3.forceCollide(58).iterations(16).radius((data)=>{ return data.isActive === 0 ? 20 : 70;}))
-      .force('x', d3.forceX(0))
-      .force('y', d3.forceY(0))
+      // .force('collide', d3.forceCollide(58).iterations(16).radius((data) => { return data.isActive === 0 ? 20 : 70; }))
+      // .force('x', d3.forceX(110))
+      // .force('y', d3.forceY(110))
       .on('tick', this.ticked);
 
     svgEdges = group.append('g').attr('id', 'lines').selectAll('.link');
@@ -73,6 +73,15 @@ export default class ForceNetworkGraph extends Component {
     svgEdgepaths = group.append('g').attr('id', 'linePaths').selectAll('.edgepath');
     svgEdgelabels = group.append('g').attr('id', 'lineLabels').selectAll('.edgelabel');
     this.reDraw();
+    setTimeout(() => {
+      nodesData.map((node) => {
+        node.hide = false;
+      });
+      edgesData.map((link) => {
+        link.hide = false;
+      });
+      simulation.restart();
+    }, 2000);
     // 监听点击和搜索节点事件
     reaction(
       () => this.props.forceNetworkStore.focusNodeName,
@@ -104,6 +113,15 @@ export default class ForceNetworkGraph extends Component {
         nodesData = nodesData.concat(toJS(nodes));
         edgesData = edgesData.concat(toJS(links));
         this.reDraw();
+        setTimeout(() => {
+          nodesData.map((node) => {
+            node.hide = false;
+          });
+          edgesData.map((link) => {
+            link.hide = false;
+          });
+          simulation.restart();
+        }, 2000);
       }
     );
     // 监听聚焦事件
@@ -217,7 +235,7 @@ export default class ForceNetworkGraph extends Component {
     svgEdges.exit().remove();
     svgEdges = svgEdges.enter()
       .append('line')
-      .attr('class', (data) => data.lineType === 1 ? styles.links : styles.dashLinks)
+      .attr('class', (data) => (data.hide && styles.hide) || (data.lineType === 1 && styles.links) || styles.dashLinks)
       .attr('marker-end', (data) => data.lineType === 2 ? '' : 'url(#mainArrow)')
       .merge(svgEdges);
     // labels
@@ -305,7 +323,7 @@ export default class ForceNetworkGraph extends Component {
       .attr('cx', (data) => { return data.x; })
       .attr('cy', (data) => { return data.y; })
       .attr('class', (data) => {
-        return (data.hide && styles.hide) || (data.isFocus && ' ') || (data.isActive === 0 && styles.noActive) || (data.category === 0 && styles.mainCompany) || (data.blackList && data.category !== 7 && styles.blackListNodes) || (data.status === 0 && styles.cancelNodes) || styles[`category${data.category}`];
+        return (data.hide && styles.hide) || (data.isFocus && ' ') || (data.isActive === 0 && styles.noActive) || (data.category === 0 && styles.mainCompany) || (data.blackList && data.category !== 7 && styles.blackListNodes) || (data.status === 0 && styles.cancelNodes) || styles[`category1`];
       })
       .attr('fill', (data) => {
         return (!data.isFocus && ' ') || (data.blackList && data.category !== 7 && 'url(#bling9)') || (data.status === 0 && 'url(#bling10)') || `url(#bling${data.category})`;
@@ -323,7 +341,7 @@ export default class ForceNetworkGraph extends Component {
       .attr('x2', (data) => { return data.target.x; })
       .attr('y2', (data) => { return data.target.y; })
       .attr('class', (data) => {
-        return ((data.source.isActive === 0 || data.target.isActive === 0) && styles.lineNoActive) || (data.lineType === 1 && styles.links) || styles.dashLinks;
+        return (data.hide && styles.hide) || ((data.source.isActive === 0 || data.target.isActive === 0) && styles.lineNoActive) || (data.lineType === 1 && styles.links) || styles.dashLinks;
       });
     svgTexts1
       .attr('x', (data) => { return data.x; })

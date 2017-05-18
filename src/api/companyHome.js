@@ -284,3 +284,8 @@ export const getNowRecordPictures = (id, source) => {
 export const getTaxCheckList = (id, params, source) => {
   return axios.get('/api/monitor/' + id + '/taxCheck/page', {params: params, cancelToken: source.token});
 };
+
+// 全网关系图拓展节点
+export const expandNetwork = (monitorCompanyId, params) => {
+  return axios.post(`/api/monitor/${monitorCompanyId}/expendNetwork/expend`, params);
+};
