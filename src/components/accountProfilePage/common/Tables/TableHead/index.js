@@ -3,19 +3,37 @@ import { observer } from 'mobx-react';
 import Popover from 'antd/lib/popover';
 import styles from './index.less';
 
-function TableHead({}) {
+function TableHead({ companyType, tip, title }) {
+  const createIcon = () => {
+    if (companyType === 'warningCompnay') {
+      return (styles.warning_icon01);
+    } else if (companyType === 'riskCompnay') {
+      return (styles.warning_icon02);
+    }else if (companyType === 'lowScoreCompnay') {
+      return (styles.warning_icon03);
+    }
+  };
+  const createIconTips = () => {
+    if (companyType === 'warningCompnay') {
+      return (styles.questions_01);
+    } else if (companyType === 'riskCompnay') {
+      return (styles.questions_02);
+    }else if (companyType === 'lowScoreCompnay') {
+      return (styles.questions_03);
+    }
+  };
   return (
-    <div className="clearfix">
+    <div className={`clearfix ${styles.head_box}`}>
       <div className={`${styles.title} pull-left`}>
-        <i className={`pull-left ${styles.warning_icon01} ${styles.nav_icon}`}></i>
+        <i className={`pull-left ${createIcon()} ${styles.nav_icon}`}></i>
         <div className={`${styles.nav_text} pull-left`}>
-          <span className={styles.company}>最新预警企业 </span>
+          <span className={styles.company}>{title}</span>
           <span className={styles.number}>TOP10</span>
         </div>
       </div>
       <div className="pull-right">
-        <Popover placement="bottomRight" content="系统选取您的下属帐号中最新预警的10家企业，供您参考" trigger="hover">
-          <i className={`${styles.questions_01} ${styles.questions_icon}`}></i>
+        <Popover placement="bottomRight" content={tip} trigger="hover">
+          <i className={`${createIconTips()} ${styles.questions_icon}`}></i>
         </Popover>
       </div>
     </div>

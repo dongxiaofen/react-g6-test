@@ -1,6 +1,6 @@
 import React, { Component, PropTypes } from 'react';
 import { inject, observer} from 'mobx-react';
-import { Tabs } from 'antd';
+import Tabs from 'antd/lib/tabs';
 const TabPane = Tabs.TabPane;
 import SubAccount from './SubAccount';
 import MyAccount from './MyAccount';
@@ -22,7 +22,7 @@ export default class AccountProfileBody extends Component {
       <Container>
         <Row className={styles.mTop}>
           <Col width="12">
-            <Tabs defaultActiveKey="1">
+            <Tabs defaultActiveKey="2">
               <TabPane tab="我的账号" key="1">
                 <MyAccount />
               </TabPane>
