@@ -27,7 +27,7 @@ function CardList({ assetLocalData, getAssetLocalDetail, openDetailModal }) {
           );
         });
       },
-      '经营详情'
+      '资产交易'
     );
   };
 
