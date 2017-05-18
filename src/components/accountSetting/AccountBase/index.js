@@ -7,7 +7,7 @@ function AccountBase(props) {
   return (
     <div className={styles.wrapper}>
       <BaseInfo {...props} />
-      <OperateInfo baseInfo={props.accountSettingStore.base} />
+      <OperateInfo {...props} />
     </div>
   );
 }

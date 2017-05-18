@@ -3,7 +3,7 @@ import { observer } from 'mobx-react';
 import { ModuleTitle, CardTable } from 'components/common/report';
 // import styles from './index.less';
 
-function AlterList({alterList, isLoading}) {
+function AlterList({alterList, isLoading, errText}) {
   const data = {
     meta: {
       body: [
@@ -17,8 +17,8 @@ function AlterList({alterList, isLoading}) {
       cData: alterList
     },
     isLoading: isLoading,
-    module: '变更信息',
-    error: alterList.length === 0
+    module: errText ? errText : '变更信息',
+    error: errText || alterList.length === 0 ? {message: errText} : false,
   };
   return (
     <div>

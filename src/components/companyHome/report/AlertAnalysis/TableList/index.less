@@ -20,17 +20,35 @@
 .name {
   display: inline-block;
   color: #212121;
-  margin-right: 15px;
   vertical-align: middle;
+}
+.count {
+  position: relative;
+  top: -11px;
+  margin-left: 3px;
+  line-height: 1;
+  display: inline-block;
+  height: 16px;
+  padding: 0 5px;
+  border-radius: 8px;
+  background: #e53935;
+  color: #fff;
 }
 .type {
   display: inline-block;
-  border: 1px solid #90caf9;
-  padding: 4px 10px;
   line-height: 1;
-  color:#90caf9;
+  color: #e53935;
+  height: 14px;
+  font-weight: bold;
   vertical-align: middle;
-  border-radius: 12px;
+}
+.type:after {
+  content: '';
+  display: inline-block;
+  height: 14px;
+  margin: 0 10px;
+  border-right: 1px solid #e0e0e0;
+  vertical-align: middle;
 }
 .desc {
   color: #757575;
@@ -42,6 +60,17 @@
 }
 .viewBtn {
   float: right;
-  color: #42a5f5;
+  color: #e53935;
   cursor: pointer;
+  text-decoration: underline;
+}
+
+.title {
+  margin: 5px 0 15px 0;
+  font-weight: bold;
+  font-size:14px;
+  color:#616161;
+  letter-spacing:0;
+  height: 14px;
+  line-height:14px;
 }

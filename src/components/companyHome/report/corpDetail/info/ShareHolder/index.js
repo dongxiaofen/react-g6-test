@@ -3,7 +3,7 @@ import { observer } from 'mobx-react';
 import { ModuleTitle, CommonTable } from 'components/common/report';
 // import styles from './index.less';
 
-function ShareHolder({ shareHolderList, isLoading }) {
+function ShareHolder({ shareHolderList, isLoading, errText }) {
   const data = {
     meta: {
       body: [
@@ -17,8 +17,8 @@ function ShareHolder({ shareHolderList, isLoading }) {
       dict: 'shareholder',
     },
     isLoading: isLoading,
-    module: '股东信息',
-    error: shareHolderList.length === 0
+    module: errText ? errText : '股东信息',
+    error: errText || shareHolderList.length === 0 ? {message: errText} : false,
   };
   return (
     <div>

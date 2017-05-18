@@ -4,12 +4,12 @@ import { ModuleTitle } from 'components/common/report';
 import AlterAnalysisTab from './AlterAnalysisTab';
 import styles from './index.less';
 
-function AlterAnalysis({alterAnalysis, isLoading}) {
+function AlterAnalysis({alterAnalysis, isLoading, errText}) {
   const data = {
     items: alterAnalysis,
     isLoading: isLoading,
-    module: '变更分析',
-    error: alterAnalysis.length === 0
+    module: errText ? errText : '变更分析',
+    error: errText || alterAnalysis.length === 0 ? {message: errText} : false,
   };
   return (
     <div className={styles.box}>

@@ -18,6 +18,12 @@
   -webkit-transition-duration: 2s;
   -webkit-transition-timing-function: ease;
 }
+.trans1 {
+  opacity: 1;
+  -webkit-transition-property: opacity;
+  -webkit-transition-duration: 0.5s;
+  -webkit-transition-timing-function: ease;
+}
 .show {
   // display: block;
   opacity: 1;
@@ -29,8 +35,16 @@
   composes: trans;
 }
 .links {
-  stroke: #999;
-  stroke-opacity: 0.6;
+  stroke: #333;
+  stroke-width: 1.5px;
+  fill: none;
+  composes: trans;
+}
+.dashLinks{
+  stroke-dasharray: 10,10;
+  stroke: #333;
+  stroke-width: 1.5px;
+  fill: none;
   composes: trans;
 }
 .nodeText {
@@ -39,7 +53,12 @@
   composes: trans;
   font-size: 12px;
 }
-
+.hideText {
+  fill: white;
+  opacity: 0;
+  cursor: pointer;
+  composes: trans1;
+}
 .arrow {
   fill: #e5e5e5;
 }
@@ -157,7 +176,4 @@
 }
 .lineNoActive {
   stroke: #EEEFF3;
-}
-.textHide {
-  opacity: 0;
 }

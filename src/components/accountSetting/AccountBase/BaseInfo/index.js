@@ -5,7 +5,8 @@ import Item from '../Item';
 import PwdModal from '../../userModal/PwdModal';
 import EditModal from '../../userModal/EditModal';
 import styles from './index.less';
-function BaseInfo({accountSettingStore}) {
+function BaseInfo({accountSettingStore, clientStore}) {
+  const consumeType = clientStore.userInfo.consumeType;
   const baseInfo = accountSettingStore.base;
   const tree = accountSettingStore.tree;
   const activeIndex = tree.activeIndex;
@@ -86,12 +87,12 @@ function BaseInfo({accountSettingStore}) {
       {
         name: '套餐有效期',
         keys: 'lastLoginTs',
-        none: baseInfo.data.consumeType !== 'FEESET' || baseInfo.data.parentUserId ? true : false,
+        none: consumeType !== 'FEESET' || baseInfo.data.parentUserId ? true : false,
       },
       {
         name: '剩余点数',
         keys: 'point',
-        none: baseInfo.data.consumeType !== 'POINT' || baseInfo.data.parentUserId ? true : false,
+        none: consumeType !== 'POINT' || baseInfo.data.parentUserId ? true : false,
         handle: addUnit.bind(null, '点'),
       },
     ];
