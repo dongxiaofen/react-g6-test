@@ -4,7 +4,7 @@ import { Row } from 'components/common/layout';
 import Card from './Card';
 import { loadingComp } from 'components/hoc';
 
-function CardList({ assetLocalData }) {
+function CardList({ assetLocalData, getAssetLocalDetail, openDetailModal }) {
   const modifyMoney = (value) => {
     return `${(value / 10000).toFixed(2)}万元`;
   };
@@ -17,6 +17,24 @@ function CardList({ assetLocalData }) {
     return value;
   };
 
+  const _openDetailModal = () => {
+    openDetailModal(
+      (cb) => {
+        require.ensure([], (require) => {
+          cb(
+            require('./detail/Title'),
+            require('./detail/Content'),
+          );
+        });
+      },
+      '经营详情'
+    );
+  };
+
+  const viewDetail = (type, data) => {
+    getAssetLocalDetail({ type: data.type, id: data.data._id }, _openDetailModal);
+  };
+
   const createCards = (assetType, config) => {
     return assetLocalData.map((item, key) => {
       const type = assetType[item.type];
@@ -25,7 +43,8 @@ function CardList({ assetLocalData }) {
           key={`assetLocalCardListKey${key}`}
           data={item}
           config={config[type]}
-          type={type} />
+          type={type}
+          viewDetail={viewDetail.bind(this, type)} />
       );
     });
   };
@@ -58,7 +77,7 @@ function CardList({ assetLocalData }) {
       dataKey: [
         { key: 'assetTotal', handle: modifyMoney },
         { key: 'creditorRightsNum', handle: modifyRightNum },
-        { key: 'assignor', width: '12', handle: nowrap },
+        { key: 'assignor', handle: nowrap },
       ],
       dateKey: 'releaseDate'
     }
@@ -73,11 +92,14 @@ function CardList({ assetLocalData }) {
 CardList.propTypes = {
   assetLocalData: PropTypes.object,
   assetLocalLoading: PropTypes.bool,
+  getAssetLocalDetail: PropTypes.func,
+  openDetailModal: PropTypes.func,
 };
 export default loadingComp({
   mapDataToProps: props => ({
     loading: props.assetLocalLoading,
     category: 0,
+    height: 500,
     error: props.assetLocalData.length === 0,
     errCategory: 2,
   })

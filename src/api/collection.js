@@ -1,9 +1,10 @@
 import axios from 'axios';
-
+// 获取收藏列表
 export const getCollectionPage = (params) => {
   return axios.get(`/api/collection/page`, { params: params });
 };
 
+// 取消收藏
 export const cancelCollection = (id, productType) => {
   let url;
   switch (productType) {

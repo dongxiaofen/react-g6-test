@@ -8,12 +8,13 @@ import Select from 'components/lib/Select';
 import CardList from './CardList';
 
 const Option = Select.Option;
-@inject('assetTransactionStore', 'uiStore')
+@inject('assetTransactionStore', 'uiStore', 'detailModalStore')
 @observer
 export default class AssetLocal extends Component {
   static propTypes = {
     assetTransactionStore: PropTypes.object,
-    uiStore: PropTypes.object
+    uiStore: PropTypes.object,
+    detailModalStore: PropTypes.object,
   };
 
   componentDidMount() {
@@ -192,7 +193,9 @@ export default class AssetLocal extends Component {
         <div className={styles.cardList}>
           <CardList
             assetLocalLoading={this.props.assetTransactionStore.assetLocalLoading}
-            assetLocalData={this.props.assetTransactionStore.assetLocalData} />
+            assetLocalData={this.props.assetTransactionStore.assetLocalData}
+            getAssetLocalDetail={this.props.assetTransactionStore.getAssetLocalDetail}
+            openDetailModal={this.props.detailModalStore.openDetailModal} />
         </div>
       </div>
     );

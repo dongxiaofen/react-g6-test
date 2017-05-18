@@ -69,6 +69,7 @@ class AssetTransactionStore {
     assetType: '',
   }
   @observable assetLocalData = [];
+  @observable assetLocalDetail = {};
   @observable assetLocalLoading = false;
 
   @observable tradeTrendParams = {
@@ -99,6 +100,17 @@ class AssetTransactionStore {
           console.log(err);
           this.assetLocalLoading = false;
         }
+      }));
+  }
+
+  @action.bound getAssetLocalDetail(params, openDetailModal) {
+    assetTransactionApi.getAssetLocalDetail(params)
+      .then(action('get assset local detail', (resp) => {
+        this.assetLocalDetail = resp.data;
+        openDetailModal();
+      }))
+      .catch(action('get asset local detail catch', (err) => {
+        console.log(err);
       }));
   }
 

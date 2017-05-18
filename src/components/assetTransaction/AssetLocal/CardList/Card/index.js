@@ -3,37 +3,16 @@ import { observer } from 'mobx-react';
 
 import styles from './index.less';
 import { Col } from 'components/common/layout';
+import assetLocalConfig from 'helpers/assetLocalConfig';
 
-function Card({data, config, type}) {
-  const keyConfig = {
-    tradingAssets: {
-      assetTotal: '成交价',
-      creditorRightsNum: '债权数量',
-      assignor: '转让方',
-      assignee: '受让方',
-      releaseDate: '成交时间'
-    },
-    saleAssets: {
-      startPrice: '起估价',
-      evaluatedPrice: '评估价',
-      handledDepartment: '处置单位',
-      auctionRounds: '拍卖轮次',
-      'startDate/endDate': '竞价起止时间'
-    },
-    investAssets: {
-      assetTotal: '成交价',
-      creditorRightsNum: '债权数量',
-      releaseDate: '发布时间',
-      assignor: '转让方',
-    }
-  };
+function Card({ data, config, type, viewDetail }) {
   const createContent = () => {
     const output = [];
     config.dataKey.map((item, idx) => {
       const content = item.handle ? item.handle(data.data[item.key], data) : data.data[item.key];
       output.push(
         <div key={idx} className={styles.col}>
-          <div className={styles.key}>{keyConfig[type][item.key]}：</div>
+          <div className={styles.key}>{assetLocalConfig[type][item.key]}：</div>
           <div className={styles.content} title={content}>
             {content}
           </div>
@@ -63,11 +42,12 @@ function Card({data, config, type}) {
         <div className={styles.separateLine}></div>
         <div className={`clearfix ${styles.footer}`}>
           <div className={styles.date}>
-            <span>{keyConfig[type][config.dateKey]}：</span>
+            <span>{assetLocalConfig[type][config.dateKey]}：</span>
             <span>{modifyDate(config.dateKey, data.data)}</span>
           </div>
           <div
-            className={styles.view}>
+            className={styles.view}
+            onClick={viewDetail.bind(this, data)}>
             <i className="fa fa-search"></i>
             <span>查看详情</span>
           </div>
@@ -81,5 +61,6 @@ Card.propTypes = {
   data: PropTypes.object,
   config: PropTypes.object,
   type: PropTypes.string,
+  viewDetail: PropTypes.func,
 };
 export default observer(Card);
