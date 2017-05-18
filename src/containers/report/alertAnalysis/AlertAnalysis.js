@@ -12,6 +12,7 @@ export default class AlertAnalysis extends Component {
     if (!this.props.alertAnalysisStore.isMount) {
       const { monitorId, analysisReportId } = this.props.routing.location.query;
       this.props.alertAnalysisStore.getAlertAnalysisList(monitorId, analysisReportId);
+      this.props.alertAnalysisStore.getSixStar(monitorId);
     }
   }
   render() {

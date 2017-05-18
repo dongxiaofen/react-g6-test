@@ -297,3 +297,8 @@ export const addTaxCheck = (monitorId, analysisReportId, params) => {
 export const getTaxList = (id, source) => {
   return axios.get('/api/monitor/' + id + '/tax', {cancelToken: source.token});
 };
+
+// 六芒星
+export const getSixStar = (id, source) => {
+  return axios.get('/api/monitor/' + id + '/alert/score', {cancelToken: source.token});
+};
