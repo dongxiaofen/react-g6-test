@@ -28,6 +28,7 @@ class ForceNetworkStore {
   @observable nodeInfo = {
     isShowInfo: false,
     company: {},
+    tabAct: -1,
   }
   @action.bound saveNetwork(nextLocation) {
     this.isExpandSaved = true;

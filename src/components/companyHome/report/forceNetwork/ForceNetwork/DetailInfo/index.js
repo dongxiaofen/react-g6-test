@@ -8,6 +8,9 @@ function DetailInfo({forceNetworkStore}) {
   const company = forceNetworkStore.nodeInfo.company;
   return (
     <div className={isShowInfo ? styles.show : styles.hide}>
+      <div className="clearfix">
+        <i className={`fa fa-times-circle ${styles.close}`} aria-hidden="true"></i>
+      </div>
       {
         company.basicInfo ?
         <CompanyInfo forceNetworkStore={forceNetworkStore}/>

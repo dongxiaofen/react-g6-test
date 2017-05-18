@@ -1,8 +1,9 @@
 import React, {PropTypes} from 'react';
 import { observer, inject} from 'mobx-react';
 import Operation from '../Operation';
+import ListInfo from '../ListInfo';
 // import * as svgTools from 'helpers/svgTools';
-// import styles from './index.less';
+import styles from './index.less';
 
 function CompanyInfo({forceNetworkStore}) {
   const companyInfo = forceNetworkStore.nodeInfo.company;
@@ -19,7 +20,7 @@ function CompanyInfo({forceNetworkStore}) {
         value = data.regCap + data.regCapCur;
       }
       output.push(
-        <p key={`basicInfo${idx}`}>{item.label}：{value}</p>
+        <p key={`basicInfo${idx}`} className={styles.baseInfo}>{item.label}：{value}</p>
       );
     });
     return output;
@@ -29,27 +30,36 @@ function CompanyInfo({forceNetworkStore}) {
     content: [
       {
         keys: ['name', 'invRatio'],
-        data: companyInfo.shareHolderList
+        data: companyInfo.shareHolderList,
+        type: 'inline'
       },
       {
         keys: ['name', 'position'],
-        data: companyInfo.personList
+        data: companyInfo.personList,
+        type: 'block'
       },
       {
         keys: ['name', 'entInvList'],
-        data: companyInfo.entInvList
+        data: companyInfo.entInvList,
+        type: 'block'
       }
     ]
   };
-  console.log(listConfig);
+  const isLive = companyInfo.basicInfo.status === 1;
   return (
     <div>
-      <p>{companyInfo.basicInfo.name}</p>
+      <div className={`clearfix ${styles.nameWrap}`}>
+        <p className={styles.companyName}>{companyInfo.basicInfo.name}</p>
+        <span className={isLive ? styles.labelLive : styles.labelClose}>{isLive ? '在营' : '注销'}</span>
+      </div>
       <div>
         {createBasicInfo(companyInfo.basicInfo)}
       </div>
       <div>
         <Operation />
+      </div>
+      <div>
+        <ListInfo listData = {listConfig} />
       </div>
     </div>
   );
