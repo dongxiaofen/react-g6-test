@@ -15,6 +15,7 @@ export default class AccountProfileBody extends Component {
   };
   componentWillMount() {
     this.props.accountProfileStore.getAcconutPageInfo();
+    this.props.accountProfileStore.getEchartsData();
   }
   render() {
     return (

@@ -2,6 +2,7 @@ import React, {PropTypes} from 'react';
 import { observer } from 'mobx-react';
 import DetailCard from '../../DetailCard';
 function Rule7({data}) {
+  console.log(data);
   const modifyData = ()=>{
     const newsDetail = data.detail.slice(0);
     newsDetail.forEach((detailItem)=> {
