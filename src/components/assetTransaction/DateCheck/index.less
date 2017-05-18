@@ -1,0 +1,47 @@
+@import '~sc-colors/index.less';
+
+.dateCheck {
+  float: left;
+  margin-left: 20px;
+  height: 20px;
+  
+  line-height: 20px;
+}
+
+.dateCheckItem{
+  display: inline-block;
+  padding: 0 7px;
+  height: 15px;
+
+  font-size: 13px;
+  line-height: 15px;
+  color: #666;
+
+  vertical-align: middle;
+  border-right: 1px solid #DDDDDD;
+  cursor: pointer;
+  user-select: none;
+
+  -webkit-transition: color .2s ease-out;
+     -moz-transition: color .2s ease-out;
+      -ms-transition: color .2s ease-out;
+       -o-transition: color .2s ease-out;
+          transition: color .2s ease-out;
+
+  &:hover{
+    color: skyblue;
+  }
+
+  &:last-child{
+    border-right: none;
+  }
+}
+
+.dateCheckItemActive{
+  color: #3483e9;
+  font-weight: bold;
+
+  &:hover{
+    color: #3483e9;
+  }
+}

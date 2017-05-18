@@ -3,7 +3,7 @@ import { observer } from 'mobx-react';
 import { ModuleTitle, KvTable } from 'components/common/report';
 // import styles from './index.less';
 
-function RegisterInfo({ registerInfo, isLoading }) {
+function RegisterInfo({ registerInfo, isLoading, errText }) {
   const handleRegCap = (items) => {
     if (items.regCap === '0.0' || items.regCap === '0' || items.regCap === '' || items.regCap === undefined) {
       return '--';
@@ -25,8 +25,8 @@ function RegisterInfo({ registerInfo, isLoading }) {
       ],
     },
     isLoading: isLoading,
-    module: '注册信息',
-    error: registerInfo.length === 0
+    module: errText ? errText : '注册信息',
+    error: errText || registerInfo.length === 0 ? {message: errText} : false,
   };
   return (
     <div>

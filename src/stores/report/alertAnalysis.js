@@ -10,7 +10,11 @@ class AlertAnalysisStore {
   @observable isMount = false;
   @observable loadingId = -1;
   alertCancel = null;
-  @observable listData = {};
+  @observable listData = [];
+  // 六芒星data
+  @observable sixStarData = {};
+  // 六芒星loading
+  @observable loading = false;
   @observable detailData = {
     activeIndex: 0,
     page: 1,
@@ -178,11 +182,36 @@ class AlertAnalysisStore {
       html: '',
     };
   }
+  // 获取六芒星Data
+  @action.bound getSixStar(monitorId) {
+    if (window.reportSourceCancel === undefined) {
+      window.reportSourceCancel = [];
+    }
+    const source = CancelToken.source();
+    window.reportSourceCancel.push(source.cancel);
+    // 打开loading
+    this.loading = true;
+    // 获取列表数据
+    companyHomeApi.getSixStar(monitorId, source)
+      .then(action('six list', (resp) => {
+        this.sixStarData = resp.data.content;
+        // 关闭loading
+        this.loading = false;
+      }))
+      .catch(action('six error', (err) => {
+        console.log(err.response, '=====six error');
+        // 关闭loading
+        this.loading = false;
+        this.sixStarData = {error: 'error'};
+      }));
+  }
   @action.bound resetStore() {
     this.isMount = false;
     this.loadingId = -1;
     this.alertCancel = null;
     this.listData = {};
+    this.sixStarData = {};
+    this.loading = false;
     this.resetDetailData();
   }
 }

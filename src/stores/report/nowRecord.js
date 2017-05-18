@@ -41,6 +41,8 @@ class NowRecordStore {
     // 获取列表数据
     companyHomeApi.getNowRecordList(this.monitorId, params, source)
       .then(action('nowRecordList list', (resp) => {
+        // 关闭loading
+        this.loading = false;
         const listAll = [];
         let singleData = {};
         // 拿到返回值后循环获取每条数据的img
@@ -66,8 +68,6 @@ class NowRecordStore {
                   }
                   // 将数据排序
                   this.dataList = listAll;
-                  // 关闭loading
-                  this.loading = false;
                   uiStore.uiState.nowRecordPager.totalElements = resp.data.totalElements;
                 }
               }))

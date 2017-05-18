@@ -17,28 +17,20 @@ class PdfStore {
   @observable network = {};
   @observable blacklist = {};
   @observable team = {};
+  @observable taxList = {};
 
   // summary
   @observable summary = {};
-
   @action.bound getOverviewData(id) {
     // 获取pdf
-    axios.get(`/api/pdf?monitorId=${id}&types=RISK`)
-      .then(action( (response) => {
-        // this.risk = response.data.risk;
-        console.log(response);
-      }))
-      .catch((error) => {
-        console.log(error.response);
-      });
-    // 获取摘要信息
-    axios.get(`/api/pdf?monitorId=${id}&types=SUMMARY`)
+    axios.get(`/api/pdf?monitorId=${id}
+    &types=SUMMARY,CORP,CORP_BASIC,OPERATION,OPERATION_BIDDING,OPERATION_PATENT`)
       .then(action( (response) => {
         this.banner = response.data.banner;
         this.summary = response.data.summary;
       }))
       .catch((error) => {
-        console.log(error);
+        console.log(error.response);
       });
     // 获取基本信息
     axios.get(`api/monitor/${id}/corpDetail`)

@@ -1,25 +1,56 @@
 import React, {PropTypes} from 'react';
-import { observer } from 'mobx-react';
+import { observer, inject } from 'mobx-react';
 import styles from './index.less';
+import { loadingComp } from 'components/hoc';
 
-function TableBody({}) {
-  // <span className={styles.score}>80分</span>
+
+function TableBody({ hasScore, dateType, data, hasFlag, routing }) {
+  const showRigthDate = (latestDt, alertCount, score) => {
+    if (dateType === 'singeLine') {
+      return (<div className={styles.date}>2017-08-01</div>);
+    }else if (dateType === 'comprehensive' || dateType === 'warning') {
+      return (
+        <div className={`${styles.has_warning_counts} ${dateType === 'comprehensive' ? styles.comprehensive : styles.warning_count}`}>
+          <div className={styles.discript}>
+            <span className={styles.count_text}>{dateType === 'comprehensive' ? '综合分' : '预警次数'}</span>
+            <span className={styles.count}>{dateType === 'comprehensive' ? score : alertCount}</span>
+          </div>
+          <div className={styles.date_time}>{latestDt}</div>
+        </div>
+      );
+    }
+  };
+  const jumpPage = (companyName) => {
+    routing.push(`/searchCompany?companyName=${companyName}`);
+  };
+  const createList = () => {
+    let listItem = [];
+    data.map((itemData, index) => {
+      listItem = [...listItem,
+        <div key={`${index}list_items`} className={`clearfix ${styles.singe_item}`}>
+          <div className="pull-left">
+            <div className={styles.right_discription}>
+              <a onClick={jumpPage.bind(this, itemData.companyName)} className={styles.companyName}>{itemData.companyName}</a>
+              { hasFlag && itemData.productType === 'MONITOR' ? <span className={`${styles.flag} ${styles.monitor}`}>监控</span> : ''}
+              { hasFlag && itemData.productType === ' ANALYSIS' ? <span className={`${styles.flag} ${styles.monitor}`}>深度</span> : ''}
+              { hasScore ? <span className={styles.score}>{itemData.score}分</span> : '' }
+              <div className={styles.account_user}>
+                {`所属帐号：${itemData.userName}(${itemData.email})`}
+              </div>
+            </div>
+          </div>
+          <div className={`pull-right ${styles.warning_date}`}>
+            { showRigthDate(itemData.latestDt, itemData.alertCount, itemData.score) }
+          </div>
+        </div>
+      ];
+    });
+    return listItem;
+  };
+
   return (
-    <div className={`clearfix ${styles.singe_item}`}>
-      <div className="pull-left">
-        <div className={styles.right_discription}>
-          <a href="#" className={styles.companyName}>1.深圳中洲集团有限公司</a>
-          {/* <span className={styles.flag}>深度分析报告</span> */}
-          <span className={styles.score}>86分</span>
-        <div className={styles.account_user}>
-          所属帐号：周XX（zhou@test.cn）
-        </div>
-        </div>
-      </div>
-      <div className={`pull-right ${styles.warningDate}`}>
-        {/* <div>最新预警日期</div> */}
-        <div className={styles.date}>2017-08-01</div>
-      </div>
+    <div className={styles.body_box}>
+      {createList()}
     </div>
   );
 }
@@ -27,4 +58,11 @@ function TableBody({}) {
 TableBody.propTypes = {
   className: PropTypes.string,
 };
-export default observer(TableBody);
+export default loadingComp({
+  mapDataToProps: props => ({
+    loading: props.isLoading,
+    category: 0,
+    error: props.error,
+    module: props.module
+  })
+})(inject('routing')(observer(TableBody)));
