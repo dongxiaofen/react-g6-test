@@ -59,6 +59,18 @@ class AssetTransactionStore {
     return compliteDate;
   }
 
+  @observable assetLocalParams = {
+    // index: 1,
+    // size: 10,
+    assignorType: '',
+    region: '',
+    assetGt: '',
+    assetLt: '',
+    assetType: '',
+  }
+  @observable assetLocalLoading = false;
+  @observable assetLocalData = [];
+
   @observable tradeTrendParams = {
     region: '',
     startDate: '',
@@ -68,6 +80,26 @@ class AssetTransactionStore {
   @observable auctionData = [];
   @observable transactionData = [];
   @observable tradeTrendLoading = false;
+
+  @action.bound setAssetLocalParams(params) {
+    this.assetLocalParams = params;
+  }
+
+  @action.bound getAssetLocal(params) {
+    const source = axios.CancelToken.source();
+    this.assetLocalLoading = true;
+    assetTransactionApi.getAssetLocal({ params: params, cancelToken: source.token })
+      .then(action('get asset local', (resp) => {
+        console.log(resp.data);
+        this.assetLocalLoading = false;
+      }))
+      .catch(action('get asset local catch', (err) => {
+        if (!axios.isCancel(err)) {
+          console.log(err);
+          this.assetLocalLoading = false;
+        }
+      }));
+  }
 
   @action.bound setTradeTrendParams(params) {
     this.tradeTrendParams = params;
@@ -94,6 +126,10 @@ class AssetTransactionStore {
           this.tradeTrendLoading = false;
         }
       }));
+  }
+
+  @action.bound resetStore() {
+    console.log('asset resetStore');
   }
 }
 export default new AssetTransactionStore();
