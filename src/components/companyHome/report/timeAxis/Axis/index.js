@@ -124,10 +124,12 @@ class Axis extends Component {
   startScroll = (evt) => {
     evt.persist();
     const size = Object.keys(this.props.timeAxisStore.axisData.data).length;
-    const targetWrap = document.getElementById('scrollBarWrap');
+    const scrollBarWrap = document.getElementById('scrollBarWrap');
     const scrollBar = document.getElementById('scrollBar');
     const scrollCon = document.getElementById('scrollCon');
-    const barWrapWidth = targetWrap.clientWidth;
+    scrollBar.style.transition = 'none';
+    scrollCon.style.transition = 'none';
+    const barWrapWidth = scrollBarWrap.clientWidth;
     const barStep = 90 / (size - 9);
     const conStep = 1 / 9 * 100;
     const oldStep = this.currStep;
@@ -140,11 +142,12 @@ class Axis extends Component {
       if (this.currStep > (size - 9)) {
         this.currStep = size - 9;
       }
-      console.log(distence, this.currStep, '--');
       scrollBar.style.left = this.currStep * barStep + '%';
       scrollCon.style.left = -this.currStep * conStep + '%';
     };
     document.onmouseup = () => {
+      scrollBar.style.transition = 'all 0.3s linear';
+      scrollCon.style.transition = 'all 0.3s linear';
       document.onmouseup = null;
       document.onmousemove = null;
     };
@@ -163,6 +166,10 @@ class Axis extends Component {
     const labelLen = labelConf.filter(item => !item.hide).length;
     return (
       <div className={styles.wrap}>
+        <div className={styles.iconWrap}>
+          <span className={styles.mainIcon}></span><span>主体公司</span>
+          <span className={styles.relationIcon}></span><span>关联公司</span>
+        </div>
         <div className={styles.labelCon}>
           {this.createLabel(labelConf)}
         </div>
@@ -171,13 +178,13 @@ class Axis extends Component {
             <div
               id="scrollCon"
               className={styles.scrollCon}
-              style={{width: sortedTime.length >= 9 ? sortedTime.length / 9 * 100 + '%' : '100%'}}
+              style={{width: sortedTime.length >= 9 ? sortedTime.length / 9 * 100 + '%' : '100%', transition: 'all .3s linear'}}
               >
               {this.createLine(sortedTime, labelConf, moduleData)}
             </div>
           </div>
           <div id="scrollBarWrap" className={styles.barWrap}>
-            <div id="scrollBar" className={styles.scrollBar} onMouseDown={this.startScroll}></div>
+            <div id="scrollBar" style={{transition: 'all .3s linear'}} className={styles.scrollBar} onMouseDown={this.startScroll}></div>
           </div>
         </div>
       </div>

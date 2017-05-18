@@ -39,7 +39,7 @@
 .scrollCon{
   position: absolute;
   left: 0;
-  transition: all .3s;
+  transition: all .3s linear;
 }
 .lineItem {
   position: relative;
@@ -114,5 +114,24 @@
   border-radius: 4px;
   background: #e5e5e5;
   cursor: move;
-  transition: all .3s;
+}
+.iconWrap{
+  margin-bottom: 20px;
+  line-height: 1;
+  text-align: right;
+}
+.icon {
+  display: inline-block;
+  width: 10px;
+  height: 8px;
+}
+.mainIcon{
+  composes: icon;
+  background: #42A5F5;
+  margin-right: 4px;
+}
+.relationIcon{
+  composes: icon;
+  margin: 0 4px 0 20px;
+  background: #43BF77;
 }
