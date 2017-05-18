@@ -4,7 +4,7 @@ import styles from './index.less';
 
 function Score({score}) {
   return (
-    <span className={styles.box}>综合分{score}</span>
+    <span className={styles.box}>综合分 {score}</span>
   );
 }
 

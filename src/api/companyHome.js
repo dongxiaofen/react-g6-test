@@ -304,4 +304,8 @@ export const getShortPath = (monitorId, params) => {
 // 关联图,获取公司信息
 export const getCompNodeInfo = (monitorId, params) => {
   return axios.get(`/api/monitor/${monitorId}/expendNetwork/nodeInfo`, {params});
+
+// 六芒星
+export const getSixStar = (id, source) => {
+  return axios.get('/api/monitor/' + id + '/alert/score', {cancelToken: source.token});
 };
