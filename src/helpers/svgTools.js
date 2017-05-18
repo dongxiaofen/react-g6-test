@@ -188,15 +188,18 @@ export function findOneLevelNodes(node, ary) {
   }
   return false;
 }
-// 获取links和nodes的id
-export function getNodesAndLinks(nodesAry, linksAry) {
-  const nodes = [];
-  const links = [];
-  nodesAry.forEach((node)=>{
-    nodes.push(node.id);
+
+// 获取当前网络图的nodeId和linkId
+export function getCurrentNodesLinks(forceNetwork) {
+  const output = {
+    nodes: [],
+    links: []
+  };
+  forceNetwork.nodes.map((node) => {
+    output.nodes.push(node.id);
   });
-  linksAry.forEach((link)=>{
-    links.push(link.id);
+  forceNetwork.links.map((link) => {
+    output.links.push(link.id);
   });
-  return {nodes, links};
+  return output;
 }
