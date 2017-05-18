@@ -1,16 +1,28 @@
 import React, {PropTypes} from 'react';
-import { observer } from 'mobx-react';
+import { observer, inject } from 'mobx-react';
 import styles from './index.less';
 
-function LinkJump({}) {
+function LinkJump({linkJumpStore, name, className}) {
+  // 点击后根据传人的公司名进行跳转报告或搜索
+  const linkJump = () => {
+    linkJumpStore.getNameType(name);
+  };
+  // 样式:不传入className 则显示默认样式
+  let style = '';
+  if (className) {
+    style = className;
+  } else {
+    style = styles.box;
+  }
   return (
-    <div>
-
-    </div>
+    <span onClick={linkJump.bind(this)} className={style}>
+      {name}
+    </span>
   );
 }
-
 LinkJump.propTypes = {
-  foo: PropTypes.string,
+  linkJumpStore: PropTypes.object,
+  name: PropTypes.string,
+  className: PropTypes.string,
 };
-export default observer(LinkJump);
+export default inject('linkJumpStore')((observer(LinkJump)));

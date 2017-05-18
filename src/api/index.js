@@ -17,4 +17,5 @@ export * as bidMarketApi from './bidMarket';
 export * as highRiskCorpApi from './highRiskCorp';
 export * as accountProfileApi from './accountProfile';
 export * as assetTransactionApi from './assetTransaction';
+export * as linkJumpApi from './linkJump';
 // append here from plop
