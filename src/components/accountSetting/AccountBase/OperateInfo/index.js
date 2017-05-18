@@ -3,8 +3,9 @@ import { observer } from 'mobx-react';
 import AnimateLoading from 'components/hoc/LoadingComp/AnimateLoading';
 import Item from '../Item';
 import styles from './index.less';
-function OperateInfo({baseInfo}) {
-  const data = baseInfo.data;
+function OperateInfo({accountSettingStore, clientStore}) {
+  const consumeType = clientStore.userInfo.consumeType;
+  const data = accountSettingStore.base.data;
   let output = (
     <div className={styles.animateBox}>
       <AnimateLoading />
@@ -55,7 +56,7 @@ function OperateInfo({baseInfo}) {
           key={idx}
           {...item}
           remainValue={data[item.remainKey]}
-          feeset={data.consumeType === 'FEESET' && !data.parentUserId}
+          feeset={consumeType === 'FEESET' && !data.parentUserId}
           values={data[item.keys]} />
       );
     });

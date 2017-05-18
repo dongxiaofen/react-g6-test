@@ -3,9 +3,9 @@ import { observer } from 'mobx-react';
 import { loadingComp } from 'components/hoc';
 import AccountTable from '../AccountTable';
 import styles from './index.less';
-function Consume({accountSettingStore}) {
+function Consume({accountSettingStore, clientStore}) {
   const timeMap = accountSettingStore.timeMap;
-  const consumeType = accountSettingStore.getActiveTreeValue('consumeType');
+  const consumeType = clientStore.userInfo.consumeType;
   const consumeTypeMap = accountSettingStore.consumeTypeMap;
   const handleConsumeInfo = (value, item) => {
     const nameStr = item.companyName ? `企业：${item.companyName}` : '';

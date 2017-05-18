@@ -5,7 +5,7 @@ import { loadingComp } from 'components/hoc';
 import Pager from 'components/common/Pager';
 
 function TaxCheckItem({taxCheckStore, uiStore}) {
-  const dataList = taxCheckStore.taxListData;
+  const dataList = taxCheckStore.taxListData.content;
   const listDom = [];
   if (dataList && dataList.length > 0) {
     dataList.map((obj, idx)=>{
@@ -51,10 +51,9 @@ TaxCheckItem.propTypes = {
 export default loadingComp({
   mapDataToProps: props => ({
     loading: props.taxCheckStore.loading === true ? true : false,
-    imgCategory: 14,
     category: 2,
     module: '税务核查列表',
     errCategory: 2,
-    error: props.taxCheckStore.taxListData.length === 0,
+    error: props.taxCheckStore.taxListData.error,
   }),
 })(observer(TaxCheckItem));
