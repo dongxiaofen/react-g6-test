@@ -5,6 +5,7 @@ import styles from './index.less';
 class Axis extends Component {
   static propTypes = {
     timeAxisStore: PropTypes.object,
+    routing: PropTypes.object,
   };
   constructor(props) {
     super(props);
@@ -58,6 +59,10 @@ class Axis extends Component {
       document.body.onscroll = null;
     });
   }
+  getDetail() {
+    const {monitorId} = this.props.routing.location.query;
+    this.props.timeAxisStore.getAxisDetail(monitorId, ...arguments);
+  }
   createLabel = (labelConf) => {
     return labelConf.map((item, idx) => {
       return <div key={idx} className={styles.labelItem}>{item.label}</div>;
@@ -77,8 +82,14 @@ class Axis extends Component {
             className={styles.iconItem}
             style={{width: 100 / sortedTime.length + '%'}}
             >
-            {!!mainCount && <div style={this.mapIconStyle(mainCount, minAndmax)} className={styles.mainItem}>{mainCount}</div>}
-            {!!relatedCount && <div style={this.mapIconStyle(relatedCount, minAndmax)} className={styles.relatedItem}>{relatedCount}</div>}
+            {!!mainCount && <div
+              style={this.mapIconStyle(mainCount, minAndmax)}
+              className={styles.mainItem}
+              onClick={this.getDetail.bind(this, conf.key, time, 'main')}>{mainCount}</div>}
+            {!!relatedCount && <div
+              style={this.mapIconStyle(relatedCount, minAndmax)}
+              className={styles.relatedItem}
+              onClick={this.getDetail.bind(this, conf.key, time, 'related')}>{relatedCount}</div>}
           </div>
         );
       });

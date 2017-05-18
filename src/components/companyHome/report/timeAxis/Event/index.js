@@ -1,6 +1,8 @@
 import React from 'react';
 import { observer } from 'mobx-react';
-function Event() {
+import { loadingComp } from 'components/hoc';
+function Event({timeAxisStore}) {
+  console.log(timeAxisStore.eventData);
   return (
     <div>
       Event
@@ -8,4 +10,10 @@ function Event() {
   );
 }
 
-export default observer(Event);
+export default loadingComp({
+  mapDataToProps: props => ({
+    loading: props.timeAxisStore.eventData.events === undefined ? true : false,
+    error: props.timeAxisStore.eventData.error,
+    height: 100,
+  }),
+})(observer(Event));
