@@ -34,6 +34,6 @@ function Bidding({moduleData}) {
 }
 
 Bidding.propTypes = {
-  moduleData: PropTypes.array,
+  moduleData: PropTypes.object,
 };
 export default observer(Bidding);

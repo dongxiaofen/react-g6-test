@@ -69,8 +69,8 @@ function Base({ judgeIsModuleExist, pdfStore }) {
           ?
           <div>
             <PdfTitle module="基本信息" subModule="税务信息" />
-            {/* <Tax moduleData = {pathval.getPathValue(pdfStore, 'report.corpDetail.taxList')} /> */}
-            <Tax moduleData = {pathval.getPathValue(pdfStore, 'testTaxList')} />
+             <Tax moduleData = {pathval.getPathValue(pdfStore, 'report.corpDetail.taxList')} />
+            {/* <Tax moduleData = {pathval.getPathValue(pdfStore, 'testTaxList')} /> */}
           </div>
           :
           ''
