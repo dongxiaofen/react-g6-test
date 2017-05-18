@@ -182,9 +182,21 @@ export function updateNodeByExpandIdx(pathsArr, expandIdx, nodesData) {
 // 查看是否一度关联
 export function findOneLevelNodes(node, ary) {
   for (const nodeItem of ary) {
-    if (nodeItem === node.name) {
+    if (nodeItem === node.id) {
       return true;
     }
   }
   return false;
+}
+// 获取links和nodes的id
+export function getNodesAndLinks(nodesAry, linksAry) {
+  const nodes = [];
+  const links = [];
+  nodesAry.forEach((node)=>{
+    nodes.push(node.id);
+  });
+  linksAry.forEach((link)=>{
+    links.push(link.id);
+  });
+  return {nodes, links};
 }

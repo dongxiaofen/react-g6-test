@@ -297,7 +297,14 @@ export const addTaxCheck = (monitorId, analysisReportId, params) => {
 export const getTaxList = (id, source) => {
   return axios.get('/api/monitor/' + id + '/tax', {cancelToken: source.token});
 };
-
+// 关联图,获取最短路径
+export const getShortPath = (monitorId, params) => {
+  return axios.post(`/api/monitor/${monitorId}/expendNetwork/shortestRoute`, params);
+};
+// 关联图,获取公司信息
+export const getCompNodeInfo = (monitorId, params) => {
+  return axios.get(`/api/monitor/${monitorId}/expendNetwork/nodeInfo`, {params});
+};
 // 六芒星
 export const getSixStar = (id, source) => {
   return axios.get('/api/monitor/' + id + '/alert/score', {cancelToken: source.token});

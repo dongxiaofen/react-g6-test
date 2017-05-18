@@ -17,9 +17,15 @@ class ForceNetworkStore {
     links: [],
     change: false
   };
-  @observable focusNodeName = '';
+  @observable focalNode = {};
   @observable isExpandSaved = true;
-
+  @observable shortestPahth = [];
+  @observable centerNode = {
+    id: '',
+  };
+  @observable nodeInfo = {
+    company: {},
+  }
   @action.bound saveNetwork(nextLocation) {
     this.isExpandSaved = true;
     browserHistory.push(nextLocation.pathname + nextLocation.search);
@@ -79,8 +85,8 @@ class ForceNetworkStore {
     this.expandNetwork.change = !this.expandNetwork.change;
     this.isExpandSaved = false;
   }
-  @action.bound focusNode(name) {
-    this.focusNodeName = name;
+  @action.bound focusNode(node) {
+    this.focalNode = node;
   }
   @action.bound getReportModule(params) {
     this.isMount = true;
@@ -107,6 +113,7 @@ class ForceNetworkStore {
         } else {
           this.forceNetwork = resp.data.currentNetwork;
           this.mainCompanyName = resp.data.currentNetwork.companyName;
+          this.centerNode.id = resp.data.source;
         }
       }))
       .catch(action('forceNetwork出错', (err) => {
@@ -119,6 +126,24 @@ class ForceNetworkStore {
   }
   @action.bound setFocalNode(node) {
     this.dbFocalNode = node;
+  }
+  @action.bound getShortPath(monitorId, params) {
+    companyHomeApi.getShortPath(monitorId, params)
+      .then(action('get short path', (resp)=>{
+        this.shortestPahth = resp.data;
+      }))
+      .catch(action((error)=>{
+        console.log('getShortPathk出错', error);
+      }));
+  }
+  @action.bound getCompNodeInfo(monitorId, params) {
+    companyHomeApi.getCompNodeInfo(monitorId, params)
+    .then(action('getCompNodeInfo', (resp)=>{
+      this.nodeInfo.company = resp.data;
+    }))
+    .catch(action((error)=>{
+      console.log('getCompNodeInfo出错', error);
+    }));
   }
 }
 export default new ForceNetworkStore();
