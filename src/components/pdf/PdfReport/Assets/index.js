@@ -6,14 +6,14 @@ import Bidding from './IntangibleAssets/Bidding';
 import PdfTitle from 'components/common/pdf/PdfTitle';
 import pathval from 'pathval';
 
-function Assets({pdfStore}) {
+function Assets({pdfStore, judgeIsModuleExist}) {
   return (
     <div>
       <div>
-        <PdfTitle module="经营信息" subModule="无形资产/招投标" />
-        <TradeMark moduleData={pathval.getPathValue(pdfStore, 'trademark')} />
-        <Patent moduleData={pathval.getPathValue(pdfStore, 'patent')} />
-        <Bidding moduleData={pathval.getPathValue(pdfStore, 'bidding')} />
+        <PdfTitle module="经营信息" />
+        {judgeIsModuleExist('OPERATION_TRADEMARK') ? <TradeMark moduleData={pathval.getPathValue(pdfStore, 'trademark')} /> : ''}
+        {judgeIsModuleExist('OPERATION_PATENT') ? <Patent moduleData={pathval.getPathValue(pdfStore, 'patent')} /> : ''}
+        {judgeIsModuleExist('OPERATION_BIDDING') ? <Bidding moduleData={pathval.getPathValue(pdfStore, 'bidding')} /> : ''}
       </div>
     </div>
   );
