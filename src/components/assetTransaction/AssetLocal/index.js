@@ -1,20 +1,25 @@
 import React, { Component, PropTypes } from 'react';
 import { observer, inject } from 'mobx-react';
+import { toJS } from 'mobx';
 
 import cityName from 'helpers/cityName';
 import styles from './index.less';
 import Select from 'components/lib/Select';
 
 const Option = Select.Option;
-@inject('assetTransactionStore')
+@inject('assetTransactionStore', 'uiStore')
 @observer
 export default class AssetLocal extends Component {
   static propTypes = {
-    assetTransactionStore: PropTypes.object
+    assetTransactionStore: PropTypes.object,
+    uiStore: PropTypes.object
   };
 
   componentDidMount() {
-    // this.props.assetTransactionStore.getAssetLocal();
+    const params = toJS(this.props.assetTransactionStore.assetLocalParams);
+    params.index = 1;
+    params.size = this.props.uiStore.uiState.assetLocal.size;
+    this.props.assetTransactionStore.getAssetLocal(params);
   }
 
   areaSelectList() {
@@ -98,15 +103,44 @@ export default class AssetLocal extends Component {
     return output;
   }
 
+  modfyMoney = (value) => {
+    const assets = value.split(',');
+    const assetGt = assets[0] || '';
+    const assetLt = assets[1] || '';
+    return { assetGt, assetLt };
+  }
+
+  filterHandle = (key, value) => {
+    const params = toJS(this.props.assetTransactionStore.assetLocalParams);
+    params.index = 1;
+    params.size = this.props.uiStore.uiState.assetLocal.size;
+    if (key === 'money') {
+      const { assetGt, assetLt } = this.modfyMoney(value);
+      params.assetGt = assetGt;
+      params.assetLt = assetLt;
+    } else {
+      params[key] = value;
+    }
+    this.props.assetTransactionStore.getAssetLocal(params);
+  }
+
   changeSelect = (key, value) => {
-    console.log('key:', key, 'value:', value);
+    const setParams = this.props.assetTransactionStore.setAssetLocalParams;
+    if (key === 'money') {
+      const { assetGt, assetLt } = this.modfyMoney(value);
+      setParams('assetGt', assetGt);
+      setParams('assetLt', assetLt);
+    } else {
+      setParams(key, value);
+    }
+    this.filterHandle(key, value);
   }
 
   render() {
     const params = this.props.assetTransactionStore.assetLocalParams;
     const assets = params.assetGt || params.assetLt ? `${params.assetGt},${params.assetLt}` : '';
     return (
-      <div className={`clearfix ${styles.assetLocal}`}>
+      <div className={`clearfix ${styles.assetLocal}`} style={{ height: 1000 }}>
         <div className={`clearfix ${styles.assetLocalSwitchData}`}>
           <span className={styles.label}>地区</span>
           <div className={styles.select}>

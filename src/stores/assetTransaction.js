@@ -2,6 +2,8 @@ import { observable, action } from 'mobx';
 import axios from 'axios';
 import moment from 'moment';
 import { assetTransactionApi } from 'api';
+import uiStore from './ui';
+import { setPathValue } from 'pathval';
 
 class AssetTransactionStore {
   constructor() {
@@ -60,8 +62,6 @@ class AssetTransactionStore {
   }
 
   @observable assetLocalParams = {
-    // index: 1,
-    // size: 10,
     assignorType: '',
     region: '',
     assetGt: '',
@@ -81,8 +81,8 @@ class AssetTransactionStore {
   @observable transactionData = [];
   @observable tradeTrendLoading = false;
 
-  @action.bound setAssetLocalParams(params) {
-    this.assetLocalParams = params;
+  @action.bound setAssetLocalParams(path, value) {
+    setPathValue(this.assetLocalParams, path, value);
   }
 
   @action.bound getAssetLocal(params) {
@@ -90,7 +90,8 @@ class AssetTransactionStore {
     this.assetLocalLoading = true;
     assetTransactionApi.getAssetLocal({ params: params, cancelToken: source.token })
       .then(action('get asset local', (resp) => {
-        console.log(resp.data);
+        this.assetLocalData = resp.data.data;
+        uiStore.uiState.assetLocal.totalElements = resp.data.pageTotal;
         this.assetLocalLoading = false;
       }))
       .catch(action('get asset local catch', (err) => {
