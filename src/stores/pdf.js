@@ -19,58 +19,6 @@ class PdfStore {
   @observable blacklist = [];
   @observable team = {};
   @observable taxList = {};
-  @observable testTaxList = {
-    operating_progress: {
-      2015: {
-        XSZZL: 3.45,
-        JLRZZL: 12.34,
-        YYLRZZL: 23.45,
-        ZCZZL: 12.34,
-        ZYYWSRBDL: 12.34
-      },
-      2016: {
-        XSZZL: 3.45,
-        JLRZZL: 12.34,
-        YYLRZZL: 23.45,
-        ZCZZL: 12.34,
-        ZYYWSRBDL: 12.34
-      }
-    },
-    operating_capability: {
-      2015: {
-        'ZZCYSRB': 12.34,
-        'CWFYZB': 3.45,
-        'GLFYZB': 12.34,
-        'GSGM': 1234,
-        'XSFYZB': 23.45
-      },
-      2016: {
-        ZZCYSRB: 12.34,
-        CWFYZB: 3.45,
-        GLFYZB: 12.34,
-        GSGM: 1234,
-        XSFYZB: 23.45
-      }
-    },
-    operating_profit: {
-      2015: {
-        'XSMLL': 12.34,
-        'YYJLL': 23.45,
-        'ZCJLL': 12.34,
-        'CBFYJLL': 12.34,
-        'ZYYWLRL': 2.0,
-        'XSJLL': 3.45
-      },
-      2016: {
-        XSMLL: 12.34,
-        YYJLL: 23.45,
-        ZCJLL: 12.34,
-        CBFYJLL: 12.34,
-        ZYYWLRL: 2,
-        XSJLL: 3.45
-      }
-    }
-  };
 
   // summary
   @observable summary = {};
@@ -78,7 +26,7 @@ class PdfStore {
   @action.bound getOverviewData(id) {
     // 获取pdf
     axios.get(`/api/pdf?monitorId=${id}
-    &types=SUMMARY,CORP,CORP_BASIC,CORP_INV_POS,STOCK,CORP_ALTER,CORP_YEAR_REPORT,CORP_TAX,RISK,RISK_ANNOUNCEMENT,RISK_NOTICE,RISK_JUDGEMENT,RISK_EXECUTE,RISK_DISHONESTY,RISK_LITIGATION,RISK_TAXATION,RISK_ABNORMAL,RISK_CHECK,NEWS,NETWORK,NETWORK_RELEVANCE,NETWORK_BLACKLIST,STOCK_INFO,STOCK_ANNOUNCEMENT,OPERATION,OPERATION_TRADEMARK,OPERATION_BIDDING,OPERATION_PATENT,OPERATION_TEL,NETWORK,NETWORK_RELEVANCE,NETWORK_BLACKLIST,TEAM,TEAM_RECRUITMENT_RESUME,TEAM_ANALYSIS`)
+    &types=SUMMARY,CORP,CORP_BASIC,CORP_INV_POS,STOCK,CORP_ALTER,CORP_YEAR_REPORT,CORP_TAX,RISK,RISK_ANNOUNCEMENT,RISK_NOTICE,RISK_JUDGEMENT,RISK_EXECUTE,RISK_DISHONESTY,RISK_LITIGATION,RISK_TAXATION,RISK_ABNORMAL,RISK_CHECK,NEWS,NETWORK,NETWORK_RELEVANCE,NETWORK_BLACKLIST,STOCK_INFO,STOCK_ANNOUNCEMENT,OPERATION,OPERATION_BIDDING,OPERATION_PATENT,OPERATION_TEL,OPERATION_TRADEMARK,NETWORK,NETWORK_RELEVANCE,NETWORK_BLACKLIST,TEAM,TEAM_RECRUITMENT_RESUME,TEAM_ANALYSIS`)
       .then(action((response) => {
         this.banner = pathval.getPathValue(response.data, 'banner');
         this.summary = pathval.getPathValue(response.data, 'summary');
