@@ -52,7 +52,7 @@ export default class ForceNetworkGraph extends Component {
       .call(zoom.on('zoom', () => {
         group.attr('transform', `translate(${d3.event.transform.x}, ${d3.event.transform.y}) scale(${d3.event.transform.k})`);
       }))
-      .on('dblclick.zoom', ()=>{});
+      .on('dblclick.zoom', () => { });
     group = svg.append('g').attr('id', 'whole');
     const width = d3.select('svg').attr('width');
     const height = d3.select('svg').attr('height');
@@ -60,12 +60,12 @@ export default class ForceNetworkGraph extends Component {
       .force('charge', d3.forceManyBody().strength(-500))
       .force('center', d3.forceCenter(width / 2, height / 2))
       .force('link', d3.forceLink(edgesData).id((data) => { return data.id; }).distance(150))
-      // .force('collide', d3.forceCollide(58).iterations(16).radius((data)=>{ return data.isActive === 0 ? 20 : 70;}))
+      .force('collide', d3.forceCollide(58).iterations(16).radius((data)=>{ return data.isActive === 0 ? 20 : 70;}))
       .force('x', d3.forceX(0))
       .force('y', d3.forceY(0))
       .on('tick', this.ticked);
 
-    svgEdges = group.append('g').attr('id', 'lines').selectAll('.link').attr('marker-end', 'url(#mainArrow)');
+    svgEdges = group.append('g').attr('id', 'lines').selectAll('.link');
     svgNodes = group.append('g').attr('id', 'nodes').selectAll('.node');
     svgTexts1 = group.append('g').attr('id', 'texts1').selectAll('text');
     svgTexts2 = group.append('g').attr('id', 'texts2').selectAll('text');
@@ -217,8 +217,8 @@ export default class ForceNetworkGraph extends Component {
     svgEdges.exit().remove();
     svgEdges = svgEdges.enter()
       .append('line')
-      .attr('class', styles.links)
-      .attr('marker-end', 'url(#mainArrow)')
+      .attr('class', (data) => data.lineType === 1 ? styles.links : styles.dashLinks)
+      .attr('marker-end', (data) => data.lineType === 2 ? '' : 'url(#mainArrow)')
       .merge(svgEdges);
     // labels
     svgEdgepaths = svgEdgepaths.data(edgesData);
@@ -246,19 +246,19 @@ export default class ForceNetworkGraph extends Component {
     svgEdgelabels.append('textPath')
       .attr('xlink:href', (data, idx) => { return '#edgepath' + idx; })
       .style('pointer-events', 'none');
-      // .text((data) => { return svgTools.getLinkInfo(data); });
+    // .text((data) => { return svgTools.getLinkInfo(data); });
 
     // Update and restart the simulation.
     simulation.nodes(nodesData);
     simulation.force('link').links(edgesData);
     simulation.alpha(1).restart();
   }
-  dblclickNode = ()=> {
+  dblclickNode = () => {
     simulation.stop();
     svgNodes
       .transition()
       .duration(2000)
-      .attr('r', (data)=>{
+      .attr('r', (data) => {
         if (data.isActive === 0) {
           return 10;
         }
@@ -268,13 +268,13 @@ export default class ForceNetworkGraph extends Component {
     //   clearTimeout(dblclikTimer);
     // }
     simulation
-      .force('charge', d3.forceManyBody().strength((data)=>{
+      .force('charge', d3.forceManyBody().strength((data) => {
         if (data.isActive === 0) {
           return -100;
         }
         return -1000;
       }))
-      .force('link', d3.forceLink(edgesData).id((data) => { return data.name; }).distance((data)=>{
+      .force('link', d3.forceLink(edgesData).id((data) => { return data.name; }).distance((data) => {
         if (data.target.isActive === 0 || data.source.isActive === 0) {
           return 90;
         }
@@ -322,27 +322,26 @@ export default class ForceNetworkGraph extends Component {
       .attr('y1', (data) => { return data.source.y; })
       .attr('x2', (data) => { return data.target.x; })
       .attr('y2', (data) => { return data.target.y; })
-      .attr('class', (data)=> {
-        return ((data.source.isActive === 0 || data.target.isActive === 0) && styles.lineNoActive) || styles.links;
+      .attr('class', (data) => {
+        return ((data.source.isActive === 0 || data.target.isActive === 0) && styles.lineNoActive) || (data.lineType === 1 && styles.links) || styles.dashLinks;
       });
-
     svgTexts1
       .attr('x', (data) => { return data.x; })
       .attr('y', (data) => { return data.y; })
-      .attr('class', (data)=> {
+      .attr('class', (data) => {
         return data.isActive === 0 ? styles.hide : styles.nodeText;
       });
     svgTexts2
       .attr('x', (data) => { return data.x; })
       .attr('y', (data) => { return data.y; })
-      .attr('class', (data)=> {
+      .attr('class', (data) => {
         return data.isActive === 0 ? styles.hide : styles.nodeText;
       });
 
     svgTexts3
       .attr('x', (data) => { return data.x; })
       .attr('y', (data) => { return data.y; })
-      .attr('class', (data)=> {
+      .attr('class', (data) => {
         return data.isActive === 0 ? styles.hide : styles.nodeText;
       });
 
@@ -391,7 +390,7 @@ export default class ForceNetworkGraph extends Component {
       } else {
         const date = new Date();
         clickTime = date;
-        timer = setTimeout(()=>{
+        timer = setTimeout(() => {
           console.log('单击', data);
           this.props.forceNetworkStore.focusNode(data.name);
           clickTime = '';
