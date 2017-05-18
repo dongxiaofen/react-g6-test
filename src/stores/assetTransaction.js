@@ -68,8 +68,8 @@ class AssetTransactionStore {
     assetLt: '',
     assetType: '',
   }
-  @observable assetLocalLoading = false;
   @observable assetLocalData = [];
+  @observable assetLocalLoading = false;
 
   @observable tradeTrendParams = {
     region: '',

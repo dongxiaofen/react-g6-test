@@ -5,6 +5,7 @@ import { toJS } from 'mobx';
 import cityName from 'helpers/cityName';
 import styles from './index.less';
 import Select from 'components/lib/Select';
+import CardList from './CardList';
 
 const Option = Select.Option;
 @inject('assetTransactionStore', 'uiStore')
@@ -140,51 +141,58 @@ export default class AssetLocal extends Component {
     const params = this.props.assetTransactionStore.assetLocalParams;
     const assets = params.assetGt || params.assetLt ? `${params.assetGt},${params.assetLt}` : '';
     return (
-      <div className={`clearfix ${styles.assetLocal}`} style={{ height: 1000 }}>
-        <div className={`clearfix ${styles.assetLocalSwitchData}`}>
-          <span className={styles.label}>地区</span>
-          <div className={styles.select}>
-            <Select
-              width="120px"
-              onChange={this.changeSelect.bind(this, 'region')}
-              value={params.region}>
-              {this.areaSelectList()}
-            </Select>
+      <div>
+        <div className="clearfix">
+          <div className={`clearfix ${styles.assetLocalSwitchData}`}>
+            <span className={styles.label}>地区</span>
+            <div className={styles.select}>
+              <Select
+                width="120px"
+                onChange={this.changeSelect.bind(this, 'region')}
+                value={params.region}>
+                {this.areaSelectList()}
+              </Select>
+            </div>
+          </div>
+          <div className={`clearfix ${styles.assetLocalSwitchData}`}>
+            <span className={styles.label}>转让机构</span>
+            <div className={styles.select}>
+              <Select
+                width="120px"
+                value={params.assignorType}
+                disabledStyle={params.assetType === '拍卖资产' ? true : false}
+                onChange={this.changeSelect.bind(this, 'assignorType')}>
+                {this.assignorSelectList()}
+              </Select>
+            </div>
+          </div>
+          <div className={`clearfix ${styles.assetLocalSwitchData}`}>
+            <span className={styles.label}>资产金额</span>
+            <div className={styles.select}>
+              <Select
+                width="120px"
+                value={assets.trim()}
+                onChange={this.changeSelect.bind(this, 'money')}>
+                {this.moneySelectList()}
+              </Select>
+            </div>
+          </div>
+          <div className={`clearfix ${styles.assetLocalSwitchData}`}>
+            <span className={styles.label}>资产类型</span>
+            <div className={styles.select}>
+              <Select
+                width="120px"
+                value={params.assetType}
+                onChange={this.changeSelect.bind(this, 'assetType')}>
+                {this.typeSelectList(params)}
+              </Select>
+            </div>
           </div>
         </div>
-        <div className={`clearfix ${styles.assetLocalSwitchData}`}>
-          <span className={styles.label}>转让机构</span>
-          <div className={styles.select}>
-            <Select
-              width="120px"
-              value={params.assignorType}
-              disabledStyle={params.assetType === '拍卖资产' ? true : false}
-              onChange={this.changeSelect.bind(this, 'assignorType')}>
-              {this.assignorSelectList()}
-            </Select>
-          </div>
-        </div>
-        <div className={`clearfix ${styles.assetLocalSwitchData}`}>
-          <span className={styles.label}>资产金额</span>
-          <div className={styles.select}>
-            <Select
-              width="120px"
-              value={assets.trim()}
-              onChange={this.changeSelect.bind(this, 'money')}>
-              {this.moneySelectList()}
-            </Select>
-          </div>
-        </div>
-        <div className={`clearfix ${styles.assetLocalSwitchData}`}>
-          <span className={styles.label}>资产类型</span>
-          <div className={styles.select}>
-            <Select
-              width="120px"
-              value={params.assetType}
-              onChange={this.changeSelect.bind(this, 'assetType')}>
-              {this.typeSelectList(params)}
-            </Select>
-          </div>
+        <div className={styles.cardList}>
+          <CardList
+            assetLocalLoading={this.props.assetTransactionStore.assetLocalLoading}
+            assetLocalData={this.props.assetTransactionStore.assetLocalData} />
         </div>
       </div>
     );
