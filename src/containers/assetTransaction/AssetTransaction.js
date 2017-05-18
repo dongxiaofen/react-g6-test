@@ -5,6 +5,7 @@ import Tabs from 'antd/lib/tabs';
 import styles from './index.less';
 import { Container, Row, Col } from 'components/common/layout';
 import TradeTrend from 'components/assetTransaction/TradeTrend';
+import AssetLocal from 'components/assetTransaction/AssetLocal';
 
 const TabPane = Tabs.TabPane;
 
@@ -19,8 +20,10 @@ export default class AssetTransaction extends Component {
           </Col>
         </Row>
         <Row>
-          <Tabs defaultActiveKey="2">
-            <TabPane tab="本地资产" key="1">Content of Tab Pane 1</TabPane>
+          <Tabs defaultActiveKey="1">
+            <TabPane tab="本地资产" key="1">
+              <AssetLocal />
+            </TabPane>
             <TabPane tab="交易趋势" key="2">
               <TradeTrend />
             </TabPane>

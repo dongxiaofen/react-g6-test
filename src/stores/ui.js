@@ -13,6 +13,7 @@ import relPerCheckStore from './report/relPerCheck';
 import nowRecordStore from './report/nowRecord';
 import taxCheckStore from './report/taxCheck';
 import bidMarketStore from './bidMarket';
+import assetTransactionStore from './assetTransaction';
 
 class UiStore {
   constructor() {
@@ -137,6 +138,15 @@ class UiStore {
         params.index = this.uiState.bidMarketInfo.index;
         params.size = this.uiState.bidMarketInfo.size;
         bidMarketStore.getInfo(params);
+      }
+    );
+    reaction(
+      () => this.uiState.assetLocal.index,
+      () => {
+        const params = assetTransactionStore.assetLocalParams;
+        params.index = this.uiState.assetLocal.index;
+        params.size = this.uiState.assetLocal.size;
+        assetTransactionStore.getAssetLocal(params);
       }
     );
   }
@@ -376,6 +386,11 @@ class UiStore {
     bidMarketInfo: {
       index: 1,
       size: 9,
+      totalElements: 0
+    },
+    assetLocal: {
+      index: 1,
+      size: 10,
       totalElements: 0
     }
   };
@@ -637,6 +652,11 @@ class UiStore {
         bidMarketInfo: {
           index: 1,
           size: 9,
+          totalElements: 0
+        },
+        assetLocal: {
+          index: 1,
+          size: 10,
           totalElements: 0
         }
       }

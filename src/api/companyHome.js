@@ -19,6 +19,7 @@ export const getBannerInfo = ({
   return axios.get(url);
 };
 
+// 获取上市代码，检查该公司是否是上市公司
 export const getStockCode = ({ reportId, monitorId, analysisReportId }) => {
   let url;
   if (reportId) {
