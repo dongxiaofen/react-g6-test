@@ -60,7 +60,7 @@ export default class ForceNetworkGraph extends Component {
       .force('charge', d3.forceManyBody().strength(-500))
       .force('center', d3.forceCenter(width / 2, height / 2))
       .force('link', d3.forceLink(edgesData).id((data) => { return data.id; }).distance(150))
-      // .force('collide', d3.forceCollide(58).iterations(16).radius((data)=>{ return data.isActive === 0 ? 20 : 70;}))
+      .force('collide', d3.forceCollide(58).iterations(16).radius((data)=>{ return data.isActive === 0 ? 20 : 70;}))
       .force('x', d3.forceX(0))
       .force('y', d3.forceY(0))
       .on('tick', this.ticked);
