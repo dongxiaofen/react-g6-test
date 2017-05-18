@@ -5,12 +5,12 @@ import * as svgTools from 'helpers/svgTools';
 
 function Operation({forceNetworkStore, routing}) {
   const getShortPath = ()=>{
-    if (forceNetworkStore.focusNode) {
+    if (forceNetworkStore.focalNode) {
       const {monitorId} = routing.location.query;
       const {nodes, links} = forceNetworkStore.forceNetwork;
       const params = {};
-      params.source = svgTools.findCenterNode(nodes).id;
-      params.target = forceNetworkStore.focalNode;
+      params.source = forceNetworkStore.centerNode.id;
+      params.target = forceNetworkStore.focalNode.id;
       params.currentNetwork = svgTools.getNodesAndLinks(nodes, links);
       forceNetworkStore.getShortPath(monitorId, params);
     }

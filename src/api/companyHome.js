@@ -301,3 +301,7 @@ export const getTaxList = (id, source) => {
 export const getShortPath = (monitorId, params) => {
   return axios.post(`/api/monitor/${monitorId}/expendNetwork/shortestRoute`, params);
 };
+// 关联图,获取公司信息
+export const getCompNodeInfo = (monitorId, params) => {
+  return axios.get(`/api/monitor/${monitorId}/expendNetwork/nodeInfo`, {params});
+};

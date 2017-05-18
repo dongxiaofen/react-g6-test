@@ -34,13 +34,15 @@ let group;
 let clickTime = '';
 let timer = null;
 // let dblclikTimer = null;
-@inject('forceNetworkStore')
+// nodeStatus 1:active -1灰色 －２灰色变小
+@inject('forceNetworkStore', 'routing')
 @observer
 export default class ForceNetworkGraph extends Component {
   static propTypes = {
     forceNetworkStore: PropTypes.object,
     svgWidth: PropTypes.number,
-    svgHeight: PropTypes.number
+    svgHeight: PropTypes.number,
+    routing: PropTypes.object,
   };
   componentDidMount() {
     // console.log(toJS(this.props.forceNetworkStore.forceNetwork));
@@ -57,10 +59,10 @@ export default class ForceNetworkGraph extends Component {
     const width = d3.select('svg').attr('width');
     const height = d3.select('svg').attr('height');
     simulation = d3.forceSimulation(nodesData)
-      .force('charge', d3.forceManyBody().strength(-500))
+      .force('charge', d3.forceManyBody().strength(-2000))
       .force('center', d3.forceCenter(width / 2, height / 2))
       .force('link', d3.forceLink(edgesData).id((data) => { return data.id; }).distance(150))
-      .force('collide', d3.forceCollide(58).iterations(16).radius((data)=>{ return data.isActive === 0 ? 20 : 70;}))
+      // .force('collide', d3.forceCollide(58).iterations(16).radius((data)=>{ return data.isActive === 0 ? 20 : 70;}))
       .force('x', d3.forceX(0))
       .force('y', d3.forceY(0))
       .on('tick', this.ticked);
@@ -75,23 +77,21 @@ export default class ForceNetworkGraph extends Component {
     this.reDraw();
     // 监听点击和搜索节点事件
     reaction(
-      () => this.props.forceNetworkStore.focusNodeName,
+      () => this.props.forceNetworkStore.focalNode,
       () => {
         if (nodesData !== '') {
-          const { focusNodeName } = this.props.forceNetworkStore;
+          const { focalNode } = this.props.forceNetworkStore;
           nodesData.map((node) => {
-            node.isFocus = false;
+            if (focalNode.name === node.name) {
+              node.nodeStatus = 1;
+            } else if (svgTools.findOneLevelNodes(node, focalNode.oneLevelLinkedNodes)) {
+              node.nodeStatus = -1;
+            }
           });
-          if (focusNodeName === this.props.forceNetworkStore.mainCompanyName) {
-            nodesData[0].isFocus = true;
-          } else {
-            nodesData.map((node) => {
-              if (focusNodeName !== '' && node.name.indexOf(focusNodeName) >= 0 && node.category !== 0) {
-                node.isFocus = true;
-              }
-            });
+          if (focalNode.name) {
+            const { monitorId } = this.props.routing.location.query;
+            this.props.forceNetworkStore.getCompNodeInfo(monitorId, {companyName: focalNode.name});
           }
-          svgTools.focusRelatedLinks(focusNodeName, edgesData);
           simulation.restart();
         }
       }
@@ -112,12 +112,12 @@ export default class ForceNetworkGraph extends Component {
       () => {
         const { dbFocalNode } = this.props.forceNetworkStore;
         nodesData.map((node) => {
-          if (node.name === dbFocalNode.name) {
-            node.isActive = 1;
-          } else if (svgTools.findOneLevelNodes(node, dbFocalNode.OneLevelLinkedNodes)) {
-            node.isActive = 2;
+          if (node.id === dbFocalNode.id) {
+            node.nodeStatus = 1;
+          } else if (svgTools.findOneLevelNodes(node, dbFocalNode.oneLevelLinkedNodes)) {
+            node.nodeStatus = 1;
           } else {
-            node.isActive = 0;
+            node.nodeStatus = -2;
           }
         });
         this.dblclickNode(dbFocalNode);
@@ -256,17 +256,18 @@ export default class ForceNetworkGraph extends Component {
   dblclickNode = ()=> {
     simulation
       .force('charge', d3.forceManyBody().strength((data) => {
-        if (data.isActive === 0) {
-          return -100;
+        if (data.nodeStatus === -2) {
+          return -500;
         }
-        return -1000;
+        return -2000;
       }))
       .force('link', d3.forceLink(edgesData).id((data) => { return data.name; }).distance((data) => {
-        if (data.target.isActive === 0 || data.source.isActive === 0) {
+        if (data.target.nodeStatus === -2 || data.source.nodeStatus === -2) {
           return 90;
         }
         return 150;
       }))
+      // .force('collide', d3.forceCollide(58).iterations(16).radius((data)=>{ return data.isActive === 0 ? 20 : 70;}))
       .restart();
   }
   ticked = () => {
@@ -274,7 +275,7 @@ export default class ForceNetworkGraph extends Component {
       .attr('cx', (data) => { return data.x; })
       .attr('cy', (data) => { return data.y; })
       .attr('class', (data) => {
-        return (data.hide && styles.hide) || (data.isFocus && ' ') || (data.isActive === 0 && styles.noActive) || (data.category === 0 && styles.mainCompany) || (data.blackList && data.category !== 7 && styles.blackListNodes) || (data.status === 0 && styles.cancelNodes) || styles[`category${data.category}`];
+        return (data.hide && styles.hide) || (data.nodeStatus < 0 && styles.noActive) || (data.category === 0 && styles.mainCompany) || (data.blackList && data.category !== 7 && styles.blackListNodes) || (data.status === 0 && styles.cancelNodes) || styles[`category${data.category}`];
       })
       .attr('fill', (data) => {
         return (!data.isFocus && ' ') || (data.blackList && data.category !== 7 && 'url(#bling9)') || (data.status === 0 && 'url(#bling10)') || `url(#bling${data.category})`;
@@ -282,7 +283,7 @@ export default class ForceNetworkGraph extends Component {
       .transition()
       .duration(100)
       .attr('r', (data) => {
-        if (data.isActive === 0) {
+        if (data.nodeStatus === -2) {
           return 10;
         }
         return data.isFocus ? 20 : 35;
@@ -294,26 +295,26 @@ export default class ForceNetworkGraph extends Component {
       .attr('x2', (data) => { return data.target.x; })
       .attr('y2', (data) => { return data.target.y; })
       .attr('class', (data) => {
-        return ((data.source.isActive === 0 || data.target.isActive === 0) && styles.lineNoActive) || (data.lineType === 1 && styles.links) || styles.dashLinks;
+        return ((data.source.nodeStatus < 0 || data.target.nodeStatus < 0) && styles.lineNoActive) || (data.lineType === 1 && styles.links) || styles.dashLinks;
       });
     svgTexts1
       .attr('x', (data) => { return data.x; })
       .attr('y', (data) => { return data.y; })
       .attr('class', (data)=> {
-        return data.isActive === 0 ? styles.hideText : styles.nodeText;
+        return data.nodeStatus === -2 ? styles.hideText : styles.nodeText;
       });
     svgTexts2
       .attr('x', (data) => { return data.x; })
       .attr('y', (data) => { return data.y; })
       .attr('class', (data)=> {
-        return data.isActive === 0 ? styles.hideText : styles.nodeText;
+        return data.nodeStatus === -2 ? styles.hideText : styles.nodeText;
       });
 
     svgTexts3
       .attr('x', (data) => { return data.x; })
       .attr('y', (data) => { return data.y; })
       .attr('class', (data)=> {
-        return data.isActive === 0 ? styles.hideText : styles.nodeText;
+        return data.nodeStatus === -2 ? styles.hideText : styles.nodeText;
       });
 
     svgEdgepaths
@@ -363,7 +364,7 @@ export default class ForceNetworkGraph extends Component {
         clickTime = date;
         timer = setTimeout(() => {
           console.log('单击', data);
-          this.props.forceNetworkStore.focusNode(data.id);
+          this.props.forceNetworkStore.focusNode(data);
           clickTime = '';
         }, 300);
       }
