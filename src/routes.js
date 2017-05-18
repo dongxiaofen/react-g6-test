@@ -42,6 +42,7 @@ import {
     Disclaimer,
     Tax,
     TaxCheck,
+    AssetTransaction,
 // first append here from plop
   } from 'containers';
 
@@ -105,6 +106,7 @@ export default (allStore) => {
       <Route path="userAgreement" component={ UserAgreement } />
       <Route path="disclaimer" component={ Disclaimer } />
       <Route path="accountProfile" component={ AccountProfile } />
+      <Route path="assetTransaction" component={ AssetTransaction } />
 {/* second append here from plop */}
     </Route>
   );

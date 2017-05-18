@@ -19,6 +19,7 @@ export const getBannerInfo = ({
   return axios.get(url);
 };
 
+// 获取上市代码，检查该公司是否是上市公司
 export const getStockCode = ({ reportId, monitorId, analysisReportId }) => {
   let url;
   if (reportId) {
@@ -285,7 +286,33 @@ export const getTaxCheckList = (id, params, source) => {
   return axios.get('/api/monitor/' + id + '/taxCheck/page', {params: params, cancelToken: source.token});
 };
 
+// 全网关系图拓展节点
+export const expandNetwork = (monitorCompanyId, params) => {
+  return axios.post(`/api/monitor/${monitorCompanyId}/expendNetwork/expend`, params);
+};
+export const addTaxCheck = (monitorId, analysisReportId, params) => {
+  let url;
+  if (monitorId) {
+    url = `/api/monitor/${monitorId}/taxCheck`;
+  } else if (analysisReportId) {
+    url = `/api/analysisReport/${analysisReportId}/taxCheck`;
+  }
+  return axios.post(url, params);
+};
 // 税务列表
 export const getTaxList = (id, source) => {
   return axios.get('/api/monitor/' + id + '/tax', {cancelToken: source.token});
 };
+// 关联图,获取最短路径
+export const getShortPath = (monitorId, params) => {
+  return axios.post(`/api/monitor/${monitorId}/expendNetwork/shortestRoute`, params);
+};
+// 关联图,获取公司信息
+export const getCompNodeInfo = (monitorId, params) => {
+  return axios.get(`/api/monitor/${monitorId}/expendNetwork/nodeInfo`, {params});
+};
+// 六芒星
+export const getSixStar = (id, source) => {
+  return axios.get('/api/monitor/' + id + '/alert/score', {cancelToken: source.token});
+};
+
