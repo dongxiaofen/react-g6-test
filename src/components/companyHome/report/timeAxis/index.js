@@ -7,7 +7,7 @@ import Event from './Event';
 function TimeAxis(props) {
   const {time, module, relation} = props.timeAxisStore.eventParams;
   return (
-    <div>
+    <div style={{margin: '-5px 10px 0 10px'}}>
       <ModuleTitle module="时间轴" />
       <Axis {...props} />
       <ModuleTitle module={time ? `${time}事件（${module} - ${relation}）` : '事件'} />

@@ -2,7 +2,7 @@ import { observable, action } from 'mobx';
 import { companyHomeApi } from 'api';
 
 class TimeAxisStore {
-  isMount = false;
+  @observable isMount = false;
   @observable axisData = {};
   @observable eventParams = {
     time: '',
@@ -10,9 +10,18 @@ class TimeAxisStore {
     relation: '',
   };
   @observable eventData = {};
+  moduleDict = {
+    corp: '工商信息',
+    legal: '法务信息',
+    news: '新闻信息',
+    operation: '经营信息',
+    stock: '上市公告',
+    team: '团队信息',
+  };
 
   @action.bound getReportModule(params) {
     params.module = 'timeline';
+    this.isMount = true;
     companyHomeApi.getReportModule(params)
       .then(action('timeline', resp => {
         const noData = !resp.data || Object.keys(resp.data).length === 0;
@@ -40,8 +49,8 @@ class TimeAxisStore {
   @action.bound getAxisDetail(monitorId, key, time, relation) {
     this.eventParams = {
       time,
-      relation,
-      module: key,
+      relation: relation === 'main' ? '主体企业' : '关联企业',
+      module: this.moduleDict[key],
     };
     this.eventData = {};
     companyHomeApi.getAxisDetail(monitorId, key, time)
