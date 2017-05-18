@@ -14,7 +14,7 @@ function Bidding({moduleData}) {
     );
   }
   const data = {
-    config: [
+    dataConfig: [
       {'key': 'title', 'width': '12'},
       {'key': 'publishDate', 'width': '12'},
       {'key': 'type', 'width': '12'},

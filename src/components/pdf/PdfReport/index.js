@@ -12,13 +12,20 @@ import Network from './NetWork';
 import Team from './Team';
 
 function PdfReport() {
-  const judgeIsModuleExist = (module) => {
-    const pdfModule = this.props.pdfModule;
-    if (module === 'STOCK') {
-      const isStock = this.judgeIsStock();
-      return isStock && ((pdfModule && pdfModule.indexOf(module) !== -1) || pdfModule === undefined);
-    }
-    return (pdfModule && pdfModule.indexOf(module) !== -1) || pdfModule === undefined;
+  // const judgeIsStock = () => {
+  //   const banner = this.props.data.get('banner');
+  //   if (banner) {
+  //     return banner.stockType || banner.stockCode;
+  //   }
+  // };
+  const judgeIsModuleExist = () => {
+    return true;
+    // const pdfModule = this.props.pdfModule;
+    // if (module === 'STOCK') {
+    //   const isStock = judgeIsStock();
+    //   return isStock && ((pdfModule && pdfModule.indexOf(module) !== -1) || pdfModule === undefined);
+    // }
+    // return (pdfModule && pdfModule.indexOf(module) !== -1) || pdfModule === undefined;
   };
   return (
     <Container>

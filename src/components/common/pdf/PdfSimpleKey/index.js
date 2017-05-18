@@ -21,7 +21,7 @@ function PdfSimpleKey({dataConfig, item, type, dict, hasConfig}) {
             row.push(
               <KeyValue
                 {...parentProps}
-                key = {`${configItem.key}arrValue`}
+                key= {`${configItem.key}arrValue`}
                 theKey={hasConfig ? config[dict][configItem.key] : configItem.key}
                 theValue={configItem.handle ? configItem.handle(dataItem[configItem.key], dataItem) : dataItem[configItem.key]}
                 keyClass="key"
