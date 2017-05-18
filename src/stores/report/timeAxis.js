@@ -65,6 +65,13 @@ class TimeAxisStore {
   }
   @action.bound resetStore() {
     this.isMount = false;
+    this.axisData = {};
+    this.eventParams = {
+      time: '',
+      module: '',
+      relation: '',
+    };
+    this.eventData = {};
   }
 }
 export default new TimeAxisStore();
