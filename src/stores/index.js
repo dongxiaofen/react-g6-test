@@ -42,4 +42,5 @@ export forceNetworkStore from './report/forceNetwork';
 export nowRecordStore from './report/nowRecord';
 export taxStore from './report/tax';
 export taxCheckStore from './report/taxCheck';
+export assetTransactionStore from './assetTransaction';
 // append here from plop
