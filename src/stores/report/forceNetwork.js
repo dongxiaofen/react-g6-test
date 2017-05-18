@@ -17,8 +17,9 @@ class ForceNetworkStore {
     links: [],
     change: false
   };
-  @observable focusNodeName = '';
+  @observable focalNode = '';
   @observable isExpandSaved = true;
+  @observable shortestPahth = [];
 
   @action.bound saveNetwork(nextLocation) {
     this.isExpandSaved = true;
@@ -79,8 +80,8 @@ class ForceNetworkStore {
     this.expandNetwork.change = !this.expandNetwork.change;
     this.isExpandSaved = false;
   }
-  @action.bound focusNode(name) {
-    this.focusNodeName = name;
+  @action.bound focusNode(id) {
+    this.focalNode = id;
   }
   @action.bound getReportModule(params) {
     this.isMount = true;
@@ -120,6 +121,12 @@ class ForceNetworkStore {
   }
   @action.bound setFocalNode(node) {
     this.dbFocalNode = node;
+  }
+  @action.bound getShortPath(monitorId, params) {
+    companyHomeApi.getShortPath(monitorId, params)
+      .then((resp)=>{
+        this.shortestPahth = resp.data;
+      });
   }
 }
 export default new ForceNetworkStore();

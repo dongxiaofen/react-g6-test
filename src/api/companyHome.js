@@ -289,3 +289,7 @@ export const getTaxCheckList = (id, params, source) => {
 export const getTaxList = (id, source) => {
   return axios.get('/api/monitor/' + id + '/tax', {cancelToken: source.token});
 };
+// 关联图,获取最短路径
+export const getShortPath = (monitorId, params) => {
+  return axios.post(`/api/monitor/${monitorId}/expendNetwork/shortestRoute`, params);
+};

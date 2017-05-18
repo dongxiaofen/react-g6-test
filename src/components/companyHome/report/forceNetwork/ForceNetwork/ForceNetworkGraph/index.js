@@ -364,7 +364,7 @@ export default class ForceNetworkGraph extends Component {
         clickTime = date;
         timer = setTimeout(()=>{
           console.log('单击', data);
-          this.props.forceNetworkStore.focusNode(data.name);
+          this.props.forceNetworkStore.focusNode(data.id);
           clickTime = '';
         }, 300);
       }

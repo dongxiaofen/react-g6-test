@@ -188,3 +188,15 @@ export function findOneLevelNodes(node, ary) {
   }
   return false;
 }
+// 获取links和nodes的id
+export function getNodesAndLinks(nodesAry, linksAry) {
+  const nodes = [];
+  const links = [];
+  nodesAry.forEach((node)=>{
+    nodes.push(node.id);
+  });
+  linksAry.forEach((link)=>{
+    links.push(link.id);
+  });
+  return {nodes, links};
+}
