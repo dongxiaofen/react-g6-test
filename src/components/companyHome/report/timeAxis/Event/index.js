@@ -1,19 +1,23 @@
 import React from 'react';
-import { observer } from 'mobx-react';
+import { observer, inject } from 'mobx-react';
 import { loadingComp } from 'components/hoc';
-function Event({timeAxisStore}) {
+import AlterCard from 'components/common/AlertCard';
+function Event({timeAxisStore, riskHeadlinesStore}) {
   console.log(timeAxisStore.eventData);
   return (
     <div>
-      Event
+      <AlterCard
+        module="headLine"
+        data={timeAxisStore.eventData.events}
+        store={riskHeadlinesStore}/>
     </div>
   );
 }
 
-export default loadingComp({
+export default inject('riskHeadlinesStore')(loadingComp({
   mapDataToProps: props => ({
     loading: props.timeAxisStore.eventData.events === undefined ? true : false,
     error: props.timeAxisStore.eventData.error,
     height: 100,
   }),
-})(observer(Event));
+})(observer(Event)));
