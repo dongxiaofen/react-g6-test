@@ -9,7 +9,7 @@ import { batchReport } from 'components/hoc';
 export default class TimeAxis extends Component {
   render() {
     return (
-      <TimeAxisComp />
+      <TimeAxisComp {...this.props} />
     );
   }
 }

@@ -4,12 +4,12 @@ import { ModuleTitle } from 'components/common/report';
 import Axis from './Axis';
 import Event from './Event';
 
-function TimeAxis() {
+function TimeAxis(props) {
   return (
     <div>
       <ModuleTitle module="事件时间轴" />
-      <Axis />
-      <Event />
+      <Axis {...props} />
+      <Event {...props} />
     </div>
   );
 }
