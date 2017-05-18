@@ -24,6 +24,7 @@ class ForceNetworkStore {
     id: '',
   };
   @observable nodeInfo = {
+    isShowInfo: false,
     company: {},
   }
   @action.bound saveNetwork(nextLocation) {
@@ -87,6 +88,7 @@ class ForceNetworkStore {
   }
   @action.bound focusNode(node) {
     this.focalNode = node;
+    this.nodeInfo.isShowInfo = true;
   }
   @action.bound getReportModule(params) {
     this.isMount = true;

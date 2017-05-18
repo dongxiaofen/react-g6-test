@@ -1,12 +1,18 @@
 import React, {PropTypes} from 'react';
 import { observer, inject} from 'mobx-react';
-// import styles from './index.less';
-import Operation from './Operation';
+import styles from './index.less';
+import CompanyInfo from './CompanyInfo';
 
 function DetailInfo({forceNetworkStore}) {
+  const isShowInfo = forceNetworkStore.nodeInfo.isShowInfo;
+  const company = forceNetworkStore.nodeInfo.company;
   return (
-    <div>
-      <Operation forceNetworkStore={forceNetworkStore}/>
+    <div className={isShowInfo ? styles.show : styles.hide}>
+      {
+        company.basicInfo ?
+        <CompanyInfo forceNetworkStore={forceNetworkStore}/>
+        : 'loading'
+      }
     </div>
   );
 }
