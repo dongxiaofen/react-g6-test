@@ -53,7 +53,7 @@ class TimeAxisStore {
       module: this.moduleDict[key],
     };
     this.eventData = {};
-    companyHomeApi.getAxisDetail(monitorId, key, time)
+    companyHomeApi.getAxisDetail(monitorId, key, time, relation)
       .then(action('getAxisDetail', resp => {
         const noData = !resp.data || !resp.data.events || resp.data.events.length === 0;
         this.eventData = noData ? {events: [], error: {message: '未查询到相关数据'}} : resp.data;
