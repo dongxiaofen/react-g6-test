@@ -239,19 +239,17 @@ export default class ForceNetworkGraph extends Component {
     svgEdgelabels = svgEdgelabels.enter()
       .append('text')
       .style('pointer-events', 'none')
-      .attr('dx', 40)
+      .attr('dx', 60)
       .attr('dy', -2)
       .attr('class', (data) => {
-        return data.isFocus ? styles.show : styles.hide;
+        return data.hide ? styles.hide : styles.linkLabel;
       })
-      .attr('font-size', 8)
-      .attr('fill', '#3483e9')
       .attr('id', (data, idx) => { return 'edgelabel' + idx; });
 
     svgEdgelabels.append('textPath')
       .attr('xlink:href', (data, idx) => { return '#edgepath' + idx; })
-      .style('pointer-events', 'none');
-    // .text((data) => { return svgTools.getLinkInfo(data); });
+      .style('pointer-events', 'none')
+      .text((data) => data.lineName);
 
     // Update and restart the simulation.
     simulation.nodes(nodesData);
@@ -300,7 +298,7 @@ export default class ForceNetworkGraph extends Component {
       .attr('x2', (data) => { return data.target.x; })
       .attr('y2', (data) => { return data.target.y; })
       .attr('class', (data) => {
-        return ((data.source.nodeStatus < 0 || data.target.nodeStatus < 0) && styles.lineNoActive) || (data.lineType === 1 && styles.links) || styles.dashLinks;
+        return (data.hide && styles.hide) || ((data.source.nodeStatus < 0 || data.target.nodeStatus < 0) && styles.lineNoActive) || (data.lineType === 1 && styles.links) || styles.dashLinks;
       });
     svgTexts1
       .attr('x', (data) => { return data.x; })
@@ -338,7 +336,7 @@ export default class ForceNetworkGraph extends Component {
         return 'rotate(0)';
       })
       .attr('class', (data) => {
-        return data.isFocus ? styles.show : styles.hide;
+        return data.hide ? styles.hide : styles.linkLabel;
       });
   }
   dragstarted = (data) => {
