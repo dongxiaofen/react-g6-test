@@ -9,7 +9,7 @@ function BaseList({
   routing,
   reportManageStore,
   payModalStore,
-  modalStore,
+  // modalStore,
   item,
   status,
 }) {
@@ -54,31 +54,31 @@ function BaseList({
     return str;
   };
 
-  const openUpdateToAnalysisModal = (_reportId) => {
-    const updateDeepAction = () => {
-      const reportManagePager = uiStore.uiState.reportManagePager;
-      const params = {
-        companyName: '',
-        index: reportManagePager.index,
-        size: reportManagePager.size
-      };
-      reportManageStore.updateToAnalysisReport(_reportId, params);
-    };
-    modalStore.openCompModal({
-      title: '升级报告',
-      width: 420,
-      isSingleBtn: true,
-      pointText: '升级报告即视为同意',
-      pactUrl: 'xxxxxx',
-      pactName: '用户服务协议',
-      confirmAction: updateDeepAction,
-      loader: (cb) => {
-        require.ensure([], (require) => {
-          cb(require('./UpdateDeep'));
-        });
-      }
-    });
-  };
+  // const openUpdateToAnalysisModal = (_reportId) => {
+  //   const updateDeepAction = () => {
+  //     const reportManagePager = uiStore.uiState.reportManagePager;
+  //     const params = {
+  //       companyName: '',
+  //       index: reportManagePager.index,
+  //       size: reportManagePager.size
+  //     };
+  //     reportManageStore.updateToAnalysisReport(_reportId, params);
+  //   };
+  //   modalStore.openCompModal({
+  //     title: '升级报告',
+  //     width: 420,
+  //     isSingleBtn: true,
+  //     pointText: '升级报告即视为同意',
+  //     pactUrl: 'xxxxxx',
+  //     pactName: '用户服务协议',
+  //     confirmAction: updateDeepAction,
+  //     loader: (cb) => {
+  //       require.ensure([], (require) => {
+  //         cb(require('./UpdateDeep'));
+  //       });
+  //     }
+  //   });
+  // };
 
   return (
     <div className={`clearfix ${styles.item}`}>
@@ -117,14 +117,14 @@ function BaseList({
         <Col width="3">
           <div className="clearfix">
             <div className={`clearfix ${styles.actionWrap}`}>
-              {
+              {/* {
                 status === 'report'
                 ?
                   <div className={`${styles.turnBtn}`} onClick={openUpdateToAnalysisModal.bind(null, reportId)}>
                     升级报告
                   </div>
                 : null
-              }
+              } */}
               <div className={`${styles.turnBtn}`}
                 onClick={turnToMonitor}>
                 加入监控
@@ -142,7 +142,7 @@ BaseList.propTypes = {
   uiStore: PropTypes.object,
   reportManageStore: PropTypes.object,
   payModalStore: PropTypes.object,
-  modalStore: PropTypes.object,
+  // modalStore: PropTypes.object,
   item: PropTypes.object,
   status: PropTypes.string,
 };
@@ -150,6 +150,6 @@ export default inject(
   'routing',
   'uiStore',
   'reportManageStore',
-  'modalStore',
+  // 'modalStore',
   'payModalStore'
 )(observer(BaseList));
