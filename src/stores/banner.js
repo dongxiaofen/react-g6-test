@@ -95,6 +95,9 @@ class BannerStore {
     },
   };
 
+  // 需要下载的keys
+  @observable pdfDownloadKeys = [];
+
   @observable isAllChecked = false;
 
   // 添加/取消收藏loading
@@ -108,6 +111,10 @@ class BannerStore {
   closeContactPopoverAlias = this.closeContactPopover;
   openContactPopoverAlias = this.openContactPopover;
   extendContactAlias = this.extendContact;
+
+  @action.bound setPdfDownloadKeys(keys) {
+    this.pdfDownloadKeys = keys;
+  }
 
   @action.bound closeHisNamePopover() {
     this.hisNameVis = false;

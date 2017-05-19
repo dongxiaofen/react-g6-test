@@ -112,18 +112,14 @@ export default class AssetLocal extends Component {
     return { assetGt, assetLt };
   }
 
-  filterHandle = (key, value) => {
+  filterHandle = () => {
     const params = toJS(this.props.assetTransactionStore.assetLocalParams);
-    params.index = 1;
-    params.size = this.props.uiStore.uiState.assetLocal.size;
-    if (key === 'money') {
-      const { assetGt, assetLt } = this.modfyMoney(value);
-      params.assetGt = assetGt;
-      params.assetLt = assetLt;
+    const index = this.props.uiStore.uiState.assetLocal.index;
+    if (index === 1) {
+      this.props.assetTransactionStore.getAssetLocal(params);
     } else {
-      params[key] = value;
+      this.props.uiStore.updateUiStore('assetLocal.index', 1);
     }
-    this.props.assetTransactionStore.getAssetLocal(params);
   }
 
   changeSelect = (key, value) => {
@@ -135,7 +131,7 @@ export default class AssetLocal extends Component {
     } else {
       setParams(key, value);
     }
-    this.filterHandle(key, value);
+    this.filterHandle();
   }
 
   render() {
@@ -192,6 +188,7 @@ export default class AssetLocal extends Component {
         </div>
         <div className={styles.cardList}>
           <CardList
+            uiStore={this.props.uiStore}
             assetLocalLoading={this.props.assetTransactionStore.assetLocalLoading}
             assetLocalData={this.props.assetTransactionStore.assetLocalData}
             getAssetLocalDetail={this.props.assetTransactionStore.getAssetLocalDetail}

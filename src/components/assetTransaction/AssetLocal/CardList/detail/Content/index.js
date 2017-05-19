@@ -1,16 +1,29 @@
 import React, {PropTypes} from 'react';
-import { observer } from 'mobx-react';
-import styles from './index.less';
+import { observer, inject } from 'mobx-react';
 
-function Content({}) {
+import SaleAssets from 'components/assetTransaction/AssetLocal/CardList/detail/SaleAssets';
+
+function Content({ assetTransactionStore }) {
+  const createContent = (data) => {
+    if (data.type === '拍卖资产') {
+      return (
+        <SaleAssets
+          data={data}
+          swiperImg={assetTransactionStore.assetLocalSwiperImg}
+          setAssetLocalSwiperImg={assetTransactionStore.setAssetLocalSwiperImg} />
+      );
+    }
+    return <div dangerouslySetInnerHTML={{ __html: data.content }}></div>;
+  };
+  const assetLocalDetail = assetTransactionStore.assetLocalDetail;
   return (
-    <div className={styles}>
-      this is content
+    <div className="clearfix" style={{ padding: 20 }}>
+      {createContent(assetLocalDetail)}
     </div>
   );
 }
 
 Content.propTypes = {
-  foo: PropTypes.string,
+  assetTransactionStore: PropTypes.object,
 };
-export default observer(Content);
+export default inject('assetTransactionStore')(observer(Content));

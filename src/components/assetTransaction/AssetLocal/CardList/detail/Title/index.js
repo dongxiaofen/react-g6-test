@@ -65,7 +65,7 @@ function Title({ assetTransactionStore }) {
   const assetConfig = keyConfig[type];
   return (
     <div className={`${styles.wrap}`}>
-      <div className={`${styles.header} clearfix`}>
+      <div className={`clearfix ${styles.header}`}>
         <div className={styles.titleInfo}>
           <span className={styles.type}>{assetLocalDetail.type}</span>
           <span className={styles.line}>|</span>
@@ -78,7 +78,7 @@ function Title({ assetTransactionStore }) {
           </div>
         </div>
       </div>
-      <div>
+      <div className="clearfix">
         {createContent(assetConfig, assetLocalDetail, type)}
       </div>
     </div>

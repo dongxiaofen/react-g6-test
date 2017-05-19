@@ -68,6 +68,13 @@ class AssetTransactionStore {
     assetLt: '',
     assetType: '',
   }
+
+  @observable assetLocalSwiperImg = {
+    bgImgDistance: 0,
+    distance: 0,
+    activeImg: 0,
+  }
+
   @observable assetLocalData = [];
   @observable assetLocalDetail = {};
   @observable assetLocalLoading = false;
@@ -86,8 +93,14 @@ class AssetTransactionStore {
     setPathValue(this.assetLocalParams, path, value);
   }
 
+  @action.bound setAssetLocalSwiperImg(path, value) {
+    setPathValue(this.assetLocalSwiperImg, path, value);
+  }
+
   @action.bound getAssetLocal(params) {
     const source = axios.CancelToken.source();
+    params.index = uiStore.uiState.assetLocal.index;
+    params.size = uiStore.uiState.assetLocal.size;
     this.assetLocalLoading = true;
     assetTransactionApi.getAssetLocal({ params: params, cancelToken: source.token })
       .then(action('get asset local', (resp) => {

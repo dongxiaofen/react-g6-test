@@ -1,10 +1,12 @@
 import React, {PropTypes} from 'react';
 import { observer } from 'mobx-react';
-import { Row } from 'components/common/layout';
-import Card from './Card';
+import { Row, Col } from 'components/common/layout';
+import Pager from 'components/common/Pager';
 import { loadingComp } from 'components/hoc';
 
-function CardList({ assetLocalData, getAssetLocalDetail, openDetailModal }) {
+import Card from './Card';
+
+function CardList({ assetLocalData, uiStore, getAssetLocalDetail, openDetailModal }) {
   const modifyMoney = (value) => {
     return `${(value / 10000).toFixed(2)}万元`;
   };
@@ -27,7 +29,7 @@ function CardList({ assetLocalData, getAssetLocalDetail, openDetailModal }) {
           );
         });
       },
-      '经营详情'
+      '资产交易'
     );
   };
 
@@ -85,12 +87,22 @@ function CardList({ assetLocalData, getAssetLocalDetail, openDetailModal }) {
   return (
     <Row>
       {createCards(assetType, config)}
+      <Col>
+        <div style={{ marginTop: 10, marginBottom: 20 }}>
+          <Pager
+            tData={assetLocalData}
+            module="assetLocal"
+            uiStore={uiStore}
+            type="large" />
+        </div>
+      </Col>
     </Row>
   );
 }
 
 CardList.propTypes = {
   assetLocalData: PropTypes.object,
+  uiStore: PropTypes.object,
   assetLocalLoading: PropTypes.bool,
   getAssetLocalDetail: PropTypes.func,
   openDetailModal: PropTypes.func,
