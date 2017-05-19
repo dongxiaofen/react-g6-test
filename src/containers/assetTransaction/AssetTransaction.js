@@ -20,7 +20,7 @@ export default class AssetTransaction extends Component {
           </Col>
         </Row>
         <Row>
-          <Tabs defaultActiveKey="1">
+          <Tabs defaultActiveKey="2">
             <TabPane tab="本地资产" key="1">
               <AssetLocal />
             </TabPane>
