@@ -4,9 +4,10 @@ import Switch from 'components/lib/switch';
 import Modal from 'components/lib/Modal';
 import styles from './index.less';
 function ActionWrap({ data, mainData, index, relation, monitorListStore, payModalStore, messageStore, clientStore }) {
+  const activeList = monitorListStore.activeList;
   const monitorId = relation === 'main' ? data.monitorId : data.monitorCompanyType.monitorId;
   const status = data.status;
-  const switchLoading = monitorListStore.switchLoading.get(monitorId);
+  const switchLoading = monitorListStore[activeList].switchLoading.get(monitorId);
   const textDict = {
     'PAUSE': '暂停',
     'EXPIRED': '监控到期',
@@ -17,7 +18,7 @@ function ActionWrap({ data, mainData, index, relation, monitorListStore, payModa
   const switchFlag = status === 'PAUSE' ? false : true;
   const expired = status === 'EXPIRED';
   const relDisable = relation === 'relation' && mainData.status === 'PAUSE';
-  const relLoading = relation === 'relation' && monitorListStore.switchLoading.get(mainData.monitorId);
+  const relLoading = relation === 'relation' && monitorListStore[activeList].switchLoading.get(mainData.monitorId);
   const changeStatus = (newStatus) => {
     if (newStatus || relation === 'relation') {
       monitorListStore.changeStatus({

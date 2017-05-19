@@ -39,6 +39,13 @@ class UiStore {
       }
     );
     reaction(
+      () => this.uiState.deepMonitorListPager.index,
+      () => {
+        document.body.scrollTop = 0;
+        monitorListStore.getMainList();
+      }
+    );
+    reaction(
       () => this.uiState.alertAnalysis.index,
       () => {
         const { monitorId, analysisReportId } = bannerStore;
@@ -166,6 +173,24 @@ class UiStore {
       }
     },
     monitorListPager: {
+      index: 1,
+      size: 10,
+      totalElements: 0,
+    },
+    deepMonitorList: {
+      searchInput: '',
+      sortDirection: {
+        start_tm: 'DESC',
+        expire_dt: 'DESC',
+        latestTs: 'DESC',
+      },
+      params: {
+        companyName: '',
+        sort: 'start_tm,DESC',
+        monitorStatus: '',
+      }
+    },
+    deepMonitorListPager: {
       index: 1,
       size: 10,
       totalElements: 0,
@@ -431,7 +456,25 @@ class UiStore {
             monitorStatus: '',
           }
         },
+        deepMonitorList: {
+          searchInput: '',
+          sortDirection: {
+            start_tm: 'DESC',
+            expire_dt: 'DESC',
+            latestTs: 'DESC',
+          },
+          params: {
+            companyName: '',
+            sort: 'start_tm,DESC',
+            monitorStatus: '',
+          }
+        },
         monitorListPager: {
+          index: 1,
+          size: 10,
+          totalElements: 0,
+        },
+        deepMonitorListPager: {
           index: 1,
           size: 10,
           totalElements: 0,
