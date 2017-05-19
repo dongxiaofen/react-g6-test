@@ -73,9 +73,9 @@ export default class TradeTrend extends Component {
   }
 
   filterTrend(params) {
-    const tradeTrendCancle = this.props.assetTransactionStore.tradeTrendCancle;
-    if (tradeTrendCancle && typeof tradeTrendCancle === 'function') {
-      tradeTrendCancle();
+    const tradeTrendCancel = this.props.assetTransactionStore.tradeTrendCancel;
+    if (tradeTrendCancel && typeof tradeTrendCancel === 'function') {
+      tradeTrendCancel();
     }
     this.props.assetTransactionStore.setTradeTrendParams(params);
     this.props.assetTransactionStore.getAssetTrend(params);

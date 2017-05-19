@@ -7,7 +7,8 @@ import { setPathValue } from 'pathval';
 
 class AssetTransactionStore {
   constructor() {
-    this.tradeTrendCancle = '';
+    this.assetLocalCancel = '';
+    this.tradeTrendCancel = '';
   }
 
   dealWithDate(type, startDate, endDate, result) {
@@ -116,6 +117,7 @@ class AssetTransactionStore {
           this.assetLocalLoading = false;
         }
       }));
+    this.assetLocalCancel = source.cancel;
   }
 
   @action.bound getAssetLocalDetail(params, openDetailModal) {
