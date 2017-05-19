@@ -7,7 +7,7 @@ function Event({timeAxisStore, riskHeadlinesStore}) {
   return (
     <div>
       <AlterCard
-        module="headLine"
+        module="timeAxis"
         data={timeAxisStore.eventData.events}
         store={riskHeadlinesStore}/>
     </div>
