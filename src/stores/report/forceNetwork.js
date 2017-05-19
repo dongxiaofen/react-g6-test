@@ -143,7 +143,7 @@ class ForceNetworkStore {
   @action.bound getPersonNodeInfo(monitorId, params) {
     companyHomeApi.getPersonNodeInfo(monitorId, params)
     .then(action('getPersonNodeInfo', (resp)=>{
-      this.nodeInfo.person = resp.data;
+      this.nodeInfo.detailInfo = resp.data;
     }))
     .catch(action((error)=>{
       console.log('getPersonNodeInfo', error);

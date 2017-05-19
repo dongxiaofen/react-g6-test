@@ -1,30 +1,21 @@
 import React, {PropTypes} from 'react';
 import { observer, inject} from 'mobx-react';
-import Operation from '../Operation';
-import ListInfo from '../ListInfo';
+import Operation from '../common/Operation';
+import ListInfo from '../common/ListInfo';
+import BaseInfo from '../common/BaseInfo';
 // import * as svgTools from 'helpers/svgTools';
 import styles from './index.less';
 
 function CompanyInfo({forceNetworkStore}) {
   const companyInfo = forceNetworkStore.nodeInfo.detailInfo;
-  const createBasicInfo = (data) => {
-    const config = [
-      {key: 'frName', label: '法人代表'},
-      {key: 'esDate', label: '成立日期'},
-      {key: 'regCap', label: '注册资本'},
-    ];
-    const output = [];
-    config.map((item, idx)=>{
-      let value = data[item.key];
-      if (item.key === 'regCap') {
-        value = data.regCap ? data.regCap + data.regCapCur : '--';
-      }
-      output.push(
-        <p key={`basicInfo${idx}`} className={styles.baseInfo}>{item.label}：{value || '--'}</p>
-      );
-    });
-    return output;
+  const modifyRegCap = (value, data)=> {
+    return data.regCap ? data.regCap + data.regCapCur : '--';
   };
+  const baseConfig = [
+    {key: 'frName', label: '法人代表'},
+    {key: 'esDate', label: '成立日期'},
+    {key: 'regCap', label: '注册资本', modifyText: modifyRegCap},
+  ];
   const listConfig = {
     tabs: ['股东信息', '任职信息', '对外投资'],
     content: [
@@ -53,7 +44,7 @@ function CompanyInfo({forceNetworkStore}) {
         <span className={isLive ? styles.labelLive : styles.labelClose}>{isLive ? '在营' : '注销'}</span>
       </div>
       <div>
-        {createBasicInfo(companyInfo.basicInfo)}
+        <BaseInfo config={baseConfig} data={companyInfo.basicInfo} />
       </div>
       <div>
         <Operation />

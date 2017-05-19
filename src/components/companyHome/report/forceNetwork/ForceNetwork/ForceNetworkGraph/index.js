@@ -86,9 +86,12 @@ export default class ForceNetworkGraph extends Component {
               node.nodeStatus = -1;
             }
           });
-          if (focalNode.name) {
+          if (focalNode.cateType === 1) {
             const { monitorId } = this.props.routing.location.query;
             this.props.forceNetworkStore.getCompNodeInfo(monitorId, { companyName: focalNode.name });
+          } else if (focalNode.cateType === 2) {
+            const { monitorId } = this.props.routing.location.query;
+            this.props.forceNetworkStore.getPersonNodeInfo(monitorId, { personId: focalNode.id });
           }
           simulation.restart();
         }
