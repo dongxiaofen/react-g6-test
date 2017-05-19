@@ -99,6 +99,8 @@ class AssetTransactionStore {
 
   @action.bound getAssetLocal(params) {
     const source = axios.CancelToken.source();
+    params.index = uiStore.uiState.assetLocal.index;
+    params.size = uiStore.uiState.assetLocal.size;
     this.assetLocalLoading = true;
     assetTransactionApi.getAssetLocal({ params: params, cancelToken: source.token })
       .then(action('get asset local', (resp) => {
