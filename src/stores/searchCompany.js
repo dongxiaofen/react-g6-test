@@ -94,7 +94,7 @@ class SearchCompanyStore {
   // 点击某条数据相关信息
   @observable singleItemData = {};
   // 选择那种报告 'analysis'深度 'report'高级 'free'快速
-  @observable reportType = 'analysis';
+  @observable reportType = 'report';
   // 获取搜索公司列表
   @action.bound getCompanyList() {
     // 是否已搜索
@@ -221,6 +221,10 @@ class SearchCompanyStore {
   // 搜索的searchKey
   @action.bound searchChange(evt) {
     this.searchKey = evt.target.value;
+  }
+  // 外部搜索传值searchKey
+  @action.bound searchChangeOther(name) {
+    this.searchKey = name;
   }
   // 搜索handleEnter
   @action.bound handleEnter(evt) {
@@ -377,7 +381,7 @@ class SearchCompanyStore {
         modalStore.closeAction();
         // 弹出成功提示
         const obj = {
-          content: '高级查询报告创建成功'
+          content: '报告创建成功'
         };
         messageStore.openMessage({ ...obj });
         // 跳转
@@ -393,7 +397,7 @@ class SearchCompanyStore {
           if (err.response.data.errorCode === 409201) {
             // 弹出成功提示
             const obj = {
-              content: '高级查询报告创建成功'
+              content: '报告创建成功'
             };
             messageStore.openMessage({ ...obj });
             // 跳转
@@ -577,7 +581,7 @@ class SearchCompanyStore {
     this.filterToggle = false;
     this.loading = false;
     this.singleItemData = {};
-    this.reportType = 'analysis';
+    this.reportType = 'report';
   }
 }
 export default new SearchCompanyStore();

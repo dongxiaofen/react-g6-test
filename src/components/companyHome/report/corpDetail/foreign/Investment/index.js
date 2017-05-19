@@ -25,7 +25,7 @@ function Investment({ frinvList, isLoading }) {
     },
     isLoading: isLoading,
     module: '法人对外投资',
-    error: frinvList.length === 0
+    error: frinvList && frinvList.length === 0
   };
   return (
     <div>

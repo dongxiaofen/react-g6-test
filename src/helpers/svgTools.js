@@ -182,9 +182,24 @@ export function updateNodeByExpandIdx(pathsArr, expandIdx, nodesData) {
 // 查看是否一度关联
 export function findOneLevelNodes(node, ary) {
   for (const nodeItem of ary) {
-    if (nodeItem === node.name) {
+    if (nodeItem === node.id) {
       return true;
     }
   }
   return false;
+}
+
+// 获取当前网络图的nodeId和linkId
+export function getCurrentNodesLinks(forceNetwork) {
+  const output = {
+    nodes: [],
+    links: []
+  };
+  forceNetwork.nodes.map((node) => {
+    output.nodes.push(node.id);
+  });
+  forceNetwork.links.map((link) => {
+    output.links.push(link.id);
+  });
+  return output;
 }

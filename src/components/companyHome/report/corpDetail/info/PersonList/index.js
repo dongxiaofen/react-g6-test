@@ -2,7 +2,7 @@ import React, { PropTypes } from 'react';
 import { observer } from 'mobx-react';
 import { ModuleTitle, CommonTable } from 'components/common/report';
 
-function PersonList({ personList, isLoading }) {
+function PersonList({ personList, isLoading, errText }) {
   const data = {
     meta: {
       body: [
@@ -13,8 +13,8 @@ function PersonList({ personList, isLoading }) {
       dict: 'personList',
     },
     isLoading: isLoading,
-    module: '主要人员',
-    error: personList.length === 0
+    module: errText ? errText : '主要人员',
+    error: errText || personList.length === 0 ? {message: errText} : false,
   };
   return (
     <div>

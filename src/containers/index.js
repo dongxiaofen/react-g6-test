@@ -38,4 +38,5 @@ export UserAgreement from './userAgreement';
 export Disclaimer from './disclaimer';
 export Tax from './report/tax';
 export TaxCheck from './report/taxCheck';
+export AssetTransaction from './assetTransaction';
 // append here from plop

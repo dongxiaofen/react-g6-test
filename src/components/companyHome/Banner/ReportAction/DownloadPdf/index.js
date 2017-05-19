@@ -176,6 +176,7 @@ export default class DownloadPdf extends Component {
         window.open(`/pdfDown?analysisReportId=${reportId}${queryStr}`);
       }
       this.props.bannerStore.clearPdfConfigChecked();
+      this.props.bannerStore.setPdfDownloadKeys(queryArray);
     } else {
       this.setState({ tipInfo: true });
     }
@@ -186,7 +187,7 @@ export default class DownloadPdf extends Component {
     return (
       <div className={styles.downloadModal}>
         <div className={styles.downloadTitleBox}>
-          <i className="fa fa-drupal" aria-hidden="true"></i>
+          <i className="fa fa-file-text-o" aria-hidden="true"></i>
           <span>{this.props.bannerStore.companyName}</span>
         </div>
         <div className={styles.pdfDownModaBtnBox}>

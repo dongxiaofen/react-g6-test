@@ -22,6 +22,9 @@ class CorpDetailStore {
   @observable yearReportList = [];
   // 选择年报
   @observable yearReportTab = '';
+  // 错误信息
+
+  @observable errData = {};
 
   @action.bound getReportModule(params) {
     this.isMount = true;
@@ -50,6 +53,7 @@ class CorpDetailStore {
       }))
       .catch(action('get corpDetail err', (err)=>{
         this.isLoading = false;
+        this.errData = err.response.data;
         console.log('get corpDetail err', err);
       }));
   }

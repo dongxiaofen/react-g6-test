@@ -11,7 +11,7 @@ import PdfNotFound from 'components/common/pdf/PdfNotFound';
 // import styles from './index.less';
 
 function YearReportList({moduleData}) {
-  if (moduleData === null || moduleData.length === 0) {
+  if (!moduleData || moduleData.length === 0) {
     return (
       <div>
         <PdfNotFound />
