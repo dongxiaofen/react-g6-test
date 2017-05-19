@@ -483,8 +483,12 @@ class SearchCompanyStore {
           content: '已创建监控'
         };
         messageStore.openMessage({ ...text });
-        // /companyHome?monitorId=184832&companyType=MAIN
-        browserHistory.push(`/companyHome?monitorId=${resp.data.monitorId}&companyType=MAIN`);
+        // 根据不同的返回值跳转深度监控或者监控
+        if (resp.data && resp.data.deepMonitorId > 0) {
+          browserHistory.push(`/companyHome?deepMonitorId=${resp.data.deepMonitorId}&companyType=MAIN`);
+        } else {
+          browserHistory.push(`/companyHome?monitorId=${resp.data.monitorId}&companyType=MAIN`);
+        }
       }))
       .catch(action('createMonitor error', (err) => {
         console.log(err.response, '=====createMonitor error');

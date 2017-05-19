@@ -4,6 +4,8 @@ import styles from './index.less';
 import Statistics from '../common/Statistics';
 import Tables from '../common/Tables';
 // import NewBusiness from '../common/NewBusiness';
+// import IndustryDist from '../common/IndustryDist';
+// import ProvinceRank from '../common/ProvinceRank';
 
 function MyAccount({accountProfileStore}) {
   const statistics = {
@@ -66,6 +68,12 @@ function MyAccount({accountProfileStore}) {
         <Tables config = {lowScoreCompnay} className="" />
         {/* <div className={styles.newBusiness}>
           <NewBusiness newBusinessData={accountProfileStore.myNewBusinessData} />
+        </div>
+        <div className={styles.provinceRank}>
+          <ProvinceRank myProvinceRank={accountProfileStore.myProvinceRank} />
+        </div>
+        <div className={styles.industryDist}>
+          <IndustryDist myIndustryDist={accountProfileStore.myIndustryDist} />
         </div> */}
       </div>
     </div>
