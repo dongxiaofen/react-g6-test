@@ -12,11 +12,10 @@ import Network from './NetWork';
 import Team from './Team';
 import styles from './index.less';
 
-function PdfReport() {
-  const judgeIsModuleExist = () => {
-    return true;
-    // const pdfModule = bannerStore.pdfDownloadKeys;
-    // return (pdfModule && pdfModule.includes(module)) || pdfModule === null;
+function PdfReport({bannerStore}) {
+  const judgeIsModuleExist = (module) => {
+    const pdfModule = bannerStore.pdfDownloadKeys;
+    return (pdfModule && pdfModule.includes(module)) || !pdfModule;
   };
   return (
     <Container>
