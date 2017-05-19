@@ -1,0 +1,169 @@
+@import '~sc-colors/index.less';
+.bgImgWrap {
+  width: 568px;
+  height: 450px;
+  float: left;
+}
+
+.imgSwiper {
+  width: 650px;
+  float: left;
+  margin-right: 20px;
+
+  .bgImg {
+    width: 100%;
+    height: 100%;
+  }
+}
+
+.top {
+  margin-bottom: 30px;
+}
+
+.imgWrap {
+  position: relative;
+  height: 450px;
+  padding: 0 40px;
+  border: 1px solid #eeeeee;
+}
+.text {
+  color: @black7;
+  font-size: 13px;
+  padding-top: 10px;
+  .row {
+    margin-bottom: 13px;
+  }
+}
+.textHasPic {
+  .text;
+  width: 250px;
+  float: left;
+}
+.textHasNoPic {
+  .text;
+  .row {
+    width: 50%;
+    float: left;
+  }
+}
+.imgContent {
+  width: 568px;
+  height: 450px;
+  overflow: hidden;
+}
+.imgInner {
+  height: 450px;
+  transition: transform 1s ease;
+}
+.lteFive {
+  width: 126px;
+  margin-right: 5px;
+}
+.lgFive {
+  width: 117px;
+}
+.navWrapBase {
+  height: 87px;
+  margin-right: 4px;
+  margin-top: 4px;
+  float: left;
+  img {
+    width: 100%;
+    height: 100%;
+    &:hover {
+      cursor: pointer;
+    }
+  }
+}
+.label {
+  float: left;
+}
+.value {
+  word-break: break-all;
+  float: left;
+  width: 185px;
+}
+.navWrap {
+  .navWrapBase;
+  border: 2px solid @black16;
+
+}
+.navWrapActive {
+  .navWrapBase;
+  border: 2px solid @blue2;
+}
+
+.arrow {
+  display: block;
+  position: absolute;
+  top: 50%;
+  width: 15px;
+  height: 26px;
+  margin-top: -8px;
+
+  font-size: 26px;
+  color: @black8;
+
+  &:hover {
+    cursor: pointer;
+  }
+}
+.prev {
+  .arrow;
+  left: 10px;
+  margin-right: 4px;
+}
+.next {
+  .arrow;
+  right: 10px;
+  margin-left: 4px;
+}
+
+.navContainer {
+  width: 650px;
+  position: relative;
+}
+.navArrow {
+  float: left;
+  font-size: 35px;
+  display: block;
+  height: 87px;
+  margin-top: 4px;
+  width: 17px;
+  text-align: center;
+  &:hover {
+    background-color: @black11;
+    cursor: pointer;
+    i {
+      color: @white1;
+    }
+  }
+  i {
+    color: @black8;
+    margin-top: 22.5px;
+  }
+}
+.navPrev {
+  .navArrow;
+  margin-right: 4px;
+}
+.navNext {
+  .navArrow;
+  margin-left: 4px;
+}
+.navContent {
+  width: 605px;
+  overflow: hidden;
+  height: 95px;
+  float: left;
+}
+.navContentL {
+  width: 650px;
+  overflow: hidden;
+  height: 95px;
+  float: left;
+}
+.navInner {
+  height: 95px;
+  transition: transform 1s ease;
+}

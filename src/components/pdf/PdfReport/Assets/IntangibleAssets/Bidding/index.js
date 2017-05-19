@@ -14,7 +14,7 @@ function Bidding({moduleData}) {
     );
   }
   const data = {
-    config: [
+    dataConfig: [
       {'key': 'title', 'width': '12'},
       {'key': 'publishDate', 'width': '12'},
       {'key': 'type', 'width': '12'},
@@ -34,6 +34,6 @@ function Bidding({moduleData}) {
 }
 
 Bidding.propTypes = {
-  moduleData: PropTypes.array,
+  moduleData: PropTypes.object,
 };
 export default observer(Bidding);

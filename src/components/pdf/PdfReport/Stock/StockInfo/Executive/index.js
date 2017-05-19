@@ -6,7 +6,7 @@ import SecondTitle from 'components/common/pdf/SecondTitle';
 
 function Executive({moduleData}) {
   const moduleTitle = '高管';
-  if (moduleData === undefined || moduleData.length === 0) {
+  if (!moduleData || moduleData.length === 0) {
     return (
       <div>
         <SecondTitle module={moduleTitle}/>

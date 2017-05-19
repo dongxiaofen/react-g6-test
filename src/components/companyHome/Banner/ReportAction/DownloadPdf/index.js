@@ -176,6 +176,7 @@ export default class DownloadPdf extends Component {
         window.open(`/pdfDown?analysisReportId=${reportId}${queryStr}`);
       }
       this.props.bannerStore.clearPdfConfigChecked();
+      this.props.bannerStore.setPdfDownloadKeys(queryArray);
     } else {
       this.setState({ tipInfo: true });
     }

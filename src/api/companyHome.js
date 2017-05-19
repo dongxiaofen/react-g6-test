@@ -136,6 +136,8 @@ export const checkPersonInfo = (url, params) => {
 export const getIdCard = (url) => {
   return axios.get(url);
 };
+
+// 获取上市公告
 export const changeAnnouncement = ({ stockType, monitorId, reportId, analysisReportId }) => {
   let url;
   if (monitorId) {
