@@ -11,6 +11,7 @@ import Office from '../Base/Foreign/Office';
 import AlterAnalysis from '../Base/Alter/AlterAnalysis';
 import AlterList from '../Base/Alter/AlterList';
 import YearReportList from '../Base/YearReport/YearReportList';
+import Tax from '../Base/Tax';
 import pathval from 'pathval';
 
 
@@ -59,6 +60,17 @@ function Base({ judgeIsModuleExist, pdfStore }) {
           <div>
             <PdfTitle module="基本信息" subModule="企业年报" />
             <YearReportList moduleData = {pathval.getPathValue(pdfStore, 'report.corpDetail.yearReportList')} />
+          </div>
+          :
+          ''
+      }
+      {
+        judgeIsModuleExist('CORP_YEAR_REPORT')
+          ?
+          <div>
+            <PdfTitle module="基本信息" subModule="税务信息" />
+             <Tax moduleData = {pathval.getPathValue(pdfStore, 'report.corpDetail.taxList')} />
+            {/* <Tax moduleData = {pathval.getPathValue(pdfStore, 'testTaxList')} /> */}
           </div>
           :
           ''

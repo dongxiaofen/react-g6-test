@@ -1,5 +1,5 @@
 import React, {PropTypes} from 'react';
-import { observer } from 'mobx-react';
+import { observer, inject } from 'mobx-react';
 import {Container, Row, Col} from 'components/common/layout';
 import Header from './Header';
 import Overview from './OverView';
@@ -11,14 +11,11 @@ import Assets from './Assets';
 import Network from './NetWork';
 import Team from './Team';
 
-function PdfReport() {
+function PdfReport(bannerStore) {
   const judgeIsModuleExist = (module) => {
-    const pdfModule = this.props.pdfModule;
-    if (module === 'STOCK') {
-      const isStock = this.judgeIsStock();
-      return isStock && ((pdfModule && pdfModule.indexOf(module) !== -1) || pdfModule === undefined);
-    }
-    return (pdfModule && pdfModule.indexOf(module) !== -1) || pdfModule === undefined;
+    console.log(module);
+    const pdfModule = bannerStore.pdfDownloadKeys;
+    return (pdfModule && pdfModule.indexOf(module) !== -1) || pdfModule === null;
   };
   return (
     <Container>
@@ -42,4 +39,4 @@ function PdfReport() {
 PdfReport.propTypes = {
   judgeIsModuleExist: PropTypes.func,
 };
-export default observer(PdfReport);
+export default inject('bannerStore')(observer(PdfReport));

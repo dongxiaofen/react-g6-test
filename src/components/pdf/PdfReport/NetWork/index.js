@@ -23,7 +23,7 @@ function NetWork({judgeIsModuleExist, pdfStore}) {
           ?
           <div>
             <PdfTitle module="关联网络" subModule="风险关系" />
-            < BlackNetWork moduleData={pathval.getPathValue(pdfStore, 'blacklist.result[0].paths')} />
+            < BlackNetWork moduleData={pathval.getPathValue(pdfStore, 'blacklist')} />
           </div>
           :
           ''
