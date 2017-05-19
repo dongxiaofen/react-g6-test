@@ -75,6 +75,7 @@ export default class ForceNetworkGraph extends Component {
     reaction(
       () => this.props.forceNetworkStore.focalNode,
       () => {
+        this.props.forceNetworkStore.resetNodeInfo();
         if (nodesData !== '') {
           const { focalNode } = this.props.forceNetworkStore;
           nodesData.map((node) => {
@@ -114,6 +115,7 @@ export default class ForceNetworkGraph extends Component {
     reaction(
       () => this.props.forceNetworkStore.dbFocalNode,
       () => {
+        this.props.forceNetworkStore.resetNodeInfo();
         const { dbFocalNode } = this.props.forceNetworkStore;
         nodesData.map((node) => {
           if (node.id === dbFocalNode.id) {
@@ -126,6 +128,21 @@ export default class ForceNetworkGraph extends Component {
         });
         this.dblclickNode(dbFocalNode);
         this.getNodeInfo(dbFocalNode);
+        this.getShortPath(dbFocalNode);
+      }
+    );
+    // 监听最短路径
+    reaction(
+      () => this.props.forceNetworkStore.shortestPahth,
+      () => {
+        const { dbFocalNode, focalNode} = this.props.forceNetworkStore;
+        if (dbFocalNode.id) {
+          nodesData.map((node) => {
+            console.log(node);
+          });
+        } else if (focalNode.id) {
+          // 单击,高亮最短路径,暗掉其他路径
+        }
       }
     );
   }
@@ -138,6 +155,15 @@ export default class ForceNetworkGraph extends Component {
       this.props.forceNetworkStore.getPersonNodeInfo(monitorId, { personId: focalNode.id });
     }
   }
+  getShortPath = (nodeInfo)=>{
+    if (nodeInfo.id) {
+      const {monitorId} = this.props.routing.location.query;
+      const source = this.props.forceNetworkStore.centerNode.id;
+      const target = nodeInfo.id;
+      const currentNetwork = svgTools.getCurrentNodesLinks(this.props.forceNetworkStore.forceNetwork);
+      this.props.forceNetworkStore.getShortPath(monitorId, {source, target, currentNetwork});
+    }
+  };
   // 当有元素变动的时候重绘关联图
   reDraw = () => {
     // nodes
@@ -375,9 +401,9 @@ export default class ForceNetworkGraph extends Component {
         data.fx = null;
       } else {
         const { dbFocalNode } = this.props.forceNetworkStore;
+        const date = new Date();
+        clickTime = date;
         if (!dbFocalNode.id) {
-          const date = new Date();
-          clickTime = date;
           timer = setTimeout(() => {
             console.log('单击', data);
             this.props.forceNetworkStore.focusNode(data);

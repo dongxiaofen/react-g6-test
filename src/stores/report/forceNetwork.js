@@ -155,5 +155,9 @@ class ForceNetworkStore {
   @action.bound updateValue(keyPath, value) {
     pathval.setPathValue(this, keyPath, value);
   }
+  @action.bound resetNodeInfo() {
+    this.nodeInfo.detailInfo = {};
+    this.nodeInfo.tabAct = 0;
+  }
 }
 export default new ForceNetworkStore();

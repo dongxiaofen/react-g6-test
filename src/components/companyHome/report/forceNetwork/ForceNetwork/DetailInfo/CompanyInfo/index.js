@@ -47,7 +47,7 @@ function CompanyInfo({forceNetworkStore}) {
         <BaseInfo config={baseConfig} data={companyInfo.basicInfo} />
       </div>
       <div>
-        <Operation />
+        <Operation forceNetworkStore={forceNetworkStore}/>
       </div>
       <div>
         <ListInfo listData = {listConfig} forceNetworkStore={forceNetworkStore}/>

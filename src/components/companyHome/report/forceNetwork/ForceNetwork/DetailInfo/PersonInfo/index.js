@@ -32,7 +32,7 @@ function PersonInfo({forceNetworkStore}) {
     <div>
       <p className={styles.name}>{personInfo.basicInfo.name}</p>
       <BaseInfo config={baseConfig} data={personInfo.basicInfo}/>
-      <Operation />
+      <Operation forceNetworkStore={forceNetworkStore}/>
       <ListInfo listData = {listConfig} forceNetworkStore={forceNetworkStore}/>
     </div>
   );
