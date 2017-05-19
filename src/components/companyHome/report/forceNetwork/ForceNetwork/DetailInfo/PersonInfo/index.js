@@ -2,12 +2,12 @@ import React, {PropTypes} from 'react';
 import { observer } from 'mobx-react';
 import BaseInfo from '../common/BaseInfo';
 import ListInfo from '../common/ListInfo';
+import Operation from '../common/Operation';
 // import * as svgTools from 'helpers/svgTools';
 import styles from './index.less';
 
 function PersonInfo({forceNetworkStore}) {
   const personInfo = forceNetworkStore.nodeInfo.detailInfo;
-  console.log(personInfo);
   const baseConfig = [
     {key: 'positionOther', label: '对外任职'},
     {key: 'invest', label: '对外投资'},
@@ -32,6 +32,7 @@ function PersonInfo({forceNetworkStore}) {
     <div>
       <p className={styles.name}>{personInfo.basicInfo.name}</p>
       <BaseInfo config={baseConfig} data={personInfo.basicInfo}/>
+      <Operation />
       <ListInfo listData = {listConfig} forceNetworkStore={forceNetworkStore}/>
     </div>
   );

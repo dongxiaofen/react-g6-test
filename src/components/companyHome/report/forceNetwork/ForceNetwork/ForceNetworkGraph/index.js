@@ -86,13 +86,7 @@ export default class ForceNetworkGraph extends Component {
               node.nodeStatus = -1;
             }
           });
-          if (focalNode.cateType === 1) {
-            const { monitorId } = this.props.routing.location.query;
-            this.props.forceNetworkStore.getCompNodeInfo(monitorId, { companyName: focalNode.name });
-          } else if (focalNode.cateType === 2) {
-            const { monitorId } = this.props.routing.location.query;
-            this.props.forceNetworkStore.getPersonNodeInfo(monitorId, { personId: focalNode.id });
-          }
+          this.getNodeInfo(focalNode);
           simulation.restart();
         }
       }
@@ -131,8 +125,18 @@ export default class ForceNetworkGraph extends Component {
           }
         });
         this.dblclickNode(dbFocalNode);
+        this.getNodeInfo(dbFocalNode);
       }
     );
+  }
+  getNodeInfo = (focalNode)=> {
+    if (focalNode.cateType === 1) {
+      const { monitorId } = this.props.routing.location.query;
+      this.props.forceNetworkStore.getCompNodeInfo(monitorId, { companyName: focalNode.name });
+    } else if (focalNode.cateType === 2) {
+      const { monitorId } = this.props.routing.location.query;
+      this.props.forceNetworkStore.getPersonNodeInfo(monitorId, { personId: focalNode.id });
+    }
   }
   // 当有元素变动的时候重绘关联图
   reDraw = () => {
@@ -370,13 +374,16 @@ export default class ForceNetworkGraph extends Component {
         data.fx = null;
         data.fx = null;
       } else {
-        const date = new Date();
-        clickTime = date;
-        timer = setTimeout(() => {
-          console.log('单击', data);
-          this.props.forceNetworkStore.focusNode(data);
-          clickTime = '';
-        }, 300);
+        const { dbFocalNode } = this.props.forceNetworkStore;
+        if (!dbFocalNode.id) {
+          const date = new Date();
+          clickTime = date;
+          timer = setTimeout(() => {
+            console.log('单击', data);
+            this.props.forceNetworkStore.focusNode(data);
+            clickTime = '';
+          }, 300);
+        }
       }
     } else {
       // console.log(data, '拖拽结束');

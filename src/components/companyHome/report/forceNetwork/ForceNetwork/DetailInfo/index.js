@@ -3,11 +3,11 @@ import { observer, inject} from 'mobx-react';
 import styles from './index.less';
 import CompanyInfo from './CompanyInfo';
 import PersonInfo from './PersonInfo';
+import AnimateLoading from 'components/hoc/LoadingComp/AnimateLoading';
 
 function DetailInfo({forceNetworkStore}) {
   const isShowInfo = forceNetworkStore.nodeInfo.isShowInfo;
   const detailInfo = forceNetworkStore.nodeInfo.detailInfo;
-  console.log(forceNetworkStore);
   const createContent = () => {
     if (detailInfo.basicInfo) {
       if (detailInfo.basicInfo.cateType === 1) {
@@ -16,9 +16,9 @@ function DetailInfo({forceNetworkStore}) {
         return <PersonInfo forceNetworkStore={forceNetworkStore}/>;
       }
     } else if (detailInfo.error) {
-      return <p>暂无信息</p>;
+      return <p className={styles.nomess}>暂无信息</p>;
     }
-    return <p>loading</p>;
+    return <AnimateLoading />;
   };
   return (
     <div className={isShowInfo ? styles.show : styles.hide}>

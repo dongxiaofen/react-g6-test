@@ -121,6 +121,7 @@ class ForceNetworkStore {
   }
   @action.bound setFocalNode(node) {
     this.dbFocalNode = node;
+    this.nodeInfo.isShowInfo = true;
   }
   @action.bound getShortPath(monitorId, params) {
     companyHomeApi.getShortPath(monitorId, params)
@@ -137,6 +138,7 @@ class ForceNetworkStore {
       this.nodeInfo.detailInfo = resp.data;
     }))
     .catch(action((error)=>{
+      this.nodeInfo.detailInfo = {error: true};
       console.log('getCompNodeInfo出错', error);
     }));
   }
@@ -146,6 +148,7 @@ class ForceNetworkStore {
       this.nodeInfo.detailInfo = resp.data;
     }))
     .catch(action((error)=>{
+      this.nodeInfo.detailInfo = {error: true};
       console.log('getPersonNodeInfo', error);
     }));
   }
