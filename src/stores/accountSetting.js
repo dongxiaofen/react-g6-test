@@ -36,6 +36,7 @@ class AccountSettingStore {
   };
   // 账号树数据
   @observable tree = {
+    fromHome: false,
     searchInput: '',
     activeIndex: 0,
     activeId: -1,
@@ -245,9 +246,12 @@ class AccountSettingStore {
       }));
   }
   @action.bound getTreeList(afterAddUser) {
+    const activeId = this.tree.fromHome ? this.tree.activeId : -1;
+    const searchInput = this.tree.fromHome ? this.tree.searchInput : '';
     if (!afterAddUser) {
       this.resetStore();
     }
+    this.tree.searchInput = searchInput;
     accountSettingApi.getTreeList()
       .then(action('getTreeList_success', resp => {
         if (resp.data && resp.data.length > 0) {
@@ -255,9 +259,11 @@ class AccountSettingStore {
           const userEmail = clientStore.userInfo.email;
           treeData.formatData(null, null, userEmail);
           this.tree.data = {content: treeData.formatResult};
+          this.tree.activeIndex = activeId !== -1 ? treeData.formatResult.findIndex(item => item.id === activeId) || 0 : 0;
           if (!afterAddUser) {
-            const uId = treeData.formatResult[0].id;
-            const pId = treeData.formatResult[0].parentUserId;
+            const activeIndex = this.tree.activeIndex;
+            const uId = treeData.formatResult[activeIndex].id;
+            const pId = treeData.formatResult[activeIndex].parentUserId;
             this.tree.activeId = uId;
             this.getUserInfo(uId);
             // this.getReportAndMonitor(uId);
@@ -278,10 +284,11 @@ class AccountSettingStore {
       .catch(action('getTreeList_error', err => {
         this.tree.data = {error: err.response.data, content: []};
         this.base = {error: err.response.data, data: {}};
-        this.tabs.business.reportAndMonitor = {error: err.response.data, data: []};
-        this.tabs.business.province = {error: err.response.data, content: []};
-        this.tabs.business.industry = {error: err.response.data, content: []};
-        this.tabs.business.scale = {error: err.response.data, data: {}};
+        // this.tabs.business.reportAndMonitor = {error: err.response.data, data: []};
+        // this.tabs.business.province = {error: err.response.data, content: []};
+        // this.tabs.business.industry = {error: err.response.data, content: []};
+        // this.tabs.business.scale = {error: err.response.data, data: {}};
+        this.tabs.alertCorp = {error: err.response.data, content: []};
         this.tabs.consume = {error: err.response.data, page: []};
         this.tabs.recharge = {error: err.response.data, content: []};
         this.tabs.summary = {error: err.response.data, page: []};
@@ -419,6 +426,7 @@ class AccountSettingStore {
   }
   @action.bound resetTree() {
     this.tree = {
+      fromHome: false,
       searchInput: '',
       activeIndex: 0,
       activeId: -1,

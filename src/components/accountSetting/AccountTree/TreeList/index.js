@@ -38,7 +38,6 @@ function TreeList({accountSettingStore, uiStore, clientStore}) {
   };
   const showNodeDetail = (level, uId) => {
     accountSettingStore.changeValue(`tree.activeId`, uId);
-    console.log(data.findIndex(item => item.id === uId), '--log');
     accountSettingStore.changeValue(`tree.activeIndex`, data.findIndex(item => item.id === uId));
     getUserData(uId, level);
   };
