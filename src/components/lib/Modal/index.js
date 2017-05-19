@@ -1,6 +1,5 @@
 import React, { Component, PropTypes } from 'react';
 import { observer } from 'mobx-react';
-import { Link } from 'react-router';
 import Button from 'components/lib/button';
 import styles from './index.less';
 @observer
@@ -128,7 +127,7 @@ export default class Modal extends Component {
         <div className={styles.pointText}>
           <i className="fa fa-exclamation-circle"></i>
           {this.props.pointText}
-          《<Link to={this.props.pactUrl}>{this.props.pactName}</Link>》
+          《<a href="/disclaimer" target="_bank">免责声明</a>》
         </div>
       );
     }

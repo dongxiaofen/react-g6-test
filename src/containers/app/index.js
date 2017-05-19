@@ -37,6 +37,13 @@ export default class App extends Component {
         </div>
       );
     }
+    if (pathname === '/disclaimer' || pathname === '/userAgreement') {
+      return (
+        <div className={styles.container}>
+          {this.props.children}
+        </div>
+      );
+    }
     return (
       <div className={styles.wrap}>
         {false && <DevTools />}
