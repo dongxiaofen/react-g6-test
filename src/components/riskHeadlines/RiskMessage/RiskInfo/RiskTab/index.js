@@ -5,6 +5,7 @@ import styles from './index.less';
 function RiskTab({riskHeadlinesStore}) {
   const events = riskHeadlinesStore.events;
   const filterParams = riskHeadlinesStore.filterParams;
+  const active = riskHeadlinesStore.companyList.active;
   const changeModule = (dimGroupType, count) => {
     if (count > 0) {
       riskHeadlinesStore.riskUpdateValue('events', 'params.dimGroupType', dimGroupType);
@@ -13,7 +14,8 @@ function RiskTab({riskHeadlinesStore}) {
       const index = 1;
       const from = filterParams.from;
       const to = filterParams.to;
-      riskHeadlinesStore.getCompanyEvents(monitorId, {index, from, to, dimGroupType});
+      const productType = active.productType;
+      riskHeadlinesStore.getCompanyEvents(monitorId, {index, from, to, dimGroupType, productType});
     }
   };
   const tabConf = [

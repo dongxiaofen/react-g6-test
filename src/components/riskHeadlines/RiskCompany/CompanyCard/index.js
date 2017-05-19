@@ -38,7 +38,7 @@ function CompanyCard({riskHeadlinesStore, companyData}) {
   const clickCompany = ()=> {
     const params = Object.assign({}, filterParams);
     params.productType = companyData.productType;
-    riskHeadlinesStore.riskUpdateValue('companyList', 'active', monitorId);
+    riskHeadlinesStore.riskUpdateValue('companyList', 'active', companyData);
     riskHeadlinesStore.riskUpdateValue('events', 'companyType', 'MAIN');
     riskHeadlinesStore.getCompanyInfo(monitorId, params);
   };
@@ -52,7 +52,7 @@ function CompanyCard({riskHeadlinesStore, companyData}) {
       riskHeadlinesStore.setMapValue('subCompanyList', `${companyData.monitorId}`, []);
     }
   };
-  const cssComName = companyList.active === companyData.monitorId ? styles.companyNameAct : styles.companyName;
+  const cssComName = companyList.active.monitorId === companyData.monitorId ? styles.companyNameAct : styles.companyName;
   const subCompanyData = subCompanyList.get(companyData.monitorId) || [];
   const cssName = subCompanyData.length > 0 ? styles.up : styles.extend;
   const viewText = () => {
@@ -97,7 +97,7 @@ function CompanyCard({riskHeadlinesStore, companyData}) {
            <SubCompany
             data={subCompanyData}
             riskHeadlinesStore={riskHeadlinesStore}
-            activeComMonId ={companyList.active} />
+            active ={companyList.active} />
         </div> : ''
       }
     </div>

@@ -34,7 +34,7 @@ const initState = {
   companyList: {
     loading: true,
     data: [],
-    active: '',
+    active: {},
   },
   detailModalData: {
     info: {},
@@ -97,7 +97,7 @@ class RiskHeadlinesStore {
     newParams.companyName = params.companyName;
     newParams.productType = data.productType;
     if (hasEvents) {
-      this.riskUpdateValue('companyList', 'active', monitorId);
+      this.riskUpdateValue('companyList', 'active', data);
       this.getCompanyInfo(monitorId, newParams);
     } else {
       this.riskUpdateValue('events', 'companyType', 'SUB');
@@ -151,7 +151,7 @@ class RiskHeadlinesStore {
       axiosCancel.companySubListCancel = null;
       if (type === 'default') { // 默认获取第一个关联公司的事件
         this.getCompanyInfo(resp.data[0].monitorId, params);
-        this.riskUpdateValue('companyList', 'active', resp.data[0].monitorId);
+        this.riskUpdateValue('companyList', 'active', resp.data[0]);
       }
     }))
     .catch(action('subCompany', (error)=>{
@@ -277,6 +277,9 @@ class RiskHeadlinesStore {
   }
   @action.bound setMapValue(objName, keyPath, value) {
     this[objName].set(keyPath, value);
+  }
+  @action.bound updateValue(keyPath, value) {
+    pathval.setPathValue(keyPath, value);
   }
   @action.bound setCompanyList(data) {
     this.riskUpdateValue('companyList', 'data', data);
