@@ -6,7 +6,7 @@ import uiStore from './ui';
 import { monitorListApi } from 'api';
 const CancelToken = axios.CancelToken;
 class MonitorListStore {
-  @observable activeList = 'monitorList'; // monitorList, deepMonitorList
+  @observable activeList = 'deepMonitorList'; // monitorList, deepMonitorList
   @observable monitorList = {
     mainListCancel: null,
     mainCountCancel: null,
@@ -65,15 +65,15 @@ class MonitorListStore {
     }
     const source = CancelToken.source();
     this[activeList].mainCountCancel = source.cancel;
-    monitorListApi.getMonitorCount({monitorStatus, companyName}, source)
+    monitorListApi.getMonitorCount(activeList, {monitorStatus, companyName}, source)
       .then(action('getCount_success', resp => {
         this[activeList].mainCountCancel = null;
-        this[activeList].monitorCount = resp.data;
+        this[activeList].monitorCount = resp.data || {error: true};
       }))
       .catch(action('getCount_error', err => {
         if (!axios.isCancel(err)) {
           this[activeList].mainCountCancel = null;
-          this[activeList].monitorCount = err.response.data;
+          this[activeList].monitorCount = {error: err.response.data};
         }
       }));
   }
@@ -89,7 +89,7 @@ class MonitorListStore {
     this[activeList].mainListCancel = source.cancel;
     this[activeList].mainList = {};
     this[activeList].relationListStatus = observable.map({});
-    monitorListApi.getMainList(mainParams, source)
+    monitorListApi.getMainList(activeList, mainParams, source)
       .then(action('getMainList_success', resp => {
         this[activeList].mainListCancel = null;
         uiStore.uiState.monitorListPager.totalElements = resp.data.totalElements;
@@ -106,7 +106,7 @@ class MonitorListStore {
   @action.bound getRelationList(monitorId) {
     const activeList = this.activeList;
     this[activeList].relationListStatus.set(monitorId, 'loading');
-    monitorListApi.getRelList(monitorId)
+    monitorListApi.getRelList(activeList, monitorId)
       .then(action('getRelList_success', resp => {
         this[activeList].relationListStatus.set(monitorId, 'show');
         this[activeList].relationList.set(monitorId, resp.data);
@@ -128,7 +128,7 @@ class MonitorListStore {
     const activeList = this.activeList;
     const {monitorId, status, idx, relation, mMonitorId} = params || this[activeList].pauseInfo;
     this[activeList].switchLoading.set(monitorId, true);
-    monitorListApi.changeMonitorStatus({monitorId, status})
+    monitorListApi.changeMonitorStatus(activeList, {monitorId, status})
       .then(action('changeStatus_success', resp => {
         if (relation === 'main') {
           const {index, size, totalElements} = uiStore.uiState.monitorListPager;
@@ -161,8 +161,9 @@ class MonitorListStore {
       }));
   }
   @action.bound renewalAction(params) {
+    const activeList = this.activeList;
     const {monitorId, time, successCb, errorCb} = params;
-    monitorListApi.renewal({monitorId, time})
+    monitorListApi.renewal(activeList, {monitorId, time})
       .then(action('renewal_success', resp => {
         const {index, size, totalElements} = uiStore.uiState.monitorListPager;
         let newIndex = index;

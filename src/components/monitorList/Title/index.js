@@ -1,15 +1,17 @@
-import React, { PropTypes } from 'react';
+import React from 'react';
 import styles from './index.less';
-function Title({children}) {
+function Title({monitorListStore}) {
+  const activeList = monitorListStore.activeList;
+  const dict = {
+    monitorList: '监控列表',
+    deepMonitorList: '深度监控列表',
+  };
   return (
     <h1
       className={styles.titleCss}
       >
-      {children}
+      {dict[activeList]}
     </h1>
   );
 }
-Title.propTypes = {
-  children: PropTypes.node,
-};
 export default Title;

@@ -11,10 +11,11 @@
 }
 .switchBox {
   height: 20px;
-  text-align: center;
+  text-align: right;
 }
 .statusTextBox {
   margin-top: 17px;
+  text-align: right;
 }
 .statusTextBox:after {
   content: '';
@@ -22,22 +23,41 @@
   clear: both;
 }
 .statusText {
-  float: left;
+  display: inline-block;
   font-size: 13px;
   line-height: 1;
   color: @mdc-blue-grey-300;
+  vertical-align: middle;
+  margin-right: 10px;
 }
 .rechargeBtn {
-  float: right;
-  padding-left: 15px;
+  display: inline-block;
   font-size: 13px;
   line-height: 1;
   color: @mdc-blue-grey-500;
   text-decoration: underline;
-  border-left: 1px solid @mdc-blue-grey-100;
   cursor: pointer;
 }
 .rechargeBtnBlue {
   composes: rechargeBtn;
+  color: @mdc-blue-400;
+}
+.upgradeBtn {
+  display: inline-block;
+  font-size: 13px;
+  line-height: 1;
+  color: @mdc-blue-grey-500;
+  cursor: pointer;
+  text-decoration: underline;
+}
+.verLine {
+  display: inline-block;
+  height: 13px;
+  margin: 0 14px;
+  vertical-align: middle;
+  border-right: 1px solid @mdc-blue-grey-300;
+}
+.upgradeBtnBlue {
+  composes: upgradeBtn;
   color: @mdc-blue-400;
 }

@@ -5,6 +5,7 @@ function Counter({monitorListStore}) {
   const activeList = monitorListStore.activeList;
   const data = monitorListStore[activeList].monitorCount;
   const returnLoading = (values) => {
+    if (data.error) return 0;
     if (data.errorCode) {
       return 0;
     }

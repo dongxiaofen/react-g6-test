@@ -10,6 +10,7 @@ import {
     Account,
     HomePage,
     MonitorList,
+    DeepMonitorList,
     CompanyHome,
     Solution,
     About,
@@ -70,6 +71,7 @@ export default (allStore) => {
       <Route path="account" component={ Account } />
       <Route path="homePage" component={ HomePage } />
       <Route path="monitorList" component={ MonitorList } />
+      <Route path="deepMonitorList" component={ DeepMonitorList } />
       <Route path="companyHome" component={ CompanyHome } onEnter={requireAuth.bind(null, allStore)} >
         <IndexRedirect to="corpDetail" />
         <Route path="corpDetail" component={CorpDetail} />

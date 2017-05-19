@@ -81,6 +81,7 @@ function ActionWrap({ data, mainData, index, relation, monitorListStore, payModa
     <div className={styles.wrapper}>
       <div className={styles.actionBox}>
         <div className={styles.switchBox}>
+          <div className={styles.statusText}>{statusText}</div>
           <Switch
             onChange={changeStatus}
             status={switchFlag}
@@ -88,7 +89,10 @@ function ActionWrap({ data, mainData, index, relation, monitorListStore, payModa
             loading={switchLoading || relLoading} />
         </div>
         {relation === 'main' && <div className={styles.statusTextBox}>
-          <div className={styles.statusText}>{statusText}</div>
+          {activeList === 'monitorList' && <div className={expired ? styles.upgradeBtn : styles.upgradeBtnBlue} onClick={recharge}>
+            升级
+          </div>}
+          {activeList === 'monitorList' && <span className={styles.verLine}></span>}
           <div className={expired ? styles.rechargeBtn : styles.rechargeBtnBlue} onClick={recharge}>
             续期
           </div>
