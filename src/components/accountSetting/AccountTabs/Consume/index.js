@@ -3,9 +3,8 @@ import { observer } from 'mobx-react';
 import { loadingComp } from 'components/hoc';
 import AccountTable from '../AccountTable';
 import styles from './index.less';
-function Consume({accountSettingStore, clientStore}) {
+function Consume({accountSettingStore}) {
   const timeMap = accountSettingStore.timeMap;
-  const consumeType = clientStore.userInfo.consumeType;
   const consumeTypeMap = accountSettingStore.consumeTypeMap;
   const handleConsumeInfo = (value, item) => {
     const nameStr = item.companyName ? `企业：${item.companyName}` : '';
@@ -21,32 +20,21 @@ function Consume({accountSettingStore, clientStore}) {
     {name: '消费编号', key: 'seqNum', width: '15%'},
     {name: '消费类型', key: 'consumeOperationType', width: '15%', handle: handleConsumeType},
     {name: '操作时间', key: 'opTime', width: '15%'},
-    {name: '消费点数', key: 'consume', none: consumeType !== 'POINT'},
     {name: '消费内容', key: 'consumeInfo', handle: handleConsumeInfo},
   ];
-  const totalConsume = accountSettingStore.tabs.consume.totalConsume;
-  const data = accountSettingStore.tabs.consume.page;
+  const data = accountSettingStore.tabs.consume.content;
   return (
     <div className={styles.wrapper}>
-      {
-        consumeType === 'POINT'
-        ?
-        <div className={styles.totalConsume}>
-          {`总消费点数 ${totalConsume || 0} 点`}
-        </div>
-        :
-        null
-      }
       <AccountTable
         module="accountConsume"
         headData={head}
-        bodyData={data.content} />
+        bodyData={data} />
     </div>
   );
 }
 export default loadingComp({
   mapDataToProps: props => ({
-    loading: props.accountSettingStore.tabs.consume.page === undefined ? true : false,
+    loading: props.accountSettingStore.tabs.consume.content === undefined ? true : false,
     error: props.accountSettingStore.tabs.consume.error,
     category: 0,
     errCategory: 1,

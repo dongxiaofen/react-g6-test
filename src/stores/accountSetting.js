@@ -359,7 +359,7 @@ class AccountSettingStore {
     delete params.totalElements;
     accountSettingApi.getAlertCorp(uId, params)
       .then(action('getAlertCorp_success', resp => {
-        const noData = !resp.data || resp.data.content === undefined || resp.data && resp.data.content.content.length === 0;
+        const noData = !resp.data || resp.data.content === undefined || resp.data && resp.data.content.length === 0;
         this.tabs.alertCorp = noData ? {error: {message: '暂无预警企业'}, content: []} : resp.data;
         uiStore.updateUiStore('accountAlertCorp.totalElements', pathval.getPathValue(resp, 'data.content.totalElements') || 0);
       }))
@@ -374,12 +374,13 @@ class AccountSettingStore {
     delete params.totalElements;
     accountSettingApi.getConsume(uId, params)
       .then(action('getConsume_success', resp => {
-        const noData = resp.data.page === undefined || resp.data.page.content.length === 0;
-        this.tabs.consume = noData ? {error: {message: '暂无消费记录'}, page: []} : resp.data;
-        uiStore.updateUiStore('accountConsume.totalElements', pathval.getPathValue(resp, 'data.page.totalElements') || 0);
+        const noData = resp.data.content === undefined || resp.data.content.length === 0;
+        this.tabs.consume = noData ? {error: {message: '暂无消费记录'}, content: []} : resp.data;
+        uiStore.updateUiStore('accountConsume.totalElements', pathval.getPathValue(resp, 'data.content.totalElements') || 0);
       }))
       .catch(action('getConsume_error', err => {
-        this.tabs.consume = {error: err.response.data, page: []};
+        console.log('getConsume_error', err);
+        this.tabs.consume = {error: err.response.data, content: []};
       }));
   }
   @action.bound getRecharge(uId) {
@@ -402,12 +403,12 @@ class AccountSettingStore {
     delete params.totalElements;
     accountSettingApi.getSummary(uId, params)
       .then(action('getSummary_success', resp => {
-        const noData = resp.data.page === undefined || resp.data.page.content.length === 0;
-        this.tabs.summary = noData ? {error: {message: '暂无消费记录'}, page: []} : resp.data;
-        uiStore.updateUiStore('accountSummary.totalElements', pathval.getPathValue(resp, 'data.page.totalElements') || 0);
+        const noData = resp.data === undefined || resp.data.content.length === 0;
+        this.tabs.summary = noData ? {error: {message: '暂无消费记录'}, content: []} : resp.data;
+        uiStore.updateUiStore('accountSummary.totalElements', pathval.getPathValue(resp, 'data.totalElements') || 0);
       }))
       .catch(action('getSummary_error', err => {
-        this.tabs.summary = {error: err.response.data, page: []};
+        this.tabs.summary = {error: err.response.data, content: []};
       }));
   }
   @action.bound getLoginRecord(uId) {
