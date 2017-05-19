@@ -63,7 +63,7 @@ function Risk({pdfStore, judgeIsModuleExist}) {
         {judgeIsModuleExist('RISK_CHECK') ?
         <div>
           <PdfTitle module="风险信息" subModule="抽查检查信息" />
-          <CheckInfo {...this.props} />
+          <CheckInfo moduleData={pathval.getPathValue(pdfStore, 'risk.data.corpDetailPunish.checkMessage')} />
         </div> : ''}
       </div>
     </div>
