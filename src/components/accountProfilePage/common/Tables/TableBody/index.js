@@ -32,7 +32,7 @@ function TableBody({ hasScore, dateType, data, hasFlag, routing }) {
             <div className={styles.right_discription}>
               <a onClick={jumpPage.bind(this, itemData.companyName)} className={styles.companyName}>{itemData.companyName}</a>
               { hasFlag && itemData.productType === 'MONITOR' ? <span className={`${styles.flag} ${styles.monitor}`}>监控</span> : ''}
-              { hasFlag && itemData.productType === ' ANALYSIS' ? <span className={`${styles.flag} ${styles.monitor}`}>深度</span> : ''}
+              { hasFlag && itemData.productType === 'DEEP_MONITOR' ? <span className={`${styles.flag} ${styles.monitor}`}>深度</span> : ''}
               { hasScore ? <span className={styles.score}>{itemData.score}分</span> : '' }
               <div className={styles.account_user}>
                 {`所属帐号：${itemData.userName}(${itemData.email})`}
