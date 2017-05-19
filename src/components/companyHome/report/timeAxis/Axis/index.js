@@ -6,6 +6,7 @@ class Axis extends Component {
   static propTypes = {
     timeAxisStore: PropTypes.object,
     routing: PropTypes.object,
+    bannerStore: PropTypes.object,
   };
   constructor(props) {
     super(props);
@@ -65,13 +66,16 @@ class Axis extends Component {
   }
   createLabel = (labelConf) => {
     return labelConf.map((item, idx) => {
-      return <div key={idx} className={styles.labelItem}>{item.label}</div>;
+      if (!item.hide) {
+        return <div key={idx} className={styles.labelItem}>{item.label}</div>;
+      }
     });
   }
   createLine = (sortedTime, labelConf, moduleData) => {
     const minAndmax = this.computeMinAndMax(this.props.timeAxisStore.axisData.data);
     const itemList = {};
     labelConf.map((conf, idx) => {
+      if (conf.hide) return;
       itemList[conf.key] = [];
       sortedTime.map(time => {
         const mainCount = moduleData[time][conf.key].main;
@@ -166,12 +170,14 @@ class Axis extends Component {
   render() {
     const moduleData = this.props.timeAxisStore.axisData.data;
     const sortedTime = Object.keys(moduleData).sort().reverse();
+    const stockCode = this.props.bannerStore.stockCode;
+    console.log(!stockCode, '--stockCode');
     const labelConf = [
       {label: '工商信息', key: 'corp'},
       {label: '法务信息', key: 'legal'},
       {label: '新闻舆情', key: 'news'},
       {label: '经营信息', key: 'operation'},
-      {label: '上市公告', key: 'stock', hide: false},
+      {label: '上市公告', key: 'stock', hide: !stockCode},
       {label: '团队信息', key: 'team'},
     ];
     const labelLen = labelConf.filter(item => !item.hide).length;
