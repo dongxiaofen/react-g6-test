@@ -63,7 +63,7 @@ function MyAccount({accountProfileStore}) {
       <div className="clearfix">
         <Tables config = {warningCompnay} className="" />
         <Tables config = {riskCompnay} className={styles.gap} />
-        <Tables config = {lowScoreCompnay} className="" />
+        <Tables config = {lowScoreCompnay} className={styles.full_box} />
         {/* <div className={styles.newBusiness}>
           <NewBusiness newBusinessData={accountProfileStore.myNewBusinessData} />
         </div> */}
