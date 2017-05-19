@@ -3,6 +3,7 @@ import { companyHomeApi } from 'api';
 import bannerStore from '../banner';
 import { browserHistory } from 'react-router';
 import * as svgTools from 'helpers/svgTools';
+import pathval from 'pathval';
 
 class ForceNetworkStore {
   @observable error = '';
@@ -28,7 +29,7 @@ class ForceNetworkStore {
   @observable nodeInfo = {
     isShowInfo: false,
     company: {},
-    tabAct: -1,
+    tabAct: 0,
   }
   @action.bound saveNetwork(nextLocation) {
     this.isExpandSaved = true;
@@ -138,6 +139,9 @@ class ForceNetworkStore {
     .catch(action((error)=>{
       console.log('getCompNodeInfo出错', error);
     }));
+  }
+  @action.bound updateValue(keyPath, value) {
+    pathval.setPathValue(this, keyPath, value);
   }
 }
 export default new ForceNetworkStore();

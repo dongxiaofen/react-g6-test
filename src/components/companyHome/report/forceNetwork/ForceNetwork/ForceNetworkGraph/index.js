@@ -81,6 +81,8 @@ export default class ForceNetworkGraph extends Component {
             if (focalNode.name === node.name) {
               node.nodeStatus = 1;
             } else if (svgTools.findOneLevelNodes(node, focalNode.oneLevelLinkedNodes)) {
+              node.nodeStatus = 1;
+            } else {
               node.nodeStatus = -1;
             }
           });

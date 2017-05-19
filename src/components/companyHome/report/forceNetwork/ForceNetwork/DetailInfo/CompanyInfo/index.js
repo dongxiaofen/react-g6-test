@@ -10,17 +10,17 @@ function CompanyInfo({forceNetworkStore}) {
   const createBasicInfo = (data) => {
     const config = [
       {key: 'frName', label: '法人代表'},
-      {key: 'esDate', label: '法人代表'},
+      {key: 'esDate', label: '成立日期'},
       {key: 'regCap', label: '注册资本'},
     ];
     const output = [];
     config.map((item, idx)=>{
       let value = data[item.key];
       if (item.key === 'regCap') {
-        value = data.regCap + data.regCapCur;
+        value = data.regCap ? data.regCap + data.regCapCur : '--';
       }
       output.push(
-        <p key={`basicInfo${idx}`} className={styles.baseInfo}>{item.label}：{value}</p>
+        <p key={`basicInfo${idx}`} className={styles.baseInfo}>{item.label}：{value || '--'}</p>
       );
     });
     return output;
@@ -29,17 +29,17 @@ function CompanyInfo({forceNetworkStore}) {
     tabs: ['股东信息', '任职信息', '对外投资'],
     content: [
       {
-        keys: ['name', 'invRatio'],
+        keys: [{key: 'invRatio', keyType: 'ratio'}],
         data: companyInfo.shareHolderList,
         type: 'inline'
       },
       {
-        keys: ['name', 'position'],
+        keys: [{key: 'position', label: '职位'}],
         data: companyInfo.personList,
         type: 'block'
       },
       {
-        keys: ['name', 'entInvList'],
+        keys: [{key: 'invRatio', label: '投资比例', keyType: 'ratio'}, {key: 'invConum', label: '投资金额', keyType: 'money'}],
         data: companyInfo.entInvList,
         type: 'block'
       }
@@ -59,7 +59,7 @@ function CompanyInfo({forceNetworkStore}) {
         <Operation />
       </div>
       <div>
-        <ListInfo listData = {listConfig} />
+        <ListInfo listData = {listConfig} forceNetworkStore={forceNetworkStore}/>
       </div>
     </div>
   );

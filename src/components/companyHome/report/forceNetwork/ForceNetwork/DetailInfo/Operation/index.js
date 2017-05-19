@@ -1,7 +1,8 @@
 import React, {PropTypes} from 'react';
 import { observer, inject} from 'mobx-react';
 import * as svgTools from 'helpers/svgTools';
-// import styles from './index.less';
+import Button from 'components/lib/button';
+import styles from './index.less';
 
 function Operation({forceNetworkStore, routing}) {
   const getShortPath = ()=>{
@@ -14,8 +15,9 @@ function Operation({forceNetworkStore, routing}) {
     }
   };
   return (
-    <div>
-      <a onClick={getShortPath}>最短路径</a>
+    <div className={styles.operation}>
+      <Button btnType="primary" className={styles.buttonEx}>节点扩展</Button>
+      <Button onClick={getShortPath} btnType="primary" className={styles.button}>关联路径</Button>
     </div>
   );
 }

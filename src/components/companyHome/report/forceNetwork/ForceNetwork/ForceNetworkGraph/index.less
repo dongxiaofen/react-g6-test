@@ -77,6 +77,10 @@
 //   fill: @red1;
 //   composes: trans;
 // }
+.nodesTrans {
+  cursor: pointer;
+  transition: all 1s ease;
+}
 .cancelNodes {
   cursor: pointer;
   stroke: #000000;
@@ -119,6 +123,7 @@
 }
 .noActive {
   fill: #CFD0D4;
+  composes: nodesTrans;
 }
 .lineNoActive {
   stroke: #EEEFF3;
