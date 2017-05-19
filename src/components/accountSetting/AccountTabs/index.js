@@ -16,9 +16,9 @@ function AccountTabs(props) {
   const none_ = !data || data[activeIndex].email === userEmail;
   const activeKey = props.accountSettingStore.tabs.activeKey;
   const tabConf = [
-    {name: '业务统计', comp: Business, none: false},
-    {name: '预警企业', comp: AlertCorp, none: none_},
+    {name: '业务统计', comp: Business, none: true},
     {name: '消费记录', comp: Consume, none: false},
+    {name: '预警企业', comp: AlertCorp, none: none_},
     {name: '充值记录', comp: Recharge, none: none},
     {name: '消费汇总', comp: Summary, none: none},
     {name: '登录记录', comp: LoginRecord, none: false},

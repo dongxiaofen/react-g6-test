@@ -158,7 +158,7 @@ class AccountSettingStore {
   };
   // tab栏数据
   @observable tabs = {
-    activeKey: '业务统计',
+    activeKey: '消费记录',
     business: {
       reportAndMonitor: {},
       province: {},
@@ -258,10 +258,10 @@ class AccountSettingStore {
             const pId = treeData.formatResult[0].parentUserId;
             this.tree.activeId = uId;
             this.getUserInfo(uId);
-            this.getReportAndMonitor(uId);
-            this.getProvince(uId);
-            this.getIndustry(uId);
-            this.getScale(uId);
+            // this.getReportAndMonitor(uId);
+            // this.getProvince(uId);
+            // this.getIndustry(uId);
+            // this.getScale(uId);
             this.getConsume(uId);
             if (!pId) {
               this.getRecharge(uId);
@@ -546,7 +546,7 @@ class AccountSettingStore {
   }
   @action.bound resetTabs() {
     this.tabs = {
-      activeKey: '业务统计',
+      activeKey: '消费记录',
       business: {
         reportAndMonitor: {},
         province: {},
