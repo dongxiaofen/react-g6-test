@@ -10,7 +10,7 @@ function Grade({itemData}) {
     const styleConfig = {'HIGH': 'big', 'MIDDLE': 'middle', 'LOW': 'small'}; // 样式映射
     let styleImportance = '';
     const showGradeList = [];
-    if (itemData.ruleSimpleResponses.length > 0) {
+    if (itemData.ruleSimpleResponses && itemData.ruleSimpleResponses.length > 0) {
       itemData.ruleSimpleResponses.map((obj, resIdx)=>{
         const importance = gradeConfig[obj.eventImportance];
         if (resIdx === 0) {

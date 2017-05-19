@@ -36,14 +36,18 @@ function CompanyCard({riskHeadlinesStore, companyData}) {
   };
   const monitorId = companyData.monitorId;
   const clickCompany = ()=> {
+    const params = Object.assign({}, filterParams);
+    params.productType = companyData.productType;
     riskHeadlinesStore.riskUpdateValue('companyList', 'active', monitorId);
     riskHeadlinesStore.riskUpdateValue('events', 'companyType', 'MAIN');
-    riskHeadlinesStore.getCompanyInfo(monitorId, filterParams);
+    riskHeadlinesStore.getCompanyInfo(monitorId, params);
   };
   const extendSubCompany = ()=> {
     const data = subCompanyList.get(companyData.monitorId) || [];
     if (data.length < 1) {
-      riskHeadlinesStore.getSubCompanyList(monitorId, riskHeadlinesStore.filterParams);
+      const params = Object.assign({}, riskHeadlinesStore.filterParams);
+      params.productType = companyData.productType;
+      riskHeadlinesStore.getSubCompanyList(monitorId, params);
     } else {
       riskHeadlinesStore.setMapValue('subCompanyList', `${companyData.monitorId}`, []);
     }

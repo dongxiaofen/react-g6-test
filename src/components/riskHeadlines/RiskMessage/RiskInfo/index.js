@@ -3,13 +3,10 @@ import { observer, inject} from 'mobx-react';
 import styles from '../index.less';
 import RiskTab from './RiskTab';
 import loadingComp from 'components/hoc/LoadingComp';
-function RiskInfo({riskHeadlinesStore, routing}) {
+import LinkJump from 'components/common/LinkJump';
+function RiskInfo({riskHeadlinesStore}) {
   const events = riskHeadlinesStore.events;
   const isSubCom = events.companyType === 'SUB';
-  const monitorId = events.info.monitorId;
-  const viewReport = ()=> {
-    routing.history.push(`/companyHome?monitorId=${monitorId}&companyType=${isSubCom ? 'ASSOCIATE' : 'MAIN'}`);
-  };
   if (this.props.riskHeadlinesStore.events.info.error) {
     return <div></div>;
   }
@@ -18,7 +15,7 @@ function RiskInfo({riskHeadlinesStore, routing}) {
       <p className={isSubCom ? styles.subCom : styles.mainCom}>
         {events.info.companyName}
         <i></i>
-        <span onClick={viewReport}>{isSubCom ? '关联监控报告' : '主体监控报告'}</span>
+        <LinkJump name={events.info.companyName} label={isSubCom ? '关联监控报告' : '主体监控报告'} className={styles.name} />
       </p>
       <RiskTab riskHeadlinesStore={riskHeadlinesStore}/>
     </div>
