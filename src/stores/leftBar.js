@@ -1,7 +1,7 @@
 import { observable, action, reaction, runInAction } from 'mobx';
-const helpInfo1 = '创建高级查询报告、深度分析报告、主体监控报告后，可查看该板块信息';
-const helpInfo2 = '创建主体监控报告后，可查看该板块信息';
-const helpInfo3 = '创建深度分析报告、主体监控报告后，可查看该板块信息';
+const helpInfo1 = '创建深度监控后，可查看该板块信息';
+const helpInfo2 = '创建深度监控、监控后，可查看该板块信息';
+const helpInfo3 = '创建深度监控、监控、报告后，可查看该板块信息';
 class LeftBarStore {
   constructor() {
     reaction(
@@ -21,13 +21,13 @@ class LeftBarStore {
         {
           menuText: '企业基本信息',
           menuKey: 'corpDetail',
-          helpInfo: helpInfo1,
+          helpInfo: helpInfo3,
           contain: ['deepMonitor', 'monitor', 'report']
         },
         {
           menuText: '上市披露',
           menuKey: 'stock',
-          helpInfo: helpInfo1,
+          helpInfo: helpInfo3,
           contain: ['deepMonitor', 'monitor', 'report']
         },
         {
@@ -39,29 +39,29 @@ class LeftBarStore {
         {
           menuText: '风险信息',
           menuKey: 'risk',
-          helpInfo: helpInfo1,
+          helpInfo: helpInfo3,
           contain: ['deepMonitor', 'monitor', 'report']
         },
         {
           menuText: '新闻信息',
           menuKey: 'internet',
-          helpInfo: helpInfo1,
+          helpInfo: helpInfo3,
           contain: ['deepMonitor', 'monitor', 'report']
         },
         {
           menuText: '经营信息',
           menuKey: 'assets',
-          helpInfo: helpInfo1,
+          helpInfo: helpInfo3,
           contain: ['deepMonitor', 'monitor', 'report']
         },
         {
           menuText: '团队信息',
           menuKey: 'team',
-          helpInfo: helpInfo1,
+          helpInfo: helpInfo3,
           contain: ['deepMonitor', 'monitor', 'report']
         },
       ],
-      helpInfo: helpInfo1,
+      helpInfo: helpInfo3,
       contain: ['deepMonitor', 'monitor', 'report'],
     },
     {
@@ -71,22 +71,22 @@ class LeftBarStore {
         {
           menuText: '全网关系',
           menuKey: 'forceNetwork',
-          helpInfo: helpInfo1,
+          helpInfo: helpInfo2,
           contain: ['deepMonitor', 'monitor']
         },
         {
           menuText: '关联关系',
           menuKey: 'network',
-          helpInfo: helpInfo1,
+          helpInfo: helpInfo3,
           contain: ['deepMonitor', 'monitor', 'report']
         },
         {
           menuText: '风险关系', menuKey: 'blackNetwork',
-          helpInfo: helpInfo1,
+          helpInfo: helpInfo3,
           contain: ['deepMonitor', 'monitor', 'report']
         },
       ],
-      helpInfo: helpInfo1,
+      helpInfo: helpInfo3,
       contain: ['deepMonitor', 'monitor', 'report'],
     },
     {
@@ -102,11 +102,11 @@ class LeftBarStore {
         {
           menuText: '预警分析',
           menuKey: 'alertAnalysis',
-          helpInfo: helpInfo3,
+          helpInfo: helpInfo1,
           contain: ['deepMonitor']
         },
       ],
-      helpInfo: helpInfo3,
+      helpInfo: helpInfo2,
       contain: ['deepMonitor', 'monitor'],
     },
     {
@@ -116,17 +116,17 @@ class LeftBarStore {
         {
           menuText: '关联人核查',
           menuKey: 'relPerCheck',
-          helpInfo: helpInfo1,
+          helpInfo: helpInfo2,
           contain: ['deepMonitor', 'monitor']
         },
         {
           menuText: '税务核查',
           menuKey: 'taxCheck',
-          helpInfo: helpInfo1,
+          helpInfo: helpInfo2,
           contain: ['deepMonitor', 'monitor']
         },
       ],
-      helpInfo: helpInfo1,
+      helpInfo: helpInfo2,
       contain: ['deepMonitor', 'monitor'],
     },
     {
@@ -136,7 +136,8 @@ class LeftBarStore {
         {
           menuText: '现勘记录',
           menuKey: 'nowRecord',
-          helpInfo: helpInfo2, contain: ['deepMonitor', 'monitor']
+          helpInfo: helpInfo2,
+          contain: ['deepMonitor', 'monitor']
         },
       ],
       helpInfo: helpInfo2,
