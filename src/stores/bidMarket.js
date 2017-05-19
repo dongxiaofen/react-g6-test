@@ -177,12 +177,17 @@ class BidMarketStore {
   // 设置全国请求
   @action.bound setParams(params) {
     params.index = 1;
-    // uiStore.uiState.bidMarketInfo.index = 1;
     this.params = params;
     this.getDistribution(params);
     this.getTrend(params);
     this.getRank(params);
-    this.getInfo(params);
+
+    const infoIndex = uiStore.uiState.bidMarketInfo.index;
+    if (infoIndex === 1) {
+      this.getInfo(params);
+    } else {
+      uiStore.uiState.bidMarketInfo.index = 1;
+    }
   }
 
   // 设置二级城市或地区请求
@@ -191,7 +196,13 @@ class BidMarketStore {
     this.params = params;
     this.getTrend(params);
     this.getRank(params);
-    this.getInfo(params);
+
+    const infoIndex = uiStore.uiState.bidMarketInfo.index;
+    if (infoIndex === 1) {
+      this.getInfo(params);
+    } else {
+      uiStore.uiState.bidMarketInfo.index = 1;
+    }
   }
 
   // 全国分布和地区分布
