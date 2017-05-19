@@ -4,6 +4,8 @@ import axios from 'axios';
 import { bidMarketApi } from 'api';
 import uiStore from './ui';
 import messageStore from './message';
+import entireLoadingStore from './entireLoading';
+
 import areaLanLon from 'helpers/areaLanLon';
 import bidMarketMapColor from 'helpers/bidMarketMapColor';
 
@@ -418,18 +420,18 @@ class BidMarketStore {
 
   // 招投标信息详情
   @action.bound getBidMarketDetail(announceId, key, openModal) {
-    this.detailLoading = true;
+    entireLoadingStore.openEntireLoading();
     bidMarketApi.getBidMarketDetail(announceId)
       .then(action('get bidMarket detail', (resp) => {
         this.detailTitleData = this.areaInfo[key];
         this.detailContent = resp.data.result;
-        this.detailLoading = false;
+        entireLoadingStore.closeEntireLoading();
         openModal();
       }))
       .catch(action('get bidMarket detail err', (err) => {
         console.log(err);
         messageStore.openMessage({ type: 'warning', content: '获取招投标详情失败' });
-        this.detailLoading = false;
+        entireLoadingStore.closeEntireLoading();
       }));
   }
 

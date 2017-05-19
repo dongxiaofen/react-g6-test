@@ -10,8 +10,9 @@ import Modal from 'components/common/Modal';
 import DetailModal from 'components/common/DetailModal';
 import Message from 'components/common/Message';
 import PayModal from 'components/common/PayModal';
+import EntireLoading from 'components/common/EntireLoading';
 
-@inject('modalStore', 'detailModalStore', 'messageStore', 'payModalStore')
+@inject('modalStore', 'detailModalStore', 'messageStore', 'payModalStore', 'entireLoadingStore')
 @observer
 export default class App extends Component {
   static propTypes = {
@@ -21,6 +22,7 @@ export default class App extends Component {
     detailModalStore: PropTypes.object,
     messageStore: PropTypes.object,
     payModalStore: PropTypes.object,
+    entireLoadingStore: PropTypes.object,
   };
   render() {
     const pathname = this.props.location.pathname;
@@ -44,6 +46,7 @@ export default class App extends Component {
         <DetailModal detailModalStore={this.props.detailModalStore} />
         <Message messageStore={this.props.messageStore} />
         <PayModal payModalStore={this.props.payModalStore} />
+        <EntireLoading entireLoadingStore={this.props.entireLoadingStore} />
         <NavBar />
         <div className={styles.box}>
           <div className={styles.content}>

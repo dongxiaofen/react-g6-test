@@ -3,6 +3,7 @@ import axios from 'axios';
 import moment from 'moment';
 import { assetTransactionApi } from 'api';
 import uiStore from './ui';
+import entireLoadingStore from './entireLoading';
 import { setPathValue } from 'pathval';
 
 class AssetTransactionStore {
@@ -121,13 +122,16 @@ class AssetTransactionStore {
   }
 
   @action.bound getAssetLocalDetail(params, openDetailModal) {
+    entireLoadingStore.openEntireLoading();
     assetTransactionApi.getAssetLocalDetail(params)
       .then(action('get assset local detail', (resp) => {
         this.assetLocalDetail = resp.data;
+        entireLoadingStore.closeEntireLoading();
         openDetailModal();
       }))
       .catch(action('get asset local detail catch', (err) => {
         console.log(err);
+        entireLoadingStore.closeEntireLoading();
       }));
   }
 
