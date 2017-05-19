@@ -315,7 +315,7 @@ export const getCompNodeInfo = (monitorId, params) => {
 export const getSixStar = (id, source) => {
   return axios.get('/api/monitor/' + id + '/alert/score', {cancelToken: source.token});
 };
-// 关联图,获取公司信息
+// 关联图,获取个人信息
 export const getPersonNodeInfo = (monitorId, params) => {
-  return axios.get(`/api/monitor/${monitorId}/expendNetwork/nodeInfo`, {params});
+  return axios.get(`/api/monitor/${monitorId}/expendNetwork/personInfo`, {params});
 };

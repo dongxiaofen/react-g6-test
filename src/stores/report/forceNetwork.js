@@ -28,7 +28,7 @@ class ForceNetworkStore {
   };
   @observable nodeInfo = {
     isShowInfo: false,
-    company: {},
+    detailInfo: {},
     tabAct: 0,
   }
   @action.bound saveNetwork(nextLocation) {
@@ -134,10 +134,19 @@ class ForceNetworkStore {
   @action.bound getCompNodeInfo(monitorId, params) {
     companyHomeApi.getCompNodeInfo(monitorId, params)
     .then(action('getCompNodeInfo', (resp)=>{
-      this.nodeInfo.company = resp.data;
+      this.nodeInfo.detailInfo = resp.data;
     }))
     .catch(action((error)=>{
       console.log('getCompNodeInfo出错', error);
+    }));
+  }
+  @action.bound getPersonNodeInfo(monitorId, params) {
+    companyHomeApi.getPersonNodeInfo(monitorId, params)
+    .then(action('getPersonNodeInfo', (resp)=>{
+      this.nodeInfo.person = resp.data;
+    }))
+    .catch(action((error)=>{
+      console.log('getPersonNodeInfo', error);
     }));
   }
   @action.bound updateValue(keyPath, value) {

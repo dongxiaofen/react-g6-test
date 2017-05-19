@@ -6,7 +6,7 @@ import ListInfo from '../ListInfo';
 import styles from './index.less';
 
 function CompanyInfo({forceNetworkStore}) {
-  const companyInfo = forceNetworkStore.nodeInfo.company;
+  const companyInfo = forceNetworkStore.nodeInfo.detailInfo;
   const createBasicInfo = (data) => {
     const config = [
       {key: 'frName', label: '法人代表'},

@@ -5,14 +5,14 @@ import CompanyInfo from './CompanyInfo';
 
 function DetailInfo({forceNetworkStore}) {
   const isShowInfo = forceNetworkStore.nodeInfo.isShowInfo;
-  const company = forceNetworkStore.nodeInfo.company;
+  const detailInfo = forceNetworkStore.nodeInfo.detailInfo;
   return (
     <div className={isShowInfo ? styles.show : styles.hide}>
       <div className="clearfix">
         <i className={`fa fa-times-circle ${styles.close}`} aria-hidden="true"></i>
       </div>
       {
-        company.basicInfo ?
+        detailInfo.basicInfo ?
         <CompanyInfo forceNetworkStore={forceNetworkStore}/>
         : 'loading'
       }
