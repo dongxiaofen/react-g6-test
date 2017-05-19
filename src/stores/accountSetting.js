@@ -19,18 +19,20 @@ class AccountSettingStore {
     ONE_YEAR: '1年',
   };
   consumeTypeMap = {
-    REPORT_MAIN: '高级查询报告',
-    REPORT_REFRESH: '刷新高级查询报告',
-    REPORT_TO_MONITOR: '高级查询报告转监控',
-    ANALYSIS_REPORT_MAIN: '深度分析报告',
-    ANALYSIS_REPORT_REFRESH: '刷新深度分析报告',
-    ANALYSIS_REPORT_TO_MONITOR: '深度分析报告转监控',
-    REPORT_TO_ANALYSIS_REPORT: '高级查询报告升级为深度分析报告',
-    MONITOR_MAIN: '主体监控报告',
-    MONITOR_MAIN_RENEWAL: '主体监控续费',
-    PERSON_CHECK: '个人核查',
-    TEST_: '税务核查',
-    TEST__: '快速查询报告',
+    REPORT_MAIN: '创建查询报告',
+    REPORT_REFRESH: '刷新查询报告',
+    REPORT_TO_MONITOR: '查询报告转为监控报告',
+    REPORT_TO_DEEP_MONITOR: '查询报告转为深度监控报告',
+    MONITOR_MAIN: '创建监控报告',
+    MONITOR_MAIN_RENEWAL: '监控报告续费',
+    MONITOR_TO_DEEP_MONITOR: '监控报告升级为深度监控报告',
+    DEEP_MONITOR_MAIN: '创建深度监控报告',
+    DEEP_MONITOR_MAIN_RENEWAL: '深度监控报告续费',
+    REPORT_PERSON_CHECK: '个人核查',
+    MONITOR_PERSON_CHECK: '个人核查',
+    DEEP_MONITOR_PERSON_CHECK: '个人核查',
+    MONITOR_TAX_CHECK: '税务核查',
+    DEEP_MONITOR_TAX_CHECK: '税务核查',
   };
   // 账号树数据
   @observable tree = {
