@@ -5,7 +5,7 @@ import AlterCard from 'components/common/AlertCard';
 function Event({timeAxisStore, riskHeadlinesStore}) {
   console.log(timeAxisStore.eventData);
   return (
-    <div>
+    <div style={{marginTop: '30px'}}>
       <AlterCard
         module="timeAxis"
         data={timeAxisStore.eventData.events}
