@@ -20,6 +20,7 @@ function Menu({ routing }) {
       children: [
         { module: '报告列表', route: 'reportManage' },
         { module: '监控列表', route: 'monitorList' },
+        { module: '深度监控列表', route: 'deepMonitorList' },
       ]
     },
     {
@@ -40,6 +41,7 @@ function Menu({ routing }) {
   ];
 
   const routeToPage = (route) => {
+    console.log(route);
     browserHistory.push(`/${route}`);
   };
 

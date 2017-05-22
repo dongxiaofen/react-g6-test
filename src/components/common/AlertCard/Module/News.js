@@ -55,6 +55,7 @@ function News({data, module, store, cardType}) {
   return (
     <BaseModule
       data={moduleData}
+      module={module}
       btnText="查看"
       type="detail"
       viewDetCallback={viewDetail}

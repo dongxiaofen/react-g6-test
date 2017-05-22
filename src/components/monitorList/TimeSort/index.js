@@ -2,17 +2,18 @@ import React from 'react';
 import { observer } from 'mobx-react';
 import styles from './index.less';
 function TypeFilter({monitorListStore, uiStore}) {
+  const activeList = monitorListStore.activeList;
   const sortConfig = [
     {name: '首次监控', property: 'start_tm'},
     {name: '截止日期', property: 'expire_dt'},
     {name: '最近更新', property: 'latestTs'},
   ];
-  const sortDirection = uiStore.uiState.monitorList.sortDirection;
-  const properties = uiStore.uiState.monitorList.params.sort.split(',')[0];
+  const sortDirection = uiStore.uiState[activeList].sortDirection;
+  const properties = uiStore.uiState[activeList].params.sort.split(',')[0];
   const sortHandle = (property, newSortValue) => {
-    uiStore.updateUiStore(`monitorList.sortDirection.${property}`, newSortValue);
-    uiStore.updateUiStore(`monitorList.params.sort`, `${property},${newSortValue}`);
-    uiStore.updateUiStore(`monitorListPager.index`, 1);
+    uiStore.updateUiStore(`${activeList}.sortDirection.${property}`, newSortValue);
+    uiStore.updateUiStore(`${activeList}.params.sort`, `${property},${newSortValue}`);
+    uiStore.updateUiStore(`${activeList}Pager.index`, 1);
     monitorListStore.getMainList();
   };
   const createSort = () => {
