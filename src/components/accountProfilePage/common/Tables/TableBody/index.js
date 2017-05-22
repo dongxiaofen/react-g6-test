@@ -4,7 +4,7 @@ import styles from './index.less';
 import { loadingComp } from 'components/hoc';
 
 
-function TableBody({ hasScore, dateType, data, hasFlag, routing }) {
+function TableBody({ hasScore, dateType, data, hasFlag, routing, searchCompanyStore }) {
   const showRigthDate = (latestDt, alertCount, score) => {
     if (dateType === 'singeLine') {
       return (<div className={styles.date}>2017-08-01</div>);
@@ -21,7 +21,10 @@ function TableBody({ hasScore, dateType, data, hasFlag, routing }) {
     }
   };
   const jumpPage = (companyName) => {
-    routing.push(`/searchCompany?companyName=${companyName}`);
+    searchCompanyStore.searchTabClick('COMPANY_NAME');
+    searchCompanyStore.searchChange({target: {value: companyName}});
+    searchCompanyStore.getCompanyList();
+    routing.push(`/searchCompany`);
   };
   const createList = () => {
     let listItem = [];
@@ -65,4 +68,4 @@ export default loadingComp({
     error: props.error,
     module: props.module
   })
-})(inject('routing')(observer(TableBody)));
+})(inject('routing', 'searchCompanyStore')(observer(TableBody)));

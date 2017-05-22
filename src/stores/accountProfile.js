@@ -104,7 +104,7 @@ class AccountProfileStore {
         this.myNewBusinessData = response.data;
       }))
       .catch(action( (err) => {
-        this.myNewBusinessData = {error: err.response.data};
+        this.myNewBusinessData = {error: err};
       }));
   }
   // 获取我的地域分布
@@ -114,7 +114,7 @@ class AccountProfileStore {
         this.myProvinceRank = response.data;
       }))
       .catch(action( (err) => {
-        this.myProvinceRank = {error: err.response.data};
+        this.myProvinceRank = {error: err};
       }));
   }
   // 获取我的行业分布
@@ -124,7 +124,7 @@ class AccountProfileStore {
         this.myIndustryDist = response.data;
       }))
       .catch(action( (err) => {
-        this.myIndustryDist = {error: err.response.data};
+        this.myIndustryDist = {error: err};
       }));
   }
   // 获取下属新增业务统计
@@ -134,7 +134,7 @@ class AccountProfileStore {
         this.subNewBusinessData = response.data;
       }))
       .catch(action( (err) => {
-        this.subNewBusinessData = {error: err.response.data};
+        this.subNewBusinessData = {error: err};
       }));
   }
   // 获取下属地域分布
@@ -144,7 +144,7 @@ class AccountProfileStore {
         this.subProvinceRank = response.data;
       }))
       .catch(action( (err) => {
-        this.subProvinceRank = {error: err.response.data};
+        this.subProvinceRank = {error: err};
       }));
   }
   // 获取下属行业分布
@@ -154,7 +154,7 @@ class AccountProfileStore {
         this.subIndustryDist = response.data;
       }))
       .catch(action( (err) => {
-        this.subIndustryDist = {error: err.response.data};
+        this.subIndustryDist = {error: err};
       }));
   }
 
@@ -179,7 +179,7 @@ class AccountProfileStore {
       }))
       .catch(action( (err) => {
         this.subFrequentRuleIsloading = false;
-        console.log(err.response.data);
+        console.log(err);
       }));
   }
 
@@ -191,7 +191,7 @@ class AccountProfileStore {
       }))
       .catch(action( (err) => {
         this.subNewestRuleIsLoading = false;
-        console.log(err.response.data);
+        console.log(err);
       }));
   }
 
@@ -203,7 +203,7 @@ class AccountProfileStore {
       }))
       .catch(action( (err) => {
         this.newAccount10IsLoading = false;
-        console.log(err.response.data);
+        console.log(err);
       }));
   }
 
@@ -213,7 +213,7 @@ class AccountProfileStore {
         console.log(response.data);
       }))
       .catch(action( (err) => {
-        console.log(err.response.data);
+        console.log(err);
       }));
   }
 
@@ -223,7 +223,7 @@ class AccountProfileStore {
         console.log(response.data);
       }))
       .catch(action( (err) => {
-        console.log(err.response.data);
+        console.log(err);
       }));
   }
 
@@ -235,7 +235,7 @@ class AccountProfileStore {
       }))
       .catch(action( (err) => {
         this.ownWarningCompnayIsLoading = false;
-        console.log(err.response.data);
+        console.log(err);
       }));
   }
 
@@ -247,7 +247,7 @@ class AccountProfileStore {
       }))
       .catch(action( (err) => {
         this.subWarningCompnayIsLoading = false;
-        console.log(err.response.data);
+        console.log(err);
       }));
   }
 
@@ -259,7 +259,7 @@ class AccountProfileStore {
       }))
       .catch(action( (err) => {
         this.ownRiskCompnayIsLoading = false;
-        console.log(err.response.data);
+        console.log(err);
       }));
   }
 
@@ -271,7 +271,7 @@ class AccountProfileStore {
       }))
       .catch(action( (err) => {
         this.subRiskCompnayIsLoading = false;
-        console.log(err.response.data);
+        console.log(err);
       }));
   }
 
@@ -283,7 +283,7 @@ class AccountProfileStore {
       }))
       .catch(action( (err) => {
         this.ownLowScoreCompnayIsLoading = false;
-        console.log(err.response.data);
+        console.log(err);
       }));
   }
 
@@ -295,7 +295,7 @@ class AccountProfileStore {
       }))
       .catch(action( (err) => {
         this.subLowScoreCompnayIsLoading = false;
-        console.log(err.response.data);
+        console.log(err);
       }));
   }
 
