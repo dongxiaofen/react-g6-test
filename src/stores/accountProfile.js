@@ -2,19 +2,9 @@ import { observable, action } from 'mobx';
 import { accountProfileApi } from 'api';
 
 class AccountProfileStore {
-  @observable ownWarningStatisticsData = {
-    'alertCompanyCount': 3,
-    'alertCount': 33,
-    'monitorCount': 33,
-    'reportCount': 33
-  };
+  @observable ownWarningStatisticsData = {};
 
-  @observable subWarningStatisticsData = {
-    'alertCompanyCount': 8,
-    'alertCount': 30,
-    'monitorCount': 30,
-    'reportCount': 56
-  };
+  @observable subWarningStatisticsData = {};
 
 
   @observable ownWarningCompnay = [];
@@ -27,34 +17,8 @@ class AccountProfileStore {
   @observable subLowestScore = [];
 
   @observable subAccount10Data = [];
-  @observable subNewestRuleData = [
-    {
-      'alertType': 'RULE',
-      'count': 10,
-      'ruleName': '张三',
-      'ruleTime': '2017-05-15'
-    },
-    {
-      'alertType': 'RULE',
-      'count': 20,
-      'ruleName': '阿虎',
-      'ruleTime': '2017-05-15'
-    }
-  ];
-  @observable subFrequentRuleData = [
-    {
-      'alertType': 'RULE',
-      'count': 10,
-      'ruleName': '张三',
-      'ruleTime': '2017-05-15'
-    },
-    {
-      'alertType': 'RULE',
-      'count': 36,
-      'ruleName': '李四',
-      'ruleTime': '2017-05-15'
-    }
-  ];
+  @observable subNewestRuleData = [];
+  @observable subFrequentRuleData = [];
 
   // 加载状态
   @observable ownWarningCompnayIsLoading = true;
@@ -210,7 +174,7 @@ class AccountProfileStore {
   @action.bound getOwnWarningStatistics() {
     accountProfileApi.ownWarningStatistics()
       .then(action( (response) => {
-        console.log(response.data);
+        this.ownWarningStatisticsData = response.data;
       }))
       .catch(action( (err) => {
         console.log(err);
@@ -220,7 +184,7 @@ class AccountProfileStore {
   @action.bound getSubWarningStatistics() {
     accountProfileApi.subWarningStatistics()
       .then(action( (response) => {
-        console.log(response.data);
+        this.subWarningStatisticsData = response.data;
       }))
       .catch(action( (err) => {
         console.log(err);
