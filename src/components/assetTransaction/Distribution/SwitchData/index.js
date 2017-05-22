@@ -26,7 +26,7 @@ function SwitchData({ assetTransactionStore }) {
   ];
 
   const assignorRadioOptions = assignor.map((item) => {
-    if (distributionStaticKey === 'transactionSum' || distributionStaticKey === 'auctionSum') {
+    if (distributionStaticKey === 'auctionTotal' || distributionStaticKey === 'auctionSum') {
       item.disabled = true;
     } else {
       item.disabled = false;

@@ -21,7 +21,6 @@ export default class Distribution extends Component {
     params.endDate = moment().format('YYYY-MM-DD');
     this.props.assetTransactionStore.setDistributionParams(params);
     this.props.assetTransactionStore.getAreaDistribution(params);
-    this.props.assetTransactionStore.getAreaDistributionDetail(params);
   }
 
   render() {

@@ -269,10 +269,11 @@ class AssetTransactionStore {
   };
   @observable distributionStaticKey = 'transactionTotal';
   @observable areaDistributionLoading = false;
-  @observable areaDistributionDetailLoading = false;
+  @observable areaDistributionDetailLoading = true;
   @observable areaDistributionResult = {};
   @observable distributionMapData = [];
   @observable distributionBar = { axis: [], data: [] };
+  @observable distributionDetail = { region: '', data: {}, asset80Focus: 0 };
 
   @action.bound setAssetLocalParams(path, value) {
     setPathValue(this.assetLocalParams, path, value);
@@ -367,10 +368,16 @@ class AssetTransactionStore {
         this.distributionBar.data = barData;
         this.areaDistributionResult = resp.data;
         this.areaDistributionLoading = false;
+        let region = barAxis[barAxis.length - 1];
+        region = region ? region.split('.')[1] : '';
+        if (region) {
+          this.getAreaDistributionDetail({ type, region, startDate, endDate });
+        }
       }))
       .catch(action('get area distribution catch', (err) => {
         console.log(err);
         this.areaDistributionLoading = false;
+        this.areaDistributionDetailLoading = false;
       }));
   }
 
@@ -379,7 +386,20 @@ class AssetTransactionStore {
     this.areaDistributionDetailLoading = true;
     assetTransactionApi.getAreaDistributionDetail({ params: params, cancelToken: source.token })
       .then(action('get area distribution detail', (resp) => {
-        console.log(resp.data, '------detail');
+        const basicData = this.areaDistributionResult.basicData;
+        const region = params.region;
+        if (basicData.length) {
+          let newRegionData = {};
+          for (let idx = 0; idx < basicData.length; idx++) {
+            if (basicData[idx]._id === region) {
+              newRegionData = basicData[idx];
+              break;
+            }
+          }
+          this.distributionDetail.region = region;
+          this.distributionDetail.data = newRegionData;
+          this.distributionDetail.asset80Focus = resp.data.asset80Focus;
+        }
         this.areaDistributionDetailLoading = false;
       }))
       .catch(action('get area distribution detail catch', (err) => {
