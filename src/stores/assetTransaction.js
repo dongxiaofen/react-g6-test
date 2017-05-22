@@ -3,11 +3,13 @@ import axios from 'axios';
 import moment from 'moment';
 import { assetTransactionApi } from 'api';
 import uiStore from './ui';
+import entireLoadingStore from './entireLoading';
 import { setPathValue } from 'pathval';
 
 class AssetTransactionStore {
   constructor() {
-    this.cancels = [];
+    this.assetLocalCancel = '';
+    this.tradeTrendCancel = '';
   }
 
   dealWithDate(type, startDate, endDate, result) {
@@ -61,6 +63,7 @@ class AssetTransactionStore {
     return compliteDate;
   }
 
+  /* 本地资产 */
   @observable assetLocalParams = {
     assignorType: '',
     region: '',
@@ -78,16 +81,17 @@ class AssetTransactionStore {
   @observable assetLocalData = [];
   @observable assetLocalDetail = {};
   @observable assetLocalLoading = false;
+  // --------------------------------------------
 
+  /* 交易趋势 */
   @observable tradeTrendParams = {
     region: '',
     startDate: '',
     endDate: '',
   };
   @observable tradeTrendData = [];
-  @observable auctionData = [];
-  @observable transactionData = [];
   @observable tradeTrendLoading = false;
+  // --------------------------------------------
 
   @action.bound setAssetLocalParams(path, value) {
     setPathValue(this.assetLocalParams, path, value);
@@ -114,16 +118,20 @@ class AssetTransactionStore {
           this.assetLocalLoading = false;
         }
       }));
+    this.assetLocalCancel = source.cancel;
   }
 
   @action.bound getAssetLocalDetail(params, openDetailModal) {
+    entireLoadingStore.openEntireLoading();
     assetTransactionApi.getAssetLocalDetail(params)
       .then(action('get assset local detail', (resp) => {
         this.assetLocalDetail = resp.data;
+        entireLoadingStore.closeEntireLoading();
         openDetailModal();
       }))
       .catch(action('get asset local detail catch', (err) => {
         console.log(err);
+        entireLoadingStore.closeEntireLoading();
       }));
   }
 
@@ -141,8 +149,6 @@ class AssetTransactionStore {
         const endDate = this.tradeTrendParams.endDate;
         result.auctionData = this.dealWithDate('auction', startDate, endDate, result.auctionData);
         result.transactionData = this.dealWithDate('transaction', startDate, endDate, result.transactionData);
-        this.transactionData = result.transactionData;
-        this.auctionData = result.auctionData;
         this.tradeTrendData = result;
         this.tradeTrendLoading = false;
       }))
@@ -152,6 +158,7 @@ class AssetTransactionStore {
           this.tradeTrendLoading = false;
         }
       }));
+    this.tradeTrendCancle = source.cancel;
   }
 
   @action.bound resetStore() {

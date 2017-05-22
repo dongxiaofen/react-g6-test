@@ -44,4 +44,5 @@ export taxStore from './report/tax';
 export taxCheckStore from './report/taxCheck';
 export assetTransactionStore from './assetTransaction';
 export linkJumpStore from './linkJump';
+export entireLoadingStore from './entireLoading';
 // append here from plop

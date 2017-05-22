@@ -43,6 +43,7 @@ export default class ReportMain extends Component {
             <div className="clearfix">
               <h1 className={styles.title}>报告列表</h1>
               <Filter
+                uiStore={this.props.uiStore}
                 reportManageStore={this.props.reportManageStore}
                 status={reportManageList.reportStatus}
                 reportManagePager={reportManagePager} />
