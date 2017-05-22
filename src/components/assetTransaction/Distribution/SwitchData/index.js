@@ -16,6 +16,7 @@ function SwitchData({ assetTransactionStore }) {
   const distributionStaticKey = assetTransactionStore.distributionStaticKey;
   const setParams = assetTransactionStore.setDistributionParams;
   const getAreaDistribution = assetTransactionStore.getAreaDistribution;
+  const getAreaDistributionDetail = assetTransactionStore.getAreaDistributionDetail;
 
   const assetsRadioOptions = [
     { label: '交易资产总额', value: 'transactionTotal' },
@@ -45,7 +46,7 @@ function SwitchData({ assetTransactionStore }) {
     params.type = evt.target.value;
     setParams(params);
     getAreaDistribution(params);
-    assetTransactionStore.getAreaDistributionDetail(params);
+    getAreaDistributionDetail(params);
   };
 
   const dateOnChange = (dateString, dateTime) => {
@@ -53,6 +54,7 @@ function SwitchData({ assetTransactionStore }) {
     params.endDate = dateTime[1];
     setParams(params);
     getAreaDistribution(params);
+    getAreaDistributionDetail(params);
   };
 
   const checkChange = (value) => {
@@ -60,6 +62,7 @@ function SwitchData({ assetTransactionStore }) {
     params.endDate = value[1];
     setParams(params);
     getAreaDistribution(params);
+    getAreaDistributionDetail(params);
   };
 
   return (

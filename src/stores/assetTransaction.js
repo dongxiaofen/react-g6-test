@@ -176,7 +176,7 @@ class AssetTransactionStore {
     return {
       bar: _barData,
       barData: _barData.data,
-      barAxis: barData.axis,
+      barAxis: _barData.axis,
       mapData,
     };
   }
@@ -379,7 +379,7 @@ class AssetTransactionStore {
     this.areaDistributionDetailLoading = true;
     assetTransactionApi.getAreaDistributionDetail({ params: params, cancelToken: source.token })
       .then(action('get area distribution detail', (resp) => {
-        console.log(resp.data);
+        console.log(resp.data, '------detail');
         this.areaDistributionDetailLoading = false;
       }))
       .catch(action('get area distribution detail catch', (err) => {
