@@ -282,7 +282,11 @@ export const getNowRecordList = (id, params, source) => {
 export const getNowRecordPictures = (id, source) => {
   return axios.get('/api/survey/' + id + '/pictures', { cancelToken: source.token });
 };
-
+// 时间轴
+export const getAxisDetail = (monitorId, key, time, relation) => {
+  const module = key === 'legal' ? 'risk' : key;
+  return axios.get(`/api/monitor/${monitorId}/timeline/${relation === 'related' ? `related/${module}` : module}?date=${time}`);
+};
 // 税务核查列表
 export const getTaxCheckList = (id, params, source) => {
   return axios.get('/api/monitor/' + id + '/taxCheck/page', {params: params, cancelToken: source.token});

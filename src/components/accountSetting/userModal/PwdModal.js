@@ -100,7 +100,7 @@ function PwdModal({accountSettingStore, clientStore}) {
   return (
     <Modal
       visible={moduleData.visible}
-      width="440px"
+      width="460px"
       closeAction={modalCancel}
       cancelAction={modalCancel}
       confirmAction={modalConfirm}

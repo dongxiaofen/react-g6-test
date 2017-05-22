@@ -3,7 +3,7 @@ export const getTreeList = () => {
   return axios.get('/api/user/sub/tree');
 };
 export const getUserInfo = (uId) => {
-  return axios.get(`/api/user/sub/${uId}`);
+  return axios.get(`/api/user/sub/${uId}/xx`);
 };
 export const getReportAndMonitor = (uId) => {
   return axios.get(`/api/user/sub/${uId}/statistic/reportAndMonitor/xx`);
@@ -21,13 +21,13 @@ export const getAlertCorp = (uId, params) => {
   return axios.get(`/api/user/sub/${uId}/alert`, {params});
 };
 export const getConsume = (uId, params) => {
-  return axios.get(`/api/user/sub/${uId}/consume`, {params});
+  return axios.get(`/api/user/sub/${uId}/consume/xx`, {params});
 };
 export const getRecharge = (uId, params) => {
-  return axios.get(`/api/user/sub/${uId}/recharge`, {params});
+  return axios.get(`/api/user/sub/${uId}/recharge/xx`, {params});
 };
 export const getSummary = (uId, params) => {
-  return axios.get(`/api/user/sub/${uId}/consume/summary`, {params});
+  return axios.get(`/api/user/sub/${uId}/consume/summary/xx`, {params});
 };
 export const getLoginRecord = (uId, params) => {
   return axios.get(`/api/user/sub/${uId}/login`, {params});

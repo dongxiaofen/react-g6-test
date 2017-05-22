@@ -9,12 +9,12 @@ function TreeList({accountSettingStore, uiStore, clientStore}) {
   const userEmail = clientStore.userInfo.email;
   const getUserData = (uId, level) => {
     uiStore.resetAccountPager();
-    accountSettingStore.changeValue('tabs.activeKey', '业务统计');
+    accountSettingStore.changeValue('tabs.activeKey', '消费记录');
     accountSettingStore.getUserInfo(uId);
-    accountSettingStore.getReportAndMonitor(uId);
-    accountSettingStore.getProvince(uId);
-    accountSettingStore.getIndustry(uId);
-    accountSettingStore.getScale(uId);
+    // accountSettingStore.getReportAndMonitor(uId);
+    // accountSettingStore.getProvince(uId);
+    // accountSettingStore.getIndustry(uId);
+    // accountSettingStore.getScale(uId);
     accountSettingStore.getConsume(uId);
     if (userEmail !== moduleData.data.content[moduleData.activeIndex].email) {
       accountSettingStore.getAlertCorp(uId);
@@ -38,7 +38,6 @@ function TreeList({accountSettingStore, uiStore, clientStore}) {
   };
   const showNodeDetail = (level, uId) => {
     accountSettingStore.changeValue(`tree.activeId`, uId);
-    console.log(data.findIndex(item => item.id === uId), '--log');
     accountSettingStore.changeValue(`tree.activeIndex`, data.findIndex(item => item.id === uId));
     getUserData(uId, level);
   };
