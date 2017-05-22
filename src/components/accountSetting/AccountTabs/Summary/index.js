@@ -6,11 +6,12 @@ import styles from './index.less';
 function Summary({accountSettingStore}) {
   const timeMap = accountSettingStore.timeMap;
   const consumeTypeMap = accountSettingStore.consumeTypeMap;
+  const taxTypeMap = accountSettingStore.taxTypeMap;
   const handleConsumeInfo = (value, item) => {
     const nameStr = item.companyName ? `企业：${item.companyName}` : '';
     const timeStr = item.timeType ? `；监控时长：${timeMap[item.timeType]}` : '';
     const personStr = item.memo ? `；核查人姓名：${item.memo}` : '';
-    const taxStr = item.taxIndex ? `;${item.taxIndex}` : '';
+    const taxStr = item.taxIndex ? `；核查${taxTypeMap[item.taxIndex]}` : '';
     return nameStr + timeStr + personStr + taxStr;
   };
   const handleConsumeType = (value) => {
