@@ -114,10 +114,15 @@ class UiStore {
     reaction(
       () => this.uiState.reportManagePager.index,
       () => {
+        const params = {
+          companyName: reportManageStore.companyName,
+          index: this.uiState.reportManagePager.index,
+          size: this.uiState.reportManagePager.size
+        };
         if (this.uiState.reportManageList.reportStatus === 'report') {
-          reportManageStore.getReportList(this.uiState.reportManagePager);
+          reportManageStore.getReportList(params);
         } else {
-          reportManageStore.getAnalysisReportList(this.uiState.reportManagePager);
+          reportManageStore.getAnalysisReportList(params);
         }
       }
     );

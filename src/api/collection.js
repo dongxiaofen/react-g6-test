@@ -17,6 +17,9 @@ export const cancelCollection = (id, productType) => {
     case 'MONITOR':
       url = `/api/monitor/${id}/collection`;
       break;
+    case 'DEEP_MONITOR':
+      url = `/api/deepMonitor/${id}/collection`;
+      break;
     default:
       break;
   }
