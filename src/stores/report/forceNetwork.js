@@ -35,16 +35,27 @@ class ForceNetworkStore {
   @action.bound expand() {
     this.expandNetwork.nodes = [];
     this.expandNetwork.links = [];
-    const source = 'B4D4425824F00FB3055281E3B5DFA95AB37BBF74FB02A49C607478C115A94BDF';
-    const target = '4D6D56FEB192CE7FF96EACB57001D69EA2BF36FE67AFE4A2ADE8D0383939D72D';
+    const source = '6E130A9157DFD30DCC1EF0CFDF8FE7136BE994FD0CEA769F83AC6CD0938BC96E';
+    const target = '31F8E5035EACAABDCB950A6E17257F204A429561BFB7CC063D741DD356A8A5A6';
     const currentNetwork = toJS(svgTools.getCurrentNodesLinks(this.forceNetwork));
-    console.log({target, source, currentNetwork});
-    companyHomeApi.expandNetwork(bannerStore.monitorId, {target, source, currentNetwork})
+    companyHomeApi.expandNetwork(bannerStore.monitorId, { target, source, currentNetwork })
       .then(action('get expand data', (resp) => {
-        console.log(resp);
+        // console.log(resp);
+        resp.data.currentNetwork.nodes.map((node) => {
+          node.hide = true;
+        });
+        resp.data.currentNetwork.links.map((link) => {
+          link.hide = true;
+        });
+        this.expandNetwork.nodes = resp.data.currentNetwork.nodes;
+        this.expandNetwork.links = resp.data.currentNetwork.links;
+        this.expandNetwork.links.pop();
+        this.expandNetwork.change = !this.expandNetwork.change;
+        this.isExpandSaved = false;
       }))
       .catch(action('get expand出错', (err) => {
         console.log('get expand出错', err);
+        this.expandNetwork.change = !this.expandNetwork.change;
       }));
     // this.expandNetwork.nodes.push({
     //   hide: true,
@@ -120,21 +131,21 @@ class ForceNetworkStore {
   }
   @action.bound getShortPath(monitorId, params) {
     companyHomeApi.getShortPath(monitorId, params)
-      .then(action('get short path', (resp)=>{
+      .then(action('get short path', (resp) => {
         this.shortestPahth = resp.data;
       }))
-      .catch(action((error)=>{
+      .catch(action((error) => {
         console.log('getShortPathk出错', error);
       }));
   }
   @action.bound getCompNodeInfo(monitorId, params) {
     companyHomeApi.getCompNodeInfo(monitorId, params)
-    .then(action('getCompNodeInfo', (resp)=>{
-      this.nodeInfo.company = resp.data;
-    }))
-    .catch(action((error)=>{
-      console.log('getCompNodeInfo出错', error);
-    }));
+      .then(action('getCompNodeInfo', (resp) => {
+        this.nodeInfo.company = resp.data;
+      }))
+      .catch(action((error) => {
+        console.log('getCompNodeInfo出错', error);
+      }));
   }
 }
 export default new ForceNetworkStore();

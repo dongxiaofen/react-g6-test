@@ -131,6 +131,8 @@ export default class ForceNetworkGraph extends Component {
   }
   // 当有元素变动的时候重绘关联图
   reDraw = () => {
+    simulation.nodes(nodesData);
+    simulation.force('link').links(edgesData);
     // nodes
     svgNodes = svgNodes.data(nodesData);
     svgNodes.exit().remove();
@@ -143,8 +145,7 @@ export default class ForceNetworkGraph extends Component {
       .call(d3.drag()
         .on('start', this.dragstarted)
         .on('drag', this.dragged)
-        .on('end', this.dragended))
-      .merge(svgNodes);
+        .on('end', this.dragended));
 
     svgNodes.append('title')
       .text((data) => { return data.name; });
@@ -167,8 +168,7 @@ export default class ForceNetworkGraph extends Component {
       .call(d3.drag()
         .on('start', this.dragstarted)
         .on('drag', this.dragged)
-        .on('end', this.dragended))
-      .merge(svgTexts1);
+        .on('end', this.dragended));
 
     svgTexts2 = svgTexts2.data(nodesData);
     svgTexts2.exit().remove();
@@ -187,8 +187,7 @@ export default class ForceNetworkGraph extends Component {
       .call(d3.drag()
         .on('start', this.dragstarted)
         .on('drag', this.dragged)
-        .on('end', this.dragended))
-      .merge(svgTexts2);
+        .on('end', this.dragended));
 
     svgTexts3 = svgTexts3.data(nodesData);
     svgTexts3.exit().remove();
@@ -205,8 +204,7 @@ export default class ForceNetworkGraph extends Component {
       .call(d3.drag()
         .on('start', this.dragstarted)
         .on('drag', this.dragged)
-        .on('end', this.dragended))
-      .merge(svgTexts3);
+        .on('end', this.dragended));
 
     svgTexts1
       .append('title')
@@ -223,8 +221,7 @@ export default class ForceNetworkGraph extends Component {
     svgEdges = svgEdges.enter()
       .append('line')
       .attr('class', (data) => (data.hide && styles.hide) || (data.lineType === 1 && styles.links) || styles.dashLinks)
-      .attr('marker-end', (data) => data.lineType === 2 ? '' : 'url(#cArrow)')
-      .merge(svgEdges);
+      .attr('marker-end', (data) => (data.lineType === 2 && '') || (svgTools.getArrowType(data.target, nodesData) < 2 && 'url(#cArrow)') || 'url(#pArrow)');
     // labels
     svgEdgepaths = svgEdgepaths.data(edgesData);
     svgEdgepaths.exit().remove();
@@ -252,8 +249,6 @@ export default class ForceNetworkGraph extends Component {
       .text((data) => data.lineName);
 
     // Update and restart the simulation.
-    simulation.nodes(nodesData);
-    simulation.force('link').links(edgesData);
     simulation.alpha(1).restart();
   }
   dblclickNode = () => {
@@ -388,7 +383,7 @@ export default class ForceNetworkGraph extends Component {
               markerWidth="10"
               markerHeight="10"
               viewBox="0 0 12 12"
-              refX="55"
+              refX="57"
               refY="6"
               orient="auto">
               <path d="M2,2 L10,6 L2,10 L6,6 L2,2" className={styles.arrow} />
@@ -398,7 +393,7 @@ export default class ForceNetworkGraph extends Component {
               markerWidth="10"
               markerHeight="10"
               viewBox="0 0 12 12"
-              refX="50"
+              refX="47"
               refY="6"
               orient="auto">
               <path d="M2,2 L10,6 L2,10 L6,6 L2,2" className={styles.arrow} />
