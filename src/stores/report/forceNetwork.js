@@ -3,6 +3,7 @@ import { companyHomeApi } from 'api';
 import bannerStore from '../banner';
 import { browserHistory } from 'react-router';
 import * as svgTools from 'helpers/svgTools';
+import pathval from 'pathval';
 
 class ForceNetworkStore {
   @observable error = '';
@@ -26,7 +27,9 @@ class ForceNetworkStore {
     id: '',
   };
   @observable nodeInfo = {
-    company: {},
+    isShowInfo: false,
+    detailInfo: {},
+    tabAct: 0,
   }
   @action.bound saveNetwork(nextLocation) {
     this.isExpandSaved = true;
@@ -87,6 +90,7 @@ class ForceNetworkStore {
   }
   @action.bound focusNode(node) {
     this.focalNode = node;
+    this.nodeInfo.isShowInfo = true;
   }
   @action.bound getReportModule(params) {
     this.isMount = true;
@@ -128,6 +132,7 @@ class ForceNetworkStore {
   }
   @action.bound setFocalNode(node) {
     this.dbFocalNode = node;
+    this.nodeInfo.isShowInfo = true;
   }
   @action.bound getShortPath(monitorId, params) {
     companyHomeApi.getShortPath(monitorId, params)
@@ -141,11 +146,29 @@ class ForceNetworkStore {
   @action.bound getCompNodeInfo(monitorId, params) {
     companyHomeApi.getCompNodeInfo(monitorId, params)
       .then(action('getCompNodeInfo', (resp) => {
-        this.nodeInfo.company = resp.data;
+        this.nodeInfo.detailInfo = resp.data;
       }))
       .catch(action((error) => {
+        this.nodeInfo.detailInfo = { error: true };
         console.log('getCompNodeInfo出错', error);
       }));
+  }
+  @action.bound getPersonNodeInfo(monitorId, params) {
+    companyHomeApi.getPersonNodeInfo(monitorId, params)
+      .then(action('getPersonNodeInfo', (resp) => {
+        this.nodeInfo.detailInfo = resp.data;
+      }))
+      .catch(action((error) => {
+        this.nodeInfo.detailInfo = { error: true };
+        console.log('getPersonNodeInfo', error);
+      }));
+  }
+  @action.bound updateValue(keyPath, value) {
+    pathval.setPathValue(this, keyPath, value);
+  }
+  @action.bound resetNodeInfo() {
+    this.nodeInfo.detailInfo = {};
+    this.nodeInfo.tabAct = 0;
   }
 }
 export default new ForceNetworkStore();

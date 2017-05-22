@@ -19,6 +19,7 @@ export const getBannerInfo = ({
   return axios.get(url);
 };
 
+// 获取上市代码，检查该公司是否是上市公司
 export const getStockCode = ({ reportId, monitorId, analysisReportId }) => {
   let url;
   if (reportId) {
@@ -135,6 +136,8 @@ export const checkPersonInfo = (url, params) => {
 export const getIdCard = (url) => {
   return axios.get(url);
 };
+
+// 获取上市公告
 export const changeAnnouncement = ({ stockType, monitorId, reportId, analysisReportId }) => {
   let url;
   if (monitorId) {
@@ -314,4 +317,7 @@ export const getCompNodeInfo = (monitorId, params) => {
 export const getSixStar = (id, source) => {
   return axios.get('/api/monitor/' + id + '/alert/score', {cancelToken: source.token});
 };
-
+// 关联图,获取个人信息
+export const getPersonNodeInfo = (monitorId, params) => {
+  return axios.get(`/api/monitor/${monitorId}/expendNetwork/personInfo`, {params});
+};

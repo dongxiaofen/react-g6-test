@@ -222,6 +222,10 @@ class SearchCompanyStore {
   @action.bound searchChange(evt) {
     this.searchKey = evt.target.value;
   }
+  // 外部搜索传值searchKey
+  @action.bound searchChangeOther(name) {
+    this.searchKey = name;
+  }
   // 搜索handleEnter
   @action.bound handleEnter(evt) {
     if (evt.keyCode === 13) {
