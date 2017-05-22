@@ -4,8 +4,9 @@ import { browserHistory } from 'react-router';
 import AnimateLoading from 'components/hoc/LoadingComp/AnimateLoading';
 import styles from './index.less';
 function CompanyWrap({data, monitorListStore}) {
+  const activeList = monitorListStore.activeList;
   const monitorId = data.monitorId;
-  const relStatus = monitorListStore.relationListStatus.get(monitorId);
+  const relStatus = monitorListStore[activeList].relationListStatus.get(monitorId);
   const angle = relStatus === 'show' ? 'up' : 'down';
   const btnText = relStatus === 'show' ? '收起' : '展开';
   const viewReport = () => {

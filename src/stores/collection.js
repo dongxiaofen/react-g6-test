@@ -12,9 +12,6 @@ class CollectionStore {
     this.isLoading = true;
     collectionApi.getCollectionPage(params)
       .then(action('get collection page', (resp) => {
-        if (params.index === 1) {
-          uiStore.uiState.collection.index = 1;
-        }
         this.resultContent = resp.data.content;
         uiStore.uiState.collection.totalElements = resp.data.totalElements;
         this.isLoading = false;

@@ -11,7 +11,7 @@ import PauseInfo from 'components/monitorList/PauseInfo';
 import AddRelation from 'components/common/AddRelation';
 @inject('monitorListStore', 'uiStore', 'routing')
 @observer
-export default class MonitorList extends Component {
+export default class DeepMonitorList extends Component {
   static propTypes = {
     monitorListStore: PropTypes.object,
     routing: PropTypes.object,

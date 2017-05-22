@@ -9,11 +9,15 @@ function Search({ collectionStore, uiStore }) {
 
   const searchHandle = () => {
     const collection = uiStore.uiState.collection;
-    collectionStore.getCollectionPage({
-      companyName: collection.companyName,
-      index: 1,
-      size: collection.size
-    });
+    if (collection.index === 1) {
+      collectionStore.getCollectionPage({
+        companyName: collection.companyName,
+        index: 1,
+        size: collection.size
+      });
+    } else {
+      uiStore.updateUiStore('collection.index', 1);
+    }
   };
 
   const searchKeyDownHandle = (evt) => {
