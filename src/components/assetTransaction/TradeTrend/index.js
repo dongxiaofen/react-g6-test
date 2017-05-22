@@ -73,6 +73,10 @@ export default class TradeTrend extends Component {
   }
 
   filterTrend(params) {
+    const tradeTrendCancel = this.props.assetTransactionStore.tradeTrendCancel;
+    if (tradeTrendCancel && typeof tradeTrendCancel === 'function') {
+      tradeTrendCancel();
+    }
     this.props.assetTransactionStore.setTradeTrendParams(params);
     this.props.assetTransactionStore.getAssetTrend(params);
   }
@@ -285,6 +289,7 @@ export default class TradeTrend extends Component {
             <span className={styles.label}>地区</span>
             <div className={styles.fLeft}>
               <Select
+                width="120px"
                 defaultValue={params.region}
                 onChange={this.changeRegion}
                 value={params.region}>
@@ -305,7 +310,7 @@ export default class TradeTrend extends Component {
               message={message[this.state.current]}
               tradeTrendLoading={tradeTrendLoading}
               data={transactionArr}
-              chartData={this.props.assetTransactionStore.transactionData}
+              chartData={tradeTrendData.transactionData}
               option={tradeOpt}
             />
           </Col>
@@ -317,7 +322,7 @@ export default class TradeTrend extends Component {
               message={message[this.state.current]}
               tradeTrendLoading={tradeTrendLoading}
               data={auctionArr}
-              chartData={this.props.assetTransactionStore.auctionData}
+              chartData={tradeTrendData.auctionData}
               option={auctionOpt} />
           </Col>
         </Row>

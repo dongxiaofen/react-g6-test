@@ -115,6 +115,10 @@ export default class AssetLocal extends Component {
   filterHandle = () => {
     const params = toJS(this.props.assetTransactionStore.assetLocalParams);
     const index = this.props.uiStore.uiState.assetLocal.index;
+    const assetLocalCancel = this.props.assetTransactionStore.assetLocalCancel;
+    if (assetLocalCancel && typeof assetLocalCancel === 'function') {
+      assetLocalCancel();
+    }
     if (index === 1) {
       this.props.assetTransactionStore.getAssetLocal(params);
     } else {
