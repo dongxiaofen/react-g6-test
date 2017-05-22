@@ -24,12 +24,14 @@ class Axis extends Component {
       if (evt.wheelDelta > 0) {
         if (this.currStep >= 1) {
           this.currStep--;
+          evt.preventDefault();
         } else {
           this.currStep = 0;
         }
       } else {
         if (Math.abs(this.currStep) <= totalStep - 1) {
           this.currStep++;
+          evt.preventDefault();
         } else {
           this.currStep = totalStep;
         }
@@ -38,26 +40,23 @@ class Axis extends Component {
       scrollCon.style.left = -this.currStep * conStep + '%';
     });
     scrollConWrap.addEventListener('DOMMouseScroll', (evt) => {
-      if (evt.detail > 0) {
+      if (evt.detail <= 0) {
         if (this.currStep > 0) {
           this.currStep--;
+          evt.preventDefault();
+        } else {
+          this.currStep = 0;
         }
       } else {
         if (Math.abs(this.currStep) < totalStep) {
           this.currStep++;
+          evt.preventDefault();
+        } else {
+          this.currStep = totalStep;
         }
       }
       scrollBar.style.left = this.currStep * barStep + '%';
       scrollCon.style.left = -this.currStep * conStep + '%';
-    });
-    scrollConWrap.addEventListener('mouseenter', () => {
-      const bodyScroll = document.body.scrollTop;
-      document.body.onscroll = () => {
-        document.body.scrollTop = bodyScroll;
-      };
-    });
-    scrollConWrap.addEventListener('mouseleave', () => {
-      document.body.onscroll = null;
     });
   }
   getDetail() {
@@ -104,15 +103,6 @@ class Axis extends Component {
     return Object.keys(itemList).map(labelKey => {
       return <div key={labelKey} className={styles.lineItem}>{itemList[labelKey]}</div>;
     });
-  }
-  mapBarToCon(distence) {
-    const target = document.getElementById('scrollBar');
-    const targetWrap = document.getElementById('scrollBarWrap');
-    const scrollCon = document.getElementById('scrollCon');
-    return -(scrollCon.clientWidth - targetWrap.clientWidth) / (targetWrap.clientWidth - target.clientWidth) * distence;
-  }
-  formatPx(value) {
-    return value.length === 0 ? 0 : parseInt(value, 10);
   }
   computeMinAndMax(obj) {
     const arr = [];
@@ -171,7 +161,6 @@ class Axis extends Component {
     const moduleData = this.props.timeAxisStore.axisData.data;
     const sortedTime = Object.keys(moduleData).sort().reverse();
     const stockCode = this.props.bannerStore.stockCode;
-    console.log(!stockCode, '--stockCode');
     const labelConf = [
       {label: '工商信息', key: 'corp'},
       {label: '法务信息', key: 'legal'},
