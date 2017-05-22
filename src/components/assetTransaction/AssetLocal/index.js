@@ -4,6 +4,7 @@ import { toJS } from 'mobx';
 import Radio from 'antd/lib/radio';
 
 import cityName from 'helpers/cityName';
+import assignor from 'components/assetTransaction/assignor';
 import styles from './index.less';
 import Select from 'components/lib/Select';
 import CardList from './CardList';
@@ -39,33 +40,6 @@ export default class AssetLocal extends Component {
     return output;
   }
 
-  assignorSelectList() {
-    const assignor = [
-      '资产管理公司',
-      '投资公司',
-      '银行',
-      'P2P金融',
-      '非金融企业',
-      '小额贷款',
-      '保理',
-      '金融租赁',
-      '保险',
-      '信托',
-      '互联网平台',
-      '其他'
-    ];
-    const output = [];
-    output.push(<Option key="assetLocalAssignorSelectKey0" value="">全部</Option>);
-    assignor.forEach((item, key) => {
-      output.push(
-        <Option key={`assetLocalAssignorSelectKey${key + 1}`} value={item}>
-          {item}
-        </Option>
-      );
-    });
-    return output;
-  }
-
   moneySelectList() {
     const config = [
       { label: '全部', value: '' },
@@ -79,27 +53,6 @@ export default class AssetLocal extends Component {
     config.forEach((item, key) => {
       output.push(
         <Option key={`assetLocalMoneySelectKey${key}`} value={item.value}>
-          {item.label}
-        </Option>
-      );
-    });
-    return output;
-  }
-
-  typeSelectList() {
-    const assetType = [
-      // { label: '全部', key: 'sum' },
-      { label: '拍卖资产', key: 'auctionSum' },
-      { label: '交易资产', key: 'transactionSum' },
-      { label: '招商资产', key: 'attractSum' },
-    ];
-    const output = [];
-    output.push(<Option key="assetLocalTypeSelectKey0" value="">全部</Option>);
-    assetType.forEach((item, key) => {
-      output.push(
-        <Option
-          key={`assetLocalTypeSelectKey${key + 1}`}
-          value={item.label}>
           {item.label}
         </Option>
       );
@@ -163,21 +116,10 @@ export default class AssetLocal extends Component {
       { label: '招商资产', value: '招商资产' },
       { label: '拍卖资产', value: '拍卖资产', disabled: params.assignorType ? true : false },
     ];
-    const assignorRadioOption = [
-      { label: '全部', value: '', disabled: this.assignorRadioDisable() },
-      { label: '资产管理公司', value: '资产管理公司', disabled: this.assignorRadioDisable() },
-      { label: '投资公司', value: '投资公司', disabled: this.assignorRadioDisable() },
-      { label: '银行', value: '银行', disabled: this.assignorRadioDisable() },
-      { label: 'P2P金融', value: 'P2P金融', disabled: this.assignorRadioDisable() },
-      { label: '非金融企业', value: '非金融企业', disabled: this.assignorRadioDisable() },
-      { label: '小额贷款', value: '小额贷款', disabled: this.assignorRadioDisable() },
-      { label: '保理', value: '保理', disabled: this.assignorRadioDisable() },
-      { label: '金融租赁', value: '金融租赁', disabled: this.assignorRadioDisable() },
-      { label: '保险', value: '保险', disabled: this.assignorRadioDisable() },
-      { label: '信托', value: '信托', disabled: this.assignorRadioDisable() },
-      { label: '互联网平台', value: '互联网平台', disabled: this.assignorRadioDisable() },
-      { label: '其他', value: '其他', disabled: this.assignorRadioDisable() },
-    ];
+    const assignorRadioOption = assignor.map((item) => {
+      item.disabled = this.assignorRadioDisable();
+      return item;
+    });
     return (
       <div>
         <div className="clearfix">
@@ -203,28 +145,6 @@ export default class AssetLocal extends Component {
               </Select>
             </div>
           </div>
-          {/* <div className={`clearfix ${styles.assetLocalSwitchData}`}>
-            <span className={styles.label}>转让机构</span>
-            <div className={styles.select}>
-              <Select
-                width="120px"
-                value={params.assignorType}
-                onChange={this.changeSelect.bind(this, 'assignorType')}>
-                {this.assignorSelectList()}
-              </Select>
-            </div>
-          </div> */}
-          {/* <div className={`clearfix ${styles.assetLocalSwitchData}`}>
-            <span className={styles.label}>资产类型</span>
-            <div className={styles.select}>
-              <Select
-                width="120px"
-                value={params.assetType}
-                onChange={this.changeSelect.bind(this, 'assetType')}>
-                {this.typeSelectList()}
-              </Select>
-            </div>
-          </div> */}
         </div>
         <div className={`clearfix ${styles.radiosBox}`}>
           <span className={styles.label}>资产类型</span>
