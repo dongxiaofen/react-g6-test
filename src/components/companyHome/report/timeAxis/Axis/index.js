@@ -13,7 +13,8 @@ class Axis extends Component {
     this.currStep = 0;
   }
   componentDidMount() {
-    const size = Object.keys(this.props.timeAxisStore.axisData.data).length;
+    let size = Object.keys(this.props.timeAxisStore.axisData.data).length;
+    size = size < 9 ? 9 : size;
     const scrollCon = document.getElementById('scrollCon');
     const scrollBar = document.getElementById('scrollBar');
     const scrollConWrap = document.getElementById('scrollConWrap');
@@ -128,7 +129,8 @@ class Axis extends Component {
   }
   startScroll = (evt) => {
     evt.persist();
-    const size = Object.keys(this.props.timeAxisStore.axisData.data).length;
+    let size = Object.keys(this.props.timeAxisStore.axisData.data).length;
+    size = size < 9 ? 9 : size;
     const scrollBarWrap = document.getElementById('scrollBarWrap');
     const scrollBar = document.getElementById('scrollBar');
     const scrollCon = document.getElementById('scrollCon');
@@ -169,7 +171,7 @@ class Axis extends Component {
       {label: '上市公告', key: 'stock', hide: !stockCode},
       {label: '团队信息', key: 'team'},
     ];
-    const labelLen = labelConf.filter(item => !item.hide).length;
+    const size = Object.keys(moduleData).length;
     return (
       <div className={styles.wrap}>
         <div className={styles.iconWrap}>
@@ -179,7 +181,7 @@ class Axis extends Component {
         <div className={styles.labelCon}>
           {this.createLabel(labelConf)}
         </div>
-        <div id="scrollConWrap" className={styles.lineCon} style={{height: (labelLen + 1) * 40}}>
+        <div id="scrollConWrap" className={styles.lineCon}>
           <div className={styles.scollConWrap}>
             <div
               id="scrollCon"
@@ -189,9 +191,9 @@ class Axis extends Component {
               {this.createLine(sortedTime, labelConf, moduleData)}
             </div>
           </div>
-          <div id="scrollBarWrap" className={styles.barWrap}>
+          {size > 9 && <div id="scrollBarWrap" className={styles.barWrap}>
             <div id="scrollBar" style={{transition: 'all .3s linear'}} className={styles.scrollBar} onMouseDown={this.startScroll}></div>
-          </div>
+          </div>}
         </div>
       </div>
     );
