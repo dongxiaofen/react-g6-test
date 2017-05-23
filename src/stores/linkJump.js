@@ -15,10 +15,10 @@ class LinkJumpStore {
         // 跳转相关地方
         if (data && data.monitorId > 0) {
           // 跳转监控
-          browserHistory.push(`/companyHome?monitorId=${data.monitorId}&companyType=MAIN`);
+          browserHistory.push(`/companyHome?monitorId=${data.monitorId}`);
         } else if (data && data.reportId > 0) {
           // 跳转报告
-          browserHistory.push(`/companyHome?reportId=${data.reportId}&companyType=MAIN`);
+          browserHistory.push(`/companyHome?reportId=${data.reportId}`);
         } else {
           // 跳转搜索页面进行搜索
           searchCompanyStore.searchTabClick('COMPANY_NAME');
