@@ -22,7 +22,7 @@ function Base({ judgeIsModuleExist, pdfStore }) {
         judgeIsModuleExist('CORP_BASIC')
           ?
           <div>
-            <PdfTitle module="基本信息" subModule="工商基本信息" />
+            <PdfTitle module="企业基本信息" subModule="工商基本信息" />
             <RegisterInfo moduleData={pathval.getPathValue(pdfStore, 'report.corpDetail.basicList')} />
             <ShareHolder moduleData = {pathval.getPathValue(pdfStore, 'report.corpDetail.shareHolderList')} />
             <PersonListData moduleData={pathval.getPathValue(pdfStore, 'report.corpDetail.personList')} />
@@ -35,7 +35,7 @@ function Base({ judgeIsModuleExist, pdfStore }) {
         judgeIsModuleExist('CORP_INV_POS')
           ?
           <div>
-            <PdfTitle module="基本信息" subModule="对外投资任职" />
+            <PdfTitle module="企业基本信息" subModule="对外投资任职" />
             <Enterprise moduleData = {pathval.getPathValue(pdfStore, 'report.corpDetail.entinvItemList')} />
             <Investment moduleData = {pathval.getPathValue(pdfStore, 'report.corpDetail.frinvList')} />
             <Office moduleData = {pathval.getPathValue(pdfStore, 'report.corpDetail.frPositionList')} />
@@ -47,7 +47,7 @@ function Base({ judgeIsModuleExist, pdfStore }) {
         judgeIsModuleExist('CORP_ALTER')
           ?
           <div>
-            <PdfTitle module="基本信息" subModule="工商变更" />
+            <PdfTitle module="企业基本信息" subModule="工商变更" />
             <AlterAnalysis moduleData = {pathval.getPathValue(pdfStore, 'report.tendency.result[0].data')} />
             <AlterList moduleData = {pathval.getPathValue(pdfStore, 'report.tendency.result[0].alterList')} />
           </div>
@@ -58,7 +58,7 @@ function Base({ judgeIsModuleExist, pdfStore }) {
         judgeIsModuleExist('CORP_YEAR_REPORT')
           ?
           <div>
-            <PdfTitle module="基本信息" subModule="企业年报" />
+            <PdfTitle module="企业基本信息" subModule="企业年报" />
             <YearReportList moduleData = {pathval.getPathValue(pdfStore, 'report.corpDetail.yearReportList')} />
           </div>
           :
@@ -68,7 +68,7 @@ function Base({ judgeIsModuleExist, pdfStore }) {
         judgeIsModuleExist('CORP_YEAR_REPORT')
           ?
           <div>
-            <PdfTitle module="基本信息" subModule="税务信息" />
+            <PdfTitle module="企业基本信息" subModule="税务信息" />
              <Tax moduleData = {pathval.getPathValue(pdfStore, 'report.corpDetail.taxList')} />
             {/* <Tax moduleData = {pathval.getPathValue(pdfStore, 'testTaxList')} /> */}
           </div>

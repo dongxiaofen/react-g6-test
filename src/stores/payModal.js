@@ -25,6 +25,8 @@ class PayModalStore {
     // 下拉框值
     @observable selectValue = 'ONE_YEAR';
     // 二次弹框相关
+    // 选择监控类型
+    @observable monitorType = 'MONITOR';
     // 二次弹框是否显示
     @observable secondVisible = false;
     // 需要显示的内容
@@ -40,7 +42,8 @@ class PayModalStore {
     @observable pointText = '';
     @observable pactUrl = '';
     @observable pactName ='';
-    @observable width = '560px';
+    @observable width = '504px';
+    @observable isSingleBtn =false;
 
     @observable callBack = null;
     // 是否是套餐用户的监控续期
@@ -51,9 +54,11 @@ class PayModalStore {
       this.btnLoading = false;
       this.selectValue = 'ONE_YEAR';
       this.isComboRenewal = false;
+      this.monitorType = 'MONITOR';
+      this.isSingleBtn = false;
     }
 
-    @action.bound openCompModal({ modalType, width, pactName, pactUrl, pointText, isComboRenewal, callBack }) {
+    @action.bound openCompModal({ modalType, width, pactName, pactUrl, pointText, isComboRenewal, callBack, isSingleBtn }) {
       this.visible = true;
       this.pactName = pactName;
       this.pactUrl = pactUrl;
@@ -66,7 +71,7 @@ class PayModalStore {
           this.tittle = '监控续期';
           break;
         case 'createMonitor':
-          this.tittle = '加入监控';
+          this.tittle = '选择监控类型';
           break;
         case 'turnMonitor':
           this.tittle = '转为监控';
@@ -75,10 +80,15 @@ class PayModalStore {
           break;
       }
       if (width !== undefined) { this.width = width; }
+      if (isSingleBtn !== undefined) { this.isSingleBtn = isSingleBtn; }
     }
 
     @action.bound choiceClick(value) {
       this.selectValue = value;
+    }
+
+    @action.bound choiceMonitorType(value) {
+      this.monitorType = value;
     }
 
     @action.bound confirmAction() {

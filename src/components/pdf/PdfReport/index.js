@@ -10,26 +10,26 @@ import News from './News';
 import Assets from './Assets';
 import Network from './NetWork';
 import Team from './Team';
+import styles from './index.less';
 
-function PdfReport(bannerStore) {
+function PdfReport({bannerStore}) {
   const judgeIsModuleExist = (module) => {
-    console.log(module);
     const pdfModule = bannerStore.pdfDownloadKeys;
-    return (pdfModule && pdfModule.indexOf(module) !== -1) || pdfModule === null;
+    return (pdfModule && pdfModule.includes(module)) || !pdfModule;
   };
   return (
     <Container>
       <Row>
-        <Col width="12">
-          <Header />
-          <Overview />
-          <Base judgeIsModuleExist={judgeIsModuleExist} />
-          <Stock judgeIsModuleExist={judgeIsModuleExist} />
-          <Risk judgeIsModuleExist={judgeIsModuleExist} />
-          <News judgeIsModuleExist={judgeIsModuleExist} />
-          <Assets judgeIsModuleExist={judgeIsModuleExist} />
-          <Network judgeIsModuleExist={judgeIsModuleExist} />
-          <Team judgeIsModuleExist={judgeIsModuleExist} />
+        <Col className={styles.pdf_body} width="12">
+            <Header />
+            {judgeIsModuleExist('SUMMARY') ? <Overview /> : ''}
+            {judgeIsModuleExist('CORP') ? <Base judgeIsModuleExist={judgeIsModuleExist} /> : ''}
+            {judgeIsModuleExist('STOCK') ? <Stock judgeIsModuleExist={judgeIsModuleExist} /> : ''}
+            {judgeIsModuleExist('RISK') ? <Risk judgeIsModuleExist={judgeIsModuleExist} /> : ''}
+            {judgeIsModuleExist('NEWS') ? <News judgeIsModuleExist={judgeIsModuleExist} /> : ''}
+            {judgeIsModuleExist('OPERATION') ? <Assets judgeIsModuleExist={judgeIsModuleExist} /> : ''}
+            {judgeIsModuleExist('NETWORK') ? <Network judgeIsModuleExist={judgeIsModuleExist} /> : ''}
+            {judgeIsModuleExist('TEAM') ? <Team judgeIsModuleExist={judgeIsModuleExist} /> : '' }
         </Col>
       </Row>
     </Container>
