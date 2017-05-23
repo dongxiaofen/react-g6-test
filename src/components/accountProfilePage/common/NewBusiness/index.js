@@ -2,7 +2,7 @@ import React, {PropTypes} from 'react';
 import { observer } from 'mobx-react';
 import styles from './index.less';
 import { loadingComp } from 'components/hoc';
-import Chart from 'components/common/echarts/ResizeChart';
+import Chart from 'components/common/Charts/ResizeChart';
 
 function NewBusiness({newBusinessData}) {
   const data = newBusinessData;
@@ -194,7 +194,7 @@ function NewBusiness({newBusinessData}) {
     <div className={styles.box}>
       <span className={styles.titleText}>新增业务统计</span>
       <Chart
-        chartId="newBusiness"
+        chartId="myNewBusiness"
         height="440"
         option={createOption()} />
     </div>

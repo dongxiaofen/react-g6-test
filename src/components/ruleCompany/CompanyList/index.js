@@ -6,8 +6,6 @@ import CompanyName from './CompanyName';
 import ReportType from './ReportType';
 import Time from './Time';
 import Numbers from './Numbers';
-import ReportLink from './ReportLink';
-// import ReportLink from './ReportLink';
 import { loadingComp } from 'components/hoc';
 import Pager from 'components/common/Pager';
 
@@ -24,7 +22,7 @@ function CompanyList({ruleCompanyStore, uiStore}) {
               <ReportType data={obj} />
             </Col>
             <Col width="2">
-              <ReportLink data={obj} />
+              <span className={styles.null}>data</span>
             </Col>
             <Col width="2">
               <Time data={obj} />

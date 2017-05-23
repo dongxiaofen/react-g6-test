@@ -13,10 +13,7 @@ class LinkJumpStore {
         // 返回数据
         const data = resp.data;
         // 跳转相关地方
-        if (data && data.deepMonitorId > 0) {
-          // 跳转深度监控
-          browserHistory.push(`/companyHome?deepMonitorId=${data.deepMonitorId}&companyType=MAIN`);
-        } else if (data && data.monitorId > 0) {
+        if (data && data.monitorId > 0) {
           // 跳转监控
           browserHistory.push(`/companyHome?monitorId=${data.monitorId}&companyType=MAIN`);
         } else if (data && data.reportId > 0) {
