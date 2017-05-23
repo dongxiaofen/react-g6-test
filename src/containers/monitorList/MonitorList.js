@@ -16,10 +16,6 @@ export default class MonitorList extends Component {
     monitorListStore: PropTypes.object,
     routing: PropTypes.object,
   };
-  componentWillMount() {
-    const pathname = this.props.routing.location.pathname.substr(1);
-    this.props.monitorListStore.changeValue('activeList', pathname);
-  }
   componentDidMount() {
     this.props.monitorListStore.getMainCount();
     this.props.monitorListStore.getMainList();
