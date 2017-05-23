@@ -183,7 +183,7 @@ class AlertAnalysisStore {
     };
   }
   // 获取六芒星Data
-  @action.bound getSixStar(monitorId) {
+  @action.bound getSixStar(monitorId = 320) {
     if (window.reportSourceCancel === undefined) {
       window.reportSourceCancel = [];
     }
