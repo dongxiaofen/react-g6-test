@@ -23,7 +23,7 @@ function ReportAction({ bannerStore, modalStore, payModalStore, routing, clientS
   const openCreateMonitorModal = () => {
     payModalStore.openCompModal({
       'modalType': 'createMonitor',
-      'width': '560px',
+      'width': '504px',
       'pactName': '用户服务协议',
       'pactUrl': '/',
       'pointText': '加入监控即视为同意',
@@ -38,7 +38,7 @@ function ReportAction({ bannerStore, modalStore, payModalStore, routing, clientS
   const renewalMonitorModal = () => {
     let config = {
       'modalType': 'continueMonitor',
-      'width': '560px',
+      'width': '504px',
       'callBack': renewalConfirm
     };
     if (clientStore.userInfo.consumeType === 'FEESET') {
