@@ -183,7 +183,7 @@ export default loadingComp({
     loading: props.areaLoading,
     category: 0,
     height: 500,
-    error: false,
+    error: props.area.data.length === 0,
     errCategory: 1,
   })
 })(observer(Chart));

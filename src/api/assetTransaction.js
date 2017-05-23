@@ -14,3 +14,13 @@ export const getAssetLocalDetail = (params) => {
 export const getAssetTrend = (params) => {
   return axios.get('/api/market/asset/trend', params);
 };
+
+// 获取地域分布
+export const getAreaDistribution = (params) => {
+  return axios.get('/api/market/asset/areaDistribution', params);
+};
+
+// 获取地域分布详情
+export const getAreaDistributionDetail = (params) => {
+  return axios.get('/api/market/asset/areaDistribution/detail', params);
+};
