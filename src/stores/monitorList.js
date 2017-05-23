@@ -80,7 +80,12 @@ class MonitorListStore {
         }
       }));
   }
-  @action.bound getRelationList(monitorId) {
+  @action.bound getRelationList(monitorId, count) {
+    if (count === 0) {
+      this.monitorList.relationListStatus.set(monitorId, 'show');
+      this.monitorList.relationList.set(monitorId, []);
+      return false;
+    }
     this.monitorList.relationListStatus.set(monitorId, 'loading');
     monitorListApi.getRelList(monitorId)
       .then(action('getRelList_success', resp => {
