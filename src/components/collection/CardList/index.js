@@ -32,15 +32,11 @@ function CardList({ collectionStore, uiStore }) {
   const category = (productType) => {
     switch (productType) {
       case 'REPORT':
-        return '高级查询报告';
-      case 'ANALYSIS_REPORT':
-        return '深度分析报告';
+        return '查询报告';
       case 'MONITOR':
-        return '主体监控报告';
-      case 'DEEP_MONITOR':
-        return '深度监控报告';
+        return '监控报告';
       default:
-        return '错误';
+        return 'system error';
     }
   };
 

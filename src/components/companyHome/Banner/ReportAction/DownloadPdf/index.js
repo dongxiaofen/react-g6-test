@@ -135,7 +135,6 @@ export default class DownloadPdf extends Component {
     const query = this.props.routing.location.query;
     const monitorId = query.monitorId;
     const reportId = query.reportId;
-    const analysisReportId = query.analysisReportId;
     let queryStr = '&type=';
     let queryArray = [];
     const bannerStore = this.props.bannerStore;
@@ -171,9 +170,6 @@ export default class DownloadPdf extends Component {
       }
       if (reportId) {
         window.open(`/pdfDown?reportId=${reportId}${queryStr}`);
-      }
-      if (analysisReportId) {
-        window.open(`/pdfDown?analysisReportId=${reportId}${queryStr}`);
       }
       this.props.bannerStore.clearPdfConfigChecked();
       this.props.bannerStore.setPdfDownloadKeys(queryArray);

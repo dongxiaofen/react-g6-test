@@ -120,11 +120,14 @@ Chart.propTypes = {
   getAreaDistributionDetail: PropTypes.func,
 };
 export default loadingComp({
-  mapDataToProps: props => ({
-    loading: props.loading,
-    category: 0,
-    height: 680,
-    error: props.distributionMapData.length === 0,
-    errCategory: 1,
-  })
+  mapDataToProps: props => {
+    const mapData = props.distributionMapData;
+    return {
+      loading: props.loading,
+      category: 0,
+      height: 680,
+      error: mapData.every((item) => { return Number(item.value[2]) === 0 && Number(item.value[3]) === 0; }),
+      errCategory: 1,
+    };
+  }
 })(observer(Chart));

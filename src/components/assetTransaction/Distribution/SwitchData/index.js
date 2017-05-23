@@ -61,7 +61,6 @@ function SwitchData({ assetTransactionStore }) {
     params.endDate = value[1];
     setParams(params);
     getAreaDistribution(params);
-    getAreaDistributionDetail(params);
   };
 
   return (

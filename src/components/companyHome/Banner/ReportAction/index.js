@@ -2,32 +2,23 @@ import React, { PropTypes } from 'react';
 import { observer, inject } from 'mobx-react';
 import styles from './index.less';
 
-function ReportAction({ bannerStore, modalStore, payModalStore, routing, clientStore }) {
-  const { monitorId, reportId, analysisReportId, companyType } = routing.location.query;
+function ReportAction({ bannerStore, modalStore, payModalStore, routing }) {
+  const { monitorId, reportId, companyType } = routing.location.query;
   const monitorStatus = bannerStore.monitorStatus;
   /* 普通按钮 */
-  const choiceOk = () => {
-    if (reportId || analysisReportId) {
-      bannerStore.updateToMonitor({
-        reportId: reportId,
-        analysisReportId: analysisReportId,
-        time: payModalStore.selectValue
-      });
-    } else {
-      const companyName = bannerStore.companyName;
-      const obj = { companyName: companyName, time: payModalStore.selectValue };
-      bannerStore.createMonitor(obj);
-    }
+  const addMonitorAction = () => {
+    bannerStore.updateToMonitor({
+      reportId: reportId,
+      time: payModalStore.selectValue
+    });
   };
 
   const openCreateMonitorModal = () => {
     payModalStore.openCompModal({
       'modalType': 'createMonitor',
       'width': '504px',
-      'pactName': '用户服务协议',
-      'pactUrl': '/',
       'pointText': '加入监控即视为同意',
-      'callBack': choiceOk
+      'callBack': addMonitorAction
     });
   };
 
@@ -36,78 +27,25 @@ function ReportAction({ bannerStore, modalStore, payModalStore, routing, clientS
   };
 
   const renewalMonitorModal = () => {
-    let config = {
+    payModalStore.openCompModal({
       'modalType': 'continueMonitor',
       'width': '504px',
       'callBack': renewalConfirm
-    };
-    if (clientStore.userInfo.consumeType === 'FEESET') {
-      config = {
-        'isComboRenewal': true,
-        'callBack': renewalConfirm
-      };
-    }
-    payModalStore.openCompModal({ ...config });
-  };
-
-  const updateHighOrDeepConfirmAction = () => {
-    if (reportId) {
-      bannerStore.updateToAnalysisReport(reportId);
-    } else {
-      const companyName = bannerStore.companyName;
-      const updateHighOrDeep = bannerStore.updateHighOrDeep;
-      bannerStore.createReport(updateHighOrDeep.active, companyName);
-    }
-  };
-
-  const openUpdateHighOrDeepModal = () => {
-    modalStore.openCompModal({
-      title: '升级报告',
-      width: 420,
-      isSingleBtn: true,
-      pointText: '升级报告即视为同意',
-      pactUrl: 'xxxxxx',
-      pactName: '用户服务协议',
-      confirmAction: updateHighOrDeepConfirmAction,
-      loader: (cb) => {
-        if (reportId) {
-          require.ensure([], (require) => {
-            cb(require('./UpdateDeep'));
-          });
-        } else {
-          require.ensure([], (require) => {
-            cb(require('./UpdateHighOrDeep'));
-          });
-        }
-      }
     });
   };
+
   const bannerActionBtn = () => {
     const outputBtn = [];
-    const updateReport = <div key="btnUpdateReprot" className={styles.actionBtn} onClick={openUpdateHighOrDeepModal}>升级报告</div>;
     const addMonitor = <div key="btnAddMonitor" className={styles.actionBtn} onClick={openCreateMonitorModal}>加入监控</div>;
-    const updateMonitor = <div key="btnUpdateMonitor" className={styles.actionBtn} onClick={openCreateMonitorModal}>升级监控</div>;
     const monitorRenewal = <div key="btnRenewalMonitor" className={styles.actionBtn} onClick={renewalMonitorModal}>监控续期</div>;
     switch (companyType) {
-      case 'FREE':
-        outputBtn.push(updateReport);
-        outputBtn.push(addMonitor);
-        break;
       case 'MAIN':
         if (reportId) {
-          outputBtn.push(updateReport);
-          outputBtn.push(addMonitor);
-        }
-        if (analysisReportId) {
           outputBtn.push(addMonitor);
         }
         if (monitorId) {
           outputBtn.push(monitorRenewal);
         }
-        break;
-      case 'ASSOCIATE':
-        outputBtn.push(updateReport);
-        outputBtn.push(updateMonitor);
         break;
       default:
         break;
@@ -141,7 +79,7 @@ function ReportAction({ bannerStore, modalStore, payModalStore, routing, clientS
 
   const addOrCancelCollection = () => {
     const params = { collection: !bannerStore.collection };
-    bannerStore.addOrCancelCollection({ reportId, analysisReportId, monitorId, params });
+    bannerStore.addOrCancelCollection({ reportId, monitorId, params });
   };
 
   const pauseOrRestoreMonitorConfirm = () => {
@@ -163,7 +101,7 @@ function ReportAction({ bannerStore, modalStore, payModalStore, routing, clientS
   };
 
   const refreshHighOrDeepConfirm = () => {
-    bannerStore.refreshHighOrDeep(reportId, analysisReportId);
+    bannerStore.refreshHighOrDeep(reportId);
   };
 
   const refreshHighOrDeepModal = () => {
@@ -307,7 +245,6 @@ ReportAction.propTypes = {
   bannerStore: PropTypes.object,
   modalStore: PropTypes.object,
   payModalStore: PropTypes.object,
-  clientStore: PropTypes.object,
   routing: PropTypes.object,
 };
-export default inject('routing', 'modalStore', 'payModalStore', 'clientStore')(observer(ReportAction));
+export default inject('routing', 'modalStore', 'payModalStore')(observer(ReportAction));

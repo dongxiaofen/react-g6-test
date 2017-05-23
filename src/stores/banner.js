@@ -197,56 +197,10 @@ class BannerStore {
     this.updateHighOrDeep.pointTextSub = pointTextSub;
   }
 
-  // 创建高级报告或者深度报告
-  @action.bound createReport(active, companyName) {
+  // 刷新报告
+  @action.bound refreshHighOrDeep(reportId) {
     modalStore.confirmLoading = true;
-    companyHomeApi.createReport(active, companyName)
-      .then(action('create report', (resp) => {
-        modalStore.confirmLoading = false;
-        modalStore.closeAction();
-        if (resp.data.reportId) {
-          browserHistory.push(`/companyHome?reportId=${resp.data.reportId}&companyType=MAIN`);
-          messageStore.openMessage({ content: '高级查询报告创建成功', callBack: this.windowReload });
-        }
-        if (resp.data.analysisReportId) {
-          browserHistory.push(`/companyHome?analysisReportId=${resp.data.analysisReportId}&companyType=MAIN`);
-          messageStore.openMessage({ content: '深度分析报告创建成功', callBack: this.windowReload });
-        }
-      }))
-      .catch((err) => {
-        console.log(err);
-        runInAction(() => {
-          modalStore.confirmLoading = false;
-          messageStore.openMessage({ content: err.response.data.message });
-          modalStore.closeAction();
-        });
-      });
-  }
-
-  // 高级查询报告升级为深度分析报告
-  @action.bound updateToAnalysisReport(reportId) {
-    modalStore.confirmLoading = true;
-    companyHomeApi.updateToAnalysisReport(reportId)
-      .then(action('update to analysis report', (resp) => {
-        modalStore.confirmLoading = false;
-        modalStore.closeAction();
-        browserHistory.push(`/companyHome?analysisReportId=${resp.data.analysisReportId}&companyType=MAIN`);
-        messageStore.openMessage({ content: '深度分析报告创建成功', callBack: this.windowReload });
-      }))
-      .catch((err) => {
-        console.log(err.response);
-        runInAction(() => {
-          modalStore.confirmLoading = false;
-          modalStore.closeAction();
-          messageStore.openMessage({ content: err.response.data.message });
-        });
-      });
-  }
-
-  // 刷新高级或者深度报告
-  @action.bound refreshHighOrDeep(reportId, analysisReportId) {
-    modalStore.confirmLoading = true;
-    companyHomeApi.refreshHighOrDeep(reportId, analysisReportId)
+    companyHomeApi.refreshHighOrDeep(reportId)
       .then(action('refresh high or deep', (resp) => {
         console.log(resp.data);
         modalStore.confirmLoading = false;
@@ -263,24 +217,9 @@ class BannerStore {
       });
   }
 
-  // 创建监控
-  @action.bound createMonitor(obj) {
-    companyHomeApi.createMonitor(obj)
-      .then(action('create monitor', (resp) => {
-        payModalStore.closeAction();
-        browserHistory.push(`/companyHome?monitorId=${resp.data.monitorId}&companyType=MAIN`);
-        messageStore.openMessage({ content: '成功创建监控', callBack: this.windowReload });
-      }))
-      .catch(action('createMonitor error', (err) => {
-        console.log(err.response, '=====createMonitor error');
-        payModalStore.closeAction();
-        messageStore.openMessage({ type: 'warning', content: err.response.data.message });
-      }));
-  }
-
   // 升级为监控
-  @action.bound updateToMonitor({ reportId, analysisReportId, time }) {
-    companyHomeApi.updateToMonitor({ reportId, analysisReportId, time })
+  @action.bound updateToMonitor({ reportId, time }) {
+    companyHomeApi.updateToMonitor({ reportId, time })
       .then(action('update to monitor', (resp) => {
         payModalStore.closeAction();
         browserHistory.push(`/companyHome?monitorId=${resp.data.monitorId}&companyType=MAIN`);
@@ -432,9 +371,9 @@ class BannerStore {
   }
 
   // 添加/取消收藏
-  @action.bound addOrCancelCollection({ reportId, analysisReportId, monitorId, params }) {
+  @action.bound addOrCancelCollection({ reportId, monitorId, params }) {
     this.collectionLoading = true;
-    companyHomeApi.addOrCancelCollection({ reportId, analysisReportId, monitorId, params })
+    companyHomeApi.addOrCancelCollection({ reportId, monitorId, params })
       .then(action('add or cancel collection', () => {
         this.collection = !this.collection;
         this.collectionLoading = false;

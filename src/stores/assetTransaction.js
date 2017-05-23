@@ -349,10 +349,27 @@ class AssetTransactionStore {
 
   @action.bound setDistributionStaticKey(val) {
     const { mapData, barAxis, barData } = this.distributionMap(this.areaDistributionResult.basicData, val);
+    const { type, startDate, endDate } = this.distributionParams;
+
     this.distributionStaticKey = val;
     this.distributionMapData = mapData;
     this.distributionBar.axis = barAxis;
     this.distributionBar.data = barData;
+
+    let region = barAxis[barAxis.length - 1];
+    region = region ? region.split('.')[1] : '';
+    if (region) {
+      this.getAreaDistributionDetail({ type, region, startDate, endDate });
+    } else {
+      this.setDetailData();
+    }
+  }
+
+  @action.bound setDetailData() {
+    this.distributionDetail.region = '';
+    this.distributionDetail.data = {};
+    this.distributionDetail.asset80Focus = 0;
+    this.areaDistributionDetailLoading = false;
   }
 
   @action.bound getAreaDistribution(params) {
@@ -373,6 +390,8 @@ class AssetTransactionStore {
         region = region ? region.split('.')[1] : '';
         if (region) {
           this.getAreaDistributionDetail({ type, region, startDate, endDate });
+        } else {
+          this.setDetailData();
         }
       }))
       .catch(action('get area distribution catch', (err) => {
