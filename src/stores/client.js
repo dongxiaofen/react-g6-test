@@ -4,7 +4,7 @@ import { clientApi } from 'api';
 
 class ClientStore {
   @observable userInfo = {};
-  @observable envConfig = 'local';
+  @observable envConfig = 'cfca_prod';
 
   @action.bound combineServerData(data) {
     this.userInfo = data.userInfo;
