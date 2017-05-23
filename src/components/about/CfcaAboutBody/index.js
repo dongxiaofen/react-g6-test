@@ -1,7 +1,8 @@
 import { observer } from 'mobx-react';
 import styles from './index.less';
 import React, { Component, PropTypes} from 'react';
-import HeaderNavBar from 'components/common/HeaderNavBar';
+// import HeaderNavBar from 'components/common/HeaderNavBar';
+import CfcaHeaderNav from 'components/common/CfcaHeaderNav';
 import CfcaFooter from 'components/common/CfcaFooter';
 
 import img1 from 'imgs/cfca/1.png';
@@ -74,9 +75,9 @@ export default class CfcaAboutBody extends Component {
   render() {
     return (
       <div>
-        <HeaderNavBar isHeaderScroll={this.state.isHeaderScroll} about="1" {...this.props} />
+        <CfcaHeaderNav isHeaderScroll={this.state.isHeaderScroll} about="1" {...this.props} />
         <div className={`clearfix ${styles['about-banner']}`}>
-          <div id="about-banner-title" className={styles['about-banner-title']}>专注于挖掘企业大数据</div>
+          <div id="about-banner-title" className={styles['about-banner-title']}>可靠　专业　领先</div>
           <div className={styles['about-container']}>
             <div className={styles['about-banner-content']}>
               <p id="about-banner-content1" className={styles['about-banner-content1']}>风险监控平台是中国金融认证中心、中金支付重力打造的金融信息风险技术服务平台，它以互联网技术为载体、结合行业数据，专注信息汇总、数据挖掘、数据应用，致力于为金融机构、政府部门、大型企业等客户提供最优质的大数据解决方案。</p>
@@ -148,4 +149,3 @@ export default class CfcaAboutBody extends Component {
     );
   }
 }
-
