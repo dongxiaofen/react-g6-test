@@ -48,6 +48,8 @@ class PayModalStore {
     @observable callBack = null;
     // 是否是套餐用户的监控续期
     @observable isComboRenewal = false;
+    // 是否为续期
+    @observable isRenewal = false;
 
     @action.bound closeAction() {
       this.visible = false;
@@ -56,15 +58,17 @@ class PayModalStore {
       this.isComboRenewal = false;
       this.monitorType = 'MONITOR';
       this.isSingleBtn = false;
+      this.isRenewal = false;
     }
 
-    @action.bound openCompModal({ modalType, width, pactName, pactUrl, pointText, isComboRenewal, callBack, isSingleBtn }) {
+    @action.bound openCompModal({ modalType, width, pactName, pactUrl, pointText, isComboRenewal, callBack, isSingleBtn, isRenewal }) {
       this.visible = true;
       this.pactName = pactName;
       this.pactUrl = pactUrl;
       this.pointText = pointText;
       this.modalType = modalType;
       this.callBack = callBack;
+      this.isRenewal = isRenewal;
       if (isComboRenewal !== undefined) { this.isComboRenewal = isComboRenewal;}
       switch (modalType) {
         case 'continueMonitor':

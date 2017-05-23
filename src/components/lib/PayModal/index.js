@@ -20,6 +20,7 @@ function PayModal({
   monitorType,
   choiceMonitorType,
   isSingleBtn,
+  isRenewal,
 }) {
   // 生成报告或转为监控
   const payClick = () => {
@@ -133,17 +134,21 @@ function PayModal({
   return (
     <div>
       <Modal {...modalConfig}>
-        <div className="clearfix">
-          {monitorButton()}
-        </div>
-        <div className={`${isComboRenewal ? styles.comboRenewal_tips : styles.nomal_tips}`}>
-          {monitorType === 'DEPTH_MONITOR' ? <span>包含：监控数据及功能，企业税务分析和综合分析评分、风险扫描预警。
-            {!isComboRenewal ? <i className={styles.triangle_right}></i> : ''}
+        {
+          isRenewal ? '' : <div>
+          <div className="clearfix">
+            {monitorButton()}
+          </div>
+          <div className={`${isComboRenewal ? styles.comboRenewal_tips : styles.nomal_tips}`}>
+            {monitorType === 'DEPTH_MONITOR' ? <span>包含：监控数据及功能，企业税务分析和综合分析评分、风险扫描预警。
+              {!isComboRenewal ? <i className={styles.triangle_right}></i> : ''}
           </span> : ''}
-          {monitorType === 'MONITOR' ? <span>包含：查询报告数据，并实时监控、推送数据。
-            {!isComboRenewal ? <i className={styles.triangle_left}></i> : ''}
+            {monitorType === 'MONITOR' ? <span>包含：查询报告数据，并实时监控、推送数据。
+              {!isComboRenewal ? <i className={styles.triangle_left}></i> : ''}
           </span> : ''}
+          </div>
         </div>
+        }
         {isComboRenewal ? '' :
           <div className={`clearfix ${styles.wrap}`} style={{ marginBottom: isComboRenewal ? 0 : 30 }}>
             {modalContent}
@@ -171,5 +176,6 @@ PayModal.propTypes = {
   choiceClick: PropTypes.func,
   choiceMonitorType: PropTypes.func,
   isSingleBtn: PropTypes.bool,
+  isRenewal: PropTypes.bool,
 };
 export default inject('clientStore')(observer(PayModal));
