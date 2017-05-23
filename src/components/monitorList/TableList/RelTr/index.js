@@ -10,7 +10,8 @@ function RelTr({data, mainData, index, monitorListStore, uiStore}) {
     browserHistory.push(`/companyHome?monitorId=${monitorId}&companyType=${companyType}`);
   };
   const handleRelName = () => {
-    const { companyName } = uiStore.uiState.monitorList.params;
+    const activeList = monitorListStore.activeList;
+    const { companyName } = uiStore.uiState[activeList].params;
     if (companyName) {
       const regExp = new RegExp(companyName, 'g');
       const result = data.companyName.replace(regExp, match => `<span style="color: #42A5F5">${match}</span>`);
