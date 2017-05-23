@@ -111,7 +111,7 @@ export default loadingComp({
   mapDataToProps: props => ({
     loading: props.assetLocalLoading,
     category: 0,
-    height: 500,
+    height: 300,
     error: props.assetLocalData.length === 0,
     errCategory: 2,
   })

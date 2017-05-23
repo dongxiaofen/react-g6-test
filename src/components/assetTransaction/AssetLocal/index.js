@@ -1,13 +1,16 @@
 import React, { Component, PropTypes } from 'react';
 import { observer, inject } from 'mobx-react';
 import { toJS } from 'mobx';
+import Radio from 'antd/lib/radio';
 
 import cityName from 'helpers/cityName';
+import assignor from 'components/assetTransaction/assignor';
 import styles from './index.less';
 import Select from 'components/lib/Select';
 import CardList from './CardList';
 
 const Option = Select.Option;
+const RadioGroup = Radio.Group;
 @inject('assetTransactionStore', 'uiStore', 'detailModalStore')
 @observer
 export default class AssetLocal extends Component {
@@ -37,33 +40,6 @@ export default class AssetLocal extends Component {
     return output;
   }
 
-  assignorSelectList() {
-    const assignor = [
-      '资产管理公司',
-      '投资公司',
-      '银行',
-      'P2P金融',
-      '非金融企业',
-      '小额贷款',
-      '保理',
-      '金融租赁',
-      '保险',
-      '信托',
-      '互联网平台',
-      '其他'
-    ];
-    const output = [];
-    output.push(<Option key="assetLocalAssignorSelectKey0" value="">全部</Option>);
-    assignor.forEach((item, key) => {
-      output.push(
-        <Option key={`assetLocalAssignorSelectKey${key + 1}`} value={item}>
-          {item}
-        </Option>
-      );
-    });
-    return output;
-  }
-
   moneySelectList() {
     const config = [
       { label: '全部', value: '' },
@@ -77,27 +53,6 @@ export default class AssetLocal extends Component {
     config.forEach((item, key) => {
       output.push(
         <Option key={`assetLocalMoneySelectKey${key}`} value={item.value}>
-          {item.label}
-        </Option>
-      );
-    });
-    return output;
-  }
-
-  typeSelectList() {
-    const assetType = [
-      // { label: '全部', key: 'sum' },
-      { label: '拍卖资产', key: 'auctionSum' },
-      { label: '交易资产', key: 'transactionSum' },
-      { label: '招商资产', key: 'attractSum' },
-    ];
-    const output = [];
-    output.push(<Option key="assetLocalTypeSelectKey0" value="">全部</Option>);
-    assetType.forEach((item, key) => {
-      output.push(
-        <Option
-          key={`assetLocalTypeSelectKey${key + 1}`}
-          value={item.label}>
           {item.label}
         </Option>
       );
@@ -138,9 +93,33 @@ export default class AssetLocal extends Component {
     this.filterHandle();
   }
 
+  radioOnChange = (key, evt) => {
+    const setParams = this.props.assetTransactionStore.setAssetLocalParams;
+    setParams(key, evt.target.value);
+    this.filterHandle();
+  };
+
+  assignorRadioDisable() {
+    const assetType = this.props.assetTransactionStore.assetLocalParams.assetType;
+    if (assetType === '拍卖资产') {
+      return true;
+    }
+    return false;
+  }
+
   render() {
     const params = this.props.assetTransactionStore.assetLocalParams;
     const assets = params.assetGt || params.assetLt ? `${params.assetGt},${params.assetLt}` : '';
+    const assetRadioOption = [
+      { label: '全部', value: '' },
+      { label: '交易资产', value: '交易资产' },
+      { label: '招商资产', value: '招商资产' },
+      { label: '拍卖资产', value: '拍卖资产', disabled: params.assignorType ? true : false },
+    ];
+    const assignorRadioOption = assignor.map((item) => {
+      item.disabled = this.assignorRadioDisable();
+      return item;
+    });
     return (
       <div>
         <div className="clearfix">
@@ -156,18 +135,6 @@ export default class AssetLocal extends Component {
             </div>
           </div>
           <div className={`clearfix ${styles.assetLocalSwitchData}`}>
-            <span className={styles.label}>转让机构</span>
-            <div className={styles.select}>
-              <Select
-                width="120px"
-                value={params.assignorType}
-                disabledStyle={params.assetType === '拍卖资产' ? true : false}
-                onChange={this.changeSelect.bind(this, 'assignorType')}>
-                {this.assignorSelectList()}
-              </Select>
-            </div>
-          </div>
-          <div className={`clearfix ${styles.assetLocalSwitchData}`}>
             <span className={styles.label}>资产金额</span>
             <div className={styles.select}>
               <Select
@@ -178,16 +145,23 @@ export default class AssetLocal extends Component {
               </Select>
             </div>
           </div>
-          <div className={`clearfix ${styles.assetLocalSwitchData}`}>
-            <span className={styles.label}>资产类型</span>
-            <div className={styles.select}>
-              <Select
-                width="120px"
-                value={params.assetType}
-                onChange={this.changeSelect.bind(this, 'assetType')}>
-                {this.typeSelectList(params)}
-              </Select>
-            </div>
+        </div>
+        <div className={`clearfix ${styles.radiosBox}`}>
+          <span className={styles.label}>资产类型</span>
+          <div className={styles.radios}>
+            <RadioGroup
+              options={assetRadioOption}
+              value={params.assetType}
+              onChange={this.radioOnChange.bind(null, 'assetType')}/>
+          </div>
+        </div>
+        <div className={`clearfix ${styles.radiosBox}`}>
+          <span className={styles.label}>转让机构</span>
+          <div className={styles.radios}>
+            <RadioGroup
+              options={assignorRadioOption}
+              value={params.assignorType}
+              onChange={this.radioOnChange.bind(null, 'assignorType')}/>
           </div>
         </div>
         <div className={styles.cardList}>
