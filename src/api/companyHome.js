@@ -243,20 +243,27 @@ export const getAxisDetail = (monitorId, key, time, relation) => {
   return axios.get(`/api/monitor/${monitorId}/timeline/${relation === 'related' ? `related/${module}` : module}?date=${time}`);
 };
 // 税务核查列表
-export const getTaxCheckList = (id, params, source) => {
-  return axios.get('/api/monitor/' + id + '/taxCheck/page', {params: params, cancelToken: source.token});
+export const getTaxCheckList = (monitorId, reportId, params, source) => {
+  let url = '';
+  if (monitorId) {
+    url = `/api/monitor/${monitorId}/taxCheck/page`;
+  } else if (reportId) {
+    url = `/api/report/${reportId}/taxCheck/page`;
+  }
+  return axios.get(url, {params: params, cancelToken: source.token});
 };
 
 // 全网关系图拓展节点
 export const expandNetwork = (monitorCompanyId, params) => {
   return axios.post(`/api/monitor/${monitorCompanyId}/expendNetwork/expend`, params);
 };
-export const addTaxCheck = (monitorId, analysisReportId, params) => {
+// 税务核查添加
+export const addTaxCheck = (monitorId, reportId, params) => {
   let url;
   if (monitorId) {
     url = `/api/monitor/${monitorId}/taxCheck`;
-  } else if (analysisReportId) {
-    url = `/api/analysisReport/${analysisReportId}/taxCheck`;
+  } else if (reportId) {
+    url = `/api/report/${reportId}/taxCheck`;
   }
   return axios.post(url, params);
 };

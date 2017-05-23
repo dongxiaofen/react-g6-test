@@ -15,8 +15,8 @@ export default class TaxCheckList extends Component {
     modalStore: PropTypes.object,
   }
   componentDidMount() {
-    const { monitorId } = this.props.routing.location.query;
-    this.props.taxCheckStore.getTaxCheckList(monitorId);
+    const { monitorId, reportId } = this.props.routing.location.query;
+    this.props.taxCheckStore.getTaxCheckList(monitorId, reportId);
   }
   componentWillUnmount() {
     this.props.taxCheckStore.resetStore();
@@ -45,9 +45,9 @@ export default class TaxCheckList extends Component {
         const selectNoMsg = this.props.taxCheckStore.selectConf.every(item => item.msg === '');
         if (selectNoMsg) {
           runInAction(() => {
-            const { monitorId, analysisReportId } = this.props.routing.location.query;
+            const { monitorId, reportId } = this.props.routing.location.query;
             this.props.modalStore.confirmLoading = true;
-            this.props.taxCheckStore.postSelectInfo(monitorId, analysisReportId);
+            this.props.taxCheckStore.postSelectInfo(monitorId, reportId);
           });
         }
       },
