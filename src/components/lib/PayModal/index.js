@@ -17,10 +17,7 @@ function PayModal({
   pactUrl,
   pactName,
   choiceClick,
-  monitorType,
-  choiceMonitorType,
   isSingleBtn,
-  isRenewal,
 }) {
   // 生成报告或转为监控
   const payClick = () => {
@@ -37,11 +34,6 @@ function PayModal({
   // 选择持续监控时间
   const selectClick = (value) => {
     choiceClick(value);
-  };
-
-  // 选择监控类型
-  const selectMonitor = (value) => {
-    choiceMonitorType(value);
   };
 
   const modalBtnList = () => {
@@ -72,20 +64,29 @@ function PayModal({
     });
   };
 
-
-  const monitorButton = () => {
+  const modalPackage = () => {
     const init = [
-      {text: '加入监控', key: 'MONITOR'},
-      {text: '加入深度监控', key: 'DEPTH_MONITOR'},
+      {text: '1个月', key: 'ONE_MONTH'},
+      {text: '2个月', key: 'TWO_MONTH'},
+      {text: '3个月', key: 'THREE_MONTH'},
+      {text: '4个月', key: 'FOUR_MONTH'},
+      {text: '5个月', key: 'FIVE_MONTH'},
+      {text: '6个月', key: 'SIX_MONTH'},
+      {text: '7个月', key: 'SEVEN_MONTH'},
+      {text: '8个月', key: 'EIGHT_MONTH'},
+      {text: '9个月', key: 'NINE_MONTH'},
+      {text: '10个月', key: 'TEN_YEAR'},
+      {text: '11个月', key: 'ELEVEN_YEAR'},
+      {text: '12个月', key: 'ONE_YEAR'},
     ];
     return init.map((item, key) => {
       return (
         <div
-          key={`monitorSelectKey${key}`}
-          className={`${isComboRenewal ? styles.comboRenewal : styles.selectMonitor} ${item.key === 'DEPTH_MONITOR' ? 'pull-right' : ''}`}>
+          key={`payModalSelectKey${key}`}
+          className={styles.selectItem}>
           <div
-            className={monitorType === item.key ? styles.monitor_active : styles.selectDiv}
-            onClick={selectMonitor.bind(null, item.key)}>
+            className={selectValue === item.key ? styles.active : styles.selectDiv}
+            onClick={selectClick.bind(null, item.key)}>
             {item.text}
           </div>
         </div>
@@ -134,21 +135,6 @@ function PayModal({
   return (
     <div>
       <Modal {...modalConfig}>
-        {
-          isRenewal ? '' : <div>
-          <div className="clearfix">
-            {monitorButton()}
-          </div>
-          <div className={`${isComboRenewal ? styles.comboRenewal_tips : styles.nomal_tips}`}>
-            {monitorType === 'DEPTH_MONITOR' ? <span>包含：监控数据及功能，企业税务分析和综合分析评分、风险扫描预警。
-              {!isComboRenewal ? <i className={styles.triangle_right}></i> : ''}
-          </span> : ''}
-            {monitorType === 'MONITOR' ? <span>包含：查询报告数据，并实时监控、推送数据。
-              {!isComboRenewal ? <i className={styles.triangle_left}></i> : ''}
-          </span> : ''}
-          </div>
-        </div>
-        }
         {isComboRenewal ? '' :
           <div className={`clearfix ${styles.wrap}`} style={{ marginBottom: isComboRenewal ? 0 : 30 }}>
             {modalContent}
