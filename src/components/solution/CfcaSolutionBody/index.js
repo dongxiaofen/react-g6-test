@@ -2,7 +2,7 @@ import React, { Component, PropTypes } from 'react';
 import styles from './index.less';
 // import HeaderNavBar from 'components/common/HeaderNavBar';
 import CfcaHeaderNav from 'components/common/CfcaHeaderNav';
-import solutionTop from 'imgs/solution/top_2.png';
+import solutionTop from 'imgs/solution/top_cfca.png';
 import solution1 from 'imgs/solution/solution-1-cfca.png';
 import solution2 from 'imgs/solution/solution-2-cfca.png';
 import solution3 from 'imgs/solution/solution-3-cfca.png';
@@ -110,7 +110,7 @@ export default class CfcaSolutionBody extends Component {
             <p style={{marginTop: '24px'}}>金融机构可通过创建监控，实时查看借贷企业</p>
             <p>及其关联企业、关联人的动态行为数据</p>
             <p>精准评估对象当前的风险水平，实现异常节点实时预警</p>
-            <p>帮助金融机构及时发现风险，减少资金损失</p>
+            {/* <p>帮助金融机构及时发现风险，减少资金损失</p> */}
           </div>
         </div>
         <div className={styles.section}>
@@ -119,10 +119,10 @@ export default class CfcaSolutionBody extends Component {
           </div>
           <div ref="sec3" className={styles.right}>
             <h4>贷后管理<span> (针对信贷业务完成后阶段)</span></h4>
-            <p style={{marginTop: '24px'}}>金融机构根据自己的需要设定风险规则，平台将根据这些规则为客户推送企业动态，并形成健康趋势图</p>
-            {/* <p>平台将根据这些规则为客户推送企业动态，并形成健康趋势图</p> */}
+            <p style={{marginTop: '24px'}}>金融机构根据自己的需要设定风险规则，平台将根据这些规则为客户推送企业动态，并形成健康趋势图，简化贷后管理工作，提升贷后管理效率，帮助金融机构及时发现企业异常，如：经营不力、财务恶化、信用下降……</p>
+            {/* <p>平台将根据这些规则为客户推送企业动态，并形成健康趋势图</p>
             <p>简化贷后管理工作，提升贷后管理效率，帮助金融机构及时发现企业异常，如：经营不力、财务恶化、信用下降……</p>
-            <p>制定相应对策，消除坏账隐患</p>
+            <p>制定相应对策，消除坏账隐患</p> */}
           </div>
         </div>
       </div>

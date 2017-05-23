@@ -25,7 +25,7 @@ function CfcaFooter() {
           <Link to="/about">关于我们</Link>
         </li>
       </ul>
-      <div className={styles['footer-nav']}>
+      <div className={styles['footer-nav']} style={{display: 'none'}}>
         <div className={`row ${styles['footer-nav-content']}`}>
           <div className="col-md-4">
             <div className={styles['footer-title']}><Link to="/">公司首页</Link></div>
