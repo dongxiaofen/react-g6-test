@@ -319,7 +319,7 @@ export const getCompNodeInfo = (monitorId, params) => {
 };
 // 六芒星
 export const getSixStar = (id, source) => {
-  return axios.get('/api/deepMonitor/' + id + '/alert/score', {cancelToken: source.token});
+  return axios.get('/api/monitor/' + id + '/alert/score', {cancelToken: source.token});
 };
 // 关联图,获取个人信息
 export const getPersonNodeInfo = (monitorId, params) => {

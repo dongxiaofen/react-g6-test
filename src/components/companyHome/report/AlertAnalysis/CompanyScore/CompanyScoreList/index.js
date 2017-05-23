@@ -29,12 +29,11 @@ function CompanyScoreList({sixStarData}) {
           <span className={styles.type}>
             {sixStarData.operation.name}
           </span>
-          {/* <span className={styles.data}>超过<span>70%</span>企业</span> */}
-          <span className={styles.data}>
-            该企业{sixStarData.operation.name}评分
+          <span className={styles.score}>
             <span>{sixStarData.operation.score}</span>
             分
           </span>
+          {/* <span className={styles.data}>超过<span>70%</span>企业</span> */}
         </div>
         <div className={styles.text}>
           {sixStarData.operation.description}
@@ -52,12 +51,11 @@ function CompanyScoreList({sixStarData}) {
           <span className={styles.type}>
             {sixStarData.industry.name}
           </span>
-          {/* <span className={styles.data}>超过<span>70%</span>企业</span> */}
-          <span className={styles.data}>
-            该企业{sixStarData.industry.name}评分
+          <span className={styles.score}>
             <span>{sixStarData.industry.score}</span>
             分
           </span>
+          {/* <span className={styles.data}>超过<span>70%</span>企业</span> */}
         </div>
         <div className={styles.text}>
           {sixStarData.industry.description}
@@ -75,12 +73,11 @@ function CompanyScoreList({sixStarData}) {
           <span className={styles.type}>
             {sixStarData.creativity.name}
           </span>
-          {/* <span className={styles.data}>超过<span>70%</span>企业</span> */}
-          <span className={styles.data}>
-            该企业{sixStarData.creativity.name}评分
+          <span className={styles.score}>
             <span>{sixStarData.creativity.score}</span>
             分
           </span>
+          {/* <span className={styles.data}>超过<span>70%</span>企业</span> */}
         </div>
         <div className={styles.text}>
           {sixStarData.creativity.description}
@@ -98,12 +95,11 @@ function CompanyScoreList({sixStarData}) {
           <span className={styles.type}>
             {sixStarData.law.name}
           </span>
-          {/* <span className={styles.data}>超过<span>70%</span>企业</span> */}
-          <span className={styles.data}>
-            该企业{sixStarData.law.name}评分
+          <span className={styles.score}>
             <span>{sixStarData.law.score}</span>
             分
           </span>
+          {/* <span className={styles.data}>超过<span>70%</span>企业</span> */}
         </div>
         <div className={styles.text}>
           {sixStarData.law.description}
@@ -121,12 +117,11 @@ function CompanyScoreList({sixStarData}) {
           <span className={styles.type}>
             {sixStarData.team.name}
           </span>
-          {/* <span className={styles.data}>超过<span>70%</span>企业</span> */}
-          <span className={styles.data}>
-            该企业{sixStarData.team.name}评分
+          <span className={styles.score}>
             <span>{sixStarData.team.score}</span>
             分
           </span>
+          {/* <span className={styles.data}>超过<span>70%</span>企业</span> */}
         </div>
         <div className={styles.text}>
           {sixStarData.team.description}
@@ -144,12 +139,11 @@ function CompanyScoreList({sixStarData}) {
           <span className={styles.type}>
             {sixStarData.influence.name}
           </span>
-          {/* <span className={styles.data}>超过<span>70%</span>企业</span> */}
-          <span className={styles.data}>
-            该企业{sixStarData.influence.name}评分
+          <span className={styles.score}>
             <span>{sixStarData.influence.score}</span>
             分
           </span>
+          {/* <span className={styles.data}>超过<span>70%</span>企业</span> */}
         </div>
         <div className={styles.text}>
           {sixStarData.influence.description}
