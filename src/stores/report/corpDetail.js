@@ -53,7 +53,9 @@ class CorpDetailStore {
       }))
       .catch(action('get corpDetail err', (err)=>{
         this.isLoading = false;
-        this.errData = err.response.data;
+        if (err.response && err.response.data) {
+          this.errData = err.response.data;
+        }
         console.log('get corpDetail err', err);
       }));
   }
