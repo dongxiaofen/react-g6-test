@@ -1,10 +1,12 @@
 import { observable, action } from 'mobx';
 import axios from 'axios';
 import moment from 'moment';
+import { setPathValue } from 'pathval';
+
 import { assetTransactionApi } from 'api';
+import geoCoordMap from 'helpers/geoCoordMap';
 import uiStore from './ui';
 import entireLoadingStore from './entireLoading';
-import { setPathValue } from 'pathval';
 
 class AssetTransactionStore {
   constructor() {
@@ -63,6 +65,171 @@ class AssetTransactionStore {
     return compliteDate;
   }
 
+  // 处理选择的资产统计类别
+  distributionMap(data, key) {
+    const mapData = [];
+    const barData = [];
+    let keyAllTotal = 0;
+    data.forEach((item) => {
+      if (geoCoordMap[item._id]) {
+        keyAllTotal += item[key];
+      }
+    });
+    // 设置单位
+    let unit;
+    let itemName;
+    // 遍历数据
+    data.forEach(item => {
+      let keyTotal;
+      if (key === 'auctionTotal' || key === 'transactionTotal') {
+        keyTotal = (item[key] / 10000).toFixed(2);
+      } else {
+        keyTotal = item[key];
+      }
+      const auctionTotal = (item.auctionTotal / 10000).toFixed(2);
+      const auctionSum = item.auctionSum;
+      const transactionTotal = (item.transactionTotal / 10000).toFixed(2);
+      const transactionSum = item.transactionSum;
+      let color;
+      if (key === 'auctionTotal' || key === 'transactionTotal') {
+        if (keyTotal <= 9999) {
+          color = '#779F85';
+        } else if (keyTotal <= 19999) {
+          color = '#55979F';
+        } else if (keyTotal <= 29999) {
+          color = '#2F4554';
+        } else if (keyTotal >= 30000) {
+          color = '#C13430';
+        } else {
+          color = '#000';
+        }
+      } else {
+        if (keyTotal <= 9) {
+          color = '#779F85';
+        } else if (keyTotal <= 199) {
+          color = '#55979F';
+        } else if (keyTotal <= 499) {
+          color = '#2F4554';
+        } else if (keyTotal >= 500) {
+          color = '#C13430';
+        } else {
+          color = '#000';
+        }
+      }
+      // 设置单位
+      unit = key === 'auctionTotal' || key === 'transactionTotal' ? '万元' : '笔';
+      switch (key) {
+        case 'auctionTotal':
+          itemName = '拍卖资产总额';
+          break;
+        case 'transactionTotal':
+          itemName = '交易资产总额';
+          break;
+        case 'auctionSum':
+          itemName = '拍卖笔数';
+          break;
+        case 'transactionSum':
+          itemName = '交易笔数';
+          break;
+        default:
+      }
+      if (item._id !== '未知' && item._id !== '其他' && item._id !== '台湾' && item._id !== '香港' && item._id !== '澳门') {
+        if (geoCoordMap[item._id]) {
+          const percent = keyAllTotal ? item[key] / keyAllTotal : 0;
+          mapData.push({
+            name: item._id,
+            value: [
+              geoCoordMap[item._id][0],
+              geoCoordMap[item._id][1],
+              keyTotal,
+              (percent * 100).toFixed(2),
+              itemName,
+              unit
+            ],
+            itemStyle: {
+              normal: {
+                color: color,
+                borderColor: color,
+                borderWidth: 1,
+                opacity: 0.5,
+              },
+              emphasis: {
+                color: color,
+                borderColor: color,
+                borderWidth: 1,
+                opacity: 0.7,
+              }
+            }
+          });
+        }
+        barData.push(
+          {
+            transactionTotal,
+            transactionSum,
+            auctionTotal,
+            auctionSum,
+            area: item._id
+          });
+      }
+    });
+    const _barData = this.distributionBarData(barData, key, unit);
+    return {
+      bar: _barData,
+      barData: _barData.data,
+      barAxis: _barData.axis,
+      mapData,
+    };
+  }
+
+  distributionBarData(data, key, unit) {
+    const axis = [];
+    const _data = [];
+    const whetherHasData = [];
+    let assetsBarData = data;
+    assetsBarData = assetsBarData.sort((prev, next) => {
+      return prev[key] - next[key];
+    });
+    assetsBarData = assetsBarData.slice(assetsBarData.length - 10);
+    assetsBarData.forEach((item) => {
+      if (Number(item[key]) > 0) {
+        whetherHasData.push(item);
+      }
+    });
+    if (whetherHasData.length > 0) {
+      whetherHasData.forEach((item, idx) => {
+        axis.push(`${whetherHasData.length - idx}.${item.area}`);
+        _data.push({
+          value: item[key],
+          unit: unit
+        });
+      });
+    }
+    return { data: _data, axis };
+  }
+
+  // 处理地图圆点的大小
+  mapSymbol(key, data) {
+    const value = data[2];
+    if (key === 'transactionTotal' || key === 'auctionTotal') {
+      if (value >= 0 && value <= 9999) {
+        return 20;
+      } else if (value >= 10000 && value <= 19999) {
+        return 25;
+      } else if (value >= 20000 && value <= 29999) {
+        return 30;
+      }
+      return 40;
+    }
+    if (value >= 0 && value <= 9) {
+      return 20;
+    } else if (value >= 10 && value <= 199) {
+      return 25;
+    } else if (value >= 200 && value <= 499) {
+      return 30;
+    }
+    return 40;
+  }
+
   /* 本地资产 */
   @observable assetLocalParams = {
     assignorType: '',
@@ -92,6 +259,21 @@ class AssetTransactionStore {
   @observable tradeTrendData = [];
   @observable tradeTrendLoading = false;
   // --------------------------------------------
+
+  /* 地区分布 */
+  @observable distributionParams = {
+    type: '',
+    region: '',
+    startDate: '',
+    endDate: '',
+  };
+  @observable distributionStaticKey = 'transactionTotal';
+  @observable areaDistributionLoading = false;
+  @observable areaDistributionDetailLoading = true;
+  @observable areaDistributionResult = {};
+  @observable distributionMapData = [];
+  @observable distributionBar = { axis: [], data: [] };
+  @observable distributionDetail = { region: '', data: {}, asset80Focus: 0 };
 
   @action.bound setAssetLocalParams(path, value) {
     setPathValue(this.assetLocalParams, path, value);
@@ -159,6 +341,72 @@ class AssetTransactionStore {
         }
       }));
     this.tradeTrendCancle = source.cancel;
+  }
+
+  @action.bound setDistributionParams(params) {
+    this.distributionParams = params;
+  }
+
+  @action.bound setDistributionStaticKey(val) {
+    const { mapData, barAxis, barData } = this.distributionMap(this.areaDistributionResult.basicData, val);
+    this.distributionStaticKey = val;
+    this.distributionMapData = mapData;
+    this.distributionBar.axis = barAxis;
+    this.distributionBar.data = barData;
+  }
+
+  @action.bound getAreaDistribution(params) {
+    const source = axios.CancelToken.source();
+    const { type, startDate, endDate } = params;
+    this.areaDistributionLoading = true;
+    this.areaDistributionDetailLoading = true;
+    assetTransactionApi.getAreaDistribution({ params: { type, startDate, endDate }, cancelToken: source.token })
+      .then(action('get area distribution', (resp) => {
+        const result = resp.data;
+        const { mapData, barAxis, barData } = this.distributionMap(result.basicData, this.distributionStaticKey);
+        this.distributionMapData = mapData;
+        this.distributionBar.axis = barAxis;
+        this.distributionBar.data = barData;
+        this.areaDistributionResult = resp.data;
+        this.areaDistributionLoading = false;
+        let region = barAxis[barAxis.length - 1];
+        region = region ? region.split('.')[1] : '';
+        if (region) {
+          this.getAreaDistributionDetail({ type, region, startDate, endDate });
+        }
+      }))
+      .catch(action('get area distribution catch', (err) => {
+        console.log(err);
+        this.areaDistributionLoading = false;
+        this.areaDistributionDetailLoading = false;
+      }));
+  }
+
+  @action.bound getAreaDistributionDetail(params) {
+    const source = axios.CancelToken.source();
+    this.areaDistributionDetailLoading = true;
+    assetTransactionApi.getAreaDistributionDetail({ params: params, cancelToken: source.token })
+      .then(action('get area distribution detail', (resp) => {
+        const basicData = this.areaDistributionResult.basicData;
+        const region = params.region;
+        if (basicData.length) {
+          let newRegionData = {};
+          for (let idx = 0; idx < basicData.length; idx++) {
+            if (basicData[idx]._id === region) {
+              newRegionData = basicData[idx];
+              break;
+            }
+          }
+          this.distributionDetail.region = region;
+          this.distributionDetail.data = newRegionData;
+          this.distributionDetail.asset80Focus = resp.data.asset80Focus;
+        }
+        this.areaDistributionDetailLoading = false;
+      }))
+      .catch(action('get area distribution detail catch', (err) => {
+        console.log(err);
+        this.areaDistributionDetailLoading = false;
+      }));
   }
 
   @action.bound resetStore() {
