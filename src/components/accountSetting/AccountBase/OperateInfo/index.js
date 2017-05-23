@@ -14,39 +14,33 @@ function OperateInfo({accountSettingStore, clientStore}) {
   if (data) {
     const config = [
       {
-        name: '快速查询报告',
-        keys: 'freeReportNum',
-        remainKey: '',
-        unit: '个',
-      },
-      {
-        name: '高级查询报告',
+        name: '查询报告',
         keys: 'reportCount',
-        remainKey: '',
+        remainKey: 'leftReportNum',
         unit: '个',
       },
       {
-        name: '深度评估报告',
-        keys: 'analysisReportCount',
-        remainKey: '',
-        unit: '个',
-      },
-      {
-        name: '监控主体报告',
+        name: '监控报告',
         keys: 'monitorCount',
-        remainKey: '',
+        remainKey: 'leftMonitorNum',
+        unit: '个',
+      },
+      {
+        name: '深度监控报告',
+        keys: 'deepMonitorNum',
+        remainKey: 'leftDeepMonitorNum',
         unit: '个',
       },
       {
         name: '个人核查',
         keys: 'personCheckCount',
-        remainKey: '',
+        remainKey: 'leftPersonCheckNum',
         unit: '个',
       },
       {
         name: '税务核查指标',
         keys: 'taxCheckCount',
-        remainKey: '',
+        remainKey: 'leftTaxCheckNum',
         unit: '个',
       },
     ];

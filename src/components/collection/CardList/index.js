@@ -37,6 +37,8 @@ function CardList({ collectionStore, uiStore }) {
         return '深度分析报告';
       case 'MONITOR':
         return '主体监控报告';
+      case 'DEEP_MONITOR':
+        return '深度监控报告';
       default:
         return '错误';
     }

@@ -7,18 +7,20 @@ function Menu({ routing }) {
   const config = [
     { parent: { module: '首页', route: 'accountProfile' } },
     { parent: { module: '查询', route: 'searchCompany' } },
-    {
-      parent: { module: '头条' },
-      children: [
-        { module: '每日头条', route: 'riskHeadlines' },
-        { module: '头条趋势', route: 'monitorStatistics' },
-      ]
-    },
+    // {
+    //   parent: { module: '头条' },
+    //   children: [
+    //     { module: '每日头条', route: 'riskHeadlines' },
+    //     { module: '头条趋势', route: 'monitorStatistics' },
+    //   ]
+    // },
+    { parent: { module: '头条', route: 'riskHeadlines' } },
     {
       parent: { module: '企业' },
       children: [
         { module: '报告列表', route: 'reportManage' },
         { module: '监控列表', route: 'monitorList' },
+        { module: '深度监控列表', route: 'deepMonitorList' },
       ]
     },
     {
@@ -39,6 +41,7 @@ function Menu({ routing }) {
   ];
 
   const routeToPage = (route) => {
+    console.log(route);
     browserHistory.push(`/${route}`);
   };
 

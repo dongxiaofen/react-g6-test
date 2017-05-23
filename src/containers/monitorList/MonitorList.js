@@ -9,12 +9,17 @@ import Counter from 'components/monitorList/Counter';
 import TableList from 'components/monitorList/TableList';
 import PauseInfo from 'components/monitorList/PauseInfo';
 import AddRelation from 'components/common/AddRelation';
-@inject('monitorListStore', 'uiStore')
+@inject('monitorListStore', 'uiStore', 'routing')
 @observer
 export default class MonitorList extends Component {
   static propTypes = {
     monitorListStore: PropTypes.object,
+    routing: PropTypes.object,
   };
+  componentWillMount() {
+    const pathname = this.props.routing.location.pathname.substr(1);
+    this.props.monitorListStore.changeValue('activeList', pathname);
+  }
   componentDidMount() {
     this.props.monitorListStore.getMainCount();
     this.props.monitorListStore.getMainList();
@@ -22,7 +27,7 @@ export default class MonitorList extends Component {
   render() {
     return (
       <Container>
-        <Title>监控列表</Title>
+        <Title {...this.props} />
         <SearchBar {...this.props} />
         <TypeFilter {...this.props} />
         <TimeSort {...this.props} />
