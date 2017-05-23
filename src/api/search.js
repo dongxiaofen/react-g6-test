@@ -17,8 +17,8 @@ export const createReport = (params) => {
 export const createAnalysisReport = (params) => {
   return axios.post(`/api/analysisReport`, {companyName: params});
 };
-export const createMonitor = (params) => {
-  return axios.post(`/api/monitor`, params);
+export const createMonitor = (params, url) => {
+  return axios.post(`${url}`, params);
 };
 export const getFeedBack = (params) => {
   return axios.post(`/api/company/search/feedback`, params);

@@ -38,16 +38,26 @@ class ForceNetworkStore {
   @action.bound expand() {
     this.expandNetwork.nodes = [];
     this.expandNetwork.links = [];
-    const source = 'B4D4425824F00FB3055281E3B5DFA95AB37BBF74FB02A49C607478C115A94BDF';
-    const target = '4D6D56FEB192CE7FF96EACB57001D69EA2BF36FE67AFE4A2ADE8D0383939D72D';
+    const source = '7C6B00F8E8AE273AE43412572F8B57E0E3F2BB5ABDE4FAA8AB3CB4769A1F3E93';
+    const target = '5D5D8F1C928299E884A210A93E53088B7D0BADF1739D34A9667A1AC945658360';
     const currentNetwork = toJS(svgTools.getCurrentNodesLinks(this.forceNetwork));
-    console.log({target, source, currentNetwork});
-    companyHomeApi.expandNetwork(bannerStore.monitorId, {target, source, currentNetwork})
+    companyHomeApi.expandNetwork(bannerStore.monitorId, { target, source, currentNetwork })
       .then(action('get expand data', (resp) => {
-        console.log(resp);
+        // console.log(resp);
+        resp.data.currentNetwork.nodes.map((node) => {
+          node.hide = true;
+        });
+        resp.data.currentNetwork.links.map((link) => {
+          link.hide = true;
+        });
+        this.expandNetwork.nodes = resp.data.currentNetwork.nodes;
+        this.expandNetwork.links = resp.data.currentNetwork.links;
+        this.expandNetwork.change = !this.expandNetwork.change;
+        this.isExpandSaved = false;
       }))
       .catch(action('get expand出错', (err) => {
         console.log('get expand出错', err);
+        this.expandNetwork.change = !this.expandNetwork.change;
       }));
     // this.expandNetwork.nodes.push({
     //   hide: true,
@@ -91,15 +101,19 @@ class ForceNetworkStore {
           link.hide = true;
           if (resp.data.currentNetwork.nodes.findIndex((node) => node.id === link.source) < 0 || resp.data.currentNetwork.nodes.findIndex((node) => node.id === link.target) < 0) {
             canRenderSvg = false;
-            console.info('网络图link名字和node不对应', link);
+            console.info('网络图link名字异常', link);
           }
         });
         resp.data.currentNetwork.nodes.map((node) => {
           node.hide = true;
-          if (node.layer === -1) {
-            // canRenderSvg = false;
-            // console.info('网络图node的layer有-1', node);
-          }
+          // if (resp.data.currentNetwork.links.findIndex((link) => node.id === link.source) < 0 || resp.data.currentNetwork.links.findIndex((link) => node.id === link.target) < 0) {
+          //   canRenderSvg = false;
+          //   console.info('网络图node名字异常', node);
+          // }
+          // if (node.layer === -1) {
+          //   // canRenderSvg = false;
+          //   // console.info('网络图node的layer有-1', node);
+          // }
         });
         if (!canRenderSvg || resp.data.currentNetwork.nodes[0].layer === undefined) {
           this.error = {
@@ -125,32 +139,32 @@ class ForceNetworkStore {
   }
   @action.bound getShortPath(monitorId, params) {
     companyHomeApi.getShortPath(monitorId, params)
-      .then(action('get short path', (resp)=>{
+      .then(action('get short path', (resp) => {
         this.shortestPahth = resp.data;
       }))
-      .catch(action((error)=>{
+      .catch(action((error) => {
         console.log('getShortPathk出错', error);
       }));
   }
   @action.bound getCompNodeInfo(monitorId, params) {
     companyHomeApi.getCompNodeInfo(monitorId, params)
-    .then(action('getCompNodeInfo', (resp)=>{
-      this.nodeInfo.detailInfo = resp.data;
-    }))
-    .catch(action((error)=>{
-      this.nodeInfo.detailInfo = {error: true};
-      console.log('getCompNodeInfo出错', error);
-    }));
+      .then(action('getCompNodeInfo', (resp) => {
+        this.nodeInfo.detailInfo = resp.data;
+      }))
+      .catch(action((error) => {
+        this.nodeInfo.detailInfo = { error: true };
+        console.log('getCompNodeInfo出错', error);
+      }));
   }
   @action.bound getPersonNodeInfo(monitorId, params) {
     companyHomeApi.getPersonNodeInfo(monitorId, params)
-    .then(action('getPersonNodeInfo', (resp)=>{
-      this.nodeInfo.detailInfo = resp.data;
-    }))
-    .catch(action((error)=>{
-      this.nodeInfo.detailInfo = {error: true};
-      console.log('getPersonNodeInfo', error);
-    }));
+      .then(action('getPersonNodeInfo', (resp) => {
+        this.nodeInfo.detailInfo = resp.data;
+      }))
+      .catch(action((error) => {
+        this.nodeInfo.detailInfo = { error: true };
+        console.log('getPersonNodeInfo', error);
+      }));
   }
   @action.bound updateValue(keyPath, value) {
     pathval.setPathValue(this, keyPath, value);

@@ -31,7 +31,7 @@ function AreaSelect({highRiskCorpStore, module, onChange}) {
     <div className={styles.selectLine}>
       <span className={styles.label}>地区</span>
       <Select
-        width="120px"
+        width="100px"
         className={styles.selectBox}
         defaultValue={selectValue}
         onChange={selectChange}

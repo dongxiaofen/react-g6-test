@@ -5,7 +5,6 @@ export MyHomePage from './myHomePage';
 export RiskHeadlines from './riskHeadlines';
 export HomePage from './homePage';
 export MonitorList from './monitorList';
-export DeepMonitorList from './deepMonitorList';
 export SearchCompany from './searchCompany';
 export CompanyHome from './companyHome';
 export Solution from './solution';

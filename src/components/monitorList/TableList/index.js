@@ -8,10 +8,9 @@ import AddTr from './AddTr';
 import Pager from 'components/common/Pager';
 import styles from './index.less';
 function TableList({monitorListStore}) {
-  const activeList = monitorListStore.activeList;
-  const mainData = monitorListStore[activeList].mainList.content;
-  const relData = monitorListStore[activeList].relationList;
-  const relDataStatus = monitorListStore[activeList].relationListStatus;
+  const mainData = monitorListStore.monitorList.mainList.content;
+  const relData = monitorListStore.monitorList.relationList;
+  const relDataStatus = monitorListStore.monitorList.relationListStatus;
   const createList = () => {
     const output = [];
     let item;
@@ -72,21 +71,18 @@ function TableList({monitorListStore}) {
       <div className={styles.tableList}>
         {createList()}
       </div>
-      <Pager module={`${activeList}Pager`} />
+      <Pager module="monitorListPager" />
     </div>
   );
 }
 
 export default loadingComp({
-  mapDataToProps: props => {
-    const activeList = props.monitorListStore.activeList;
-    return {
-      loading: props.monitorListStore[activeList].mainList.content === undefined ? true : false,
-      error: props.monitorListStore[activeList].mainList.error,
-      imgCategory: 13,
-      category: 2,
-      errCategory: 2,
-      module: '监控列表',
-    };
-  },
+  mapDataToProps: props => ({
+    loading: props.monitorListStore.monitorList.mainList.content === undefined ? true : false,
+    error: props.monitorListStore.monitorList.mainList.error,
+    imgCategory: 13,
+    category: 2,
+    errCategory: 2,
+    module: '监控列表',
+  }),
 })(observer(TableList));

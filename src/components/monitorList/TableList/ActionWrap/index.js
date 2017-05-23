@@ -4,10 +4,9 @@ import Switch from 'components/lib/switch';
 import Modal from 'components/lib/Modal';
 import styles from './index.less';
 function ActionWrap({ data, mainData, index, relation, monitorListStore, payModalStore, messageStore, clientStore }) {
-  const activeList = monitorListStore.activeList;
   const monitorId = relation === 'main' ? data.monitorId : data.monitorCompanyType.monitorId;
   const status = data.status;
-  const switchLoading = monitorListStore[activeList].switchLoading.get(monitorId);
+  const switchLoading = monitorListStore.monitorList.switchLoading.get(monitorId);
   const textDict = {
     'PAUSE': '暂停',
     'EXPIRED': '监控到期',
@@ -18,7 +17,7 @@ function ActionWrap({ data, mainData, index, relation, monitorListStore, payModa
   const switchFlag = status === 'PAUSE' ? false : true;
   const expired = status === 'EXPIRED';
   const relDisable = relation === 'relation' && mainData.status === 'PAUSE';
-  const relLoading = relation === 'relation' && monitorListStore[activeList].switchLoading.get(mainData.monitorId);
+  const relLoading = relation === 'relation' && monitorListStore.monitorList.switchLoading.get(mainData.monitorId);
   const changeStatus = (newStatus) => {
     if (newStatus || relation === 'relation') {
       monitorListStore.changeStatus({
@@ -89,10 +88,6 @@ function ActionWrap({ data, mainData, index, relation, monitorListStore, payModa
             loading={switchLoading || relLoading} />
         </div>
         {relation === 'main' && <div className={styles.statusTextBox}>
-          {activeList === 'monitorList' && <div className={expired ? styles.upgradeBtn : styles.upgradeBtnBlue} onClick={recharge}>
-            升级
-          </div>}
-          {activeList === 'monitorList' && <span className={styles.verLine}></span>}
           <div className={expired ? styles.rechargeBtn : styles.rechargeBtnBlue} onClick={recharge}>
             续期
           </div>

@@ -22,17 +22,11 @@ class AccountSettingStore {
     REPORT_MAIN: '创建查询报告',
     REPORT_REFRESH: '刷新查询报告',
     REPORT_TO_MONITOR: '查询报告转为监控报告',
-    REPORT_TO_DEEP_MONITOR: '查询报告转为深度监控报告',
     MONITOR_MAIN: '创建监控报告',
     MONITOR_MAIN_RENEWAL: '监控报告续费',
-    MONITOR_TO_DEEP_MONITOR: '监控报告升级为深度监控报告',
-    DEEP_MONITOR_MAIN: '创建深度监控报告',
-    DEEP_MONITOR_MAIN_RENEWAL: '深度监控报告续费',
     REPORT_PERSON_CHECK: '个人核查',
     MONITOR_PERSON_CHECK: '个人核查',
-    DEEP_MONITOR_PERSON_CHECK: '个人核查',
     MONITOR_TAX_CHECK: '税务核查',
-    DEEP_MONITOR_TAX_CHECK: '税务核查',
   };
   taxTypeMap = {
     R001: 'A类营业收入',

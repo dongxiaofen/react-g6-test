@@ -3,8 +3,7 @@ import { observer } from 'mobx-react';
 import Modal from 'components/lib/Modal';
 import styles from './index.less';
 function PauseInfo({monitorListStore}) {
-  const activeList = monitorListStore.activeList;
-  const { visible, loading } = monitorListStore[activeList].pauseInfo;
+  const { visible, loading } = monitorListStore.monitorList.pauseInfo;
   const confirmAction = () => {
     monitorListStore.changeStatusInfo({
       loading: true,

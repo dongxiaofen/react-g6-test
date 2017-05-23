@@ -6,7 +6,11 @@ import ReportButton from './ReportButton';
 
 function SearchItemRight({itemData, modalStore, payModalStore, singleData, createMonitor, createReportType, selectReportType}) {
   let output = '';
-  if (itemData.monitorStatus !== 'MONITOR' && itemData.monitorStatus !== 'PAUSE' && itemData.monitorStatus !== 'EXPIRED' && itemData.reportStatus !== 'REPORT' && itemData.analysisReportStatus !== 'REPORT') {
+  if (itemData.reportStatus === 'REPORT' || itemData.monitorStatus === 'MONITOR' || itemData.monitorStatus === 'PAUSE' || itemData.monitorStatus === 'EXPIRED') {
+    output = (
+      <ReportButton itemData={itemData} />
+    );
+  } else {
     output = (
       <FreeButton
         payModalStore={payModalStore}
@@ -16,11 +20,6 @@ function SearchItemRight({itemData, modalStore, payModalStore, singleData, creat
         createMonitor={createMonitor}
         createReportType={createReportType}
         selectReportType={selectReportType} />
-    );
-  }
-  if (itemData.reportStatus === 'REPORT' || itemData.monitorStatus === 'MONITOR' || itemData.monitorStatus === 'PAUSE' || itemData.monitorStatus === 'EXPIRED' || itemData.analysisReportStatus === 'REPORT') {
-    output = (
-      <ReportButton itemData={itemData} />
     );
   }
   return (

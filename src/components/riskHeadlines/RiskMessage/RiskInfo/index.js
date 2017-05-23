@@ -8,7 +8,6 @@ function RiskInfo({riskHeadlinesStore, searchCompanyStore}) {
   const events = riskHeadlinesStore.events;
   const isSubCom = events.companyType === 'SUB';
   const monitorId = events.info.monitorId;
-  const active = riskHeadlinesStore.companyList.active;
   if (this.props.riskHeadlinesStore.events.info.error) {
     return <div></div>;
   }
@@ -19,11 +18,7 @@ function RiskInfo({riskHeadlinesStore, searchCompanyStore}) {
     browserHistory.push(`/searchCompany`);
   };
   const viewReport = ()=> {
-    if (active.productType === 'MONITOR') {
-      browserHistory.push(`/companyHome?monitorId=${monitorId}&companyType=MAIN`);
-    } else if (active.productType === 'DEEP_MONITOR') {
-      console.log('跳转深度报告');
-    }
+    browserHistory.push(`/companyHome?monitorId=${monitorId}`);
   };
   return (
     <div>
