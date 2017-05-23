@@ -11,13 +11,10 @@ function CardList({ collectionStore, uiStore }) {
     let url;
     switch (productType) {
       case 'REPORT':
-        url = `/companyHome?reportId=${id}&companyType=MAIN`;
-        break;
-      case 'ANALYSIS_REPORT':
-        url = `/companyHome?analysisReportId=${id}&companyType=MAIN`;
+        url = `/companyHome?reportId=${id}`;
         break;
       case 'MONITOR':
-        url = `/companyHome?monitorId=${id}&companyType=MAIN`;
+        url = `/companyHome?monitorId=${id}`;
         break;
       default:
         break;

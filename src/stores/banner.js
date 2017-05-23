@@ -12,10 +12,7 @@ class BannerStore {
   // banner
   @observable monitorId = '';
   @observable reportId = '';
-  @observable analysisReportId = '';
-  @observable companyName = '';
   @observable score = '';
-  @observable companyType = '';
 
   @observable isLoading = false;
   @observable hisNameVis = false;
@@ -131,14 +128,11 @@ class BannerStore {
   @action.bound extendContact(key) {
     this.contactExtended = this.contactExtended === key ? '' : key;
   }
-  @action.bound getBannerInfo({ monitorId, reportId, analysisReportId, companyName, companyType }) {
+  @action.bound getBannerInfo({ monitorId, reportId }) {
     this.monitorId = monitorId;
     this.reportId = reportId;
-    this.analysisReportId = analysisReportId;
-    this.companyName = companyName;
-    this.companyType = companyType;
     this.isLoading = true;
-    companyHomeApi.getBannerInfo({ monitorId, reportId, analysisReportId, companyName, companyType })
+    companyHomeApi.getBannerInfo({ monitorId, reportId })
       .then(action('get banner info...', (resp) => {
         const whatThisBannerInfo = resp.data.bannerInfo.bannerInfo;
         this.companyName = resp.data.name;
@@ -222,7 +216,7 @@ class BannerStore {
     companyHomeApi.updateToMonitor({ reportId, time })
       .then(action('update to monitor', (resp) => {
         payModalStore.closeAction();
-        browserHistory.push(`/companyHome?monitorId=${resp.data.monitorId}&companyType=MAIN`);
+        browserHistory.push(`/companyHome?monitorId=${resp.data.monitorId}`);
         messageStore.openMessage({ content: '成功创建监控', callBack: this.windowReload });
       }))
       .catch((err) => {
@@ -389,9 +383,7 @@ class BannerStore {
   @action.bound resetStore() {
     this.monitorId = '';
     this.reportId = '';
-    this.companyName = '';
     this.score = '';
-    this.companyType = '';
     this.isLoading = false;
     this.hisNameVis = false;
     this.contactVis = false;
