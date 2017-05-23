@@ -137,8 +137,12 @@ function PayModal({
           {monitorButton()}
         </div>
         <div className={`${isComboRenewal ? styles.comboRenewal_tips : styles.nomal_tips}`}>
-          {monitorType === 'DEPTH_MONITOR' ? <span>包含：监控数据及功能，企业税务分析和综合分析评分、风险扫描预警。</span> : ''}
-          {monitorType === 'MONITOR' ? <span>包含：查询报告数据，并实时监控、推送数据。</span> : ''}
+          {monitorType === 'DEPTH_MONITOR' ? <span>包含：监控数据及功能，企业税务分析和综合分析评分、风险扫描预警。
+            {!isComboRenewal ? <i className={styles.triangle_right}></i> : ''}
+          </span> : ''}
+          {monitorType === 'MONITOR' ? <span>包含：查询报告数据，并实时监控、推送数据。
+            {!isComboRenewal ? <i className={styles.triangle_left}></i> : ''}
+          </span> : ''}
         </div>
         {isComboRenewal ? '' :
           <div className={`clearfix ${styles.wrap}`} style={{ marginBottom: isComboRenewal ? 0 : 30 }}>
