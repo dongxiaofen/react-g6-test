@@ -12,7 +12,7 @@ class AlertAnalysisStore {
   alertCancel = null;
   @observable listData = [];
   // 六芒星data
-  @observable sixStarData = {};
+  @observable sixStarData = '';
   // 六芒星loading
   @observable loading = false;
   @observable detailData = {
@@ -202,7 +202,7 @@ class AlertAnalysisStore {
         console.log(err.response, '=====six error');
         // 关闭loading
         this.loading = false;
-        this.sixStarData = {error: 'error'};
+        // this.sixStarData = {error: 'error'};
       }));
   }
   @action.bound resetStore() {

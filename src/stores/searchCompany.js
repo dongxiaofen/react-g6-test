@@ -476,7 +476,14 @@ class SearchCompanyStore {
   }
   // 创建监控
   @action.bound createMonitor(obj) {
-    searchApi.createMonitor(obj)
+    // 判断请求创建哪一种监控
+    let url = '';
+    if (url) {
+      url = '/api/deepMonitor';
+    } else {
+      url = '/api/monitor';
+    }
+    searchApi.createMonitor(obj, url)
       .then(action('createMonitor', (resp) => {
         payModalStore.closeAction();
         const text = {

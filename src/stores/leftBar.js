@@ -103,7 +103,8 @@ class LeftBarStore {
           menuText: '预警分析',
           menuKey: 'alertAnalysis',
           helpInfo: helpInfo1,
-          contain: ['deepMonitor']
+          // contain: ['deepMonitor']
+          contain: ['deepMonitor', 'monitor']
         },
       ],
       helpInfo: helpInfo2,
