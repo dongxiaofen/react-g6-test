@@ -20,7 +20,7 @@ function Status({bannerStore, routing}) {
     // 主体监控中
     leftType = (
       <div className={styles.bannerType}>
-        <i className="fa fa-flag"></i>
+        <i className="fa fa-eye"></i>
         <span>正在监控中</span>
       </div>
     );
@@ -28,7 +28,7 @@ function Status({bannerStore, routing}) {
     // 主体监控已到期
     leftType = (
       <div className={styles.bannerType}>
-        <i className="fa fa-flag-o"></i>
+        <i className="fa fa-eye-slash"></i>
         <span>监控已到期</span>
       </div>
     );
@@ -36,7 +36,7 @@ function Status({bannerStore, routing}) {
     // 主体监控已暂停
     leftType = (
       <div className={styles.bannerType}>
-        <i className="fa fa-flag-o"></i>
+        <i className="fa fa-eye-slash"></i>
         <span>监控已暂停</span>
       </div>
     );

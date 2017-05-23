@@ -172,7 +172,7 @@ function ReportAction({ bannerStore, modalStore, payModalStore, routing }) {
           // 恢复按钮的点击事件
           output = (
             <div key="textAction4" className={styles.textAction} onClick={pauseOrRestoreMonitorConfirm}>
-              <i className="fa fa-camera"></i>
+              <i className="fa fa-eye"></i>
               恢复监控
             </div>
           );
@@ -181,7 +181,7 @@ function ReportAction({ bannerStore, modalStore, payModalStore, routing }) {
         // 暂停监控按钮
         output = (
           <div key="textAction4" className={styles.textAction} onClick={pauseOrRestoreMonitorModal}>
-            <i className="fa fa-camera-retro" aria-hidden="true"></i>
+            <i className="fa fa-eye-slash" aria-hidden="true"></i>
             暂停监控
           </div>
         );

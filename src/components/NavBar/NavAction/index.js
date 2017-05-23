@@ -63,7 +63,7 @@ export default class NavAction extends Component {
         </div>
         <div className={styles.menuBox} style={{ position: 'relative' }}>
           <span className={styles.downloadApp}>
-            <i className="fa fa-code-fork" aria-hidden="true"></i>下载APP
+            <i className="fa fa-qrcode" aria-hidden="true"></i>下载APP
           </span>
           <HoverBox width="100px" left="0px">
             <div className={styles.code}></div>

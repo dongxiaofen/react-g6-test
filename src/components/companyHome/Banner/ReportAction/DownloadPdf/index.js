@@ -199,7 +199,9 @@ export default class DownloadPdf extends Component {
                 : null
             }
           </div>
-          <div onClick={this.downloadPdf} className={styles.pdfDownModaBtn}>下载</div>
+          <div onClick={this.downloadPdf} className={styles.pdfDownModaBtn}>
+            <i className="fa fa-download"></i>下载
+          </div>
         </div>
         <div className={styles['download-content-box']}>
           {this.menuLevelOne()}
