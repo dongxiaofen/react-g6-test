@@ -25,7 +25,7 @@ function RegCapSelect({highRiskCorpStore, module, regCapSelect, onChange}) {
     <div className={styles.selectLine}>
       <span className={styles.label}>注册资本</span>
       <Select
-        width="120px"
+        width="100px"
         className={styles.selectBox}
         defaultValue={selectValue}
         onChange={selectChange}

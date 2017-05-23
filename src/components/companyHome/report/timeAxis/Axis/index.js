@@ -13,7 +13,8 @@ class Axis extends Component {
     this.currStep = 0;
   }
   componentDidMount() {
-    const size = Object.keys(this.props.timeAxisStore.axisData.data).length;
+    let size = Object.keys(this.props.timeAxisStore.axisData.data).length;
+    size = size < 9 ? 9 : size;
     const scrollCon = document.getElementById('scrollCon');
     const scrollBar = document.getElementById('scrollBar');
     const scrollConWrap = document.getElementById('scrollConWrap');
@@ -24,12 +25,14 @@ class Axis extends Component {
       if (evt.wheelDelta > 0) {
         if (this.currStep >= 1) {
           this.currStep--;
+          evt.preventDefault();
         } else {
           this.currStep = 0;
         }
       } else {
         if (Math.abs(this.currStep) <= totalStep - 1) {
           this.currStep++;
+          evt.preventDefault();
         } else {
           this.currStep = totalStep;
         }
@@ -38,26 +41,23 @@ class Axis extends Component {
       scrollCon.style.left = -this.currStep * conStep + '%';
     });
     scrollConWrap.addEventListener('DOMMouseScroll', (evt) => {
-      if (evt.detail > 0) {
+      if (evt.detail <= 0) {
         if (this.currStep > 0) {
           this.currStep--;
+          evt.preventDefault();
+        } else {
+          this.currStep = 0;
         }
       } else {
         if (Math.abs(this.currStep) < totalStep) {
           this.currStep++;
+          evt.preventDefault();
+        } else {
+          this.currStep = totalStep;
         }
       }
       scrollBar.style.left = this.currStep * barStep + '%';
       scrollCon.style.left = -this.currStep * conStep + '%';
-    });
-    scrollConWrap.addEventListener('mouseenter', () => {
-      const bodyScroll = document.body.scrollTop;
-      document.body.onscroll = () => {
-        document.body.scrollTop = bodyScroll;
-      };
-    });
-    scrollConWrap.addEventListener('mouseleave', () => {
-      document.body.onscroll = null;
     });
   }
   getDetail() {
@@ -105,15 +105,6 @@ class Axis extends Component {
       return <div key={labelKey} className={styles.lineItem}>{itemList[labelKey]}</div>;
     });
   }
-  mapBarToCon(distence) {
-    const target = document.getElementById('scrollBar');
-    const targetWrap = document.getElementById('scrollBarWrap');
-    const scrollCon = document.getElementById('scrollCon');
-    return -(scrollCon.clientWidth - targetWrap.clientWidth) / (targetWrap.clientWidth - target.clientWidth) * distence;
-  }
-  formatPx(value) {
-    return value.length === 0 ? 0 : parseInt(value, 10);
-  }
   computeMinAndMax(obj) {
     const arr = [];
     Object.keys(obj).map(time => {
@@ -138,7 +129,8 @@ class Axis extends Component {
   }
   startScroll = (evt) => {
     evt.persist();
-    const size = Object.keys(this.props.timeAxisStore.axisData.data).length;
+    let size = Object.keys(this.props.timeAxisStore.axisData.data).length;
+    size = size < 9 ? 9 : size;
     const scrollBarWrap = document.getElementById('scrollBarWrap');
     const scrollBar = document.getElementById('scrollBar');
     const scrollCon = document.getElementById('scrollCon');
@@ -171,7 +163,6 @@ class Axis extends Component {
     const moduleData = this.props.timeAxisStore.axisData.data;
     const sortedTime = Object.keys(moduleData).sort().reverse();
     const stockCode = this.props.bannerStore.stockCode;
-    console.log(!stockCode, '--stockCode');
     const labelConf = [
       {label: '工商信息', key: 'corp'},
       {label: '法务信息', key: 'legal'},
@@ -180,7 +171,7 @@ class Axis extends Component {
       {label: '上市公告', key: 'stock', hide: !stockCode},
       {label: '团队信息', key: 'team'},
     ];
-    const labelLen = labelConf.filter(item => !item.hide).length;
+    const size = Object.keys(moduleData).length;
     return (
       <div className={styles.wrap}>
         <div className={styles.iconWrap}>
@@ -190,7 +181,7 @@ class Axis extends Component {
         <div className={styles.labelCon}>
           {this.createLabel(labelConf)}
         </div>
-        <div id="scrollConWrap" className={styles.lineCon} style={{height: (labelLen + 1) * 40}}>
+        <div id="scrollConWrap" className={styles.lineCon}>
           <div className={styles.scollConWrap}>
             <div
               id="scrollCon"
@@ -200,9 +191,9 @@ class Axis extends Component {
               {this.createLine(sortedTime, labelConf, moduleData)}
             </div>
           </div>
-          <div id="scrollBarWrap" className={styles.barWrap}>
+          {size > 9 && <div id="scrollBarWrap" className={styles.barWrap}>
             <div id="scrollBar" style={{transition: 'all .3s linear'}} className={styles.scrollBar} onMouseDown={this.startScroll}></div>
-          </div>
+          </div>}
         </div>
       </div>
     );
