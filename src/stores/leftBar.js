@@ -68,12 +68,12 @@ class LeftBarStore {
       menuText: '关联网络',
       menuKey: 'network',
       children: [
-        {
-          menuText: '全网关系',
-          menuKey: 'forceNetwork',
-          helpInfo: helpInfo1,
-          contain: ['deepMonitor', 'monitor']
-        },
+        // {
+        //   menuText: '全网关系',
+        //   menuKey: 'forceNetwork',
+        //   helpInfo: helpInfo1,
+        //   contain: ['deepMonitor', 'monitor']
+        // },
         {
           menuText: '关联关系',
           menuKey: 'network',
