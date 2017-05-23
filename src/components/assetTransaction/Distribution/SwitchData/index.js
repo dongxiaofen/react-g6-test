@@ -16,7 +16,17 @@ function SwitchData({ assetTransactionStore }) {
   const distributionStaticKey = assetTransactionStore.distributionStaticKey;
   const setParams = assetTransactionStore.setDistributionParams;
   const getAreaDistribution = assetTransactionStore.getAreaDistribution;
-  const getAreaDistributionDetail = assetTransactionStore.getAreaDistributionDetail;
+
+  const requestCancel = () => {
+    const distributionCancel = assetTransactionStore.distributionCancel;
+    const distributionDetailCancel = assetTransactionStore.distributionDetailCancel;
+    if (distributionCancel && typeof distributionCancel === 'function') {
+      distributionCancel();
+    }
+    if (distributionDetailCancel && typeof distributionDetailCancel === 'function') {
+      distributionDetailCancel();
+    }
+  };
 
   const assetsRadioOptions = [
     { label: '交易资产总额', value: 'transactionTotal' },
@@ -43,20 +53,22 @@ function SwitchData({ assetTransactionStore }) {
   };
 
   const setAssignor = (evt) => {
+    requestCancel();
     params.type = evt.target.value;
     setParams(params);
     getAreaDistribution(params);
   };
 
   const dateOnChange = (dateString, dateTime) => {
+    requestCancel();
     params.startDate = dateTime[0];
     params.endDate = dateTime[1];
     setParams(params);
     getAreaDistribution(params);
-    getAreaDistributionDetail(params);
   };
 
   const checkChange = (value) => {
+    requestCancel();
     params.startDate = value[0];
     params.endDate = value[1];
     setParams(params);

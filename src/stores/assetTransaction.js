@@ -12,6 +12,8 @@ class AssetTransactionStore {
   constructor() {
     this.assetLocalCancel = '';
     this.tradeTrendCancel = '';
+    this.distributionCancel = '';
+    this.distributionDetailCancel = '';
   }
 
   dealWithDate(type, startDate, endDate, result) {
@@ -396,9 +398,12 @@ class AssetTransactionStore {
       }))
       .catch(action('get area distribution catch', (err) => {
         console.log(err);
-        this.areaDistributionLoading = false;
-        this.areaDistributionDetailLoading = false;
+        if (!axios.isCancel(err)) {
+          this.areaDistributionLoading = false;
+          this.areaDistributionDetailLoading = false;
+        }
       }));
+    this.distributionCancel = source.cancel;
   }
 
   @action.bound getAreaDistributionDetail(params) {
@@ -424,8 +429,11 @@ class AssetTransactionStore {
       }))
       .catch(action('get area distribution detail catch', (err) => {
         console.log(err);
-        this.areaDistributionDetailLoading = false;
+        if (!axios.isCancel(err)) {
+          this.areaDistributionDetailLoading = false;
+        }
       }));
+    this.distributionDetailCancel = source.cancel;
   }
 
   @action.bound resetStore() {
