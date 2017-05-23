@@ -40,9 +40,9 @@ class TaxCheckStore {
       {year: '2015', taxIndex: 'R001', input: '', msg: ''},
     ];
   }
-  @action.bound postSelectInfo(monitorId, analysisReportId) {
+  @action.bound postSelectInfo(monitorId, reportId) {
     const params = this.selectConf;
-    companyHomeApi.addTaxCheck(monitorId, analysisReportId, params)
+    companyHomeApi.addTaxCheck(monitorId, reportId, params)
       .then(action('addTaxCheck', () => {
         modalStore.confirmLoading = false;
         modalStore.visible = false;
@@ -51,7 +51,7 @@ class TaxCheckStore {
           type: 'info',
           content: '添加成功'
         });
-        this.getTaxCheckList(monitorId);
+        this.getTaxCheckList(monitorId, reportId);
       }))
       .catch(action('addTaxCheck', err => {
         console.log(err);
@@ -63,13 +63,10 @@ class TaxCheckStore {
       }));
   }
   // 获取列表数据
-  @action.bound getTaxCheckList(monitorId) {
+  @action.bound getTaxCheckList(monitorId, reportId) {
     this.taxState = true;
     if (window.reportSourceCancel === undefined) {
       window.reportSourceCancel = [];
-    }
-    if (monitorId) {
-      this.monitorId = monitorId;
     }
     const source = CancelToken.source();
     window.reportSourceCancel.push(source.cancel);
@@ -80,7 +77,7 @@ class TaxCheckStore {
       size: uiStore.uiState.taxCheckPager.size,
     };
     // 获取列表数据
-    companyHomeApi.getTaxCheckList(this.monitorId, params, source)
+    companyHomeApi.getTaxCheckList(monitorId, reportId, params, source)
       .then(action('taxList list', (resp) => {
         this.taxListData = resp.data;
         // 关闭loading
