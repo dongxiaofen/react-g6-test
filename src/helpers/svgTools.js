@@ -203,3 +203,7 @@ export function getCurrentNodesLinks(forceNetwork) {
   });
   return output;
 }
+// 判断连线箭头端节点是公司还是人
+export function getArrowType(target, nodes) {
+  return nodes[nodes.findIndex((node) => node.id === target.id)].cateType;
+}
