@@ -375,7 +375,7 @@ class SearchCompanyStore {
         };
         messageStore.openMessage({ ...obj });
         // 跳转
-        browserHistory.push(`/companyHome?reportId=${resp.data.reportId}&companyType=MAIN`);
+        browserHistory.push(`/companyHome?reportId=${resp.data.reportId}`);
       }))
       .catch(action('createReport error', (err) => {
         // 关闭弹出按钮loading
@@ -391,7 +391,7 @@ class SearchCompanyStore {
             };
             messageStore.openMessage({ ...obj });
             // 跳转
-            browserHistory.push(`/companyHome?reportId=${err.response.data.data.reportId}&companyType=MAIN`);
+            browserHistory.push(`/companyHome?reportId=${err.response.data.data.reportId}`);
           } else {
             // 弹出失败提示
             const obj = {
@@ -425,7 +425,7 @@ class SearchCompanyStore {
       .then(action('createMonitor', (resp) => {
         payModalStore.closeAction();
         messageStore.openMessage({ ...text });
-        browserHistory.push(`/companyHome?monitorId=${resp.data.monitorId}&companyType=MAIN`);
+        browserHistory.push(`/companyHome?monitorId=${resp.data.monitorId}`);
       }))
       .catch(action('createMonitor error', (err) => {
         console.log(err.response, '=====createMonitor error');
