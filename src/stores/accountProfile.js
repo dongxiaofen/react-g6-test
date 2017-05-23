@@ -2,19 +2,9 @@ import { observable, action } from 'mobx';
 import { accountProfileApi } from 'api';
 
 class AccountProfileStore {
-  @observable ownWarningStatisticsData = {
-    'alertCompanyCount': 3,
-    'alertCount': 33,
-    'monitorCount': 33,
-    'reportCount': 33
-  };
+  @observable ownWarningStatisticsData = {};
 
-  @observable subWarningStatisticsData = {
-    'alertCompanyCount': 8,
-    'alertCount': 30,
-    'monitorCount': 30,
-    'reportCount': 56
-  };
+  @observable subWarningStatisticsData = {};
 
 
   @observable ownWarningCompnay = [];
@@ -27,34 +17,8 @@ class AccountProfileStore {
   @observable subLowestScore = [];
 
   @observable subAccount10Data = [];
-  @observable subNewestRuleData = [
-    {
-      'alertType': 'RULE',
-      'count': 10,
-      'ruleName': '张三',
-      'ruleTime': '2017-05-15'
-    },
-    {
-      'alertType': 'RULE',
-      'count': 20,
-      'ruleName': '阿虎',
-      'ruleTime': '2017-05-15'
-    }
-  ];
-  @observable subFrequentRuleData = [
-    {
-      'alertType': 'RULE',
-      'count': 10,
-      'ruleName': '张三',
-      'ruleTime': '2017-05-15'
-    },
-    {
-      'alertType': 'RULE',
-      'count': 36,
-      'ruleName': '李四',
-      'ruleTime': '2017-05-15'
-    }
-  ];
+  @observable subNewestRuleData = [];
+  @observable subFrequentRuleData = [];
 
   // 加载状态
   @observable ownWarningCompnayIsLoading = true;
@@ -104,7 +68,7 @@ class AccountProfileStore {
         this.myNewBusinessData = response.data;
       }))
       .catch(action( (err) => {
-        this.myNewBusinessData = {error: err.response.data};
+        this.myNewBusinessData = {error: err};
       }));
   }
   // 获取我的地域分布
@@ -114,7 +78,7 @@ class AccountProfileStore {
         this.myProvinceRank = response.data;
       }))
       .catch(action( (err) => {
-        this.myProvinceRank = {error: err.response.data};
+        this.myProvinceRank = {error: err};
       }));
   }
   // 获取我的行业分布
@@ -124,7 +88,7 @@ class AccountProfileStore {
         this.myIndustryDist = response.data;
       }))
       .catch(action( (err) => {
-        this.myIndustryDist = {error: err.response.data};
+        this.myIndustryDist = {error: err};
       }));
   }
   // 获取下属新增业务统计
@@ -134,7 +98,7 @@ class AccountProfileStore {
         this.subNewBusinessData = response.data;
       }))
       .catch(action( (err) => {
-        this.subNewBusinessData = {error: err.response.data};
+        this.subNewBusinessData = {error: err};
       }));
   }
   // 获取下属地域分布
@@ -144,7 +108,7 @@ class AccountProfileStore {
         this.subProvinceRank = response.data;
       }))
       .catch(action( (err) => {
-        this.subProvinceRank = {error: err.response.data};
+        this.subProvinceRank = {error: err};
       }));
   }
   // 获取下属行业分布
@@ -154,7 +118,7 @@ class AccountProfileStore {
         this.subIndustryDist = response.data;
       }))
       .catch(action( (err) => {
-        this.subIndustryDist = {error: err.response.data};
+        this.subIndustryDist = {error: err};
       }));
   }
 
@@ -179,7 +143,7 @@ class AccountProfileStore {
       }))
       .catch(action( (err) => {
         this.subFrequentRuleIsloading = false;
-        console.log(err.response.data);
+        console.log(err);
       }));
   }
 
@@ -191,7 +155,7 @@ class AccountProfileStore {
       }))
       .catch(action( (err) => {
         this.subNewestRuleIsLoading = false;
-        console.log(err.response.data);
+        console.log(err);
       }));
   }
 
@@ -203,27 +167,27 @@ class AccountProfileStore {
       }))
       .catch(action( (err) => {
         this.newAccount10IsLoading = false;
-        console.log(err.response.data);
+        console.log(err);
       }));
   }
 
   @action.bound getOwnWarningStatistics() {
     accountProfileApi.ownWarningStatistics()
       .then(action( (response) => {
-        console.log(response.data);
+        this.ownWarningStatisticsData = response.data;
       }))
       .catch(action( (err) => {
-        console.log(err.response.data);
+        console.log(err);
       }));
   }
 
   @action.bound getSubWarningStatistics() {
     accountProfileApi.subWarningStatistics()
       .then(action( (response) => {
-        console.log(response.data);
+        this.subWarningStatisticsData = response.data;
       }))
       .catch(action( (err) => {
-        console.log(err.response.data);
+        console.log(err);
       }));
   }
 
@@ -235,7 +199,7 @@ class AccountProfileStore {
       }))
       .catch(action( (err) => {
         this.ownWarningCompnayIsLoading = false;
-        console.log(err.response.data);
+        console.log(err);
       }));
   }
 
@@ -247,7 +211,7 @@ class AccountProfileStore {
       }))
       .catch(action( (err) => {
         this.subWarningCompnayIsLoading = false;
-        console.log(err.response.data);
+        console.log(err);
       }));
   }
 
@@ -259,7 +223,7 @@ class AccountProfileStore {
       }))
       .catch(action( (err) => {
         this.ownRiskCompnayIsLoading = false;
-        console.log(err.response.data);
+        console.log(err);
       }));
   }
 
@@ -271,7 +235,7 @@ class AccountProfileStore {
       }))
       .catch(action( (err) => {
         this.subRiskCompnayIsLoading = false;
-        console.log(err.response.data);
+        console.log(err);
       }));
   }
 
@@ -283,7 +247,7 @@ class AccountProfileStore {
       }))
       .catch(action( (err) => {
         this.ownLowScoreCompnayIsLoading = false;
-        console.log(err.response.data);
+        console.log(err);
       }));
   }
 
@@ -295,7 +259,7 @@ class AccountProfileStore {
       }))
       .catch(action( (err) => {
         this.subLowScoreCompnayIsLoading = false;
-        console.log(err.response.data);
+        console.log(err);
       }));
   }
 

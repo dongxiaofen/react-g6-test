@@ -15,6 +15,16 @@
   }
 }
 
+.selectMonitor {
+  float: left;
+  margin-bottom: 10px;
+  width: 172px;
+
+  &:nth-of-type(n + 6) {
+    margin-bottom: 0;
+  }
+}
+
 .selectDiv {
   font-size: 13px;
   line-height: 35px;
@@ -40,9 +50,15 @@
   .selectDiv;
   margin: -1px;
   color: #42a5f5;
-
+  background: url("imgs/searchCompany/yes.png") 50px 23px no-repeat;
   border: 2px solid #42a5f5;
-  background-color: #e7f2ff;
+}
+.monitor_active{
+  .selectDiv;
+  margin: -1px;
+  color: #42a5f5;
+  background: url("imgs/searchCompany/yes.png") 157px 23px no-repeat;
+  border: 2px solid #42a5f5;
 }
 
 .modalText {
@@ -53,4 +69,37 @@
 
 .modalTextSub {
   color: #42A5F5;
+}
+.comboRenewal_tips{
+  font-size: 12px;
+  color:#42a5f5;
+  line-height: 18px;
+  margin: 10px 0 30px 0;
+}
+
+.nomal_tips{
+  font-size: 12px;
+  color:#42a5f5;
+  line-height: 18px;
+  background-color: #f5f5f5;
+  padding: 10px;
+  margin: 10px 0 40px 0;
+}
+
+// 套餐收费的类型选框样式
+.comboRenewal{
+    float: left;
+    margin-bottom: 10px;
+    width: 130px;
+
+    &:nth-of-type(n + 6) {
+      margin-bottom: 0;
+    }
+  .monitor_active{
+    .selectDiv;
+    margin: -1px;
+    color: #42a5f5;
+    background: url("imgs/searchCompany/yes.png") 115px 23px no-repeat;
+    border: 2px solid #42a5f5;
+  }
 }
