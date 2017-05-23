@@ -52,9 +52,9 @@ class CorpDetailStore {
         this.yearReportList = resp.data.corpDetail.yearReportList;
       }))
       .catch(action('get corpDetail err', (err)=>{
+        console.log('get corpDetail err', err);
         this.isLoading = false;
         this.errData = err.response.data;
-        console.log('get corpDetail err', err);
       }));
   }
   // 设置年报显示某年
