@@ -57,7 +57,7 @@ class MonitorListStore {
   }
   @action.bound getMainCount() {
     const activeList = this.activeList;
-    const {monitorStatus, companyName} = uiStore.uiState.monitorList.params;
+    const {monitorStatus, companyName} = uiStore.uiState[activeList].params;
     this[activeList].monitorCount = {};
     if (this[activeList].mainCountCancel) {
       this[activeList].mainCountCancel();
@@ -84,7 +84,7 @@ class MonitorListStore {
       this[activeList].mainListCancel = null;
     }
     const source = CancelToken.source();
-    const mainParams = Object.assign({}, uiStore.uiState.monitorListPager, uiStore.uiState.monitorList.params);
+    const mainParams = Object.assign({}, uiStore.uiState[activeList + 'Pager'], uiStore.uiState[activeList].params);
     delete mainParams.totalElements;
     this[activeList].mainListCancel = source.cancel;
     this[activeList].mainList = {};
@@ -92,7 +92,7 @@ class MonitorListStore {
     monitorListApi.getMainList(activeList, mainParams, source)
       .then(action('getMainList_success', resp => {
         this[activeList].mainListCancel = null;
-        uiStore.uiState.monitorListPager.totalElements = resp.data.totalElements;
+        uiStore.uiState[activeList + 'Pager'].totalElements = resp.data.totalElements;
         const data = resp.data.content && resp.data.content.length > 0 ? resp.data : {error: {message: '未查询到相关监控信息'}, content: []};
         this[activeList].mainList = data;
       }))
@@ -131,12 +131,12 @@ class MonitorListStore {
     monitorListApi.changeMonitorStatus(activeList, {monitorId, status})
       .then(action('changeStatus_success', resp => {
         if (relation === 'main') {
-          const {index, size, totalElements} = uiStore.uiState.monitorListPager;
+          const {index, size, totalElements} = uiStore.uiState[activeList + 'Pager'];
           let newIndex = index;
           if (index === Math.ceil(totalElements / size) && totalElements % size === 1 && index !== 1) {
             newIndex = index - 1;
           }
-          uiStore.uiState.monitorListPager.index = newIndex;
+          uiStore.uiState[activeList + 'Pager'].index = newIndex;
           this.getMainCount();
           this.getMainList();
           this[activeList].pauseInfo.visible = false;
@@ -165,12 +165,12 @@ class MonitorListStore {
     const {monitorId, time, successCb, errorCb} = params;
     monitorListApi.renewal(activeList, {monitorId, time})
       .then(action('renewal_success', resp => {
-        const {index, size, totalElements} = uiStore.uiState.monitorListPager;
+        const {index, size, totalElements} = uiStore.uiState[activeList + 'Pager'];
         let newIndex = index;
         if (index === Math.ceil(totalElements / size) && totalElements % size === 1 && index !== 1) {
           newIndex = index - 1;
         }
-        uiStore.uiState.monitorListPager.index = newIndex;
+        uiStore.uiState[activeList + 'Pager'].index = newIndex;
         this.getMainCount();
         this.getMainList();
         successCb(resp);
