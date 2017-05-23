@@ -4,7 +4,7 @@ import styles from './index.less';
 import { loadingComp } from 'components/hoc';
 
 
-function TableBody({ hasScore, dateType, data, hasFlag, routing }) {
+function TableBody({ hasScore, dateType, data, hasFlag, routing, searchCompanyStore }) {
   const showRigthDate = (latestDt, alertCount, score) => {
     if (dateType === 'singeLine') {
       return (<div className={styles.date}>2017-08-01</div>);
@@ -21,7 +21,10 @@ function TableBody({ hasScore, dateType, data, hasFlag, routing }) {
     }
   };
   const jumpPage = (companyName) => {
-    routing.push(`/searchCompany?companyName=${companyName}`);
+    searchCompanyStore.searchTabClick('COMPANY_NAME');
+    searchCompanyStore.searchChange({target: {value: companyName}});
+    searchCompanyStore.getCompanyList();
+    routing.push(`/searchCompany`);
   };
   const createList = () => {
     let listItem = [];
@@ -32,7 +35,7 @@ function TableBody({ hasScore, dateType, data, hasFlag, routing }) {
             <div className={styles.right_discription}>
               <a onClick={jumpPage.bind(this, itemData.companyName)} className={styles.companyName}>{itemData.companyName}</a>
               { hasFlag && itemData.productType === 'MONITOR' ? <span className={`${styles.flag} ${styles.monitor}`}>监控</span> : ''}
-              { hasFlag && itemData.productType === ' ANALYSIS' ? <span className={`${styles.flag} ${styles.monitor}`}>深度</span> : ''}
+              { hasFlag && itemData.productType === 'DEEP_MONITOR' ? <span className={`${styles.flag} ${styles.monitor}`}>深度</span> : ''}
               { hasScore ? <span className={styles.score}>{itemData.score}分</span> : '' }
               <div className={styles.account_user}>
                 {`所属帐号：${itemData.userName}(${itemData.email})`}
@@ -65,4 +68,4 @@ export default loadingComp({
     error: props.error,
     module: props.module
   })
-})(inject('routing')(observer(TableBody)));
+})(inject('routing', 'searchCompanyStore')(observer(TableBody)));

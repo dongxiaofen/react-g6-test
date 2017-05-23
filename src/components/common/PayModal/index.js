@@ -17,6 +17,9 @@ function _PayModal({payModalStore}) {
   selectValue,
   btnLoading,
   choiceClick,
+  monitorType,
+  choiceMonitorType,
+  isSingleBtn,
 } = payModalStore;
   return (
     <PayModal
@@ -33,6 +36,9 @@ function _PayModal({payModalStore}) {
       closeAction={closeAction}
       selectValue={selectValue}
       btnLoading={btnLoading}
+      monitorType={monitorType}
+      choiceMonitorType={choiceMonitorType}
+      isSingleBtn={isSingleBtn}
     />
   );
 }
@@ -47,5 +53,8 @@ _PayModal.propTypes = {
   closeAction: PropTypes.func,
   width: PropTypes.string,
   choiceClick: PropTypes.func,
+  monitorType: PropTypes.string,
+  choiceMonitorType: PropTypes.func,
+  isSingleBtn: PropTypes.bool,
 };
 export default observer(_PayModal);
