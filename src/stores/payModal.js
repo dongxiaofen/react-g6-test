@@ -23,7 +23,7 @@ class PayModalStore {
     // loading
     @observable btnLoading = false;
     // 下拉框值
-    @observable selectValue = 'ONE_YEAR';
+    @observable selectValue = 'ONE_MONTH';
     // 二次弹框相关
     // 选择监控类型
     @observable monitorType = 'MONITOR';
@@ -54,7 +54,7 @@ class PayModalStore {
     @action.bound closeAction() {
       this.visible = false;
       this.btnLoading = false;
-      this.selectValue = 'ONE_YEAR';
+      this.selectValue = 'ONE_MONTH';
       this.isComboRenewal = false;
       this.monitorType = 'MONITOR';
       this.isSingleBtn = false;
@@ -75,7 +75,7 @@ class PayModalStore {
           this.tittle = '监控续期';
           break;
         case 'createMonitor':
-          this.tittle = '选择监控类型';
+          this.tittle = '加入监控';
           break;
         case 'turnMonitor':
           this.tittle = '转为监控';

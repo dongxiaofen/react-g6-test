@@ -7,8 +7,6 @@ function PayModal({
   clientStore,
   visible,
   tittle,
-  width,
-  isComboRenewal,
   selectValue,
   confirmAction,
   closeAction,
@@ -47,17 +45,18 @@ function PayModal({
       {text: '7个月', key: 'SEVEN_MONTH'},
       {text: '8个月', key: 'EIGHT_MONTH'},
       {text: '9个月', key: 'NINE_MONTH'},
-      {text: '10=1年', key: 'ONE_YEAR'},
+      {text: '10个月', key: 'ONE_YEAR'},
     ];
     return init.map((item, key) => {
       return (
         <div
           key={`payModalSelectKey${key}`}
-          className={styles.selectItem}>
+          className={styles.selectPoint}>
           <div
             className={selectValue === item.key ? styles.active : styles.selectDiv}
             onClick={selectClick.bind(null, item.key)}>
             {item.text}
+            {item.key === 'ONE_YEAR' ? <i className={styles.lable}></i> : ''}
           </div>
         </div>
       );
@@ -77,13 +76,13 @@ function PayModal({
       {text: '9个月', key: 'NINE_MONTH'},
       {text: '10个月', key: 'TEN_YEAR'},
       {text: '11个月', key: 'ELEVEN_YEAR'},
-      {text: '12个月', key: 'ONE_YEAR'},
+      {text: '1年', key: 'ONE_YEAR'},
     ];
     return init.map((item, key) => {
       return (
         <div
-          key={`payModalSelectKey${key}`}
-          className={styles.selectItem}>
+          key={`payModalKey${key}`}
+          className={styles.selectPackge}>
           <div
             className={selectValue === item.key ? styles.active : styles.selectDiv}
             onClick={selectClick.bind(null, item.key)}>
@@ -94,9 +93,9 @@ function PayModal({
     });
   };
 
-  let modalConfig = {
+  const modalConfig = {
     title: tittle,
-    width: width,
+    width: clientStore.userInfo.consumeType === 'FEESET' ? '580px' : '504px',
     visible: visible,
     isNeedBtn: true,
     confirmText: '确定',
@@ -110,36 +109,18 @@ function PayModal({
     pactName: pactName,
     isSingleBtn: isSingleBtn,
   };
-  let modalContent = modalBtnList();
+  let modalContent = null;
   if (clientStore.userInfo.consumeType === 'FEESET') {
-    modalConfig = {
-      title: isComboRenewal ? '监控续期（1年）' : tittle,
-      width: '420px',
-      visible: visible,
-      isNeedBtn: true,
-      isSingleBtn: true,
-      confirmText: '确定',
-      closeAction: closeModal,
-      confirmAction: payClick,
-      confirmLoading: btnLoading,
-      pointText: pointText,
-      pactUrl: pactUrl,
-      pactName: pactName,
-    };
-    if (isComboRenewal) {
-      modalContent = null;
-    } else {
-      modalContent = <div className={styles.modalText}>即将创建主体监控报告，监控周期为<span className={styles.modalTextSub}>1年</span></div>;
-    }
+    modalContent = modalPackage();
+  }else if (clientStore.userInfo.consumeType === 'POINT') {
+    modalContent = modalBtnList();
   }
   return (
     <div>
       <Modal {...modalConfig}>
-        {isComboRenewal ? '' :
-          <div className={`clearfix ${styles.wrap}`} style={{ marginBottom: isComboRenewal ? 0 : 30 }}>
+          <div className={`clearfix ${styles.wrap}`} style={{ marginBottom: 30 }}>
             {modalContent}
           </div>
-        }
       </Modal>
     </div>
   );
