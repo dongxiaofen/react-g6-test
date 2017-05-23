@@ -15,10 +15,11 @@ import url from 'url';
 // import fundebug from 'fundebug-nodejs';
 import logger from 'morgan';
 import { match, RouterContext } from 'react-router';
-import { Provider } from 'mobx-react';
+import { Provider, useStaticRendering } from 'mobx-react';
 import getRoutes from './routes';
 import { RouterStore } from 'mobx-react-router';
 import * as allStores from 'stores';
+useStaticRendering(true);
 // fundebug.apikey = '45f943a4862476f1895ca38d28def3231ea03ca1e4c94320476f52019f29560f';
 const agent = require('superagent-defaults')();
 const BASE_DIRNAME = process.cwd();
@@ -181,6 +182,7 @@ app.use((req, res) => {
           .then((resp) => {
             /*获取用户信息*/
             allStores.clientStore.userInfo = resp.data;
+            allStores.clientStore.envConfig = config.target;
             allStores.loginStore.isShowLogin = false;
             /*获取报告leftBar高亮*/
             if (reqPathName.indexOf('companyHome') >= 0) {

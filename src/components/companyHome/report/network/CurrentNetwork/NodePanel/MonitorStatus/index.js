@@ -8,11 +8,11 @@ function MonitorStatus({ nodeData, monitorInfoList, routing, modalStore, network
   const viewMonitor = (id, type = 'MAIN') => {
     location.href = `/companyHome?monitorId=${id}&companyType=${type}`;
   };
-  const viewAnaReport = (analysisReportId, type) => {
-    location.href = `/companyHome?analysisReportId=${analysisReportId}&companyType=${type}`;
-  };
   const viewReport = (reportId, type) => {
     location.href = type === 'MAIN' ? `/companyHome?reportId=${reportId}&companyType=${type}` : `/companyHome?companyName=${reportId}&companyType=${type}`;
+  };
+  const gotoSearch = (name) => {
+    networkStore.gotoSearch(name);
   };
   const monitorStatus = (value) => {
     if (value.indexOf('MONITOR') >= 0) {
@@ -54,16 +54,16 @@ function MonitorStatus({ nodeData, monitorInfoList, routing, modalStore, network
           {
             monitorId ?
               <div className={styles.actionBox}>
-                <a onClick={viewReport.bind(this, nodeData.name, 'FREE')} className={styles.actionFlow}>
-                  查看主页
+                <a onClick={gotoSearch.bind(this, nodeData.name)} className={styles.actionFlow}>
+                  查看企业
               </a>
                 <a onClick={openCreateMonitorModal} className={styles.actionFlow}>
                   关联监控
               </a>
               </div> :
               <div className={styles.actionBox}>
-                <a onClick={viewReport.bind(this, nodeData.name, 'FREE')} className={styles.actionFlow}>
-                  查看主页
+                <a onClick={gotoSearch.bind(this, nodeData.name)} className={styles.actionFlow}>
+                  查看企业
               </a>
               </div>
           }
@@ -79,31 +79,19 @@ function MonitorStatus({ nodeData, monitorInfoList, routing, modalStore, network
               {monitorStatus(monitorInfo.monitorStatus)}
             </div>
             <div className={styles.actionBox}>
-              <a className={styles.actionFlow} onClick={viewMonitor.bind(this, monitorInfo.monitorMapResponse.monitorId, monitorInfo.monitorMapResponse.companyType)}>查看主页</a>
-            </div>
-          </div>
-        );
-      } else if (monitorInfo.analysisReportStatus) {
-        // 深度分析报告
-        output = (
-          <div>
-            <div className={styles.item}>
-              已创建深度分析报告
-            </div>
-            <div className={styles.actionBox}>
-              <a className={styles.actionFlow} onClick={viewAnaReport.bind(this, monitorInfo.analysisReportId, 'MAIN')}>查看主页</a>
+              <a className={styles.actionFlow} onClick={viewMonitor.bind(this, monitorInfo.monitorMapResponse.monitorId, monitorInfo.monitorMapResponse.companyType)}>查看企业</a>
             </div>
           </div>
         );
       } else if (monitorInfo.reportStatus === 'REPORT') {
-        // 高级报告
+        // 查询报告
         output = (
           <div>
             <div className={styles.item}>
               已创建高级查询报告
             </div>
             <div className={styles.actionBox}>
-              <a className={styles.actionFlow} onClick={viewReport.bind(this, monitorInfo.reportId, 'MAIN')}>查看主页</a>
+              <a className={styles.actionFlow} onClick={viewReport.bind(this, monitorInfo.reportId, 'MAIN')}>查看企业</a>
             </div>
           </div>
         );
@@ -115,7 +103,7 @@ function MonitorStatus({ nodeData, monitorInfoList, routing, modalStore, network
               {monitorStatus(monitorInfo.monitorStatus)}
             </div>
             <div className={styles.actionBox}>
-              <a className={styles.actionFlow} onClick={viewMonitor.bind(this, monitorInfo.monitorMapResponse.monitorId, 'ASSOCIATE')}>查看主页</a>
+              <a className={styles.actionFlow} onClick={gotoSearch.bind(this, nodeData.name)}>查看企业</a>
             </div>
           </div>
         );
