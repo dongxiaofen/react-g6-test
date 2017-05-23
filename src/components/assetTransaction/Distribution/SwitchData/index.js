@@ -20,9 +20,9 @@ function SwitchData({ assetTransactionStore }) {
 
   const assetsRadioOptions = [
     { label: '交易资产总额', value: 'transactionTotal' },
-    { label: '交易笔数', value: 'transactionSum', disabled: params.type ? true : false },
-    { label: '拍卖资产总额', value: 'auctionTotal' },
-    { label: '拍卖笔数', value: 'auctionSum', disabled: params.type ? true : false }
+    { label: '交易笔数', value: 'transactionSum' },
+    { label: '拍卖资产总额', value: 'auctionTotal', disabled: !!params.type },
+    { label: '拍卖笔数', value: 'auctionSum', disabled: !!params.type }
   ];
 
   const assignorRadioOptions = assignor.map((item) => {
@@ -46,7 +46,6 @@ function SwitchData({ assetTransactionStore }) {
     params.type = evt.target.value;
     setParams(params);
     getAreaDistribution(params);
-    getAreaDistributionDetail(params);
   };
 
   const dateOnChange = (dateString, dateTime) => {

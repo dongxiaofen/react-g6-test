@@ -359,6 +359,7 @@ class AssetTransactionStore {
     const source = axios.CancelToken.source();
     const { type, startDate, endDate } = params;
     this.areaDistributionLoading = true;
+    this.areaDistributionDetailLoading = true;
     assetTransactionApi.getAreaDistribution({ params: { type, startDate, endDate }, cancelToken: source.token })
       .then(action('get area distribution', (resp) => {
         const result = resp.data;
