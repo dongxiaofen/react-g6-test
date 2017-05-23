@@ -36,11 +36,12 @@ function BaseList({
 
   const viewReport = () => {
     const { push } = routing;
-    if (status === 'report') {
-      push(`/companyHome?reportId=${reportId}&companyType=MAIN`);
-    } else {
-      push(`/companyHome?analysisReportId=${reportId}&companyType=MAIN`);
-    }
+    push(`/companyHome?reportId=${reportId}`);
+    // if (status === 'report') {
+    //   push(`/companyHome?reportId=${reportId}`);
+    // } else {
+    //   push(`/companyHome?analysisReportId=${reportId}`);
+    // }
   };
 
   const stockTableType = (stockType) => {

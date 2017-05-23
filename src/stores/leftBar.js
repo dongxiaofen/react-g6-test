@@ -71,7 +71,7 @@ class LeftBarStore {
         //   menuText: '全网关系',
         //   menuKey: 'forceNetwork',
         //   helpInfo: helpInfo1,
-        //   contain: ['monitor']
+        //   contain: ['deepMonitor', 'monitor']
         // },
         {
           menuText: '关联关系',
@@ -115,18 +115,18 @@ class LeftBarStore {
         {
           menuText: '关联人核查',
           menuKey: 'relPerCheck',
-          helpInfo: helpInfo1,
-          contain: ['monitor']
+          helpInfo: helpInfo2,
+          contain: ['monitor', 'report']
         },
         {
           menuText: '税务核查',
           menuKey: 'taxCheck',
-          helpInfo: helpInfo1,
-          contain: ['monitor']
+          helpInfo: helpInfo2,
+          contain: ['monitor', 'report']
         },
       ],
-      helpInfo: helpInfo1,
-      contain: ['monitor'],
+      helpInfo: helpInfo2,
+      contain: ['monitor', 'report'],
     },
     {
       menuText: '企业现勘',

@@ -32,16 +32,25 @@ class AlertAnalysisStore {
     companyHomeApi.judgeReportType(companyName)
       .then(resp => {
         const {reportId, monitorId, analysisReportId} = resp.data;
-        const type = resp.data.monitorMapResponse && resp.data.monitorMapResponse.companyType;
+        // const type = resp.data.monitorMapResponse && resp.data.monitorMapResponse.companyType;
         let url;
-        if (monitorId && type === 'MAIN') {
-          url = `corpDetail?companyType=${type}&monitorId=${monitorId}`;
+        // if (monitorId && type === 'MAIN') {
+        //   url = `corpDetail?companyType=${type}&monitorId=${monitorId}`;
+        // } else if (reportId) {
+        //   url = `corpDetail?companyType=MAIN&reportId=${reportId}`;
+        // } else if (analysisReportId) {
+        //   url = `corpDetail?companyType=MAIN&analysisReportId=${analysisReportId}`;
+        // } else {
+        //   url = `corpDetail?companyName=${companyName}&companyType=FREE`;
+        // }
+        if (monitorId) {
+          url = `corpDetail?monitorId=${monitorId}`;
         } else if (reportId) {
-          url = `corpDetail?companyType=MAIN&reportId=${reportId}`;
+          url = `corpDetail?reportId=${reportId}`;
         } else if (analysisReportId) {
-          url = `corpDetail?companyType=MAIN&analysisReportId=${analysisReportId}`;
+          url = `corpDetail?analysisReportId=${analysisReportId}`;
         } else {
-          url = `corpDetail?companyName=${companyName}&companyType=FREE`;
+          url = `corpDetail?companyName=${companyName}`;
         }
         window.open(url);
       })
