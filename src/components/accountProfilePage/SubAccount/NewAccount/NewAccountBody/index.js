@@ -17,8 +17,8 @@ function NewAccountBody({data, routing, accountSettingStore}) {
       accountSettingStore.fromHome = false;
       accountSettingStore.searchInput = email;
       accountSettingStore.activeId = userId;
+      routing.push(`/searchCompany`);
     });
-    routing.push(`/searchCompany`);
   };
   const createList = () => {
     let arrList = [];
@@ -27,7 +27,7 @@ function NewAccountBody({data, routing, accountSettingStore}) {
         arrList = [...arrList,
           <li key={`${index}newAccount`} className={`${styles.list_item}`}>
             <div className={`${styles.marginRL} clearfix`}>
-              <div onClick={jumpAccoutSetting(itemData, itemData.email)} className={`${styles.user} pull-left`}>
+              <div onClick={jumpAccoutSetting.bind(this, itemData, itemData.email)} className={`${styles.user} pull-left`}>
                 <Popover content={`所属账号：${itemData.userName}（${itemData.email}`}>
                   {spliceString(itemData.userName.concat(itemData.email))}
                 </Popover>

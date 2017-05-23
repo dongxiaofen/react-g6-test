@@ -69,7 +69,7 @@ function SubAccount({ accountProfileStore }) {
         </div>
         <div className="clearfix">
           <div className={`${styles.newAccount} pull-left`}>
-            <NewAccount />
+             <NewAccount />
           </div>
           <div className={`${styles.rules} pull-left`}>
             <Rules />
