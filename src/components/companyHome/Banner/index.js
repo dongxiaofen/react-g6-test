@@ -13,23 +13,17 @@ export default class Banner extends Component {
     bannerStore: PropTypes.object,
   };
   componentDidMount() {
-    const { monitorId, reportId, analysisReportId, companyName, companyType } = this.props.routing.location.query;
-    this.props.bannerStore.getBannerInfo({ monitorId, reportId, analysisReportId, companyName, companyType });
-    this.props.bannerStore.getStockCode({ monitorId, reportId, analysisReportId, companyName, companyType });
+    const { monitorId, reportId } = this.props.routing.location.query;
+    this.props.bannerStore.getBannerInfo({ monitorId, reportId });
+    this.props.bannerStore.getStockCode({ monitorId, reportId });
   }
   bannerCountAndDate() {
     const bannerStore = this.props.bannerStore;
-    const companyType = this.props.routing.location.query.companyType;
     return (
       <div className={`clearfix ${styles.countAndDate}`}>
-        {
-          companyType !== 'FREE'
-          ?
-          <div className={styles.date}>
-            更新日期：{bannerStore.lastModifiedTs}
-          </div>
-          : null
-        }
+        <div className={styles.date}>
+          更新日期：{bannerStore.lastModifiedTs}
+        </div>
         <div className={styles.count}>
           被查询次数：{bannerStore.searchedCount}
         </div>

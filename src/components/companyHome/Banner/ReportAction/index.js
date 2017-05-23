@@ -3,7 +3,7 @@ import { observer, inject } from 'mobx-react';
 import styles from './index.less';
 
 function ReportAction({ bannerStore, modalStore, payModalStore, routing }) {
-  const { monitorId, reportId, companyType } = routing.location.query;
+  const { monitorId, reportId } = routing.location.query;
   const monitorStatus = bannerStore.monitorStatus;
   /* 普通按钮 */
   const addMonitorAction = () => {
@@ -38,17 +38,11 @@ function ReportAction({ bannerStore, modalStore, payModalStore, routing }) {
     const outputBtn = [];
     const addMonitor = <div key="btnAddMonitor" className={styles.actionBtn} onClick={openCreateMonitorModal}>加入监控</div>;
     const monitorRenewal = <div key="btnRenewalMonitor" className={styles.actionBtn} onClick={renewalMonitorModal}>监控续期</div>;
-    switch (companyType) {
-      case 'MAIN':
-        if (reportId) {
-          outputBtn.push(addMonitor);
-        }
-        if (monitorId) {
-          outputBtn.push(monitorRenewal);
-        }
-        break;
-      default:
-        break;
+    if (reportId) {
+      outputBtn.push(addMonitor);
+    }
+    if (monitorId) {
+      outputBtn.push(monitorRenewal);
     }
     return (
       <div className="clearfix">
@@ -192,7 +186,6 @@ function ReportAction({ bannerStore, modalStore, payModalStore, routing }) {
 
   const bannerTextAction = () => {
     const output = [];
-    const mainStatus = bannerStore.mainStatus;
     const collectionAction = collectionTextAction();
     const refreshReportAction = (
       <div key="textAction2" className={styles.textAction} onClick={refreshHighOrDeepModal}>
@@ -207,23 +200,15 @@ function ReportAction({ bannerStore, modalStore, payModalStore, routing }) {
       </div>
     );
     const pauseOrRestoreMonitorAction = pauseOrRestoreMonitorTextAction();
-    if (companyType === 'MAIN') {
-      output.push(collectionAction);
-      if (monitorId) {
-        if (monitorStatus !== 'EXPIRED') {
-          output.push(pauseOrRestoreMonitorAction);
-        }
-      } else {
-        output.push(refreshReportAction);
-      }
-    } else if (companyType === 'ASSOCIATE') {
-      if (mainStatus !== 'PAUSE' && monitorStatus !== 'EXPIRED') {
+    output.push(collectionAction);
+    if (monitorId) {
+      if (monitorStatus !== 'EXPIRED') {
         output.push(pauseOrRestoreMonitorAction);
       }
+    } else {
+      output.push(refreshReportAction);
     }
-    if (companyType !== 'FREE') {
-      output.push(downloadPdfAction);
-    }
+    output.push(downloadPdfAction);
     return (
       <div className="clearfix">
         <div className={styles.textActionGroup}>

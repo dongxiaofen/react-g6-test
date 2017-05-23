@@ -2,34 +2,24 @@ import axios from 'axios';
 export const getBannerInfo = ({
   monitorId,
   reportId,
-  analysisReportId,
-  companyName,
-  companyType
 }) => {
   let url;
   if (monitorId) {
     url = `/api/monitor/${monitorId}/infobanner/xx`;
   } else if (reportId) {
     url = `/api/report/infobanner?reportId=${reportId}`;
-  } else if (analysisReportId) {
-    url = `/api/analysisReport/infobanner?analysisReportId=${analysisReportId}`;
-  } else if (companyType === 'FREE') {
-    url = `/api/free/xx/infobanner?companyName=${encodeURI(companyName)}`;
   }
   return axios.get(url);
 };
 
 // 获取上市代码，检查该公司是否是上市公司
-export const getStockCode = ({ reportId, monitorId, analysisReportId }) => {
+export const getStockCode = ({ reportId, monitorId }) => {
   let url;
   if (reportId) {
     url = `/api/report/${reportId}/stockCode`;
   }
   if (monitorId) {
     url = `/api/monitor/${monitorId}/stockCode`;
-  }
-  if (analysisReportId) {
-    url = `/api/analysisReport/${analysisReportId}/stockCode`;
   }
   return axios.get(url);
 };
