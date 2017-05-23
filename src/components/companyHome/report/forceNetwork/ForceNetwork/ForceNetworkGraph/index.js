@@ -6,6 +6,14 @@ import * as svgTools from 'helpers/svgTools';
 import * as d3 from 'd3';
 let nodesData;
 let edgesData;
+
+let linkG;
+let nodeG;
+let edgepathsG;
+let edgelabelsG;
+let texts1G;
+let texts2G;
+let texts3G;
 let svgEdges;
 let svgNodes;
 let svgTexts1;
@@ -54,13 +62,13 @@ export default class ForceNetworkGraph extends Component {
       .force('y', d3.forceY(0))
       .on('tick', this.ticked);
 
-    svgEdges = group.append('g').attr('id', 'lines').selectAll('.link');
-    svgNodes = group.append('g').attr('id', 'nodes').selectAll('.node');
-    svgTexts1 = group.append('g').attr('id', 'texts1').selectAll('text');
-    svgTexts2 = group.append('g').attr('id', 'texts2').selectAll('text');
-    svgTexts3 = group.append('g').attr('id', 'texts3').selectAll('text');
-    svgEdgepaths = group.append('g').attr('id', 'linePaths').selectAll('.edgepath');
-    svgEdgelabels = group.append('g').attr('id', 'lineLabels').selectAll('.edgelabel');
+    linkG = group.append('g').attr('id', 'lines');
+    nodeG = group.append('g').attr('id', 'nodes');
+    texts1G = group.append('g').attr('id', 'texts1');
+    texts2G = group.append('g').attr('id', 'texts2');
+    texts3G = group.append('g').attr('id', 'texts3');
+    edgepathsG = group.append('g').attr('id', 'linePaths');
+    edgelabelsG = group.append('g').attr('id', 'lineLabels');
     this.reDraw();
     setTimeout(() => {
       nodesData.map((node) => {
@@ -135,7 +143,7 @@ export default class ForceNetworkGraph extends Component {
     reaction(
       () => this.props.forceNetworkStore.shortestPahth,
       () => {
-        const { dbFocalNode, focalNode} = this.props.forceNetworkStore;
+        const { dbFocalNode, focalNode } = this.props.forceNetworkStore;
         if (dbFocalNode.id) {
           nodesData.map((node) => {
             console.log(node);
@@ -146,7 +154,7 @@ export default class ForceNetworkGraph extends Component {
       }
     );
   }
-  getNodeInfo = (focalNode)=> {
+  getNodeInfo = (focalNode) => {
     if (focalNode.cateType === 1) {
       const { monitorId } = this.props.routing.location.query;
       this.props.forceNetworkStore.getCompNodeInfo(monitorId, { companyName: focalNode.name });
@@ -155,39 +163,44 @@ export default class ForceNetworkGraph extends Component {
       this.props.forceNetworkStore.getPersonNodeInfo(monitorId, { personId: focalNode.id });
     }
   }
-  getShortPath = (nodeInfo)=>{
+  getShortPath = (nodeInfo) => {
     if (nodeInfo.id) {
-      const {monitorId} = this.props.routing.location.query;
+      const { monitorId } = this.props.routing.location.query;
       const source = this.props.forceNetworkStore.centerNode.id;
       const target = nodeInfo.id;
       const currentNetwork = svgTools.getCurrentNodesLinks(this.props.forceNetworkStore.forceNetwork);
-      this.props.forceNetworkStore.getShortPath(monitorId, {source, target, currentNetwork});
+      this.props.forceNetworkStore.getShortPath(monitorId, { source, target, currentNetwork });
     }
   };
   // 当有元素变动的时候重绘关联图
   reDraw = () => {
+    simulation.nodes(nodesData);
+    simulation.force('link').links(edgesData);
     // nodes
-    svgNodes = svgNodes.data(nodesData);
+    svgNodes = nodeG
+      .selectAll('circle')
+      .data(nodesData, (data) => data.id);
     svgNodes.exit().remove();
-    svgNodes = svgNodes.enter()
+    const nodeEnter = svgNodes.enter();
+    nodeEnter
       .append('circle')
-      .attr('r', (data) => data.cateType < 2 ? 38 : 28)
       .attr('class', (data) => {
         return (data.hide && styles.hide) || (data.cateType === 0 && styles.mainCompany) || (data.status === 0 && styles.cancelNodes) || (data.cateType === 1 && styles.relativeCompany) || (data.cateType === 2 && styles.relativePerson);
       })
+      .attr('r', (data) => data.cateType < 2 ? 38 : 28)
       .call(d3.drag()
         .on('start', this.dragstarted)
         .on('drag', this.dragged)
         .on('end', this.dragended))
-      .merge(svgNodes);
-
-    svgNodes.append('title')
+      .append('title')
       .text((data) => { return data.name; });
 
+    svgNodes = nodeEnter
+      .merge(svgNodes);
     // texts
-    svgTexts1 = svgTexts1.data(nodesData);
+    svgTexts1 = texts1G.selectAll('text').data(nodesData, (data) => data.id);
     svgTexts1.exit().remove();
-    svgTexts1 = svgTexts1.enter()
+    const texts1Enter = svgTexts1.enter()
       .append('text')
       .attr('class', (data) => {
         return data.hide ? styles.hide : styles.nodeText;
@@ -203,11 +216,13 @@ export default class ForceNetworkGraph extends Component {
         .on('start', this.dragstarted)
         .on('drag', this.dragged)
         .on('end', this.dragended))
-      .merge(svgTexts1);
+      .append('title')
+      .text((data) => { return data.name; });
+    svgTexts1 = texts1Enter.merge(svgTexts1);
 
-    svgTexts2 = svgTexts2.data(nodesData);
+    svgTexts2 = texts2G.selectAll('text').data(nodesData, (data) => data.id);
     svgTexts2.exit().remove();
-    svgTexts2 = svgTexts2.enter()
+    const texts2Enter = svgTexts2.enter()
       .append('text')
       .attr('class', (data) => {
         return data.hide ? styles.hide : styles.nodeText;
@@ -223,11 +238,14 @@ export default class ForceNetworkGraph extends Component {
         .on('start', this.dragstarted)
         .on('drag', this.dragged)
         .on('end', this.dragended))
-      .merge(svgTexts2);
+      .append('title')
+      .text((data) => { return data.name; });
+    svgTexts2 = texts2Enter.merge(svgTexts2);
+    // .merge(svgTexts2);
 
-    svgTexts3 = svgTexts3.data(nodesData);
+    svgTexts3 = texts3G.selectAll('text').data(nodesData, (data) => data.id);
     svgTexts3.exit().remove();
-    svgTexts3 = svgTexts3.enter()
+    const texts3Enter = svgTexts3.enter()
       .append('text')
       .attr('class', (data) => {
         return data.hide ? styles.hide : styles.nodeText;
@@ -241,56 +259,48 @@ export default class ForceNetworkGraph extends Component {
         .on('start', this.dragstarted)
         .on('drag', this.dragged)
         .on('end', this.dragended))
-      .merge(svgTexts3);
-
-    svgTexts1
       .append('title')
       .text((data) => { return data.name; });
-    svgTexts2
-      .append('title')
-      .text((data) => { return data.name; });
-    svgTexts3
-      .append('title')
-      .text((data) => { return data.name; });
+    svgTexts3 = texts3Enter.merge(svgTexts3);
     // links
-    svgEdges = svgEdges.data(edgesData);
+    svgEdges = linkG
+      .selectAll('line')
+      .data(edgesData, (data) => data.id);
     svgEdges.exit().remove();
-    svgEdges = svgEdges.enter()
+    const linkEnter = svgEdges
+      .enter()
       .append('line')
       .attr('class', (data) => (data.hide && styles.hide) || (data.lineType === 1 && styles.links) || styles.dashLinks)
-      .attr('marker-end', (data) => data.lineType === 2 ? '' : 'url(#cArrow)')
-      .merge(svgEdges);
+      .attr('marker-end', (data) => (data.lineType === 2 && '') || (svgTools.getArrowType(data.target, nodesData) < 2 && 'url(#cArrow)') || 'url(#pArrow)');
+    svgEdges = linkEnter.merge(svgEdges);
     // labels
-    svgEdgepaths = svgEdgepaths.data(edgesData);
+    svgEdgepaths = edgepathsG.selectAll('.edgepath').data(edgesData, (data) => data.id);
     svgEdgepaths.exit().remove();
-    svgEdgepaths = svgEdgepaths.enter()
+    const edgepathEnter = svgEdgepaths.enter()
       .append('path')
       .attr('class', 'edgepath')
       .attr('id', (data, idx) => { return 'edgepath' + idx; })
       .style('pointer-events', 'none');
+    svgEdgepaths = edgepathEnter.merge(svgEdgepaths);
 
-    svgEdgelabels = svgEdgelabels.data(edgesData);
+    svgEdgelabels = edgelabelsG.selectAll('.edgelabel').data(edgesData, (data) => data.id);
     svgEdgelabels.exit().remove();
-    svgEdgelabels = svgEdgelabels.enter()
+    const edgelabelsEnter = svgEdgelabels.enter()
       .append('text')
       .style('pointer-events', 'none')
-      .attr('dx', 40)
-      .attr('dy', -2)
       .attr('class', (data) => {
-        return data.isFocus ? styles.show : styles.hide;
+        return data.hide ? styles.hide : styles.linkLabel;
       })
-      .attr('font-size', 8)
-      .attr('fill', '#3483e9')
-      .attr('id', (data, idx) => { return 'edgelabel' + idx; });
-
-    svgEdgelabels.append('textPath')
+      .attr('dx', 60)
+      .attr('dy', -2)
+      .attr('id', (data, idx) => { return 'edgelabel' + idx; })
+      .append('textPath')
       .attr('xlink:href', (data, idx) => { return '#edgepath' + idx; })
-      .style('pointer-events', 'none');
-    // .text((data) => { return svgTools.getLinkInfo(data); });
+      .style('pointer-events', 'none')
+      .text((data) => data.lineName);
+    svgEdgelabels = edgelabelsEnter.merge(svgEdgelabels);
 
     // Update and restart the simulation.
-    simulation.nodes(nodesData);
-    simulation.force('link').links(edgesData);
     simulation.alpha(1).restart();
   }
   dblclickNode = () => {
@@ -311,7 +321,7 @@ export default class ForceNetworkGraph extends Component {
       .restart();
   }
   ticked = () => {
-    svgNodes
+    d3.selectAll('circle')
       .attr('cx', (data) => { return data.x; })
       .attr('cy', (data) => { return data.y; })
       .attr('class', (data) => {
@@ -329,40 +339,40 @@ export default class ForceNetworkGraph extends Component {
         return data.cateType < 2 ? 38 : 28;
       });
 
-    svgEdges
+    d3.selectAll('line')
       .attr('x1', (data) => { return data.source.x; })
       .attr('y1', (data) => { return data.source.y; })
       .attr('x2', (data) => { return data.target.x; })
       .attr('y2', (data) => { return data.target.y; })
       .attr('class', (data) => {
-        return ((data.source.nodeStatus < 0 || data.target.nodeStatus < 0) && styles.lineNoActive) || (data.lineType === 1 && styles.links) || styles.dashLinks;
+        return (data.hide && styles.hide) || ((data.source.nodeStatus < 0 || data.target.nodeStatus < 0) && styles.lineNoActive) || (data.lineType === 1 && styles.links) || styles.dashLinks;
       });
-    svgTexts1
+    d3.selectAll('#texts1 text')
       .attr('x', (data) => { return data.x; })
       .attr('y', (data) => { return data.y; })
       .attr('class', (data) => {
         return data.nodeStatus === -2 ? styles.hideText : styles.nodeText;
       });
-    svgTexts2
-      .attr('x', (data) => { return data.x; })
-      .attr('y', (data) => { return data.y; })
-      .attr('class', (data) => {
-        return data.nodeStatus === -2 ? styles.hideText : styles.nodeText;
-      });
-
-    svgTexts3
+    d3.selectAll('#texts2 text')
       .attr('x', (data) => { return data.x; })
       .attr('y', (data) => { return data.y; })
       .attr('class', (data) => {
         return data.nodeStatus === -2 ? styles.hideText : styles.nodeText;
       });
 
-    svgEdgepaths
+    d3.selectAll('#texts3 text')
+      .attr('x', (data) => { return data.x; })
+      .attr('y', (data) => { return data.y; })
+      .attr('class', (data) => {
+        return data.nodeStatus === -2 ? styles.hideText : styles.nodeText;
+      });
+
+    d3.selectAll('.edgepath')
       .attr('d', (data) => {
         return 'M ' + data.source.x + ' ' + data.source.y + ' L ' + data.target.x + ' ' + data.target.y;
       });
 
-    svgEdgelabels
+    d3.selectAll('#lineLabels text')
       .attr('transform', function autoRotate(data) {
         if (data.target.x < data.source.x) {// 边上的文字自动转向
           const bbox = this.getBBox();
@@ -373,7 +383,7 @@ export default class ForceNetworkGraph extends Component {
         return 'rotate(0)';
       })
       .attr('class', (data) => {
-        return data.isFocus ? styles.show : styles.hide;
+        return (data.hide && styles.hide) || ((data.source.nodeStatus < 0 || data.target.nodeStatus < 0) && styles.hide) || styles.linkLabel;
       });
   }
   dragstarted = (data) => {
@@ -428,7 +438,7 @@ export default class ForceNetworkGraph extends Component {
               markerWidth="10"
               markerHeight="10"
               viewBox="0 0 12 12"
-              refX="55"
+              refX="57"
               refY="6"
               orient="auto">
               <path d="M2,2 L10,6 L2,10 L6,6 L2,2" className={styles.arrow} />
@@ -438,7 +448,7 @@ export default class ForceNetworkGraph extends Component {
               markerWidth="10"
               markerHeight="10"
               viewBox="0 0 12 12"
-              refX="50"
+              refX="47"
               refY="6"
               orient="auto">
               <path d="M2,2 L10,6 L2,10 L6,6 L2,2" className={styles.arrow} />

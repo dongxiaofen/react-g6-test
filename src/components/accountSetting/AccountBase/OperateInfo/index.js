@@ -26,12 +26,6 @@ function OperateInfo({accountSettingStore, clientStore}) {
         unit: '个',
       },
       {
-        name: '深度监控报告',
-        keys: 'deepMonitorNum',
-        remainKey: 'leftDeepMonitorNum',
-        unit: '个',
-      },
-      {
         name: '个人核查',
         keys: 'personCheckCount',
         remainKey: 'leftPersonCheckNum',

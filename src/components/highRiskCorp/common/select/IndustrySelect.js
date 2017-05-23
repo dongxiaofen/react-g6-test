@@ -26,7 +26,7 @@ function IndustrySelect({highRiskCorpStore, module, industrySelect, onChange}) {
     <div className={styles.selectLine}>
       <span className={styles.label}>行业</span>
       <Select
-        width="143px"
+        width="130px"
         className={styles.selectBox}
         defaultValue={selectValue}
         onChange={selectChange}

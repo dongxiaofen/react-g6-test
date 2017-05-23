@@ -3,6 +3,7 @@ import logoImgGd from '../../static/images/loginGd/logo2.png';
 import logoImgSc from '../../static/images/homePage/header_logo_1.png';
 
 import loginLogo from 'imgs/login/loginLogo.png';
+import cfcaLoginLogo from 'imgs/login/cfca_loginLogo.png';
 import dxLoginLogo from '../../static/images/1.6/login/dx_loginLogo.png';
 import appCodeImg from '../../static/images/1.6/Header/appCode.png';
 import appCodeImgSc from 'imgs/homePage/downloadApp2.png';
@@ -40,8 +41,8 @@ export default function getPermissionMeta(env) {
       favicon: '/favicon3.ico',
       scmSource: 'SC_WEB',
       logoStyle: 'logo',
-      loginLogo: loginLogo,
-      loginLogoStyle: 'loginLogoImg',
+      loginLogo: cfcaLoginLogo,
+      loginLogoStyle: 'cfcaLoginLogoImg',
       beian: '京ICP证120015号 京公网安备110102005601',
       title: '星象-风险监控平台',
       pdfStyle: 'scPdfBg',

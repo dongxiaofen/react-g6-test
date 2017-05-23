@@ -3,7 +3,7 @@ import { observer } from 'mobx-react';
 import styles from './index.less';
 import {Row, Col} from 'components/common/layout';
 import { runInAction } from 'mobx';
-import photo from 'imgs/personReport/photo.png';
+// import photo from 'imgs/personReport/photo.png';
 
 function Banner({personReportStore, params}) {
   const bannerInfo = personReportStore.reportData;
@@ -34,19 +34,19 @@ function Banner({personReportStore, params}) {
       </span>
     );
   };
-  const modifyCrimeResponses = (valueObj) => {
-    return (
-      valueObj.caseTime && valueObj.caseTime.length > 0 ?
-        <span>{valueObj.compared}<span className={styles.caseTime}>(案发时间：{valueObj.caseTime.join(',')})</span></span> :
-        valueObj.compared
-    );
-  };
+  // const modifyCrimeResponses = (valueObj) => {
+  //   return (
+  //     valueObj.caseTime && valueObj.caseTime.length > 0 ?
+  //       <span>{valueObj.compared}<span className={styles.caseTime}>(案发时间：{valueObj.caseTime.join(',')})</span></span> :
+  //       valueObj.compared
+  //   );
+  // };
   const config = [
     {key: 'name', width: '6', name: '姓名'},
     {key: 'idCard', width: '6', name: '身份证号', handle: modifyIdcard},
     {key: 'companyName', width: '6', name: '所属企业'},
     {key: 'relationship', width: '6', name: '关联关系'},
-    {key: 'crimeResponses', width: '12', name: '犯罪记录', handle: modifyCrimeResponses},
+    // {key: 'crimeResponses', width: '12', name: '犯罪记录', handle: modifyCrimeResponses},
   ];
   const createContent = ()=> {
     const output = [];
@@ -63,7 +63,7 @@ function Banner({personReportStore, params}) {
   };
   return (
     <div className={`${styles.wrap} clearfix`}>
-      <img className={styles.photo} alt="身份证照片" src={bannerInfo.photo ? `data:image/jpg;base64,${bannerInfo.photo}` : photo} />
+      {/* <img className={styles.photo} alt="身份证照片" src={bannerInfo.photo ? `data:image/jpg;base64,${bannerInfo.photo}` : photo} /> */}
       <div className={styles.info}>
         <Row>
           {createContent()}

@@ -1,16 +1,11 @@
 import React from 'react';
 import styles from './index.less';
-function Title({monitorListStore}) {
-  const activeList = monitorListStore.activeList;
-  const dict = {
-    monitorList: '监控列表',
-    deepMonitorList: '深度监控列表',
-  };
+function Title() {
   return (
     <h1
       className={styles.titleCss}
       >
-      {dict[activeList]}
+      监控列表
     </h1>
   );
 }

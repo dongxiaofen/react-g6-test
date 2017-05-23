@@ -1,27 +1,23 @@
 import axios from 'axios';
-const monitorTypeMap = {
-  monitorList: 'monitor',
-  deepMonitorList: 'deepMonitor'
-};
-export const getMonitorCount = (monitorType, params, source) => {
-  return axios.get(`/api/${monitorTypeMap[monitorType]}/statistic`, {
+export const getMonitorCount = (params, source) => {
+  return axios.get(`/api/monitor/statistic`, {
     params: params,
     cancelToken: source.token
   });
 };
-export const getMainList = (monitorType, params, source) => {
-  return axios.get(`/api/${monitorTypeMap[monitorType]}/companyList/xx`, {
+export const getMainList = (params, source) => {
+  return axios.get(`/api/monitor/companyList/xx`, {
     params: params,
     cancelToken: source.token
   });
 };
-export const getRelList = (monitorType, monitorId) => {
-  return axios.get(`/api/${monitorTypeMap[monitorType]}/${monitorId}/companyList`);
+export const getRelList = (monitorId) => {
+  return axios.get(`/api/monitor/${monitorId}/companyList`);
 };
-export const changeMonitorStatus = (monitorType, params) => {
+export const changeMonitorStatus = (params) => {
   const {monitorId, status} = params;
-  return axios.put(`/api/${monitorTypeMap[monitorType]}/${monitorId}/status`, {status});
+  return axios.put(`/api/monitor/${monitorId}/status`, {status});
 };
-export const renewal = (monitorType, params) => {
-  return axios.put(`/api/${monitorTypeMap[monitorType]}/${params.monitorId}/renewal`, {time: params.time});
+export const renewal = (params) => {
+  return axios.put(`/api/monitor/${params.monitorId}/renewal`, {time: params.time});
 };

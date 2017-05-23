@@ -12,5 +12,9 @@
       'monitorType':'MONITOR' 选择监控报告的类型，默认是 MONITOR
       'choiceMonitorType': 触发选择监控类型的函数
       'isSingleBtn': 是否只要一个按钮，默认false
+      'isRenewal':是否是续期默认false
+      'isComboRenewal'是否是套餐
     });
 ````
+####如果是套餐续期要要传 sComboRenewal
+####点数续期 isRenewal

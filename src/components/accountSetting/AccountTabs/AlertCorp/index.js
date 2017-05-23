@@ -20,7 +20,7 @@ function AlertCorp({accountSettingStore, searchCompanyStore}) {
           return (
             <div key={idx} className={styles.itemBox}>
               <span className={styles.corpName} onClick={routeToSearch.bind(null, item.companyName)}>{item.companyName}</span>
-              <span className={styles.score}>{`综合分 ${item.score}`}</span>
+              {item.score && <span className={styles.score}>{`综合分 ${item.score}`}</span>}
               <span className={styles.date}>{`最新预警日期：${item.latestDt}`}</span>
             </div>
           );
