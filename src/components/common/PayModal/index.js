@@ -20,6 +20,7 @@ function _PayModal({payModalStore}) {
   monitorType,
   choiceMonitorType,
   isSingleBtn,
+  isRenewal,
 } = payModalStore;
   return (
     <PayModal
@@ -39,6 +40,7 @@ function _PayModal({payModalStore}) {
       monitorType={monitorType}
       choiceMonitorType={choiceMonitorType}
       isSingleBtn={isSingleBtn}
+      isRenewal={isRenewal}
     />
   );
 }
@@ -56,5 +58,6 @@ _PayModal.propTypes = {
   monitorType: PropTypes.string,
   choiceMonitorType: PropTypes.func,
   isSingleBtn: PropTypes.bool,
+  isRenewal: PropTypes.bool,
 };
 export default observer(_PayModal);

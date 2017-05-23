@@ -45,6 +45,7 @@ function Login({loginStore, clientStore, pathname}) {
   const errText = pathval.getPathValue(loginStore, 'errText');
   const isIE = pathval.getPathValue(loginStore, 'isIE');
   const envConfig = pathval.getPathValue(clientStore, 'envConfig');
+  const loginClass = envConfig === 'cfca_prod' ? styles['login-cafa'] : styles.login;
   return (
     <div
       className={
@@ -52,13 +53,20 @@ function Login({loginStore, clientStore, pathname}) {
           `clearfix ${styles.loginBg} ${styles.isVisible}` :
           `clearfix ${styles.loginBg}`
       }>
-      <div id="login" className={`clearfix ${styles.login}`}>
+      <div id="login" className={`clearfix ${loginClass}`}>
         <div
           className={`clearfix ${styles.loginClose}`}
           onClick={closeLoginOnClick}>
           <img className={styles.loginColseImg} src={loginColse} alt=""/>
         </div>
-        <div className={styles.loginLogo}>
+        {/* {envConfig === 'cfca_prod' ?
+          <div className={styles['loginLogo-cfca']}></div> :
+          <div className={styles.loginLogo}>
+            <div className={styles[getPermissionMeta(envConfig).loginLogoStyle]}>
+              <img src={getPermissionMeta(envConfig).loginLogo} alt=""/>
+            </div>
+          </div>} */}
+        <div className={envConfig === 'cfca_prod' ? styles['loginLogo-cfca'] : styles.loginLogo}>
           <div className={styles[getPermissionMeta(envConfig).loginLogoStyle]}>
             <img src={getPermissionMeta(envConfig).loginLogo} alt=""/>
           </div>
@@ -149,4 +157,3 @@ Login.propTypes = {
 };
 
 export default inject('loginStore', 'clientStore')(observer(Login));
-

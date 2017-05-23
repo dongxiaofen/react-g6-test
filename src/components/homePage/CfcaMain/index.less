@@ -5,10 +5,12 @@
 .home-banner {
   position: relative;
   width: 100%;
-  height: 900px;
-  background-image: url('imgs/homePage/banner.jpg');
-  -webkit-background-size: 100% 100%;
-  background-size: 100% 100%;
+  height: 680px;
+  background-image: url('imgs/homePage/banner_cfca.png');
+  -webkit-background-size: auto 100%;
+  background-size: auto 100%;
+  -webkit-background-position: center center;
+  background-position: center center;
 }
 .webGL{
   position: absolute;
@@ -16,7 +18,7 @@
   left: 0;
 }
 .home-banner h1 {
-  margin-top: 205px;
+  margin-top: 250px;
   margin-bottom: 30px;
 
   font-size: 42px;
@@ -162,6 +164,7 @@
 .home-box1 {
   padding-top: 100px;
   padding-bottom: 150px;
+  background-color: #fff;
 }
 
 .box-title {
@@ -172,10 +175,13 @@
   line-height: 1em;
   text-align: center;
 }
+.title-cfca {
+  color: @blue1;
+}
 .box-content {
   margin-bottom: 12px;
 
-  font-size: 16px;
+  font-size: 14px;
   line-height: 1em;
   color: @black7;
   text-align: center;
@@ -188,6 +194,7 @@
 .home-box1-content li {
   margin-right: 124px;
   float: left;
+  position: relative;
 
   text-align: center;
 
@@ -196,20 +203,34 @@
 .home-box1-content li:last-child {
   margin-right: 0;
 }
+.box1-relative1, .box1-relative2 {
+  position: absolute;
+  width: 100px;
+  height: 30px;
+}
+.box1-relative1 {
+  top: -30px;
+  left: 140px;
+}
+.box1-relative2 {
+  top: 50px;
+  left: 140px;
+}
 .box1-content-title {
   margin-bottom: 15px;
-  font-size: 24px;
-  color: @black5;
+  font-size: 18px;
+  // color: @black5;
+  color: @blue1;
   line-height: 1em;
 }
 .box1-content-txt {
   margin-bottom: 0;
-  font-size: 16px;
+  font-size: 14px;
   color: @black7;
   line-height: 1em;
 }
 .home-box1-img {
-  margin-bottom: 12px;
+  margin-bottom: 60px;
 }
 .home-box2 {
   padding-top: 100px;
@@ -217,26 +238,39 @@
   background-color: @black12;
 }
 .home-box2-content {
-  width: 1068px;
+  width: 1090px;
   margin-left: auto;
   margin-right: auto;
   padding-top: 48px;
 }
 .box2-content-itemL, .box2-content-itemR
 {
-  width: 430px;
+  width: 260px;
+  height: 300px;
+  background-color: #fff;
 }
 .box2-content-itemL {
   float: left;
+  margin-right: 14px;
+  padding-top: 30px;
+  padding-left: 45px;
+  padding-right: 45px;
+  text-align: center;
+  &:last-child {
+    margin-right: 0;
+  }
 }
 .box2-content-itemR {
   float: right;
 }
+.box2-item-img {
+  height: 95px;
+}
 .box2-item-title {
-  margin-top: 14px;
+  margin-top: 25px;
   margin-bottom: 0;
 
-  font-size: 24px;
+  font-size: 18px;
   line-height: 1em;
   text-align: center;
   color: @blue2;
@@ -245,13 +279,13 @@
   margin-top: 10px;
   margin-bottom: 0;
 
-  font-size: 16px;
+  font-size: 12px;
   line-height: 24px;
-  color: @black5;
+  color: @black7;
 }
-.box2-content-block2 {
-  margin-top: 56px;
-}
+// .box2-content-block2 {
+//   margin-top: 56px;
+// }
 .home-box1-content {
   padding-top: 68px;
   padding-left: 0;

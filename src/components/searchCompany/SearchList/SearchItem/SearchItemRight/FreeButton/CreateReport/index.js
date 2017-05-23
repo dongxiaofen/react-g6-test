@@ -5,7 +5,7 @@ import styles from './index.less';
 function CreateReport({}) {
   return (
     <div className={styles.text}>
-      即将创建报告<span className={styles.textSub}>（包含工商、法务、关联网络、上市、新闻、团队、经营等数据）</span>
+      您即将创建报告<span className={styles.textSub}>（包含工商、法务、企业关联图，新闻，经营状况、团队等数据）</span>
     </div>
   );
 }

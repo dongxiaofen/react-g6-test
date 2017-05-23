@@ -15,6 +15,8 @@ class TaxCheckStore {
   @observable taxState = false;
   // loading
   @observable loading = false;
+  // monitorId
+  @observable monitorId = '';
 
   @action.bound addSelectItem() {
     this.selectConf.push({
@@ -66,6 +68,9 @@ class TaxCheckStore {
     if (window.reportSourceCancel === undefined) {
       window.reportSourceCancel = [];
     }
+    if (monitorId) {
+      this.monitorId = monitorId;
+    }
     const source = CancelToken.source();
     window.reportSourceCancel.push(source.cancel);
     // 打开loading
@@ -75,7 +80,7 @@ class TaxCheckStore {
       size: uiStore.uiState.taxCheckPager.size,
     };
     // 获取列表数据
-    companyHomeApi.getTaxCheckList(monitorId, params, source)
+    companyHomeApi.getTaxCheckList(this.monitorId, params, source)
       .then(action('taxList list', (resp) => {
         this.taxListData = resp.data;
         // 关闭loading
@@ -95,6 +100,7 @@ class TaxCheckStore {
     this.taxListData = {};
     this.loading = false;
     this.taxState = false;
+    this.monitorId = '';
   }
 }
 export default new TaxCheckStore();

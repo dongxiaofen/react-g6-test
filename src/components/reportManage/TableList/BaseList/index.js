@@ -27,7 +27,6 @@ function BaseList({
   const turnToMonitor = () => {
     payModalStore.openCompModal({
       'modalType': 'createMonitor',
-      'width': '560px',
       'pactName': '用户服务协议',
       'pactUrl': '/',
       'pointText': '加入监控即视为同意',

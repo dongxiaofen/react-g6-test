@@ -12,7 +12,7 @@ class AlertAnalysisStore {
   alertCancel = null;
   @observable listData = [];
   // 六芒星data
-  @observable sixStarData = {};
+  @observable sixStarData = '';
   // 六芒星loading
   @observable loading = false;
   @observable detailData = {
@@ -194,7 +194,7 @@ class AlertAnalysisStore {
     // 获取列表数据
     companyHomeApi.getSixStar(monitorId, source)
       .then(action('six list', (resp) => {
-        this.sixStarData = resp.data.content;
+        this.sixStarData = resp.data.result;
         // 关闭loading
         this.loading = false;
       }))

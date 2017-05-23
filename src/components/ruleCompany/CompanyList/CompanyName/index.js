@@ -7,30 +7,24 @@ function CompanyName({data}) {
   // 公司名
   const name = data.companyName;
   // 分数
-  const type = 80;
-  // 跳转报告
+  let score = '';
+  if (data.score) {
+    score = (
+      <div className={styles.type}>
+        综合分{data.score}
+      </div>
+    );
+  }
+  // 跳转监控
   const link = () => {
-    // 深度报告
-    if (data.productType === 'ANALYSIS_REPORT') {
-      browserHistory.push(`/companyHome/alertAnalysis?analysisReportId=${data.productId}&companyType=MAIN`);
-    }
-    // 高级报告
-    if (data.productType === 'REPORT') {
-      browserHistory.push(`/companyHome/alertAnalysis?reportId=${data.productId}&companyType=MAIN`);
-    }
-    // 监控
-    if (data.productType === 'MONITOR') {
-      browserHistory.push(`/companyHome/alertAnalysis?monitorId=${data.productId}&companyType=MAIN`);
-    }
+    browserHistory.push(`/companyHome?monitorId=${data.productId}&companyType=MAIN`);
   };
   return (
     <div className={styles.box}>
       <div onClick={link} className={styles.name}>
         {name}
       </div>
-      <div className={styles.type}>
-        综合分{type}
-      </div>
+      {score}
     </div>
   );
 }

@@ -23,7 +23,7 @@ class PayModalStore {
     // loading
     @observable btnLoading = false;
     // 下拉框值
-    @observable selectValue = 'ONE_YEAR';
+    @observable selectValue = 'ONE_MONTH';
     // 二次弹框相关
     // 选择监控类型
     @observable monitorType = 'MONITOR';
@@ -48,30 +48,34 @@ class PayModalStore {
     @observable callBack = null;
     // 是否是套餐用户的监控续期
     @observable isComboRenewal = false;
+    // 是否为续期
+    @observable isRenewal = false;
 
     @action.bound closeAction() {
       this.visible = false;
       this.btnLoading = false;
-      this.selectValue = 'ONE_YEAR';
+      this.selectValue = 'ONE_MONTH';
       this.isComboRenewal = false;
       this.monitorType = 'MONITOR';
       this.isSingleBtn = false;
+      this.isRenewal = false;
     }
 
-    @action.bound openCompModal({ modalType, width, pactName, pactUrl, pointText, isComboRenewal, callBack, isSingleBtn }) {
+    @action.bound openCompModal({ modalType, width, pactName, pactUrl, pointText, isComboRenewal, callBack, isSingleBtn, isRenewal }) {
       this.visible = true;
       this.pactName = pactName;
       this.pactUrl = pactUrl;
       this.pointText = pointText;
       this.modalType = modalType;
       this.callBack = callBack;
+      this.isRenewal = isRenewal;
       if (isComboRenewal !== undefined) { this.isComboRenewal = isComboRenewal;}
       switch (modalType) {
         case 'continueMonitor':
           this.tittle = '监控续期';
           break;
         case 'createMonitor':
-          this.tittle = '选择监控类型';
+          this.tittle = '加入监控';
           break;
         case 'turnMonitor':
           this.tittle = '转为监控';

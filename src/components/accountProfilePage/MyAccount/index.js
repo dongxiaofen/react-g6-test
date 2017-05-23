@@ -4,6 +4,8 @@ import styles from './index.less';
 import Statistics from '../common/Statistics';
 import Tables from '../common/Tables';
 // import NewBusiness from '../common/NewBusiness';
+// import IndustryDist from '../common/IndustryDist';
+// import ProvinceRank from '../common/ProvinceRank';
 
 function MyAccount({accountProfileStore}) {
   const statistics = {
@@ -63,7 +65,18 @@ function MyAccount({accountProfileStore}) {
       <div className="clearfix">
         <Tables config = {warningCompnay} className="" />
         <Tables config = {riskCompnay} className={styles.gap} />
+        <Tables config = {lowScoreCompnay} className="" />
         <Tables config = {lowScoreCompnay} className={styles.full_box} />
+
+        {/* <div className={styles.newBusiness}>
+          <NewBusiness newBusinessData={accountProfileStore.myNewBusinessData} />
+        </div>
+        <div className={styles.provinceRank}>
+          <ProvinceRank myProvinceRank={accountProfileStore.myProvinceRank} />
+        </div>
+        <div className={styles.industryDist}>
+          <IndustryDist myIndustryDist={accountProfileStore.myIndustryDist} />
+        </div> */}
       </div>
     </div>
   );
