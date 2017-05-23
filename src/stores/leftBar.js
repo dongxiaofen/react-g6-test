@@ -1,7 +1,6 @@
 import { observable, action, reaction, runInAction } from 'mobx';
-const helpInfo1 = '创建深度监控后，可查看该板块信息';
-const helpInfo2 = '创建深度监控、监控后，可查看该板块信息';
-const helpInfo3 = '创建深度监控、监控、报告后，可查看该板块信息';
+const helpInfo1 = '创建监控后，可查看该板块信息';
+const helpInfo2 = '创建监控、报告后，可查看该板块信息';
 class LeftBarStore {
   constructor() {
     reaction(
@@ -21,73 +20,73 @@ class LeftBarStore {
         {
           menuText: '企业基本信息',
           menuKey: 'corpDetail',
-          helpInfo: helpInfo3,
-          contain: ['deepMonitor', 'monitor', 'report']
+          helpInfo: helpInfo2,
+          contain: ['monitor', 'report']
         },
         {
           menuText: '上市披露',
           menuKey: 'stock',
-          helpInfo: helpInfo3,
-          contain: ['deepMonitor', 'monitor', 'report']
+          helpInfo: helpInfo2,
+          contain: ['monitor', 'report']
         },
         {
           menuText: '税务信息',
           menuKey: 'tax',
           helpInfo: helpInfo1,
-          contain: ['deepMonitor']
+          contain: ['monitor']
         },
         {
           menuText: '风险信息',
           menuKey: 'risk',
-          helpInfo: helpInfo3,
-          contain: ['deepMonitor', 'monitor', 'report']
+          helpInfo: helpInfo2,
+          contain: ['monitor', 'report']
         },
         {
           menuText: '新闻信息',
           menuKey: 'internet',
-          helpInfo: helpInfo3,
-          contain: ['deepMonitor', 'monitor', 'report']
+          helpInfo: helpInfo2,
+          contain: ['monitor', 'report']
         },
         {
           menuText: '经营信息',
           menuKey: 'assets',
-          helpInfo: helpInfo3,
-          contain: ['deepMonitor', 'monitor', 'report']
+          helpInfo: helpInfo2,
+          contain: ['monitor', 'report']
         },
         {
           menuText: '团队信息',
           menuKey: 'team',
-          helpInfo: helpInfo3,
-          contain: ['deepMonitor', 'monitor', 'report']
+          helpInfo: helpInfo2,
+          contain: ['monitor', 'report']
         },
       ],
-      helpInfo: helpInfo3,
-      contain: ['deepMonitor', 'monitor', 'report'],
+      helpInfo: helpInfo2,
+      contain: ['monitor', 'report'],
     },
     {
       menuText: '关联网络',
       menuKey: 'network',
       children: [
-        {
-          menuText: '全网关系',
-          menuKey: 'forceNetwork',
-          helpInfo: helpInfo2,
-          contain: ['deepMonitor', 'monitor']
-        },
+        // {
+        //   menuText: '全网关系',
+        //   menuKey: 'forceNetwork',
+        //   helpInfo: helpInfo1,
+        //   contain: ['monitor']
+        // },
         {
           menuText: '关联关系',
           menuKey: 'network',
-          helpInfo: helpInfo3,
-          contain: ['deepMonitor', 'monitor', 'report']
+          helpInfo: helpInfo2,
+          contain: ['monitor', 'report']
         },
         {
           menuText: '风险关系', menuKey: 'blackNetwork',
-          helpInfo: helpInfo3,
-          contain: ['deepMonitor', 'monitor', 'report']
+          helpInfo: helpInfo2,
+          contain: ['monitor', 'report']
         },
       ],
-      helpInfo: helpInfo3,
-      contain: ['deepMonitor', 'monitor', 'report'],
+      helpInfo: helpInfo2,
+      contain: ['monitor', 'report'],
     },
     {
       menuText: '趋势分析',
@@ -96,19 +95,18 @@ class LeftBarStore {
         {
           menuText: '事件时间轴',
           menuKey: 'timeAxis',
-          helpInfo: helpInfo2,
-          contain: ['deepMonitor', 'monitor']
+          helpInfo: helpInfo1,
+          contain: ['monitor']
         },
         {
           menuText: '预警分析',
           menuKey: 'alertAnalysis',
           helpInfo: helpInfo1,
-          // contain: ['deepMonitor']
-          contain: ['deepMonitor', 'monitor']
+          contain: ['monitor']
         },
       ],
-      helpInfo: helpInfo2,
-      contain: ['deepMonitor', 'monitor'],
+      helpInfo: helpInfo1,
+      contain: ['monitor'],
     },
     {
       menuText: '信息核查',
@@ -117,18 +115,18 @@ class LeftBarStore {
         {
           menuText: '关联人核查',
           menuKey: 'relPerCheck',
-          helpInfo: helpInfo2,
-          contain: ['deepMonitor', 'monitor']
+          helpInfo: helpInfo1,
+          contain: ['monitor']
         },
         {
           menuText: '税务核查',
           menuKey: 'taxCheck',
-          helpInfo: helpInfo2,
-          contain: ['deepMonitor', 'monitor']
+          helpInfo: helpInfo1,
+          contain: ['monitor']
         },
       ],
-      helpInfo: helpInfo2,
-      contain: ['deepMonitor', 'monitor'],
+      helpInfo: helpInfo1,
+      contain: ['monitor'],
     },
     {
       menuText: '企业现勘',
@@ -137,12 +135,12 @@ class LeftBarStore {
         {
           menuText: '现勘记录',
           menuKey: 'nowRecord',
-          helpInfo: helpInfo2,
-          contain: ['deepMonitor', 'monitor']
+          helpInfo: helpInfo1,
+          contain: ['monitor']
         },
       ],
-      helpInfo: helpInfo2,
-      contain: ['deepMonitor', 'monitor'],
+      helpInfo: helpInfo1,
+      contain: ['monitor'],
     },
   ];
 
@@ -161,11 +159,8 @@ class LeftBarStore {
     });
   }
   @action.bound getReportType(routing) {
-    const { deepMonitorId, monitorId, reportId} = routing.location.query;
+    const { monitorId, reportId} = routing.location.query;
     let reportType;
-    if (deepMonitorId) {
-      reportType = 'deepMonitor'; // 高级监控
-    }
     if (monitorId) {
       reportType = 'monitor'; // 监控
     }

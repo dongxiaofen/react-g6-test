@@ -25,4 +25,3 @@ export const upGradeToMonitor = (reportId, status, selectValue) => {
   }
   return axios.put(url, {time: selectValue});
 };
-

@@ -5,18 +5,10 @@ import styles from './index.less';
 function ReportLink({data}) {
   // 类型
   let type = '';
-  switch (data.productType) {
-    case 'ANALYSIS_REPORT':
-      type = '深度分析';
-      break;
-    case 'REPORT':
-      type = '高级报告';
-      break;
-    case 'MONITOR':
-      type = '主体监控';
-      break;
-    default:
-      break;
+  if (data.productType === 'MONITOR') {
+    type = '监控';
+  } else {
+    type = '报告';
   }
   return (
     <div className={styles.box}>

@@ -5,17 +5,13 @@ import styles from './index.less';
 
 function ReportButton({itemData}) {
   let text = '';
-  if (itemData && itemData.deepMonitorId > 0) {
-    text = '查看深度监控';
-  } else if (itemData && itemData.monitorId > 0) {
+  if (itemData && itemData.monitorId > 0) {
     text = '查看监控';
   } else {
     text = '查看报告';
   }
   const hrefCompany = () => {
-    if (itemData && itemData.deepMonitorId > 0) {
-      browserHistory.push('/companyHome?deepMonitorId=' + itemData.deepMonitorId + '&companyType=MAIN');
-    } else if (itemData && itemData.monitorId > 0) {
+    if (itemData && itemData.monitorId > 0) {
       browserHistory.push('/companyHome?monitorId=' + itemData.monitorId + '&companyType=MAIN');
     } else {
       browserHistory.push('/companyHome?reportId=' + itemData.reportId + '&companyType=MAIN');

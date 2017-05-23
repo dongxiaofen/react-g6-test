@@ -3,9 +3,8 @@ import { observer } from 'mobx-react';
 import Chart from 'components/common/Charts/ResizeChart';
 import styles from './index.less';
 
-function CompanyScoreChart({alertAnalysisStore}) {
-  const data = alertAnalysisStore.sixStarData;
-  console.log(data);
+function CompanyScoreChart({sixStarData}) {
+  const data = sixStarData;
   const createOption = () => ({
     title: {
       text: ''
@@ -28,7 +27,7 @@ function CompanyScoreChart({alertAnalysisStore}) {
          { name: '团队相关', max: 100},
          { name: '社会影响力', max: 100},
          { name: '创新能力', max: 100},
-         { name: '负面相关', max: 100}
+         { name: '法务相关', max: 100}
       ]
     },
     series: [{
@@ -46,7 +45,14 @@ function CompanyScoreChart({alertAnalysisStore}) {
       },
       data: [
         {
-          value: [78, 88, 65, 84, 91, 69],
+          value: [
+            data.industry ? sixStarData.industry.score : 0,
+            data.operation ? sixStarData.operation.score : 0,
+            data.team ? sixStarData.team.score : 0,
+            data.influence ? sixStarData.influence.score : 0,
+            data.creativity ? sixStarData.creativity.score : 0,
+            data.law ? sixStarData.law.score : 0
+          ],
           name: '企业综合评分',
           label: {
             normal: {
@@ -72,7 +78,7 @@ function CompanyScoreChart({alertAnalysisStore}) {
     <div className={styles.box}>
       <Chart
         chartId="leida"
-        height="450"
+        height="430"
         option={createOption()} />
     </div>
   );

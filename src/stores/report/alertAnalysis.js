@@ -183,7 +183,7 @@ class AlertAnalysisStore {
     };
   }
   // 获取六芒星Data
-  @action.bound getSixStar(monitorId = 320) {
+  @action.bound getSixStar(monitorId) {
     if (window.reportSourceCancel === undefined) {
       window.reportSourceCancel = [];
     }
@@ -194,7 +194,7 @@ class AlertAnalysisStore {
     // 获取列表数据
     companyHomeApi.getSixStar(monitorId, source)
       .then(action('six list', (resp) => {
-        this.sixStarData = resp.data.content;
+        this.sixStarData = resp.data.result;
         // 关闭loading
         this.loading = false;
       }))
@@ -202,7 +202,7 @@ class AlertAnalysisStore {
         console.log(err.response, '=====six error');
         // 关闭loading
         this.loading = false;
-        // this.sixStarData = {error: 'error'};
+        this.sixStarData = {error: 'error'};
       }));
   }
   @action.bound resetStore() {
