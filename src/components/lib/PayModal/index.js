@@ -17,6 +17,9 @@ function PayModal({
   pactUrl,
   pactName,
   choiceClick,
+  monitorType,
+  choiceMonitorType,
+  isSingleBtn,
 }) {
   // 生成报告或转为监控
   const payClick = () => {
@@ -35,6 +38,11 @@ function PayModal({
     choiceClick(value);
   };
 
+  // 选择监控类型
+  const selectMonitor = (value) => {
+    choiceMonitorType(value);
+  };
+
   const modalBtnList = () => {
     const init = [
       {text: '1个月', key: 'ONE_MONTH'},
@@ -46,7 +54,7 @@ function PayModal({
       {text: '7个月', key: 'SEVEN_MONTH'},
       {text: '8个月', key: 'EIGHT_MONTH'},
       {text: '9个月', key: 'NINE_MONTH'},
-      {text: '10个月=1年', key: 'ONE_YEAR'},
+      {text: '10=1年', key: 'ONE_YEAR'},
     ];
     return init.map((item, key) => {
       return (
@@ -56,6 +64,27 @@ function PayModal({
           <div
             className={selectValue === item.key ? styles.active : styles.selectDiv}
             onClick={selectClick.bind(null, item.key)}>
+            {item.text}
+          </div>
+        </div>
+      );
+    });
+  };
+
+
+  const monitorButton = () => {
+    const init = [
+      {text: '加入监控', key: 'MONITOR'},
+      {text: '加入深度监控', key: 'DEPTH_MONITOR'},
+    ];
+    return init.map((item, key) => {
+      return (
+        <div
+          key={`monitorSelectKey${key}`}
+          className={`${isComboRenewal ? styles.comboRenewal : styles.selectMonitor} ${item.key === 'DEPTH_MONITOR' ? 'pull-right' : ''}`}>
+          <div
+            className={monitorType === item.key ? styles.monitor_active : styles.selectDiv}
+            onClick={selectMonitor.bind(null, item.key)}>
             {item.text}
           </div>
         </div>
@@ -77,13 +106,13 @@ function PayModal({
     pointText: pointText,
     pactUrl: pactUrl,
     pactName: pactName,
+    isSingleBtn: isSingleBtn,
   };
-
   let modalContent = modalBtnList();
   if (clientStore.userInfo.consumeType === 'FEESET') {
     modalConfig = {
       title: isComboRenewal ? '监控续期（1年）' : tittle,
-      width: 420,
+      width: '420px',
       visible: visible,
       isNeedBtn: true,
       isSingleBtn: true,
@@ -104,9 +133,18 @@ function PayModal({
   return (
     <div>
       <Modal {...modalConfig}>
-        <div className={`clearfix ${styles.wrap}`} style={{ marginBottom: isComboRenewal ? 0 : 30 }}>
-          {modalContent}
+        <div className="clearfix">
+          {monitorButton()}
         </div>
+        <div className={`${isComboRenewal ? styles.comboRenewal_tips : styles.nomal_tips}`}>
+          {monitorType === 'DEPTH_MONITOR' ? <span>包含：监控数据及功能，企业税务分析和综合分析评分、风险扫描预警。</span> : ''}
+          {monitorType === 'MONITOR' ? <span>包含：查询报告数据，并实时监控、推送数据。</span> : ''}
+        </div>
+        {isComboRenewal ? '' :
+          <div className={`clearfix ${styles.wrap}`} style={{ marginBottom: isComboRenewal ? 0 : 30 }}>
+            {modalContent}
+          </div>
+        }
       </Modal>
     </div>
   );
@@ -127,5 +165,7 @@ PayModal.propTypes = {
   modalType: PropTypes.string,
   width: PropTypes.string,
   choiceClick: PropTypes.func,
+  choiceMonitorType: PropTypes.func,
+  isSingleBtn: PropTypes.bool,
 };
 export default inject('clientStore')(observer(PayModal));
