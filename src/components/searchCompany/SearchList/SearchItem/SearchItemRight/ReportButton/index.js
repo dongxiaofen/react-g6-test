@@ -12,9 +12,9 @@ function ReportButton({itemData}) {
   }
   const hrefCompany = () => {
     if (itemData && itemData.monitorId > 0) {
-      browserHistory.push('/companyHome?monitorId=' + itemData.monitorId + '&companyType=MAIN');
+      browserHistory.push('/companyHome?monitorId=' + itemData.monitorId);
     } else {
-      browserHistory.push('/companyHome?reportId=' + itemData.reportId + '&companyType=MAIN');
+      browserHistory.push('/companyHome?reportId=' + itemData.reportId);
     }
   };
   return (
