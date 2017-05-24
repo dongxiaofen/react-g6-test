@@ -100,7 +100,7 @@ export default class TradeTrend extends Component {
         money: ['auctionTotalAll', 'auctionTotal'],
         counts: ['auctionSumAll', 'auctionSum'],
         seriesName: ['拍卖资产总量', '拍卖笔数总量'],
-        label: ['交易资产增量', '拍卖笔数增量']
+        label: ['拍卖资产增量', '拍卖笔数增量']
       },
     };
     const moneyAry = this.getValueArry('money', config[type].money[0], data);
