@@ -86,7 +86,7 @@ function BaseInfo({accountSettingStore, clientStore}) {
       },
       {
         name: '套餐有效期',
-        keys: 'lastLoginTs',
+        keys: 'feesetExpireDt',
         none: consumeType !== 'FEESET' || baseInfo.data.parentUserId ? true : false,
       },
       {
