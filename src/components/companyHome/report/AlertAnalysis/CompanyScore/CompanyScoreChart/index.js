@@ -1,6 +1,6 @@
 import React, {PropTypes} from 'react';
 import { observer } from 'mobx-react';
-import Chart from 'components/common/Charts/ResizeChart';
+import Chart from 'components/common/Charts/BaseChart';
 import styles from './index.less';
 
 function CompanyScoreChart({sixStarData}) {

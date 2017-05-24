@@ -108,7 +108,7 @@ function PayModal({
   let modalContent = null;
   if (clientStore.userInfo.consumeType === 'FEESET') {
     modalContent = modalPackage();
-  }else if (clientStore.userInfo.consumeType === 'POINT') {
+  }else if (!clientStore.userInfo.consumeType || clientStore.userInfo.consumeType === 'POINT') {
     modalContent = modalBtnList();
   }
   return (
