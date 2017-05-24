@@ -18,6 +18,7 @@ export default inject('riskHeadlinesStore')(loadingComp({
   mapDataToProps: props => ({
     loading: props.timeAxisStore.eventData.events === undefined ? true : false,
     error: props.timeAxisStore.eventData.error,
+    module: '时间轴事件',
     height: 100,
   }),
 })(observer(Event)));
