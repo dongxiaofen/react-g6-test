@@ -3,9 +3,6 @@ import { observer, inject } from 'mobx-react';
 import styles from './index.less';
 import Statistics from '../common/Statistics';
 import Tables from '../common/Tables';
-// import NewBusiness from '../common/NewBusiness';
-// import IndustryDist from '../common/IndustryDist';
-// import ProvinceRank from '../common/ProvinceRank';
 
 function MyAccount({accountProfileStore}) {
   const statistics = {
@@ -34,6 +31,7 @@ function MyAccount({accountProfileStore}) {
     isLoading: accountProfileStore.ownWarningCompnayIsLoading,
     error: accountProfileStore.ownWarningCompnay.length === 0,
     module: '',
+    owner: 'own',
   };
   const riskCompnay = {
     hasScore: true,
@@ -46,6 +44,7 @@ function MyAccount({accountProfileStore}) {
     isLoading: accountProfileStore.ownRiskCompnayIsLoading,
     error: accountProfileStore.ownHighRisk.length === 0,
     module: '',
+    owner: 'own',
   };
   const lowScoreCompnay = {
     hasScore: false,
@@ -58,6 +57,7 @@ function MyAccount({accountProfileStore}) {
     isLoading: accountProfileStore.ownLowScoreCompnayIsLoading,
     error: accountProfileStore.ownLowestScore.length === 0,
     module: '',
+    owner: 'own',
   };
   return (
     <div className={styles.top}>
@@ -65,18 +65,7 @@ function MyAccount({accountProfileStore}) {
       <div className="clearfix">
         <Tables config = {warningCompnay} className="" />
         <Tables config = {riskCompnay} className={styles.gap} />
-        <Tables config = {lowScoreCompnay} className="" />
         <Tables config = {lowScoreCompnay} className={styles.full_box} />
-
-        {/* <div className={styles.newBusiness}>
-          <NewBusiness newBusinessData={accountProfileStore.myNewBusinessData} />
-        </div>
-        <div className={styles.provinceRank}>
-          <ProvinceRank myProvinceRank={accountProfileStore.myProvinceRank} />
-        </div>
-        <div className={styles.industryDist}>
-          <IndustryDist myIndustryDist={accountProfileStore.myIndustryDist} />
-        </div> */}
       </div>
     </div>
   );
