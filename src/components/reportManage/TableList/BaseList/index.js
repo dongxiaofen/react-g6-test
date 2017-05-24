@@ -27,8 +27,6 @@ function BaseList({
   const turnToMonitor = () => {
     payModalStore.openCompModal({
       'modalType': 'createMonitor',
-      'pactName': '用户服务协议',
-      'pactUrl': '/',
       'pointText': '加入监控即视为同意',
       'callBack': choiceOk
     });
@@ -69,8 +67,6 @@ function BaseList({
   //     width: 420,
   //     isSingleBtn: true,
   //     pointText: '升级报告即视为同意',
-  //     pactUrl: 'xxxxxx',
-  //     pactName: '用户服务协议',
   //     confirmAction: updateDeepAction,
   //     loader: (cb) => {
   //       require.ensure([], (require) => {

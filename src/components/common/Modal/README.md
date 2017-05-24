@@ -19,8 +19,6 @@
 @param isNeedBtn // 是否需要按钮
 
 @param pointText // 提示文案
-@param pactUrl // 跳转协议的链接
-@param pactName // 跳转协议的名称
 
 @param confirmText // 确定按钮文本，默认确定
 @param cancelText // 取消按钮文本，默认取消
@@ -45,7 +43,6 @@ openCompModal({
   isNeedBtn,
   pointText,
   pactUrl,
-  pactName,
   cancelText,
   confirmText,
   confirmAction,

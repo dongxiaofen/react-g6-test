@@ -9,9 +9,7 @@ function _PayModal({payModalStore}) {
   width,
   isComboRenewal,
   pointText,
-  pactUrl,
   modalType,
-  pactName,
   confirmAction,
   closeAction,
   selectValue,
@@ -30,8 +28,6 @@ function _PayModal({payModalStore}) {
       isComboRenewal={isComboRenewal}
       modalType={modalType}
       pointText={pointText}
-      pactUrl={pactUrl}
-      pactName={pactName}
       choiceClick={choiceClick}
       confirmAction={confirmAction}
       closeAction={closeAction}

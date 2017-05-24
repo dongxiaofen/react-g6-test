@@ -12,8 +12,6 @@ function PayModal({
   closeAction,
   btnLoading,
   pointText,
-  pactUrl,
-  pactName,
   choiceClick,
   isSingleBtn,
 }) {
@@ -105,8 +103,6 @@ function PayModal({
     confirmAction: payClick,
     confirmLoading: btnLoading,
     pointText: pointText,
-    pactUrl: pactUrl,
-    pactName: pactName,
     isSingleBtn: isSingleBtn,
   };
   let modalContent = null;
@@ -133,8 +129,6 @@ PayModal.propTypes = {
   btnLoading: PropTypes.bool,
   pointText: PropTypes.string,
   selectValue: PropTypes.string,
-  pactUrl: PropTypes.string,
-  pactName: PropTypes.string,
   visible: PropTypes.bool,
   isComboRenewal: PropTypes.bool,
   tittle: PropTypes.string,

@@ -9,8 +9,6 @@ class ModalStore {
   @observable width = '440px';
   // 是否有提示文本
   @observable pointText = '';
-  @observable pactUrl = '';
-  @observable pactName = '';
   // action
   @observable confirmAction;
   @observable cancelAction;
@@ -19,8 +17,6 @@ class ModalStore {
     this.isCustomize = false;
     this.isSingleBtn = false;
     this.pointText = '';
-    this.pactUrl = '';
-    this.pactName = '';
     this.width = '440px';
   }
 
@@ -46,8 +42,6 @@ class ModalStore {
     title,
     isNeedBtn,
     pointText,
-    pactUrl,
-    pactName,
     isCustomize,
     isSingleBtn,
     cancelText,
@@ -66,8 +60,6 @@ class ModalStore {
     if (width) { this.width = width; }
     if (isNeedBtn !== undefined) { this.isNeedBtn = isNeedBtn; }
     if (pointText !== undefined) { this.pointText = pointText; }
-    if (pactUrl !== undefined) { this.pactUrl = pactUrl; }
-    if (pactName !== undefined) { this.pactName = pactName; }
     if (isCustomize !== undefined) { this.isCustomize = isCustomize; }
     if (isSingleBtn !== undefined) { this.isSingleBtn = isSingleBtn; }
     // action

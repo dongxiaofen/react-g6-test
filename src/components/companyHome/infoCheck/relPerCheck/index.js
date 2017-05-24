@@ -38,8 +38,6 @@ function RelPerInfo({relPerCheckStore}) {
                     closeAction={closeModal}
                     relPerCheckStore={relPerCheckStore}
                     pointText = "核查即视为同意"
-                    pactUrl= "/"
-                    pactName= "用户服务协议"
                     btnLoading={relPerCheckStore.isLoading}/>
       </div>
     );
@@ -52,8 +50,6 @@ function RelPerInfo({relPerCheckStore}) {
                 closeAction={closeModal}
                 relPerCheckStore={relPerCheckStore}
                 pointText = "核查即视为同意"
-                pactUrl= "/"
-                pactName= "用户服务协议"
                 btnLoading={relPerCheckStore.isLoading}/>
     <CheckList listData={relPerCheckStore.personCheckInfoData} />
   </div>
