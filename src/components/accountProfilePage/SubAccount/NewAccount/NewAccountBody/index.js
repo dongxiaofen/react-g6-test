@@ -28,7 +28,7 @@ function NewAccountBody({data, routing, accountSettingStore}) {
         arrList = [...arrList,
           <li key={`${index}newAccount`} className={`${styles.list_item}`}>
             <div className={`${styles.marginRL} clearfix`}>
-              <div onClick={jumpAccoutSetting.bind(this, itemData.email, itemData.userName)} className={`${styles.user} pull-left`}>
+              <div onClick={jumpAccoutSetting.bind(this, itemData.email, itemData.userId)} className={`${styles.user} pull-left`}>
                 <Popover content={`所属账号：${itemData.userName}（${itemData.email}`}>
                   {spliceString(itemData.userName.concat(itemData.email))}
                 </Popover>

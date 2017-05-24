@@ -33,7 +33,7 @@ function Content({internetStore}) {
         <div className={styles.title}>
           <ModuleTitle module="新闻分析" />
         </div>
-        <div className={styles.tabs}>
+        <div className={`clearfix ${styles.tabs}`}>
           <NewsTabs internetStore={internetStore} />
         </div>
       </div>
