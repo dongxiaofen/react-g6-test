@@ -27,7 +27,7 @@ function BaseList({
   const turnToMonitor = () => {
     payModalStore.openCompModal({
       'modalType': 'createMonitor',
-      'pointText': '加入监控即视为同意',
+      'pointText': true,
       'callBack': choiceOk
     });
   };

@@ -8,7 +8,7 @@ class ModalStore {
   @observable isSingleBtn = false;
   @observable width = '440px';
   // 是否有提示文本
-  @observable pointText = '';
+  @observable pointText = false;
   // action
   @observable confirmAction;
   @observable cancelAction;
@@ -16,7 +16,7 @@ class ModalStore {
     this.visible = false;
     this.isCustomize = false;
     this.isSingleBtn = false;
-    this.pointText = '';
+    this.pointText = false;
     this.width = '440px';
   }
 

@@ -9,7 +9,7 @@ function FreeButton({modalStore, payModalStore, itemData, singleData, createMoni
       title: '创建报告',
       width: '504px',
       isSingleBtn: true,
-      pointText: '升级报告即视为同意',
+      pointText: true,
       confirmAction: createReportType,
       loader: (cb) => {
         require.ensure([], (require) => {
@@ -28,7 +28,7 @@ function FreeButton({modalStore, payModalStore, itemData, singleData, createMoni
     payModalStore.openCompModal({
       'modalType': 'createMonitor',
       'width': '580px',
-      'pointText': '加入监控即视为同意',
+      'pointText': true,
       'callBack': choiceOk,
     });
   };

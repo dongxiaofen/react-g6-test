@@ -44,7 +44,7 @@ function _PayModal({payModalStore}) {
 _PayModal.propTypes = {
   visible: PropTypes.bool,
   isComboRenewal: PropTypes.bool,
-  pointText: PropTypes.string,
+  pointText: PropTypes.bool,
   pactUrl: PropTypes.string,
   tittle: PropTypes.string,
   modalType: PropTypes.string,
