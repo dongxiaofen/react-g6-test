@@ -21,8 +21,8 @@ export default class AlertAnalysis extends Component {
     const alertCancel = alertAnalysisStore.alertCancel;
     if (alertCancel && typeof alertCancel === 'function') {
       alertCancel();
-      alertAnalysisStore.changeValue('loading', -1);
     }
+    alertAnalysisStore.changeValue('loadingId', -1);
   }
 
   render() {
