@@ -127,7 +127,7 @@ PayModal.propTypes = {
   closeAction: PropTypes.func,
   confirmAction: PropTypes.func,
   btnLoading: PropTypes.bool,
-  pointText: PropTypes.string,
+  pointText: PropTypes.bool,
   selectValue: PropTypes.string,
   visible: PropTypes.bool,
   isComboRenewal: PropTypes.bool,
