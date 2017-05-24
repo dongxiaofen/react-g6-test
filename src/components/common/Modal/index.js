@@ -8,8 +8,6 @@ function _Modal({modalStore}) {
     title,
     isNeedBtn,
     pointText,
-    pactUrl,
-    pactName,
     isCustomize,
     isSingleBtn,
     width,
@@ -33,8 +31,6 @@ function _Modal({modalStore}) {
       isSingleBtn={isSingleBtn}
       title={title}
       pointText={pointText}
-      pactUrl={pactUrl}
-      pactName={pactName}
       cancelText={cancelText}
       confirmText={confirmText}
       confirmWidth={confirmWidth}
