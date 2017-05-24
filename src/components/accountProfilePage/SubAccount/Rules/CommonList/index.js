@@ -7,7 +7,6 @@ function CommonList({data}) {
     'RULE': '自定义预警',
     'SYS_RULE': '系统预警',
   };
-
   const createList = () => {
     let arrList = [];
     if (data) {
