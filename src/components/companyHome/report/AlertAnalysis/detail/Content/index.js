@@ -26,6 +26,8 @@ function Content({alertAnalysisStore}) {
     const detail = detailData.detail;
     if (info.alertType === 'RULE') {
       const singleDetail = detail[detailData.activeIndex];
+      // console.log(singleDetail, 'singleDetail-----------');
+      // if (!singleDetail) { return }
       switch (singleDetail.pattern) {
         case 'COURT_NOTICE':
           return <Ktannouncement data={singleDetail} />;
