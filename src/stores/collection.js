@@ -29,11 +29,17 @@ class CollectionStore {
     collectionApi.cancelCollection(id, productType)
       .then(action('cancel collection', () => {
         const collection = uiStore.uiState.collection;
-        this.getCollectionPage({
+        const resultContent = this.resultContent;
+        const pageConfig = {
           companyName: collection.companyName,
           index: collection.index,
           size: collection.size
-        });
+        };
+        if (resultContent.length === 1 && collection.totalElements !== 1) {
+          collection.index = collection.index - 1;
+        } else {
+          this.getCollectionPage(pageConfig);
+        }
         messageStore.openMessage({ content: '取消收藏成功' });
       }))
       .catch(action('cancel collection err', (err) => {
