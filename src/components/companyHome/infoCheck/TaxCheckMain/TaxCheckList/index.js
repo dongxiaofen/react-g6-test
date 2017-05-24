@@ -29,8 +29,6 @@ export default class TaxCheckList extends Component {
       confirmText: '核查',
       confirmWidth: 280,
       pointText: '核查即视为同意',
-      pactUrl: '',
-      pactName: '用户服务协议',
       loader: (cb) => {
         require.ensure([], (require) => {
           cb(require('../TaxCheckModal'));

@@ -10,8 +10,6 @@ function FreeButton({modalStore, payModalStore, itemData, singleData, createMoni
       width: '504px',
       isSingleBtn: true,
       pointText: '升级报告即视为同意',
-      pactUrl: 'xxxxxx',
-      pactName: '用户服务协议',
       confirmAction: createReportType,
       loader: (cb) => {
         require.ensure([], (require) => {
@@ -30,8 +28,6 @@ function FreeButton({modalStore, payModalStore, itemData, singleData, createMoni
     payModalStore.openCompModal({
       'modalType': 'createMonitor',
       'width': '580px',
-      'pactName': '用户服务协议',
-      'pactUrl': '/',
       'pointText': '加入监控即视为同意',
       'callBack': choiceOk,
     });

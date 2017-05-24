@@ -40,8 +40,6 @@ class PayModalStore {
 
     @observable visible = false;
     @observable pointText = '';
-    @observable pactUrl = '';
-    @observable pactName ='';
     @observable width = '504px';
     @observable isSingleBtn =false;
 
@@ -61,10 +59,8 @@ class PayModalStore {
       this.isRenewal = false;
     }
 
-    @action.bound openCompModal({ modalType, width, pactName, pactUrl, pointText, isComboRenewal, callBack, isSingleBtn, isRenewal }) {
+    @action.bound openCompModal({ modalType, width, pointText, isComboRenewal, callBack, isSingleBtn, isRenewal }) {
       this.visible = true;
-      this.pactName = pactName;
-      this.pactUrl = pactUrl;
       this.pointText = pointText;
       this.modalType = modalType;
       this.callBack = callBack;
