@@ -7,7 +7,7 @@ function Statistics({titleData, data, units}) {
   const createList = () => {
     let listArr = [];
     Object.keys(titleData).map( (key) => {
-      listArr = [...listArr, <SingeInfo key={key} title={titleData[key]} unit={units[key]} count={data[key]} />];
+      listArr = [...listArr, <SingeInfo key={key} title={titleData[key]} unit={units[key]} count={data[key] ? data[key] : 0} />];
     });
     return listArr;
   };

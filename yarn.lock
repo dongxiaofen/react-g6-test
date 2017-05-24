@@ -5391,9 +5391,11 @@ sax@~1.2.1:
   version "1.2.1"
   resolved "http://registry.npm.taobao.org/sax/download/sax-1.2.1.tgz#7b8e656190b228e81a66aea748480d828cd2d37a"
 
-sc-colors:
-  version "1.0.0"
-  resolved "https://registry.yarnpkg.com/sc-colors/-/sc-colors-1.0.0.tgz#96e995dc0290fad7d37f86a4f8a9a470ecc30d62"
+sc-colors@^1.0.0, sc-colors@1.0.1:
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/sc-colors/-/sc-colors-1.0.1.tgz#f5b4b893364c6e82e48e0676482a2483dd530888"
+  dependencies:
+    sc-colors "^1.0.0"
 
 scroll-behavior@0.3.2:
   version "0.3.2"

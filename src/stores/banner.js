@@ -33,13 +33,6 @@ class BannerStore {
   // 上市代码
   @observable stockCode = '';
 
-  // 升级成高级报告或者深度报告
-  @observable updateHighOrDeep = {
-    active: 1,
-    pointText: '已选择高级查询报告',
-    pointTextSub: '（包含快速查询报告数据，另有关联网络、上市、新闻、团队、经营数据）'
-  };
-
   // 下载pdf配置
   @observable pdfDownloadConfig = {
     levelOne: [
@@ -182,13 +175,6 @@ class BannerStore {
         //   console.log('获取stockCode出错', err.response);
         // }
       });
-  }
-
-  // 修改UpdateHighOrDeep
-  @action.bound setUpdateHighOrDeep({ active, pointText, pointTextSub }) {
-    this.updateHighOrDeep.active = active;
-    this.updateHighOrDeep.pointText = pointText;
-    this.updateHighOrDeep.pointTextSub = pointTextSub;
   }
 
   // 刷新报告
@@ -400,11 +386,6 @@ class BannerStore {
     this.collection = false;
     this.mainStatus = '';
     this.stockCode = '';
-    this.updateHighOrDeep = {
-      active: 1,
-      pointText: '已选择高级查询报告',
-      pointTextSub: '（包含快速查询报告数据，另有关联网络、上市、新闻、团队、经营数据）'
-    };
     this.pdfDownloadConfig = {
       levelOne: [
         { label: '信息概览', value: 'SUMMARY', checked: false },
