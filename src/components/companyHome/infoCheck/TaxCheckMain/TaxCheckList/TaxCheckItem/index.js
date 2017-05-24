@@ -37,7 +37,7 @@ function TaxCheckItem({taxCheckStore, uiStore}) {
         </tbody>
       </table>
       <div className={styles.page}>
-        <Pager tData={taxCheckStore.taxListData} module="taxCheckPager"
+        <Pager tData={taxCheckStore.taxListData.content} module="taxCheckPager"
                uiStore={uiStore} type="large"/>
       </div>
     </div>

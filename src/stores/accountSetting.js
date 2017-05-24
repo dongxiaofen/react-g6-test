@@ -27,6 +27,7 @@ class AccountSettingStore {
     REPORT_PERSON_CHECK: '个人核查',
     MONITOR_PERSON_CHECK: '个人核查',
     MONITOR_TAX_CHECK: '税务核查',
+    REPORT_TAX_CHECK: '税务核查',
   };
   taxTypeMap = {
     R001: 'A类营业收入',

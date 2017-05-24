@@ -8,7 +8,7 @@ function RuleEvent({ruleStore}) {
   return (
     <div className={styles.box}>
       <div className={styles.message}>
-        2.请设置事件预警规则
+        2.设置事件预警规则
       </div>
       <div className={styles.content}>
         <div className={styles.wrap}>
