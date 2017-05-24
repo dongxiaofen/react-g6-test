@@ -10,7 +10,7 @@ function News({data, module, store, cardType}) {
       url = dealWithDate(data.content.title);
     }
     let companyId = '';
-    if (module === 'laneGraph') {
+    if (module === 'timeAxis') {
       companyId = data.relatedMonitorId || data.mainMonitorId;
     } else {
       companyId = store.events.info.monitorId;
