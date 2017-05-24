@@ -4,7 +4,7 @@ import styles from './index.less';
 import { loadingComp } from 'components/hoc';
 
 
-function TableBody({ hasScore, dateType, data, hasFlag, routing, searchCompanyStore }) {
+function TableBody({ hasScore, dateType, data, hasFlag, routing, searchCompanyStore, owner }) {
   const showRigthDate = (latestDt, alertCount, score) => {
     if (dateType === 'singeLine') {
       return (<div className={styles.date}>2017-08-01</div>);
@@ -20,11 +20,15 @@ function TableBody({ hasScore, dateType, data, hasFlag, routing, searchCompanySt
       );
     }
   };
-  const jumpPage = (companyName) => {
-    searchCompanyStore.searchTabClick('COMPANY_NAME');
-    searchCompanyStore.searchChange({target: {value: companyName}});
-    searchCompanyStore.getCompanyList();
-    routing.push(`/searchCompany`);
+  const jumpPage = (companyName, monitorId) => {
+    if (owner && owner === 'own') {
+      routing.push(`/companyHome/alertAnalysis?companyType=MAIN&monitorId=${monitorId}`);
+    } else {
+      searchCompanyStore.searchTabClick('COMPANY_NAME');
+      searchCompanyStore.searchChange({target: {value: companyName}});
+      searchCompanyStore.getCompanyList();
+      routing.push(`/searchCompany`);
+    }
   };
   const createList = () => {
     let listItem = [];
@@ -32,13 +36,13 @@ function TableBody({ hasScore, dateType, data, hasFlag, routing, searchCompanySt
       listItem = [...listItem,
         <div key={`${index}list_items`} className={`clearfix ${styles.singe_item}`}>
           <div className="pull-left">
-            <div className={styles.right_discription}>
-              <a onClick={jumpPage.bind(this, itemData.companyName)} className={styles.companyName}>{itemData.companyName}</a>
+            <div className={`${styles.right_discription} ${owner && owner === 'own' ? styles.paddingTop35 : ''}`}>
+              <a onClick={jumpPage.bind(this, itemData.companyName, itemData.productId)} className={styles.companyName}>{itemData.companyName}</a>
               { hasFlag && itemData.productType === 'MONITOR' ? <span className={`${styles.flag} ${styles.monitor}`}>监控</span> : ''}
               { hasFlag && itemData.productType === 'DEEP_MONITOR' ? <span className={`${styles.flag} ${styles.monitor}`}>深度</span> : ''}
               { hasScore ? <span className={styles.score}>{itemData.score}分</span> : '' }
               <div className={styles.account_user}>
-                {`所属帐号：${itemData.userName}(${itemData.email})`}
+                {owner && owner === 'own' ? '' : `所属帐号：${itemData.userName}(${itemData.email})`}
               </div>
             </div>
           </div>
