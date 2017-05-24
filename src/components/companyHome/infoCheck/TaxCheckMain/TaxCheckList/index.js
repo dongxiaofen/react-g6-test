@@ -26,7 +26,7 @@ export default class TaxCheckList extends Component {
       title: '税务核查',
       width: '695px',
       isSingleBtn: true,
-      confirmText: '核查',
+      confirmText: '确定',
       confirmWidth: 280,
       pointText: true,
       loader: (cb) => {
