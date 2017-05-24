@@ -74,7 +74,7 @@ class AlertAnalysisStore {
       .then(action('getAlertDetail_success', resp => {
         this.loadingId = -1;
         this.alertCancel = null;
-        this.detailData.detail = resp.data;
+        this.detailData.detail = resp.data.content;
         this.detailData.info = info;
         this.openDetailModal(this.detailData.info.alertType);
         if (this.detailData.info.alertType === 'RULE') {
