@@ -5,8 +5,8 @@ import Item from '../Item';
 import PwdModal from '../../userModal/PwdModal';
 import EditModal from '../../userModal/EditModal';
 import styles from './index.less';
-function BaseInfo({accountSettingStore, clientStore}) {
-  const consumeType = clientStore.userInfo.consumeType;
+function BaseInfo({accountSettingStore}) {
+  // const consumeType = clientStore.userInfo.consumeType;
   const baseInfo = accountSettingStore.base;
   const tree = accountSettingStore.tree;
   const activeIndex = tree.activeIndex;
@@ -25,10 +25,10 @@ function BaseInfo({accountSettingStore, clientStore}) {
       </div>
     );
   };
-  const addUnit = (unit, value) => {
-    if (value === '- -') return value;
-    return value + ' ' + unit;
-  };
+  // const addUnit = (unit, value) => {
+  //   if (value === '- -') return value;
+  //   return value + ' ' + unit;
+  // };
   const editUserInfo = (name, values) => {
     accountSettingStore.changeValue('editModal.actName', name);
     accountSettingStore.changeValue(`editModal.form.${name}.value`, values);
@@ -84,17 +84,18 @@ function BaseInfo({accountSettingStore, clientStore}) {
         keys: 'contactEmail',
         handle: handleEdit,
       },
-      {
-        name: '套餐有效期',
-        keys: 'lastLoginTs',
-        none: consumeType !== 'FEESET' || baseInfo.data.parentUserId ? true : false,
-      },
-      {
-        name: '剩余点数',
-        keys: 'point',
-        none: consumeType !== 'POINT' || baseInfo.data.parentUserId ? true : false,
-        handle: addUnit.bind(null, '点'),
-      },
+      // 设计图没有此字段暂时隐藏
+      // {
+      //   name: '套餐有效期',
+      //   keys: 'lastLoginTs',
+      //   none: consumeType !== 'FEESET' || baseInfo.data.parentUserId ? true : false,
+      // },
+      // {
+      //   name: '剩余点数',
+      //   keys: 'point',
+      //   none: consumeType !== 'POINT' || baseInfo.data.parentUserId ? true : false,
+      //   handle: addUnit.bind(null, '点'),
+      // },
     ];
     output = config.map((item, idx) => {
       if (!item.none) {
