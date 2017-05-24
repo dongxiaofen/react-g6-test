@@ -42,7 +42,7 @@ function CfcaFooter() {
       </div>
       <div className={styles['footer-nav']}>
         <div className={styles['footer-nav-content']}>
-          <div className={styles['footer-text']}>地址：北京市西域区菜市口南大街平原里20-3</div>
+          <div className={styles['footer-text']}>地址：北京市西城区菜市口南大街平原里20-3</div>
           <div className={styles['footer-text']}>电话：400-860-9888 / 400-007-6633</div>
           <div className={styles['footer-text']}>邮编：101300</div>
           <div className={styles['footer-text']}>Copyright@1999</div>
