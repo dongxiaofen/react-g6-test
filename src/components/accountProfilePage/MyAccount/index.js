@@ -24,7 +24,7 @@ function MyAccount({accountProfileStore}) {
     hasScore: true,
     dateType: 'singeLine',
     data: accountProfileStore.ownWarningCompnay,
-    hasFlag: true,
+    hasFlag: false,
     companyType: 'warningCompnay',
     tip: '系统选取您账号下最新预警的10家企业，仅供参考',
     title: '最新预警企业',
