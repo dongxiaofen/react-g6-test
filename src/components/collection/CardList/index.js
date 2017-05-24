@@ -60,9 +60,15 @@ function CardList({ collectionStore, uiStore }) {
             onClick={cancelCollection.bind(null, id, productType)}>
             取消收藏
           </div>
-          <div className={styles.lastModifiedTs}>
-            <div className={styles.timeValue}>{item.latestDt}</div>
-            <div className={styles.timeKey}>最近更新日期</div>
+          <div className={`clearfix ${styles.lastModifiedTs}`}>
+            <div className={styles.dateItem}>
+              <div className={styles.timeValue}>{item.collectionDt}</div>
+              <div className={styles.timeKey}>收藏日期</div>
+            </div>
+            <div className={styles.dateItem}>
+              <div className={styles.timeValue}>{item.latestDt}</div>
+              <div className={styles.timeKey}>最近更新日期</div>
+            </div>
           </div>
         </div>
       );
