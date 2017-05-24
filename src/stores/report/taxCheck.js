@@ -76,8 +76,11 @@ class TaxCheckStore {
       index: uiStore.uiState.taxCheckPager.index,
       size: uiStore.uiState.taxCheckPager.size,
     };
+    if (monitorId) {
+      this.monitorId = monitorId;
+    }
     // 获取列表数据
-    companyHomeApi.getTaxCheckList(monitorId, reportId, params, source)
+    companyHomeApi.getTaxCheckList(this.monitorId, reportId, params, source)
       .then(action('taxList list', (resp) => {
         this.taxListData = resp.data;
         // 关闭loading
