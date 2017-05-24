@@ -129,7 +129,8 @@ app.use((req, res) => {
           keyWord: '誉存科技',
           type: 'COMPANY_NAME'
         };
-        agent.get(config.backendApi + '/api/company/search')
+        /*axios.get(config.backendApi + '/api/user/info', {params})
+          .then((resp) => {
           .query(params)
           .end(function (err, resp) {
             // writeDataToFile('resp', resp.body);
@@ -154,7 +155,7 @@ app.use((req, res) => {
                 });
               });
             });
-          })
+          })*/
       } else if (reqPathName === '/') { // 访问首页
         /*服务端注入RouterStore*/
         const routingStore = new RouterStore();
@@ -182,7 +183,8 @@ app.use((req, res) => {
           .then((resp) => {
             /*获取用户信息*/
             allStores.clientStore.userInfo = resp.data;
-            allStores.clientStore.envConfig = config.target;
+            // allStores.clientStore.envConfig = config.target;
+            allStores.clientStore.envConfig = 'cfca_prod';
             allStores.loginStore.isShowLogin = false;
             /*获取报告leftBar高亮*/
             if (reqPathName.indexOf('companyHome') >= 0) {
