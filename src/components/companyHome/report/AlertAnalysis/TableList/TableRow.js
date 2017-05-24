@@ -41,7 +41,7 @@ function TableRow({data, routing, alertAnalysisStore, networkStore}) {
         <span className={styles.name}>
           {data.ruleName}
         <span className={styles.type}>
-          {`${alertTypeMap[data.alertType]}次数${data.count}`}
+          {`${alertTypeMap[data.alertType]}${data.count}次`}
         </span>
         </span>
         <span

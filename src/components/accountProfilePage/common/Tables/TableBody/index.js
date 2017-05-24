@@ -7,7 +7,7 @@ import { loadingComp } from 'components/hoc';
 function TableBody({ hasScore, dateType, data, hasFlag, routing, searchCompanyStore, owner }) {
   const showRigthDate = (latestDt, alertCount, score) => {
     if (dateType === 'singeLine') {
-      return (<div className={styles.date}>2017-08-01</div>);
+      return (<div className={styles.date}>{latestDt}</div>);
     }else if (dateType === 'comprehensive' || dateType === 'warning') {
       return (
         <div className={`${styles.has_warning_counts} ${dateType === 'comprehensive' ? styles.comprehensive : styles.warning_count}`}>
