@@ -3,7 +3,7 @@ import { observer } from 'mobx-react';
 import { loadingComp } from 'components/hoc';
 import AccountTable from '../AccountTable';
 import styles from './index.less';
-function Consume({accountSettingStore}) {
+function Consume({accountSettingStore, clientStore}) {
   const timeMap = accountSettingStore.timeMap;
   const consumeTypeMap = accountSettingStore.consumeTypeMap;
   const taxTypeMap = accountSettingStore.taxTypeMap;
@@ -21,6 +21,7 @@ function Consume({accountSettingStore}) {
     {name: '消费编号', key: 'seqNum', width: '15%'},
     {name: '消费类型', key: 'consumeOperationType', width: '15%', handle: handleConsumeType},
     {name: '操作时间', key: 'opTime', width: '15%'},
+    {name: '消费点数', key: 'consume', width: '15%', none: clientStore.userInfo.consumeType !== 'POINT'},
     {name: '消费内容', key: 'consumeInfo', handle: handleConsumeInfo},
   ];
   const data = accountSettingStore.tabs.consume.content;
