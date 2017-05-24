@@ -5,7 +5,7 @@ const RangePicker = DatePicker.RangePicker;
 import styles from './index.less';
 // import {Checkbox, Input} from 'components/lib';
 import Input from 'components/lib/input';
-import {Checkbox} from 'antd';
+import Checkbox from 'antd/lib/checkbox';
 import moment from 'moment';
 moment.locale('zh-cn');
 function RiskFilter({riskHeadlinesStore}) {
