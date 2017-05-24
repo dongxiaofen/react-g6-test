@@ -15,28 +15,28 @@
 .trans {
   opacity: 1;
   -webkit-transition-property: opacity;
-  -webkit-transition-duration: 2s;
+  -webkit-transition-duration: 0.5s;
   -webkit-transition-timing-function: ease;
 }
 .show {
-  // display: block;
-  opacity: 1;
-  composes: trans;
+  display: block;
+  // opacity: 1;
+  // composes: trans;
 }
 .hide {
-  // display: none;
-  opacity: 0;
-  composes: trans;
+  display: none;
+  // opacity: 0;
+  // composes: trans;
 }
 .links {
   stroke: #999;
   stroke-opacity: 0.6;
-  composes: trans;
+  // composes: trans;
 }
 .nodeText {
   fill: grey;
   cursor: pointer;
-  composes: trans;
+  // composes: trans;
 }
 
 .arrow {
@@ -48,92 +48,93 @@
   stroke: @yellow1;
   stroke-width: 2px;
   fill: @yellow1;
-  composes: trans;
+  // composes: trans;
 }
 .searchNode {
   cursor: pointer;
   stroke: @red1;
   stroke-width: 2px;
   fill: @red1;
-  composes: trans;
+  // composes: trans;
 }
 .cancelNodes {
   cursor: pointer;
   stroke: none;
   fill: #bbbbbb;
-  composes: trans;
+  // composes: trans;
 }
 .blackListNodes {
   cursor: pointer;
   stroke: none;
   fill: #000;
-  composes: trans;
+  // composes: trans;
 }
 .mainCompany {
   cursor: pointer;
   stroke: none;
   fill: #3a637f;
-  composes: trans;
+  // composes: trans;
 }
 .category1 {
   cursor: pointer;
   stroke: none;
   fill: #c23531;
-  composes: trans;
+  // composes: trans;
 }
 .category2 {
   cursor: pointer;
   stroke: none;
   fill: #dd9177;
-  composes: trans;
+  // composes: trans;
 }
 .category3 {
   cursor: pointer;
   stroke: none;
   fill: #bda29a;
-  composes: trans;
+  // composes: trans;
 }
 .category4 {
   cursor: pointer;
   stroke: none;
   fill: #448587;
-  composes: trans;
+  // composes: trans;
 }
 .category5 {
   cursor: pointer;
   stroke: none;
   fill: #91c7ae;
-  composes: trans;
+  // composes: trans;
 }
 .category6 {
   cursor: pointer;
   stroke: none;
   fill: #bd8b43;
-  composes: trans;
+  // composes: trans;
 }
 .category7 {
   cursor: pointer;
   stroke: none;
   fill: #749f83;
-  composes: trans;
+  // composes: trans;
 }
 .category8 {
   cursor: pointer;
   stroke: none;
   fill: #6e7074;
-  composes: trans;
+  // composes: trans;
 }
+
 .relativeCompany {
   cursor: pointer;
   stroke: none;
   fill: #4ab2e8;
-  composes: trans;
+  // composes: trans;
 }
 .relativePerson {
   cursor: pointer;
   stroke: none;
   fill: #365ebf;
-  composes: trans;
+  // composes: trans;
 }
 @keyframes graphAnimate {
   from{transform: scale(0, 0)}
