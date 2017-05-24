@@ -17,12 +17,9 @@ function CompanyList({ruleCompanyStore, uiStore}) {
       list.push(
         <div key={`${idx}list`} className={styles.single}>
           <Row>
-            <Col width="5">
+            <Col width="7">
               <CompanyName data={obj} />
               <ReportType data={obj} />
-            </Col>
-            <Col width="2">
-              <span className={styles.null}>data</span>
             </Col>
             <Col width="2">
               <Time data={obj} />

@@ -17,7 +17,7 @@ function ReportAction({ bannerStore, modalStore, payModalStore, routing }) {
     payModalStore.openCompModal({
       'modalType': 'createMonitor',
       'width': '504px',
-      'pointText': '加入监控即视为同意',
+      'pointText': true,
       'callBack': addMonitorAction
     });
   };
