@@ -155,7 +155,7 @@ function CheckModal({visible, width, closeAction, btnLoading, relPerCheckStore, 
              isNeedBtn
              pointText={pointText}
              title="关联人核查"
-             confirmText= "核查">
+             confirmText= "确定">
       <div className={styles.contentWrap}>
         <div className={styles.content}>
           <div

@@ -125,7 +125,7 @@ export default class Modal extends Component {
       pointTextComp = (
         <div className={styles.pointText}>
           <i className="fa fa-exclamation-circle"></i>
-          确认即视为同意
+          确定即视为同意
           《<Link to="/disclaimer" target="_blank">免责声明</Link>》
         </div>
       );

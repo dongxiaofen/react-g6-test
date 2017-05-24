@@ -7,9 +7,10 @@ function FreeButton({modalStore, payModalStore, itemData, singleData, createMoni
     selectReportType('report');
     const args = {
       title: '创建报告',
-      width: '504px',
+      width: '420px',
       isSingleBtn: true,
       pointText: true,
+      confirmText: '确定',
       confirmAction: createReportType,
       loader: (cb) => {
         require.ensure([], (require) => {
