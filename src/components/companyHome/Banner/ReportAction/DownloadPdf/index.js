@@ -135,7 +135,6 @@ export default class DownloadPdf extends Component {
     const query = this.props.routing.location.query;
     const monitorId = query.monitorId;
     const reportId = query.reportId;
-    const analysisReportId = query.analysisReportId;
     let queryStr = '&type=';
     let queryArray = [];
     const bannerStore = this.props.bannerStore;
@@ -172,9 +171,6 @@ export default class DownloadPdf extends Component {
       if (reportId) {
         window.open(`/pdfDown?reportId=${reportId}${queryStr}`);
       }
-      if (analysisReportId) {
-        window.open(`/pdfDown?analysisReportId=${reportId}${queryStr}`);
-      }
       this.props.bannerStore.clearPdfConfigChecked();
       this.props.bannerStore.setPdfDownloadKeys(queryArray);
     } else {
@@ -203,7 +199,9 @@ export default class DownloadPdf extends Component {
                 : null
             }
           </div>
-          <div onClick={this.downloadPdf} className={styles.pdfDownModaBtn}>下载</div>
+          <div onClick={this.downloadPdf} className={styles.pdfDownModaBtn}>
+            <i className="fa fa-download"></i>下载
+          </div>
         </div>
         <div className={styles['download-content-box']}>
           {this.menuLevelOne()}

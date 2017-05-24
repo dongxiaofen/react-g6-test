@@ -119,6 +119,11 @@ export const changeAnnouncement = ({ stockType, monitorId, reportId }) => {
   return axios.get(url);
 };
 
+// 刷新报告
+export const refreshHighOrDeep = (reportId) => {
+  return axios.put(`/api/report/${reportId}`);
+};
+
 // 创建高级报告或者深度报告
 export const createReport = (active, companyName) => {
   let url;
@@ -131,35 +136,18 @@ export const createReport = (active, companyName) => {
   return axios.post(url, { companyName: companyName });
 };
 
-// // 高级查询报告升级为深度分析报告
-// export const updateToAnalysisReport = (reportId) => {
-//   return axios.put(`/api/report/${reportId}/upgrade/analysisReport`, { reportId: reportId });
-// };
-
-// 刷新高级报告或者深度报告
-export const refreshHighOrDeep = (reportId, analysisReportId) => {
-  const url = analysisReportId
-    ? `/api/analysisReport/${analysisReportId}`
-    : `/api/report/${reportId}`;
-  return axios.put(url);
-};
-
 // 创建监控
 export const createMonitor = (params) => {
   return axios.post(`/api/monitor`, params);
 };
 
 // 升级监控
-export const updateToMonitor = ({ reportId, analysisReportId, time }) => {
+export const updateToMonitor = ({ reportId, time }) => {
   let url;
   const params = { time: time };
   if (reportId) {
     url = `/api/report/${reportId}/upgrade`;
     params.reportId = reportId;
-  }
-  if (analysisReportId) {
-    url = `/api/analysisReport/${analysisReportId}/upgrade`;
-    params.analysisReportId = analysisReportId;
   }
   return axios.put(url, params);
 };
@@ -175,13 +163,10 @@ export const pauseOrRestoreMonitor = (monitorId, status) => {
 };
 
 // 添加/删除收藏
-export const addOrCancelCollection = ({ reportId, analysisReportId, monitorId, params }) => {
+export const addOrCancelCollection = ({ reportId, monitorId, params }) => {
   let url;
   if (reportId) {
     url = `/api/report/${reportId}/collection`;
-  }
-  if (analysisReportId) {
-    url = `/api/analysisReport/${analysisReportId}/collection`;
   }
   if (monitorId) {
     url = `/api/monitor/${monitorId}/collection`;

@@ -1,3 +1,25 @@
+.info {
+  width: 100%;
+
+  color: #333;
+
+  background: #f6f8fa;
+  border-bottom: 1px solid #efefef;
+
+  div {
+    width: 100%;
+    padding: 10px;
+
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+  }
+
+  span {
+    color: #c23531;
+  }
+}
+
 .infoWrap {
   width: 100%;
   margin-bottom: 20px;
@@ -55,5 +77,12 @@
   .infoWrapDiv2 {
     .infoWrapDiv;
     width: 50%;
+  }
+}
+
+@media (max-width: 1680px) {
+  .infoWrap .infoWrapDiv .infoCircle {
+    width: 100px;
+    height: 100px;
   }
 }
