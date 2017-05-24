@@ -38,12 +38,11 @@ function TableRow({data, routing, alertAnalysisStore, networkStore}) {
   return (
     <div className={styles.itemBox}>
       <div className={styles.lineRow}>
-        <span className={styles.type}>
-          {alertTypeMap[data.alertType]}
-        </span>
         <span className={styles.name}>
           {data.ruleName}
-          <span className={styles.count}>{data.count}</span>
+        <span className={styles.type}>
+          {`${alertTypeMap[data.alertType]}次数${data.count}`}
+        </span>
         </span>
         <span
           className={styles.viewBtn}
