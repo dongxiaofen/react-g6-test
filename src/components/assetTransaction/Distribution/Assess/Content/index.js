@@ -6,6 +6,7 @@ import { loadingComp } from 'components/hoc';
 
 function Content({ type, detail }) {
   const detailData = detail.data;
+  const asset80Focus = detail.asset80Focus ? (detail.asset80Focus * 100).toFixed(2) : 0;
   const transactionTotal = Number(detailData.transactionTotal); // 交易资产总额
   const transactionSum = Number(detailData.transactionSum); // 交易笔数
   const auctionTotal = Number(detailData.auctionTotal); // 拍卖资产总额
@@ -81,10 +82,19 @@ function Content({ type, detail }) {
     details.push(transactionTotalItem);
     details.push(transactionSumItem);
   }
+  const title = `${detail.region} 80% 的资金交易金额，主要集中在前 ${asset80Focus}% 笔的交易中。`;
   return (
-    <ul className={`clearfix ${styles.infoWrap}`}>
-      {details}
-    </ul>
+    <div>
+      <div className={styles.info}>
+        <div title={title}>
+          {detail.region}地区交易评估：
+          <span>{title}</span>
+        </div>
+      </div>
+      <ul className={`clearfix ${styles.infoWrap}`}>
+        {details}
+      </ul>
+    </div>
   );
 }
 
@@ -110,7 +120,7 @@ export default loadingComp({
     return {
       loading: props.loading,
       category: 0,
-      height: 189,
+      height: 229,
       error: error,
       errCategory: 1,
     };
