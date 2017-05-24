@@ -89,7 +89,7 @@ export default class CfcaSolutionBody extends Component {
         <div className={styles.top}>
           <img src={solutionTop} />
           <h1 ref="title">大数据技术的应用场景</h1>
-          <p ref="titleP">将大数据服务与传统金融相融合，通过机器学习，模式识别，文本算法，图像算法，关联规则，个性化推荐等技术为金融机构提供完整的风险解决方案，让金融更简单，更安全。</p>
+          <p ref="titleP">企业身份认证产品是中金融信通过互联网和大数据技术手段，整合了银行、工商、税务、运营、公安和支付等多个维度的数据，对有企业在线身份认证需求的企业和金融机构客户提供的一套便捷、高效、安全的产品解决方案。</p>
         </div>
         <div className={styles.section}>
           <div className={styles.left}>
