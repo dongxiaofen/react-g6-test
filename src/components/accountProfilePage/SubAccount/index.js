@@ -11,14 +11,14 @@ function SubAccount({ accountProfileStore }) {
     titleData: {
       'alertCompanyCount': '预警企业',
       'alertCount': '触发预警',
-      'monitorCount': '报告企业',
-      'reportCount': '监控企业'
+      'reportCount': '报告企业',
+      'monitorCount': '监控企业',
     },
     units: {
       'alertCompanyCount': '家',
       'alertCount': '条',
+      'reportCount': '家',
       'monitorCount': '家',
-      'reportCount': '家'
     },
     data: accountProfileStore.subWarningStatisticsData,
   };

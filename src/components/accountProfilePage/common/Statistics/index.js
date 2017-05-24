@@ -6,11 +6,9 @@ import SingeInfo from './SingeInfo/index';
 function Statistics({titleData, data, units}) {
   const createList = () => {
     let listArr = [];
-    for (const key in data) {
-      if (key) {
-        listArr = [...listArr, <SingeInfo key={key} title={titleData[key]} unit={units[key]} count={data[key]} />];
-      }
-    }
+    Object.keys(titleData).map( (key) => {
+      listArr = [...listArr, <SingeInfo key={key} title={titleData[key]} unit={units[key]} count={data[key]} />];
+    });
     return listArr;
   };
 

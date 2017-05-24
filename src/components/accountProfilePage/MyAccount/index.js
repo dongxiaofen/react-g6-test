@@ -9,14 +9,14 @@ function MyAccount({accountProfileStore}) {
     titleData: {
       'alertCompanyCount': '预警企业',
       'alertCount': '触发预警',
-      'monitorCount': '报告企业',
-      'reportCount': '监控企业'
+      'reportCount': '报告企业',
+      'monitorCount': '监控企业',
     },
     units: {
       'alertCompanyCount': '家',
       'alertCount': '条',
+      'reportCount': '家',
       'monitorCount': '家',
-      'reportCount': '家'
     },
     data: accountProfileStore.ownWarningStatisticsData,
   };
@@ -24,7 +24,7 @@ function MyAccount({accountProfileStore}) {
     hasScore: true,
     dateType: 'singeLine',
     data: accountProfileStore.ownWarningCompnay,
-    hasFlag: true,
+    hasFlag: false,
     companyType: 'warningCompnay',
     tip: '系统选取您账号下最新预警的10家企业，仅供参考',
     title: '最新预警企业',
