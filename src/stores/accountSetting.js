@@ -395,7 +395,7 @@ class AccountSettingStore {
       .then(action('getConsume_success', resp => {
         const noData = resp.data.content === undefined || resp.data.content.length === 0;
         this.tabs.consume = noData ? {error: {message: '暂无消费记录'}, content: []} : resp.data;
-        uiStore.updateUiStore('accountConsume.totalElements', pathval.getPathValue(resp, 'data.content.totalElements') || 0);
+        uiStore.updateUiStore('accountConsume.totalElements', pathval.getPathValue(resp, 'data.totalElements') || 0);
       }))
       .catch(action('getConsume_error', err => {
         console.log('getConsume_error', err);
