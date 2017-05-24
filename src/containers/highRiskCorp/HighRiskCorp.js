@@ -1,6 +1,6 @@
 import React, { Component, PropTypes } from 'react';
 import { inject, observer } from 'mobx-react';
-import mobx from 'mobx';
+// import mobx from 'mobx';
 import { Container } from 'components/common/layout';
 import CountTitle from 'components/highRiskCorp/CountTitle';
 import IndustryDistribute from 'components/highRiskCorp/IndustryDistribute';
@@ -22,7 +22,7 @@ export default class HighRiskCorp extends Component {
     store.getArea();
   }
   render() {
-    console.log(mobx.toJS(this.props.highRiskCorpStore), '---');
+    // console.log(mobx.toJS(this.props.highRiskCorpStore), '---');
     return (
       <Container>
         <CountTitle />
