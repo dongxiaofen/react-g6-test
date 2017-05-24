@@ -3,7 +3,6 @@ import {Route, IndexRoute, IndexRedirect} from 'react-router';
 import axios from 'axios';
 import {
     App,
-    Home,
     SearchCompany,
     MyHomePage,
     RiskHeadlines,
@@ -70,7 +69,7 @@ export default () => {
   return (
     <Route path="/" component={ App }>
       <IndexRoute component={ HomePage } />
-      <Route path="pdfDown" component={ Home } />
+      <Route path="pdfDown" component={ Pdf } />
       <Route path="searchCompany" component={ SearchCompany } onEnter={requireAuth} />
       <Route path="myHomePage" component={ MyHomePage } onEnter={requireAuth} />
       <Route path="riskHeadlines" component={ RiskHeadlines } onEnter={requireAuth} />

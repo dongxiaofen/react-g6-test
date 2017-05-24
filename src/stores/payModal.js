@@ -39,7 +39,7 @@ class PayModalStore {
     @observable isRepeat = false;
 
     @observable visible = false;
-    @observable pointText = '';
+    @observable pointText = false;
     @observable width = '504px';
     @observable isSingleBtn =false;
 
@@ -61,7 +61,9 @@ class PayModalStore {
 
     @action.bound openCompModal({ modalType, width, pointText, isComboRenewal, callBack, isSingleBtn, isRenewal }) {
       this.visible = true;
-      this.pointText = pointText;
+      if (pointText !== undefined) {
+        this.pointText = pointText;
+      }
       this.modalType = modalType;
       this.callBack = callBack;
       this.isRenewal = isRenewal;

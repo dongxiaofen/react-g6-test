@@ -1,5 +1,6 @@
 import React from 'react';
 import { observer, inject } from 'mobx-react';
+import { toJS } from 'mobx';
 import { loadingComp } from 'components/hoc';
 import loadingBoxHoc from '../common/loadingBoxHoc';
 import Chart from 'components/common/Charts/ResizeChart';
@@ -96,13 +97,19 @@ function EnterpriseIncrement({highRiskCorpStore}) {
 export default inject('highRiskCorpStore')(
   loadingBoxHoc('enterpriseIncrement')(
     loadingComp({
-      mapDataToProps: props => ({
-        loading: props.highRiskCorpStore.enterpriseIncrement.data.blacklist_dist_list === undefined ? true : false,
-        error: props.highRiskCorpStore.enterpriseIncrement.data.error,
-        height: 434,
-        errCategory: 1,
-        category: 0,
-      }),
+      mapDataToProps: props => {
+        const data = props.highRiskCorpStore.enterpriseIncrement.data;
+        const NotCount = data.blacklist_dist_list && toJS(data.blacklist_dist_list).every((item) => {
+          return item.count === 0;
+        });
+        return {
+          loading: data.blacklist_dist_list === undefined ? true : false,
+          error: data.error || NotCount,
+          height: 434,
+          errCategory: 1,
+          category: 0,
+        };
+      },
     })(observer(EnterpriseIncrement))
   )
 );

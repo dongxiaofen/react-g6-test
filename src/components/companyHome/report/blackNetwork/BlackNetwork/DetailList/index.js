@@ -20,7 +20,8 @@ function DetailList({blackNetworkStore, detailModalStore}) {
             require('./DetailModal')
           );
         });
-      }
+      },
+      '失信被执行人记录'
     );
   };
   return (

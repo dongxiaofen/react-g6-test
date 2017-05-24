@@ -33,18 +33,12 @@ class BannerStore {
   // 上市代码
   @observable stockCode = '';
 
-  // 升级成高级报告或者深度报告
-  @observable updateHighOrDeep = {
-    active: 1,
-    pointText: '已选择高级查询报告',
-    pointTextSub: '（包含快速查询报告数据，另有关联网络、上市、新闻、团队、经营数据）'
-  };
-
   // 下载pdf配置
   @observable pdfDownloadConfig = {
     levelOne: [
       { label: '信息概览', value: 'SUMMARY', checked: false },
       { label: '企业基本信息', value: 'CORP', checked: false },
+      { label: '税务信息', value: 'TAX', checked: false },
       { label: '上市披露', value: 'STOCK', checked: false },
       { label: '关联网络', value: 'NETWORK', checked: false },
       { label: '风险信息', value: 'RISK', checked: false },
@@ -60,6 +54,7 @@ class BannerStore {
         { label: '对外投资任职', value: 'CORP_INV_POS', checked: false },
         { label: '企业年报', value: 'CORP_YEAR_REPORT', checked: false },
       ],
+      'TAX': [],
       'STOCK': [
         { label: '公司概况', value: 'STOCK_INFO', checked: false },
         { label: '公司公告', value: 'STOCK_ANNOUNCEMENT', checked: false },
@@ -182,13 +177,6 @@ class BannerStore {
         //   console.log('获取stockCode出错', err.response);
         // }
       });
-  }
-
-  // 修改UpdateHighOrDeep
-  @action.bound setUpdateHighOrDeep({ active, pointText, pointTextSub }) {
-    this.updateHighOrDeep.active = active;
-    this.updateHighOrDeep.pointText = pointText;
-    this.updateHighOrDeep.pointTextSub = pointTextSub;
   }
 
   // 刷新报告
@@ -321,9 +309,14 @@ class BannerStore {
     const levelTwo = this.pdfDownloadConfig.levelTwo;
     const levelTwoKeys = Object.keys(levelTwo);
     const stockCode = this.stockCode;
+    const isMonitor = window.location.href.includes('monitorId');
     levelOne.map((item) => {
       if (item.value === 'STOCK') {
         if (stockCode) {
+          item.checked = checked;
+        }
+      } else if (item.value === 'TAX') {
+        if (isMonitor) {
           item.checked = checked;
         }
       } else {
@@ -400,15 +393,11 @@ class BannerStore {
     this.collection = false;
     this.mainStatus = '';
     this.stockCode = '';
-    this.updateHighOrDeep = {
-      active: 1,
-      pointText: '已选择高级查询报告',
-      pointTextSub: '（包含快速查询报告数据，另有关联网络、上市、新闻、团队、经营数据）'
-    };
     this.pdfDownloadConfig = {
       levelOne: [
         { label: '信息概览', value: 'SUMMARY', checked: false },
         { label: '企业基本信息', value: 'CORP', checked: false },
+        { label: '税务信息', value: 'TAX', checked: false },
         { label: '上市披露', value: 'STOCK', checked: false },
         { label: '关联网络', value: 'NETWORK', checked: false },
         { label: '风险信息', value: 'RISK', checked: false },
@@ -424,6 +413,7 @@ class BannerStore {
           { label: '对外投资任职', value: 'CORP_INV_POS', checked: false },
           { label: '企业年报', value: 'CORP_YEAR_REPORT', checked: false },
         ],
+        'TAX': [],
         'STOCK': [
           { label: '公司概况', value: 'STOCK_INFO', checked: false },
           { label: '公司公告', value: 'STOCK_ANNOUNCEMENT', checked: false },
@@ -445,7 +435,6 @@ class BannerStore {
         ],
         'NEWS': [],
         'OPERATION': [
-          { label: '企业综合信息', value: 'OPERATION_TEL', checked: false },
           { label: '招投标', value: 'OPERATION_BIDDING', checked: false },
           { label: '专利', value: 'OPERATION_PATENT', checked: false },
           { label: '商标', value: 'OPERATION_TRADEMARK', checked: false },

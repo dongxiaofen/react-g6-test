@@ -26,9 +26,9 @@ export default class TaxCheckList extends Component {
       title: '税务核查',
       width: '695px',
       isSingleBtn: true,
-      confirmText: '核查',
+      confirmText: '确定',
       confirmWidth: 280,
-      pointText: '核查即视为同意',
+      pointText: true,
       loader: (cb) => {
         require.ensure([], (require) => {
           cb(require('../TaxCheckModal'));

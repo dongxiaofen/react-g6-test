@@ -4,7 +4,7 @@ import styles from './index.less';
 
 function DetailTitle({}) {
   return (
-    <div className={styles.title}>失信被执行人记录</div>
+    <div className={styles.title}></div>
   );
 }
 

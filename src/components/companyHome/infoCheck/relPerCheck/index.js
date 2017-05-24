@@ -27,18 +27,18 @@ function RelPerInfo({relPerCheckStore}) {
       relPerCheckStore.personNameShow = false;
     });
   };
+  const checkModalConfig = {
+    visible: relPerCheckStore.showCheckModal,
+    closeAction: closeModal,
+    relPerCheckStore: relPerCheckStore,
+    pointText: true,
+    btnLoading: relPerCheckStore.isLoading
+  };
   if (relPerCheckStore.personCheckInfoData && relPerCheckStore.personCheckInfoData.length > 0) {
     return (
     <div>
       <Button className={styles.noDataButton} onClick={handleClick}>添加核查</Button>
-      <CheckModal visible={relPerCheckStore.showCheckModal}
-                  width="421px"
-                  closeAction={closeModal}
-                  relPerCheckStore={relPerCheckStore}
-                  pointText = "核查即视为同意"
-                  pactUrl= "/"
-                  pactName= "用户服务协议"
-                  btnLoading={relPerCheckStore.isLoading}/>
+      <CheckModal {...checkModalConfig} />
       <CheckList listData={relPerCheckStore.personCheckInfoData} />
     </div>
     );
@@ -48,14 +48,7 @@ function RelPerInfo({relPerCheckStore}) {
       <img className={styles.img} src={noData} />
       <div className={styles.noDataInfo}>还没有关联人核查结果，请添加核查</div>
       <Button className={styles.noDataButton} onClick={handleClick}>添加核查</Button>
-      <CheckModal visible={relPerCheckStore.showCheckModal}
-                  width="421px"
-                  closeAction={closeModal}
-                  relPerCheckStore={relPerCheckStore}
-                  pointText = "核查即视为同意"
-                  pactUrl= "/"
-                  pactName= "用户服务协议"
-                  btnLoading={relPerCheckStore.isLoading}/>
+      <CheckModal {...checkModalConfig} />
     </div>
   );
 }

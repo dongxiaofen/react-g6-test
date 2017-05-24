@@ -27,15 +27,13 @@ class ReportManageStore {
     this.isLoading = true;
     reportManageApi.getReportList(params)
       .then(action('get report page', (resp) => {
-        if (params.index === 1) {
-          uiStore.uiState.reportManagePager.index = 1;
-        }
+        const reportManagePager = uiStore.uiState.reportManagePager;
         this.reportList = resp.data.content;
-        uiStore.uiState.reportManagePager.totalElements = resp.data.totalElements;
+        reportManagePager.totalElements = resp.data.totalElements;
         this.isLoading = false;
       }))
       .catch((err) => {
-        console.log(err.response, '-----getReportList');
+        console.log(err, '-----getReportList');
         runInAction(() => {
           this.isLoading = false;
         });

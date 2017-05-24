@@ -108,7 +108,7 @@ class MonitorListStore {
     const {monitorId, status, idx, relation, mMonitorId} = params || this.monitorList.pauseInfo;
     this.monitorList.switchLoading.set(monitorId, true);
     monitorListApi.changeMonitorStatus({monitorId, status})
-      .then(action('changeStatus_success', resp => {
+      .then(action('changeStatus_success', () => {
         if (relation === 'main') {
           const {index, size, totalElements} = uiStore.uiState.monitorListPager;
           let newIndex = index;
@@ -121,7 +121,8 @@ class MonitorListStore {
           this.monitorList.pauseInfo.visible = false;
           this.monitorList.pauseInfo.loading = false;
         } else {
-          this.monitorList.relationList.get(mMonitorId)[idx] = Object.assign({}, this.monitorList.relationList.get(mMonitorId)[idx], resp.data[0]);
+          this.monitorList.relationList.get(mMonitorId)[idx].status = this.monitorList.relationList.get(mMonitorId)[idx].status === 'MONITOR' ? 'PAUSE' : 'MONITOR';
+          // this.monitorList.relationList.get(mMonitorId)[idx] = Object.assign({}, this.monitorList.relationList.get(mMonitorId)[idx], resp.data[0]);
         }
         this.monitorList.switchLoading.set(monitorId, false);
         messageStore.openMessage({

@@ -11,7 +11,7 @@ export default class Modal extends Component {
     title: PropTypes.string,
     width: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
     isCustomize: PropTypes.bool,
-    pointText: PropTypes.string,
+    pointText: PropTypes.bool,
     children: PropTypes.node,
     isSingleBtn: PropTypes.bool,
     // text
@@ -125,7 +125,7 @@ export default class Modal extends Component {
       pointTextComp = (
         <div className={styles.pointText}>
           <i className="fa fa-exclamation-circle"></i>
-          {this.props.pointText}
+          确定即视为同意
           《<Link to="/disclaimer" target="_blank">免责声明</Link>》
         </div>
       );

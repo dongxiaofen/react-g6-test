@@ -204,6 +204,7 @@ export default loadingComp({
   mapDataToProps: props => ({
     loading: props.timeAxisStore.axisData.data === undefined ? true : false,
     error: props.timeAxisStore.axisData.error,
+    module: '时间轴',
     height: 100,
   }),
 })(observer(Axis));
