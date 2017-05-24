@@ -89,7 +89,7 @@ function MonitorStatus({ nodeData, monitorInfoList, routing, modalStore, network
         output = (
           <div>
             <div className={styles.item}>
-              已创建高级查询报告
+              已创建查询报告
             </div>
             <div className={styles.actionBox}>
               <a className={styles.actionFlow} onClick={viewReport.bind(this, monitorInfo.reportId, 'MAIN')}>查看企业</a>
