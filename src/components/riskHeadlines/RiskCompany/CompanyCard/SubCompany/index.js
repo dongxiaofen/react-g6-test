@@ -7,6 +7,7 @@ function SubCompany({data, active, riskHeadlinesStore}) {
     riskHeadlinesStore.riskUpdateValue('companyList', 'active', item);
     riskHeadlinesStore.riskUpdateValue('events', 'companyType', 'SUB');
     riskHeadlinesStore.getCompanyInfo(item.monitorId, riskHeadlinesStore.filterParams);
+    riskHeadlinesStore.riskUpdateValue('events', 'params.index', 1);
   };
   const createList = ()=> {
     const output = [];
