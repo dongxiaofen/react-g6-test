@@ -2,7 +2,6 @@ import React from 'react';
 import { observer, inject } from 'mobx-react';
 import styles from './index.less';
 function TableRow({data, routing, alertAnalysisStore, networkStore}) {
-  console.log(data, 'data------------');
   const loadingId = alertAnalysisStore.loadingId;
   const viewDetail = () => {
     if (loadingId === data.id) {
