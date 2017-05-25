@@ -31,42 +31,17 @@ function CfcaMain({isHeaderScroll}) {
       <CfcaHeaderNav isHeaderScroll={isHeaderScroll} home="1" />
       <div id="home-banner" className={`clearfix ${styles['home-banner']}`}>
         <canvas id="canvas" className={styles.webGL}></canvas>
-        <h1 id="home-banner-title">定制化风险决策平台&nbsp;&nbsp;用数据连接管理</h1>
-        <p id="home-banner-txt1">集合移动互联网、大数据、云计算的前沿技术，专注企业情报信息采集与清洗，企业经营风险识别模型优化，个性风险规则自定义设计，</p>
-        <p id="home-banner-txt2">为金融机构信贷管理提供全方位解决方案。</p>
-        {/* <div className={styles['banner-shape']}>
-          <div className={styles['banner-shape-img1']}>
-            <img src={bannerShape1} alt=""/>
-          </div>
-          <div className={styles['banner-shape-img2']}>
-            <img src={bannerShape2} alt=""/>
-          </div>
-          <div className={styles['banner-shape-img3']}>
-            <img src={bannerShape2} alt=""/>
-          </div>
-          <div className={styles['banner-shape-img4']}>
-            <img src={bannerShape2} alt=""/>
-          </div>
-          <div className={styles['banner-shape-img5']}>
-            <img src={bannerShape2} alt=""/>
-          </div>
-          <div className={styles['banner-shape-text']}>
-            <img src={homeLogo} alt=""/>
-          </div>
-        </div>
-        <div className={styles['banner-arrow']}>
-          <img
-            className={styles['banner-arrow-img']}
-            onClick={arrowOnClick}
-            src={bannerArrow} />
-        </div> */}
+        <h1 id="home-banner-title">云端&nbsp;&nbsp;数据&nbsp;&nbsp;风控</h1>
+        <p id="home-banner-txt1">用大数据的新思维来挖掘企业风险，基于云计算的服务平台定位企业风控，</p>
+        <p id="home-banner-txt2">让金融更简单，更安全。</p>
       </div>
       <div id="home-box1" className={styles['home-box1']}>
         <div className="container">
           <div id="home-box1-txt" className={styles['home-box1-txt']}>
-            <p className={`${styles['box-title']} ${styles['title-cfca']}`}>专业高效的风险管理产品</p>
-            <p className={styles['box-content']}>提供全方位企业信息查询、风险监控、风险分析、风险预警、风险管理等一体化服务，解决金融机构在收集企业信息效率低，风险评估信息批量处</p>
-            <p className={styles['box-content']}>理难度大、贷后管理滞后、预警不及时等问题。</p>
+            <p className={`${styles['box-title']} ${styles['title-cfca']}`}>领域细分的风险管理平台</p>
+            <p className={styles['box-content']}>依托中国金融认证中心、中金支付与银行等金融机构的长期合作，</p>
+            <p className={styles['box-content']}>专注企业风控，五大功能提供全方位企业信息查询、风险监控、风险分析、风险预警、风险管理等一体化服务，</p>
+            <p className={styles['box-content']}>降低金融机构在前期收集、评估，后期监控、预警、管理的成本问题。</p>
           </div>
           <ul id="home-box1-icon" className={`clearfix ${styles['home-box1-content']}`}>
             <li>
@@ -122,8 +97,8 @@ function CfcaMain({isHeaderScroll}) {
       <div id="home-box2" className={styles['home-box2']}>
         <div id="home-box2-txt" className={styles['home-box2-txt']}>
           <p className={`${styles['box-title']} ${styles['title-cfca']}`}>前沿领先的大数据技术</p>
-          <p className={styles['box-content']}>平台采用具备全球领先水平的开源技术作为研发的基础和支撑，从海量数据收集，到数据清洗整理，数据建模分析，数据可视化处理，我们的数据科</p>
-          <p className={styles['box-content']}>学家团队均有自己独到的见解和领先的技术能力。</p>
+          <p className={styles['box-content']}>利用全球领先的开源技术作为研发的基础和支撑，从海量数据收集、数据清洗整理、数据分析建模、数据可视化处理，</p>
+          <p className={styles['box-content']}>打造立体全流程的云服务平台，我们立志在金融科技的领域走出自己的道路。</p>
         </div>
         <div className={styles['home-box2-content']}>
           <div id="box2-content-block1" className={`clearfix ${styles['box2-content-block1']}`}>
@@ -180,6 +155,6 @@ function CfcaMain({isHeaderScroll}) {
 }
 
 CfcaMain.propTypes = {
-  isHeaderScroll: PropTypes.bool,
+  isHeaderScroll: PropTypes.string,
 };
 export default observer(CfcaMain);

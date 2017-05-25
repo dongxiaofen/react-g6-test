@@ -35,7 +35,7 @@ function Content({ areaInfo, uiStore, detailModalStore, getBidMarketDetail }) {
                 </span>
               </div>
               <div className={`clearfix ${styles['bulletin-name']}`}>
-                <span className={styles['bulletin-name-title']}>项目名称：</span>
+                项目名称：
                 <span className={styles['bulletin-url']}
                   title={item.title}
                   onClick={getDetail.bind(null, item.announceID, key)}>

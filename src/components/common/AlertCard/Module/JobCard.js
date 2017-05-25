@@ -29,8 +29,8 @@ function JobCard({data}) {
             <div>
               {
                 itemData.url ?
-                <a href={itemData.url} target="_blank">
-                  <span className={styles.firstItem}>{DICT[origData.dict][firstKey]}:{itemData[firstKey] ? itemData[firstKey] : '--'}</span>
+                <a className={styles.firstItemUrl} href={itemData.url} target="_blank">
+                  <span>{DICT[origData.dict][firstKey]}:{itemData[firstKey] ? itemData[firstKey] : '--'}</span>
                 </a>
                 :
                 <p>

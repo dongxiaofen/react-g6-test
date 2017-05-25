@@ -18,11 +18,13 @@ class ModalStore {
     this.isSingleBtn = false;
     this.pointText = false;
     this.width = '440px';
+    this.cancelText = '取消';
+    this.confirmText = '确定';
   }
 
   // button text
   @observable cancelText = '取消';
-  @observable confirmText = '确认';
+  @observable confirmText = '确定';
   @observable confirmWidth = '';
 
   // loading

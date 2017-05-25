@@ -8,38 +8,40 @@ import DICT from 'dict/reportModule';
 function DetailModal({blackNetworkStore}) {
   const detailModalData = blackNetworkStore.detailModalData;
   return (
-    <Row className={styles.box}>
-      <Col width="6">
-        <KeyValue keyClass="greyKey" theKey={DICT.dishonestyList.regDate} theValue={detailModalData.regDate} />
-      </Col>
-      <Col width="6">
-        <KeyValue keyClass="greyKey" theKey={DICT.dishonestyList.publishDate} theValue={detailModalData.publishDate} />
-      </Col>
-      <Col width="6">
-        <KeyValue keyClass="greyKey" theKey={DICT.dishonestyList.caseCode} theValue={detailModalData.caseCode} />
-      </Col>
-      <Col width="6">
-        <KeyValue keyClass="greyKey" theKey={DICT.dishonestyList.gistId} theValue={detailModalData.gistId} />
-      </Col>
-      <Col width="6">
-        <KeyValue keyClass="greyKey" theKey={DICT.dishonestyList.gistUnit} theValue={detailModalData.gistUnit} />
-      </Col>
-      <Col width="6">
-        <KeyValue keyClass="greyKey" theKey={DICT.dishonestyList.courtName} theValue={detailModalData.courtName} />
-      </Col>
-      <Col width="6">
-        <KeyValue keyClass="greyKey" theKey={DICT.dishonestyList.areaName} theValue={detailModalData.areaName} />
-      </Col>
-      <Col width="6">
-        <KeyValue keyClass="greyKey" theKey={DICT.dishonestyList.performance} theValue={detailModalData.performance} />
-      </Col>
-      <Col width="12">
-        <KeyValue keyClass="greyKey" theKey={DICT.dishonestyList.disruptTypeName} theValue={detailModalData.disruptTypeName} />
-      </Col>
-      <Col width="12">
-        <KeyValue keyClass="greyKey" theKey={DICT.dishonestyList.duty} theValue={detailModalData.duty} />
-      </Col>
-    </Row>
+    <div className={`clearfix ${styles.box}`}>
+      <Row>
+        <Col width="6">
+          <KeyValue keyClass="greyKey" theKey={DICT.dishonestyList.regDate} theValue={detailModalData.regDate} />
+        </Col>
+        <Col width="6">
+          <KeyValue keyClass="greyKey" theKey={DICT.dishonestyList.publishDate} theValue={detailModalData.publishDate} />
+        </Col>
+        <Col width="6">
+          <KeyValue keyClass="greyKey" theKey={DICT.dishonestyList.caseCode} theValue={detailModalData.caseCode} />
+        </Col>
+        <Col width="6">
+          <KeyValue keyClass="greyKey" theKey={DICT.dishonestyList.gistId} theValue={detailModalData.gistId} />
+        </Col>
+        <Col width="6">
+          <KeyValue keyClass="greyKey" theKey={DICT.dishonestyList.gistUnit} theValue={detailModalData.gistUnit} />
+        </Col>
+        <Col width="6">
+          <KeyValue keyClass="greyKey" theKey={DICT.dishonestyList.courtName} theValue={detailModalData.courtName} />
+        </Col>
+        <Col width="6">
+          <KeyValue keyClass="greyKey" theKey={DICT.dishonestyList.areaName} theValue={detailModalData.areaName} />
+        </Col>
+        <Col width="6">
+          <KeyValue keyClass="greyKey" theKey={DICT.dishonestyList.performance} theValue={detailModalData.performance} />
+        </Col>
+        <Col width="12">
+          <KeyValue keyClass="greyKey" theKey={DICT.dishonestyList.disruptTypeName} theValue={detailModalData.disruptTypeName} />
+        </Col>
+        <Col width="12">
+          <KeyValue keyClass="greyKey" theKey={DICT.dishonestyList.duty} theValue={detailModalData.duty} />
+        </Col>
+      </Row>
+    </div>
   );
 }
 

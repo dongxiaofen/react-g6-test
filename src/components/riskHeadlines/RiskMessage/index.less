@@ -20,13 +20,6 @@
 }
 .mainCom {
   composes: companyName;
-  span {
-    color: @mdc-blue-400;
-    border-bottom: 1px solid @mdc-blue-400;
-    cursor: pointer;
-    line-height: 13px;
-    display: inline-block;
-  }
   i {
     display: inline-block;
     background-image: url('imgs/riskHeadlines/comMain.png');
@@ -39,17 +32,25 @@
     color: @mdc-grey-800;
     cursor: pointer;
   }
-  span {
-    color: @green5;
-    border-bottom: 1px solid @green5;
-    cursor: pointer;
-    line-height: 13px;
-    display: inline-block;
-  }
   i {
     background-image: url('imgs/riskHeadlines/comSub.png');
   }
 }
 .riskInfo {
   margin-bottom: 50px;
+}
+
+.mainJump{
+  color: @mdc-blue-400;
+  border-bottom: 1px solid @mdc-blue-400;
+  cursor: pointer;
+  line-height: 13px;
+  display: inline-block;
+}
+.subJump{
+  color: @green5;
+  border-bottom: 1px solid @green5;
+  cursor: pointer;
+  line-height: 13px;
+  display: inline-block;
 }

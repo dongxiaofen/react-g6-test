@@ -242,6 +242,7 @@ export default class CircleNetworkGraph extends Component {
     nodeXY = {};
     layerCount = {};
     radiusArr = [];
+    group = '';
   }
 
   ticked = () => {
