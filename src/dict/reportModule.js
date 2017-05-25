@@ -313,6 +313,8 @@ const config = {
     'content': '公告内容',
   },
   judgeDoc: {
+    'companyName': '事件企业',
+    'relation': '关联关系',
     'publishDate': '发布日期',
     'title': '文书标题',
     'court': '判决法院',
@@ -347,6 +349,7 @@ const config = {
   dishonestyList: {
     'publishDate': '发布日期',
     'companyName': '失信被执行人全称',
+    'relation': '关联关系',
     'orgCode': '组织机构代码',
     'frName': '法人',
     'disruptTypeName': '失信被执行人行为具体情形',
