@@ -148,6 +148,7 @@ app.use((req, res) => {
             const timestamp = new Date().getTime();
             const htmlName = username + timestamp + '.html';
             const pdfName = username + timestamp + '.pdf';
+            console.log(htmlName, 'htmlName==================');
             writeStrToHtml(htmlName, reportHtml, () => {
               html2Pdf(htmlName, pdfName, () => {
                 res.download(PDF_DIRNAME + pdfName, companyName + '.pdf', (err) => {
