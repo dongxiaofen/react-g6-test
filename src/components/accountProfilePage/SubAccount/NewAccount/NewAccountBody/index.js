@@ -8,9 +8,9 @@ import styles from './index.less';
 function NewAccountBody({data, routing, accountSettingStore}) {
   const spliceString = (str) => {
     if (str.length > 18) {
-      return `所属账号：${str.slice(0, 18)}...`;
+      return `所属账号：（${str.slice(0, 18)}...）`;
     }
-    return `所属账号：${str}`;
+    return `所属账号：（${str}）`;
   };
   const jumpAccoutSetting = (email, userId) => {
     console.log(email, userId);

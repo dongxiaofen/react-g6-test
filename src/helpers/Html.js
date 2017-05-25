@@ -54,6 +54,14 @@ export default class Html extends Component {
             rel="stylesheet" type="text/css" charSet="UTF-8"/>
           <link href="../vendors/css/preload.css"
             rel="stylesheet" type="text/css" charSet="UTF-8"/>
+          {this.props.pdfDown === '1' ?
+            <link href="../vendors/css/pdf.css"
+                  rel="stylesheet" type="text/css" charSet="UTF-8"/> :
+            Object.keys(assets.styles).map((style, key) =>
+              <link href={assets.styles[style]} key={key}
+                    rel="stylesheet" type="text/css" charSet="UTF-8"/>
+            )
+          }
           {
             Object.keys(assets.styles).map((style, key) =>
             <link href={assets.styles[style]} key={key}

@@ -135,10 +135,11 @@ app.use((req, res) => {
         axios.get(config.backendApi + '/api/pdf', { params })
           .then((resp) => {
             // writeDataToFile('resp', resp.data);
+            allStores.pdfStore.setTypes(params.types);
             allStores.clientStore.envConfig = config.target;
             allStores.pdfStore.getPdfDownData(resp.data);
             const component = (
-              <Provider { ...allStores }>
+              <Provider { ...allStores } key="provided">
                 <RouterContext {...renderProps} />
               </Provider>
             );
