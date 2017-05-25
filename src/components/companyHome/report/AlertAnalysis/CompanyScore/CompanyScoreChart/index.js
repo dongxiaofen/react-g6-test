@@ -19,6 +19,7 @@ function CompanyScoreChart({sixStarData}) {
       name: {
         textStyle: {
           fontSize: 14,
+          color: '#9e9e9e',
         },
       },
       indicator: [
@@ -28,7 +29,23 @@ function CompanyScoreChart({sixStarData}) {
          { name: '社会影响力', max: 100},
          { name: '创新能力', max: 100},
          { name: '法务相关', max: 100}
-      ]
+      ],
+      axisLine: {
+        lineStyle: {
+          color: ['#e0e0e0'],
+        },
+      },
+      splitLine: {
+        lineStyle: {
+          color: ['#e0e0e0'],
+        },
+      },
+      splitArea: {
+        areaStyle: {
+          // color: ['rgba(250,250,250,0.3)', 'rgba(200,200,200,0.3)'],
+          opacity: 0.6,
+        },
+      },
     },
     series: [{
       name: '企业综合评分',
@@ -78,7 +95,7 @@ function CompanyScoreChart({sixStarData}) {
     <div className={styles.box}>
       <Chart
         chartId="leida"
-        height="430"
+        height="380px"
         option={createOption()} />
     </div>
   );

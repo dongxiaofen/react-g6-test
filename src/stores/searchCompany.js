@@ -1,4 +1,4 @@
-import { observable, action } from 'mobx';
+import { observable, action, toJS } from 'mobx';
 import { browserHistory } from 'react-router';
 import {searchApi} from 'api';
 import modalStore from './modal';
@@ -282,7 +282,7 @@ class SearchCompanyStore {
         if (type === 'ok') {
           // 全选和单选
           if (idx === 'all') {
-            this.filterSheet.filterResult[key] = obj.value;
+            this.filterSheet.filterResult[key] = toJS(obj.value);
             const status = [];
             this.filterSheet.filterStatus[key].map(()=>{
               status.push(true);
@@ -395,6 +395,7 @@ class SearchCompanyStore {
           } else {
             // 弹出失败提示
             const obj = {
+              type: 'warning',
               content: err.response.data.message
             };
             messageStore.openMessage({ ...obj });
@@ -462,6 +463,11 @@ class SearchCompanyStore {
         console.log(resp, '======getFeedBack result');
       }))
       .catch(action('getFeedBack error', (err) => {
+        const text = {
+          type: 'warning',
+          content: err.response.data.message
+        };
+        messageStore.openMessage({ ...text });
         console.log(err.response, '=====getFeedBack error');
       }));
   }
