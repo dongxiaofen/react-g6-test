@@ -53,7 +53,11 @@ function CardList({ collectionStore, uiStore }) {
             </div>
             <div className={styles.infoDetail}>
               <span className={styles.detailItem}>{`法人：${item.frName ? item.frName : '无'}`}</span>
-              <span className={styles.detailItem}>{`地址：${item.address ? item.address : '无'}`}</span>
+              <span
+                className={styles.detailItem}
+                title={item.address ? item.address : '无'}>
+                {`地址：${item.address ? item.address : '无'}`}
+              </span>
             </div>
           </div>
           <div className={styles.cancelBtn}

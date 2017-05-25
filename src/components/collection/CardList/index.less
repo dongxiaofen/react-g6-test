@@ -28,6 +28,7 @@
 
 .baseInfo {
   float: left;
+  width: 40%;
 }
 
 .name {
@@ -78,7 +79,25 @@
 }
 
 .detailItem{
+  display: inline-block;
   margin-right: 40px;
+
+  vertical-align: middle;
+
+  &:last-child {
+    margin-right: 0;
+  }
+}
+
+@media (max-width: 1680px) {
+  .detailItem {
+    &:last-child {
+      width: 295px;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+      overflow: hidden;
+    }
+  }
 }
 
 .lastModifiedTs{
