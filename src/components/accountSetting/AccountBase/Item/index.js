@@ -27,7 +27,7 @@ function Item({name, keys, values, handle, none, unit, feeset, remainValue, Rema
 
   const newRemain = Number(remainValue);
   return (
-    <div className={styles.wrapper}>
+    <div className={name === '剩余点数' ? styles.wrapperEnd : styles.wrapper}>
       <div className={styles.keys}>
         {name}
       </div>
