@@ -19,7 +19,6 @@ export default class AlertAnalysis extends Component {
   componentWillUnmount() {
     const alertAnalysisStore = this.props.alertAnalysisStore;
     const alertCancel = alertAnalysisStore.alertCancel;
-    console.log(alertCancel, '-------alertCancelalertCancelalertCancelalertCancel');
     if (alertCancel && typeof alertCancel === 'function') {
       alertCancel();
     }
