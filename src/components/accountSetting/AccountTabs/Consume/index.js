@@ -8,7 +8,6 @@ function Consume({accountSettingStore, clientStore}) {
   const consumeTypeMap = accountSettingStore.consumeTypeMap;
   const taxTypeMap = accountSettingStore.taxTypeMap;
   const handleConsumeInfo = (value, item) => {
-    console.log(item, 'item---------------');
     const nameStr = item.companyName ? `企业：${item.companyName}` : '';
     const timeStr = item.timeType ? `；监控时长：${timeMap[item.timeType]}` : '';
     const personStr = item.checkPerson ? `；核查人姓名：${item.checkPerson}` : '';
