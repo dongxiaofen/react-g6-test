@@ -142,13 +142,13 @@ app.use((req, res) => {
                 <RouterContext {...renderProps} />
               </Provider>
             );
+            console.log(<RouterContext {...renderProps} />, '---------------------');
             const reportHtml = ReactDOM.renderToString(<Html pdfDown="1" assets={webpackIsomorphicTools.assets()} component={component} {...allStores} />);
             const companyName = resp.data.companyName;
             const username = resp.data.email;
             const timestamp = new Date().getTime();
             const htmlName = username + timestamp + '.html';
             const pdfName = username + timestamp + '.pdf';
-            console.log(htmlName, 'htmlName==================');
             writeStrToHtml(htmlName, reportHtml, () => {
               html2Pdf(htmlName, pdfName, () => {
                 res.download(PDF_DIRNAME + pdfName, companyName + '.pdf', (err) => {
