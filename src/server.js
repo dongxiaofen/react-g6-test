@@ -135,14 +135,14 @@ app.use((req, res) => {
         axios.get(config.backendApi + '/api/pdf', { params })
           .then((resp) => {
             // writeDataToFile('resp', resp.data);
+            allStores.pdfStore.setTypes(params.types);
             allStores.clientStore.envConfig = config.target;
             allStores.pdfStore.getPdfDownData(resp.data);
             const component = (
-              <Provider { ...allStores }>
+              <Provider { ...allStores } key="provided">
                 <RouterContext {...renderProps} />
               </Provider>
             );
-            console.log(<RouterContext {...renderProps} />, '---------------------');
             const reportHtml = ReactDOM.renderToString(<Html pdfDown="1" assets={webpackIsomorphicTools.assets()} component={component} {...allStores} />);
             const companyName = resp.data.companyName;
             const username = resp.data.email;
@@ -165,6 +165,7 @@ app.use((req, res) => {
             console.log('pdfDown err', err.response.status);
           });
       } else if (reqPathName === '/') { // 访问首页
+        allStores.clientStore.envConfig = 'cfca_prod';
         /*服务端注入RouterStore*/
         const routingStore = new RouterStore();
         allStores.routing = routingStore;

@@ -33,9 +33,10 @@ function MonitorStatus({ nodeData, monitorInfoList, routing, modalStore, network
     networkStore.monitorExistNode(monitorId, params);
   };
   const openCreateMonitorModal = () => {
-    modalStore.openCompModal({
+    const args = {
       title: '添加关联监控',
-      width: 440,
+      width: '420px',
+      pointText: true,
       confirmAction: handleCreateMonitor,
       cancelAction: modalStore.closeAction,
       loader: (cb) => {
@@ -43,7 +44,8 @@ function MonitorStatus({ nodeData, monitorInfoList, routing, modalStore, network
           cb(require('./CreateMonitor'));
         });
       }
-    });
+    };
+    modalStore.openCompModal({ ...args });
   };
   const getMonitorStatus = () => {
     let output;

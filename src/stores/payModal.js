@@ -57,6 +57,7 @@ class PayModalStore {
       this.monitorType = 'MONITOR';
       this.isSingleBtn = false;
       this.isRenewal = false;
+      this.pointText = false;
     }
 
     @action.bound openCompModal({ modalType, width, pointText, isComboRenewal, callBack, isSingleBtn, isRenewal }) {
