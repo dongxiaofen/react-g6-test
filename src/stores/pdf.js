@@ -19,7 +19,7 @@ class PdfStore {
   @observable blacklist = [];
   @observable team = {};
   @observable taxList = {};
-  @observable pdfTypesKey = '';
+  @observable pdfTypesKey = 'SUMMARY,CORP,CORP_BASIC,CORP_INV_POS,STOCK,CORP_ALTER,CORP_YEAR_REPORT,TAX,RISK,RISK_ANNOUNCEMENT,RISK_NOTICE,RISK_JUDGEMENT,RISK_EXECUTE,RISK_DISHONESTY,RISK_LITIGATION,RISK_TAXATION,RISK_ABNORMAL,RISK_CHECK,NEWS,NETWORK,NETWORK_RELEVANCE,NETWORK_BLACKLIST,STOCK_INFO,STOCK_ANNOUNCEMENT,OPERATION,OPERATION_BIDDING,OPERATION_PATENT,OPERATION_TEL,OPERATION_TRADEMARK,NETWORK,NETWORK_RELEVANCE,NETWORK_BLACKLIST,TEAM,TEAM_RECRUITMENT_RESUME,TEAM_ANALYSIS';
 
   // summary
   @observable summary = {};
@@ -30,7 +30,7 @@ class PdfStore {
 
   @action.bound getOverviewData(id) {
     // 获取pdf
-    axios.get(`/api/pdf?monitorId=${id}&types=SUMMARY,CORP,CORP_BASIC,CORP_INV_POS,STOCK,CORP_ALTER,CORP_YEAR_REPORT,CORP_TAX,RISK,RISK_ANNOUNCEMENT,RISK_NOTICE,RISK_JUDGEMENT,RISK_EXECUTE,RISK_DISHONESTY,RISK_LITIGATION,RISK_TAXATION,RISK_ABNORMAL,RISK_CHECK,NEWS,NETWORK,NETWORK_RELEVANCE,NETWORK_BLACKLIST,STOCK_INFO,STOCK_ANNOUNCEMENT,OPERATION,OPERATION_BIDDING,OPERATION_PATENT,OPERATION_TEL,OPERATION_TRADEMARK,NETWORK,NETWORK_RELEVANCE,NETWORK_BLACKLIST,TEAM,TEAM_RECRUITMENT_RESUME,TEAM_ANALYSIS`)
+    axios.get(`/api/pdf?monitorId=${id}&types=SUMMARY,CORP,CORP_BASIC,CORP_INV_POS,STOCK,CORP_ALTER,CORP_YEAR_REPORT,TAX,RISK,RISK_ANNOUNCEMENT,RISK_NOTICE,RISK_JUDGEMENT,RISK_EXECUTE,RISK_DISHONESTY,RISK_LITIGATION,RISK_TAXATION,RISK_ABNORMAL,RISK_CHECK,NEWS,NETWORK,NETWORK_RELEVANCE,NETWORK_BLACKLIST,STOCK_INFO,STOCK_ANNOUNCEMENT,OPERATION,OPERATION_BIDDING,OPERATION_PATENT,OPERATION_TRADEMARK,NETWORK,NETWORK_RELEVANCE,NETWORK_BLACKLIST,TEAM,TEAM_RECRUITMENT_RESUME,TEAM_ANALYSIS`)
       .then(action((response) => {
         this.banner = pathval.getPathValue(response.data, 'banner');
         this.summary = pathval.getPathValue(response.data, 'summary');
@@ -45,6 +45,7 @@ class PdfStore {
         this.network = pathval.getPathValue(response.data, 'network');
         this.blacklist = pathval.getPathValue(response.data, 'blackList.result[0].paths');
         this.team = pathval.getPathValue(response.data, 'recruitTeamResponse');
+        this.taxList = pathval.getPathValue(response.data, 'taxInfo.result');
       }))
       .catch((error) => {
         console.log(error.response);
@@ -65,6 +66,7 @@ class PdfStore {
     this.network = pathval.getPathValue(data, 'network');
     this.blacklist = pathval.getPathValue(data, 'blackList.result[0].paths');
     this.team = pathval.getPathValue(data, 'recruitTeamResponse');
+    this.taxList = pathval.getPathValue(data, 'taxInfo.result');
   }
 }
 export default new PdfStore();

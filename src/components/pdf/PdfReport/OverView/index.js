@@ -65,7 +65,7 @@ function OverView({ pdfStore, clientStore, routing }) {
     valueData: summaryData.riskInfo ? {data: summaryData.riskInfo.court, type: 'object'} : undefined,
   };
   const taxInfoMap = {
-    title: '税务公示信息',
+    title: '纳税信用',
     valueData: summaryData.riskInfo ? {data: summaryData.riskInfo.taxNotice, type: 'number'} : undefined,
   };
   const corpNoticeMap = {
