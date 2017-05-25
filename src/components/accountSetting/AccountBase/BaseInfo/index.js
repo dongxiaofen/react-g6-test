@@ -20,7 +20,7 @@ function BaseInfo({accountSettingStore}) {
     const level = tree.data.content[activeIndex].level;
     return (
       <div className={styles.pwdBox}>
-        {values}
+        <span className={styles.value}>{values}</span>
         {level < 2 && <span className={styles.changePwd} onClick={showPwdModal}>修改密码</span>}
       </div>
     );
@@ -41,7 +41,7 @@ function BaseInfo({accountSettingStore}) {
     const level = tree.data.content[activeIndex].level;
     return (
       <div className={level < 2 ? styles.editBox : styles.editDisable}>
-        {values}
+        <span className={styles.value}>{values}</span>
         {level < 2 && <span className={styles.editBtn} onClick={editUserInfo.bind(null, name, values)}>修改</span>}
       </div>
     );
