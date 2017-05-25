@@ -6,8 +6,9 @@ import { runInAction } from 'mobx';
 import styles from './index.less';
 
 function NewAccountBody({data, routing, accountSettingStore}) {
-  const spliceString = (str) => {
-    if (str.length > 18) {
+  const spliceString = (userName, email) => {
+    const str = userName.concat(`（${email}）`);
+    if (str > 18) {
       return `所属账号：${str.slice(0, 18)}...`;
     }
     return `所属账号：${str}`;
@@ -30,7 +31,7 @@ function NewAccountBody({data, routing, accountSettingStore}) {
             <div className={`${styles.marginRL} clearfix`}>
               <div onClick={jumpAccoutSetting.bind(this, itemData.email, itemData.userId)} className={`${styles.user} pull-left`}>
                 <Popover content={`所属账号：${itemData.userName}（${itemData.email}）`}>
-                  {spliceString(itemData.userName.concat(itemData.email))}
+                  {spliceString(itemData.userName, itemData.email)}
                 </Popover>
               </div>
               <div className={`${styles.date} pull-right`}>

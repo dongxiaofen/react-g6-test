@@ -135,10 +135,11 @@ app.use((req, res) => {
         axios.get(config.backendApi + '/api/pdf', { params })
           .then((resp) => {
             // writeDataToFile('resp', resp.data);
+            allStores.pdfStore.setTypes(params.types);
             allStores.clientStore.envConfig = config.target;
             allStores.pdfStore.getPdfDownData(resp.data);
             const component = (
-              <Provider { ...allStores }>
+              <Provider { ...allStores } key="provided">
                 <RouterContext {...renderProps} />
               </Provider>
             );
@@ -164,6 +165,7 @@ app.use((req, res) => {
             console.log('pdfDown err', err.response.status);
           });
       } else if (reqPathName === '/') { // 访问首页
+        allStores.clientStore.envConfig = 'cfca_prod';
         /*服务端注入RouterStore*/
         const routingStore = new RouterStore();
         allStores.routing = routingStore;

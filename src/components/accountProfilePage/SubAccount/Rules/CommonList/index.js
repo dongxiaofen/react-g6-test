@@ -6,6 +6,7 @@ function CommonList({data}) {
   const rulesType = {
     'RULE': '自定义预警',
     'SYS_RULE': '系统预警',
+    'BLACKLIST': '系统预警'
   };
   const createList = () => {
     let arrList = [];
@@ -19,9 +20,9 @@ function CommonList({data}) {
                 <p>最新预警日期</p>
                 <p>{itemData.ruleTime}</p>
               </div> :
-              <div>
-                <p>预警次数</p>
-                <p>{itemData.count}</p>
+              <div className={styles.w_count}>
+                <span>预警 {`${itemData.count}`} 次</span>
+                {/* <span>{itemData.count}</span> */}
               </div>
               }
             </div>
