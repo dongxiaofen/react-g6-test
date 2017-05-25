@@ -165,6 +165,19 @@ export default class ForceNetworkGraph extends Component {
       }
     );
   }
+  componentWillUnmount() {
+    if (simulation) {
+      simulation.stop(); // 停止网络图计算
+    }
+    nodesData = '';
+    edgesData = '';
+    svgEdges = '';
+    svgNodes = '';
+    svgTexts = '';
+    isDragging = false;
+    zoom = '';
+    group = '';
+  }
   ticked = () => {
     svgEdges
       .attr('x1', (data) => { return data.source.x; })
