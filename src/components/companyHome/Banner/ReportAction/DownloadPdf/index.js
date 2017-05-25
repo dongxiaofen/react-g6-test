@@ -14,11 +14,25 @@ export default class DownloadPdf extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      tipInfo: false
+      tipInfo: false,
+      tipInfoFn: () => {
+        const pdfDownloadConfig = this.props.bannerStore.pdfDownloadConfig;
+        const levelOneHasTrue = pdfDownloadConfig.levelOne.every((item) => item.checked === false);
+        const levelTwo = pdfDownloadConfig.levelTwo;
+        const levelTwoKeys = Object.keys(levelTwo);
+        const levelTwoBools = [];
+        levelTwoKeys.forEach((key) => {
+          const _levelTwo = levelTwo[key];
+          levelTwoBools.push(_levelTwo.every((item) => item.checked === false));
+        });
+        const levelTwoHasTrue = levelTwoBools.every((item) => item === true);
+        return levelOneHasTrue && levelTwoHasTrue;
+      }
     };
   }
 
   downloadAll = (evt) => {
+    if (evt.target.checked) { this.setState({ tipInfo: false }); }
     this.props.bannerStore.setDownloadAll(evt.target.checked);
   }
 
@@ -46,10 +60,12 @@ export default class DownloadPdf extends Component {
   }
 
   menuLevelOneOnChange = (key, value, evt) => {
+    if (evt.target.checked) { this.setState({ tipInfo: false }); }
     this.props.bannerStore.setPdfLevelOne(key, value, evt.target.checked);
   }
 
   menuLevelTwoOnChange = (levelOne, key, levelOneKey, evt) => {
+    if (evt.target.checked) { this.setState({ tipInfo: false }); }
     this.props.bannerStore.setPdfLevelTwo(levelOne, key, levelOneKey, evt.target.checked);
   }
 
@@ -166,6 +182,7 @@ export default class DownloadPdf extends Component {
     });
     queryArray = Array.from(new Set(queryArray));
     if (queryArray.length > 0) {
+      this.setState({ tipInfo: false });
       queryStr = queryStr + queryArray.join(',');
       if (monitorId) {
         window.open(`/pdfDown?monitorId=${monitorId}${queryStr}`);
@@ -182,6 +199,7 @@ export default class DownloadPdf extends Component {
   }
 
   render() {
+    const isShowTipInfo = this.state.tipInfoFn();
     return (
       <div className={styles.downloadModal}>
         <div className={styles.downloadTitleBox}>
@@ -196,7 +214,7 @@ export default class DownloadPdf extends Component {
               全部页面
             </Checkbox>
             {
-              this.state.tipInfo
+              this.state.tipInfo && isShowTipInfo
                 ? <span className={styles['tip-info']}>请选择需要下载的板块</span>
                 : null
             }
