@@ -4,7 +4,7 @@ import AnimateLoading from 'components/hoc/LoadingComp/AnimateLoading';
 import Item from '../Item';
 import styles from './index.less';
 
-function OperateInfo({accountSettingStore, clientStore, className}) {
+function Remaining({accountSettingStore, clientStore}) {
   const consumeType = clientStore.userInfo.consumeType;
   const data = accountSettingStore.base.data;
   let output = (
@@ -38,20 +38,13 @@ function OperateInfo({accountSettingStore, clientStore, className}) {
         remainKey: 'leftTaxCheckNum',
         unit: '个',
       },
-      {
-        name: '剩余点数',
-        keys: 'point',
-        remainKey: 'remainingPoint',
-        none: consumeType !== 'POINT' || data.parentUserId ? true : false,
-        unit: '点',
-      },
     ];
     const content = config.map((item, idx) => {
       return (
         <Item
           key={idx}
           {...item}
-          Remaining={false}
+          Remaining
           remainValue={data[item.remainKey]}
           feeset={consumeType === 'FEESET' && !data.parentUserId}
           values={data[item.keys]} />
@@ -60,11 +53,11 @@ function OperateInfo({accountSettingStore, clientStore, className}) {
     output = content;
   }
   return (
-    <div className={`${styles.infoBox} ${className ? className : ''}`}>
-      <h2 className={styles.operateTitle}>操作记录</h2>
+    <div className={styles.infoBox}>
+      <h2 className={styles.operateTitle}>剩余套餐</h2>
       {output}
     </div>
   );
 }
 
-export default observer(OperateInfo);
+export default observer(Remaining);

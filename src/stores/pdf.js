@@ -1,4 +1,4 @@
-import {observable, action} from 'mobx';
+import { observable, action } from 'mobx';
 import axios from 'axios';
 import pathval from 'pathval';
 
@@ -45,6 +45,22 @@ class PdfStore {
       .catch((error) => {
         console.log(error.response);
       });
+  }
+  @action.bound getPdfDownData(data) {
+    console.log('data', data);
+    this.banner = pathval.getPathValue(data, 'banner');
+    this.summary = pathval.getPathValue(data, 'summary');
+    this.report = pathval.getPathValue(data, 'corpDetail');
+    this.company = pathval.getPathValue(data, 'stock.info');
+    this.announcement = pathval.getPathValue(data, 'stock.announcement');
+    this.risk = pathval.getPathValue(data, 'risk');
+    this.internet = pathval.getPathValue(data, 'internet');
+    this.trademark = pathval.getPathValue(data, 'trademark');
+    this.patent = pathval.getPathValue(data, 'patent');
+    this.bidding = pathval.getPathValue(data, 'biddingList');
+    this.network = pathval.getPathValue(data, 'network');
+    this.blacklist = pathval.getPathValue(data, 'blackList.result[0].paths');
+    this.team = pathval.getPathValue(data, 'recruitTeamResponse');
   }
 }
 export default new PdfStore();

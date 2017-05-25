@@ -2,7 +2,7 @@ import React, {PropTypes} from 'react';
 import { observer } from 'mobx-react';
 import styles from './index.less';
 
-function Filter({ reportManageStore, uiStore, reportManagePager, status }) {
+function Filter({ reportManageStore, uiStore, reportManagePager }) {
   const setFocus = (bool) => {
     reportManageStore.setFocus(bool);
   };
@@ -18,14 +18,10 @@ function Filter({ reportManageStore, uiStore, reportManagePager, status }) {
       size: reportManagePager.size
     };
     const index = uiStore.uiState.reportManagePager.index;
-    if (status === 'report') {
-      if (index === 1) {
-        reportManageStore.getReportList(params);
-      } else {
-        uiStore.updateUiStore('reportManagePager.index', 1);
-      }
+    if (index === 1) {
+      reportManageStore.getReportList(params);
     } else {
-      reportManageStore.getAnalysisReportList(params);
+      uiStore.updateUiStore('reportManagePager.index', 1);
     }
   };
 

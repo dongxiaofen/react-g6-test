@@ -22,7 +22,7 @@ function PauseInfo({monitorListStore}) {
       title="暂停监控"
       visible={visible}
       cancelText="取消"
-      confirmText="确认"
+      confirmText="确定"
       confirmLoading={loading}
       confirmAction={confirmAction}
       cancelAction={cancelAction}
