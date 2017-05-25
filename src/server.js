@@ -164,6 +164,7 @@ app.use((req, res) => {
             console.log('pdfDown err', err.response.status);
           });
       } else if (reqPathName === '/') { // 访问首页
+        allStores.clientStore.envConfig = 'cfca_prod';
         /*服务端注入RouterStore*/
         const routingStore = new RouterStore();
         allStores.routing = routingStore;
