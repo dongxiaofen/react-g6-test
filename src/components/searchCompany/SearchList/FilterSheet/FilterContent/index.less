@@ -7,6 +7,7 @@
   height: 50px;
   line-height: 50px;
   overflow: hidden;
+  position: relative;
 }
 .show {
   height: auto;
@@ -22,8 +23,16 @@
   width: 90%;
   padding-bottom: 12px;
 }
+
+@media screen and (max-width: 1680px) {
+    .itemWrap {
+      width: 88%;
+    }
+}
 .toggleItem {
-  float: right;
+  // float: right;
+  position: absolute;
+  right: 0;
   padding-right: 5px;
 }
 .toggleItem a {

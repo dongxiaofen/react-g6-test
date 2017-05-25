@@ -12,11 +12,20 @@ function TableBody({ hasScore, dateType, data, hasFlag, routing, searchCompanySt
       return (
         <div className={`${styles.has_warning_counts} ${dateType === 'comprehensive' ? styles.comprehensive : styles.warning_count}`}>
           <div className={styles.discript}>
-            <span className={styles.count_text}>{dateType === 'comprehensive' ? '综合分' : '预警次数'}</span>
-            <span className={styles.count}>{dateType === 'comprehensive' ? score : alertCount}</span>
+                  <span className={styles.count_text}>{dateType === 'comprehensive' ? '综合分' : '预警次数'}</span>
+                  <span className={styles.count}>{dateType === 'comprehensive' ? score : alertCount}</span>
           </div>
           <div className={styles.date_time}>{latestDt}</div>
         </div>
+      );
+    } else if (dateType === 'warningDate') {
+      return (
+      <div className={`${styles.has_warning_counts} ${styles.warning_date}`}>
+        <div className={styles.discript}>
+          <span className={styles.count_text}>预警时间</span>
+        </div>
+        <div className={styles.date_time}>{latestDt}</div>
+      </div>
       );
     }
   };
@@ -36,7 +45,7 @@ function TableBody({ hasScore, dateType, data, hasFlag, routing, searchCompanySt
       listItem = [...listItem,
         <div key={`${index}list_items`} className={`clearfix ${styles.singe_item}`}>
           <div className="pull-left">
-            <div className={`${styles.right_discription} ${owner && owner === 'own' ? styles.paddingTop35 : ''}`}>
+            <div className={`${styles.right_discription}`}>
               <a onClick={jumpPage.bind(this, itemData.companyName, itemData.productId)} className={styles.companyName}>{itemData.companyName}</a>
               { hasFlag && itemData.productType === 'MONITOR' ? <span className={`${styles.flag} ${styles.monitor}`}>监控</span> : ''}
               { hasFlag && itemData.productType === 'DEEP_MONITOR' ? <span className={`${styles.flag} ${styles.monitor}`}>深度</span> : ''}

@@ -122,7 +122,7 @@ class Axis extends Component {
     };
   }
   mapIconStyle(value, minAndmax) {
-    const min = 16;
+    const min = 20;
     const max = 28;
     const weight = minAndmax.min === minAndmax.max ? max : (value - minAndmax.min) / (minAndmax.max - minAndmax.min) * (max - min) + min;
     return {position: 'relative', width: weight, height: weight, lineHeight: weight + 'px'};

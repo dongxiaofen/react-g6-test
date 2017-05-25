@@ -1,6 +1,6 @@
 import React, {PropTypes} from 'react';
 import { observer } from 'mobx-react';
-import { ModuleTitle, CardTable} from 'components/common/report';
+import {CardTable} from 'components/common/report';
 
 function TaxInfo({taxList}) {
   const regExecMoney = value => {
@@ -40,7 +40,6 @@ function TaxInfo({taxList}) {
   };
   return (
     <div>
-      <ModuleTitle module="纳税信用"/>
       <CardTable {...data} />
     </div>
   );
