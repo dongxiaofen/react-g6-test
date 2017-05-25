@@ -40,14 +40,13 @@ function TableRow({data, routing, alertAnalysisStore, networkStore}) {
       <div className={styles.lineRow}>
         <span className={styles.name}>
           {data.ruleName}
-        <span className={styles.type}>
-          {`${alertTypeMap[data.alertType]}${data.count}次`}
-        </span>
+          <span className={styles.type}>
+            {`${alertTypeMap[data.alertType]}${data.count}次`}
+          </span>
         </span>
         <span
           className={styles.viewBtn}
-          onClick={viewDetail}
-          >
+          onClick={viewDetail}>
           {loadingId === data.id ? '获取中' : '详情'}
         </span>
       </div>
