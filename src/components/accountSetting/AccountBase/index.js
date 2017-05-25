@@ -10,7 +10,6 @@ function AccountBase(props) {
   const consumeType = props.clientStore.userInfo.consumeType;
   const root = props.clientStore.userInfo.root;
   const data = props.accountSettingStore.base.data;
-  console.log(data, '-------------');
   if (consumeType === 'FEESET' && root && data && data.parentUserId) {
     return (
       <div className={`${styles.wrapper} clearfix`}>
