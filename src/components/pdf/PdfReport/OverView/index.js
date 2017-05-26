@@ -6,10 +6,10 @@ import styles from './index.less';
 import Summary from './Summary';
 import pathval from 'pathval';
 
-function OverView({ pdfStore, clientStore, routing }) {
+function OverView({ pdfStore, clientStore }) {
   const summaryData = pdfStore.summary ? pdfStore.summary : '';
   const isStock = pathval.getPathValue(pdfStore, 'banner.stockCode');
-  const monitorId = routing.location.query.monitorId;
+  // const monitorId = routing.location.query.monitorId;
   const corpBasicMap = {
     mapKey: {
       registerInfo: '注册信息',
@@ -177,9 +177,7 @@ function OverView({ pdfStore, clientStore, routing }) {
       <SecondTitle module="团队信息" />
       <hr className={styles.hrhr} />
       <Summary {...recruitmentEmployeeMap} />
-      {
-        monitorId ? <Summary {...recruitmentResumeMap} /> : null
-      }
+      <Summary {...recruitmentResumeMap} />
     </div>
   );
 }
@@ -189,4 +187,4 @@ OverView.propTypes = {
   clientStore: PropTypes.object,
   routing: PropTypes.object,
 };
-export default inject('clientStore', 'pdfStore', 'routing')(observer(OverView));
+export default inject('clientStore', 'pdfStore')(observer(OverView));
