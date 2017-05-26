@@ -35,9 +35,13 @@ function Summary({mapKey, valueData, unit, title}) {
       <p className={styles.title} key="summary-title">{title}</p>
       <div className={styles.info} key="summary-value">
         {
-          valueData ?
-            <p className={styles.infos}>{valueData.type === 'number' ? `${valueData.data > 0 ? '共 ' + valueData.data + ' ' + (unit || '条') : '暂无信息'}` : objParse(valueData.data)}</p>
-            : '暂无信息'
+          valueData && valueData.type === 'none' ? valueData.data : <div>
+            {
+              valueData ?
+                <p className={styles.infos}>{valueData.type === 'number' ? `${valueData.data > 0 ? '共 ' + valueData.data + ' ' + (unit || '条') : '暂无信息'}` : objParse(valueData.data)}</p>
+                : '暂无信息'
+            }
+          </div>
         }
       </div>
     </div>

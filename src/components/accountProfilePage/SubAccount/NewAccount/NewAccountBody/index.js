@@ -8,7 +8,7 @@ import styles from './index.less';
 function NewAccountBody({data, routing, accountSettingStore}) {
   const spliceString = (userName, email) => {
     const str = userName.concat(`（${email}）`);
-    if (str > 18) {
+    if (str.length > 18) {
       return `所属账号：${str.slice(0, 18)}...`;
     }
     return `所属账号：${str}`;
