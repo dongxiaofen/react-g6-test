@@ -29,6 +29,7 @@ class PdfStore {
     if (monitorId) {
       this.reportType = 'MONITOR';
     }
+    this.reportType = '';
   }
 
   @action.bound getOverviewData(id) {
