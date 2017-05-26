@@ -145,14 +145,12 @@ function OverView({ pdfStore, clientStore, routing }) {
       <Summary {...yearReport} />
       {
         isStock ?
-          [
             <div key="thisIsSecondTitleObject">
-              <SecondTitle module="上市披露" />,
-              <hr className={styles.hrhr} />,
-              <Summary {...companySummary}/>,
+              <SecondTitle module="上市披露" />
+              <hr className={styles.hrhr} />
+              <Summary {...companySummary}/>
               <Summary {...companyAnnouncement} />
             </div>
-          ]
           : ''
       }
       <SecondTitle module="风险信息" />
