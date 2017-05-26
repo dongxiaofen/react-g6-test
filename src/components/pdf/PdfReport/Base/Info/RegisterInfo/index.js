@@ -14,7 +14,7 @@ function RegisterInfo({ moduleData }) {
     );
   }
   const handleCap = (value) => {
-    return value + '万人民币';
+    return parseFloat(value).toFixed(2) + '万人民币';
   };
   const data = {
     dataConfig: [

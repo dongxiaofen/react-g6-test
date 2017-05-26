@@ -23,7 +23,7 @@ function AvgSalary({moduleData}) {
         if (data[key]) {
           result.push({
             time: key,
-            salary: data[key]
+            salary: data[key].toFixed(2)
           });
         }
       }

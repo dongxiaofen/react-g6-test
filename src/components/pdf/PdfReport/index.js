@@ -10,6 +10,7 @@ import News from './News';
 import Assets from './Assets';
 import Network from './NetWork';
 import Team from './Team';
+import Tax from './Tax';
 import styles from './index.less';
 
 function PdfReport({pdfStore}) {
@@ -25,6 +26,7 @@ function PdfReport({pdfStore}) {
             {judgeIsModuleExist('SUMMARY') ? <Overview /> : ''}
             {judgeIsModuleExist('CORP') ? <Base judgeIsModuleExist={judgeIsModuleExist} /> : ''}
             {judgeIsModuleExist('STOCK') ? <Stock judgeIsModuleExist={judgeIsModuleExist} /> : ''}
+            {judgeIsModuleExist('TAX') ? <Tax judgeIsModuleExist={judgeIsModuleExist} /> : ''}
             {judgeIsModuleExist('RISK') ? <Risk judgeIsModuleExist={judgeIsModuleExist} /> : ''}
             {judgeIsModuleExist('NEWS') ? <News judgeIsModuleExist={judgeIsModuleExist} /> : ''}
             {judgeIsModuleExist('OPERATION') ? <Assets judgeIsModuleExist={judgeIsModuleExist} /> : ''}
