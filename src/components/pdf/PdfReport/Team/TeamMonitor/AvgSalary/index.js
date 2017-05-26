@@ -5,6 +5,7 @@ import PdfTable from 'components/common/pdf/PdfTable';
 import SecondTitle from 'components/common/pdf/SecondTitle';
 
 function AvgSalary({moduleData}) {
+  console.log(moduleData, '招聘平均薪资');
   if (!moduleData || Object.keys(moduleData).length < 1) {
     return (
       <div>
