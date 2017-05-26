@@ -6,14 +6,14 @@ import Pager from 'components/common/Pager';
 import { loadingComp } from 'components/hoc';
 
 
-function TableList({ listData, status, uiStore }) {
+function TableList({ listData, uiStore }) {
   return (
     <div>
       <div className={styles.list}>
         {
           listData && listData.length > 0
             ?
-            listData.map((item, key) => <BaseList key={`reportManage${key}Id`} status={status} item={item} />)
+            listData.map((item, key) => <BaseList key={`reportManage${key}Id`} item={item} />)
             : null
         }
       </div>
@@ -30,7 +30,6 @@ function TableList({ listData, status, uiStore }) {
 
 TableList.propTypes = {
   listData: PropTypes.oneOfType([PropTypes.array, PropTypes.object]),
-  status: PropTypes.string,
   loading: PropTypes.bool,
   uiStore: PropTypes.object,
 };
