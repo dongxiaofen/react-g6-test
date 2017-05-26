@@ -194,7 +194,7 @@ class BannerStore {
         runInAction(() => {
           modalStore.confirmLoading = false;
           modalStore.closeAction();
-          messageStore.openMessage({ content: err.response.data.message });
+          messageStore.openMessage({ type: 'warning', content: err.response.data.message });
         });
       });
   }
