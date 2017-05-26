@@ -5,6 +5,7 @@ import Item from '../Item';
 import PwdModal from '../../userModal/PwdModal';
 import EditModal from '../../userModal/EditModal';
 import styles from './index.less';
+import Popover from 'antd/lib/popover';
 function BaseInfo({accountSettingStore}) {
   // const consumeType = clientStore.userInfo.consumeType;
   const baseInfo = accountSettingStore.base;
@@ -18,6 +19,16 @@ function BaseInfo({accountSettingStore}) {
       return values;
     }
     const level = tree.data.content[activeIndex].level;
+    if (values.length > 18) {
+      return (
+        <div className={styles.pwdBox}>
+          <Popover content={values}>
+            {`${values.slice(0, 17)}...`}
+          </Popover>
+          {level < 2 && <span className={styles.changePwd} onClick={showPwdModal}>修改密码</span>}
+        </div>
+      );
+    }
     return (
       <div className={styles.pwdBox}>
         <span className={styles.value}>{values}</span>

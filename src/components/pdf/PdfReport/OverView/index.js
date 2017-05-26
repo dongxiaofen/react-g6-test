@@ -65,7 +65,7 @@ function OverView({ pdfStore, clientStore, routing }) {
     valueData: summaryData.riskInfo ? {data: summaryData.riskInfo.court, type: 'object'} : undefined,
   };
   const taxInfoMap = {
-    title: '税务公示信息',
+    title: '纳税信用',
     valueData: summaryData.riskInfo ? {data: summaryData.riskInfo.taxNotice, type: 'number'} : undefined,
   };
   const corpNoticeMap = {
@@ -145,14 +145,12 @@ function OverView({ pdfStore, clientStore, routing }) {
       <Summary {...yearReport} />
       {
         isStock ?
-          [
             <div key="thisIsSecondTitleObject">
-              <SecondTitle module="上市披露" />,
-              <hr className={styles.hrhr} />,
-              <Summary {...companySummary}/>,
+              <SecondTitle module="上市披露" />
+              <hr className={styles.hrhr} />
+              <Summary {...companySummary}/>
               <Summary {...companyAnnouncement} />
             </div>
-          ]
           : ''
       }
       <SecondTitle module="风险信息" />

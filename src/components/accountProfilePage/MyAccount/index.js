@@ -22,7 +22,7 @@ function MyAccount({accountProfileStore}) {
   };
   const warningCompnay = {
     hasScore: true,
-    dateType: 'singeLine',
+    dateType: 'warningDate',
     data: accountProfileStore.ownWarningCompnay,
     hasFlag: false,
     companyType: 'warningCompnay',
