@@ -310,7 +310,7 @@ export default class CircleNetworkGraph extends Component {
     });
 
     svgEdgelabels.attr('transform', function autoRotate(data) {
-      if (data.target.x < data.source.x) {// 边上的文字自动转向
+      if (!d3.select(this).attr('class').includes('hide') && data.target.x < data.source.x) {// 边上的文字自动转向， 兼容firefox
         const bbox = this.getBBox();
         const rx = bbox.x + bbox.width / 2;
         const ry = bbox.y + bbox.height / 2;
