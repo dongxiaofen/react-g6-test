@@ -5,6 +5,7 @@ import TaxOperation from './TaxOperation';
 import TaxUp from './TaxUp';
 
 function Tax({moduleData}) {
+  console.log(moduleData, '========================');
   return (
     <div>
       <TaxProfit moduleData={moduleData} />
