@@ -2,7 +2,7 @@ import React, { Component, PropTypes } from 'react';
 import { observer, inject } from 'mobx-react';
 import PdfBody from 'components/pdf/PdfReport';
 
-@inject('pdfStore')
+@inject('pdfStore', 'routing')
 @observer
 export default class Pdf extends Component {
   static propTypes = {

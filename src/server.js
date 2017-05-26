@@ -135,6 +135,7 @@ app.use((req, res) => {
         axios.get(config.backendApi + '/api/pdf', { params })
           .then((resp) => {
             // writeDataToFile('resp', resp.data);
+            console.log(params.types, 'params.types-----------')
             allStores.pdfStore.setTypes(params.types);
             allStores.clientStore.envConfig = config.target;
             allStores.pdfStore.getPdfDownData(resp.data);

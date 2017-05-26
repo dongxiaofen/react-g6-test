@@ -8,7 +8,7 @@ function ShareHolder({ moduleData }) {
   if (moduleData === null || moduleData.length === 0) {
     return (
       <div>
-        <SecondTitle module="注册信息"/>
+        <SecondTitle module="股东信息"/>
         <PdfNotFound />
       </div>
     );
@@ -26,7 +26,7 @@ function ShareHolder({ moduleData }) {
   };
   return (
     <div>
-      <SecondTitle module="注册信息" />
+      <SecondTitle module="股东信息" />
       <PdfTable {...data} />
     </div>
   );
