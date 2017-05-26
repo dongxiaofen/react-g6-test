@@ -15,9 +15,9 @@ function Item({name, keys, values, handle, none, unit, feeset, remainValue, Rema
   }
   const cutLength = (value, _unit) => {
     if (!Remaining) {
-      if (value.toString().length > 4) {
+      if (value.toString().length > 10) {
         return (<Popover content={`${value} ${_unit}`}>
-          {`${value.toString().slice(0, 4)}.. ${_unit}` }
+          {`${value.toString().slice(0, 9)}...` }
         </Popover>);
       }
       return (<span>{`${value} ${_unit}`}</span>);
