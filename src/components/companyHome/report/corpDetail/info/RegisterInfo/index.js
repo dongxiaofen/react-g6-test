@@ -8,7 +8,7 @@ function RegisterInfo({ registerInfo, isLoading, errText }) {
     if (items.regCap === '0.0' || items.regCap === '0' || items.regCap === '' || items.regCap === undefined) {
       return '--';
     }
-    return items.regCap + items.unit + items.regCapCur;
+    return Number(items.regCap).toFixed(2) + items.unit + items.regCapCur;
   };
   const data = {
     meta: {
