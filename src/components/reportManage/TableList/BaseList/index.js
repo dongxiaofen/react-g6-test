@@ -16,7 +16,7 @@ function BaseList({
   const choiceOk = () => {
     const reportManagePager = uiStore.uiState.reportManagePager;
     const params = {
-      companyName: '',
+      companyName: reportManageStore.companyName,
       index: reportManagePager.index,
       size: reportManagePager.size
     };

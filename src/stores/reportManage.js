@@ -25,7 +25,7 @@ class ReportManageStore {
   @action.bound getReportListData(params) {
     const reportManagePager = uiStore.uiState.reportManagePager;
     const pageIndex = reportManagePager.index;
-    if (this.reportList.length === 0 && pageIndex !== 1) {
+    if (this.reportList.length === 1 && pageIndex !== 1) {
       reportManagePager.index = pageIndex - 1;
     } else {
       this.getReportList(params);
@@ -55,7 +55,7 @@ class ReportManageStore {
         payModalStore.closeAction();
         messageStore.openMessage({ type: 'info', content: '加入监控成功', duration: '1500' });
         this.monitorId = resp.data.monitorId;
-        this.getReportList(params);
+        this.getReportListData(params);
       }))
       .catch(action( (err) => {
         payModalStore.closeAction();
