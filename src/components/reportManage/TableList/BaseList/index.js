@@ -51,7 +51,12 @@ function BaseList({
       <Row>
         <Col width="5">
           <div className={styles.nameWrap}>
-            <span onClick={viewReport} className={styles.name}>{item.companyName}</span>
+            <span
+              className={styles.name}
+              title={ item.companyName }
+              onClick={viewReport}>
+              {item.companyName}
+            </span>
             {
               item.companyStatus
                 ? <span title={item.companyStatus} className={styles.mainLabel}>{item.companyStatus}</span>
@@ -61,7 +66,11 @@ function BaseList({
           </div>
           <div className={styles.infoDetail}>
             <span className={styles.detailItem}>{`法人：${item.frName ? item.frName : '无'}`}</span>
-            <span className={styles.detailItem}>{`地址：${item.address ? item.address : '无'}`}</span>
+            <span
+              className={styles.detailItem}
+              title={item.address ? item.address : '无'}>
+              {`地址：${item.address ? item.address : '无'}`}
+            </span>
           </div>
         </Col>
         <Col width="4">
