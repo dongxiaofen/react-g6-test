@@ -167,7 +167,7 @@ app.use((req, res) => {
             console.log('pdfDown err', err.response.status);
           });
       } else if (reqPathName === '/') { // 访问首页
-        allStores.clientStore.envConfig = 'cfca_prod';
+        allStores.clientStore.envConfig = config.target;
         /*服务端注入RouterStore*/
         const routingStore = new RouterStore();
         allStores.routing = routingStore;
@@ -194,8 +194,7 @@ app.use((req, res) => {
           .then((resp) => {
             /*获取用户信息*/
             allStores.clientStore.userInfo = resp.data;
-            // allStores.clientStore.envConfig = config.target;
-            allStores.clientStore.envConfig = 'cfca_prod';
+            allStores.clientStore.envConfig = config.target;
             allStores.loginStore.isShowLogin = false;
             /*获取报告leftBar高亮*/
             if (reqPathName.indexOf('companyHome') >= 0) {
