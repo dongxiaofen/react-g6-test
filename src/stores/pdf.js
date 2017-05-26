@@ -20,12 +20,15 @@ class PdfStore {
   @observable team = {};
   @observable taxList = {};
   @observable pdfTypesKey = 'SUMMARY,CORP,CORP_BASIC,CORP_INV_POS,STOCK,CORP_ALTER,CORP_YEAR_REPORT,TAX,RISK,RISK_ANNOUNCEMENT,RISK_NOTICE,RISK_JUDGEMENT,RISK_EXECUTE,RISK_DISHONESTY,RISK_LITIGATION,RISK_TAXATION,RISK_ABNORMAL,RISK_CHECK,NEWS,NETWORK,NETWORK_RELEVANCE,NETWORK_BLACKLIST,STOCK_INFO,STOCK_ANNOUNCEMENT,OPERATION,OPERATION_BIDDING,OPERATION_PATENT,OPERATION_TEL,OPERATION_TRADEMARK,NETWORK,NETWORK_RELEVANCE,NETWORK_BLACKLIST,TEAM,TEAM_RECRUITMENT_RESUME,TEAM_ANALYSIS';
-
+  @observable reportType = 'MONITOR';
   // summary
   @observable summary = {};
 
-  @action.bound setTypes(types) {
+  @action.bound setTypes(types, monitorId) {
     this.pdfTypesKey = types;
+    if (monitorId) {
+      this.reportType = 'MONITOR';
+    }
   }
 
   @action.bound getOverviewData(id) {
