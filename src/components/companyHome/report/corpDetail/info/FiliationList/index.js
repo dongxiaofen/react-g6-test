@@ -17,7 +17,7 @@ function FiliationList({ filiationList, isLoading, errText }) {
     },
     isLoading: isLoading,
     module: errText ? errText : '分支机构',
-    error: errText || filiationList.length === 0 ? {message: errText} : true,
+    error: errText || filiationList.length === 0 ? {message: errText} : false,
   };
   return (
     <div>
