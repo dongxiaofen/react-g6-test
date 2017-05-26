@@ -194,7 +194,11 @@ class BannerStore {
         runInAction(() => {
           modalStore.confirmLoading = false;
           modalStore.closeAction();
-          messageStore.openMessage({ type: 'warning', content: err.response.data.message });
+          if (err.response.data.errorCode === 403218) {
+            messageStore.openMessage({ type: 'info', content: err.response.data.message });
+          } else {
+            messageStore.openMessage({ type: 'warning', content: err.response.data.message });
+          }
         });
       });
   }
