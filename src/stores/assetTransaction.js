@@ -239,13 +239,13 @@ class AssetTransactionStore {
     assetGt: '',
     assetLt: '',
     assetType: '',
-  }
+  };
 
   @observable assetLocalSwiperImg = {
     bgImgDistance: 0,
     distance: 0,
     activeImg: 0,
-  }
+  };
 
   @observable assetLocalData = [];
   @observable assetLocalDetail = {};
@@ -437,7 +437,50 @@ class AssetTransactionStore {
   }
 
   @action.bound resetStore() {
-    console.log('asset resetStore');
+    /* 本地资产 */
+    this.assetLocalParams = {
+      assignorType: '',
+      region: '',
+      assetGt: '',
+      assetLt: '',
+      assetType: '',
+    };
+
+    this.assetLocalSwiperImg = {
+      bgImgDistance: 0,
+      distance: 0,
+      activeImg: 0,
+    };
+
+    this.assetLocalData = [];
+    this.assetLocalDetail = {};
+    this.assetLocalLoading = false;
+    // --------------------------------------------
+
+    /* 交易趋势 */
+    this.tradeTrendParams = {
+      region: '',
+      startDate: '',
+      endDate: '',
+    };
+    this.tradeTrendData = [];
+    this.tradeTrendLoading = false;
+    // --------------------------------------------
+
+    /* 地区分布 */
+    this.distributionParams = {
+      type: '',
+      region: '',
+      startDate: '',
+      endDate: '',
+    };
+    this.distributionStaticKey = 'transactionTotal';
+    this.areaDistributionLoading = false;
+    this.areaDistributionDetailLoading = true;
+    this.areaDistributionResult = {};
+    this.distributionMapData = [];
+    this.distributionBar = { axis: [], data: [] };
+    this.distributionDetail = { region: '', data: {}, asset80Focus: 0 };
   }
 }
 export default new AssetTransactionStore();
