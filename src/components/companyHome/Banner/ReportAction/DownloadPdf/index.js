@@ -147,22 +147,27 @@ export default class DownloadPdf extends Component {
   }
 
   downloadPdf = () => {
+    const findIndexLevelOneChecked = (key) => {
+      const levelOne = this.props.bannerStore.pdfDownloadConfig.levelOne;
+      const index = levelOne.findIndex((item) => item.value === key);
+      return levelOne[index].checked;
+    };
     const query = this.props.routing.location.query;
     const monitorId = query.monitorId;
     const reportId = query.reportId;
     let queryStr = '&type=';
     let queryArray = [];
     const bannerStore = this.props.bannerStore;
-    const levelOne = bannerStore.pdfDownloadConfig.levelOne;
+    // const levelOne = bannerStore.pdfDownloadConfig.levelOne;
     const levelTwo = bannerStore.pdfDownloadConfig.levelTwo;
     const levelTwoKeys = Object.keys(levelTwo);
-    if (levelOne[0].checked) {
+    if (findIndexLevelOneChecked('SUMMARY')) {
       queryArray.push('SUMMARY');
     }
-    if (levelOne[2].checked) {
+    if (findIndexLevelOneChecked('TAX')) {
       queryArray.push('TAX');
     }
-    if (levelOne[5].checked) {
+    if (findIndexLevelOneChecked('NEWS')) {
       queryArray.push('NEWS');
     }
     levelTwoKeys.map((key) => {

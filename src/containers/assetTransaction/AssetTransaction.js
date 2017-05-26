@@ -1,5 +1,5 @@
-import React, { Component } from 'react';
-import { observer } from 'mobx-react';
+import React, { Component, PropTypes } from 'react';
+import { observer, inject } from 'mobx-react';
 import Tabs from 'antd/lib/tabs';
 
 import styles from './index.less';
@@ -10,8 +10,17 @@ import Distribution from 'components/assetTransaction/Distribution';
 
 const TabPane = Tabs.TabPane;
 
+@inject('assetTransactionStore')
 @observer
 export default class AssetTransaction extends Component {
+  static propTypes = {
+    assetTransactionStore: PropTypes.object,
+  }
+
+  componentWillUnmount() {
+    this.props.assetTransactionStore.resetStore();
+  }
+
   render() {
     return (
       <Container>
