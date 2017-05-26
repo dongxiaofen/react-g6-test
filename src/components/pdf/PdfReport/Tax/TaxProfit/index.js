@@ -1,27 +1,27 @@
 import React, {PropTypes} from 'react';
 import { observer } from 'mobx-react';
-import TaxUpList from './TaxUpList';
+import TaxProfitList from './TaxProfitList/index';
 import SecondTitle from 'components/common/pdf/SecondTitle';
 import PdfNotFound from 'components/common/pdf/PdfNotFound';
 
-function TaxUp({moduleData}) {
-  if (!moduleData || !moduleData.operating_capability) {
+function TaxProfit({moduleData}) {
+  if (!moduleData || !moduleData.operating_profit) {
     return (
       <div>
-        <SecondTitle module="成长能力指标"/>
+        <SecondTitle module="盈利能力指标"/>
         <PdfNotFound />
       </div>
     );
   }
   return (
     <div>
-      <SecondTitle module="成长能力指标" />
-      <TaxUpList moduleData={moduleData} />
+      <SecondTitle module="盈利能力指标" />
+      <TaxProfitList moduleData={moduleData} />
     </div>
   );
 }
 
-TaxUp.propTypes = {
+TaxProfit.propTypes = {
   moduleData: PropTypes.object,
 };
-export default observer(TaxUp);
+export default observer(TaxProfit);

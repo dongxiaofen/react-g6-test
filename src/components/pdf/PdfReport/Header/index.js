@@ -21,6 +21,29 @@ function Header({clientStore, pdfStore}) {
       </div>
     );
   }
+  // 更名历史
+  const historyData = pathval.getPathValue(moduleData, 'bannerInfo.bannerInfo.historyName');
+  let historyList = '';
+  let historyDom = '';
+  if (historyData && historyData.length > 0) {
+    historyData.forEach((item) => {
+      historyList = historyList + item.name + '　　';
+    });
+    historyDom = (
+      <div className={styles.bannerSingle}>
+        <span className={styles.bannerKey}>更名历史：</span>
+        <span className={styles.bannerValue}>{historyList}</span>
+      </div>
+    );
+  }
+  // 高风险
+  let highRiskDom = '';
+  if (pathval.getPathValue(pdfStore, 'banner.bannerInfo.bannerInfo.riskInfo') && pathval.getPathValue(pdfStore, 'banner.bannerInfo.bannerInfo.riskInfo').length > 0) {
+    highRiskDom = (<div className={styles.bannerSingle}>
+      <span className={styles.bannerKey}>高风险：</span>
+      <span className={styles.bannerValue}>请注意该企业已被平台列入高风险企业</span>
+    </div>);
+  }
   // 邮件地址
   const emailData = pathval.getPathValue(moduleData, 'bannerInfo.bannerInfo.email');
   let emailList = '';
@@ -101,6 +124,8 @@ function Header({clientStore, pdfStore}) {
         {emailDom}
         {addressDom}
         {industryDom}
+        {historyDom}
+        {highRiskDom}
       </div>
     </div>
   );

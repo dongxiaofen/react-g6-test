@@ -75,7 +75,7 @@ class RelPerCheckStore {
         this.relatedName = '';
         this.relatedType = '';
         this.relatedSubmit = false;
-        messageStore.openMessage({type: 'warning', content: error.response.data, duration: '1500'});
+        messageStore.openMessage({type: 'warning', content: error.response.data.message, duration: '1500'});
       }));
   }
   @action.bound getIdCard({monitorId, reportId, personCheckId}) {
