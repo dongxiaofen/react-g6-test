@@ -133,20 +133,20 @@ function OverView({ pdfStore, clientStore }) {
     title: '团队监控分析',
     valueData: summaryData.team ? { data: summaryData.team.recruitmentResume, type: 'object' } : undefined,
   };
-  const tax = {
-    mapKey: {
-      summary: '公司概括',
-      shareholder: '十大股东',
-      circulateShareHolder: '流通股东',
-      management: '高管'
-    },
-    title: '公司概括',
-    valueData: summaryData.stock ? {data: summaryData.stock.info, type: 'object'} : undefined,
-  };
-  const taxCompany = {
-    title: '公司公告',
-    valueData: summaryData.stock ? {data: summaryData.stock.stockAnnouncement, type: 'number'} : undefined,
-  };
+  // const tax = {
+  //   mapKey: {
+  //     summary: '公司概括',
+  //     shareholder: '十大股东',
+  //     circulateShareHolder: '流通股东',
+  //     management: '高管'
+  //   },
+  //   title: '公司概括',
+  //   valueData: summaryData.stock ? {data: summaryData.stock.info, type: 'object'} : undefined,
+  // };
+  // const taxCompany = {
+  //   title: '公司公告',
+  //   valueData: summaryData.stock ? {data: summaryData.stock.stockAnnouncement, type: 'number'} : undefined,
+  // };
   return (
     <div>
       <PdfTitle module="信息概览" subModule="" />
