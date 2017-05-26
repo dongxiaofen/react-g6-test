@@ -124,6 +124,8 @@ app.use((req, res) => {
       const reqPathName = url.parse(req.url).pathname;
       console.log('路由被match', url.parse(req.url));
       if (reqPathName === '/pdfDown') {
+        const routingStore = new RouterStore();
+        allStores.routing = routingStore;
         const params = req.query.monitorId ? {
           monitorId: req.query.monitorId,
           types: req.query.type
@@ -135,8 +137,6 @@ app.use((req, res) => {
         axios.get(config.backendApi + '/api/pdf', { params })
           .then((resp) => {
             // writeDataToFile('resp', resp.data);
-            const routingStore = new RouterStore();
-            allStores.routing = routingStore;
             allStores.pdfStore.setTypes(params.types);
             allStores.clientStore.envConfig = config.target;
             allStores.pdfStore.getPdfDownData(resp.data);
