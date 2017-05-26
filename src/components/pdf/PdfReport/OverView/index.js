@@ -133,20 +133,13 @@ function OverView({ pdfStore, clientStore }) {
     title: '团队监控分析',
     valueData: summaryData.team ? { data: summaryData.team.recruitmentResume, type: 'object' } : undefined,
   };
-  // const tax = {
-  //   mapKey: {
-  //     summary: '公司概括',
-  //     shareholder: '十大股东',
-  //     circulateShareHolder: '流通股东',
-  //     management: '高管'
-  //   },
-  //   title: '公司概括',
-  //   valueData: summaryData.stock ? {data: summaryData.stock.info, type: 'object'} : undefined,
-  // };
-  // const taxCompany = {
-  //   title: '公司公告',
-  //   valueData: summaryData.stock ? {data: summaryData.stock.stockAnnouncement, type: 'number'} : undefined,
-  // };
+  const taxSummary = {
+    mapKey: {
+      taxSummary: summaryData.taxOverall && summaryData.taxOverall.length > 0 ? summaryData.taxOverall.join(',') : '暂无信息',
+    },
+    title: '税务信息',
+    valueData: {type: 'none', data: (summaryData.taxOverall && summaryData.taxOverall.length > 0 ? summaryData.taxOverall.join(',') : '暂无信息')},
+  };
   return (
     <div>
       <PdfTitle module="信息概览" subModule="" />
@@ -169,10 +162,9 @@ function OverView({ pdfStore, clientStore }) {
       {
         pdfStore.reportType === 'MONITOR' ?
           <div key="taxList">
-            <SecondTitle module="税务信息" />
+            <SecondTitle module="税务分析" />
             <hr className={styles.hrhr} />
-            <Summary {...companySummary}/>
-            <Summary {...companyAnnouncement} />
+            <Summary {...taxSummary}/>
           </div>
           : ''
       }
