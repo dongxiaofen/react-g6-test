@@ -36,6 +36,14 @@ function Header({clientStore, pdfStore}) {
       </div>
     );
   }
+  // 高风险
+  let highRiskDom = '';
+  if (pathval.getPathValue(pdfStore, 'banner.bannerInfo.bannerInfo.riskInfo') && pathval.getPathValue(pdfStore, 'banner.bannerInfo.bannerInfo.riskInfo').length > 0) {
+    highRiskDom = (<div className={styles.bannerSingle}>
+      <span className={styles.bannerKey}>高风险：</span>
+      <span className={styles.bannerValue}>请注意该企业已被平台列入高风险企业</span>
+    </div>);
+  }
   // 邮件地址
   const emailData = pathval.getPathValue(moduleData, 'bannerInfo.bannerInfo.email');
   let emailList = '';
@@ -117,6 +125,7 @@ function Header({clientStore, pdfStore}) {
         {addressDom}
         {industryDom}
         {historyDom}
+        {highRiskDom}
       </div>
     </div>
   );
