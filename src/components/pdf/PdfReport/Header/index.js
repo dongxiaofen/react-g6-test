@@ -21,6 +21,21 @@ function Header({clientStore, pdfStore}) {
       </div>
     );
   }
+  // 更名历史
+  const historyData = pathval.getPathValue(moduleData, 'bannerInfo.bannerInfo.historyName');
+  let historyList = '';
+  let historyDom = '';
+  if (historyData && historyData.length > 0) {
+    historyData.forEach((item) => {
+      historyList = historyList + item.name + '　　';
+    });
+    historyDom = (
+      <div className={styles.bannerSingle}>
+        <span className={styles.bannerKey}>更名历史：</span>
+        <span className={styles.bannerValue}>{historyList}</span>
+      </div>
+    );
+  }
   // 邮件地址
   const emailData = pathval.getPathValue(moduleData, 'bannerInfo.bannerInfo.email');
   let emailList = '';
@@ -101,6 +116,7 @@ function Header({clientStore, pdfStore}) {
         {emailDom}
         {addressDom}
         {industryDom}
+        {historyDom}
       </div>
     </div>
   );
