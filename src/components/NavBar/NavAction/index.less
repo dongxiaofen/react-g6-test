@@ -201,15 +201,23 @@
 }
 
 .code {
-  width: 120px;
-  height: 120px;
+  width: 140px;
+  padding: 10px;
 
   text-align: center;
   line-height: 120px;
-  background-color: rgba(66, 66, 66, 0.9);
+  background-color: @mdc-white-darker;
+  .box-shadow-dropDown;
+
+  .codeText {
+    margin-top: 10px;
+    font-size: 14px;
+    line-height: 14px;
+    color: @mdc-blue-grey-400;
+  }
 
   img {
-    width: 100px;
-    height: 100px;
+    width: 120px;
+    height: 120px;
   }
 }
