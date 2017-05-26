@@ -66,9 +66,10 @@ export default class NavAction extends Component {
           <span className={styles.downloadApp}>
             <i className="fa fa-qrcode" aria-hidden="true"></i>下载APP
           </span>
-          <HoverBox width="120px" left="-8px">
-            <div className={styles.code}>
+          <HoverBox width="140px" left="-18px">
+            <div className={`clearfix ${styles.code}`}>
               <img src={codeImg} />
+              <div className={styles.codeText}>下载星象应用</div>
             </div>
           </HoverBox>
         </div>
