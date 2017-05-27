@@ -93,7 +93,8 @@ function CompanyScoreList({sixStarData}) {
         <div className={styles.top}>
           <i className={styles.img4}></i>
           <span className={styles.type}>
-            {sixStarData.law.name}
+            合规程度
+            {/* {sixStarData.law.name} */}
           </span>
           <span className={styles.score}>
             <span>{sixStarData.law.score}</span>
