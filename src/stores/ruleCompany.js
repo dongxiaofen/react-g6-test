@@ -40,6 +40,8 @@ class RuleCompanyStore {
   @action.bound handleEnter(evt) {
     if (evt.keyCode === 13) {
       this.searchInputSend = evt.target.value;
+      uiStore.uiState.ruleCompanyListPager.index = 1;
+      uiStore.uiState.ruleCompanyListPager.size = 10;
       // 发送请求
       this.getCompanyList();
     }
