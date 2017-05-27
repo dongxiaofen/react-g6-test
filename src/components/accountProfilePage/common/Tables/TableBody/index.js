@@ -24,7 +24,7 @@ function TableBody({ hasScore, dateType, data, hasFlag, routing, searchCompanySt
         <div className={styles.discript}>
           <span className={styles.count_text}>预警时间</span>
         </div>
-        <div className={styles.date_time}>{latestDt}</div>
+        <div className={styles.date_time_w}>{latestDt}</div>
       </div>
       );
     }
