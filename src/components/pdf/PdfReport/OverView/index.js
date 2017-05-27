@@ -160,7 +160,7 @@ function OverView({ pdfStore, clientStore }) {
           : ''
       }
       {
-        pdfStore.reportType === 'MONITOR' ?
+        pdfStore.banner.mainStatus === 'MONITOR' ?
           <div key="taxList">
             <SecondTitle module="税务分析" />
             <hr className={styles.hrhr} />
@@ -193,7 +193,7 @@ function OverView({ pdfStore, clientStore }) {
       <hr className={styles.hrhr} />
       <Summary {...recruitmentEmployeeMap} />
       {
-        pdfStore.reportType === 'MONITOR' ?
+        pdfStore.banner.mainStatus === 'MONITOR' ?
           <Summary {...recruitmentResumeMap} /> : ''
       }
     </div>

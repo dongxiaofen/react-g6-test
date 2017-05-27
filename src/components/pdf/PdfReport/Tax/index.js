@@ -9,7 +9,7 @@ import PdfTitle from 'components/common/pdf/PdfTitle';
 function Tax({pdfStore}) {
   const moduleData = pathval.getPathValue(pdfStore, 'taxList');
   return (
-        pdfStore.reportType === 'MONITOR' ?
+        pdfStore.banner.mainStatus === 'MONITOR' ?
         <div>
           <PdfTitle module="税务信息" />
           <TaxProfit moduleData={moduleData} />

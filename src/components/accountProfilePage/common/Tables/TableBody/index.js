@@ -2,6 +2,7 @@ import React, {PropTypes} from 'react';
 import { observer, inject } from 'mobx-react';
 import styles from './index.less';
 import { loadingComp } from 'components/hoc';
+import Popover from 'antd/lib/popover';
 
 
 function TableBody({ hasScore, dateType, data, hasFlag, routing, searchCompanyStore, owner }) {
@@ -24,10 +25,16 @@ function TableBody({ hasScore, dateType, data, hasFlag, routing, searchCompanySt
         <div className={styles.discript}>
           <span className={styles.count_text}>预警时间</span>
         </div>
-        <div className={styles.date_time}>{latestDt}</div>
+        <div className={styles.date_time_w}>{latestDt}</div>
       </div>
       );
     }
+  };
+  const sliceString = (str) => {
+    if (str.length > 20) {
+      return (`${str.slice(0, 19)}...`);
+    }
+    return str;
   };
   const jumpPage = (companyName, monitorId) => {
     if (owner && owner === 'own') {
@@ -51,7 +58,9 @@ function TableBody({ hasScore, dateType, data, hasFlag, routing, searchCompanySt
               { hasFlag && itemData.productType === 'DEEP_MONITOR' ? <span className={`${styles.flag} ${styles.monitor}`}>深度</span> : ''}
               { hasScore ? <span className={styles.score}>{itemData.score}分</span> : '' }
               <div className={styles.account_user}>
-                {owner && owner === 'own' ? '' : `所属帐号：${itemData.userName}(${itemData.email})`}
+                {owner && owner === 'own' ? '' : <Popover content={`所属帐号：${itemData.userName}（${itemData.email}）`}>
+                  {`所属帐号：${sliceString(itemData.userName.concat(itemData.email))}`}
+                </Popover>}
               </div>
             </div>
           </div>
