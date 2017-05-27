@@ -34,7 +34,7 @@ class PdfStore {
 
   @action.bound getOverviewData(id) {
     // 获取pdf
-    axios.get(`/api/pdf?monitorId=${id}&types=SUMMARY,CORP,CORP_BASIC,CORP_INV_POS,STOCK,CORP_ALTER,CORP_YEAR_REPORT,TAX,RISK,RISK_ANNOUNCEMENT,RISK_NOTICE,RISK_JUDGEMENT,RISK_EXECUTE,RISK_DISHONESTY,RISK_LITIGATION,RISK_TAXATION,RISK_ABNORMAL,RISK_CHECK,NEWS,NETWORK,NETWORK_RELEVANCE,NETWORK_BLACKLIST,STOCK_INFO,STOCK_ANNOUNCEMENT,OPERATION,OPERATION_BIDDING,OPERATION_PATENT,OPERATION_TRADEMARK,NETWORK,NETWORK_RELEVANCE,NETWORK_BLACKLIST,TEAM,TEAM_RECRUITMENT_RESUME,TEAM_ANALYSIS`)
+    axios.get(`/api/pdf?monitorId=${id}&types=TAX`)
       .then(action((response) => {
         this.banner = pathval.getPathValue(response.data, 'banner');
         this.summary = pathval.getPathValue(response.data, 'summary');
