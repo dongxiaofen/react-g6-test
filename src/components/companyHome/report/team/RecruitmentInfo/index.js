@@ -2,6 +2,7 @@ import React, {PropTypes} from 'react';
 import { observer } from 'mobx-react';
 import { toJS } from 'mobx';
 import Popover from 'antd/lib/popover';
+import noDataImg from 'imgs/loading/noDataChart.png';
 
 import styles from './index.less';
 import { Row } from 'components/common/layout';
@@ -193,7 +194,18 @@ function RecruitmentInfo({ teamStore }) {
         <div className={styles['rm-info2']}>
           <div className={styles['rm-info2-box']}>
             <div className={styles['chart-title']}>企业招聘薪资比例：</div>
-            <BaseChart chartId="wageScale" height="268px" option={wageScaleOption} />
+            {teamStore.wageScale && teamStore.wageScale.length > 0 ? <BaseChart chartId="wageScale" height="268px" option={wageScaleOption} /> : <div className={styles.noData}>
+              <div className={styles.noDataContent}>
+                <div className={styles.noDataBox}>
+                  <div className={styles.noDataImg}>
+                    <img alt="" src={noDataImg} />
+                  </div>
+                  <div className={styles.noDataText}>
+                    暂无信息
+                  </div>
+                </div>
+              </div>
+            </div>}
             {
               similarCompanyAvgSalary
               ?
