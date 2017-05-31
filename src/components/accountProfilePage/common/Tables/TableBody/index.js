@@ -46,6 +46,16 @@ function TableBody({ hasScore, dateType, data, hasFlag, routing, searchCompanySt
       routing.push(`/searchCompany`);
     }
   };
+  const spliceCompanyName = (name) => {
+    if (name.length > 14) {
+      return (
+        <Popover content={name}>
+          {`${name.slice(0, 13)}...`}
+        </Popover>
+      );
+    }
+    return name;
+  };
   const createList = () => {
     let listItem = [];
     data.map((itemData, index) => {
@@ -53,7 +63,7 @@ function TableBody({ hasScore, dateType, data, hasFlag, routing, searchCompanySt
         <div key={`${index}list_items`} className={`clearfix ${styles.singe_item}`}>
           <div className="pull-left">
             <div className={`${styles.right_discription}`}>
-              <a onClick={jumpPage.bind(this, itemData.companyName, itemData.productId)} className={styles.companyName}>{itemData.companyName}</a>
+              <a onClick={jumpPage.bind(this, itemData.companyName, itemData.productId)} className={styles.companyName}>{spliceCompanyName(itemData.companyName)}</a>
               { hasFlag && itemData.productType === 'MONITOR' ? <span className={`${styles.flag} ${styles.monitor}`}>监控</span> : ''}
               { hasFlag && itemData.productType === 'DEEP_MONITOR' ? <span className={`${styles.flag} ${styles.monitor}`}>深度</span> : ''}
               { hasScore ? <span className={styles.score}>{itemData.score}分</span> : '' }
