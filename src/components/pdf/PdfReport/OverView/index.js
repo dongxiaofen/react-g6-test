@@ -135,10 +135,10 @@ function OverView({ pdfStore, clientStore }) {
   };
   const taxSummary = {
     mapKey: {
-      taxSummary: summaryData.taxOverall && summaryData.taxOverall.length > 0 ? summaryData.taxOverall.join(',') : '暂无信息',
+      taxSummary: summaryData.taxOverall && summaryData.taxOverall.length > 0 ? summaryData.taxOverall.join('，') : '暂无信息',
     },
     title: '税务信息',
-    valueData: {type: 'none', data: (summaryData.taxOverall && summaryData.taxOverall.length > 0 ? summaryData.taxOverall.join(',') : '暂无信息')},
+    valueData: {type: 'none', data: (summaryData.taxOverall && summaryData.taxOverall.length > 0 ? summaryData.taxOverall.join('，') : '暂无信息')},
   };
   return (
     <div>
