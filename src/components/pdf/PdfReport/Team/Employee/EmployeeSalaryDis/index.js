@@ -5,7 +5,7 @@ import SecondTitle from 'components/common/pdf/SecondTitle';
 import styles from './index.less';
 
 function EmployeeSalaryDis({moduleData}) {
-  if (!moduleData || moduleData.length === 0) {
+  if (!moduleData || Object.keys(moduleData).length === 0) {
     return (
       <div>
         <SecondTitle module="招聘信息－招聘平均薪资" />
@@ -20,7 +20,6 @@ function EmployeeSalaryDis({moduleData}) {
     return data.toFixed(2);
   };
 
-  console.log(moduleData['2k以下'], '------------');
   return (
     <div className={styles.wrap}>
       <SecondTitle module="招聘信息－招聘平均薪资" />

@@ -5,7 +5,8 @@ import SecondTitle from 'components/common/pdf/SecondTitle';
 import styles from '../EmployeeSalaryDis/index.less';
 
 function EmployeeSchoolInfo({moduleData}) {
-  if (!moduleData || moduleData.length === 0) {
+  console.log(moduleData, '统计');
+  if (!moduleData || Object.keys(moduleData).length === 0) {
     return (
       <div>
         <SecondTitle module="员工背景－毕业学校" />

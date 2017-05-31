@@ -26,8 +26,8 @@ function Team({pdfStore, judgeIsModuleExist}) {
             <EmployeeMessage moduleData={pathval.getPathValue(pdfStore, 'team.recruitAndResumeResponse.recruitmentStatisticResponse.categoryInfo')} />
             <EmployeeDegreeInfo moduleData={pathval.getPathValue(pdfStore, 'team.recruitAndResumeResponse.recruitmentStatisticResponse.degreeInfo')} />
             <EmployeeSalaryDis moduleData={pathval.getPathValue(pdfStore, 'team.recruitAndResumeResponse.recruitmentStatisticResponse.salaryDis')} />
-            <EmployeeSchoolInfo moduleData={pathval.getPathValue(pdfStore, 'team.recruitAndResumeResponse.recruitmentStatisticResponse.schoolInfo')} />
-            <EmployeeCategoryTypeInfo moduleData={pathval.getPathValue(pdfStore, 'team.recruitAndResumeResponse.recruitmentStatisticResponse.majorInfo')} />
+            <EmployeeSchoolInfo moduleData={pathval.getPathValue(pdfStore, 'team.recruitAndResumeResponse.resumeStatisticResponse.schoolInfo')} />
+            <EmployeeCategoryTypeInfo moduleData={pathval.getPathValue(pdfStore, 'team.recruitAndResumeResponse.resumeStatisticResponse.majorInfo')} />
             <EmployeeList moduleData={pathval.getPathValue(pdfStore, 'team.recruitAndResumeResponse.recruitmentInfo.data')} />
           </div>
           :

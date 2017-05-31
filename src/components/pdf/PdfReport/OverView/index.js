@@ -135,10 +135,10 @@ function OverView({ pdfStore, clientStore }) {
   };
   const taxSummary = {
     mapKey: {
-      taxSummary: summaryData.taxOverall && summaryData.taxOverall.length > 0 ? summaryData.taxOverall.join(',') : '暂无信息',
+      taxSummary: summaryData.taxOverall && summaryData.taxOverall.length > 0 ? summaryData.taxOverall.join('，') : '暂无信息',
     },
     title: '税务信息',
-    valueData: {type: 'none', data: (summaryData.taxOverall && summaryData.taxOverall.length > 0 ? summaryData.taxOverall.join(',') : '暂无信息')},
+    valueData: {type: 'none', data: (summaryData.taxOverall && summaryData.taxOverall.length > 0 ? summaryData.taxOverall.join('，') : '暂无信息')},
   };
   return (
     <div>
@@ -160,7 +160,7 @@ function OverView({ pdfStore, clientStore }) {
           : ''
       }
       {
-        pdfStore.reportType === 'MONITOR' ?
+        pdfStore.banner.mainStatus === 'MONITOR' ?
           <div key="taxList">
             <SecondTitle module="税务分析" />
             <hr className={styles.hrhr} />
@@ -193,7 +193,7 @@ function OverView({ pdfStore, clientStore }) {
       <hr className={styles.hrhr} />
       <Summary {...recruitmentEmployeeMap} />
       {
-        pdfStore.reportType === 'MONITOR' ?
+        pdfStore.banner.mainStatus === 'MONITOR' ?
           <Summary {...recruitmentResumeMap} /> : ''
       }
     </div>

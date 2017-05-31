@@ -2,6 +2,7 @@ import React, {PropTypes} from 'react';
 import { observer, inject } from 'mobx-react';
 import styles from './index.less';
 import { loadingComp } from 'components/hoc';
+import Popover from 'antd/lib/popover';
 
 
 function TableBody({ hasScore, dateType, data, hasFlag, routing, searchCompanyStore, owner }) {
@@ -24,10 +25,16 @@ function TableBody({ hasScore, dateType, data, hasFlag, routing, searchCompanySt
         <div className={styles.discript}>
           <span className={styles.count_text}>预警时间</span>
         </div>
-        <div className={styles.date_time}>{latestDt}</div>
+        <div className={styles.date_time_w}>{latestDt}</div>
       </div>
       );
     }
+  };
+  const sliceString = (str) => {
+    if (str.length > 20) {
+      return (`${str.slice(0, 19)}...`);
+    }
+    return str;
   };
   const jumpPage = (companyName, monitorId) => {
     if (owner && owner === 'own') {
@@ -39,6 +46,16 @@ function TableBody({ hasScore, dateType, data, hasFlag, routing, searchCompanySt
       routing.push(`/searchCompany`);
     }
   };
+  const spliceCompanyName = (name) => {
+    if (name.length > 14) {
+      return (
+        <Popover content={name}>
+          {`${name.slice(0, 13)}...`}
+        </Popover>
+      );
+    }
+    return name;
+  };
   const createList = () => {
     let listItem = [];
     data.map((itemData, index) => {
@@ -46,12 +63,14 @@ function TableBody({ hasScore, dateType, data, hasFlag, routing, searchCompanySt
         <div key={`${index}list_items`} className={`clearfix ${styles.singe_item}`}>
           <div className="pull-left">
             <div className={`${styles.right_discription}`}>
-              <a onClick={jumpPage.bind(this, itemData.companyName, itemData.productId)} className={styles.companyName}>{itemData.companyName}</a>
+              <a onClick={jumpPage.bind(this, itemData.companyName, itemData.productId)} className={styles.companyName}>{spliceCompanyName(itemData.companyName)}</a>
               { hasFlag && itemData.productType === 'MONITOR' ? <span className={`${styles.flag} ${styles.monitor}`}>监控</span> : ''}
               { hasFlag && itemData.productType === 'DEEP_MONITOR' ? <span className={`${styles.flag} ${styles.monitor}`}>深度</span> : ''}
               { hasScore ? <span className={styles.score}>{itemData.score}分</span> : '' }
               <div className={styles.account_user}>
-                {owner && owner === 'own' ? '' : `所属帐号：${itemData.userName}(${itemData.email})`}
+                {owner && owner === 'own' ? '' : <Popover content={`所属帐号：${itemData.userName}（${itemData.email}）`}>
+                  {`所属帐号：${sliceString(itemData.userName.concat(itemData.email))}`}
+                </Popover>}
               </div>
             </div>
           </div>
