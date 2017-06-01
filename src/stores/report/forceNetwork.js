@@ -31,6 +31,7 @@ class ForceNetworkStore {
     detailInfo: {},
     tabAct: 0,
   }
+  @observable zoomIndex = 1;
   @action.bound saveNetwork(nextLocation) {
     this.isExpandSaved = true;
     browserHistory.push(nextLocation.pathname + nextLocation.search);

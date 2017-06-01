@@ -44,9 +44,10 @@ export default class ForceNetworkGraph extends Component {
     const graph = toJS(this.props.forceNetworkStore.forceNetwork);
     nodesData = graph.nodes;
     edgesData = graph.links;
-    zoom = d3.zoom();
+    window.NETWORK_ZOOM = zoom = d3.zoom();
     svg = d3.select('svg')
       .call(zoom.on('zoom', () => {
+        this.props.forceNetworkStore.updateValue('zoomIndex', d3.event.transform.k);
         group.attr('transform', `translate(${d3.event.transform.x}, ${d3.event.transform.y}) scale(${d3.event.transform.k})`);
       }))
       .on('dblclick.zoom', () => { });

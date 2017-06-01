@@ -5,6 +5,7 @@ import CompanyInfo from './CompanyInfo';
 import PersonInfo from './PersonInfo';
 import AnimateLoading from 'components/hoc/LoadingComp/AnimateLoading';
 import { Slider } from 'antd';
+import {select} from 'd3';
 
 function DetailInfo({forceNetworkStore}) {
   const isShowInfo = forceNetworkStore.nodeInfo.isShowInfo;
@@ -22,20 +23,24 @@ function DetailInfo({forceNetworkStore}) {
     return <AnimateLoading />;
   };
   const formatter = (value)=> {
-    return `${value}%`;
+    return `${(value * 100).toFixed(0)}%`;
+  };
+  const handleZoom = (value)=> {
+    forceNetworkStore.updateValue('zoomIndex', value);
+    window.NETWORK_ZOOM.scaleTo(select('svg'), value);
   };
   return (
     <div>
       <div className={`${styles.operWrap} clearfix`}>
         <div className={styles.operation}>
-          <i className="fa fa-expand" aria-hidden="true"></i>
+          <i className="fa fa-expand" aria-hidden="true" title="全屏"></i>
           <span className={styles.line}>|</span>
-          <i className="fa fa-external-link" aria-hidden="true"></i>
+          <i className="fa fa-external-link" aria-hidden="true" title="恢复"></i>
           <span className={styles.line}>|</span>
-          <i className="fa fa-floppy-o" aria-hidden="true"></i>
+          <i className="fa fa-floppy-o" aria-hidden="true" title="下载"></i>
         </div>
         <div className={styles.slider}>
-          <Slider tipFormatter={formatter} />
+          <Slider tipFormatter={formatter} min={0.1} max={2.5} step={0.01} onChange={handleZoom} value={forceNetworkStore.zoomIndex}/>
         </div>
       </div>
       <div className={isShowInfo ? styles.show : styles.hide}>

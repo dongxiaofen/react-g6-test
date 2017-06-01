@@ -211,6 +211,5 @@ export function findShortPath(nodeId, shortestPahth) {
   const index = shortestPahth[0].findIndex((path)=>{
     return path === nodeId;
   });
-  console.log(index > -1);
   return index > -1;
 }
