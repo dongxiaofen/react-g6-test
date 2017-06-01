@@ -66,6 +66,7 @@ class NetworkStore {
     browserHistory.push(`/searchCompany`);
   }
   @action.bound jumpBlackNode(name, params) {
+    console.log(blackNetworkStore.jumpNode, name, 'blackNetworkStore.jumpNode---------');
     blackNetworkStore.jumpNode = name;
     // 修改导航高亮
     leftBarStore.activeItem = 'blackNetwork';

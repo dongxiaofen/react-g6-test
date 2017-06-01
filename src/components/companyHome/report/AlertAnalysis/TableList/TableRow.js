@@ -9,10 +9,10 @@ function TableRow({data, routing, alertAnalysisStore, networkStore}) {
     }
     const alertType = data.alertType;
     if (alertType === 'BLACKLIST') {
-      console.log(data.description.indexOf('"'), '行数据');
+      // console.log(data.description.indexOf('"'), '行数据');
       // 因为后端没有返这个字段，所以要在描述里面去取
       const index = data.description.indexOf('"') + 1;
-      console.log(data.description.slice(index, data.description.length - index), '风险关联公司名称');
+      // console.log(data.description.slice(index, data.description.length - index), '风险关联公司名称');
       networkStore.jumpBlackNode(data.description.slice(index, data.description.length - index), routing.location.search);
       return false;
     }
