@@ -6,10 +6,9 @@ import styles from './index.less';
 import Summary from './Summary';
 import pathval from 'pathval';
 
-function OverView({ pdfStore, clientStore, routing }) {
+function OverView({ pdfStore, clientStore }) {
   const summaryData = pdfStore.summary ? pdfStore.summary : '';
   const isStock = pathval.getPathValue(pdfStore, 'banner.stockCode');
-  const monitorId = routing.location.query.monitorId;
   const corpBasicMap = {
     mapKey: {
       registerInfo: '注册信息',
@@ -65,7 +64,7 @@ function OverView({ pdfStore, clientStore, routing }) {
     valueData: summaryData.riskInfo ? {data: summaryData.riskInfo.court, type: 'object'} : undefined,
   };
   const taxInfoMap = {
-    title: '税务公示信息',
+    title: '纳税信用',
     valueData: summaryData.riskInfo ? {data: summaryData.riskInfo.taxNotice, type: 'number'} : undefined,
   };
   const corpNoticeMap = {
@@ -134,6 +133,13 @@ function OverView({ pdfStore, clientStore, routing }) {
     title: '团队监控分析',
     valueData: summaryData.team ? { data: summaryData.team.recruitmentResume, type: 'object' } : undefined,
   };
+  const taxSummary = {
+    mapKey: {
+      taxSummary: summaryData.taxOverall && summaryData.taxOverall.length > 0 ? summaryData.taxOverall.join('，') : '暂无信息',
+    },
+    title: '税务信息',
+    valueData: {type: 'none', data: (summaryData.taxOverall && summaryData.taxOverall.length > 0 ? summaryData.taxOverall.join('，') : '暂无信息')},
+  };
   return (
     <div>
       <PdfTitle module="信息概览" subModule="" />
@@ -145,14 +151,21 @@ function OverView({ pdfStore, clientStore, routing }) {
       <Summary {...yearReport} />
       {
         isStock ?
-          [
             <div key="thisIsSecondTitleObject">
-              <SecondTitle module="上市披露" />,
-              <hr className={styles.hrhr} />,
-              <Summary {...companySummary}/>,
+              <SecondTitle module="上市披露" />
+              <hr className={styles.hrhr} />
+              <Summary {...companySummary}/>
               <Summary {...companyAnnouncement} />
             </div>
-          ]
+          : ''
+      }
+      {
+        pdfStore.banner.mainStatus === 'MONITOR' ?
+          <div key="taxList">
+            <SecondTitle module="税务分析" />
+            <hr className={styles.hrhr} />
+            <Summary {...taxSummary}/>
+          </div>
           : ''
       }
       <SecondTitle module="风险信息" />
@@ -180,7 +193,8 @@ function OverView({ pdfStore, clientStore, routing }) {
       <hr className={styles.hrhr} />
       <Summary {...recruitmentEmployeeMap} />
       {
-        monitorId ? <Summary {...recruitmentResumeMap} /> : null
+        pdfStore.banner.mainStatus === 'MONITOR' ?
+          <Summary {...recruitmentResumeMap} /> : ''
       }
     </div>
   );
@@ -191,4 +205,4 @@ OverView.propTypes = {
   clientStore: PropTypes.object,
   routing: PropTypes.object,
 };
-export default inject('clientStore', 'pdfStore', 'routing')(observer(OverView));
+export default inject('clientStore', 'pdfStore')(observer(OverView));

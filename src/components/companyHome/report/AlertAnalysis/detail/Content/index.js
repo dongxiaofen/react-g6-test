@@ -26,6 +26,8 @@ function Content({alertAnalysisStore}) {
     const detail = detailData.detail;
     if (info.alertType === 'RULE') {
       const singleDetail = detail[detailData.activeIndex];
+      // console.log(singleDetail, 'singleDetail-----------');
+      // if (!singleDetail) { return }
       switch (singleDetail.pattern) {
         case 'COURT_NOTICE':
           return <Ktannouncement data={singleDetail} />;
@@ -51,21 +53,24 @@ function Content({alertAnalysisStore}) {
           return null;
       }
     }else if (info.alertType === 'SYS_RULE') {
-      let ruleId = detail[detailData.activeIndex].ruleId;
+      const ruleId = detail[detailData.activeIndex].ruleId;
+      let typeId = 0;
       if (ruleId === 1 || ruleId === 2 || ruleId === 5 || ruleId === 6) {
-        ruleId = 1;
+        typeId = 1;
       }else if (ruleId === 3 || ruleId === 4) {
-        ruleId = 3;
+        typeId = 3;
       } else if (ruleId >= 13 && ruleId <= 31) {
-        ruleId = 13;
+        typeId = 13;
       }else if (ruleId >= 32 && ruleId <= 50) {
-        ruleId = 32;
+        typeId = 32;
+      } else {
+        typeId = ruleId;
       }
-      switch (ruleId) {
+      switch (typeId) {
         case 1:
-          return <JudgeDoc data={detail[detailData.activeIndex]} type={info.alertTyp}/>;
+          return <JudgeDoc data={detail[detailData.activeIndex]} type={info.alertTyp} ruleId={ruleId}/>;
         case 3:
-          return <DishonestInfo data={detail[detailData.activeIndex]} type={info.alertTyp}/>;
+          return <DishonestInfo data={detail[detailData.activeIndex]} type={info.alertTyp} ruleId={ruleId}/>;
         case 7:
           return <Rule7 data={detail[detailData.activeIndex]} />;
         case 8:

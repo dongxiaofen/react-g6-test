@@ -6,19 +6,21 @@ import { runInAction } from 'mobx';
 import styles from './index.less';
 
 function NewAccountBody({data, routing, accountSettingStore}) {
-  const spliceString = (str) => {
+  const spliceString = (userName, email) => {
+    const str = userName.concat(`（${email}）`);
     if (str.length > 18) {
       return `所属账号：${str.slice(0, 18)}...`;
     }
     return `所属账号：${str}`;
   };
   const jumpAccoutSetting = (email, userId) => {
+    console.log(email, userId);
     runInAction('account', () => {
-      accountSettingStore.fromHome = false;
-      accountSettingStore.searchInput = email;
-      accountSettingStore.activeId = userId;
+      accountSettingStore.tree.fromHome = true;
+      accountSettingStore.tree.searchInput = email;
+      accountSettingStore.tree.activeId = userId;
+      routing.push(`/accountSetting`);
     });
-    routing.push(`/searchCompany`);
   };
   const createList = () => {
     let arrList = [];
@@ -27,9 +29,9 @@ function NewAccountBody({data, routing, accountSettingStore}) {
         arrList = [...arrList,
           <li key={`${index}newAccount`} className={`${styles.list_item}`}>
             <div className={`${styles.marginRL} clearfix`}>
-              <div onClick={jumpAccoutSetting(itemData, itemData.email)} className={`${styles.user} pull-left`}>
-                <Popover content={`所属账号：${itemData.userName}（${itemData.email}`}>
-                  {spliceString(itemData.userName.concat(itemData.email))}
+              <div onClick={jumpAccoutSetting.bind(this, itemData.email, itemData.userId)} className={`${styles.user} pull-left`}>
+                <Popover content={`所属账号：${itemData.userName}（${itemData.email}）`}>
+                  {spliceString(itemData.userName, itemData.email)}
                 </Popover>
               </div>
               <div className={`${styles.date} pull-right`}>

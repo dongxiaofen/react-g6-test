@@ -8,9 +8,6 @@ function HoverBox({ width, left, children }) {
   };
   return (
     <div className={styles.hoverBox} style={style}>
-      <div className={styles.arrowBox}>
-        <div className={styles.arrow}></div>
-      </div>
       {children}
     </div>
   );

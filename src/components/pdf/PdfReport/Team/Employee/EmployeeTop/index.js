@@ -35,12 +35,15 @@ function EmployeeTop({ pdfStore }) {
     <div>
       <SecondTitle module="招聘信息" />
       <div className={styles.section1}>
-        <div className={styles.title}>
-          <div>公司规模：{!scale ? '暂无信息' : scale}</div>
-          <div>办公地点：{!locations ? '暂无信息' : locations}</div>
-          <div>招聘平均薪资：{!salaryAvg ? '暂无信息' : `${salaryAvg.toFixed(2)}元`}</div>
-          <div>平均工作经验：{!workingYearsAvg ? '暂无信息' : `${workingYearsAvg.toFixed(2)}年`}</div>
-        </div>
+        {!scale && !locations && !salaryAvg && !workingYearsAvg ?
+          <PdfNotFound /> :
+          <div className={styles.title}>
+            <div>公司规模：{!scale ? '暂无信息' : scale}</div>
+            <div>办公地点：{!locations ? '暂无信息' : locations}</div>
+            <div>招聘平均薪资：{!salaryAvg ? '暂无信息' : `${salaryAvg.toFixed(2)}元`}</div>
+            <div>平均工作经验：{!workingYearsAvg ? '暂无信息' : `${workingYearsAvg.toFixed(2)}年`}</div>
+          </div>
+        }
       </div>
     </div>
   );

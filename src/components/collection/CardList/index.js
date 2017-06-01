@@ -11,13 +11,10 @@ function CardList({ collectionStore, uiStore }) {
     let url;
     switch (productType) {
       case 'REPORT':
-        url = `/companyHome?reportId=${id}&companyType=MAIN`;
-        break;
-      case 'ANALYSIS_REPORT':
-        url = `/companyHome?analysisReportId=${id}&companyType=MAIN`;
+        url = `/companyHome?reportId=${id}`;
         break;
       case 'MONITOR':
-        url = `/companyHome?monitorId=${id}&companyType=MAIN`;
+        url = `/companyHome?monitorId=${id}`;
         break;
       default:
         break;
@@ -32,15 +29,11 @@ function CardList({ collectionStore, uiStore }) {
   const category = (productType) => {
     switch (productType) {
       case 'REPORT':
-        return '高级查询报告';
-      case 'ANALYSIS_REPORT':
-        return '深度分析报告';
+        return '查询报告';
       case 'MONITOR':
-        return '主体监控报告';
-      case 'DEEP_MONITOR':
-        return '深度监控报告';
+        return '监控报告';
       default:
-        return '错误';
+        return 'system error';
     }
   };
 
@@ -60,16 +53,26 @@ function CardList({ collectionStore, uiStore }) {
             </div>
             <div className={styles.infoDetail}>
               <span className={styles.detailItem}>{`法人：${item.frName ? item.frName : '无'}`}</span>
-              <span className={styles.detailItem}>{`地址：${item.address ? item.address : '无'}`}</span>
+              <span
+                className={styles.detailItem}
+                title={item.address ? item.address : '无'}>
+                {`地址：${item.address ? item.address : '无'}`}
+              </span>
             </div>
           </div>
           <div className={styles.cancelBtn}
             onClick={cancelCollection.bind(null, id, productType)}>
             取消收藏
           </div>
-          <div className={styles.lastModifiedTs}>
-            <div className={styles.timeValue}>{item.latestDt}</div>
-            <div className={styles.timeKey}>最近更新日期</div>
+          <div className={`clearfix ${styles.lastModifiedTs}`}>
+            <div className={styles.dateItem}>
+              <div className={styles.timeValue}>{item.collectionDt}</div>
+              <div className={styles.timeKey}>收藏日期</div>
+            </div>
+            <div className={styles.dateItem}>
+              <div className={styles.timeValue}>{item.latestDt}</div>
+              <div className={styles.timeKey}>最近更新日期</div>
+            </div>
           </div>
         </div>
       );

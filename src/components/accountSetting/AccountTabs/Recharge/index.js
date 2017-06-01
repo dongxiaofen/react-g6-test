@@ -6,11 +6,11 @@ import styles from './index.less';
 function Recharge({accountSettingStore}) {
   const handleDetail = (value, item) => {
     const point = item.point ? `点数${item.point > 0 ? '增加' : '减少'} ${Math.abs(item.point)} 点` : '';
-    const reportCount = item.reportCount ? `查询报告 ${item.reportCount} 个` : '';
-    const monitorCount = item.monitorCount ? `监控报告 ${item.monitorCount} 个` : '';
-    const personCheckCount = item.personCheckCount ? `个人核查 ${item.personCheckCount} 个` : '';
-    const taxCheckCount = item.taxCheckCount ? `税务核查指标 ${item.taxCheckCount} 个` : '';
-    return [point, reportCount, monitorCount, personCheckCount, taxCheckCount].filter(val => val !== '').join('; ');
+    const reportNum = item.reportNum ? `查询报告 ${item.reportNum} 个` : '';
+    const monitorNum = item.monitorNum ? `监控报告 ${item.monitorNum} 个` : '';
+    const personCheckNum = item.personCheckNum ? `个人核查 ${item.personCheckNum} 个` : '';
+    const taxCheckNum = item.taxCheckNum ? `税务核查指标 ${item.taxCheckNum} 个` : '';
+    return [point, reportNum, monitorNum, personCheckNum, taxCheckNum].filter(val => val !== '').join('; ');
   };
   const head = [
     {name: '充值编号', key: 'seqNum', width: '25%'},

@@ -5,7 +5,7 @@ import SecondTitle from 'components/common/pdf/SecondTitle';
 import styles from './index.less';
 
 function EmployeeSalaryDis({moduleData}) {
-  if (!moduleData || moduleData.length === 0) {
+  if (!moduleData || Object.keys(moduleData).length === 0) {
     return (
       <div>
         <SecondTitle module="招聘信息－招聘平均薪资" />
@@ -13,6 +13,13 @@ function EmployeeSalaryDis({moduleData}) {
       </div>
     );
   }
+  const pointData = (data) => {
+    if (data === undefined) {
+      return '0.00';
+    }
+    return data.toFixed(2);
+  };
+
   return (
     <div className={styles.wrap}>
       <SecondTitle module="招聘信息－招聘平均薪资" />
@@ -26,23 +33,23 @@ function EmployeeSalaryDis({moduleData}) {
         <tbody>
         <tr>
           <td>2k以下</td>
-          <td>{moduleData['2k以下'] === 0.00 ? moduleData['2k以下'] : moduleData['2k以下'].toFixed(2)}</td>
+          <td>{moduleData['2k以下'] === 0.00 ? moduleData['2k以下'] : pointData(moduleData['2k以下'])}</td>
         </tr>
         <tr>
           <td>2k-4k</td>
-          <td>{moduleData['2k-4k'] === 0.00 ? moduleData['2k-4k'] : moduleData['2k-4k'].toFixed(2)}</td>
+          <td>{moduleData['2k-4k'] === 0.00 ? moduleData['2k-4k'] : pointData(moduleData['2k-4k'])}</td>
         </tr>
         <tr>
           <td>4k-8k</td>
-          <td>{moduleData['4k-8k'] === 0.00 ? moduleData['4k-8k'] : moduleData['4k-8k'].toFixed(2)}</td>
+          <td>{moduleData['4k-8k'] === 0.00 ? moduleData['4k-8k'] : pointData(moduleData['4k-8k'])}</td>
         </tr>
         <tr>
           <td>8k-10k</td>
-          <td>{moduleData['8k-10k'] === 0.00 ? moduleData['8k-10k'] : moduleData['8k-10k'].toFixed(2)}</td>
+          <td>{moduleData['8k-10k'] === 0.00 ? moduleData['8k-10k'] : pointData(moduleData['8k-10k'])}</td>
         </tr>
         <tr>
           <td>10k以上</td>
-          <td>{moduleData['10k以上'] === 0.00 ? moduleData['10k以上'] : moduleData['10k以上'].toFixed(2)}</td>
+          <td>{moduleData['10k以上'] === 0.00 ? moduleData['10k以上'] : pointData(moduleData['10k以上'])}</td>
         </tr>
         </tbody>
       </table>

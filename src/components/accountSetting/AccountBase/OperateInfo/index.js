@@ -3,7 +3,8 @@ import { observer } from 'mobx-react';
 import AnimateLoading from 'components/hoc/LoadingComp/AnimateLoading';
 import Item from '../Item';
 import styles from './index.less';
-function OperateInfo({accountSettingStore, clientStore}) {
+
+function OperateInfo({accountSettingStore, clientStore, className}) {
   const consumeType = clientStore.userInfo.consumeType;
   const data = accountSettingStore.base.data;
   let output = (
@@ -32,10 +33,17 @@ function OperateInfo({accountSettingStore, clientStore}) {
         unit: '个',
       },
       {
-        name: '税务核查指标',
+        name: '税务核查',
         keys: 'taxCheckCount',
         remainKey: 'leftTaxCheckNum',
         unit: '个',
+      },
+      {
+        name: '剩余点数',
+        keys: 'point',
+        remainKey: 'remainingPoint',
+        none: consumeType !== 'POINT' || data.parentUserId ? true : false,
+        unit: '点',
       },
     ];
     const content = config.map((item, idx) => {
@@ -43,6 +51,7 @@ function OperateInfo({accountSettingStore, clientStore}) {
         <Item
           key={idx}
           {...item}
+          Remaining={false}
           remainValue={data[item.remainKey]}
           feeset={consumeType === 'FEESET' && !data.parentUserId}
           values={data[item.keys]} />
@@ -51,7 +60,7 @@ function OperateInfo({accountSettingStore, clientStore}) {
     output = content;
   }
   return (
-    <div className={styles.infoBox}>
+    <div className={`${styles.infoBox} ${className ? className : ''}`}>
       <h2 className={styles.operateTitle}>操作记录</h2>
       {output}
     </div>

@@ -26,11 +26,9 @@ export default class TaxCheckList extends Component {
       title: '税务核查',
       width: '695px',
       isSingleBtn: true,
-      confirmText: '核查',
+      confirmText: '确定',
       confirmWidth: 280,
-      pointText: '核查即视为同意',
-      pactUrl: '',
-      pactName: '用户服务协议',
+      pointText: true,
       loader: (cb) => {
         require.ensure([], (require) => {
           cb(require('../TaxCheckModal'));
@@ -62,20 +60,22 @@ export default class TaxCheckList extends Component {
   }
   render() {
     const taxListData = this.props.taxCheckStore.taxListData.content;
-    let listDom = (
-      <div className={styles.wrap}>
-        <div className={styles.top}>
-          <Button className={styles.noDataButton} onClick={this.handleClick.bind(this)}>添加核查</Button>
-          <span className={styles.text}>
-            核查结果提示：<span>税务核查金额和实际金额误差在5%以内时即“匹配”，超过5%即“不匹配”</span>
-          </span>
+    let listDom = '';
+    if (taxListData && taxListData.length > 0) {
+      listDom = (
+        <div className={styles.wrap}>
+          <div className={styles.top}>
+            <Button className={styles.noDataButton} onClick={this.handleClick.bind(this)}>添加核查</Button>
+            <span className={styles.text}>
+              核查结果提示：<span>税务核查金额和实际金额误差在5%以内时即“匹配”，超过5%即“不匹配”</span>
+            </span>
+          </div>
+          <TaxCheckItem
+            taxCheckStore={this.props.taxCheckStore}
+            uiStore={this.props.uiStore} />
         </div>
-        <TaxCheckItem
-          taxCheckStore={this.props.taxCheckStore}
-          uiStore={this.props.uiStore} />
-      </div>
-    );
-    if (taxListData && taxListData.length === 0) {
+      );
+    } else {
       listDom = (
         <div className={styles.noData}>
           <img className={styles.img} src={noData} />

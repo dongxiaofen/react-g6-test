@@ -8,9 +8,7 @@ class ModalStore {
   @observable isSingleBtn = false;
   @observable width = '440px';
   // 是否有提示文本
-  @observable pointText = '';
-  @observable pactUrl = '';
-  @observable pactName = '';
+  @observable pointText = false;
   // action
   @observable confirmAction;
   @observable cancelAction;
@@ -18,15 +16,15 @@ class ModalStore {
     this.visible = false;
     this.isCustomize = false;
     this.isSingleBtn = false;
-    this.pointText = '';
-    this.pactUrl = '';
-    this.pactName = '';
+    this.pointText = false;
     this.width = '440px';
+    this.cancelText = '取消';
+    this.confirmText = '确定';
   }
 
   // button text
   @observable cancelText = '取消';
-  @observable confirmText = '确认';
+  @observable confirmText = '确定';
   @observable confirmWidth = '';
 
   // loading
@@ -46,8 +44,6 @@ class ModalStore {
     title,
     isNeedBtn,
     pointText,
-    pactUrl,
-    pactName,
     isCustomize,
     isSingleBtn,
     cancelText,
@@ -66,8 +62,6 @@ class ModalStore {
     if (width) { this.width = width; }
     if (isNeedBtn !== undefined) { this.isNeedBtn = isNeedBtn; }
     if (pointText !== undefined) { this.pointText = pointText; }
-    if (pactUrl !== undefined) { this.pactUrl = pactUrl; }
-    if (pactName !== undefined) { this.pactName = pactName; }
     if (isCustomize !== undefined) { this.isCustomize = isCustomize; }
     if (isSingleBtn !== undefined) { this.isSingleBtn = isSingleBtn; }
     // action

@@ -23,7 +23,13 @@ export default class HomeBody extends Component {
   }
 
   componentDidMount() {
-    if (this.props.clientStore.envConfig === 'local' || this.props.clientStore.envConfig === 'cfca_prod') {
+    const envConfig = this.props.clientStore.envConfig;
+    if (
+      envConfig === 'local'
+      || envConfig === 'cfca_prod'
+      || envConfig === 'remote_test'
+      || envConfig === 'remote_prod'
+      ) {
       (function initFram() {
         const vendors = ['webkit', 'moz'];
         for (let idx = 0; idx < vendors.length && !window.requestAnimationFrame; ++idx) {
@@ -81,7 +87,11 @@ export default class HomeBody extends Component {
       let clientWidth;
       let clientHeight;
 
-      if (this.props.clientStore.envConfig === 'local') {
+      if (
+        envConfig === 'local'
+        || envConfig === 'remote_test'
+        || envConfig === 'remote_prod'
+        ) {
         window.addEventListener('load', () => {
           clientWidth = document.documentElement.clientWidth;
           clientHeight = document.documentElement.clientHeight;
@@ -161,7 +171,7 @@ export default class HomeBody extends Component {
         });
       }
 
-      if (this.props.clientStore.envConfig === 'cfca_prod') {
+      if (envConfig === 'cfca_prod') {
         TweenMax.to(homeBox1Txt, 1, {
           y: 0,
           opacity: 1,
@@ -175,10 +185,18 @@ export default class HomeBody extends Component {
         homeBox2OffsetTop = document.getElementById('home-box2').offsetTop;
         let isHomeBox1Show = false;
         let isHomeBox2Show = false;
-        if ((this.props.clientStore.envConfig === 'local' && bodyScrollTop >= homeBox1OffsetTop / 2) || (this.props.clientStore.envConfig === 'cfca_prod')) {
+        if (
+          (envConfig === 'local'
+          || envConfig === 'remote_test'
+          || envConfig === 'remote_prod'
+          && bodyScrollTop >= homeBox1OffsetTop / 2) || (envConfig === 'cfca_prod')) {
           isHomeBox1Show = true;
         }
-        if ((this.props.clientStore.envConfig === 'local' && bodyScrollTop >= homeBox2OffsetTop / 1.5) || (this.props.clientStore.envConfig === 'cfca_prod' && bodyScrollTop >= homeBox2OffsetTop / 2)) {
+        if (
+          (envConfig === 'local'
+          || envConfig === 'remote_test'
+          || envConfig === 'remote_prod'
+          && bodyScrollTop >= homeBox2OffsetTop / 1.5) || (envConfig === 'cfca_prod' && bodyScrollTop >= homeBox2OffsetTop / 2)) {
           isHomeBox2Show = true;
         }
         if (bodyScrollTop >= homeBox1OffsetTop) {
@@ -227,7 +245,10 @@ export default class HomeBody extends Component {
         }
       };
 
-      if (this.props.clientStore.envConfig === 'local') {
+      if (
+        envConfig === 'local'
+        || envConfig === 'remote_test'
+        || envConfig === 'remote_prod') {
         window.addEventListener('resize', () => {
           // clientWidth = document.documentElement.clientWidth;
           clientHeight = document.documentElement.clientHeight;

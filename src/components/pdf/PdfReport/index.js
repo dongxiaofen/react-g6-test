@@ -10,12 +10,13 @@ import News from './News';
 import Assets from './Assets';
 import Network from './NetWork';
 import Team from './Team';
+import Tax from './Tax';
 import styles from './index.less';
 
-function PdfReport({bannerStore}) {
+function PdfReport({pdfStore}) {
   const judgeIsModuleExist = (module) => {
-    const pdfModule = bannerStore.pdfDownloadKeys;
-    return (pdfModule && pdfModule.includes(module)) || !pdfModule;
+    const pdfModule = pdfStore.pdfTypesKey;
+    return (pdfModule && pdfModule.includes(module));
   };
   return (
     <Container>
@@ -25,6 +26,7 @@ function PdfReport({bannerStore}) {
             {judgeIsModuleExist('SUMMARY') ? <Overview /> : ''}
             {judgeIsModuleExist('CORP') ? <Base judgeIsModuleExist={judgeIsModuleExist} /> : ''}
             {judgeIsModuleExist('STOCK') ? <Stock judgeIsModuleExist={judgeIsModuleExist} /> : ''}
+            {judgeIsModuleExist('TAX') ? <Tax judgeIsModuleExist={judgeIsModuleExist} /> : ''}
             {judgeIsModuleExist('RISK') ? <Risk judgeIsModuleExist={judgeIsModuleExist} /> : ''}
             {judgeIsModuleExist('NEWS') ? <News judgeIsModuleExist={judgeIsModuleExist} /> : ''}
             {judgeIsModuleExist('OPERATION') ? <Assets judgeIsModuleExist={judgeIsModuleExist} /> : ''}
@@ -39,4 +41,4 @@ function PdfReport({bannerStore}) {
 PdfReport.propTypes = {
   judgeIsModuleExist: PropTypes.func,
 };
-export default inject('bannerStore')(observer(PdfReport));
+export default inject('pdfStore')(observer(PdfReport));

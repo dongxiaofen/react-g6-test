@@ -82,6 +82,8 @@ class RuleStore {
 
   // 添加预警或修改预警时是否已经submit
   @observable submitType = false;
+  @observable btnLoading = false;
+  @observable btnDisable = false;
   // 获取规则列表
   @action.bound getRuleList() {
     // 打开loading
@@ -385,6 +387,8 @@ class RuleStore {
   @action.bound createRule() {
     // 提交记录
     this.submitType = true;
+    this.btnLoading = true;
+    this.btnDisable = true;
     // 规则名称
     const name = this.name;
     // 行业
@@ -408,6 +412,8 @@ class RuleStore {
     let params = {};
     if (this.selectRange === 'range') {
       if (!name && !eventType && !alterCount) {
+        this.btnLoading = false;
+        this.btnDisable = false;
         const obj = {
           type: 'warning',
           content: '有必填项未填'
@@ -447,10 +453,14 @@ class RuleStore {
           content: '预警创建成功'
         };
         messageStore.openMessage({ ...obj });
+        this.btnLoading = false;
+        this.btnDisable = false;
         // 跳转到列表
         browserHistory.push('/ruleList');
       }))
       .catch(action('createRule error', (err) => {
+        this.btnLoading = false;
+        this.btnDisable = false;
         const obj = {
           type: 'warning',
           content: err.response.data.message
@@ -518,6 +528,8 @@ class RuleStore {
 
     // 添加预警或修改预警时是否已经submit
     this.submitType = false;
+    this.btnLoading = false;
+    this.btnDisable = false;
   }
   // 重置列表数据
   @action.bound resetListData() {

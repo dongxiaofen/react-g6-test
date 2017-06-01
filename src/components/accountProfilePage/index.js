@@ -24,10 +24,10 @@ export default class AccountProfileBody extends Component {
           <Col width="12">
             <Tabs defaultActiveKey="1">
               <TabPane tab="我的账号" key="1">
-                <MyAccount />
+                 <MyAccount />
               </TabPane>
               <TabPane tab="下属子账号" key="2">
-                <SubAccount />
+                 <SubAccount />
               </TabPane>
             </Tabs>
           </Col>

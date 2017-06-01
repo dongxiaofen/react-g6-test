@@ -37,7 +37,7 @@
   max-width: 100px;
   height:25px;
 
-  font-size: 14px;  
+  font-size: 14px;
   line-height: 25px;
   text-align: center;
   text-overflow: ellipsis;
@@ -57,8 +57,22 @@
   line-height: 14px;
 }
 
+@media (max-width: 1680px) {
+  .infoDetail {
+    width: 440px;
+
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+  }
+}
+
 .detailItem{
   margin-right: 40px;
+
+  &:last-child {
+    margin-right: 0;
+  }
 }
 
 .dateAndAction {
@@ -146,6 +160,19 @@
 
   &:hover {
     color: @mdc-blue-400;
+  }
+}
+
+@media (max-width: 1680px) {
+  .name {
+    display: inline-block;
+    width: 370px;
+
+    vertical-align: middle;
+    
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
   }
 }
 

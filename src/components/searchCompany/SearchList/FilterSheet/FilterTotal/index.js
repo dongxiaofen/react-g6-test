@@ -69,7 +69,7 @@ function FilterTotal({filterSheet, page, searchKeyFilter, modalStore, getFeedBac
     <div className={`${styles.wrap}`}>
       {searchKey}
       {totalNumDom}
-      <div onClick={feedBack} className={styles.noResult}>
+      <div onClick={feedBack} className={searchKeyFilter ? styles.noResult : styles.none}>
         没有想要的结果？提供关键词
       </div>
     </div>

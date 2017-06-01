@@ -7,9 +7,12 @@ import uiStore from '../ui';
 import messageStore from '../message';
 const CancelToken = axios.CancelToken;
 class AlertAnalysisStore {
+  constructor() {
+    this.alertCancel = null;
+  }
+
   @observable isMount = false;
   @observable loadingId = -1;
-  alertCancel = null;
   @observable listData = [];
   // 六芒星data
   @observable sixStarData = '';
@@ -74,7 +77,7 @@ class AlertAnalysisStore {
       .then(action('getAlertDetail_success', resp => {
         this.loadingId = -1;
         this.alertCancel = null;
-        this.detailData.detail = resp.data;
+        this.detailData.detail = info.alertType === 'RULE' ? resp.data.content : resp.data;
         this.detailData.info = info;
         this.openDetailModal(this.detailData.info.alertType);
         if (this.detailData.info.alertType === 'RULE') {
@@ -217,7 +220,6 @@ class AlertAnalysisStore {
   @action.bound resetStore() {
     this.isMount = false;
     this.loadingId = -1;
-    this.alertCancel = null;
     this.listData = {};
     this.sixStarData = {};
     this.loading = false;

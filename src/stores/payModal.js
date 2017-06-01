@@ -39,9 +39,7 @@ class PayModalStore {
     @observable isRepeat = false;
 
     @observable visible = false;
-    @observable pointText = '';
-    @observable pactUrl = '';
-    @observable pactName ='';
+    @observable pointText = false;
     @observable width = '504px';
     @observable isSingleBtn =false;
 
@@ -59,13 +57,14 @@ class PayModalStore {
       this.monitorType = 'MONITOR';
       this.isSingleBtn = false;
       this.isRenewal = false;
+      this.pointText = false;
     }
 
-    @action.bound openCompModal({ modalType, width, pactName, pactUrl, pointText, isComboRenewal, callBack, isSingleBtn, isRenewal }) {
+    @action.bound openCompModal({ modalType, width, pointText, isComboRenewal, callBack, isSingleBtn, isRenewal }) {
       this.visible = true;
-      this.pactName = pactName;
-      this.pactUrl = pactUrl;
-      this.pointText = pointText;
+      if (pointText !== undefined) {
+        this.pointText = pointText;
+      }
       this.modalType = modalType;
       this.callBack = callBack;
       this.isRenewal = isRenewal;

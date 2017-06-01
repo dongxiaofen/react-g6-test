@@ -165,10 +165,10 @@ class TeamStore {
               recruitmentInfoData = recruitmentInfoData.map((item) => {
                 const obj = {};
                 obj.category = item.jobTitle;
-                obj.salaryText = item.salaryText ? item.salaryText : '无';
-                obj.address = item.address ? item.address : '无';
-                obj.requireNum = item.requireNum ? item.requireNum : '无';
-                obj.releaseTime = item.releaseTime ? item.releaseTime : '无';
+                obj.salaryText = item.salaryText ? item.salaryText : '--';
+                obj.address = item.address ? item.address : '--';
+                obj.requireNum = item.requireNum ? item.requireNum : '--';
+                obj.releaseTime = item.releaseTime ? item.releaseTime : '--';
                 obj.sourceUrl = item.sourceUrl;
                 return obj;
               });

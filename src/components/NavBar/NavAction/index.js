@@ -4,6 +4,7 @@ import { browserHistory } from 'react-router';
 
 import styles from './index.less';
 import HoverBox from './HoverBox';
+import codeImg from 'imgs/navbar/code.png';
 
 @inject('searchCompanyStore', 'clientStore')@observer
 export default class NavAction extends Component {
@@ -63,10 +64,13 @@ export default class NavAction extends Component {
         </div>
         <div className={styles.menuBox} style={{ position: 'relative' }}>
           <span className={styles.downloadApp}>
-            <i className="fa fa-code-fork" aria-hidden="true"></i>下载APP
+            <i className="fa fa-qrcode" aria-hidden="true"></i>下载APP
           </span>
-          <HoverBox width="100px" left="0px">
-            <div className={styles.code}></div>
+          <HoverBox width="140px" left="-18px">
+            <div className={`clearfix ${styles.code}`}>
+              <img src={codeImg} />
+              <div className={styles.codeText}>下载星象应用</div>
+            </div>
           </HoverBox>
         </div>
         <div className={styles.menuBox}>

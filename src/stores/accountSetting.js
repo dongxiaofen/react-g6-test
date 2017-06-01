@@ -27,6 +27,7 @@ class AccountSettingStore {
     REPORT_PERSON_CHECK: '个人核查',
     MONITOR_PERSON_CHECK: '个人核查',
     MONITOR_TAX_CHECK: '税务核查',
+    REPORT_TAX_CHECK: '税务核查',
   };
   taxTypeMap = {
     R001: 'A类营业收入',
@@ -38,20 +39,20 @@ class AccountSettingStore {
     R007: 'A类营业税金及附加信息',
     R008: 'A类销售费用',
     R009: 'A类管理费用',
-    R0010: 'A类财务费用',
-    R0011: 'A类资产减值损失',
-    R0012: 'A类公允价值变动收益',
-    R0013: 'A类投资收益',
-    R0014: 'A类营业利润',
-    R0015: 'A类营业外收入',
-    R0016: 'A类营业外支出',
-    R0017: 'A类利润（亏损）总额',
-    R0056: '应纳税所得额',
-    R0057: '应纳所得税额',
-    R0070: '应纳税额',
-    R0073: '实际应纳所得税额',
-    R0080: '本年应补所得税额',
-    R0081: '本年应退所得税额',
+    R010: 'A类财务费用',
+    R011: 'A类资产减值损失',
+    R012: 'A类公允价值变动收益',
+    R013: 'A类投资收益',
+    R014: 'A类营业利润',
+    R015: 'A类营业外收入',
+    R016: 'A类营业外支出',
+    R017: 'A类利润（亏损）总额',
+    R056: '应纳税所得额',
+    R057: '应纳所得税额',
+    R070: '应纳税额',
+    R073: '实际应纳所得税额',
+    R080: '本年应补所得税额',
+    R081: '本年应退所得税额',
   };
   // 账号树数据
   @observable tree = {
@@ -395,7 +396,7 @@ class AccountSettingStore {
       .then(action('getConsume_success', resp => {
         const noData = resp.data.content === undefined || resp.data.content.length === 0;
         this.tabs.consume = noData ? {error: {message: '暂无消费记录'}, content: []} : resp.data;
-        uiStore.updateUiStore('accountConsume.totalElements', pathval.getPathValue(resp, 'data.content.totalElements') || 0);
+        uiStore.updateUiStore('accountConsume.totalElements', pathval.getPathValue(resp, 'data.totalElements') || 0);
       }))
       .catch(action('getConsume_error', err => {
         console.log('getConsume_error', err);

@@ -93,7 +93,8 @@ function CompanyScoreList({sixStarData}) {
         <div className={styles.top}>
           <i className={styles.img4}></i>
           <span className={styles.type}>
-            {sixStarData.law.name}
+            合规程度
+            {/* {sixStarData.law.name} */}
           </span>
           <span className={styles.score}>
             <span>{sixStarData.law.score}</span>
@@ -113,7 +114,7 @@ function CompanyScoreList({sixStarData}) {
     team = (
       <div className={styles.single}>
         <div className={styles.top}>
-          <i className={styles.img4}></i>
+          <i className={styles.img5}></i>
           <span className={styles.type}>
             {sixStarData.team.name}
           </span>
@@ -135,7 +136,7 @@ function CompanyScoreList({sixStarData}) {
     influence = (
       <div className={styles.single}>
         <div className={styles.top}>
-          <i className={styles.img4}></i>
+          <i className={styles.img6}></i>
           <span className={styles.type}>
             {sixStarData.influence.name}
           </span>
@@ -155,12 +156,14 @@ function CompanyScoreList({sixStarData}) {
     <div className={styles.box}>
       {allInfo}
       <div className={styles.content}>
-        {operation}
-        {industry}
-        {creativity}
-        {law}
-        {team}
-        {influence}
+        <div className={styles.conWrap}>
+          {operation}
+          {industry}
+          {creativity}
+          {law}
+          {team}
+          {influence}
+        </div>
       </div>
     </div>
   );

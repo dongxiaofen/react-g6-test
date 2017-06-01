@@ -15,9 +15,21 @@ export default class AlertAnalysis extends Component {
       this.props.alertAnalysisStore.getSixStar(monitorId);
     }
   }
+
+  componentWillUnmount() {
+    const alertAnalysisStore = this.props.alertAnalysisStore;
+    const alertCancel = alertAnalysisStore.alertCancel;
+    if (alertCancel && typeof alertCancel === 'function') {
+      alertCancel();
+    }
+    alertAnalysisStore.changeValue('loadingId', -1);
+  }
+
   render() {
     return (
-      <AlertAnalysisBody />
+      <div>
+        <AlertAnalysisBody />
+      </div>
     );
   }
 }

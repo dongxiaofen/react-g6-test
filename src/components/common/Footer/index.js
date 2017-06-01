@@ -37,7 +37,7 @@ function Footer() {
               </li>
               <li className={styles['footer-menu-star']}></li>
               <li>
-                <Link to="/userAgreement">用户协议</Link>
+                <Link to="/userAgreement" target="_blank">用户协议</Link>
               </li>
             </ul>
             <div className={`fs7 ${styles['footer-text']} ${styles['mb-20']}`}>

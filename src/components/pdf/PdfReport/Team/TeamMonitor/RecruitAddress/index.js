@@ -5,7 +5,7 @@ import PdfTable from 'components/common/pdf/PdfTable';
 import SecondTitle from 'components/common/pdf/SecondTitle';
 
 function RecruitAddress({moduleData}) {
-  if (!moduleData) {
+  if (!moduleData || Object.keys(moduleData).length < 1) {
     return (
       <div>
         <SecondTitle module="新增招聘地点" />
@@ -19,10 +19,12 @@ function RecruitAddress({moduleData}) {
     for (const key in data) {
       if (data.hasOwnProperty(key)) {
         Key.push(key);
-        result.push({
-          time: key,
-          address: data[key].location.length > 0 ? data[key].location.join(',') : '/'
-        });
+        if (data[key].location.length > 0) {
+          result.push({
+            time: key,
+            address: data[key].location.join(',')
+          });
+        }
       }
     }
     let data_ = result;

@@ -1,7 +1,6 @@
 import { observable, action, runInAction } from 'mobx';
 import { reportManageApi } from 'api';
 import payModalStore from './payModal';
-import modalStore from './modal';
 import messageStore from './message';
 import uiStore from './ui';
 
@@ -23,77 +22,45 @@ class ReportManageStore {
     this.focus = value;
   }
 
+  @action.bound getReportListData(params) {
+    const reportManagePager = uiStore.uiState.reportManagePager;
+    const pageIndex = reportManagePager.index;
+    if (this.reportList.length === 1 && pageIndex !== 1) {
+      reportManagePager.index = pageIndex - 1;
+    } else {
+      this.getReportList(params);
+    }
+  }
+
   @action.bound getReportList(params) {
     this.isLoading = true;
     reportManageApi.getReportList(params)
       .then(action('get report page', (resp) => {
-        if (params.index === 1) {
-          uiStore.uiState.reportManagePager.index = 1;
-        }
         this.reportList = resp.data.content;
-        uiStore.uiState.reportManagePager.totalElements = resp.data.totalElements;
+        const reportManagePager = uiStore.uiState.reportManagePager;
+        reportManagePager.totalElements = resp.data.totalElements;
         this.isLoading = false;
       }))
       .catch((err) => {
-        console.log(err.response, '-----getReportList');
+        console.log(err, '-----getReportList');
         runInAction(() => {
           this.isLoading = false;
         });
       });
   }
 
-  @action.bound getAnalysisReportList(params) {
-    this.isLoading = true;
-    reportManageApi.getAnalysisReportList(params)
-      .then(action('get analysis report page', (resp) => {
-        if (params.index === 1) {
-          uiStore.uiState.reportManagePager.index = 1;
-        }
-        this.reportList = resp.data.content;
-        uiStore.uiState.reportManagePager.totalElements = resp.data.totalElements;
-        this.isLoading = false;
-      }))
-      .catch((err) => {
-        console.log(err.response, '--------getAnalysisReportList');
-        runInAction(() => {
-          this.isLoading = false;
-        });
-      });
-  }
-
-  @action.bound upGradeToMonitor(reportId, status, params, selectValue) {
-    reportManageApi.upGradeToMonitor(reportId, status, selectValue)
+  @action.bound upGradeToMonitor(reportId, params, selectValue) {
+    reportManageApi.upGradeToMonitor(reportId, selectValue)
       .then(action('update to monitor', (resp) => {
         payModalStore.closeAction();
         messageStore.openMessage({ type: 'info', content: '加入监控成功', duration: '1500' });
         this.monitorId = resp.data.monitorId;
-        if (status === 'report') {
-          this.getReportList(params);
-        } else {
-          this.getAnalysisReportList(params);
-        }
+        this.getReportListData(params);
       }))
       .catch(action( (err) => {
         payModalStore.closeAction();
         messageStore.openMessage({type: 'warning', content: err.response.data.message, duration: '1500'});
       }));
-  }
-
-  @action.bound updateToAnalysisReport(reporId, params) {
-    modalStore.confirmLoading = true;
-    reportManageApi.updateToAnalysisReport(reporId)
-      .then(action('update to AnalysisReport', () => {
-        modalStore.confirmLoading = false;
-        modalStore.closeAction();
-        messageStore.openMessage({ type: 'info', content: '升级深度分析报告成功', duration: '1500' });
-        this.getReportList(params);
-      }))
-      .catch((err) => {
-        console.log(err.response);
-        modalStore.closeAction();
-        messageStore.openMessage({ type: 'warning', content: err.response.data.message, duration: '1500' });
-        modalStore.confirmLoading = false;
-      });
   }
 }
 export default new ReportManageStore();

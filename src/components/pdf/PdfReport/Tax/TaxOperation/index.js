@@ -1,6 +1,6 @@
 import React, {PropTypes} from 'react';
 import { observer } from 'mobx-react';
-import TaxOperationList from './TaxOperationList';
+import TaxOperationList from './TaxOperationList/index';
 import SecondTitle from 'components/common/pdf/SecondTitle';
 import PdfNotFound from 'components/common/pdf/PdfNotFound';
 

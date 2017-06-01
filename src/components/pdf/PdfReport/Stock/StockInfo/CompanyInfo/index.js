@@ -5,7 +5,7 @@ import PdfSimpleKey from 'components/common/pdf/PdfSimpleKey';
 import SecondTitle from 'components/common/pdf/SecondTitle';
 
 
-function CompanyInfo({moduleData}) {// stockCode
+function CompanyInfo({moduleData, stockCode}) {// stockCode
   if (!moduleData) {
     return (
       <div>
@@ -15,11 +15,10 @@ function CompanyInfo({moduleData}) {// stockCode
     );
   }
 
-  // runInAction('change value', () => {
-  //   moduleData.stockCode = stockCode;
-  //   moduleData.reg_cap = (moduleData.reg_cap / 10000).toFixed(2);
-  //   moduleData.issued_shares = (moduleData.issued_shares / 10000).toFixed(2);
-  // });
+
+  moduleData.stockCode = stockCode;
+  moduleData.reg_cap = (moduleData.reg_cap / 10000).toFixed(2);
+  moduleData.issued_shares = (moduleData.issued_shares / 10000).toFixed(2);
   const data = {
     dataConfig: [
       {'key': 'stockCode', 'width': '6'},

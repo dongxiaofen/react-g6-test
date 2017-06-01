@@ -22,14 +22,14 @@ function PauseInfo({monitorListStore}) {
       title="暂停监控"
       visible={visible}
       cancelText="取消"
-      confirmText="确认"
+      confirmText="确定"
       confirmLoading={loading}
       confirmAction={confirmAction}
       cancelAction={cancelAction}
       closeAction={cancelAction}
       isNeedBtn>
       <p className={styles.info}>
-        监控未到期，暂停监控后将不更新该企业信息，截止监控日期将不受影响，确定暂停监控？
+        监控未到期，暂停监控后将不更新该企业信息，监控截止日期将不受影响，确定暂停监控？
       </p>
     </Modal>
   );

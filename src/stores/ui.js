@@ -112,11 +112,7 @@ class UiStore {
           index: this.uiState.reportManagePager.index,
           size: this.uiState.reportManagePager.size
         };
-        if (this.uiState.reportManageList.reportStatus === 'report') {
-          reportManageStore.getReportList(params);
-        } else {
-          reportManageStore.getAnalysisReportList(params);
-        }
+        reportManageStore.getReportList(params);
       }
     );
     reaction(

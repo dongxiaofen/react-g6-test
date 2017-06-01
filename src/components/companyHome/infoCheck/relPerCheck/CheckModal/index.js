@@ -4,7 +4,7 @@ import styles from './index.less';
 import Modal from 'components/lib/Modal';
 import { runInAction } from 'mobx';
 
-function CheckModal({visible, width, closeAction, btnLoading, relPerCheckStore, routing, pointText, pactUrl, pactName}) {
+function CheckModal({visible, width, closeAction, btnLoading, relPerCheckStore, routing, pointText }) {
   const relatedType = relPerCheckStore.relatedType;
   const relatedTypeModelStatus = relPerCheckStore.relatedTypeModelStatus;
   // 姓名
@@ -153,11 +153,9 @@ function CheckModal({visible, width, closeAction, btnLoading, relPerCheckStore, 
              confirmAction={submitClick}
              confirmLoading={btnLoading}
              isNeedBtn
-             pactUrl={pactUrl}
-             pactName={pactName}
              pointText={pointText}
              title="关联人核查"
-             confirmText= "核查">
+             confirmText= "确定">
       <div className={styles.contentWrap}>
         <div className={styles.content}>
           <div
