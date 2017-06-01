@@ -4,6 +4,7 @@ import styles from './index.less';
 import CompanyInfo from './CompanyInfo';
 import PersonInfo from './PersonInfo';
 import AnimateLoading from 'components/hoc/LoadingComp/AnimateLoading';
+import { Slider } from 'antd';
 
 function DetailInfo({forceNetworkStore}) {
   const isShowInfo = forceNetworkStore.nodeInfo.isShowInfo;
@@ -20,12 +21,29 @@ function DetailInfo({forceNetworkStore}) {
     }
     return <AnimateLoading />;
   };
+  const formatter = (value)=> {
+    return `${value}%`;
+  };
   return (
-    <div className={isShowInfo ? styles.show : styles.hide}>
-      <div className="clearfix">
-        <i className={`fa fa-times-circle ${styles.close}`} aria-hidden="true"></i>
+    <div>
+      <div className={`${styles.operWrap} clearfix`}>
+        <div className={styles.operation}>
+          <i className="fa fa-expand" aria-hidden="true"></i>
+          <span className={styles.line}>|</span>
+          <i className="fa fa-external-link" aria-hidden="true"></i>
+          <span className={styles.line}>|</span>
+          <i className="fa fa-floppy-o" aria-hidden="true"></i>
+        </div>
+        <div className={styles.slider}>
+          <Slider tipFormatter={formatter} />
+        </div>
       </div>
-      {createContent()}
+      <div className={isShowInfo ? styles.show : styles.hide}>
+        <div className="clearfix">
+          <i className={`fa fa-times-circle ${styles.close}`} aria-hidden="true"></i>
+        </div>
+        {createContent()}
+      </div>
     </div>
   );
 }
