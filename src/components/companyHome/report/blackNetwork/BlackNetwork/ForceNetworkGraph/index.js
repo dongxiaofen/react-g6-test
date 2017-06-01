@@ -101,8 +101,8 @@ export default class ForceNetworkGraph extends Component {
     if (simulation) {
       simulation.stop(); // 停止网络图计算
     }
-    nodesData = '';
-    edgesData = '';
+    nodesData = [];
+    edgesData = [];
     svgEdges = '';
     svgNodes = '';
     svgTexts = '';
