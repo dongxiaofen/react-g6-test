@@ -174,5 +174,15 @@ class ForceNetworkStore {
     this.nodeInfo.detailInfo = {};
     this.nodeInfo.tabAct = 0;
   }
+  @action.bound resetNetWork() {
+    this.zoomIndex = 1;
+    this.dbFocalNode = {};
+    this.focalNode = {};
+    this.nodeInfo = {
+      isShowInfo: false,
+      detailInfo: {},
+      tabAct: 0,
+    }
+  }
 }
 export default new ForceNetworkStore();

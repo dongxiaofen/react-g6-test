@@ -87,16 +87,22 @@ export default class ForceNetworkGraph extends Component {
         this.props.forceNetworkStore.resetNodeInfo();
         if (nodesData !== '') {
           const { focalNode } = this.props.forceNetworkStore;
-          nodesData.map((node) => {
-            if (focalNode.name === node.name) {
+          if (focalNode.name) {
+            nodesData.map((node) => {
+              if (focalNode.name === node.name) {
+                node.nodeStatus = 1;
+              } else if (svgTools.findOneLevelNodes(node, focalNode.oneLevelLinkedNodes)) {
+                node.nodeStatus = 1;
+              } else {
+                node.nodeStatus = -1;
+              }
+            });
+            this.getNodeInfo(focalNode);
+          } else {
+            nodesData.map((node) => {
               node.nodeStatus = 1;
-            } else if (svgTools.findOneLevelNodes(node, focalNode.oneLevelLinkedNodes)) {
-              node.nodeStatus = 1;
-            } else {
-              node.nodeStatus = -1;
-            }
-          });
-          this.getNodeInfo(focalNode);
+            });
+          }
           simulation.restart();
         }
       }
@@ -126,18 +132,24 @@ export default class ForceNetworkGraph extends Component {
       () => {
         this.props.forceNetworkStore.resetNodeInfo();
         const { dbFocalNode } = this.props.forceNetworkStore;
-        nodesData.map((node) => {
-          if (node.id === dbFocalNode.id) {
+        if (dbFocalNode.id) {
+          nodesData.map((node) => {
+            if (node.id === dbFocalNode.id) {
+              node.nodeStatus = 1;
+            } else if (svgTools.findOneLevelNodes(node, dbFocalNode.oneLevelLinkedNodes)) {
+              node.nodeStatus = 1;
+            } else {
+              node.nodeStatus = -2;
+            }
+          });
+          this.getNodeInfo(dbFocalNode);
+          this.getShortPath(dbFocalNode);
+        } else {
+          nodesData.map((node) => {
             node.nodeStatus = 1;
-          } else if (svgTools.findOneLevelNodes(node, dbFocalNode.oneLevelLinkedNodes)) {
-            node.nodeStatus = 1;
-          } else {
-            node.nodeStatus = -2;
-          }
-        });
-        this.dblclickNode(dbFocalNode);
-        this.getNodeInfo(dbFocalNode);
-        this.getShortPath(dbFocalNode);
+          });
+        }
+        this.modifySimulation();
       }
     );
     // 监听最短路径
@@ -315,7 +327,7 @@ export default class ForceNetworkGraph extends Component {
     // Update and restart the simulation.
     simulation.alpha(1).restart();
   }
-  dblclickNode = () => {
+  modifySimulation = () => {
     simulation
       .alpha(0.3)
       .force('charge', d3.forceManyBody().strength((data) => {
@@ -425,13 +437,12 @@ export default class ForceNetworkGraph extends Component {
         const { dbFocalNode } = this.props.forceNetworkStore;
         const date = new Date();
         clickTime = date;
-        if (!dbFocalNode.id) {
-          timer = setTimeout(() => {
-            console.log('单击', data);
+        timer = setTimeout(() => {
+          if (!dbFocalNode.id) {
             this.props.forceNetworkStore.focusNode(data);
-            clickTime = '';
-          }, 300);
-        }
+          }
+          clickTime = '';
+        }, 300);
       }
     } else {
       // console.log(data, '拖拽结束');

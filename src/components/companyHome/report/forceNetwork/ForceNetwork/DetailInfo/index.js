@@ -5,7 +5,7 @@ import CompanyInfo from './CompanyInfo';
 import PersonInfo from './PersonInfo';
 import AnimateLoading from 'components/hoc/LoadingComp/AnimateLoading';
 import { Slider } from 'antd';
-import {select} from 'd3';
+import {select, zoomIdentity} from 'd3';
 
 function DetailInfo({forceNetworkStore}) {
   const isShowInfo = forceNetworkStore.nodeInfo.isShowInfo;
@@ -29,13 +29,17 @@ function DetailInfo({forceNetworkStore}) {
     forceNetworkStore.updateValue('zoomIndex', value);
     window.NETWORK_ZOOM.scaleTo(select('svg'), value);
   };
+  const resetNetWork = ()=> {
+    select('svg').call(window.NETWORK_ZOOM.transform, zoomIdentity);
+    forceNetworkStore.resetNetWork();
+  };
   return (
     <div>
       <div className={`${styles.operWrap} clearfix`}>
         <div className={styles.operation}>
           <i className="fa fa-expand" aria-hidden="true" title="全屏"></i>
           <span className={styles.line}>|</span>
-          <i className="fa fa-external-link" aria-hidden="true" title="恢复"></i>
+          <i className="fa fa-external-link" aria-hidden="true" title="恢复" onClick={resetNetWork}></i>
           <span className={styles.line}>|</span>
           <i className="fa fa-floppy-o" aria-hidden="true" title="下载"></i>
         </div>
