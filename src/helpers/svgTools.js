@@ -167,6 +167,7 @@ export function getBlackLinkInfo(data) {
 }
 // 风险关联图根据expandIdx更新节点的显示
 export function updateNodeByExpandIdx(pathsArr, expandIdx, nodesData) {
+  console.info('nodesData', nodesData);
   nodesData.map((node) => {
     if (pathsArr[expandIdx].relatedPaths.includes(node.name)) {
       node.hide = false;
