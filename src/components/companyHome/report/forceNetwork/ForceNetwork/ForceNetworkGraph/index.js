@@ -143,13 +143,24 @@ export default class ForceNetworkGraph extends Component {
     reaction(
       () => this.props.forceNetworkStore.shortestPahth,
       () => {
-        const { dbFocalNode, focalNode } = this.props.forceNetworkStore;
+        const { dbFocalNode, focalNode, shortestPahth} = this.props.forceNetworkStore;
         if (dbFocalNode.id) {
           nodesData.map((node) => {
-            console.log(node);
+            if (svgTools.findShortPath(node.id, shortestPahth)) {
+              node.nodeStatus = 1;
+            }
+            simulation.restart();
           });
         } else if (focalNode.id) {
           // 单击,高亮最短路径,暗掉其他路径
+          nodesData.map((node) => {
+            if (svgTools.findShortPath(node.id, shortestPahth)) {
+              node.nodeStatus = 1;
+            } else {
+              node.nodeStatus = -1;
+            }
+          });
+          simulation.restart();
         }
       }
     );
@@ -305,6 +316,7 @@ export default class ForceNetworkGraph extends Component {
   }
   dblclickNode = () => {
     simulation
+      .alpha(0.3)
       .force('charge', d3.forceManyBody().strength((data) => {
         if (data.nodeStatus === -2) {
           return -500;
@@ -317,7 +329,6 @@ export default class ForceNetworkGraph extends Component {
         }
         return 150;
       }))
-      // .force('collide', d3.forceCollide(58).iterations(16).radius((data)=>{ return data.isActive === 0 ? 20 : 70;}))
       .restart();
   }
   ticked = () => {
@@ -383,7 +394,7 @@ export default class ForceNetworkGraph extends Component {
         return 'rotate(0)';
       })
       .attr('class', (data) => {
-        return (data.hide && styles.hide) || ((data.source.nodeStatus < 0 || data.target.nodeStatus < 0) && styles.hide) || styles.linkLabel;
+        return (data.hide && styles.hideLinksText) || ((data.source.nodeStatus < 0 || data.target.nodeStatus < 0) && styles.hideLinksText) || styles.linkLabel;
       });
   }
   dragstarted = (data) => {
