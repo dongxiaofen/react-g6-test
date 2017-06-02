@@ -8,10 +8,13 @@ import styles from './index.less';
 
 function PersonInfo({forceNetworkStore}) {
   const personInfo = forceNetworkStore.nodeInfo.detailInfo;
+  const modifyRegCap = (value, data)=> {
+    return data.investMount ? data.investMount + data.regCapCur : '--';
+  };
   const baseConfig = [
     {key: 'positionOther', label: '对外任职'},
     {key: 'invest', label: '对外投资'},
-    {key: 'investMount', label: '投资金额'},
+    {key: 'investMount', label: '投资金额', modifyText: modifyRegCap},
   ];
   const listConfig = {
     tabs: ['任职信息', '投资信息'],
