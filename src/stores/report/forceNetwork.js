@@ -31,6 +31,7 @@ class ForceNetworkStore {
     detailInfo: {},
     tabAct: 0,
   }
+  @observable zoomIndex = 1;
   @action.bound saveNetwork(nextLocation) {
     this.isExpandSaved = true;
     browserHistory.push(nextLocation.pathname + nextLocation.search);
@@ -172,6 +173,16 @@ class ForceNetworkStore {
   @action.bound resetNodeInfo() {
     this.nodeInfo.detailInfo = {};
     this.nodeInfo.tabAct = 0;
+  }
+  @action.bound resetNetWork() {
+    this.zoomIndex = 1;
+    this.dbFocalNode = {};
+    this.focalNode = {};
+    this.nodeInfo = {
+      isShowInfo: false,
+      detailInfo: {},
+      tabAct: 0,
+    };
   }
 }
 export default new ForceNetworkStore();
