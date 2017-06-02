@@ -1,5 +1,6 @@
 import { observable, action } from 'mobx';
 import { companyHomeApi } from 'api';
+import uiStore from '../ui';
 class CorpDetailStore {
   @observable isLoading = true;
   @observable isMount = false;
@@ -22,6 +23,9 @@ class CorpDetailStore {
   @observable yearReportList = [];
   // 选择年报
   @observable yearReportTab = '';
+  // 错误信息
+
+  @observable errData = {};
 
   @action.bound getReportModule(params) {
     this.isMount = true;
@@ -49,13 +53,21 @@ class CorpDetailStore {
         this.yearReportList = resp.data.corpDetail.yearReportList;
       }))
       .catch(action('get corpDetail err', (err)=>{
-        this.isLoading = false;
         console.log('get corpDetail err', err);
+        this.isLoading = false;
+        if (err.response && err.response.data) {
+          this.errData = err.response.data;
+        }
       }));
   }
   // 设置年报显示某年
   @action.bound setYearReport(item) {
     this.yearReportTab = item;
+    // 重置年报分页
+    uiStore.uiState.yearInvestor.index = 1;
+    uiStore.uiState.yearWebsite.index = 1;
+    uiStore.uiState.yearEquityChange.index = 1;
+    uiStore.uiState.yearChangeRecords.index = 1;
   }
   @action.bound resetStore() {
     this.isLoading = true;

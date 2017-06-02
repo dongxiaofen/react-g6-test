@@ -1,12 +1,12 @@
 import axios from 'axios';
 export const getMonitorCount = (params, source) => {
-  return axios.get('/api/monitor/statistic', {
+  return axios.get(`/api/monitor/statistic`, {
     params: params,
     cancelToken: source.token
   });
 };
 export const getMainList = (params, source) => {
-  return axios.get('/api/monitor/companyList/xx', {
+  return axios.get(`/api/monitor/companyList/xx`, {
     params: params,
     cancelToken: source.token
   });

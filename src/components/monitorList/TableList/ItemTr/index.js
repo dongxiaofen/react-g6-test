@@ -3,7 +3,7 @@ import { observer } from 'mobx-react';
 import styles from './index.less';
 function ItemTr({children, data, monitorListStore}) {
   const monitorId = data.monitorId;
-  const relStatus = monitorListStore.relationListStatus.get(monitorId);
+  const relStatus = monitorListStore.monitorList.relationListStatus.get(monitorId);
   const cssName = relStatus === 'show' ? styles.wrapperAct : styles.wrapper;
   return (
     <div className={cssName}>

@@ -7,10 +7,10 @@ import styles from './index.less';
 function TableList({alertAnalysisStore}) {
   const data = alertAnalysisStore.listData.content;
   const createTable = () => {
-    return data.map(item => {
+    return data.map( (item, index) => {
       return (
         <TableRow
-          key={item.id}
+          key={`keys${index}`}
           data={item}
           alertAnalysisStore={alertAnalysisStore}
           />

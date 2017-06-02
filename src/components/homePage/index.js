@@ -23,7 +23,13 @@ export default class HomeBody extends Component {
   }
 
   componentDidMount() {
-    if (this.props.clientStore.envConfig === 'local' || this.props.clientStore.envConfig === 'cfca_prod') {
+    const envConfig = this.props.clientStore.envConfig;
+    if (
+      envConfig === 'local'
+      || envConfig === 'cfca_prod'
+      || envConfig === 'remote_test'
+      || envConfig === 'remote_prod'
+      ) {
       (function initFram() {
         const vendors = ['webkit', 'moz'];
         for (let idx = 0; idx < vendors.length && !window.requestAnimationFrame; ++idx) {
@@ -80,88 +86,119 @@ export default class HomeBody extends Component {
       const homeBanner = document.getElementById('home-banner');
       let clientWidth;
       let clientHeight;
-      window.addEventListener('load', () => {
-        clientWidth = document.documentElement.clientWidth;
-        clientHeight = document.documentElement.clientHeight;
-        homeBanner.style.height = clientHeight + 'px';
 
-        const oCanvas = document.getElementById('canvas');
-        oCanvas.width = clientWidth - 30;
-        oCanvas.height = clientHeight - 30;
+      if (
+        envConfig === 'local'
+        || envConfig === 'remote_test'
+        || envConfig === 'remote_prod'
+        ) {
+        window.addEventListener('load', () => {
+          clientWidth = document.documentElement.clientWidth;
+          clientHeight = document.documentElement.clientHeight;
+          homeBanner.style.height = clientHeight + 'px';
 
-        const originX = clientWidth / 2;
-        const originY = clientHeight / 2;
+          const oCanvas = document.getElementById('canvas');
+          oCanvas.width = clientWidth - 30;
+          oCanvas.height = clientHeight - 30;
 
-        const ctx = oCanvas.getContext('2d');
+          const originX = clientWidth / 2;
+          const originY = clientHeight / 2;
 
-        const stars = [];
+          const ctx = oCanvas.getContext('2d');
 
-        const clientRadian = Math.sqrt(clientWidth * clientWidth + clientHeight * clientHeight);
+          const stars = [];
 
-        function createStar() {
-          const radian = Math.random() * 360 * Math.PI / 180;
-          const rRadius = Math.random() * clientRadian - clientRadian / 2;
-          const star = {
-            x: originX + rRadius * Math.sin(radian),
-            y: originY + rRadius * Math.cos(radian),
-            radius: 1,
-            radian: radian,
-            rRadius: rRadius,
-            color: '#5CA3FD',
-            speed: Math.random() + 0.06,
-            draw: function drawArc() {
-              ctx.beginPath();
-              ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2, true);
-              ctx.closePath();
-              ctx.fillStyle = this.color;
-              ctx.fill();
-            }
-          };
-          return star;
-        }
+          const clientRadian = Math.sqrt(clientWidth * clientWidth + clientHeight * clientHeight);
 
-        for (let idx = 0; idx < 400; idx++) {
-          stars.push(createStar());
-        }
+          function createStar() {
+            const radian = Math.random() * 360 * Math.PI / 180;
+            const rRadius = Math.random() * clientRadian - clientRadian / 2;
+            const star = {
+              x: originX + rRadius * Math.sin(radian),
+              y: originY + rRadius * Math.cos(radian),
+              radius: 1,
+              radian: radian,
+              rRadius: rRadius,
+              color: '#5CA3FD',
+              speed: Math.random() + 0.06,
+              draw: function drawArc() {
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2, true);
+                ctx.closePath();
+                ctx.fillStyle = this.color;
+                ctx.fill();
+              }
+            };
+            return star;
+          }
 
-        function draw() {
-          ctx.clearRect(0, 0, oCanvas.width, oCanvas.height);
-          let star;
-
-          const date = new Date();
-          const second = date.getSeconds();
-          if (second % 6 === 0) {
+          for (let idx = 0; idx < 400; idx++) {
             stars.push(createStar());
           }
 
-          for (let idx = 0; idx < stars.length; idx++) {
-            star = stars[idx];
-            star.draw();
+          function draw() {
+            ctx.clearRect(0, 0, oCanvas.width, oCanvas.height);
+            let star;
 
-            let arr;
-            if (star.rRadius > 0) {
-              arr = star.rRadius + star.speed;
-            } else {
-              arr = star.rRadius - star.speed;
+            const date = new Date();
+            const second = date.getSeconds();
+            if (second % 6 === 0) {
+              stars.push(createStar());
             }
-            star.x = originX + (arr) * Math.sin(star.radian);
-            star.y = originY + (arr) * Math.cos(star.radian);
-            star.rRadius = arr;
 
-            if (star.x < 0 || star.y < 0 || star.x > oCanvas.width || star.y > oCanvas.height) {
-              stars.splice(idx, 1);
+            for (let idx = 0; idx < stars.length; idx++) {
+              star = stars[idx];
+              star.draw();
+
+              let arr;
+              if (star.rRadius > 0) {
+                arr = star.rRadius + star.speed;
+              } else {
+                arr = star.rRadius - star.speed;
+              }
+              star.x = originX + (arr) * Math.sin(star.radian);
+              star.y = originY + (arr) * Math.cos(star.radian);
+              star.rRadius = arr;
+
+              if (star.x < 0 || star.y < 0 || star.x > oCanvas.width || star.y > oCanvas.height) {
+                stars.splice(idx, 1);
+              }
             }
+            requestAnimationFrame(draw);
           }
-          requestAnimationFrame(draw);
-        }
 
-        draw();
-      });
+          draw();
+        });
+      }
+
+      if (envConfig === 'cfca_prod') {
+        TweenMax.to(homeBox1Txt, 1, {
+          y: 0,
+          opacity: 1,
+          ease: 'easeInOut',
+        });
+      }
 
       window.onscroll = () => {
         bodyScrollTop = document.documentElement.scrollTop || window.pageYOffset || document.body.scrollTop;
         homeBox1OffsetTop = document.getElementById('home-box1').offsetTop;
         homeBox2OffsetTop = document.getElementById('home-box2').offsetTop;
+        let isHomeBox1Show = false;
+        let isHomeBox2Show = false;
+        if (
+          (envConfig === 'local'
+          || envConfig === 'remote_test'
+          || envConfig === 'remote_prod'
+          && bodyScrollTop >= homeBox1OffsetTop / 2) || (envConfig === 'cfca_prod')) {
+          isHomeBox1Show = true;
+        }
+        if (
+          (envConfig === 'local'
+          || envConfig === 'remote_test'
+          || envConfig === 'remote_prod'
+          && bodyScrollTop >= homeBox2OffsetTop / 1.5) || (envConfig === 'cfca_prod' && bodyScrollTop >= homeBox2OffsetTop / 2)) {
+          isHomeBox2Show = true;
+        }
         if (bodyScrollTop >= homeBox1OffsetTop) {
           this.setState({
             isHeaderScroll: '1',
@@ -171,7 +208,8 @@ export default class HomeBody extends Component {
             isHeaderScroll: '',
           });
         }
-        if (bodyScrollTop >= homeBox1OffsetTop / 2) {
+        // if (bodyScrollTop >= homeBox1OffsetTop / 2) {
+        if (isHomeBox1Show) {
           TweenMax.to(homeBox1Txt, 0.7, {
             y: 0,
             opacity: 1,
@@ -185,7 +223,8 @@ export default class HomeBody extends Component {
           });
         }
 
-        if (bodyScrollTop >= homeBox2OffsetTop / 1.5) {
+        // if (bodyScrollTop >= homeBox2OffsetTop / 1.5) {
+        if (isHomeBox2Show) {
           TweenMax.to(homeBox2Txt, 0.7, {
             y: 0,
             opacity: 1,
@@ -205,11 +244,17 @@ export default class HomeBody extends Component {
           });
         }
       };
-      window.addEventListener('resize', () => {
-        // clientWidth = document.documentElement.clientWidth;
-        clientHeight = document.documentElement.clientHeight;
-        homeBanner.style.height = clientHeight + 'px';
-      });
+
+      if (
+        envConfig === 'local'
+        || envConfig === 'remote_test'
+        || envConfig === 'remote_prod') {
+        window.addEventListener('resize', () => {
+          // clientWidth = document.documentElement.clientWidth;
+          clientHeight = document.documentElement.clientHeight;
+          homeBanner.style.height = clientHeight + 'px';
+        });
+      }
     }
     //  如果没有动画就不执行上面的动画方法
   }

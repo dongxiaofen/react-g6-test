@@ -14,8 +14,6 @@ class PayModalStore {
     // 报告转监控是否显示
     @observable reportToMonitorStatus = false;
     // 弹窗类型
-    // 生成报告 createReport
-    // 刷新报告 updateReport
     // 创建监控 createMonitor
     // 转为监控 turnMonitor
     // 监控续费 continueMonitor
@@ -25,8 +23,10 @@ class PayModalStore {
     // loading
     @observable btnLoading = false;
     // 下拉框值
-    @observable selectValue = 'ONE_YEAR';
+    @observable selectValue = 'ONE_MONTH';
     // 二次弹框相关
+    // 选择监控类型
+    @observable monitorType = 'MONITOR';
     // 二次弹框是否显示
     @observable secondVisible = false;
     // 需要显示的内容
@@ -39,30 +39,37 @@ class PayModalStore {
     @observable isRepeat = false;
 
     @observable visible = false;
-    @observable pointText = '';
-    @observable pactUrl = '';
-    @observable pactName ='';
-    @observable width = '560px';
+    @observable pointText = false;
+    @observable width = '504px';
+    @observable isSingleBtn =false;
 
     @observable callBack = null;
+    // 是否是套餐用户的监控续期
+    @observable isComboRenewal = false;
+    // 是否为续期
+    @observable isRenewal = false;
 
     @action.bound closeAction() {
       this.visible = false;
       this.btnLoading = false;
-      this.selectValue = 'ONE_YEAR';
+      this.selectValue = 'ONE_MONTH';
+      this.isComboRenewal = false;
+      this.monitorType = 'MONITOR';
+      this.isSingleBtn = false;
+      this.isRenewal = false;
+      this.pointText = false;
     }
 
-    @action.bound openCompModal({ modalType, width, pactName, pactUrl, pointText, callBack }) {
+    @action.bound openCompModal({ modalType, width, pointText, isComboRenewal, callBack, isSingleBtn, isRenewal }) {
       this.visible = true;
-      this.pactName = pactName;
-      this.pactUrl = pactUrl;
-      this.pointText = pointText;
+      if (pointText !== undefined) {
+        this.pointText = pointText;
+      }
       this.modalType = modalType;
       this.callBack = callBack;
+      this.isRenewal = isRenewal;
+      if (isComboRenewal !== undefined) { this.isComboRenewal = isComboRenewal;}
       switch (modalType) {
-        case 'createReport':
-          this.tittle = '创建报告';
-          break;
         case 'continueMonitor':
           this.tittle = '监控续期';
           break;
@@ -76,10 +83,15 @@ class PayModalStore {
           break;
       }
       if (width !== undefined) { this.width = width; }
+      if (isSingleBtn !== undefined) { this.isSingleBtn = isSingleBtn; }
     }
 
     @action.bound choiceClick(value) {
       this.selectValue = value;
+    }
+
+    @action.bound choiceMonitorType(value) {
+      this.monitorType = value;
     }
 
     @action.bound confirmAction() {

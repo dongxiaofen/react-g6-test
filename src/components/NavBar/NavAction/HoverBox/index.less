@@ -5,7 +5,6 @@
   top: 111px;
   left: 0;
 
-  box-shadow:0 0 5px 0 rgba(176,190,197,0.60), 0 8px 8px 2px rgba(176,190,197,0.60);
   background-color: @mdc-white-darker;
 
   visibility: hidden;
@@ -34,8 +33,10 @@
 }
 .arrow {
   display: inline-block;
-  width: 13px;
-  height: 12px;
+  width: 0;
+  height: 0;
 
-  background-image: url('imgs/navbar/drop_down_arrow.png');
+  border-left: 10px solid transparent;
+  border-right: 10px solid transparent;
+  border-bottom: 12px solid rgba(66, 66, 66, 0.9);
 }

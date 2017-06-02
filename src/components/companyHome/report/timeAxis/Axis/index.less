@@ -1,0 +1,133 @@
+.wrap {
+  margin: -10px 30px 30px 0;
+  -moz-user-select: none;
+  -webkit-user-select: none;
+  -ms-user-select: none;
+  -o-user-select: none;
+  user-select: none;
+}
+.wrap:after {
+  content: '';
+  display: block;
+  clear: both;
+}
+.labelCon {
+  float: left;
+  width: 10%;
+  text-align: center;
+  font-weight: bold;
+  color: #42A5F5;
+}
+.labelItem {
+  height: 40px;
+  line-height: 40px;
+  color: #333;
+  font-weight: normal;
+}
+.lineCon {
+  position: relative;
+  float: left;
+  width: 90%;
+}
+.scollConWrap{
+  position: relative;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+.scrollCon{
+  position: relative;
+  left: 0;
+  transition: all .3s linear;
+}
+.lineItem {
+  position: relative;
+  height: 40px;
+  line-height: 40px;
+}
+.lineItem:before {
+  position: absolute;
+  top: 50%;
+  display: block;
+  content: '';
+  width: 100%;
+  border-top: 1px dashed #e5e5e5;
+}
+.lineItem:last-of-type {
+  &:before {
+    border: none;
+  }
+}
+.timeItem {
+  line-height: 40px;
+  margin-top: -20px;
+  display: inline-block;
+  text-align: center;
+}
+.iconItem {
+  position: relative;
+  float: left;
+  height: 100%;
+  font-weight: bold;
+  text-align: center;
+  z-index: 1;
+}
+.laneCircle {
+  display: inline-block;
+  margin-right: 5px;
+  line-height: 1;
+  font-weight: bold;
+  border-radius: 50%;
+  cursor: pointer;
+}
+.laneCircle:last-of-type {
+  margin-right: 0;
+}
+.mainItem {
+  composes: laneCircle;
+  color: #f4fcf7;
+  background: #42A5F5;
+  box-shadow: 0 0 3px #42A5F5;
+}
+.relatedItem {
+  composes: laneCircle;
+  color:  #f4fcf7;
+  background: #43BF77;
+  box-shadow: 0 0 3px #43BF77;
+}
+.barWrap {
+  position: relative;
+  margin-top: 20px;
+  height: 8px;
+  border-radius: 2.5px;
+}
+.scrollBar {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 10%;
+  height: 8px;
+  border-radius: 4px;
+  background: #e5e5e5;
+  cursor: move;
+}
+.iconWrap{
+  margin-bottom: 20px;
+  line-height: 1;
+  text-align: right;
+}
+.icon {
+  display: inline-block;
+  width: 10px;
+  height: 8px;
+}
+.mainIcon{
+  composes: icon;
+  background: #42A5F5;
+  margin-right: 4px;
+}
+.relationIcon{
+  composes: icon;
+  margin: 0 4px 0 20px;
+  background: #43BF77;
+}

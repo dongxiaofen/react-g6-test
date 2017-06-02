@@ -14,7 +14,7 @@ function RuleName({ruleStore}) {
           <input
             onChange={ruleStore.changeName} value={ruleStore.name} className={styles.inputName}
             id="name"
-            placeholder="为了便于关联预警，请输入预警名称，例：工商信息" />
+            placeholder="为了便于管理预警，请输入预警名称，例：工商信息" />
         </div>
         <div className={ruleStore.submitType === true && ruleStore.name.length < 1 ? styles.validate : styles.none}>
           预警名称必填

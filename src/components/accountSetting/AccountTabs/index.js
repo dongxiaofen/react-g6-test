@@ -3,25 +3,34 @@ import { observer } from 'mobx-react';
 import Tabs from 'antd/lib/tabs';
 const TabPane = Tabs.TabPane;
 import Business from './Business';
+import AlertCorp from './AlertCorp';
 import Consume from './Consume';
 import Recharge from './Recharge';
 import Summary from './Summary';
 import LoginRecord from './LoginRecord';
 function AccountTabs(props) {
-  const baseInfo = props.accountSettingStore.base.data;
-  const access = !baseInfo || baseInfo.parentUserId;
+  const activeIndex = props.accountSettingStore.tree.activeIndex;
+  const data = props.accountSettingStore.tree.data.content;
+  const none = !data || data[activeIndex].parentUserId;
+  const userEmail = props.clientStore.userInfo.email;
+  const none_ = !data || data[activeIndex].email === userEmail;
+  const activeKey = props.accountSettingStore.tabs.activeKey;
   const tabConf = [
-    {name: '业务统计', comp: Business, hide: false},
-    {name: '消费记录', comp: Consume, hide: false},
-    {name: '充值记录', comp: Recharge, hide: access},
-    {name: '消费汇总', comp: Summary, hide: access},
-    {name: '登录记录', comp: LoginRecord, hide: false},
+    {name: '业务统计', comp: Business, none: true},
+    {name: '消费记录', comp: Consume, none: false},
+    {name: '预警企业', comp: AlertCorp, none: none_},
+    {name: '充值记录', comp: Recharge, none: none},
+    {name: '消费汇总', comp: Summary, none: none},
+    {name: '登录记录', comp: LoginRecord, none: false},
   ];
+  const changeTabs = (key) => {
+    props.accountSettingStore.changeValue('tabs.activeKey', key);
+  };
   return (
-    <Tabs defaultActiveKey="业务统计">
+    <Tabs activeKey={activeKey} onChange={changeTabs}>
       {
         tabConf.map(item => {
-          if (!item.hide) {
+          if (!item.none) {
             return (
               <TabPane tab={item.name} key={item.name}>
                 <item.comp {...props} />

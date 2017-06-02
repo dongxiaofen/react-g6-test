@@ -6,8 +6,57 @@ import uiStore from './ui';
 import clientStore from './client';
 import messageStore from './message';
 class AccountSettingStore {
+  timeMap = {
+    ONE_MONTH: '1个月',
+    TWO_MONTH: '2个月',
+    THREE_MONTH: '3个月',
+    FOUR_MONTH: '4个月',
+    FIVE_MONTH: '5个月',
+    SIX_MONTH: '6个月',
+    SEVEN_MONTH: '7个月',
+    EIGHT_MONTH: '8个月',
+    NINE_MONTH: '9个月',
+    ONE_YEAR: '1年',
+  };
+  consumeTypeMap = {
+    REPORT_MAIN: '创建查询报告',
+    REPORT_REFRESH: '刷新查询报告',
+    REPORT_TO_MONITOR: '查询报告转为监控报告',
+    MONITOR_MAIN: '创建监控报告',
+    MONITOR_MAIN_RENEWAL: '监控报告续费',
+    REPORT_PERSON_CHECK: '个人核查',
+    MONITOR_PERSON_CHECK: '个人核查',
+    MONITOR_TAX_CHECK: '税务核查',
+    REPORT_TAX_CHECK: '税务核查',
+  };
+  taxTypeMap = {
+    R001: 'A类营业收入',
+    R002: 'A类主营业务收入',
+    R003: 'A类其他业务收入',
+    R004: 'A类营业成本',
+    R005: 'A类主营业务成本',
+    R006: 'A类其他业务成本',
+    R007: 'A类营业税金及附加信息',
+    R008: 'A类销售费用',
+    R009: 'A类管理费用',
+    R010: 'A类财务费用',
+    R011: 'A类资产减值损失',
+    R012: 'A类公允价值变动收益',
+    R013: 'A类投资收益',
+    R014: 'A类营业利润',
+    R015: 'A类营业外收入',
+    R016: 'A类营业外支出',
+    R017: 'A类利润（亏损）总额',
+    R056: '应纳税所得额',
+    R057: '应纳所得税额',
+    R070: '应纳税额',
+    R073: '实际应纳所得税额',
+    R080: '本年应补所得税额',
+    R081: '本年应退所得税额',
+  };
   // 账号树数据
   @observable tree = {
+    fromHome: false,
     searchInput: '',
     activeIndex: 0,
     activeId: -1,
@@ -132,12 +181,14 @@ class AccountSettingStore {
   };
   // tab栏数据
   @observable tabs = {
+    activeKey: '消费记录',
     business: {
       reportAndMonitor: {},
       province: {},
       industry: {},
       scale: {},
     },
+    alertCorp: {},
     consume: {},
     recharge: {},
     summary: {},
@@ -145,6 +196,14 @@ class AccountSettingStore {
   };
   @action.bound changeValue(key, value) {
     pathval.setPathValue(this, key, value);
+  }
+  @action.bound getErrMsg(err) {
+    return pathval.getPathValue(err, 'response.data.message');
+  }
+  @action.bound getActiveTreeValue(name) {
+    if (this.tree.data.content) {
+      return this.tree.data.content[this.tree.activeIndex][name];
+    }
   }
   @action.bound editInfo(url, name, params) {
     this.editModal.loading = true;
@@ -165,7 +224,7 @@ class AccountSettingStore {
         this.editModal.loading = false;
         messageStore.openMessage({
           type: 'error',
-          content: err.response && err.response.data && err.response.data.message || '修改失败',
+          content: this.getErrMsg(err) || '修改失败',
         });
       }));
   }
@@ -183,7 +242,7 @@ class AccountSettingStore {
         this.pwdModal.loading = false;
         messageStore.openMessage({
           type: 'error',
-          content: err.response && err.response.data && err.response.data.message || '修改密码失败',
+          content: this.getErrMsg(err) || '修改密码失败',
         });
       }));
   }
@@ -202,14 +261,17 @@ class AccountSettingStore {
         this.addModal.loading = false;
         messageStore.openMessage({
           type: 'error',
-          content: err.response && err.response.data && err.response.data.message || '新增账号失败',
+          content: this.getErrMsg(err) || '新增账号失败',
         });
       }));
   }
   @action.bound getTreeList(afterAddUser) {
+    const activeId = this.tree.fromHome ? this.tree.activeId : -1;
+    const searchInput = this.tree.fromHome ? this.tree.searchInput : '';
     if (!afterAddUser) {
       this.resetStore();
     }
+    this.tree.searchInput = searchInput;
     accountSettingApi.getTreeList()
       .then(action('getTreeList_success', resp => {
         if (resp.data && resp.data.length > 0) {
@@ -217,17 +279,22 @@ class AccountSettingStore {
           const userEmail = clientStore.userInfo.email;
           treeData.formatData(null, null, userEmail);
           this.tree.data = {content: treeData.formatResult};
+          this.tree.activeIndex = activeId !== -1 ? treeData.formatResult.findIndex(item => item.id === activeId) || 0 : 0;
           if (!afterAddUser) {
-            const uId = treeData.formatResult[0].id;
+            const activeIndex = this.tree.activeIndex;
+            const uId = treeData.formatResult[activeIndex].id;
+            const pId = treeData.formatResult[activeIndex].parentUserId;
             this.tree.activeId = uId;
             this.getUserInfo(uId);
-            this.getReportAndMonitor(uId);
-            this.getProvince(uId);
-            this.getIndustry(uId);
-            this.getScale(uId);
+            // this.getReportAndMonitor(uId);
+            // this.getProvince(uId);
+            // this.getIndustry(uId);
+            // this.getScale(uId);
             this.getConsume(uId);
-            this.getRecharge(uId);
-            this.getSummary(uId);
+            if (!pId) {
+              this.getRecharge(uId);
+              this.getSummary(uId);
+            }
             this.getLoginRecord(uId);
           }
         } else {
@@ -237,10 +304,11 @@ class AccountSettingStore {
       .catch(action('getTreeList_error', err => {
         this.tree.data = {error: err.response.data, content: []};
         this.base = {error: err.response.data, data: {}};
-        this.tabs.business.reportAndMonitor = {error: err.response.data, data: []};
-        this.tabs.business.province = {error: err.response.data, content: []};
-        this.tabs.business.industry = {error: err.response.data, content: []};
-        this.tabs.business.scale = {error: err.response.data, data: {}};
+        // this.tabs.business.reportAndMonitor = {error: err.response.data, data: []};
+        // this.tabs.business.province = {error: err.response.data, content: []};
+        // this.tabs.business.industry = {error: err.response.data, content: []};
+        // this.tabs.business.scale = {error: err.response.data, data: {}};
+        this.tabs.alertCorp = {error: err.response.data, content: []};
         this.tabs.consume = {error: err.response.data, page: []};
         this.tabs.recharge = {error: err.response.data, content: []};
         this.tabs.summary = {error: err.response.data, page: []};
@@ -305,18 +373,34 @@ class AccountSettingStore {
         this.tabs.business.scale = {error: err.response.data, data: {}};
       }));
   }
+  @action.bound getAlertCorp(uId) {
+    this.tabs.alertCorp = {};
+    const params = uiStore.uiState.accountAlertCorp;
+    delete params.totalElements;
+    accountSettingApi.getAlertCorp(uId, params)
+      .then(action('getAlertCorp_success', resp => {
+        const noData = !resp.data || resp.data.content === undefined || resp.data && resp.data.content.length === 0;
+        this.tabs.alertCorp = noData ? {error: {message: '暂无预警企业'}, content: []} : resp.data;
+        uiStore.updateUiStore('accountAlertCorp.totalElements', pathval.getPathValue(resp, 'data.content.totalElements') || 0);
+      }))
+      .catch(action('getAlertCorp_error', err => {
+        console.log('getAlertCorp_error', err);
+        this.tabs.alertCorp = {error: err.response.data, content: []};
+      }));
+  }
   @action.bound getConsume(uId) {
     this.tabs.consume = {};
     const params = uiStore.uiState.accountConsume;
     delete params.totalElements;
     accountSettingApi.getConsume(uId, params)
       .then(action('getConsume_success', resp => {
-        const noData = resp.data.page === undefined || resp.data.page.content.length === 0;
-        this.tabs.consume = noData ? {error: {message: '暂无消费记录'}, page: []} : resp.data;
-        uiStore.updateUiStore('accountConsume.totalElements', resp.data.page.totalElements);
+        const noData = resp.data.content === undefined || resp.data.content.length === 0;
+        this.tabs.consume = noData ? {error: {message: '暂无消费记录'}, content: []} : resp.data;
+        uiStore.updateUiStore('accountConsume.totalElements', pathval.getPathValue(resp, 'data.totalElements') || 0);
       }))
       .catch(action('getConsume_error', err => {
-        this.tabs.consume = {error: err.response.data, page: []};
+        console.log('getConsume_error', err);
+        this.tabs.consume = {error: err.response.data, content: []};
       }));
   }
   @action.bound getRecharge(uId) {
@@ -327,7 +411,7 @@ class AccountSettingStore {
       .then(action('getRecharge_success', resp => {
         const noData = resp.data.content === undefined || resp.data.content.length === 0;
         this.tabs.recharge = noData ? {error: {message: '暂无充值记录'}, content: []} : resp.data;
-        uiStore.updateUiStore('accountRecharge.totalElements', resp.data.totalElements);
+        uiStore.updateUiStore('accountRecharge.totalElements', pathval.getPathValue(resp, 'data.totalElements') || 0);
       }))
       .catch(action('getRecharge_error', err => {
         this.tabs.recharge = {error: err.response.data, content: []};
@@ -339,12 +423,12 @@ class AccountSettingStore {
     delete params.totalElements;
     accountSettingApi.getSummary(uId, params)
       .then(action('getSummary_success', resp => {
-        const noData = resp.data.page === undefined || resp.data.page.content.length === 0;
-        this.tabs.summary = noData ? {error: {message: '暂无消费记录'}, page: []} : resp.data;
-        uiStore.updateUiStore('accountSummary.totalElements', resp.data.page.totalElements);
+        const noData = resp.data === undefined || resp.data.content.length === 0;
+        this.tabs.summary = noData ? {error: {message: '暂无消费记录'}, content: []} : resp.data;
+        uiStore.updateUiStore('accountSummary.totalElements', pathval.getPathValue(resp, 'data.totalElements') || 0);
       }))
       .catch(action('getSummary_error', err => {
-        this.tabs.summary = {error: err.response.data, page: []};
+        this.tabs.summary = {error: err.response.data, content: []};
       }));
   }
   @action.bound getLoginRecord(uId) {
@@ -355,7 +439,7 @@ class AccountSettingStore {
       .then(action('getLoginRecord_success', resp => {
         const noData = resp.data.content === undefined || resp.data.content.length === 0;
         this.tabs.loginRecord = noData ? {error: {message: '暂无登录记录'}, content: []} : resp.data;
-        uiStore.updateUiStore('accountLoginRecord.totalElements', resp.data.totalElements);
+        uiStore.updateUiStore('accountLoginRecord.totalElements', pathval.getPathValue(resp, 'data.totalElements') || 0);
       }))
       .catch(action('getLoginRecord_error', err => {
         this.tabs.loginRecord = {error: err.response.data, content: []};
@@ -363,6 +447,7 @@ class AccountSettingStore {
   }
   @action.bound resetTree() {
     this.tree = {
+      fromHome: false,
       searchInput: '',
       activeIndex: 0,
       activeId: -1,
@@ -492,6 +577,7 @@ class AccountSettingStore {
   }
   @action.bound resetTabs() {
     this.tabs = {
+      activeKey: '消费记录',
       business: {
         reportAndMonitor: {},
         province: {},
@@ -499,6 +585,7 @@ class AccountSettingStore {
         scale: {},
       },
       consume: {},
+      alertCorp: {},
       recharge: {},
       summary: {},
       loginRecord: {},

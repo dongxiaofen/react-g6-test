@@ -1,31 +1,48 @@
 import React, {PropTypes} from 'react';
 import { observer } from 'mobx-react';
+import { toJS } from 'mobx';
 import moment from 'moment';
 import DatePicker from 'antd/lib/date-picker';
 
 import styles from './index.less';
 import Select from 'components/lib/Select';
-import provinceCityName from 'helpers/provinceCityName';
+import cityName from 'helpers/cityName';
 
 const { RangePicker } = DatePicker;
 const Option = Select.Option;
-function SwitchData({ from, to, params, setParams }) {
+function SwitchData({ from, to, params, cancels, setParams }) {
+  const province = params.province;
   const disabledDate = (current) => {
     return current && current.valueOf() > Date.now();
   };
 
   const dateOnChange = (dateString, dateTime) => {
-    setParams({
-      from: dateTime[0],
-      to: dateTime[1],
-      province: params.province
-    });
+    if (cancels && cancels.length) {
+      cancels.forEach((cancel) => {
+        cancel();
+      });
+    }
+    const obj = toJS(params);
+    obj.from = dateTime[0];
+    obj.to = dateTime[1];
+    setParams(obj);
+  };
+
+  const selectOnChange = (val) => {
+    if (cancels && cancels.length) {
+      cancels.forEach((cancel) => {
+        cancel();
+      });
+    }
+    const obj = toJS(params);
+    obj.province = val;
+    setParams(obj);
   };
 
   const selectList = () => {
     const output = [];
     output.push(<Option value="" key="bidMarketSelectKey0">全国</Option>);
-    provinceCityName.forEach((item, key) => {
+    cityName.forEach((item, key) => {
       output.push(
         <Option value={item} key={`bidMarketSelectKey${key + 1}`}>{item}</Option>
       );
@@ -38,7 +55,10 @@ function SwitchData({ from, to, params, setParams }) {
       <div className={`clearfix ${styles.province}`}>
         <span className={styles.title}>地区：</span>
         <div className={styles.content}>
-          <Select>
+          <Select
+            defaultValue={province}
+            value={province}
+            onChange={selectOnChange}>
             {selectList()}
           </Select>
         </div>
@@ -61,6 +81,7 @@ function SwitchData({ from, to, params, setParams }) {
 SwitchData.propTypes = {
   from: PropTypes.string,
   to: PropTypes.string,
+  cancels: PropTypes.array,
   params: PropTypes.object,
   setParams: PropTypes.func,
 };

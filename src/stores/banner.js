@@ -12,9 +12,7 @@ class BannerStore {
   // banner
   @observable monitorId = '';
   @observable reportId = '';
-  @observable analysisReportId = '';
-  @observable companyName = '';
-  @observable companyType = '';
+  @observable score = '';
 
   @observable isLoading = false;
   @observable hisNameVis = false;
@@ -35,18 +33,12 @@ class BannerStore {
   // 上市代码
   @observable stockCode = '';
 
-  // 升级成高级报告或者深度报告
-  @observable updateHighOrDeep = {
-    active: 1,
-    pointText: '已选择高级查询报告',
-    pointTextSub: '（包含快速查询报告数据，另有关联网络、上市、新闻、团队、经营数据）'
-  };
-
   // 下载pdf配置
   @observable pdfDownloadConfig = {
     levelOne: [
       { label: '信息概览', value: 'SUMMARY', checked: false },
       { label: '企业基本信息', value: 'CORP', checked: false },
+      { label: '税务信息', value: 'TAX', checked: false },
       { label: '上市披露', value: 'STOCK', checked: false },
       { label: '关联网络', value: 'NETWORK', checked: false },
       { label: '风险信息', value: 'RISK', checked: false },
@@ -62,6 +54,7 @@ class BannerStore {
         { label: '对外投资任职', value: 'CORP_INV_POS', checked: false },
         { label: '企业年报', value: 'CORP_YEAR_REPORT', checked: false },
       ],
+      'TAX': [],
       'STOCK': [
         { label: '公司概况', value: 'STOCK_INFO', checked: false },
         { label: '公司公告', value: 'STOCK_ANNOUNCEMENT', checked: false },
@@ -83,7 +76,6 @@ class BannerStore {
       ],
       'NEWS': [],
       'OPERATION': [
-        { label: '企业综合信息', value: 'OPERATION_TEL', checked: false },
         { label: '招投标', value: 'OPERATION_BIDDING', checked: false },
         { label: '专利', value: 'OPERATION_PATENT', checked: false },
         { label: '商标', value: 'OPERATION_TRADEMARK', checked: false },
@@ -94,6 +86,9 @@ class BannerStore {
       ]
     },
   };
+
+  // 需要下载的keys
+  @observable pdfDownloadKeys = [];
 
   @observable isAllChecked = false;
 
@@ -108,6 +103,10 @@ class BannerStore {
   closeContactPopoverAlias = this.closeContactPopover;
   openContactPopoverAlias = this.openContactPopover;
   extendContactAlias = this.extendContact;
+
+  @action.bound setPdfDownloadKeys(keys) {
+    this.pdfDownloadKeys = keys;
+  }
 
   @action.bound closeHisNamePopover() {
     this.hisNameVis = false;
@@ -124,17 +123,15 @@ class BannerStore {
   @action.bound extendContact(key) {
     this.contactExtended = this.contactExtended === key ? '' : key;
   }
-  @action.bound getBannerInfo({ monitorId, reportId, analysisReportId, companyName, companyType }) {
+  @action.bound getBannerInfo({ monitorId, reportId }) {
     this.monitorId = monitorId;
     this.reportId = reportId;
-    this.analysisReportId = analysisReportId;
-    this.companyName = companyName;
-    this.companyType = companyType;
     this.isLoading = true;
-    companyHomeApi.getBannerInfo({ monitorId, reportId, analysisReportId, companyName, companyType })
+    companyHomeApi.getBannerInfo({ monitorId, reportId })
       .then(action('get banner info...', (resp) => {
         const whatThisBannerInfo = resp.data.bannerInfo.bannerInfo;
         this.companyName = resp.data.name;
+        this.score = resp.data.score;
         if (whatThisBannerInfo) {
           this.historyName = whatThisBannerInfo.historyName;
           this.riskInfo = whatThisBannerInfo.riskInfo;
@@ -182,63 +179,10 @@ class BannerStore {
       });
   }
 
-  // 修改UpdateHighOrDeep
-  @action.bound setUpdateHighOrDeep({ active, pointText, pointTextSub }) {
-    this.updateHighOrDeep.active = active;
-    this.updateHighOrDeep.pointText = pointText;
-    this.updateHighOrDeep.pointTextSub = pointTextSub;
-  }
-
-  // 创建高级报告或者深度报告
-  @action.bound createReport(active, companyName) {
+  // 刷新报告
+  @action.bound refreshHighOrDeep(reportId) {
     modalStore.confirmLoading = true;
-    companyHomeApi.createReport(active, companyName)
-      .then(action('create report', (resp) => {
-        modalStore.confirmLoading = false;
-        modalStore.closeAction();
-        if (resp.data.reportId) {
-          browserHistory.push(`/companyHome?reportId=${resp.data.reportId}&companyType=MAIN`);
-          messageStore.openMessage({ content: '高级查询报告创建成功', callBack: this.windowReload });
-        }
-        if (resp.data.analysisReportId) {
-          browserHistory.push(`/companyHome?analysisReportId=${resp.data.analysisReportId}&companyType=MAIN`);
-          messageStore.openMessage({ content: '深度分析报告创建成功', callBack: this.windowReload });
-        }
-      }))
-      .catch((err) => {
-        console.log(err);
-        runInAction(() => {
-          modalStore.confirmLoading = false;
-          messageStore.openMessage({ content: err.response.data.message });
-          modalStore.closeAction();
-        });
-      });
-  }
-
-  // 高级查询报告升级为深度分析报告
-  @action.bound updateToAnalysisReport(reportId) {
-    modalStore.confirmLoading = true;
-    companyHomeApi.updateToAnalysisReport(reportId)
-      .then(action('update to analysis report', (resp) => {
-        modalStore.confirmLoading = false;
-        modalStore.closeAction();
-        browserHistory.push(`/companyHome?analysisReportId=${resp.data.analysisReportId}&companyType=MAIN`);
-        messageStore.openMessage({ content: '深度分析报告创建成功', callBack: this.windowReload });
-      }))
-      .catch((err) => {
-        console.log(err.response);
-        runInAction(() => {
-          modalStore.confirmLoading = false;
-          modalStore.closeAction();
-          messageStore.openMessage({ content: err.response.data.message });
-        });
-      });
-  }
-
-  // 刷新高级或者深度报告
-  @action.bound refreshHighOrDeep(reportId, analysisReportId) {
-    modalStore.confirmLoading = true;
-    companyHomeApi.refreshHighOrDeep(reportId, analysisReportId)
+    companyHomeApi.refreshHighOrDeep(reportId)
       .then(action('refresh high or deep', (resp) => {
         console.log(resp.data);
         modalStore.confirmLoading = false;
@@ -250,32 +194,21 @@ class BannerStore {
         runInAction(() => {
           modalStore.confirmLoading = false;
           modalStore.closeAction();
-          messageStore.openMessage({ content: err.response.data.message });
+          if (err.response.data.errorCode === 403218) {
+            messageStore.openMessage({ type: 'info', content: err.response.data.message });
+          } else {
+            messageStore.openMessage({ type: 'warning', content: err.response.data.message });
+          }
         });
       });
   }
 
-  // 创建监控
-  @action.bound createMonitor(obj) {
-    companyHomeApi.createMonitor(obj)
-      .then(action('create monitor', (resp) => {
-        payModalStore.closeAction();
-        browserHistory.push(`/companyHome?monitorId=${resp.data.monitorId}&companyType=MAIN`);
-        messageStore.openMessage({ content: '成功创建监控', callBack: this.windowReload });
-      }))
-      .catch(action('createMonitor error', (err) => {
-        console.log(err.response, '=====createMonitor error');
-        payModalStore.closeAction();
-        messageStore.openMessage({ type: 'warning', content: err.response.data.message });
-      }));
-  }
-
   // 升级为监控
-  @action.bound updateToMonitor({ reportId, analysisReportId, time }) {
-    companyHomeApi.updateToMonitor({ reportId, analysisReportId, time })
+  @action.bound updateToMonitor({ reportId, time }) {
+    companyHomeApi.updateToMonitor({ reportId, time })
       .then(action('update to monitor', (resp) => {
         payModalStore.closeAction();
-        browserHistory.push(`/companyHome?monitorId=${resp.data.monitorId}&companyType=MAIN`);
+        browserHistory.push(`/companyHome?monitorId=${resp.data.monitorId}`);
         messageStore.openMessage({ content: '成功创建监控', callBack: this.windowReload });
       }))
       .catch((err) => {
@@ -380,9 +313,14 @@ class BannerStore {
     const levelTwo = this.pdfDownloadConfig.levelTwo;
     const levelTwoKeys = Object.keys(levelTwo);
     const stockCode = this.stockCode;
+    const isMonitor = window.location.href.includes('monitorId');
     levelOne.map((item) => {
       if (item.value === 'STOCK') {
         if (stockCode) {
+          item.checked = checked;
+        }
+      } else if (item.value === 'TAX') {
+        if (isMonitor) {
           item.checked = checked;
         }
       } else {
@@ -424,9 +362,9 @@ class BannerStore {
   }
 
   // 添加/取消收藏
-  @action.bound addOrCancelCollection({ reportId, analysisReportId, monitorId, params }) {
+  @action.bound addOrCancelCollection({ reportId, monitorId, params }) {
     this.collectionLoading = true;
-    companyHomeApi.addOrCancelCollection({ reportId, analysisReportId, monitorId, params })
+    companyHomeApi.addOrCancelCollection({ reportId, monitorId, params })
       .then(action('add or cancel collection', () => {
         this.collection = !this.collection;
         this.collectionLoading = false;
@@ -442,8 +380,7 @@ class BannerStore {
   @action.bound resetStore() {
     this.monitorId = '';
     this.reportId = '';
-    this.companyName = '';
-    this.companyType = '';
+    this.score = '';
     this.isLoading = false;
     this.hisNameVis = false;
     this.contactVis = false;
@@ -460,15 +397,11 @@ class BannerStore {
     this.collection = false;
     this.mainStatus = '';
     this.stockCode = '';
-    this.updateHighOrDeep = {
-      active: 1,
-      pointText: '已选择高级查询报告',
-      pointTextSub: '（包含快速查询报告数据，另有关联网络、上市、新闻、团队、经营数据）'
-    };
     this.pdfDownloadConfig = {
       levelOne: [
         { label: '信息概览', value: 'SUMMARY', checked: false },
         { label: '企业基本信息', value: 'CORP', checked: false },
+        { label: '税务信息', value: 'TAX', checked: false },
         { label: '上市披露', value: 'STOCK', checked: false },
         { label: '关联网络', value: 'NETWORK', checked: false },
         { label: '风险信息', value: 'RISK', checked: false },
@@ -484,6 +417,7 @@ class BannerStore {
           { label: '对外投资任职', value: 'CORP_INV_POS', checked: false },
           { label: '企业年报', value: 'CORP_YEAR_REPORT', checked: false },
         ],
+        'TAX': [],
         'STOCK': [
           { label: '公司概况', value: 'STOCK_INFO', checked: false },
           { label: '公司公告', value: 'STOCK_ANNOUNCEMENT', checked: false },
@@ -505,7 +439,6 @@ class BannerStore {
         ],
         'NEWS': [],
         'OPERATION': [
-          { label: '企业综合信息', value: 'OPERATION_TEL', checked: false },
           { label: '招投标', value: 'OPERATION_BIDDING', checked: false },
           { label: '专利', value: 'OPERATION_PATENT', checked: false },
           { label: '商标', value: 'OPERATION_TRADEMARK', checked: false },

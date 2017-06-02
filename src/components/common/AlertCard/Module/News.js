@@ -10,7 +10,7 @@ function News({data, module, store, cardType}) {
       url = dealWithDate(data.content.title);
     }
     let companyId = '';
-    if (module === 'laneGraph') {
+    if (module === 'timeAxis') {
       companyId = data.relatedMonitorId || data.mainMonitorId;
     } else {
       companyId = store.events.info.monitorId;
@@ -55,6 +55,7 @@ function News({data, module, store, cardType}) {
   return (
     <BaseModule
       data={moduleData}
+      module={module}
       btnText="查看"
       type="detail"
       viewDetCallback={viewDetail}

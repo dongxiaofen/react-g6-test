@@ -1,5 +1,4 @@
 export App from './app';
-export Home from './home';
 export Relation from './relation';
 export MyHomePage from './myHomePage';
 export RiskHeadlines from './riskHeadlines';
@@ -22,6 +21,7 @@ export RuleAdd from './ruleAdd';
 export Stock from './report/stock';
 export Network from './report/network';
 export RelPerCheck from './report/relPerCheck';
+export TimeAxis from './report/timeAxis';
 export AlertAnalysis from './report/alertAnalysis';
 export RuleCompany from './ruleCompany';
 export PersonReport from './personReport';
@@ -29,4 +29,13 @@ export Pdf from './pdf';
 export BlackNetwork from './report/blackNetwork';
 export Collection from './collection';
 export BidMarket from './bidMarket';
+export HighRiskCorp from './highRiskCorp';
+export AccountProfile from './accountProfile';
+export ForceNetwork from './report/forceNetwork';
+export NowRecord from './report/nowRecord';
+export UserAgreement from './userAgreement';
+export Disclaimer from './disclaimer';
+export Tax from './report/tax';
+export TaxCheck from './report/taxCheck';
+export AssetTransaction from './assetTransaction';
 // append here from plop

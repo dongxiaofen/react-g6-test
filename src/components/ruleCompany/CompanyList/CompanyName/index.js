@@ -6,44 +6,25 @@ import styles from './index.less';
 function CompanyName({data}) {
   // 公司名
   const name = data.companyName;
-  // 类型
-  let type = '';
-  switch (data.productType) {
-    case 'ANALYSIS_REPORT':
-      type = '深度评估报告';
-      break;
-    case 'REPORT':
-      type = '高级评估报告';
-      break;
-    case 'MONITOR':
-      type = '主体监控报告';
-      break;
-    default:
-      break;
+  // 分数
+  let score = '';
+  if (data.score) {
+    score = (
+      <div className={styles.type}>
+        综合分{data.score}
+      </div>
+    );
   }
-  // 跳转报告
+  // 跳转监控
   const link = () => {
-    // 深度报告
-    if (data.productType === 'ANALYSIS_REPORT') {
-      browserHistory.push(`/companyHome/alertAnalysis?analysisReportId=${data.productId}&companyType=MAIN`);
-    }
-    // 高级报告
-    if (data.productType === 'REPORT') {
-      browserHistory.push(`/companyHome/alertAnalysis?reportId=${data.productId}&companyType=MAIN`);
-    }
-    // 监控
-    if (data.productType === 'MONITOR') {
-      browserHistory.push(`/companyHome/alertAnalysis?monitorId=${data.productId}&companyType=MAIN`);
-    }
+    browserHistory.push(`/companyHome/alertAnalysis?monitorId=${data.productId}`);
   };
   return (
     <div className={styles.box}>
       <div onClick={link} className={styles.name}>
         {name}
       </div>
-      <div className={styles.type}>
-        {type}
-      </div>
+      {score}
     </div>
   );
 }

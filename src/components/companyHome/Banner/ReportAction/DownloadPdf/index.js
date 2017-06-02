@@ -14,21 +14,40 @@ export default class DownloadPdf extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      tipInfo: false
+      tipInfo: false,
+      tipInfoFn: () => {
+        const pdfDownloadConfig = this.props.bannerStore.pdfDownloadConfig;
+        const levelOneHasTrue = pdfDownloadConfig.levelOne.every((item) => item.checked === false);
+        const levelTwo = pdfDownloadConfig.levelTwo;
+        const levelTwoKeys = Object.keys(levelTwo);
+        const levelTwoBools = [];
+        levelTwoKeys.forEach((key) => {
+          const _levelTwo = levelTwo[key];
+          levelTwoBools.push(_levelTwo.every((item) => item.checked === false));
+        });
+        const levelTwoHasTrue = levelTwoBools.every((item) => item === true);
+        return levelOneHasTrue && levelTwoHasTrue;
+      }
     };
   }
 
   downloadAll = (evt) => {
+    if (evt.target.checked) { this.setState({ tipInfo: false }); }
     this.props.bannerStore.setDownloadAll(evt.target.checked);
   }
 
   downloadAllChecked() {
     const isAllChecked = this.props.bannerStore.isAllChecked;
     const stockCode = this.props.bannerStore.stockCode;
+    const monitorId = this.props.routing.location.query.monitorId;
     const output = [];
     this.props.bannerStore.pdfDownloadConfig.levelOne.map((item) => {
       if (item.value === 'STOCK') {
         if (stockCode) {
+          output.push(item.checked === true);
+        }
+      } else if (item.value === 'TAX') {
+        if (monitorId) {
           output.push(item.checked === true);
         }
       } else {
@@ -41,90 +60,86 @@ export default class DownloadPdf extends Component {
   }
 
   menuLevelOneOnChange = (key, value, evt) => {
+    if (evt.target.checked) { this.setState({ tipInfo: false }); }
     this.props.bannerStore.setPdfLevelOne(key, value, evt.target.checked);
   }
 
   menuLevelTwoOnChange = (levelOne, key, levelOneKey, evt) => {
+    if (evt.target.checked) { this.setState({ tipInfo: false }); }
     this.props.bannerStore.setPdfLevelTwo(levelOne, key, levelOneKey, evt.target.checked);
   }
 
   menuLevelOne() {
+    const checkComp = (item, key) => {
+      return (
+        <div className={`clearfix ${styles['download-item']}`} key={key}>
+          <div className={styles['download-item-title']}>
+            <Checkbox
+              key={key}
+              checked={item.checked}
+              onChange={this.menuLevelOneOnChange.bind(this, key, item.value)}>
+              {item.label}
+            </Checkbox>
+          </div>
+          <div className="clearfix">
+            {this.menuLevelTwo(item.value, key)}
+          </div>
+        </div>
+      );
+    };
+
     const output = [];
+    const monitorId = this.props.routing.location.query.monitorId;
     const pdfDownloadConfig = this.props.bannerStore.pdfDownloadConfig;
     const levelOne = pdfDownloadConfig.levelOne;
     const stockCode = this.props.bannerStore.stockCode;
     levelOne.forEach((item, key) => {
       if (item.value === 'STOCK') {
         if (stockCode) {
-          output.push(
-            <div className={`clearfix ${styles['download-item']}`} key={key}>
-              <div className={styles['download-item-title']}>
-                <Checkbox
-                  key={key}
-                  checked={item.checked}
-                  onChange={this.menuLevelOneOnChange.bind(this, key, item.value)}>
-                  {item.label}
-                </Checkbox>
-              </div>
-              <div className="clearfix">
-                {this.menuLevelTwo(item.value, key)}
-              </div>
-            </div>
-          );
+          output.push(checkComp(item, key));
+        }
+      } else if (item.value === 'TAX') {
+        if (monitorId) {
+          output.push(checkComp(item, key));
         }
       } else {
-        output.push(
-          <div className={`clearfix ${styles['download-item']}`} key={key}>
-            <div className={styles['download-item-title']}>
-              <Checkbox
-                key={key}
-                checked={item.checked}
-                onChange={this.menuLevelOneOnChange.bind(this, key, item.value)}>
-                {item.label}
-              </Checkbox>
-            </div>
-            <div className="clearfix">
-              {this.menuLevelTwo(item.value, key)}
-            </div>
-          </div>
-        );
+        output.push(checkComp(item, key));
       }
     });
     return output;
   }
 
   menuLevelTwo(key, levelOneKey) {
+    const checkComp = ({ _item, _idx, _key, _levelOneKey }) => {
+      return (
+        <div className={`clearfix ${styles['download-col-4']}`} key={_idx}>
+          <div className={styles['download-item-title2']}>
+            <Checkbox
+              checked={_item.checked}
+              onChange={this.menuLevelTwoOnChange.bind(this, _key, _idx, _levelOneKey)}>
+              {_item.label}
+            </Checkbox>
+          </div>
+        </div>
+      );
+    };
     const output = [];
     const monitorId = this.props.routing.location.query.monitorId;
     const levelTwo = this.props.bannerStore.pdfDownloadConfig.levelTwo[key];
     if (levelTwo.length) {
       levelTwo.forEach((item, idx) => {
+        const argConfig = {
+          _item: item,
+          _idx: idx,
+          _key: key,
+          _levelOneKey: levelOneKey
+        };
         if (item.value === 'TEAM_ANALYSIS') {
           if (monitorId) {
-            output.push(
-              <div className={`clearfix ${styles['download-col-4']}`} key={idx}>
-                <div className={styles['download-item-title2']}>
-                  <Checkbox
-                    checked={item.checked}
-                    onChange={this.menuLevelTwoOnChange.bind(this, key, idx, levelOneKey)}>
-                    {item.label}
-                  </Checkbox>
-                </div>
-              </div>
-            );
+            output.push(checkComp(argConfig));
           }
         } else {
-          output.push(
-            <div className={`clearfix ${styles['download-col-4']}`} key={idx}>
-              <div className={styles['download-item-title2']}>
-                <Checkbox
-                  checked={item.checked}
-                  onChange={this.menuLevelTwoOnChange.bind(this, key, idx, levelOneKey)}>
-                  {item.label}
-                </Checkbox>
-              </div>
-            </div>
-          );
+          output.push(checkComp(argConfig));
         }
       });
     }
@@ -132,20 +147,27 @@ export default class DownloadPdf extends Component {
   }
 
   downloadPdf = () => {
+    const findIndexLevelOneChecked = (key) => {
+      const levelOne = this.props.bannerStore.pdfDownloadConfig.levelOne;
+      const index = levelOne.findIndex((item) => item.value === key);
+      return levelOne[index].checked;
+    };
     const query = this.props.routing.location.query;
     const monitorId = query.monitorId;
     const reportId = query.reportId;
-    const analysisReportId = query.analysisReportId;
     let queryStr = '&type=';
     let queryArray = [];
     const bannerStore = this.props.bannerStore;
-    const levelOne = bannerStore.pdfDownloadConfig.levelOne;
+    // const levelOne = bannerStore.pdfDownloadConfig.levelOne;
     const levelTwo = bannerStore.pdfDownloadConfig.levelTwo;
     const levelTwoKeys = Object.keys(levelTwo);
-    if (levelOne[0].checked) {
+    if (findIndexLevelOneChecked('SUMMARY')) {
       queryArray.push('SUMMARY');
     }
-    if (levelOne[5].checked) {
+    if (findIndexLevelOneChecked('TAX')) {
+      queryArray.push('TAX');
+    }
+    if (findIndexLevelOneChecked('NEWS')) {
       queryArray.push('NEWS');
     }
     levelTwoKeys.map((key) => {
@@ -165,6 +187,7 @@ export default class DownloadPdf extends Component {
     });
     queryArray = Array.from(new Set(queryArray));
     if (queryArray.length > 0) {
+      this.setState({ tipInfo: false });
       queryStr = queryStr + queryArray.join(',');
       if (monitorId) {
         window.open(`/pdfDown?monitorId=${monitorId}${queryStr}`);
@@ -172,10 +195,8 @@ export default class DownloadPdf extends Component {
       if (reportId) {
         window.open(`/pdfDown?reportId=${reportId}${queryStr}`);
       }
-      if (analysisReportId) {
-        window.open(`/pdfDown?analysisReportId=${reportId}${queryStr}`);
-      }
       this.props.bannerStore.clearPdfConfigChecked();
+      this.props.bannerStore.setPdfDownloadKeys(queryArray);
     } else {
       this.setState({ tipInfo: true });
     }
@@ -183,10 +204,11 @@ export default class DownloadPdf extends Component {
   }
 
   render() {
+    const isShowTipInfo = this.state.tipInfoFn();
     return (
       <div className={styles.downloadModal}>
         <div className={styles.downloadTitleBox}>
-          <i className="fa fa-drupal" aria-hidden="true"></i>
+          <i className="fa fa-file-text-o" aria-hidden="true"></i>
           <span>{this.props.bannerStore.companyName}</span>
         </div>
         <div className={styles.pdfDownModaBtnBox}>
@@ -197,12 +219,14 @@ export default class DownloadPdf extends Component {
               全部页面
             </Checkbox>
             {
-              this.state.tipInfo
+              this.state.tipInfo && isShowTipInfo
                 ? <span className={styles['tip-info']}>请选择需要下载的板块</span>
                 : null
             }
           </div>
-          <div onClick={this.downloadPdf} className={styles.pdfDownModaBtn}>下载</div>
+          <div onClick={this.downloadPdf} className={styles.pdfDownModaBtn}>
+            <i className="fa fa-download"></i>下载
+          </div>
         </div>
         <div className={styles['download-content-box']}>
           {this.menuLevelOne()}

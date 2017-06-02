@@ -75,17 +75,15 @@ class RelPerCheckStore {
         this.relatedName = '';
         this.relatedType = '';
         this.relatedSubmit = false;
-        messageStore.openMessage({type: 'info', content: error.response.data, duration: '1500'});
+        messageStore.openMessage({type: 'warning', content: error.response.data.message, duration: '1500'});
       }));
   }
-  @action.bound getIdCard({monitorId, reportId, analysisReportId, personCheckId}) {
+  @action.bound getIdCard({monitorId, reportId, personCheckId}) {
     let url;
     if (monitorId) {
       url = `/api/monitor/${monitorId}/person/cardId?personCheckId=${personCheckId}`;
-    }else if (reportId) {
+    } else if (reportId) {
       url = `/api/report/${reportId}/person/cardId?personCheckId=${personCheckId}`;
-    }else if (analysisReportId) {
-      url = `/api/analysisReport/${analysisReportId}/person/cardId?personCheckId=${personCheckId}`;
     }
     companyHomeApi.getIdCard(url)
       .then( action( (response) => {

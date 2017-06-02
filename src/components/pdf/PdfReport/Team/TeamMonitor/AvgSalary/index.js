@@ -5,16 +5,27 @@ import PdfTable from 'components/common/pdf/PdfTable';
 import SecondTitle from 'components/common/pdf/SecondTitle';
 
 function AvgSalary({moduleData}) {
+  console.log(moduleData, '招聘平均薪资');
+  if (!moduleData || Object.keys(moduleData).length < 1) {
+    return (
+      <div>
+        <SecondTitle module="招聘平均薪资趋势" />
+        <PdfNotFound />
+      </div>
+    );
+  }
   const formatData = (data) => {
     const result = [];
     const Key = [];
     for (const key in data) {
       if (data.hasOwnProperty(key)) {
         Key.push(key);
-        result.push({
-          time: key,
-          salary: data[key] ? data[key].toFixed(2) : '/'
-        });
+        if (data[key]) {
+          result.push({
+            time: key,
+            salary: data[key].toFixed(2)
+          });
+        }
       }
     }
     let data_ = result;
@@ -23,14 +34,6 @@ function AvgSalary({moduleData}) {
     });
     return result;
   };
-  if (!moduleData) {
-    return (
-      <div>
-        <SecondTitle module="招聘平均薪资趋势" />
-        <PdfNotFound />
-      </div>
-    );
-  }
   const data = {
     dataConfig: [
       {key: 'time', width: '5'},

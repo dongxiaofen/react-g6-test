@@ -5,7 +5,6 @@ import { Container, Row, Col } from 'components/common/layout';
 import styles from './index.less';
 
 import Filter from 'components/reportManage/Filter';
-import TypeFilter from 'components/reportManage/TypeFilter';
 import TableList from 'components/reportManage/TableList';
 
 @inject('reportManageStore', 'uiStore', 'routing', 'payModalStore')
@@ -43,14 +42,13 @@ export default class ReportMain extends Component {
             <div className="clearfix">
               <h1 className={styles.title}>报告列表</h1>
               <Filter
+                uiStore={this.props.uiStore}
                 reportManageStore={this.props.reportManageStore}
                 status={reportManageList.reportStatus}
                 reportManagePager={reportManagePager} />
             </div>
-            <TypeFilter reportManageStore={this.props.reportManageStore} />
             <div className={styles.listArea}>
               <TableList
-                status={reportManageList.reportStatus}
                 listData={reportManageStore.reportList}
                 loading={reportManageStore.isLoading} />
             </div>

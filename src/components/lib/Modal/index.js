@@ -1,6 +1,6 @@
 import React, { Component, PropTypes } from 'react';
-import { observer } from 'mobx-react';
 import { Link } from 'react-router';
+import { observer } from 'mobx-react';
 import Button from 'components/lib/button';
 import styles from './index.less';
 @observer
@@ -11,9 +11,7 @@ export default class Modal extends Component {
     title: PropTypes.string,
     width: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
     isCustomize: PropTypes.bool,
-    pointText: PropTypes.string,
-    pactName: PropTypes.string,
-    pactUrl: PropTypes.string,
+    pointText: PropTypes.bool,
     children: PropTypes.node,
     isSingleBtn: PropTypes.bool,
     // text
@@ -127,8 +125,8 @@ export default class Modal extends Component {
       pointTextComp = (
         <div className={styles.pointText}>
           <i className="fa fa-exclamation-circle"></i>
-          {this.props.pointText}
-          《<Link to={this.props.pactUrl}>{this.props.pactName}</Link>》
+          确定即视为同意
+          《<Link to="/disclaimer" target="_blank">免责声明</Link>》
         </div>
       );
     }

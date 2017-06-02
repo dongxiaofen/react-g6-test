@@ -3,51 +3,66 @@ import { observer } from 'mobx-react';
 import AnimateLoading from 'components/hoc/LoadingComp/AnimateLoading';
 import Item from '../Item';
 import styles from './index.less';
-function OperateInfo({baseInfo}) {
-  const config = [
-    {
-      name: '高级查询报告',
-      keys: 'reportCount',
-      unit: '个',
-    },
-    {
-      name: '深度评估报告',
-      keys: 'analysisReportCount',
-      unit: '个',
-    },
-    {
-      name: '监控主体报告',
-      keys: 'monitorCount',
-      unit: '个',
-    },
-    {
-      name: '个人核查',
-      keys: 'personCheckCount',
-      unit: '个',
-    },
-  ];
+
+function OperateInfo({accountSettingStore, clientStore, className}) {
+  const consumeType = clientStore.userInfo.consumeType;
+  const data = accountSettingStore.base.data;
   let output = (
     <div className={styles.animateBox}>
       <AnimateLoading />
     </div>
   );
-  if (baseInfo.data) {
+  if (data) {
+    const config = [
+      {
+        name: '查询报告',
+        keys: 'reportCount',
+        remainKey: 'leftReportNum',
+        unit: '个',
+      },
+      {
+        name: '监控报告',
+        keys: 'monitorCount',
+        remainKey: 'leftMonitorNum',
+        unit: '个',
+      },
+      {
+        name: '个人核查',
+        keys: 'personCheckCount',
+        remainKey: 'leftPersonCheckNum',
+        unit: '个',
+      },
+      {
+        name: '税务核查',
+        keys: 'taxCheckCount',
+        remainKey: 'leftTaxCheckNum',
+        unit: '个',
+      },
+      {
+        name: '剩余点数',
+        keys: 'point',
+        remainKey: 'remainingPoint',
+        none: consumeType !== 'POINT' || data.parentUserId ? true : false,
+        unit: '点',
+      },
+    ];
     const content = config.map((item, idx) => {
       return (
         <Item
           key={idx}
           {...item}
-          values={baseInfo.data[item.keys]} />
+          Remaining={false}
+          remainValue={data[item.remainKey]}
+          feeset={consumeType === 'FEESET' && !data.parentUserId}
+          values={data[item.keys]} />
       );
     });
     output = content;
   }
   return (
-    <div className={styles.wrapper}>
-      <div className={styles.infoBox}>
-        <h2 className={styles.operateTitle}>操作记录</h2>
-        {output}
-      </div>
+    <div className={`${styles.infoBox} ${className ? className : ''}`}>
+      <h2 className={styles.operateTitle}>操作记录</h2>
+      {output}
     </div>
   );
 }

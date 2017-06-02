@@ -1,4 +1,4 @@
-import { observable, action } from 'mobx';
+import { observable, action, toJS } from 'mobx';
 import { browserHistory } from 'react-router';
 import {searchApi} from 'api';
 import modalStore from './modal';
@@ -94,7 +94,7 @@ class SearchCompanyStore {
   // 点击某条数据相关信息
   @observable singleItemData = {};
   // 选择那种报告 'analysis'深度 'report'高级 'free'快速
-  @observable reportType = 'analysis';
+  @observable reportType = 'report';
   // 获取搜索公司列表
   @action.bound getCompanyList() {
     // 是否已搜索
@@ -222,6 +222,10 @@ class SearchCompanyStore {
   @action.bound searchChange(evt) {
     this.searchKey = evt.target.value;
   }
+  // 外部搜索传值searchKey
+  @action.bound searchChangeOther(name) {
+    this.searchKey = name;
+  }
   // 搜索handleEnter
   @action.bound handleEnter(evt) {
     if (evt.keyCode === 13) {
@@ -278,7 +282,7 @@ class SearchCompanyStore {
         if (type === 'ok') {
           // 全选和单选
           if (idx === 'all') {
-            this.filterSheet.filterResult[key] = obj.value;
+            this.filterSheet.filterResult[key] = toJS(obj.value);
             const status = [];
             this.filterSheet.filterStatus[key].map(()=>{
               status.push(true);
@@ -354,16 +358,6 @@ class SearchCompanyStore {
   @action.bound singleData(data) {
     this.singleItemData = data;
   }
-  // 创建免费报告
-  @action.bound createFreeReport() {
-    modalStore.closeAction();
-    const obj = {
-      content: '快速查询报告创建成功'
-    };
-    messageStore.openMessage({ ...obj });
-    const companyName = this.singleItemData.company;
-    browserHistory.push('/companyHome?companyName=' + companyName + '&companyType=FREE');
-  }
   // 创建高级报告
   @action.bound createReport() {
     // 打开弹出按钮loading
@@ -377,11 +371,11 @@ class SearchCompanyStore {
         modalStore.closeAction();
         // 弹出成功提示
         const obj = {
-          content: '高级查询报告创建成功'
+          content: '报告创建成功'
         };
         messageStore.openMessage({ ...obj });
         // 跳转
-        browserHistory.push(`/companyHome?reportId=${resp.data.reportId}&companyType=MAIN`);
+        browserHistory.push(`/companyHome?reportId=${resp.data.reportId}`);
       }))
       .catch(action('createReport error', (err) => {
         // 关闭弹出按钮loading
@@ -393,14 +387,15 @@ class SearchCompanyStore {
           if (err.response.data.errorCode === 409201) {
             // 弹出成功提示
             const obj = {
-              content: '高级查询报告创建成功'
+              content: '报告创建成功'
             };
             messageStore.openMessage({ ...obj });
             // 跳转
-            browserHistory.push(`/companyHome?reportId=${err.response.data.data.reportId}&companyType=MAIN`);
+            browserHistory.push(`/companyHome?reportId=${err.response.data.data.reportId}`);
           } else {
             // 弹出失败提示
             const obj = {
+              type: 'warning',
               content: err.response.data.message
             };
             messageStore.openMessage({ ...obj });
@@ -409,83 +404,34 @@ class SearchCompanyStore {
         console.log(err.response, '=====createReport error');
       }));
   }
-  // 创建深度报告
-  @action.bound createAnalysisReport() {
-    // 打开弹出按钮loading
-    modalStore.confirmLoading = true;
-    const companyName = this.singleItemData.company;
-    searchApi.createAnalysisReport(companyName)
-      .then(action('createAnalysisReport', (resp) => {
-        // 关闭弹出按钮loading
-        modalStore.confirmLoading = false;
-        // 关闭model
-        modalStore.closeAction();
-        // 弹出成功提示
-        const obj = {
-          content: '深度分析报告创建成功'
-        };
-        messageStore.openMessage({ ...obj });
-        // 跳转
-        browserHistory.push(`/companyHome?analysisReportId=${resp.data.analysisReportId}&companyType=MAIN`);
-      }))
-      .catch(action('createAnalysisReport error', (err) => {
-        // 关闭弹出按钮loading
-        modalStore.confirmLoading = false;
-        // 关闭model
-        modalStore.closeAction();
-        if (err.response && err.response.data && err.response.data.message) {
-          // 重复创建时
-          if (err.response.data.errorCode === 409201) {
-            // 弹出成功提示
-            const obj = {
-              content: '深度分析报告创建成功'
-            };
-            messageStore.openMessage({ ...obj });
-            // 跳转
-            browserHistory.push(`/companyHome?analysisReportId=${err.response.data.data.analysisReportId}&companyType=MAIN`);
-          } else {
-            // 弹出失败提示
-            const obj = {
-              content: err.response.data.message
-            };
-            messageStore.openMessage({ ...obj });
-          }
-        }
-        console.log(err.response, '=====createAnalysisReport error');
-      }));
-  }
   // 选择哪种报告
   @action.bound selectReportType(obj) {
     this.reportType = obj;
   }
   // 根据选择的报告类型创建报告
   @action.bound createReportType() {
-    if (this.reportType === 'free') {
-      this.createFreeReport();
-    }
     if (this.reportType === 'report') {
       this.createReport();
-    }
-    if (this.reportType === 'analysis') {
-      this.createAnalysisReport();
     }
   }
   // 创建监控
   @action.bound createMonitor(obj) {
-    searchApi.createMonitor(obj)
+    // 判断请求创建哪一种监控
+    const url = '/api/monitor';
+    // 弹出消息
+    let text = {
+      content: '监控创建成功'
+    };
+    searchApi.createMonitor(obj, url)
       .then(action('createMonitor', (resp) => {
         payModalStore.closeAction();
-        const text = {
-          content: '已创建监控'
-        };
         messageStore.openMessage({ ...text });
-        // /companyHome?monitorId=184832&companyType=MAIN
-        browserHistory.push(`/companyHome?monitorId=${resp.data.monitorId}&companyType=MAIN`);
+        browserHistory.push(`/companyHome?monitorId=${resp.data.monitorId}`);
       }))
       .catch(action('createMonitor error', (err) => {
         console.log(err.response, '=====createMonitor error');
         payModalStore.closeAction();
-        const text = {
+        text = {
           type: 'warning',
           content: err.response.data.message
         };
@@ -517,6 +463,11 @@ class SearchCompanyStore {
         console.log(resp, '======getFeedBack result');
       }))
       .catch(action('getFeedBack error', (err) => {
+        const text = {
+          type: 'warning',
+          content: err.response.data.message
+        };
+        messageStore.openMessage({ ...text });
         console.log(err.response, '=====getFeedBack error');
       }));
   }
@@ -577,7 +528,7 @@ class SearchCompanyStore {
     this.filterToggle = false;
     this.loading = false;
     this.singleItemData = {};
-    this.reportType = 'analysis';
+    this.reportType = 'report';
   }
 }
 export default new SearchCompanyStore();

@@ -2,8 +2,9 @@ import React from 'react';
 import { observer } from 'mobx-react';
 import styles from './index.less';
 function Counter({monitorListStore}) {
-  const data = monitorListStore.monitorCount;
+  const data = monitorListStore.monitorList.monitorCount;
   const returnLoading = (values) => {
+    if (data.error) return 0;
     if (data.errorCode) {
       return 0;
     }

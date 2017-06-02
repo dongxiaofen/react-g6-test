@@ -6,6 +6,7 @@ import AnimateLoading from 'components/hoc/LoadingComp/AnimateLoading';
 import NewsTabs from './NewsTabs';
 import Table from './Table';
 import Pager from './Pager';
+import styles from './index.less';
 function Content({internetStore}) {
   const data = internetStore.newsData.data;
   let output;
@@ -13,11 +14,11 @@ function Content({internetStore}) {
   if (error && error.errorCode === 404208) {
     output = <ErrorText error={{message: '暂无信息，平台正为您实时抓取新闻，请五分钟后再浏览'}} />;
   } else if (error) {
-    output = <ErrorText module="新闻分析" />;
+    output = <ErrorText module="新闻内容" />;
   } else if (!data) {
     output = <AnimateLoading />;
   } else if (data.content.length === 0) {
-    output = <ErrorText module="新闻分析" />;
+    output = <ErrorText module="新闻内容" />;
   } else {
     output = (
       <div>
@@ -28,9 +29,17 @@ function Content({internetStore}) {
   }
   return (
     <div>
-      <ModuleTitle module="新闻分析" />
-      <NewsTabs internetStore={internetStore} />
-      {output}
+      <div className="clearfix">
+        <div className={styles.title}>
+          <ModuleTitle module="新闻内容" />
+        </div>
+        <div className={`clearfix ${styles.tabs}`}>
+          <NewsTabs internetStore={internetStore} />
+        </div>
+      </div>
+      <div>
+        {output}
+      </div>
     </div>
   );
 }

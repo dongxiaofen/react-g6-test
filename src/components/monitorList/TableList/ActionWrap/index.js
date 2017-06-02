@@ -3,10 +3,10 @@ import { observer, inject } from 'mobx-react';
 import Switch from 'components/lib/switch';
 import Modal from 'components/lib/Modal';
 import styles from './index.less';
-function ActionWrap({data, mainData, index, relation, monitorListStore, payModalStore, messageStore}) {
+function ActionWrap({ data, mainData, index, relation, monitorListStore, payModalStore, messageStore, clientStore }) {
   const monitorId = relation === 'main' ? data.monitorId : data.monitorCompanyType.monitorId;
   const status = data.status;
-  const switchLoading = monitorListStore.switchLoading.get(monitorId);
+  const switchLoading = monitorListStore.monitorList.switchLoading.get(monitorId);
   const textDict = {
     'PAUSE': '暂停',
     'EXPIRED': '监控到期',
@@ -17,7 +17,7 @@ function ActionWrap({data, mainData, index, relation, monitorListStore, payModal
   const switchFlag = status === 'PAUSE' ? false : true;
   const expired = status === 'EXPIRED';
   const relDisable = relation === 'relation' && mainData.status === 'PAUSE';
-  const relLoading = relation === 'relation' && monitorListStore.switchLoading.get(mainData.monitorId);
+  const relLoading = relation === 'relation' && monitorListStore.monitorList.switchLoading.get(mainData.monitorId);
   const changeStatus = (newStatus) => {
     if (newStatus || relation === 'relation') {
       monitorListStore.changeStatus({
@@ -63,19 +63,24 @@ function ActionWrap({data, mainData, index, relation, monitorListStore, payModal
     });
   };
   const recharge = () => {
-    payModalStore.openCompModal({
+    let config = {
       'modalType': 'continueMonitor',
       'width': '560px',
-      'pactName': '用户服务协议',
-      'pactUrl': '/',
-      'pointText': '',
       'callBack': choiceOk
-    });
+    };
+    if (clientStore.userInfo.consumeType === 'FEESET') {
+      config = {
+        'isComboRenewal': true,
+        'callBack': choiceOk
+      };
+    }
+    payModalStore.openCompModal({ ...config });
   };
   return (
     <div className={styles.wrapper}>
       <div className={styles.actionBox}>
         <div className={styles.switchBox}>
+          <div className={styles.statusText}>{statusText}</div>
           <Switch
             onChange={changeStatus}
             status={switchFlag}
@@ -83,7 +88,6 @@ function ActionWrap({data, mainData, index, relation, monitorListStore, payModal
             loading={switchLoading || relLoading} />
         </div>
         {relation === 'main' && <div className={styles.statusTextBox}>
-          <div className={styles.statusText}>{statusText}</div>
           <div className={expired ? styles.rechargeBtn : styles.rechargeBtnBlue} onClick={recharge}>
             续期
           </div>
@@ -95,4 +99,4 @@ function ActionWrap({data, mainData, index, relation, monitorListStore, payModal
   );
 }
 
-export default inject('payModalStore', 'messageStore')(observer(ActionWrap));
+export default inject('payModalStore', 'messageStore', 'clientStore')(observer(ActionWrap));

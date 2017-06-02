@@ -1,7 +1,7 @@
 import React, { PropTypes } from 'react';
 import { observer } from 'mobx-react';
 import { ModuleTitle, CommonTable } from 'components/common/report';
-function FiliationList({ filiationList, isLoading }) {
+function FiliationList({ filiationList, isLoading, errText }) {
   if (!filiationList) {
     return null;
   }
@@ -16,8 +16,8 @@ function FiliationList({ filiationList, isLoading }) {
       dict: 'filiationList'
     },
     isLoading: isLoading,
-    module: '分支机构',
-    error: filiationList && filiationList.length === 0
+    module: errText ? errText : '分支机构',
+    error: errText || filiationList.length === 0 ? {message: errText} : false,
   };
   return (
     <div>

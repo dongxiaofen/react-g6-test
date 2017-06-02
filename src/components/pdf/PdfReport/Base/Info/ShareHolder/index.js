@@ -8,11 +8,21 @@ function ShareHolder({ moduleData }) {
   if (moduleData === null || moduleData.length === 0) {
     return (
       <div>
-        <SecondTitle module="注册信息"/>
+        <SecondTitle module="股东信息"/>
         <PdfNotFound />
       </div>
     );
   }
+  const formData = (data) => {
+    let newArr = [];
+    data.map( (item) => {
+      if (item.subConam) {
+        item.subConam = parseFloat(item.subConam).toFixed(2);
+      }
+      newArr = [...newArr, item];
+    });
+    return newArr;
+  };
   const data = {
     dataConfig: [
       {'key': 'shareholderName', 'width': '4'},
@@ -21,12 +31,12 @@ function ShareHolder({ moduleData }) {
       {'key': 'fundedRatio', 'width': '1.4'},
       {'key': 'conDate', 'width': '1.4'},
     ],
-    items: moduleData,
+    items: formData(moduleData),
     dict: 'shareholder',
   };
   return (
     <div>
-      <SecondTitle module="注册信息" />
+      <SecondTitle module="股东信息" />
       <PdfTable {...data} />
     </div>
   );

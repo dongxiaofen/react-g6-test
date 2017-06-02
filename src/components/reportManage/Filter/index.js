@@ -2,7 +2,7 @@ import React, {PropTypes} from 'react';
 import { observer } from 'mobx-react';
 import styles from './index.less';
 
-function Filter({ reportManageStore, reportManagePager, status }) {
+function Filter({ reportManageStore, uiStore, reportManagePager }) {
   const setFocus = (bool) => {
     reportManageStore.setFocus(bool);
   };
@@ -17,10 +17,11 @@ function Filter({ reportManageStore, reportManagePager, status }) {
       index: 1,
       size: reportManagePager.size
     };
-    if (status === 'report') {
+    const index = uiStore.uiState.reportManagePager.index;
+    if (index === 1) {
       reportManageStore.getReportList(params);
     } else {
-      reportManageStore.getAnalysisReportList(params);
+      uiStore.updateUiStore('reportManagePager.index', 1);
     }
   };
 
@@ -48,6 +49,7 @@ function Filter({ reportManageStore, reportManagePager, status }) {
 Filter.propTypes = {
   reportManagePager: PropTypes.object,
   reportManageStore: PropTypes.object,
+  uiStore: PropTypes.object,
   status: PropTypes.string,
 };
 export default observer(Filter);

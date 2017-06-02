@@ -35,6 +35,10 @@ function Footer() {
               <li>
                 <Link to="/about">关于我们</Link>
               </li>
+              <li className={styles['footer-menu-star']}></li>
+              <li>
+                <Link to="/userAgreement" target="_blank">用户协议</Link>
+              </li>
             </ul>
             <div className={`fs7 ${styles['footer-text']} ${styles['mb-20']}`}>
               Copyright &copy; 2016誉存保留所有权利

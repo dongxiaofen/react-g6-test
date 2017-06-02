@@ -6,91 +6,94 @@ import uiStore from './ui';
 import { monitorListApi } from 'api';
 const CancelToken = axios.CancelToken;
 class MonitorListStore {
-  mainListCancel = null;
-  mainCountCancel = null;
-  @observable monitorCount = {};
-  @observable mainList = {};
-  @observable pauseInfo = {
-    visible: false,
-    loading: false,
-    monitorId: '',
-    status: '',
-    idx: '',
-    relation: '',
-    mMonitorId: '',
-  };
-  relationList = observable.map({});
-  relationListStatus = observable.map({});
-  switchLoading = observable.map({});
+  @observable monitorList = {
+    mainListCancel: null,
+    mainCountCancel: null,
+    monitorCount: {},
+    mainList: {},
+    pauseInfo: {
+      visible: false,
+      loading: false,
+      monitorId: '',
+      status: '',
+      idx: '',
+      relation: '',
+      mMonitorId: '',
+    },
+    relationList: observable.map(),
+    relationListStatus: observable.map({}),
+    switchLoading: observable.map({}),
+  }
   @action.bound changeValue(key, value) {
     pathval.setPathValue(this, key, value);
   }
-  @action.bound changeParams(params) {
-    Object.assign(this.searchParams, params);
-  }
   @action.bound changeStatusInfo(params) {
-    Object.assign(this.pauseInfo, params);
+    Object.assign(this.monitorList.pauseInfo, params);
   }
   @action.bound addRelatedCount(index) {
-    console.log(index, '--index');
-    const relatedCount = this.mainList.content[index].relatedCount;
-    this.mainList.content[index].relatedCount = relatedCount + 1;
+    const relatedCount = this.monitorList.mainList.content[index].relatedCount;
+    this.monitorList.mainList.content[index].relatedCount = relatedCount + 1;
   }
   @action.bound getMainCount() {
     const {monitorStatus, companyName} = uiStore.uiState.monitorList.params;
-    this.monitorCount = {};
-    if (this.mainCountCancel) {
-      this.mainCountCancel();
-      this.mainCountCancel = null;
+    this.monitorList.monitorCount = {};
+    if (this.monitorList.mainCountCancel) {
+      this.monitorList.mainCountCancel();
+      this.monitorList.mainCountCancel = null;
     }
     const source = CancelToken.source();
-    this.mainCountCancel = source.cancel;
+    this.monitorList.mainCountCancel = source.cancel;
     monitorListApi.getMonitorCount({monitorStatus, companyName}, source)
       .then(action('getCount_success', resp => {
-        this.mainCountCancel = null;
-        this.monitorCount = resp.data;
+        this.monitorList.mainCountCancel = null;
+        this.monitorList.monitorCount = resp.data || {error: true};
       }))
       .catch(action('getCount_error', err => {
         if (!axios.isCancel(err)) {
-          this.mainCountCancel = null;
-          this.monitorCount = err.response.data;
+          this.monitorList.mainCountCancel = null;
+          this.monitorList.monitorCount = {error: err.response.data};
         }
       }));
   }
   @action.bound getMainList() {
-    if (this.mainListCancel) {
-      this.mainListCancel();
-      this.mainListCancel = null;
+    if (this.monitorList.mainListCancel) {
+      this.monitorList.mainListCancel();
+      this.monitorList.mainListCancel = null;
     }
     const source = CancelToken.source();
     const mainParams = Object.assign({}, uiStore.uiState.monitorListPager, uiStore.uiState.monitorList.params);
     delete mainParams.totalElements;
-    this.mainListCancel = source.cancel;
-    this.mainList = {};
-    this.relationListStatus = observable.map({});
+    this.monitorList.mainListCancel = source.cancel;
+    this.monitorList.mainList = {};
+    this.monitorList.relationListStatus = observable.map({});
     monitorListApi.getMainList(mainParams, source)
       .then(action('getMainList_success', resp => {
-        this.mainListCancel = null;
+        this.monitorList.mainListCancel = null;
         uiStore.uiState.monitorListPager.totalElements = resp.data.totalElements;
         const data = resp.data.content && resp.data.content.length > 0 ? resp.data : {error: {message: '未查询到相关监控信息'}, content: []};
-        this.mainList = data;
+        this.monitorList.mainList = data;
       }))
       .catch(action('getMainList_error', err => {
         if (!axios.isCancel(err)) {
-          this.mainListCancel = null;
-          this.mainList = {error: err.response.data, content: []};
+          this.monitorList.mainListCancel = null;
+          this.monitorList.mainList = {error: err.response.data, content: []};
         }
       }));
   }
-  @action.bound getRelationList(monitorId) {
-    this.relationListStatus.set(monitorId, 'loading');
+  @action.bound getRelationList(monitorId, count) {
+    if (count === 0) {
+      this.monitorList.relationListStatus.set(monitorId, 'show');
+      this.monitorList.relationList.set(monitorId, []);
+      return false;
+    }
+    this.monitorList.relationListStatus.set(monitorId, 'loading');
     monitorListApi.getRelList(monitorId)
       .then(action('getRelList_success', resp => {
-        this.relationListStatus.set(monitorId, 'show');
-        this.relationList.set(monitorId, resp.data);
+        this.monitorList.relationListStatus.set(monitorId, 'show');
+        this.monitorList.relationList.set(monitorId, resp.data);
       }))
       .catch(action('getRelList_success', err => {
-        this.relationListStatus.set(monitorId, 'hide');
+        this.monitorList.relationListStatus.set(monitorId, 'hide');
         messageStore.openMessage({
           type: 'error',
           content: err.response && err.response.data && err.response.data.message || '获取失败',
@@ -98,14 +101,14 @@ class MonitorListStore {
       }));
   }
   @action.bound delRelationList(monitorId) {
-    this.relationListStatus.set(monitorId, 'hide');
-    this.relationList.set(monitorId, null);
+    this.monitorList.relationListStatus.set(monitorId, 'hide');
+    this.monitorList.relationList.set(monitorId, null);
   }
   @action.bound changeStatus(params) {
-    const {monitorId, status, idx, relation, mMonitorId} = params || this.pauseInfo;
-    this.switchLoading.set(monitorId, true);
+    const {monitorId, status, idx, relation, mMonitorId} = params || this.monitorList.pauseInfo;
+    this.monitorList.switchLoading.set(monitorId, true);
     monitorListApi.changeMonitorStatus({monitorId, status})
-      .then(action('changeStatus_success', resp => {
+      .then(action('changeStatus_success', () => {
         if (relation === 'main') {
           const {index, size, totalElements} = uiStore.uiState.monitorListPager;
           let newIndex = index;
@@ -115,23 +118,22 @@ class MonitorListStore {
           uiStore.uiState.monitorListPager.index = newIndex;
           this.getMainCount();
           this.getMainList();
-          // this.mainList.content[index] = Object.assign({}, this.mainList.content[index], resp.data.slice(-1)[0]);
-          // this.relationList.set(monitorId, resp.data.slice(0, -1));
-          this.pauseInfo.visible = false;
-          this.pauseInfo.loading = false;
+          this.monitorList.pauseInfo.visible = false;
+          this.monitorList.pauseInfo.loading = false;
         } else {
-          this.relationList.get(mMonitorId)[idx] = Object.assign({}, this.relationList.get(mMonitorId)[idx], resp.data[0]);
+          this.monitorList.relationList.get(mMonitorId)[idx].status = this.monitorList.relationList.get(mMonitorId)[idx].status === 'MONITOR' ? 'PAUSE' : 'MONITOR';
+          // this.monitorList.relationList.get(mMonitorId)[idx] = Object.assign({}, this.monitorList.relationList.get(mMonitorId)[idx], resp.data[0]);
         }
-        this.switchLoading.set(monitorId, false);
+        this.monitorList.switchLoading.set(monitorId, false);
         messageStore.openMessage({
           type: 'info',
           content: '修改成功',
         });
       }))
       .catch(action('changeStatus_error', err => {
-        this.switchLoading.set(monitorId, false);
-        this.pauseInfo.visible = false;
-        this.pauseInfo.loading = false;
+        this.monitorList.switchLoading.set(monitorId, false);
+        this.monitorList.pauseInfo.visible = false;
+        this.monitorList.pauseInfo.loading = false;
         messageStore.openMessage({
           type: 'error',
           content: err.response && err.response.data && err.response.data.message || '修改失败',
@@ -150,7 +152,6 @@ class MonitorListStore {
         uiStore.uiState.monitorListPager.index = newIndex;
         this.getMainCount();
         this.getMainList();
-        // this.mainList.content[index] = Object.assign({}, this.mainList.content[index], resp.data);
         successCb(resp);
       }))
       .catch(action('renewal_error', err => {

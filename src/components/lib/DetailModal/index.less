@@ -6,15 +6,15 @@
        -o-transform: translateZ(0);
           transform: translateZ(0);
 
-  -webkit-transition: all @secend ease-in-out;
-     -moz-transition: all @secend ease-in-out;
-      -ms-transition: all @secend ease-in-out;
-       -o-transition: all @secend ease-in-out;
-          transition: all @secend ease-in-out;
+  -webkit-transition: visibility,opacity @secend ease-in-out;
+     -moz-transition: visibility,opacity @secend ease-in-out;
+      -ms-transition: visibility,opacity @secend ease-in-out;
+       -o-transition: visibility,opacity @secend ease-in-out;
+          transition: visibility,opacity @secend ease-in-out;
 }
 
 .modal {
-  position: fixed;;
+  position: fixed;
   left: 0;
   right: 0;
   top: 0;
@@ -50,6 +50,16 @@
 .visible {
   opacity: 1;
   visibility: visible;
+}
+
+.bgClick {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+
+  background: transparent;
 }
 
 .title {

@@ -5,7 +5,7 @@ import {observer} from 'mobx-react';
 function Bidding({data, module, store, cardType}) {
   const viewDetail = () => {
     let companyId = '';
-    if (module === 'laneGraph') {
+    if (module === 'timeAxis') {
       companyId = data.relatedMonitorId || data.mainMonitorId;
     } else {
       companyId = store.events.info.monitorId;

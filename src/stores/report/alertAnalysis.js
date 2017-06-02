@@ -7,10 +7,17 @@ import uiStore from '../ui';
 import messageStore from '../message';
 const CancelToken = axios.CancelToken;
 class AlertAnalysisStore {
+  constructor() {
+    this.alertCancel = null;
+  }
+
   @observable isMount = false;
   @observable loadingId = -1;
-  alertCancel = null;
-  @observable listData = {};
+  @observable listData = [];
+  // 六芒星data
+  @observable sixStarData = '';
+  // 六芒星loading
+  @observable loading = false;
   @observable detailData = {
     activeIndex: 0,
     page: 1,
@@ -28,16 +35,25 @@ class AlertAnalysisStore {
     companyHomeApi.judgeReportType(companyName)
       .then(resp => {
         const {reportId, monitorId, analysisReportId} = resp.data;
-        const type = resp.data.monitorMapResponse && resp.data.monitorMapResponse.companyType;
+        // const type = resp.data.monitorMapResponse && resp.data.monitorMapResponse.companyType;
         let url;
-        if (monitorId && type === 'MAIN') {
-          url = `corpDetail?companyType=${type}&monitorId=${monitorId}`;
+        // if (monitorId && type === 'MAIN') {
+        //   url = `corpDetail?companyType=${type}&monitorId=${monitorId}`;
+        // } else if (reportId) {
+        //   url = `corpDetail?companyType=MAIN&reportId=${reportId}`;
+        // } else if (analysisReportId) {
+        //   url = `corpDetail?companyType=MAIN&analysisReportId=${analysisReportId}`;
+        // } else {
+        //   url = `corpDetail?companyName=${companyName}&companyType=FREE`;
+        // }
+        if (monitorId) {
+          url = `corpDetail?monitorId=${monitorId}`;
         } else if (reportId) {
-          url = `corpDetail?companyType=MAIN&reportId=${reportId}`;
+          url = `corpDetail?reportId=${reportId}`;
         } else if (analysisReportId) {
-          url = `corpDetail?companyType=MAIN&analysisReportId=${analysisReportId}`;
+          url = `corpDetail?analysisReportId=${analysisReportId}`;
         } else {
-          url = `corpDetail?companyName=${companyName}&companyType=FREE`;
+          url = `corpDetail?companyName=${companyName}`;
         }
         window.open(url);
       })
@@ -61,7 +77,7 @@ class AlertAnalysisStore {
       .then(action('getAlertDetail_success', resp => {
         this.loadingId = -1;
         this.alertCancel = null;
-        this.detailData.detail = resp.data;
+        this.detailData.detail = info.alertType === 'RULE' ? resp.data.content : resp.data;
         this.detailData.info = info;
         this.openDetailModal(this.detailData.info.alertType);
         if (this.detailData.info.alertType === 'RULE') {
@@ -72,8 +88,8 @@ class AlertAnalysisStore {
             this.getJudgeDocDetail(companyType, companyId, this.detailData.detail[this.detailData.activeIndex].content);
           }
         } else if (this.detailData.info.alertType === 'SYS_RULE') {
-          if (resp.data.detail[0].type === 'judgeInfo' && this.detailData.detail.detail[0].judgeInfo) {
-            this.getJudgeDocDetail(companyType, companyId, this.detailData.detail.detail[0].judgeInfo);
+          if (resp.data[0].detail[0].type === 'judgeInfo' && this.detailData.detail[0].detail[0].judgeInfo) {
+            this.getJudgeDocDetail(companyType, companyId, this.detailData.detail[0].detail[0].judgeInfo);
           }
         }
       }))
@@ -178,11 +194,35 @@ class AlertAnalysisStore {
       html: '',
     };
   }
+  // 获取六芒星Data
+  @action.bound getSixStar(monitorId) {
+    if (window.reportSourceCancel === undefined) {
+      window.reportSourceCancel = [];
+    }
+    const source = CancelToken.source();
+    window.reportSourceCancel.push(source.cancel);
+    // 打开loading
+    this.loading = true;
+    // 获取列表数据
+    companyHomeApi.getSixStar(monitorId, source)
+      .then(action('six list', (resp) => {
+        this.sixStarData = resp.data.result;
+        // 关闭loading
+        this.loading = false;
+      }))
+      .catch(action('six error', (err) => {
+        console.log(err.response, '=====six error');
+        // 关闭loading
+        this.loading = false;
+        this.sixStarData = {error: 'error'};
+      }));
+  }
   @action.bound resetStore() {
     this.isMount = false;
     this.loadingId = -1;
-    this.alertCancel = null;
     this.listData = {};
+    this.sixStarData = {};
+    this.loading = false;
     this.resetDetailData();
   }
 }

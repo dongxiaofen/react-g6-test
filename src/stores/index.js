@@ -1,5 +1,5 @@
 // export homeStore from './home';
-export searchStore from './search';
+// export searchStore from './search';
 export relationStore from './relation';
 export alertStore from './alert';
 export modalStore from './modal';
@@ -28,6 +28,7 @@ export ruleStore from './rule';
 export stockStore from './report/stock';
 export networkStore from './report/network';
 export ruleCompanyStore from './ruleCompany';
+export timeAxisStore from './report/timeAxis';
 export alertAnalysisStore from './report/alertAnalysis';
 export relPerCheckStore from './report/relPerCheck';
 export personReportStore from './personReport';
@@ -35,4 +36,13 @@ export pdfStore from './pdf';
 export blackNetworkStore from './report/blackNetwork';
 export collectionStore from './collection';
 export bidMarketStore from './bidMarket';
+export highRiskCorpStore from './highRiskCorp';
+export accountProfileStore from './accountProfile';
+export forceNetworkStore from './report/forceNetwork';
+export nowRecordStore from './report/nowRecord';
+export taxStore from './report/tax';
+export taxCheckStore from './report/taxCheck';
+export assetTransactionStore from './assetTransaction';
+export linkJumpStore from './linkJump';
+export entireLoadingStore from './entireLoading';
 // append here from plop

@@ -9,39 +9,31 @@ function BaseList({
   routing,
   reportManageStore,
   payModalStore,
-  modalStore,
+  // modalStore,
   item,
-  status,
 }) {
-  const reportId = status === 'report' ? item.reportId : item.analysisReportId;
+  const reportId = item.reportId;
   const choiceOk = () => {
     const reportManagePager = uiStore.uiState.reportManagePager;
     const params = {
-      companyName: '',
+      companyName: reportManageStore.companyName,
       index: reportManagePager.index,
       size: reportManagePager.size
     };
-    reportManageStore.upGradeToMonitor(reportId, status, params, payModalStore.selectValue);
+    reportManageStore.upGradeToMonitor(reportId, params, payModalStore.selectValue);
   };
 
   const turnToMonitor = () => {
     payModalStore.openCompModal({
       'modalType': 'createMonitor',
-      'width': '560px',
-      'pactName': '用户服务协议',
-      'pactUrl': '/',
-      'pointText': '加入监控即视为同意',
+      'pointText': true,
       'callBack': choiceOk
     });
   };
 
   const viewReport = () => {
     const { push } = routing;
-    if (status === 'report') {
-      push(`/companyHome?reportId=${reportId}&companyType=MAIN`);
-    } else {
-      push(`/companyHome?analysisReportId=${reportId}&companyType=MAIN`);
-    }
+    push(`/companyHome?reportId=${reportId}`);
   };
 
   const stockTableType = (stockType) => {
@@ -54,38 +46,17 @@ function BaseList({
     return str;
   };
 
-  const openUpdateToAnalysisModal = (_reportId) => {
-    const updateDeepAction = () => {
-      const reportManagePager = uiStore.uiState.reportManagePager;
-      const params = {
-        companyName: '',
-        index: reportManagePager.index,
-        size: reportManagePager.size
-      };
-      reportManageStore.updateToAnalysisReport(_reportId, params);
-    };
-    modalStore.openCompModal({
-      title: '升级报告',
-      width: 420,
-      isSingleBtn: true,
-      pointText: '升级报告即视为同意',
-      pactUrl: 'xxxxxx',
-      pactName: '用户服务协议',
-      confirmAction: updateDeepAction,
-      loader: (cb) => {
-        require.ensure([], (require) => {
-          cb(require('./UpdateDeep'));
-        });
-      }
-    });
-  };
-
   return (
     <div className={`clearfix ${styles.item}`}>
       <Row>
         <Col width="5">
           <div className={styles.nameWrap}>
-            <span onClick={viewReport} className={styles.name}>{item.companyName}</span>
+            <span
+              className={styles.name}
+              title={ item.companyName }
+              onClick={viewReport}>
+              {item.companyName}
+            </span>
             {
               item.companyStatus
                 ? <span title={item.companyStatus} className={styles.mainLabel}>{item.companyStatus}</span>
@@ -95,7 +66,11 @@ function BaseList({
           </div>
           <div className={styles.infoDetail}>
             <span className={styles.detailItem}>{`法人：${item.frName ? item.frName : '无'}`}</span>
-            <span className={styles.detailItem}>{`地址：${item.address ? item.address : '无'}`}</span>
+            <span
+              className={styles.detailItem}
+              title={item.address ? item.address : '无'}>
+              {`地址：${item.address ? item.address : '无'}`}
+            </span>
           </div>
         </Col>
         <Col width="4">
@@ -117,14 +92,6 @@ function BaseList({
         <Col width="3">
           <div className="clearfix">
             <div className={`clearfix ${styles.actionWrap}`}>
-              {
-                status === 'report'
-                ?
-                  <div className={`${styles.turnBtn}`} onClick={openUpdateToAnalysisModal.bind(null, reportId)}>
-                    升级报告
-                  </div>
-                : null
-              }
               <div className={`${styles.turnBtn}`}
                 onClick={turnToMonitor}>
                 加入监控
@@ -142,14 +109,13 @@ BaseList.propTypes = {
   uiStore: PropTypes.object,
   reportManageStore: PropTypes.object,
   payModalStore: PropTypes.object,
-  modalStore: PropTypes.object,
+  // modalStore: PropTypes.object,
   item: PropTypes.object,
-  status: PropTypes.string,
 };
 export default inject(
   'routing',
   'uiStore',
   'reportManageStore',
-  'modalStore',
+  // 'modalStore',
   'payModalStore'
 )(observer(BaseList));

@@ -8,9 +8,9 @@ import AddTr from './AddTr';
 import Pager from 'components/common/Pager';
 import styles from './index.less';
 function TableList({monitorListStore}) {
-  const mainData = monitorListStore.mainList.content;
-  const relData = monitorListStore.relationList;
-  const relDataStatus = monitorListStore.relationListStatus;
+  const mainData = monitorListStore.monitorList.mainList.content;
+  const relData = monitorListStore.monitorList.relationList;
+  const relDataStatus = monitorListStore.monitorList.relationListStatus;
   const createList = () => {
     const output = [];
     let item;
@@ -78,8 +78,8 @@ function TableList({monitorListStore}) {
 
 export default loadingComp({
   mapDataToProps: props => ({
-    loading: props.monitorListStore.mainList.content === undefined ? true : false,
-    error: props.monitorListStore.mainList.error,
+    loading: props.monitorListStore.monitorList.mainList.content === undefined ? true : false,
+    error: props.monitorListStore.monitorList.mainList.error,
     imgCategory: 13,
     category: 2,
     errCategory: 2,

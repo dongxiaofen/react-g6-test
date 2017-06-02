@@ -5,6 +5,7 @@ import blackNetworkStore from './blackNetwork';
 import leftBarStore from '../leftBar';
 import modalStore from '../modal';
 import messageStore from '../message';
+import searchCompanyStore from '../searchCompany';
 import { browserHistory } from 'react-router';
 
 class NetworkStore {
@@ -36,7 +37,7 @@ class NetworkStore {
   @observable targetComp = '';
   @observable monitorInfoList = [];
   @observable mainCompanyName = '';
-  @observable layout = 'force';
+  @observable layout = 'circle';
   @observable focusNodeName = '';
   @observable searchKey = '';
   @observable currentLevel = 1;
@@ -57,6 +58,12 @@ class NetworkStore {
         modalStore.closeAction();
         messageStore.openMessage({ content: err.response.data.message, type: 'warning' });
       }));
+  }
+  @action.bound gotoSearch(name) {
+    searchCompanyStore.searchTabClick('COMPANY_NAME');
+    searchCompanyStore.searchChangeOther(name);
+    searchCompanyStore.getCompanyList();
+    browserHistory.push(`/searchCompany`);
   }
   @action.bound jumpBlackNode(name, params) {
     blackNetworkStore.jumpNode = name;
@@ -206,5 +213,6 @@ class NetworkStore {
       this.typeList.checkedArrChanged = false;
     }
   }
+
 }
 export default new NetworkStore();

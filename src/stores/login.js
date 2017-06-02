@@ -72,7 +72,7 @@ class LoginStore {
             pathval.setPathValue(this, 'isShowLogin', false);
             const redirectRoute = ['/', '/about', '/solution'];
             if (redirectRoute.indexOf(pathname) !== -1) {
-              location.href = '/myHomePage';
+              location.href = '/accountProfile';
             } else {
               location.reload();
             }

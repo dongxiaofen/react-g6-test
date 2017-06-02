@@ -5,15 +5,16 @@ import styles from './index.less';
 
 function Menu({ routing }) {
   const config = [
-    { parent: { module: '首页', route: 'myHomePage' } },
+    { parent: { module: '首页', route: 'accountProfile' } },
     { parent: { module: '查询', route: 'searchCompany' } },
-    {
-      parent: { module: '头条' },
-      children: [
-        { module: '每日头条', route: 'riskHeadlines' },
-        { module: '头条趋势', route: 'monitorStatistics' },
-      ]
-    },
+    // {
+    //   parent: { module: '头条' },
+    //   children: [
+    //     { module: '每日头条', route: 'riskHeadlines' },
+    //     { module: '头条趋势', route: 'monitorStatistics' },
+    //   ]
+    // },
+    { parent: { module: '头条', route: 'riskHeadlines' } },
     {
       parent: { module: '企业' },
       children: [
@@ -32,13 +33,14 @@ function Menu({ routing }) {
       parent: { module: '市场' },
       children: [
         { module: '招投标', route: 'bidMarket' },
-        { module: '资产交易', route: 'poorAssets' },
-        { module: '风险企业', route: 'blackList' },
+        { module: '资产交易', route: 'assetTransaction' },
+        { module: '风险企业', route: 'highRiskCorp' },
       ],
     },
   ];
 
   const routeToPage = (route) => {
+    console.log(route);
     browserHistory.push(`/${route}`);
   };
 

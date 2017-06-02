@@ -14,9 +14,6 @@ export default class Risk extends Component {
   static propTypes = {
     riskStore: PropTypes.object
   };
-  componentWillUnmount() {
-    this.props.riskStore.resetStore();
-  }
   render() {
     const riskStore = this.props.riskStore;
     return (
@@ -24,7 +21,7 @@ export default class Risk extends Component {
         <TabPane tab="法务信息" key="法务信息">
           <Court riskStore={riskStore}/>
         </TabPane>
-        <TabPane tab="税务公示信息" key="税务公示信息">
+        <TabPane tab="纳税信用" key="纳税信用">
           <Tax riskStore={riskStore}/>
         </TabPane>
         <TabPane tab="工商公示信息" key="工商公示信息">

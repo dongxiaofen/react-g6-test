@@ -1,15 +1,12 @@
-import React, { PropTypes } from 'react';
+import React from 'react';
 import styles from './index.less';
-function Title({children}) {
+function Title() {
   return (
     <h1
       className={styles.titleCss}
       >
-      {children}
+      监控列表
     </h1>
   );
 }
-Title.propTypes = {
-  children: PropTypes.node,
-};
 export default Title;

@@ -14,7 +14,13 @@ let svgEdgelabels;
 let simulation;
 let zoom;
 let isDragging = false;
-
+let svg;
+let group;
+let linkG;
+let nodeG;
+let edgepathsG;
+let edgelabelsG;
+let textsG;
 
 @inject('blackNetworkStore')
 @observer
@@ -27,108 +33,42 @@ export default class ForceNetworkGraph extends Component {
 
   componentDidMount() {
     // console.log(toJS(this.props.blackNetworkStore), 'componentDidMount');
-    const mainCompanyName = this.props.blackNetworkStore.mainCompanyName;
+    // const mainCompanyName = this.props.blackNetworkStore.mainCompanyName;
     const graph = toJS(this.props.blackNetworkStore.blackNetwork);
     nodesData = graph.nodes;
     edgesData = graph.links;
-
     zoom = d3.zoom();
-    const svg = d3.select('svg')
+    svg = d3.select('svg')
       .call(zoom.on('zoom', () => {
-        // console.log(d3.event.transform);
-        svg.attr('transform', `translate(${d3.event.transform.x}, ${d3.event.transform.y}) scale(${d3.event.transform.k})`);
-      }))
-      .append('g');
+        group.attr('transform', `translate(${d3.event.transform.x}, ${d3.event.transform.y}) scale(${d3.event.transform.k})`);
+      }));
+    group = svg.append('g').attr('id', 'whole');
+
     const width = d3.select('svg').attr('width');
     const height = d3.select('svg').attr('height');
 
-    simulation = d3.forceSimulation()
-      .force('link', d3.forceLink().id((data) => { return data.name; }).distance(150))
-      .force('charge', d3.forceManyBody())
-      .force('center', d3.forceCenter(width / 2, height / 2));
-
-    simulation
-      .nodes(nodesData)
+    simulation = d3.forceSimulation(nodesData)
+      .force('charge', d3.forceManyBody().strength(-2000))
+      .force('center', d3.forceCenter(width / 2, height / 2))
+      .force('link', d3.forceLink(edgesData).id((data) => { return data.name; }).distance(150))
+      // .force('collide', d3.forceCollide(58).iterations(16).radius((data) => { return data.isActive === 0 ? 20 : 70; }))
+      .force('x', d3.forceX(0))
+      .force('y', d3.forceY(0))
       .on('tick', this.ticked);
 
-    simulation.force('link')
-      .links(edgesData);
+    linkG = group.append('g').attr('id', 'lines');
+    nodeG = group.append('g').attr('id', 'nodes');
+    textsG = group.append('g').attr('id', 'texts');
+    edgepathsG = group.append('g').attr('id', 'linePaths');
+    edgelabelsG = group.append('g').attr('id', 'lineLabels');
+
     // 第一次以后从关联关系跳转过来时， 更新expandIdx
     const pathsArr = this.props.blackNetworkStore.blackNetwork.paths;
     const expandIdx = this.props.blackNetworkStore.expandIdx;
     svgTools.updateNodeByExpandIdx(pathsArr, expandIdx, nodesData);
     svgTools.updateLinksDisplay(nodesData, edgesData);
 
-    svgEdges = svg.append('g')
-      .selectAll('line')
-      .data(edgesData)
-      .enter().append('line')
-      .attr('class', (data) => {
-        return !data.source.hide && !data.target.hide ? styles.links : styles.hide;
-      })
-      .attr('marker-end', () => {
-        return 'url(#relativeArrow)';
-      });
-
-    svgNodes = svg.append('g')
-      .selectAll('circle')
-      .data(nodesData)
-      .enter().append('circle')
-      .attr('r', 12)
-      .attr('class', (data) => {
-        return (data.hide && styles.hide) || (data.isBlack && styles.blackListNodes) || (data.name === mainCompanyName && styles.mainCompany) || (data.type === 'networkCompany' && styles.relativeCompany) || (data.type === 'networkPerson' && styles.relativePerson) || styles.otherNode;
-      })
-      .call(d3.drag()
-        .on('start', this.dragstarted)
-        .on('drag', this.dragged)
-        .on('end', this.dragended));
-    svgTexts = svg.selectAll('text')
-      .data(nodesData)
-      .enter()
-      .append('text')
-      .attr('class', (data) => {
-        return data.hide ? styles.hide : styles.text;
-      })
-      .attr('text-anchor', 'middle')
-      .attr('dy', () => {
-        return 25;
-      })
-      .text((data) => {         // 返回节点的名字
-        return data.name;
-      })
-      .call(d3.drag()
-        .on('start', this.dragstarted)
-        .on('drag', this.dragged)
-        .on('end', this.dragended));
-    svgEdgepaths = svg.selectAll('.edgepath')
-      .data(edgesData)
-      .enter()
-      .append('path')
-      .attr('d', (data) => { return 'M ' + data.source.x + ' ' + data.source.y + ' L ' + data.target.x + ' ' + data.target.y; })
-      .attr('class', 'edgepath')
-      .attr('id', (data, idx) => { return 'edgepath' + idx; })
-      .style('pointer-events', 'none');
-
-    svgEdgelabels = svg.selectAll('.edgelabel')
-      .data(edgesData)
-      .enter()
-      .append('text')
-      .style('pointer-events', 'none')
-      .attr('dx', 40)
-      .attr('dy', -2)
-      .attr('class', (data) => {
-        return data.isFocus ? styles.show : styles.hide;
-      })
-      .attr('font-size', 8)
-      .attr('fill', '#3483e9')
-      .attr('id', (data, idx) => { return 'edgelabel' + idx; });
-
-
-    svgEdgelabels.append('textPath')
-      .attr('xlink:href', (data, idx) => { return '#edgepath' + idx; })
-      .style('pointer-events', 'none')
-      .text((data) => { return svgTools.getBlackLinkInfo(data); });
-
+    this.reDraw();
     // 监听点击节点事件
     reaction(
       () => this.props.blackNetworkStore.focusNodeName,
@@ -157,8 +97,113 @@ export default class ForceNetworkGraph extends Component {
       }
     );
   }
+  componentWillUnmount() {
+    if (simulation) {
+      simulation.stop(); // 停止网络图计算
+    }
+    nodesData = [];
+    edgesData = [];
+    svgEdges = '';
+    svgNodes = '';
+    svgTexts = '';
+    isDragging = false;
+    zoom = '';
+    group = '';
+  }
+  reDraw = () => {
+    simulation.nodes(nodesData);
+    simulation.force('link').links(edgesData);
+    // nodes
+    svgNodes = nodeG
+      .selectAll('circle')
+      .data(nodesData, (data) => data.name);
+    svgNodes.exit().remove();
+    const nodeEnter = svgNodes.enter();
+    nodeEnter
+      .append('circle')
+      .attr('class', (data) => {
+        return (data.hide && styles.hide) || (data.isBlack && styles.blackListNodes) || (data.name === this.props.blackNetworkStore.mainCompanyName && styles.mainCompany) || (data.type === 'networkCompany' && styles.relativeCompany) || (data.type === 'networkPerson' && styles.relativePerson) || styles.otherNode;
+      })
+      .attr('r', 12)
+      .call(d3.drag()
+        .on('start', this.dragstarted)
+        .on('drag', this.dragged)
+        .on('end', this.dragended))
+      .append('title')
+      .text((data) => { return data.name; });
+
+    svgNodes = nodeEnter
+      .merge(svgNodes);
+    // texts
+    svgTexts = textsG.selectAll('text').data(nodesData, (data) => data.name);
+    svgTexts.exit().remove();
+    const texts1Enter = svgTexts.enter()
+      .append('text')
+      .attr('class', (data) => {
+        return data.hide ? styles.hide : styles.nodeText;
+      })
+      .attr('text-anchor', 'middle')
+      .attr('dy', 25)
+      .text((data) => {
+        return data.name;
+      })
+      .call(d3.drag()
+        .on('start', this.dragstarted)
+        .on('drag', this.dragged)
+        .on('end', this.dragended))
+      .append('title')
+      .text((data) => { return data.name; });
+    svgTexts = texts1Enter.merge(svgTexts);
+
+    // links
+    svgEdges = linkG
+      .selectAll('line')
+      .data(edgesData, (data) => data.id);
+    svgEdges.exit().remove();
+    const linkEnter = svgEdges
+      .enter()
+      .append('line')
+      .attr('class', (data) => {
+        return !data.source.hide && !data.target.hide ? styles.links : styles.hide;
+      })
+      .attr('marker-end', () => {
+        return 'url(#relativeArrow)';
+      });
+    svgEdges = linkEnter.merge(svgEdges);
+    // labels
+    svgEdgepaths = edgepathsG.selectAll('.edgepath').data(edgesData, (data) => data.id);
+    svgEdgepaths.exit().remove();
+    const edgepathEnter = svgEdgepaths.enter()
+      .append('path')
+      .attr('class', 'edgepath')
+      .attr('id', (data, idx) => { return 'edgepath' + idx; })
+      .style('pointer-events', 'none');
+    svgEdgepaths = edgepathEnter.merge(svgEdgepaths);
+
+    svgEdgelabels = edgelabelsG.selectAll('.edgelabel').data(edgesData, (data) => data.id);
+    svgEdgelabels.exit().remove();
+    const edgelabelsEnter = svgEdgelabels.enter()
+      .append('text')
+      .style('pointer-events', 'none')
+      .attr('class', (data) => {
+        return data.isFocus ? styles.show : styles.hide;
+      })
+      .attr('font-size', 8)
+      .attr('fill', '#3483e9')
+      .attr('dx', 40)
+      .attr('dy', -2)
+      .attr('id', (data, idx) => { return 'edgelabel' + idx; })
+      .append('textPath')
+      .attr('xlink:href', (data, idx) => { return '#edgepath' + idx; })
+      .style('pointer-events', 'none')
+      .text((data) => svgTools.getBlackLinkInfo(data));
+    svgEdgelabels = edgelabelsEnter.merge(svgEdgelabels);
+
+    // Update and restart the simulation.
+    simulation.alpha(1).restart();
+  }
   ticked = () => {
-    svgEdges
+    d3.selectAll('line')
       .attr('x1', (data) => { return data.source.x; })
       .attr('y1', (data) => { return data.source.y; })
       .attr('x2', (data) => { return data.target.x; })
@@ -167,32 +212,34 @@ export default class ForceNetworkGraph extends Component {
         return (data.hide && styles.hide) || (data.isFocus && styles.focusLink) || styles.links;
       });
 
-    svgNodes
+    d3.selectAll('circle')
       .attr('cx', (data) => { return data.x; })
       .attr('cy', (data) => { return data.y; })
       .attr('class', (data) => {
         return (data.hide && styles.hide) || (data.isBlack && styles.blackListNodes) || (data.name === this.props.blackNetworkStore.mainCompanyName && styles.mainCompany) || (data.type === 'networkCompany' && styles.relativeCompany) || (data.type === 'networkPerson' && styles.relativePerson) || styles.otherNode;
       });
 
-    svgEdgepaths.attr('d', (data) => {
-      const path = 'M ' + data.source.x + ' ' + data.source.y + ' L ' + data.target.x + ' ' + data.target.y;
-      return path;
-    });
+    d3.selectAll('.edgepath')
+      .attr('d', (data) => {
+        const path = 'M ' + data.source.x + ' ' + data.source.y + ' L ' + data.target.x + ' ' + data.target.y;
+        return path;
+      });
 
-    svgEdgelabels.attr('transform', function autoRotate(data) {
-      if (data.target.x < data.source.x) {// 边上的文字自动转向
-        const bbox = this.getBBox();
-        const rx = bbox.x + bbox.width / 2;
-        const ry = bbox.y + bbox.height / 2;
-        return 'rotate(180 ' + rx + ' ' + ry + ')';
-      }
-      return 'rotate(0)';
-    })
-    .attr('class', (data) => {
-      return (data.hide && styles.hide) || (data.isFocus && styles.show) || styles.hide;
-    });
+    d3.selectAll('#lineLabels text')
+      .attr('transform', function autoRotate(data) {
+        if (!d3.select(this).attr('class').includes('hide') && data.target.x < data.source.x) {// 边上的文字自动转向， 兼容firefox
+          const bbox = this.getBBox();
+          const rx = bbox.x + bbox.width / 2;
+          const ry = bbox.y + bbox.height / 2;
+          return 'rotate(180 ' + rx + ' ' + ry + ')';
+        }
+        return 'rotate(0)';
+      })
+      .attr('class', (data) => {
+        return (data.hide && styles.hide) || (data.isFocus && styles.show) || styles.hide;
+      });
 
-    svgTexts
+    d3.selectAll('#texts text')
       .attr('x', (data) => {
         return data.x;
       })

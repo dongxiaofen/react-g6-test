@@ -6,7 +6,6 @@ import CompanyName from './CompanyName';
 import ReportType from './ReportType';
 import Time from './Time';
 import Numbers from './Numbers';
-// import ReportLink from './ReportLink';
 import { loadingComp } from 'components/hoc';
 import Pager from 'components/common/Pager';
 
@@ -18,15 +17,18 @@ function CompanyList({ruleCompanyStore, uiStore}) {
       list.push(
         <div key={`${idx}list`} className={styles.single}>
           <Row>
-            <Col width="6">
+            <Col width="7">
               <CompanyName data={obj} />
               <ReportType data={obj} />
             </Col>
             <Col width="2">
               <Time data={obj} />
             </Col>
-            <Col width="4">
+            <Col width="2">
               <Numbers data={obj} />
+            </Col>
+            <Col width="1">
+              <span className={styles.null}>data</span>
             </Col>
           </Row>
         </div>

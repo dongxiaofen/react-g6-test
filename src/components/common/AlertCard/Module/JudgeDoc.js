@@ -26,7 +26,7 @@ function JudgeDoc({data, store, module, cardType}) {
     const docId = obj.content.docId;
     const trailDate = obj.content.trailDate;
     let companyId = '';
-    if (this.props.module === 'laneGraph') {
+    if (this.props.module === 'timeAxis') {
       companyId = obj.relatedMonitorId || obj.mainMonitorId;
     } else {
       companyId = store.events.info.monitorId;

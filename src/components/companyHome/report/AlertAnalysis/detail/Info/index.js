@@ -8,7 +8,7 @@ function Info({alertAnalysisStore}) {
   let hasRelation = false;
   let detail = {};
   if (info.alertType === 'SYS_RULE') {
-    detail = alertAnalysisStore.detailData.detail.detail[0];
+    detail = alertAnalysisStore.detailData.detail[0];
     const type = detail.type;
     hasRelation = info.alertType === 'SYS_RULE' && (type === 'judgeInfo' || type === 'dishonesty') && detail.relation;
     relation = detail.relation && detail.relation.length > 0 ? `（${detail.relation.join('／')}）` : '';

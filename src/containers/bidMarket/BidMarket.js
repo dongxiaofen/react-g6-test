@@ -5,7 +5,10 @@ import moment from 'moment';
 import styles from './index.less';
 import { Container, Row, Col } from 'components/common/layout';
 import SwitchData from 'components/bidMarket/SwitchData';
+import Area from 'components/bidMarket/Area';
 import Info from 'components/bidMarket/Info';
+import Trend from 'components/bidMarket/Trend';
+import Rank from 'components/bidMarket/Rank';
 
 const _from = moment().subtract(29, 'days').format('YYYY-MM-DD');
 const _to = moment().format('YYYY-MM-DD');
@@ -23,14 +26,12 @@ export default class BidMarket extends Component {
     const params = {
       from: _from,
       to: _to,
-      province: ''
+      province: '',
+      city: '',
+      index: 1,
+      size: bidMarketInfo.size
     };
-    const bidMarketStore = this.props.bidMarketStore;
-    bidMarketStore.getAll(params);
-    params.index = 1;
-    params.size = bidMarketInfo.size;
-    bidMarketStore.getInfo(params);
-    bidMarketStore.setParams(params);
+    this.props.bidMarketStore.setParams(params);
   }
 
   componentWillUnmount() {
@@ -47,19 +48,26 @@ export default class BidMarket extends Component {
             <SwitchData
               from={_from}
               to={_to}
+              cancels={bidMarketStore.cancels}
               params={bidMarketStore.params}
               setParams={bidMarketStore.setParams}/>
           </Col>
         </Row>
         <Row>
           <div className={styles.itemBlock}>
-            this is BidMarket
+            <div className={styles.itemBlockBG}>
+              <Area />
+            </div>
           </div>
           <div className={styles.itemBlock}>
-            this is BidMarket
+            <div className={styles.itemBlockBG}>
+              <Trend />
+            </div>
           </div>
           <div className={styles.itemBlock}>
-            this is BidMarket
+            <div className={styles.itemBlockBG}>
+              <Rank />
+            </div>
           </div>
         </Row>
         <Info

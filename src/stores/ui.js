@@ -10,7 +10,10 @@ import alertAnalysisStore from './report/alertAnalysis';
 import reportManageStore from './reportManage';
 import collectionStore from './collection';
 import relPerCheckStore from './report/relPerCheck';
+import nowRecordStore from './report/nowRecord';
+import taxCheckStore from './report/taxCheck';
 import bidMarketStore from './bidMarket';
+import assetTransactionStore from './assetTransaction';
 
 class UiStore {
   constructor() {
@@ -55,6 +58,25 @@ class UiStore {
       }
     );
     reaction(
+      () => this.uiState.accountAlertCorp.index,
+      () => {
+        const uId = accountSettingStore.base.data.id;
+        accountSettingStore.getAlertCorp(uId);
+      }
+    );
+    reaction(
+      () => this.uiState.nowRecordPager.index,
+      () => {
+        nowRecordStore.getNowRecordList();
+      }
+    );
+    reaction(
+      () => this.uiState.taxCheckPager.index,
+      () => {
+        taxCheckStore.getTaxCheckList();
+      }
+    );
+    reaction(
       () => this.uiState.accountConsume.index,
       () => {
         const uId = accountSettingStore.base.data.id;
@@ -85,11 +107,12 @@ class UiStore {
     reaction(
       () => this.uiState.reportManagePager.index,
       () => {
-        if (this.uiState.reportManageList.reportStatus === 'report') {
-          reportManageStore.getReportList(this.uiState.reportManagePager);
-        } else {
-          reportManageStore.getAnalysisReportList(this.uiState.reportManagePager);
-        }
+        const params = {
+          companyName: reportManageStore.companyName,
+          index: this.uiState.reportManagePager.index,
+          size: this.uiState.reportManagePager.size
+        };
+        reportManageStore.getReportList(params);
       }
     );
     reaction(
@@ -118,6 +141,15 @@ class UiStore {
         bidMarketStore.getInfo(params);
       }
     );
+    reaction(
+      () => this.uiState.assetLocal.index,
+      () => {
+        const params = assetTransactionStore.assetLocalParams;
+        params.index = this.uiState.assetLocal.index;
+        params.size = this.uiState.assetLocal.size;
+        assetTransactionStore.getAssetLocal(params);
+      }
+    );
   }
 
   @observable uiState = {
@@ -135,6 +167,11 @@ class UiStore {
       }
     },
     monitorListPager: {
+      index: 1,
+      size: 10,
+      totalElements: 0,
+    },
+    accountAlertCorp: {
       index: 1,
       size: 10,
       totalElements: 0,
@@ -170,6 +207,16 @@ class UiStore {
       show: observable.map({})
     },
     ruleCompanyListPager: {
+      index: 1,
+      size: 10,
+      show: observable.map({})
+    },
+    nowRecordPager: {
+      index: 1,
+      size: 10,
+      show: observable.map({})
+    },
+    taxCheckPager: {
       index: 1,
       size: 10,
       show: observable.map({})
@@ -341,6 +388,11 @@ class UiStore {
       index: 1,
       size: 9,
       totalElements: 0
+    },
+    assetLocal: {
+      index: 1,
+      size: 10,
+      totalElements: 0
     }
   };
 
@@ -357,6 +409,7 @@ class UiStore {
       size: 10,
       totalElements: 0,
     };
+    this.uiState.accountAlertCorp = Object.assign({}, template);
     this.uiState.accountConsume = Object.assign({}, template);
     this.uiState.accountRecharge = Object.assign({}, template);
     this.uiState.accountSummary = Object.assign({}, template);
@@ -380,6 +433,11 @@ class UiStore {
           }
         },
         monitorListPager: {
+          index: 1,
+          size: 10,
+          totalElements: 0,
+        },
+        accountAlertCorp: {
           index: 1,
           size: 10,
           totalElements: 0,
@@ -420,6 +478,16 @@ class UiStore {
           show: observable.map({})
         },
         ruleCompanyListPager: {
+          index: 1,
+          size: 10,
+          show: observable.map({})
+        },
+        nowRecordPager: {
+          index: 1,
+          size: 10,
+          show: observable.map({})
+        },
+        taxCheckPager: {
           index: 1,
           size: 10,
           show: observable.map({})
@@ -585,6 +653,11 @@ class UiStore {
         bidMarketInfo: {
           index: 1,
           size: 9,
+          totalElements: 0
+        },
+        assetLocal: {
+          index: 1,
+          size: 10,
           totalElements: 0
         }
       }

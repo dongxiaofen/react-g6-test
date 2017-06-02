@@ -1,0 +1,51 @@
+.listBox {
+  margin-top: 20px;
+  max-height: 414px;
+  overflow-y: auto;
+}
+.item {
+  margin-bottom: 20px;
+  padding: 20px 30px;
+  background-color: #fcfcfc;
+  border-left: 1px solid #e5e5e5;
+}
+.item:last-of-type {
+  margin-bottom: 0;
+}
+.marginLine {
+  margin-bottom: 10px;
+}
+.marginLine:after {
+  content: '';
+  display: block;
+  clear: both;
+}
+.compTitle {
+  float: left;
+  line-height: 1;
+  font-size: 13px;
+  color: #000;
+}
+.rightDate {
+  float: right;
+  font-size: 13px;
+  color: #666666;
+  line-height: 1;
+}
+.label {
+  display: inline-block;
+  height: 20px;
+  line-height: 20px;
+  margin-right: 10px;
+  padding: 0 10px;
+  color: #fff;
+  border-radius: 4px;
+}
+.redLabel {
+  composes: label;
+  background-color: #c23531;
+}
+.blackLabel {
+  composes: label;
+  background-color: #3f5869;
+}

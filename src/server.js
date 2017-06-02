@@ -15,10 +15,11 @@ import url from 'url';
 // import fundebug from 'fundebug-nodejs';
 import logger from 'morgan';
 import { match, RouterContext } from 'react-router';
-import { Provider } from 'mobx-react';
+import { Provider, useStaticRendering } from 'mobx-react';
 import getRoutes from './routes';
 import { RouterStore } from 'mobx-react-router';
 import * as allStores from 'stores';
+useStaticRendering(true);
 // fundebug.apikey = '45f943a4862476f1895ca38d28def3231ea03ca1e4c94320476f52019f29560f';
 const agent = require('superagent-defaults')();
 const BASE_DIRNAME = process.cwd();
@@ -123,25 +124,33 @@ app.use((req, res) => {
       const reqPathName = url.parse(req.url).pathname;
       console.log('路由被match', url.parse(req.url));
       if (reqPathName === '/pdfDown') {
-        allStores.searchStore.searchKey = '誉存科技';// 服务端初始化数据
-        const params = {
-          keyWord: '誉存科技',
-          type: 'COMPANY_NAME'
-        };
-        agent.get(config.backendApi + '/api/company/search')
-          .query(params)
-          .end(function (err, resp) {
-            // writeDataToFile('resp', resp.body);
-            allStores.searchStore.searchRes = resp.body.data;
+        const routingStore = new RouterStore();
+        allStores.routing = routingStore;
+        const params = req.query.monitorId ? {
+          monitorId: req.query.monitorId,
+          types: req.query.type
+        } :
+          {
+            reportId: req.query.reportId,
+            types: req.query.type
+          };
+        axios.get(config.backendApi + '/api/pdf', { params })
+          .then((resp) => {
+            // writeDataToFile('resp', resp.data);
+            allStores.pdfStore.setTypes(params.types, params.monitorId);
+            allStores.clientStore.envConfig = config.target;
+            allStores.pdfStore.getPdfDownData(resp.data);
             const component = (
-              <Provider { ...allStores }>
+              <Provider { ...allStores } key="provided">
                 <RouterContext {...renderProps} />
               </Provider>
             );
             const reportHtml = ReactDOM.renderToString(<Html pdfDown="1" assets={webpackIsomorphicTools.assets()} component={component} {...allStores} />);
-            const companyName = '吴亚东';
-            const htmlName = 'wyd.html';
-            const pdfName = 'wyd.pdf';
+            const companyName = resp.data.companyName;
+            const username = resp.data.email;
+            const timestamp = new Date().getTime();
+            const htmlName = username + timestamp + '.html';
+            const pdfName = username + timestamp + '.pdf';
             writeStrToHtml(htmlName, reportHtml, () => {
               html2Pdf(htmlName, pdfName, () => {
                 res.download(PDF_DIRNAME + pdfName, companyName + '.pdf', (err) => {
@@ -154,7 +163,12 @@ app.use((req, res) => {
               });
             });
           })
+          .catch((err) => {
+            console.log('pdfDown err', err.response.status);
+          });
       } else if (reqPathName === '/') { // 访问首页
+        // allStores.clientStore.envConfig = config.target;
+        allStores.clientStore.envConfig = 'cfca_prod';
         /*服务端注入RouterStore*/
         const routingStore = new RouterStore();
         allStores.routing = routingStore;
@@ -181,6 +195,7 @@ app.use((req, res) => {
           .then((resp) => {
             /*获取用户信息*/
             allStores.clientStore.userInfo = resp.data;
+            allStores.clientStore.envConfig = config.target;
             allStores.loginStore.isShowLogin = false;
             /*获取报告leftBar高亮*/
             if (reqPathName.indexOf('companyHome') >= 0) {

@@ -8,6 +8,7 @@ class ClientStore {
 
   @action.bound combineServerData(data) {
     this.userInfo = data.userInfo;
+    this.envConfig = data.envConfig;
   }
 
   @action.bound loginOut() {

@@ -5,11 +5,11 @@ import AnimateLoading from 'components/hoc/LoadingComp/AnimateLoading';
 import styles from './index.less';
 function CompanyWrap({data, monitorListStore}) {
   const monitorId = data.monitorId;
-  const relStatus = monitorListStore.relationListStatus.get(monitorId);
+  const relStatus = monitorListStore.monitorList.relationListStatus.get(monitorId);
   const angle = relStatus === 'show' ? 'up' : 'down';
   const btnText = relStatus === 'show' ? '收起' : '展开';
   const viewReport = () => {
-    browserHistory.push(`/companyHome?monitorId=${monitorId}&companyType=MAIN`);
+    browserHistory.push(`/companyHome?monitorId=${monitorId}`);
   };
   const stockTableType = (stockType) => {
     let str = '';
@@ -22,7 +22,7 @@ function CompanyWrap({data, monitorListStore}) {
   };
   const viewRelation = () => {
     if (!relStatus || relStatus === 'hide') {
-      monitorListStore.getRelationList(monitorId);
+      monitorListStore.getRelationList(monitorId, data.relatedCount);
     } else {
       monitorListStore.delRelationList(monitorId);
     }

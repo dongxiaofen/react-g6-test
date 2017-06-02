@@ -9,7 +9,11 @@ function TableRow({data, routing, alertAnalysisStore, networkStore}) {
     }
     const alertType = data.alertType;
     if (alertType === 'BLACKLIST') {
-      networkStore.jumpBlackNode(data.companyName, routing.location.search);
+      console.log(data.description.indexOf('"'), '行数据');
+      // 因为后端没有返这个字段，所以要在描述里面去取
+      const index = data.description.indexOf('"') + 1;
+      console.log(data.description.slice(index, data.description.length - index), '风险关联公司名称');
+      networkStore.jumpBlackNode(data.description.slice(index, data.description.length - index), routing.location.search);
       return false;
     }
     const {monitorId, analysisReportId} = routing.location.query;
@@ -40,14 +44,13 @@ function TableRow({data, routing, alertAnalysisStore, networkStore}) {
       <div className={styles.lineRow}>
         <span className={styles.name}>
           {data.ruleName}
-        </span>
-        <span className={styles.type}>
-          {alertTypeMap[data.alertType]}
+          <span className={styles.type}>
+            {`${alertTypeMap[data.alertType]}${data.count}次`}
+          </span>
         </span>
         <span
           className={styles.viewBtn}
-          onClick={viewDetail}
-          >
+          onClick={viewDetail}>
           {loadingId === data.id ? '获取中' : '详情'}
         </span>
       </div>

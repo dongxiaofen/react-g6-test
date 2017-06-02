@@ -11,26 +11,31 @@
 }
 .switchBox {
   height: 20px;
-  text-align: center;
+  text-align: right;
 }
 .statusTextBox {
   margin-top: 17px;
-  overflow: auto;
+  text-align: right;
+}
+.statusTextBox:after {
+  content: '';
+  display: block;
+  clear: both;
 }
 .statusText {
-  float: left;
+  display: inline-block;
   font-size: 13px;
   line-height: 1;
   color: @mdc-blue-grey-300;
+  vertical-align: middle;
+  margin-right: 10px;
 }
 .rechargeBtn {
-  float: right;
-  padding-left: 15px;
+  display: inline-block;
   font-size: 13px;
   line-height: 1;
   color: @mdc-blue-grey-500;
   text-decoration: underline;
-  border-left: 1px solid @mdc-blue-grey-100;
   cursor: pointer;
 }
 .rechargeBtnBlue {

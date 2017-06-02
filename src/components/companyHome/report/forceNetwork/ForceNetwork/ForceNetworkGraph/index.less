@@ -1,0 +1,139 @@
+@import '~sc-colors/index.less';
+.svgBox {
+  position: relative;
+  cursor: move;
+  border-left: 1px solid @black12;
+  border-right: 1px solid @black12;
+  border-bottom: 1px solid @black12;
+}
+
+
+// .nodes {
+//   stroke: #fff;
+//   stroke-width: 1.5px;
+// }
+.trans {
+  opacity: 1;
+  -webkit-transition-property: opacity;
+  -webkit-transition-duration: 2s;
+  -webkit-transition-timing-function: ease;
+}
+.trans1 {
+  opacity: 1;
+  -webkit-transition-property: opacity;
+  -webkit-transition-duration: 0.5s;
+  -webkit-transition-timing-function: ease;
+}
+.show {
+  // display: block;
+  opacity: 1;
+  composes: trans;
+}
+.hide {
+  // display: none;
+  opacity: 0;
+  composes: trans;
+}
+.links {
+  stroke: #AECFDA;
+  stroke-width: 1.5px;
+  fill: none;
+  composes: trans;
+}
+.dashLinks{
+  stroke-dasharray: 10,10;
+  stroke: #AECFDA;
+  stroke-width: 1.5px;
+  fill: none;
+  composes: trans;
+}
+.linkLabel {
+  fill: #424242;
+  composes: trans;
+  font-size: 8px;
+}
+.nodeText {
+  fill: white;
+  cursor: pointer;
+  composes: trans;
+  font-size: 12px;
+}
+.hideText {
+  fill: white;
+  opacity: 0;
+  cursor: pointer;
+  composes: trans1;
+}
+.arrow {
+  fill: #0D6381;
+}
+
+// .focusNode {
+//   cursor: pointer;
+//   stroke: @yellow1;
+//   stroke-width: 2px;
+//   fill: @yellow1;
+//   composes: trans;
+// }
+// .searchNode {
+//   cursor: pointer;
+//   stroke: @red1;
+//   stroke-width: 2px;
+//   fill: @red1;
+//   composes: trans;
+// }
+.nodesTrans {
+  cursor: pointer;
+  transition: fill 1s ease;
+}
+.cancelNodes {
+  cursor: pointer;
+  stroke-width: 1.5px;
+  stroke: #000000;
+  fill: #424242;
+  composes: trans;
+}
+.mainCompany {
+  cursor: pointer;
+  stroke-width: 1.5px;
+  stroke: #E1322D;
+  fill: #e96864;
+  composes: trans;
+}
+.relativeCompany {
+  cursor: pointer;
+  stroke-width: 1.5px;
+  stroke: #0D6381;
+  fill: #398BA7;
+  composes: trans;
+}
+.relativePerson {
+  cursor: pointer;
+  stroke-width: 1.5px;
+  stroke: #5CA083;
+  fill: #7FBBA1;
+  composes: trans;
+}
+@keyframes graphAnimate {
+  from{transform: scale(0, 0)}
+  to{transform: scale(1, 1)}
+}
+.boxFullScreen {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 2000;
+  animation: graphAnimate 1s;
+  background-color: @mdc-white-darker;
+  transition: all 1s;
+  padding-right: 20px;
+}
+.noActive {
+  fill: #CFD0D4;
+  composes: nodesTrans;
+}
+.lineNoActive {
+  stroke: #EEEFF3;
+}

@@ -15,8 +15,6 @@ function RuleSwitch({data, switchLoading, changeRuleStatus, setItemData, itemDat
       isNeedBtn: true,
       confirmLoading: false,
       // pointText: '创建报告即视为同意',
-      // pactUrl: 'xxxxxx',
-      // pactName: '用户服务协议',
       confirmText: '确定',
       confirmAction: changeRuleStatus.bind(null, data),
       cancelText: '取消',
