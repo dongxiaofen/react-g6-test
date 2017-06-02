@@ -44,6 +44,7 @@ function Chart({ subText, groupInterval, params, cancels, mapName, area, setPara
     },
     geo: {
       map: mapName,
+      roam: true,
       label: {
         emphasis: {
           show: false,
@@ -124,21 +125,19 @@ function Chart({ subText, groupInterval, params, cancels, mapName, area, setPara
       return (
         <div className={styles['bidMarket-tips-block']}>
           <div className={styles['bidMarket-tips']}>
-            {
-              params.province
-              ?
-              <span>
-                <i
-                  className="fa fa-exclamation-circle"
-                  style={{
-                    marginLeft: '10px',
-                    marginRight: '4px',
-                    fontSize: '14px'
-                  }}></i>
-                点击图中高亮地区（区/县），查看该地区数据变化
-              </span>
-              : null
-            }
+            <span>
+              <i className="fa fa-exclamation-circle"
+                style={{
+                  marginLeft: '10px',
+                  marginRight: '4px',
+                  fontSize: '14px'
+                }}></i>
+              {
+                params.province ?
+                '点击图中高亮地区（区/县），查看该地区数据变化' :
+                '注：可以使用鼠标滑轮进行图形缩放'
+              }
+            </span>
           </div>
         </div>
       );
