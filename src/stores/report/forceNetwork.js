@@ -182,7 +182,7 @@ class ForceNetworkStore {
       isShowInfo: false,
       detailInfo: {},
       tabAct: 0,
-    }
+    };
   }
 }
 export default new ForceNetworkStore();
