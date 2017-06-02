@@ -430,8 +430,8 @@ class BidMarketStore {
       }))
       .catch(action('get bidMarket detail err', (err) => {
         console.log(err);
-        messageStore.openMessage({ type: 'warning', content: '获取招投标详情失败' });
         entireLoadingStore.closeEntireLoading();
+        messageStore.openMessage({ type: 'warning', content: '获取招投标详情失败' });
       }));
   }
 
