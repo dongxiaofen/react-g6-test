@@ -160,6 +160,7 @@ class BidMarketStore {
   @observable groupInterval = [];
   @observable mapName = 'china';
   @observable subText = '';
+  @observable subCount = 0;
 
   @observable trend = { axis: [], amountData: [], countData: [] };
 
@@ -251,6 +252,7 @@ class BidMarketStore {
                 });
               } else {
                 subText = '，其中' + item.shortName + item.count + '家';
+                this.subCount = item.count;
               }
             });
             this.groupInterval = areaGroupInterval;
@@ -452,6 +454,7 @@ class BidMarketStore {
     this.groupInterval = [];
     this.mapName = 'china';
     this.subText = '';
+    this.subCount = 0;
 
     this.trend = { axis: [], amountData: [], countData: [] };
 

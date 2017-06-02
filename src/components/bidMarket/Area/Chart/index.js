@@ -171,6 +171,7 @@ Chart.propTypes = {
   areaLoading: PropTypes.bool,
   mapName: PropTypes.string,
   subText: PropTypes.string,
+  subCount: PropTypes.number,
   params: PropTypes.object,
   cancels: PropTypes.array,
   groupInterval: PropTypes.object,
@@ -183,7 +184,7 @@ export default loadingComp({
     loading: props.areaLoading,
     category: 0,
     height: 500,
-    error: props.area.data.length === 0,
+    error: props.area.data.length === 0 && props.subCount === 0,
     errCategory: 1,
   })
 })(observer(Chart));
