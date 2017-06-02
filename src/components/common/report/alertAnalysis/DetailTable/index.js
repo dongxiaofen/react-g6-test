@@ -2,8 +2,9 @@ import React, {PropTypes} from 'react';
 import { observer, inject} from 'mobx-react';
 import CONFIG from 'dict/reportModule';
 import styles from './index.less';
-function DetailTable({itemData, body, dict, rowIdx, hasNumber, maxCols, linkJumpStore}) {
+function DetailTable({itemData, body, dict, rowIdx, hasNumber, maxCols, linkJumpStore, detailModalStore}) {
   const redirectReport = (companyName)=> {
+    detailModalStore.closeAction();
     linkJumpStore.getNameType(companyName);
   };
   const getValue = (config, value) => {
@@ -106,4 +107,4 @@ function DetailTable({itemData, body, dict, rowIdx, hasNumber, maxCols, linkJump
 DetailTable.propTypes = {
   foo: PropTypes.string,
 };
-export default inject('linkJumpStore')(observer(DetailTable));
+export default inject('linkJumpStore', 'detailModalStore')(observer(DetailTable));
