@@ -1,5 +1,6 @@
 import { observable, action } from 'mobx';
 import { companyHomeApi } from 'api';
+import uiStore from '../ui';
 class CorpDetailStore {
   @observable isLoading = true;
   @observable isMount = false;
@@ -62,6 +63,11 @@ class CorpDetailStore {
   // 设置年报显示某年
   @action.bound setYearReport(item) {
     this.yearReportTab = item;
+    // 重置年报分页
+    uiStore.uiState.yearInvestor.index = 1;
+    uiStore.uiState.yearWebsite.index = 1;
+    uiStore.uiState.yearEquityChange.index = 1;
+    uiStore.uiState.yearChangeRecords.index = 1;
   }
   @action.bound resetStore() {
     this.isLoading = true;

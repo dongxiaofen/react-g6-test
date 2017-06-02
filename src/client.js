@@ -73,7 +73,7 @@ axios.interceptors.request.use((axiosConfig) => {
     axiosConfig.params = {
       timestamp: new Date().getTime()
     };
-  }else {
+  } else {
     axiosConfig.params.timestamp = new Date().getTime();
   }
   return axiosConfig;
@@ -90,16 +90,20 @@ axios.interceptors.response.use((response) => {
     return Promise.reject(error);
   }
   if (error.response.data.errorCode === 401006 || error.response.data.errorCode === 401007) {
-    runInAction('显示登录框', () => {
-      allStore.loginStore.isShowLogin = true;
-    });
+    if (error.config.url !== '/api/user/logout') {
+      runInAction('显示登录框', () => {
+        allStore.loginStore.isShowLogin = true;
+      });
+    } else {
+      location.href = '/';
+    }
     // allStore.modalStore.openAsyncModal((callback) => {
     //   require.ensure([], (require) => {
     //     callback(require('components/test/Test'));
     //   });
     // });
   } else if (error.response.status === 502) {
-    allStore.messageStore.openMessage({type: 'warning', content: '后端正在部署', duration: 5000});
+    allStore.messageStore.openMessage({ type: 'warning', content: '后端正在部署', duration: 5000 });
   }
   return Promise.reject(error);
 });
