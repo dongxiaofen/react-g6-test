@@ -53,7 +53,9 @@ export default class DetailModal extends Component {
   bodyStyle() {
     const body = document.getElementsByTagName('body')[0];
     if (this.props.visible) {
-      body.style.overflowY = 'hidden';
+      setTimeout(() => {
+        body.style.overflowY = 'hidden';
+      }, 100);
     } else {
       body.removeAttribute('style');
     }

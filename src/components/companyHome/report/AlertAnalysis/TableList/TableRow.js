@@ -32,7 +32,8 @@ function TableRow({data, routing, alertAnalysisStore, networkStore}) {
     }
     alertAnalysisStore.changeValue('loadingId', data.id);
     // alertAnalysisStore.changeValue('detailData.info', data);
-    alertAnalysisStore.getAlertDetail(url, type, monitorId || analysisReportId, data);
+    const params = alertType === 'RULE' ? {index: 1, size: 8} : {};
+    alertAnalysisStore.getAlertDetail(url, type, monitorId || analysisReportId, data, params);
   };
   const alertTypeMap = {
     'RULE': '我的预警',
