@@ -14,12 +14,18 @@ class LeftBarStore {
   @observable activeItem = '';
   barConf = [
     {
-      menuText: '信息报告',
+      menuText: '基本信息',
       menuKey: 'report',
       children: [
         {
-          menuText: '企业基本信息',
+          menuText: '工商信息',
           menuKey: 'corpDetail',
+          helpInfo: helpInfo2,
+          contain: ['monitor', 'report']
+        },
+        {
+          menuText: '对外投资任职',
+          menuKey: 'investAndOffice',
           helpInfo: helpInfo2,
           contain: ['monitor', 'report']
         },

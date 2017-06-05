@@ -42,6 +42,7 @@ import {
     Tax,
     TaxCheck,
     AssetTransaction,
+    InvestAndOffice,
 // first append here from plop
   } from 'containers';
 
@@ -93,6 +94,7 @@ export default () => {
         <Route path="nowRecord" component={ NowRecord } onEnter={requireAuth} />
         <Route path="tax" component={ Tax } onEnter={requireAuth} />
         <Route path="taxCheck" component={ TaxCheck } onEnter={requireAuth} />
+        <Route path="investAndOffice" component={ InvestAndOffice } />
 {/* third append here from plop */}
       </Route>
       <Route path="solution" component={ Solution } />
