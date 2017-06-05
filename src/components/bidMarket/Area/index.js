@@ -61,6 +61,7 @@ function Area({ bidMarketStore }) {
       <Chart
         mapName={bidMarketStore.mapName}
         subText={bidMarketStore.subText}
+        subCount={bidMarketStore.subCount}
         params={bidMarketStore.params}
         cancels={bidMarketStore.cancels}
         groupInterval={bidMarketStore.groupInterval}

@@ -27,6 +27,7 @@ class AlertAnalysisStore {
     info: {},
     detail: {},
     html: '',
+    orgData: {},
   }
   @action.bound changeValue(key, value) {
     pathval.setPathValue(this, key, value);
@@ -64,7 +65,7 @@ class AlertAnalysisStore {
         });
       });
   }
-  @action.bound getAlertDetail(url, companyType, companyId, info) {
+  @action.bound getAlertDetail(url, companyType, companyId, info, params) {
     if (this.alertCancel) {
       this.alertCancel();
       this.alertCancel = null;
@@ -73,11 +74,12 @@ class AlertAnalysisStore {
     this.detailData.page = 1;
     const source = CancelToken.source();
     this.alertCancel = source.cancel;
-    companyHomeApi.getAlertDetail(url, source)
+    companyHomeApi.getAlertDetail(url, source, params)
       .then(action('getAlertDetail_success', resp => {
         this.loadingId = -1;
         this.alertCancel = null;
         this.detailData.detail = info.alertType === 'RULE' ? resp.data.content : resp.data;
+        this.detailData.orgData = resp.data;
         this.detailData.info = info;
         this.openDetailModal(this.detailData.info.alertType);
         if (this.detailData.info.alertType === 'RULE') {

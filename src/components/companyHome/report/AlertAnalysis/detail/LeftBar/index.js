@@ -7,10 +7,10 @@ function LeftBar({alertAnalysisStore, routing}) {
   const activeIndex = moduleData.activeIndex;
   const tabTop = moduleData.tabTop;
   const page = moduleData.page;
-  const {monitorId, reportId} = routing.location.query;
+  const {monitorId, analysisReportId} = routing.location.query;
   let companyType = 'monitor';
-  const companyId = monitorId || reportId;
-  if (reportId) {
+  const companyId = monitorId || analysisReportId;
+  if (analysisReportId) {
     companyType = 'analysisReport';
   }
   const changeTab = (index) => {
@@ -49,20 +49,45 @@ function LeftBar({alertAnalysisStore, routing}) {
       );
     });
   };
+  const getDetail = (params)=> {
+    const alertType = moduleData.info.alertType;
+    const ruleMap = {
+      RULE: 'rule',
+      SYS_RULE: 'sysRule'
+    };
+    let url;
+    let type;
+    if (monitorId) {
+      url = `/api/monitor/${monitorId}/alert/${ruleMap[alertType]}/${moduleData.info.id}`;
+      type = 'monitor';
+    } else {
+      url = `/api/analysisReport/${analysisReportId}/alert/${ruleMap[alertType]}/${moduleData.info.id}`;
+      type = 'report';
+    }
+    alertAnalysisStore.getAlertDetail(url, type, monitorId || analysisReportId, moduleData.info, params);
+  };
   const prevClick = () => {
     if (page <= 1) {
       return false;
     }
+    if (moduleData.info.alertType === 'RULE') {
+      getDetail({index: page - 1, size: 8});
+    }
     alertAnalysisStore.changeValue('detailData.page', page - 1);
   };
   const nextClick = () => {
-    if (page * 8 >= data.length) {
+    const maxNum = moduleData.info.alertType === 'RULE' ? alertAnalysisStore.detailData.orgData.totalElements : data.length;
+    if (page * 8 >= maxNum) {
       return false;
+    }
+    if (moduleData.info.alertType === 'RULE') {
+      getDetail({index: page + 1, size: 8});
     }
     alertAnalysisStore.changeValue('detailData.page', page + 1);
   };
+  const maxNum = moduleData.info.alertType === 'RULE' ? alertAnalysisStore.detailData.orgData.totalElements : data.length;
   const prevCss = page <= 1 ? styles.arrowUpDis : styles.arrowUp;
-  const nextCss = page * 8 >= data.length ? styles.arrowDownDis : styles.arrowDown;
+  const nextCss = page * 8 >= maxNum ? styles.arrowDownDis : styles.arrowDown;
   if (data.length < 2) {
     return null;
   }
@@ -70,7 +95,7 @@ function LeftBar({alertAnalysisStore, routing}) {
     <div className={styles.tabBox}>
       <i className={prevCss} onClick={prevClick}></i>
       <div className={styles.overBox}>
-        <div className={styles.itemBox} style={{top: tabTop}}>
+        <div className={styles.itemBox} style={{top: moduleData.info.alertType === 'RULE' ? 0 : tabTop}}>
           {createTabs()}
         </div>
       </div>

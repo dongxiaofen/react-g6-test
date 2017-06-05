@@ -9,6 +9,7 @@ import DetailInfo from './DetailInfo';
 function ForceNetwork({}) {
   const svgWidth = (document.getElementById('tabContentWrap').offsetWidth - 20) * 0.75;
   const svgHeight = window.screen.height - 280;
+  const {handleZoom, resetNetWork} = ForceNetworkGraph;
   return (
     <Row>
       <Col width="9">
@@ -16,7 +17,7 @@ function ForceNetwork({}) {
         <ForceNetworkGraph {...{ svgWidth, svgHeight }} />
       </Col>
       <Col width="3">
-        <DetailInfo />
+        <DetailInfo handleZoom={handleZoom} resetNetWork={resetNetWork}/>
       </Col>
     </Row>
   );
