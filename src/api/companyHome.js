@@ -190,8 +190,8 @@ export const getAlertAnalysisList = (monitorId, analysisReportId, params, source
   return axios.get(url, { params: params, cancelToken: source.token });
 };
 // 获取评估分析列表详情
-export const getAlertDetail = (url, source) => {
-  return axios.get(url, { cancelToken: source.token });
+export const getAlertDetail = (url, source, params) => {
+  return axios.get(url, { cancelToken: source.token, params});
 };
 export const getAlertNewsMonitor = (companyId, params) => {
   return axios.get(`/api/monitor/${companyId}/internet/detail`, { params });

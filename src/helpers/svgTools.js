@@ -207,3 +207,9 @@ export function getCurrentNodesLinks(forceNetwork) {
 export function getArrowType(target, nodes) {
   return nodes[nodes.findIndex((node) => node.id === target.id)].cateType;
 }
+export function findShortPath(nodeId, shortestPahth) {
+  const index = shortestPahth[0].findIndex((path)=>{
+    return path === nodeId;
+  });
+  return index > -1;
+}
