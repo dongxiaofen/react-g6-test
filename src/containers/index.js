@@ -38,4 +38,5 @@ export Disclaimer from './disclaimer';
 export Tax from './report/tax';
 export TaxCheck from './report/taxCheck';
 export AssetTransaction from './assetTransaction';
+export InLoanAnalysis from './inLoanAnalysis';
 // append here from plop
