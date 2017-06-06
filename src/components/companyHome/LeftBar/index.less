@@ -1,15 +1,17 @@
 @import '~sc-colors/index.less';
 .wrap {
-  padding: 25px 0;
+  padding: 10px 0;
   font-size: 14px;
+  line-height: 1em;
   background-color: @mdc-white-darker;
   box-shadow: 0 2px 4px 0 rgba(176, 190, 197, 0.5);
+  margin-bottom: 20px;
 }
 .menuCss {
   position: relative;
   line-height: 1;
   padding: 15px 0;
-  padding-left: 30px;
+  padding-left: 20px;
   color: @mdc-grey-800;
   cursor: pointer;
 }
@@ -58,4 +60,26 @@
 }
 .hide {
   display: none;
+}
+.title {
+  border-bottom: 1px solid @black12;
+  padding: 0 11px 10px 20px ;
+  color: @mdc-grey-600;
+  font-weight: bold;
+}
+.reportType {
+  float: left;
+  margin-top: 5px;
+}
+.btnReport {
+  font-size: 12px;
+  line-height: 24px;
+  height: 24px;
+  padding: 0 7.5px;
+  float: right;
+}
+.btnMonitor {
+  composes: btnReport;
+  background-color: @mdc-orange-500;
+  border: @mdc-orange-500;
 }
