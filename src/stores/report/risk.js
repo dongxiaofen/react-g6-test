@@ -29,13 +29,13 @@ class RiskStore {
     const courtTab = this.court.courtTab;
     for (const tabItem of courtTab) {
       if (courtCount[tabItem.label] > 0) {
-        tabAct = tabItem.key;
+        tabAct = tabItem.label;
         break;
       }
     }
     if (tabAct === '') {
       this.court.hasCourtData = false;
-      tabAct = 'judeDoc';
+      tabAct = '判决文书';
     }
     return tabAct;
   }
