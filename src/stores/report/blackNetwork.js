@@ -29,6 +29,7 @@ class BlackNetworkStore {
   @observable blackList = [];
   @observable modalFocusIdx = -1; // 失信记录点击idx记录
   @observable detailModalData = {};
+  @observable focusNodeFlag = false;
 
   @action.bound openDetailModal(idx, data) {
     this.modalFocusIdx = idx;
@@ -36,6 +37,7 @@ class BlackNetworkStore {
   }
   @action.bound focusNode(name) {
     this.focusNodeName = name;
+    this.focusNodeFlag = !this.focusNodeFlag;
   }
   @action.bound toggleExpand(idx) {
     this.expandIdx = idx;
