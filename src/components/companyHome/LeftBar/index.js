@@ -2,7 +2,6 @@ import React, { PropTypes } from 'react';
 import { observer, inject } from 'mobx-react';
 import { runInAction } from 'mobx';
 import styles from './index.less';
-import Tooltip from 'antd/lib/tooltip';
 import Button from 'components/lib/button';
 function LeftBar({ leftBarStore, bannerStore, routing }) {
   const activeMenu = leftBarStore.activeMenu;
@@ -29,40 +28,50 @@ function LeftBar({ leftBarStore, bannerStore, routing }) {
       query: routing.location.query,
     });
   };
+  const isLock = (itemObj, type) => {
+    if (type === 'report' && itemObj.lock) {
+      return false;
+    }
+    if (type === 'loaning' && itemObj.lock) {
+      return false;
+    }
+    if (type === 'monitor' && itemObj.lock) {
+      return false;
+    }
+    return true;
+  };
   const geneBar = (type) => {
     const menuRow = [];
     // onst reportType = leftBarStore.getReportType(routing);
     barConf[type].forEach((menuObj) => {
-      const accessMenu = true;
+      const accessMenu = isLock(menuObj, type);
       const arrowCss = activeMenu.includes(menuObj.menuKey) ? styles.arrow + ` ${styles.arrowAnim}` : styles.arrow;
       const menuCss = accessMenu ? styles.menuCss : styles.menuDisCss;
       const itemRow = [];
       if (menuObj.children) {
         menuRow.push(
-          <div
-            key={menuObj.menuKey}
+          <div key={menuObj.menuKey}
             className={menuCss}
-            onClick={changeMenu.bind(this, menuObj.menuKey, accessMenu)}
-          >
+            onClick={changeMenu.bind(this, menuObj.menuKey, accessMenu)}>
             {menuObj.menuText}
             <i className={`fa fa-angle-down ${arrowCss}`}></i>
           </div>
         );
         menuObj.children.forEach((itemObj, itemIdx) => {
-          const accessItem = true;
+          const accessItem = isLock(itemObj, type);
           let itemCss = leftBarStore.activeItem === itemObj.menuKey ? styles.itemActCss : styles.itemCss;
           itemCss = accessItem ? itemCss : styles.itemDisCss;
           itemCss = activeMenu.includes(menuObj.menuKey) ? itemCss : styles.hide;
           if (itemObj.menuKey !== 'stock' || stockCode) {
             itemRow.push(
-              <Tooltip key={itemObj.menuText + itemIdx} title={accessItem ? '' : itemObj.helpInfo} placement="right">
-                <div
-                  className={itemCss}
-                  onClick={changeItem.bind(this, itemObj.menuKey, accessItem)}
-                >
-                  {itemObj.menuText}
-                </div>
-              </Tooltip>
+              <div
+                key={itemObj.menuText + itemIdx}
+                className={itemCss}
+                onClick={changeItem.bind(this, itemObj.menuKey, accessItem)}
+              >
+                {itemObj.menuText}
+                {accessItem ? '' : <i className={styles.lock}></i>}
+              </div>
             );
           }
         });
@@ -74,6 +83,7 @@ function LeftBar({ leftBarStore, bannerStore, routing }) {
             onClick={changeItem.bind(this, menuObj.menuKey, true)}
           >
             {menuObj.menuText}
+            {accessMenu ? '' : <i className={styles.lock}></i>}
           </div>
         );
       }
@@ -103,6 +113,10 @@ function LeftBar({ leftBarStore, bannerStore, routing }) {
           <Button btnType="primary" className={styles.btnMonitor}>加入监控</Button>
         </div>
         {geneBar('monitor')}
+      </div>
+      <div className={`${styles.wrap} ${styles.recordWrap}`}>
+        <i className="fa fa-pencil-square-o" aria-hidden="true"></i>
+        <span className={styles.record}>调查记录</span>
       </div>
     </div>
   );

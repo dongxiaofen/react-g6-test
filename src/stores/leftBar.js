@@ -31,14 +31,6 @@ class LeftBarStore {
             menuKey: 'stock',
           },
           {
-            menuText: '税务信息',
-            menuKey: 'tax',
-          },
-          {
-            menuText: '风险信息',
-            menuKey: 'risk',
-          },
-          {
             menuText: '新闻信息',
             menuKey: 'internet',
           },
@@ -53,53 +45,66 @@ class LeftBarStore {
         ],
       },
       {
-        menuText: '关联网络',
+        menuText: '风险信息',
+        menuKey: 'risk',
+        children: [
+          {
+            menuText: '纳税公告',
+            menuKey: 'risk',
+          },
+          {
+            menuText: '法务信息',
+            menuKey: 'risk',
+          },
+          {
+            menuText: '工商抽查',
+            menuKey: 'risk',
+          },
+        ],
+      },
+      {
+        menuText: '抵质押信息',
+        menuKey: 'pledge',
+        children: [
+          {
+            menuText: '股权相关',
+            menuKey: 'risk',
+          },
+          {
+            menuText: '抵押相关',
+            menuKey: 'risk',
+          },
+        ],
+      },
+      {
+        menuText: '关联图',
         menuKey: 'network',
         children: [
           {
-            menuText: '关联关系',
+            menuText: '企业关联',
             menuKey: 'network',
+            lock: true,
           },
           {
-            menuText: '风险关系', menuKey: 'blackNetwork',
+            menuText: '风险关系',
+            menuKey: 'blackNetwork',
+            lock: true,
           },
         ],
       },
       {
-        menuText: '趋势分析',
+        menuText: '企业历史',
         menuKey: 'trendAnalyse',
         children: [
           {
-            menuText: '事件时间轴',
+            menuText: '历史时间轴',
             menuKey: 'timeAxis',
+            lock: true,
           },
           {
-            menuText: '预警分析',
+            menuText: '历史风险',
             menuKey: 'alertAnalysis',
-          },
-        ],
-      },
-      {
-        menuText: '信息核查',
-        menuKey: 'infoCheck',
-        children: [
-          {
-            menuText: '关联人核查',
-            menuKey: 'relPerCheck',
-          },
-          {
-            menuText: '税务核查',
-            menuKey: 'taxCheck',
-          },
-        ],
-      },
-      {
-        menuText: '企业现勘',
-        menuKey: 'corprationXk',
-        children: [
-          {
-            menuText: '现勘记录',
-            menuKey: 'nowRecord',
+            lock: true,
           },
         ],
       },
@@ -108,28 +113,34 @@ class LeftBarStore {
       {
         menuText: '多维综合评价',
         menuKey: 'comprehenEval',
+        lock: true,
       },
       {
         menuText: '盈利能力分析',
         menuKey: 'profitEval',
+        lock: true,
       },
       {
         menuText: '营运能力分析',
         menuKey: 'operationEval',
+        lock: true,
       },
       {
         menuText: '成长能力分析',
         menuKey: 'growthAbilityEval',
+        lock: true,
       },
     ],
     monitor: [
       {
         menuText: '监控时间轴',
         menuKey: 'monitorTimeAxis',
+        lock: true,
       },
       {
         menuText: '监控预警',
         menuKey: 'monitorAlert',
+        lock: true,
       }
     ]
   }
