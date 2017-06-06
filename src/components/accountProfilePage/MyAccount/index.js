@@ -7,16 +7,16 @@ import Tables from '../common/Tables';
 function MyAccount({accountProfileStore}) {
   const statistics = {
     titleData: {
-      'alertCompanyCount': '预警企业',
-      'alertCount': '触发预警',
       'reportCount': '报告企业',
       'monitorCount': '监控企业',
+      'alertCompanyCount': '预警企业',
+      'alertCount': '触发预警',
     },
     units: {
-      'alertCompanyCount': '家',
-      'alertCount': '条',
       'reportCount': '家',
       'monitorCount': '家',
+      'alertCompanyCount': '家',
+      'alertCount': '条',
     },
     data: accountProfileStore.ownWarningStatisticsData,
   };
