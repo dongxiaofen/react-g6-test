@@ -71,7 +71,7 @@ export default class ForceNetworkGraph extends Component {
     this.reDraw();
     // 监听点击节点事件
     reaction(
-      () => this.props.blackNetworkStore.focusNodeName,
+      () => this.props.blackNetworkStore.focusNodeFlag,
       () => {
         const { focusNodeName } = this.props.blackNetworkStore;
         nodesData.map((node) => {
