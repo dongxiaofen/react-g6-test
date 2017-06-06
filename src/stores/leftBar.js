@@ -14,12 +14,18 @@ class LeftBarStore {
   @observable activeItem = '';
   barConf = [
     {
-      menuText: '信息报告',
+      menuText: '基本信息',
       menuKey: 'report',
       children: [
         {
-          menuText: '企业基本信息',
+          menuText: '工商信息',
           menuKey: 'corpDetail',
+          helpInfo: helpInfo2,
+          contain: ['monitor', 'report']
+        },
+        {
+          menuText: '对外投资任职',
+          menuKey: 'investAndOffice',
           helpInfo: helpInfo2,
           contain: ['monitor', 'report']
         },
@@ -135,6 +141,38 @@ class LeftBarStore {
         {
           menuText: '现勘记录',
           menuKey: 'nowRecord',
+          helpInfo: helpInfo1,
+          contain: ['monitor']
+        },
+      ],
+      helpInfo: helpInfo1,
+      contain: ['monitor'],
+    },
+    {
+      menuText: '贷中分析',
+      menuKey: 'loaning',
+      children: [
+        {
+          menuText: '多维综合评价',
+          menuKey: 'comprehenEval',
+          helpInfo: helpInfo1,
+          contain: ['monitor']
+        },
+        {
+          menuText: '盈利能力分析',
+          menuKey: 'profitEval',
+          helpInfo: helpInfo1,
+          contain: ['monitor']
+        },
+        {
+          menuText: '营运能力分析',
+          menuKey: 'operationEval',
+          helpInfo: helpInfo1,
+          contain: ['monitor']
+        },
+        {
+          menuText: '成长能力分析',
+          menuKey: 'growthAbilityEval',
           helpInfo: helpInfo1,
           contain: ['monitor']
         },

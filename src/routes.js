@@ -42,6 +42,11 @@ import {
     Tax,
     TaxCheck,
     AssetTransaction,
+    InvestAndOffice,
+    ComprehenEval,
+    ProfitEval,
+    OperationEval,
+    GrowthAbilityEval,
 // first append here from plop
   } from 'containers';
 
@@ -93,6 +98,13 @@ export default () => {
         <Route path="nowRecord" component={ NowRecord } onEnter={requireAuth} />
         <Route path="tax" component={ Tax } onEnter={requireAuth} />
         <Route path="taxCheck" component={ TaxCheck } onEnter={requireAuth} />
+        <Route path="investAndOffice" component={ InvestAndOffice } />
+        {/* 贷中*/}
+        <Route path="comprehenEval" component={ ComprehenEval } />
+        <Route path="profitEval" component={ ProfitEval } />
+        <Route path="operationEval" component={ OperationEval } />
+        <Route path="growthAbilityEval" component={ GrowthAbilityEval } />
+        {/* 贷后*/}
 {/* third append here from plop */}
       </Route>
       <Route path="solution" component={ Solution } />
