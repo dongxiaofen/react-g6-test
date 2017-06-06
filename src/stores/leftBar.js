@@ -50,15 +50,15 @@ class LeftBarStore {
         children: [
           {
             menuText: '纳税公告',
-            menuKey: 'risk',
+            menuKey: 'riskTax',
           },
           {
             menuText: '法务信息',
-            menuKey: 'risk',
+            menuKey: 'riskCourt',
           },
           {
             menuText: '工商抽查',
-            menuKey: 'risk',
+            menuKey: 'riskMici',
           },
         ],
       },
@@ -68,11 +68,11 @@ class LeftBarStore {
         children: [
           {
             menuText: '股权相关',
-            menuKey: 'risk',
+            menuKey: 'equityRela',
           },
           {
             menuText: '抵押相关',
-            menuKey: 'risk',
+            menuKey: 'mortgageRela',
           },
         ],
       },

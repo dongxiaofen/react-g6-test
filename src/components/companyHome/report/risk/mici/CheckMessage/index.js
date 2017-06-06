@@ -1,7 +1,7 @@
 import React, {PropTypes} from 'react';
 import { observer } from 'mobx-react';
-import { ModuleTitle, CardTable} from 'components/common/report';
-
+import { CardTable } from 'components/common/report';
+import loadingComp from 'components/hoc/LoadingComp';
 function CheckMessage({checkMessage}) {
   const data = {
     meta: {
@@ -20,7 +20,6 @@ function CheckMessage({checkMessage}) {
   };
   return (
     <div>
-      <ModuleTitle module="抽查检查信息"/>
       <CardTable {...data} />
     </div>
   );
@@ -29,4 +28,8 @@ function CheckMessage({checkMessage}) {
 CheckMessage.propTypes = {
   foo: PropTypes.string,
 };
-export default observer(CheckMessage);
+export default loadingComp({
+  mapDataToProps: props => ({
+    loading: props.isLoading,
+  })
+})(observer(CheckMessage));
