@@ -148,6 +148,38 @@ class LeftBarStore {
       helpInfo: helpInfo1,
       contain: ['monitor'],
     },
+    {
+      menuText: '贷中分析',
+      menuKey: 'loaning',
+      children: [
+        {
+          menuText: '多维综合评价',
+          menuKey: 'comprehenEval',
+          helpInfo: helpInfo1,
+          contain: ['monitor']
+        },
+        {
+          menuText: '盈利能力分析',
+          menuKey: 'profitEval',
+          helpInfo: helpInfo1,
+          contain: ['monitor']
+        },
+        {
+          menuText: '营运能力分析',
+          menuKey: 'operationEval',
+          helpInfo: helpInfo1,
+          contain: ['monitor']
+        },
+        {
+          menuText: '成长能力分析',
+          menuKey: 'growthAbilityEval',
+          helpInfo: helpInfo1,
+          contain: ['monitor']
+        },
+      ],
+      helpInfo: helpInfo1,
+      contain: ['monitor'],
+    },
   ];
 
   @action.bound setMenuByItem() {
