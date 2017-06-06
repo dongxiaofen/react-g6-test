@@ -3,7 +3,7 @@ import { observer, inject } from 'mobx-react';
 import { runInAction } from 'mobx';
 import styles from './index.less';
 import Button from 'components/lib/button';
-function LeftBar({ leftBarStore, bannerStore, routing }) {
+function LeftBar({ leftBarStore, bannerStore, routing, companyHomeStore}) {
   const activeMenu = leftBarStore.activeMenu;
   const stockCode = bannerStore.stockCode;
   const barConf = leftBarStore.barConf;
@@ -91,6 +91,7 @@ function LeftBar({ leftBarStore, bannerStore, routing }) {
     });
     return menuRow;
   };
+  const companyName = routing.location.query.companyName;
   return (
     <div>
       <div className={styles.wrap}>
@@ -110,7 +111,12 @@ function LeftBar({ leftBarStore, bannerStore, routing }) {
       <div className={styles.wrap}>
         <div className={`${styles.title} clearfix`}>
           <p className={styles.reportType}>贷后监控</p>
-          <Button btnType="primary" className={styles.btnMonitor}>加入监控</Button>
+          <Button
+            btnType="primary"
+            className={styles.btnMonitor}
+            onClick={companyHomeStore.createMonitor.bind(null, companyName)}>
+            加入监控
+          </Button>
         </div>
         {geneBar('monitor')}
       </div>
@@ -127,4 +133,4 @@ LeftBar.propTypes = {
   bannerStore: PropTypes.object,
   routing: PropTypes.object,
 };
-export default inject('leftBarStore', 'bannerStore', 'routing')(observer(LeftBar));
+export default inject('leftBarStore', 'bannerStore', 'routing', 'companyHomeStore')(observer(LeftBar));
