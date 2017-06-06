@@ -8,12 +8,14 @@ function MyAccount({accountProfileStore}) {
   const statistics = {
     titleData: {
       'reportCount': '报告企业',
+      'analysisCount': '分析企业',
       'monitorCount': '监控企业',
       'alertCompanyCount': '预警企业',
       'alertCount': '触发预警',
     },
     units: {
       'reportCount': '家',
+      'analysisCount': '家',
       'monitorCount': '家',
       'alertCompanyCount': '家',
       'alertCount': '条',
