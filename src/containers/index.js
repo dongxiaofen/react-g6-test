@@ -13,7 +13,7 @@ export Risk from './report/risk';
 export AccountSetting from './accountSetting';
 export Internet from './report/internet';
 export MonitorStatistics from './monitorStatistics';
-export ReportManage from './reportManage';
+export ReportList from './reportList';
 export Team from './report/team';
 export Assets from './report/assets';
 export RuleList from './ruleList';

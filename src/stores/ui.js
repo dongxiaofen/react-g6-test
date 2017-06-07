@@ -7,7 +7,7 @@ import ruleStore from './rule';
 import ruleCompanyStore from './ruleCompany';
 import accountSettingStore from './accountSetting';
 import alertAnalysisStore from './report/alertAnalysis';
-import reportManageStore from './reportManage';
+import reportListStore from './reportList';
 import collectionStore from './collection';
 import relPerCheckStore from './report/relPerCheck';
 import nowRecordStore from './report/nowRecord';
@@ -29,6 +29,20 @@ class UiStore {
       () => {
         const {monitorId, reportId, analysisReportId, companyName, companyType} = bannerStore;
         assetsStore.getPatentData({monitorId, reportId, analysisReportId, companyName, companyType});
+      }
+    );
+    reaction(
+      () => this.uiState.basicReportPager.index,
+      () => {
+        document.body.scrollTop = 0;
+        reportListStore.getReportList();
+      }
+    );
+    reaction(
+      () => this.uiState.advancedReportPager.index,
+      () => {
+        document.body.scrollTop = 0;
+        reportListStore.getReportList();
       }
     );
     reaction(
@@ -105,17 +119,6 @@ class UiStore {
       }
     );
     reaction(
-      () => this.uiState.reportManagePager.index,
-      () => {
-        const params = {
-          companyName: reportManageStore.companyName,
-          index: this.uiState.reportManagePager.index,
-          size: this.uiState.reportManagePager.size
-        };
-        reportManageStore.getReportList(params);
-      }
-    );
-    reaction(
       () => this.uiState.collection.index,
       () => {
         const collection = this.uiState.collection;
@@ -153,6 +156,16 @@ class UiStore {
   }
 
   @observable uiState = {
+    basicReportPager: {
+      index: 1,
+      size: 10,
+      totalElements: 0,
+    },
+    advancedReportPager: {
+      index: 1,
+      size: 10,
+      totalElements: 0,
+    },
     monitorList: {
       searchInput: '',
       sortDirection: {
@@ -337,14 +350,6 @@ class UiStore {
       index: 1,
       size: 10
     },
-    reportManageList: {
-      reportStatus: 'report',
-    },
-    reportManagePager: {
-      index: 1,
-      size: 10,
-      totalElements: 0, // 服务端分页
-    },
     relPerCheck: {
       index: 1,
       size: 10,
@@ -419,6 +424,16 @@ class UiStore {
   @action.bound resetStore() {
     extendObservable(this, {
       uiState: {
+        basicReportPager: {
+          index: 1,
+          size: 10,
+          totalElements: 0,
+        },
+        advancedReportPager: {
+          index: 1,
+          size: 10,
+          totalElements: 0,
+        },
         monitorList: {
           searchInput: '',
           sortDirection: {
@@ -607,14 +622,6 @@ class UiStore {
         recentRecruitment: {
           index: 1,
           size: 10
-        },
-        reportManageList: {
-          reportStatus: 'report',
-        },
-        reportManagePager: {
-          index: 1,
-          size: 10,
-          totalElements: 0, // 服务端分页
         },
         stockShareHolder: {
           index: 1,

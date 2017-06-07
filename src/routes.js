@@ -17,7 +17,7 @@ import {
     Internet,
     MonitorStatistics,
     AccountSetting,
-    ReportManage,
+    ReportList,
     Team,
     Assets,
     RuleList,
@@ -115,7 +115,7 @@ export default () => {
       {/* 测试modal用 */}
       <Route path="monitorStatistics" component={ MonitorStatistics } onEnter={requireAuth} />
       <Route path="accountSetting" component={ AccountSetting } onEnter={requireAuth} />
-      <Route path="reportManage" component={ ReportManage } onEnter={requireAuth} />
+      <Route path="reportList" component={ ReportList } onEnter={requireAuth} />
       <Route path="personReport" component={ PersonReport } onEnter={requireAuth} />
       <Route path="ruleList" component={ RuleList } onEnter={requireAuth} />
       <Route path="ruleAdd" component={ RuleAdd } onEnter={requireAuth} />

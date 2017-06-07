@@ -19,7 +19,7 @@ export internetStore from './report/internet';
 export addRelationStore from './addRelation';
 export accountSettingStore from './accountSetting';
 export messageStore from './message';
-export reportManageStore from './reportManage';
+export reportListStore from './reportList';
 export payModalStore from './payModal';
 export uiStore from './ui';
 export teamStore from './report/team';

@@ -30,8 +30,8 @@ function Menu({ routing }) {
     {
       parent: { module: '报告', tagImg: imgLoanBefore},
       children: [
-        { module: '基本报告', route: 'reportManage' },
-        { module: '高级报告', route: 'reportManage' },
+        { module: '基本报告', route: 'reportList?activeKey=basic' },
+        { module: '高级报告', route: 'reportList?activeKey=advanced' },
       ]
     },
     {
@@ -91,7 +91,11 @@ function Menu({ routing }) {
 
   const childrenIsActiveFun = (route) => {
     const pathname = routing.location.pathname.substr(1);
-    return route === pathname;
+    const search = routing.location.search;
+    if (/\?/.test(route)) {
+      return route === pathname + search;
+    }
+    return route.includes(pathname);
   };
 
   const parentItemIsActiveFun = (item) => {
@@ -99,7 +103,7 @@ function Menu({ routing }) {
     const children = item.children;
     if (children && children.length > 0) {
       const isHas = children.find((child) => {
-        return child.route === pathname;
+        return child.route.includes(pathname);
       });
       return isHas !== undefined ? true : false;
     }
