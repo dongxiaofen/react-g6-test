@@ -19,6 +19,24 @@ class CompanyHomeStore {
   ];
   @observable loanDemoAct = 0;
   @observable monitorDemoAct = 0;
+  @observable monitorTime = 1;
+  @computed get monitorTimeObj() {
+    const init = [
+      {text: '1个月', key: 'ONE_MONTH'},
+      {text: '2个月', key: 'TWO_MONTH'},
+      {text: '3个月', key: 'THREE_MONTH'},
+      {text: '4个月', key: 'FOUR_MONTH'},
+      {text: '5个月', key: 'FIVE_MONTH'},
+      {text: '6个月', key: 'SIX_MONTH'},
+      {text: '7个月', key: 'SEVEN_MONTH'},
+      {text: '8个月', key: 'EIGHT_MONTH'},
+      {text: '9个月', key: 'NINE_MONTH'},
+      {text: '10个月', key: 'TEN_MONTH'},
+      {text: '11个月', key: 'ELEVEN_MONTH'},
+      {text: '12个月', key: 'ONE_YEAR'},
+    ];
+    return init[this.monitorTime - 1];
+  }
   @computed get loanOptValue() {
     const output = [];
     this.loanOption.forEach((item)=>{
@@ -28,8 +46,7 @@ class CompanyHomeStore {
     });
     return output;
   }
-  choiceOk = (companyName)=> {
-    const params = {companyName: companyName, time: payModalStore.selectValue};
+  createMonitorConfirm = (params)=> {
     let text = {
       content: '监控创建成功'
     };
@@ -37,8 +54,8 @@ class CompanyHomeStore {
       .then(action('createMonitor', (resp) => {
         payModalStore.closeAction();
         messageStore.openMessage({ ...text });
-        this.reportInfo.monitorId = resp;
-        browserHistory.push(`/companyHome/monitorTimeAxis/?companyName=${companyName}`);
+        this.reportInfo.monitorId = resp.data.monitorId;
+        browserHistory.push(`/companyHome/monitorTimeAxis/?companyName=${params.companyName}`);
       }))
       .catch(action('createMonitor error', (err) => {
         console.log(err.response, '=====createMonitor error');
@@ -50,13 +67,22 @@ class CompanyHomeStore {
         messageStore.openMessage({ ...text });
       }));
   }
-  @action.bound createMonitor(companyName) {
-    payModalStore.openCompModal({
-      'modalType': 'createMonitor',
-      'width': '580px',
-      'pointText': true,
-      'callBack': this.choiceOk.bind(this, companyName),
-    });
+  @action.bound createMonitor() {
+    const args = {
+      width: '900px',
+      boxStyle: {
+        padding: '20px',
+      },
+      isNeedBtn: false,
+      pointText: true,
+      isSingleBtn: true,
+      loader: (cb) => {
+        require.ensure([], (require) => {
+          cb(require('components/common/reportOper/CreateMonitor'));
+        });
+      }
+    };
+    modalStore.openCompModal({ ...args });
   }
   @action.bound createLoanRep(companyName) {
     let text = {
@@ -79,7 +105,7 @@ class CompanyHomeStore {
       messageStore.openMessage({ ...text });
     }));
   }
-  @action.bound openLoanModal(companyName) {
+  @action.bound openLoanModal() {
     const args = {
       width: '900px',
       boxStyle: {
@@ -88,7 +114,6 @@ class CompanyHomeStore {
       isNeedBtn: false,
       pointText: true,
       isSingleBtn: true,
-      confirmAction: this.createLoanRep.bind(this, companyName),
       loader: (cb) => {
         require.ensure([], (require) => {
           cb(require('components/common/reportOper/CreateLoanRep'));
