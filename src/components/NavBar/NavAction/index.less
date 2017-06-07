@@ -45,6 +45,8 @@
 }
 
 .menuBox {
+  position: relative;
+  cursor: pointer;
   i {
     padding-right: 5px;
   }
@@ -67,10 +69,96 @@
   }
 }
 
+.userIco {
+  padding-right: 10px;
+  width: 28px;
+  height: 28px;
+  background-image: url('imgs/navbar/userIco.png');
+  background-size: 28px 28px;
+  transition: all 0.3s ease-in-out;
+}
+
+.userItemBox{
+  position: absolute;
+  top: 75px;
+  right: 0;
+  width: 115px;
+  padding: 5px 0;
+  visibility: hidden;
+  opacity: 0;
+  transition: all 0.3s ease-in-out;
+}
+
+.userItemBoxMain{
+  margin-top: 20px;
+  padding: 5px 0;
+  background-color: @mdc-white-darker;
+  .box-shadow-dropDown;
+  &::before{
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    display: block;
+    content: '';
+    width: 10px;
+    height: 10px;
+    background-color: @mdc-white-darker;
+    box-shadow: -1px -1px 0 #ccc;
+    transform: rotate(45deg);
+    z-index: 1;
+  }
+}
+
+.userItemBoxHover{
+  .userItemBox{
+    top: 25px;
+    visibility: visible;
+    opacity: 1;
+  }
+  .userIco{
+    background-image: url('imgs/navbar/userIco_hover.png');
+  }
+}
+
+.userItem{
+  font-size: 14px;
+  line-height: 40px;
+  color: @mdc-blue-grey-500;
+  text-align: center;
+  i{
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    margin-right: 5px;
+    vertical-align: -4px;
+    background-size: 20px 20px;
+  }
+  &:hover{
+    color: @mdc-blue-400;
+    .collection{
+      background-image: url('imgs/navbar/collection_hover.png');
+    }
+    .account{
+      background-image: url('imgs/navbar/account_hover.png');
+    }
+    .logout{
+      background-image: url('imgs/navbar/logout_hover.png');
+    }
+  }
+}
+
+.collection{
+  background-image: url('imgs/navbar/collection.png');
+}
+.account{
+  background-image: url('imgs/navbar/account.png');
+}
+.logout{
+  background-image: url('imgs/navbar/logout.png');
+}
+
 .searchBox{
   position: relative;
-  width: 204px;
-
   &:hover {
     i {
       color: @mdc-blue-300;
@@ -78,15 +166,14 @@
   }
 }
 
-.searchInput{
+.searchInputShow{
   float: left;
   width: 150px;
   height: 26px;
-
   color: @mdc-blue-grey-500;
-  line-height: 33px;
-
+  margin-right: 10px;
   background: transparent;
+  transition: all 0.3s ease-in-out;
 
   &::-webkit-input-placeholder {
     color: @mdc-grey-400;
@@ -109,13 +196,21 @@
   }
 }
 
+.searchInputHidden{
+  width: 0;
+  visibility: hidden;
+  transition: all 0.3s ease-in-out;
+}
+
 .searchIcon {
   float: right;
   font-size: 16px;
   line-height: 26px;
+  margin-top: 2px;
   color: @mdc-blue-grey-200;
-
+  cursor: pointer;
   i {
+    font-size: 20px;
     -webkit-transition: color .3s ease-in-out;
        -moz-transition: color .3s ease-in-out;
         -ms-transition: color .3s ease-in-out;
@@ -124,76 +219,22 @@
   }
 }
 
-.iconStyle {
-  position: relative;
-  float: left;
-  margin-left: 30px;
-  line-height: 70px;
-}
-
-.icon {
-  display: inline-block;
-  width: 20px;
-  height: 20px;
-
-  vertical-align: middle;
-  cursor: pointer;
-
-  .transition-all;
-}
-
-
-.userInfo {
-  padding: 20px;
-}
-
-.userInfoBorder {
-  height: 1px;
-  margin-top: 15px;
-  margin-bottom: 15px;
-  background-color: @mdc-blue-grey-50;
-}
-
-.userInfoText {
-  font-size: 14px;
-  line-height: 14px;
-  color: @mdc-blue-grey-400;
-}
-
-.userInfoText:last-child {
-  line-height: 16px;
-}
-
-.userInfoBlock {
-  float: left;
-}
-
-.userInfoBlock:first-child {
-  width: 42px;
-}
-.userInfoBlock:last-child {
-  width: 140px;
-  overflow: hidden;
-  white-space: nowrap;  
-  text-overflow: ellipsis; 
-}
-
 .logout {
   text-align: center;
 }
 
-.logoutText
-{  
-  font-size: 14px;
-  line-height: 40px;
-  color: @mdc-blue-grey-400;
-}
-
 .downloadApp {
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+  margin-top: 5px;
+  background-image: url('imgs/navbar/codeIco.png');
+  background-size: 20px 20px;
+  transition: all 0.3s ease-in-out;
   &:hover {
+    background-image: url('imgs/navbar/codeIco_hover.png');
     & + div {
       top: 50px;
-
       opacity: 1;
       visibility: visible;
     }

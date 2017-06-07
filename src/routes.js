@@ -42,6 +42,8 @@ import {
     Tax,
     TaxCheck,
     AssetTransaction,
+    InLoanAnalysis,
+
     InvestAndOffice,
     ComprehenEval,
     ProfitEval,
@@ -81,6 +83,7 @@ export default () => {
       <Route path="account" component={ Account } onEnter={requireAuth} />
       <Route path="homePage" component={ HomePage } onEnter={requireAuth} />
       <Route path="monitorList" component={ MonitorList } onEnter={requireAuth} />
+      <Route path="inLoanAnalysis" component= { InLoanAnalysis } onEnter={ requireAuth } />
       <Route path="companyHome" component={ CompanyHome } >
         <IndexRedirect to="corpDetail" />
         <Route path="corpDetail" component={CorpDetail} onEnter={requireAuth} />
