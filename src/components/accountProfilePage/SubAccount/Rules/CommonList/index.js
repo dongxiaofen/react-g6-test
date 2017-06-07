@@ -13,16 +13,16 @@ function CommonList({data}) {
     if (data) {
       data.map( (itemData, index) => {
         arrList = [...arrList,
-          <li key={`${index}newAccount`} className={`${styles.list_item} clearfix`}>
-            <div className={`${styles.user} pull-left`}>{`${rulesType[itemData.alertType]}：${itemData.ruleName}`}</div>
-            <div className={`${styles.date} pull-right`}>
+          <li key={`${index}newAccount`} className={`${styles.list_item}`}>
+            {index === 0 ? <span className={styles.rank_lable_blue}>NEW</span> : <span className={styles.rank_lable}>{index + 1}</span>}
+            <span className={`${styles.user}`}>{`${rulesType[itemData.alertType]}：${itemData.ruleName}`}</span>
+            <div className={`${styles.date}`}>
               { itemData.ruleTime ? <div>
-                <p>最新预警日期</p>
-                <p>{itemData.ruleTime}</p>
+                <span>预警日期：</span>
+                <span>{itemData.ruleTime}</span>
               </div> :
               <div className={styles.w_count}>
-                <span>预警 {`${itemData.count}`} 次</span>
-                {/* <span>{itemData.count}</span> */}
+                <span className={index === 0 ? styles.text_label_first : styles.text_label}>预警 {`${itemData.count}`} 次</span>
               </div>
               }
             </div>
