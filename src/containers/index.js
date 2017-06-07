@@ -38,4 +38,10 @@ export Disclaimer from './disclaimer';
 export Tax from './report/tax';
 export TaxCheck from './report/taxCheck';
 export AssetTransaction from './assetTransaction';
+export InLoanAnalysis from './inLoanAnalysis';
+export InvestAndOffice from './report/investAndOffice';
+export ComprehenEval from './report/comprehenEval';
+export ProfitEval from './report/profitEval';
+export OperationEval from './report/operationEval';
+export GrowthAbilityEval from './report/growthAbilityEval';
 // append here from plop
