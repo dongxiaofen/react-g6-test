@@ -7,16 +7,18 @@ import Tables from '../common/Tables';
 function MyAccount({accountProfileStore}) {
   const statistics = {
     titleData: {
+      'reportCount': '报告企业',
+      'analysisCount': '分析企业',
+      'monitorCount': '监控企业',
       'alertCompanyCount': '预警企业',
       'alertCount': '触发预警',
-      'reportCount': '报告企业',
-      'monitorCount': '监控企业',
     },
     units: {
+      'reportCount': '家',
+      'analysisCount': '家',
+      'monitorCount': '家',
       'alertCompanyCount': '家',
       'alertCount': '条',
-      'reportCount': '家',
-      'monitorCount': '家',
     },
     data: accountProfileStore.ownWarningStatisticsData,
   };
@@ -30,7 +32,7 @@ function MyAccount({accountProfileStore}) {
     title: '最新预警企业',
     isLoading: accountProfileStore.ownWarningCompnayIsLoading,
     error: accountProfileStore.ownWarningCompnay.length === 0,
-    module: '',
+    module: '我的账号最新预警企业（已创建）',
     owner: 'own',
   };
   const riskCompnay = {

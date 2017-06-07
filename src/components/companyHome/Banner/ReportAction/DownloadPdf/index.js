@@ -75,6 +75,7 @@ export default class DownloadPdf extends Component {
         <div className={`clearfix ${styles['download-item']}`} key={key}>
           <div className={styles['download-item-title']}>
             <Checkbox
+              className={styles.checkbox_style}
               key={key}
               checked={item.checked}
               onChange={this.menuLevelOneOnChange.bind(this, key, item.value)}>
@@ -115,6 +116,7 @@ export default class DownloadPdf extends Component {
         <div className={`clearfix ${styles['download-col-4']}`} key={_idx}>
           <div className={styles['download-item-title2']}>
             <Checkbox
+              className={styles.checkbox_style}
               checked={_item.checked}
               onChange={this.menuLevelTwoOnChange.bind(this, _key, _idx, _levelOneKey)}>
               {_item.label}
@@ -208,15 +210,16 @@ export default class DownloadPdf extends Component {
     return (
       <div className={styles.downloadModal}>
         <div className={styles.downloadTitleBox}>
-          <i className="fa fa-file-text-o" aria-hidden="true"></i>
-          <span>{this.props.bannerStore.companyName}</span>
+          <i className={`${styles.pdf_icon} fa fa-file-text-o`} aria-hidden="true"></i>
+          <span>{this.props.bannerStore.companyName}贷前基础报告PDF下载（小米科技有限责任公司）</span>
         </div>
         <div className={styles.pdfDownModaBtnBox}>
           <div className={styles.selectAll}>
             <Checkbox
+              className={styles.checkbox_style}
               checked={this.downloadAllChecked()}
               onChange={this.downloadAll}>
-              全部页面
+              全部信息
             </Checkbox>
             {
               this.state.tipInfo && isShowTipInfo
