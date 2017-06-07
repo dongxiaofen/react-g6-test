@@ -32,7 +32,7 @@ function MyAccount({accountProfileStore}) {
     title: '最新预警企业',
     isLoading: accountProfileStore.ownWarningCompnayIsLoading,
     error: accountProfileStore.ownWarningCompnay.length === 0,
-    module: '',
+    module: '我的账号最新预警企业（已创建）',
     owner: 'own',
   };
   const riskCompnay = {

@@ -16,7 +16,9 @@ function hoc({mapDataToProps}) {
         error,
         module,
         errCategory,
-        height
+        height,
+        errorWords,
+        path,
       } = mapDataToProps(props);
       let output;
       if (loading) {
@@ -46,7 +48,7 @@ function hoc({mapDataToProps}) {
             break;
         }
       } else if (error) {
-        output = <ErrorText module={module} error={error} errCategory={errCategory} height={height} />;
+        output = <ErrorText module={module} error={error} errCategory={errCategory} height={height} errorWords={errorWords} path={path} />;
       } else {
         output = <WrappedComponent {...props} />;
       }

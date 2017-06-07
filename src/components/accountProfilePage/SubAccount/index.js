@@ -34,7 +34,10 @@ function SubAccount({ accountProfileStore }) {
     title: '最新预警企业',
     isLoading: accountProfileStore.subWarningCompnayIsLoading,
     error: accountProfileStore.subWarningCompnay.length === 0,
-    module: '',
+    module: '子账号最新预警企业（无子账号）',
+    errCategory: 3,
+    errorWords: '账号中心',
+    path: '/accountSetting',
   };
   const riskCompnay = {
     hasScore: true,

@@ -97,7 +97,10 @@ export default loadingComp({
   mapDataToProps: props => ({
     loading: props.isLoading,
     category: 0,
+    errCategory: props.errCategory,
     error: props.error,
-    module: props.module
+    module: props.module,
+    errorWords: props.errorWords,
+    path: props.path
   })
 })(inject('routing', 'searchCompanyStore')(observer(TableBody)));
