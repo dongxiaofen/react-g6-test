@@ -1,0 +1,25 @@
+@import '~sc-colors/index.less';
+.serviceWrap{
+  float: left;
+  margin: -1px 0 0 10px;
+  padding: 0 10px 0 0;
+  border: 1px solid @mdc-blue-400;
+  line-height: 19px;
+  height: 19px;
+  font-size: 14px;
+}
+.serviceTag{
+  display: inline-block;
+  padding: 0 5px;
+  position: relative;
+  color: @mdc-blue-400;
+  &::after{
+    content: '';
+    position: absolute;
+    top: 2px;
+    left: -1px;
+    width: 1px;
+    height: 13px;
+    background:@mdc-blue-400;
+  }
+}
