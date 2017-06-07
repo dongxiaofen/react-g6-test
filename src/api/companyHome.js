@@ -272,3 +272,7 @@ export const getSixStar = (id, source) => {
 export const getPersonNodeInfo = (monitorId, params) => {
   return axios.get(`/api/monitor/${monitorId}/expendNetwork/personInfo`, {params});
 };
+// 贷中分析,创建报告
+export const createAnalyRep = (params) => {
+  return axios.post('/api/analysisReport', params);
+};

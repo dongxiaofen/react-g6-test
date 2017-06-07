@@ -104,7 +104,10 @@ function LeftBar({ leftBarStore, bannerStore, routing, companyHomeStore}) {
       <div className={styles.wrap}>
         <div className={`${styles.title} clearfix`}>
           <p className={styles.reportType}>贷中分析</p>
-          <Button btnType="primary" className={styles.btnMonitor}>创建分析</Button>
+          <Button
+            btnType="primary"
+            className={styles.btnMonitor}
+            onClick={companyHomeStore.openLoanModal.bind(null, companyName)}>创建分析</Button>
         </div>
         {geneBar('loaning')}
       </div>

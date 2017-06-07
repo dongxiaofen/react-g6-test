@@ -1,6 +1,7 @@
 import React, { Component, PropTypes } from 'react';
 import { Link } from 'react-router';
 import { observer } from 'mobx-react';
+import mobx from 'mobx';
 import Button from 'components/lib/button';
 import styles from './index.less';
 @observer
@@ -27,6 +28,7 @@ export default class Modal extends Component {
     confirmLoading: PropTypes.bool,
     // disable
     confirmDisable: PropTypes.bool,
+    boxStyle: PropTypes.object,
   }
 
   componentDidMount() {
@@ -67,9 +69,9 @@ export default class Modal extends Component {
       this.props.closeAction();
     }
   };
-
   render() {
     // 背景是否显示
+    const boxStyle = Object.assign({width: this.props.width}, mobx.toJS(this.props.boxStyle));
     const modalBoxClassName = this.props.visible
       ? `${styles.modal} ${styles['vertical-center-modal']} ${styles.modalVisible}`
       : `${styles.modal} ${styles['vertical-center-modal']}`;
@@ -134,7 +136,7 @@ export default class Modal extends Component {
     if (this.props.isCustomize) {
       return (
         <div className={modalBoxClassName}>
-          <div className={contentBoxClassName} style={{ width: this.props.width }}>
+          <div className={`${contentBoxClassName}`} style={boxStyle}>
             <div className={styles.closeBtn} onClick={this.closeAction}></div>
             <div className="clearfix">{this.props.children}</div>
           </div>
@@ -143,11 +145,15 @@ export default class Modal extends Component {
     }
     return (
       <div className={modalBoxClassName}>
-        <div className={contentBoxClassName} style={{ width: this.props.width }}>
+        <div className={contentBoxClassName} style={boxStyle}>
           <div className={styles.closeBtn} onClick={this.closeAction}></div>
-          <div className={styles.title}>
-            {this.props.title}
-          </div>
+          {
+            this.props.title ?
+            <div className={styles.title}>
+              {this.props.title}
+            </div>
+            : ''
+          }
           <div className="clearfix">{this.props.children}</div>
           {isNeedBtn}
           {pointTextComp}
