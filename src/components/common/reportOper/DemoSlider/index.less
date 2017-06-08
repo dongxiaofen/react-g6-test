@@ -1,0 +1,49 @@
+@import "~sc-colors/index.less";
+.demoSlider {
+  position: relative;
+  margin-top: 35px;
+  margin-bottom: 20px;
+}
+.carousel {
+  border: 1px solid @mdc-grey-200;
+}
+.nav {
+  float: left;
+  color: @white1;
+  background: @black1;
+  opacity: 0.2;
+  text-align: center;
+  height: 27px;
+  line-height: 27px;
+  cursor: pointer;
+}
+.navWrap {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+}
+.navAct {
+  composes: nav;
+  opacity: 0.36;
+  .navItem {
+    border-right: none;
+  }
+}
+.navItem {
+  width: 100%;
+  display: inline-block;
+  border-right: 1px solid #9e9e9e;
+  line-height: 1em;
+}
+.demo {
+  img {
+    width: 100%;
+    height: 365px;
+  }
+}
+.text {
+  color: @mdc-grey-500;
+  font-size: 14px;
+  line-height: 1em;
+  margin-bottom: 10px;
+}

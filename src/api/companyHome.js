@@ -1,15 +1,6 @@
 import axios from 'axios';
-export const getBannerInfo = ({
-  monitorId,
-  reportId,
-}) => {
-  let url;
-  if (monitorId) {
-    url = `/api/monitor/${monitorId}/infobanner/xx`;
-  } else if (reportId) {
-    url = `/api/report/infobanner?reportId=${reportId}`;
-  }
-  return axios.get(url);
+export const getBannerInfo = (params) => {
+  return axios.get(`/api/common/bannerInfo`, {params});
 };
 
 // 获取上市代码，检查该公司是否是上市公司
@@ -84,19 +75,6 @@ export const getNewsDetail = (url, source) => {
 };
 export const getBiddingDetail = (url, source) => {
   return axios.get(url, { cancelToken: source.token });
-};
-export const getPersonCheckInfo = ({ monitorId, reportId, params, source }) => {
-  if (monitorId) {
-    return axios.get(`/api/monitor/${monitorId}/person/page`, { params: params, cancelToken: source.token });
-  } else if (reportId) {
-    return axios.get(`/api/report/${reportId}/person/page`, { params: params, cancelToken: source.token });
-  }
-};
-export const checkPersonInfo = (url, params) => {
-  return axios.post(url, params);
-};
-export const getIdCard = (url) => {
-  return axios.get(url);
 };
 
 // 获取上市公告
@@ -174,10 +152,6 @@ export const addOrCancelCollection = ({ reportId, monitorId, params }) => {
   return axios.put(url, params);
 };
 
-// 获取核查人的列表
-export const getPersonName = (url) => {
-  return axios.get(url);
-};
 
 // 获取评估分析列表
 export const getAlertAnalysisList = (monitorId, analysisReportId, params, source) => {
@@ -271,4 +245,20 @@ export const getSixStar = (id, source) => {
 // 关联图,获取个人信息
 export const getPersonNodeInfo = (monitorId, params) => {
   return axios.get(`/api/monitor/${monitorId}/expendNetwork/personInfo`, {params});
+};
+// 贷中分析,创建报告
+export const createAnalyRep = (params) => {
+  return axios.post('/api/analysisReport', params);
+};
+// 贷前基础报告,升级
+export const upgradeReport = (basicReportId)=>{
+  return axios.put(`/api/basicReport/${basicReportId}/upgradeReport`);
+};
+// 获取报告的id
+export const getReportStatus = (params) => {
+  return axios.get(`/api/common/status`, {params});
+};
+// 创建基础报告
+export const createBasicReport = (params)=> {
+  return axios.post(`/api/basicReport`, params);
 };

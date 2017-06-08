@@ -3,9 +3,9 @@ import { observer, inject } from 'mobx-react';
 import styles from './index.less';
 import CheckList from './CheckList';
 import Button from 'components/lib/button';
-import noData from 'imgs/personCheck/personNoData.png';
 import CheckModal from './CheckModal';
 import { runInAction } from 'mobx';
+import { Container, Row, Col } from 'components/common/layout';
 
 function RelPerInfo({relPerCheckStore}) {
   const handleClick = () => {
@@ -34,22 +34,21 @@ function RelPerInfo({relPerCheckStore}) {
     pointText: true,
     btnLoading: relPerCheckStore.isLoading
   };
-  if (relPerCheckStore.personCheckInfoData && relPerCheckStore.personCheckInfoData.length > 0) {
-    return (
-    <div>
-      <Button className={styles.noDataButton} onClick={handleClick}>添加核查</Button>
-      <CheckModal {...checkModalConfig} />
-      <CheckList listData={relPerCheckStore.personCheckInfoData} />
-    </div>
-    );
-  }
   return (
-    <div className={styles.noData}>
-      <img className={styles.img} src={noData} />
-      <div className={styles.noDataInfo}>还没有关联人核查结果，请添加核查</div>
-      <Button className={styles.noDataButton} onClick={handleClick}>添加核查</Button>
-      <CheckModal {...checkModalConfig} />
-    </div>
+  <Container>
+    <Row>
+      <Col>
+        <div className="clearfix">
+          <h1 className={styles.title}>个人黑名单</h1>
+          <Button btnType="primary" className={styles.noDataButton} onClick={handleClick}>添加个人核查</Button>
+          <CheckModal {...checkModalConfig} />
+        </div>
+        <div className={styles.listArea}>
+          <CheckList listData={relPerCheckStore.personCheckInfoData} loading={relPerCheckStore.getDataLoading} />
+        </div>
+      </Col>
+    </Row>
+  </Container>
   );
 }
 RelPerInfo.propTypes = {

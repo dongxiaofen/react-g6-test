@@ -3,9 +3,9 @@ import pathval from 'pathval';
 import {companyHomeApi} from 'api';
 import axios from 'axios';
 const CancelToken = axios.CancelToken;
-import uiStore from '../ui';
-import modalStore from '../modal';
-import messageStore from '../message';
+import uiStore from './ui';
+import modalStore from './modal';
+import messageStore from './message';
 class TaxCheckStore {
   @observable selectConf = [
     {year: '2015', taxIndex: 'R001', input: '', msg: ''},
