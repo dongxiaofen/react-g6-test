@@ -75,6 +75,7 @@ export default class DownloadPdf extends Component {
         <div className={`clearfix ${styles['download-item']}`} key={key}>
           <div className={styles['download-item-title']}>
             <Checkbox
+              style={{fontSize: '14px'}}
               className={styles.checkbox_style}
               key={key}
               checked={item.checked}
@@ -116,6 +117,7 @@ export default class DownloadPdf extends Component {
         <div className={`clearfix ${styles['download-col-4']}`} key={_idx}>
           <div className={styles['download-item-title2']}>
             <Checkbox
+              style={{color: '#4c4c4c'}}
               className={styles.checkbox_style}
               checked={_item.checked}
               onChange={this.menuLevelTwoOnChange.bind(this, _key, _idx, _levelOneKey)}>
@@ -216,6 +218,7 @@ export default class DownloadPdf extends Component {
         <div className={styles.pdfDownModaBtnBox}>
           <div className={styles.selectAll}>
             <Checkbox
+              style={{fontSize: '14px'}}
               className={styles.checkbox_style}
               checked={this.downloadAllChecked()}
               onChange={this.downloadAll}>

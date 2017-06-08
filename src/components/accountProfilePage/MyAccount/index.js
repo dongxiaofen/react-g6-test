@@ -23,7 +23,7 @@ function MyAccount({accountProfileStore}) {
     data: accountProfileStore.ownWarningStatisticsData,
   };
   const warningCompnay = {
-    hasScore: true,
+    hasScore: true, // 未使用
     dateType: 'warningDate',
     data: accountProfileStore.ownWarningCompnay,
     hasFlag: false,

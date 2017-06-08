@@ -9,13 +9,13 @@ function CompanyName({itemData}) {
     companyName = (<span dangerouslySetInnerHTML={{__html: itemData.companyHighlight}}></span>);
   }
   // 公司名Dom和点击跳转报告
-  let companyNameDom = '';
-  companyNameDom = (
-    <div>{companyName}</div>
-  );
+  // let companyNameDom = '';
+  // companyNameDom = (
+  //   <div>{companyName}</div>
+  // );
   return (
     <div className={`${styles.company}`}>
-      {companyNameDom}
+      {companyName}
     </div>
   );
 }

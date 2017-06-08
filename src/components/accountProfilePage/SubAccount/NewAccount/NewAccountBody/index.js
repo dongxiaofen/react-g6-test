@@ -29,14 +29,15 @@ function NewAccountBody({data, routing, accountSettingStore}) {
         arrList = [...arrList,
           <li key={`${index}newAccount`} className={`${styles.list_item}`}>
             <div className={`${styles.marginRL} clearfix`}>
-              <div onClick={jumpAccoutSetting.bind(this, itemData.email, itemData.userId)} className={`${styles.user} pull-left`}>
+            {index === 0 ? <span className={styles.rank_lable_blue}>NEW</span> : <span className={styles.rank_lable}>{index + 1}</span>}
+            <span onClick={jumpAccoutSetting.bind(this, itemData.email, itemData.userId)} className={`${styles.user}`}>
                 <Popover content={`所属账号：${itemData.userName}（${itemData.email}）`}>
                   {spliceString(itemData.userName, itemData.email)}
                 </Popover>
-              </div>
-              <div className={`${styles.date} pull-right`}>
-                <p>最新预警日期</p>
-                <p>{itemData.alertDt}</p>
+              </span>
+              <div className={`${styles.date}`}>
+                <span>预警日期：</span>
+                <span>{itemData.alertDt}</span>
               </div>
             </div>
           </li>
