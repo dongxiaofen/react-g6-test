@@ -8,7 +8,7 @@ import pathval from 'pathval';
 class CompanyHomeStore {
   @observable reportInfo = {
     analysisReportId: '',
-    basicReportId: '',
+    basicReportId: '22',
     reportId: '',
     monitorId: '',
     dimensions: [],
@@ -123,11 +123,34 @@ class CompanyHomeStore {
     };
     modalStore.openCompModal({ ...args });
   }
+  @action.bound upgradeReport() {
+    const basicReportId = this.reportInfo.basicReportId;
+    let text = {
+      content: '升级成功'
+    };
+    console.log(basicReportId);
+    companyHomeApi.upgradeReport(basicReportId)
+    .then(action('upgradeReport', (resp) => {
+      modalStore.closeAction();
+      messageStore.openMessage({ ...text });
+      this.reportInfo.reportId = resp.data.reportId;
+    }))
+    .catch(action('upgradeReport error', (err) => {
+      console.log(err.response, '=====upgradeReport error');
+      modalStore.closeAction();
+      text = {
+        type: 'warning',
+        content: err.response.data.message
+      };
+      messageStore.openMessage({ ...text });
+    }));
+  }
   @action.bound openUpReportModal() {
     const args = {
       title: '升级报告',
       pointText: true,
       isSingleBtn: true,
+      confirmAction: this.upgradeReport,
       loader: (cb) => {
         require.ensure([], (require) => {
           cb(require('components/common/reportOper/UpgradeReport'));
