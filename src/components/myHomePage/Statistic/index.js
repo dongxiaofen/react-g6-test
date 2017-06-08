@@ -56,7 +56,7 @@ function Statistic({ myHomePageStore }) {
         </Link>
       </div>
       <div className={`clearfix ${styles['statistic-item-last']}`}>
-        <Link to="/reportManage" className={`clearfix ${styles['statistic-left2']}` + ' ' + styles.icon5}>
+        <Link to="/reportList?activeKey=basic" className={`clearfix ${styles['statistic-left2']}` + ' ' + styles.icon5}>
           <div className={styles['statistic-icon']}>
           </div>
           <div className={styles['statistic-content']}>
