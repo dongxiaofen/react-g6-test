@@ -2,19 +2,17 @@
 
 .item_box{
   .list_item{
+    position: relative;
+    padding: 20px 0;
     margin: 0 20px;
     border-bottom: 1px dashed @black12;
     .user{
       font-size: 14px;
       color: @mdc-grey-900;
-      margin: 20px 0 0 0;
-      padding-bottom: 20px;
     }
     .date{
-      font-size: 12px;
+      font-size: 13px;
       color: #93a6b0;
-      margin: 15px 0 0 0;
-      text-align: right;
     }
   }
   &:last-child{
@@ -23,5 +21,37 @@
   .w_count{
     padding-top: 6px;
     font-size: 14px;
+    position: absolute;
+    top: 15px;
+    right: 20px;
   }
+}
+.rank_lable{
+  background:#b0bec5;
+  border:1px solid #90a4ae;
+  border-radius:3px;
+  padding: 0 4px;
+  font-size: 12px;
+  margin-right: 6px;
+  color: @white1;
+}
+.rank_lable_blue{
+  &:extend(.rank_lable);
+  background:#64b5f6;
+  border:1px solid #42a5f5;
+}
+
+.text_label_first{
+  top: 33px;
+  right: 20px;
+  border:1px solid @mdc-red-600;
+  padding: 0 6px;
+  color: @mdc-red-600;
+}
+.text_label{
+  top: 35px;
+  right: 20px;
+  padding: 0 6px;
+  border:1px solid @mdc-blue-grey-100;
+  color: @mdc-blue-grey-100;
 }

@@ -26,7 +26,7 @@ function SubAccount({ accountProfileStore }) {
   };
   const warningCompnay = {
     hasScore: true,
-    dateType: 'singeLine',
+    dateType: 'warningDate',
     data: accountProfileStore.subWarningCompnay,
     hasFlag: false,
     companyType: 'warningCompnay',
