@@ -140,7 +140,7 @@ class BannerStore {
     .then(action('getReportStatus', (resp)=>{
       if (resp.data.basicReportId || resp.data.reportId) {
         this.getBannerInfo({companyName: params.companyName});
-        companyHomeStore.reportInfo = Object(companyHomeStore.reportInfo, resp.data);
+        companyHomeStore.updateValue('reportInfo', Object.assign(companyHomeStore.reportInfo, resp.data));
       } else {
         this.createBasicReport({companyName: params.companyName});
       }

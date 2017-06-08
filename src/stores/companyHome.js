@@ -128,7 +128,6 @@ class CompanyHomeStore {
     let text = {
       content: '升级成功'
     };
-    console.log(basicReportId);
     companyHomeApi.upgradeReport(basicReportId)
     .then(action('upgradeReport', (resp) => {
       modalStore.closeAction();
