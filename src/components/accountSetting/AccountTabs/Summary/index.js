@@ -29,8 +29,12 @@ function Summary({accountSettingStore, clientStore}) {
     {name: '操作人', key: 'operatorName', handle: handleName},
   ];
   const data = accountSettingStore.tabs.summary.content;
+  const consumePointTotal = accountSettingStore.base.data.subUserConsumePoint;
   return (
     <div className={styles.wrapper}>
+      <div className={styles.totalConsume}>
+        {`总消费点数 ${consumePointTotal || 0}`}
+      </div>
       <AccountTable
         module="accountSummary"
         headData={head}
