@@ -4,11 +4,14 @@ import styles from './index.less';
 import CompanyName from './CompanyName';
 // import MonitorStatus from './MonitorStatus';
 import CompanyStatus from './CompanyStatus';
-import StockType from './StockType';
+// import StockType from './StockType';
 import Risk from './Risk';
 import FrName from './FrName';
-import Address from './Address';
+// import Address from './Address';
 import Highlight from './Highlight';
+import Capital from './Capital';
+import RegistDate from './RegistDate';
+import Purchasedservice from './Purchasedservice';
 
 function SearchItemLeft({itemData, searchParameter}) {
   return (
@@ -16,14 +19,19 @@ function SearchItemLeft({itemData, searchParameter}) {
       <div className={`${styles.itemMessage}`}>
         <CompanyName itemData={itemData} />
         {/* <MonitorStatus itemData={itemData} /> */}
-        <CompanyStatus itemData={itemData} />
-        <StockType itemData={itemData} />
+        <Purchasedservice itemData={itemData} />
+        {/* <StockType itemData={itemData} /> */}
         <Risk itemData={itemData} />
       </div>
       <div className={`${styles.itemMessage}`}>
+        <CompanyStatus itemData={itemData} />
         <FrName itemData={itemData} />
-        <Address itemData={itemData} />
+        <Capital itemData={itemData} />
+        <RegistDate itemData={itemData} />
       </div>
+      {/* <div className={`${styles.itemMessage}`}>
+        <Address itemData={itemData} />
+      </div> */}
       <div className={`${styles.itemMessage} ${styles.itemMessagePosition}`}>
         <Highlight
           itemData={itemData}

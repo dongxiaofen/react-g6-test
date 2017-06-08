@@ -6,21 +6,18 @@
       margin-bottom: 20px;
     }
     .marginRL{
-      padding: 10px 0;
+      padding: 20px 0;
       margin: 0 20px;
       border-bottom: 1px dashed @black12;
     }
     .user{
       font-size: 14px;
       color: @mdc-grey-900;
-      margin: 20px 0 0 0;
-      padding-bottom: 20px;
+      padding-bottom: 5px;
     }
     .date{
-      font-size: 12px;
+      font-size: 13px;
       color: #93a6b0;
-      margin: 15px 0 0 0;
-      text-align: right;
     }
     &:hover{
       background-color: #f5f5f5;
@@ -30,4 +27,18 @@
       }
     }
   }
+}
+.rank_lable{
+  background:#b0bec5;
+  border:1px solid #90a4ae;
+  border-radius:3px;
+  padding: 0 4px;
+  font-size: 12px;
+  margin-right: 6px;
+  color: @white1;
+}
+.rank_lable_blue{
+  &:extend(.rank_lable);
+  background:#64b5f6;
+  border:1px solid #42a5f5;
 }

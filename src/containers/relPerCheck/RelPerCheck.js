@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { observer, inject } from 'mobx-react';
-import RelPerInfo from 'components/companyHome/infoCheck/relPerCheck';
+import RelPerInfo from 'components/relPerCheck';
 import { batchReport } from 'components/hoc';
 
 @inject('routing', 'relPerCheckStore')
