@@ -22,6 +22,7 @@ export default class AccountProfileBody extends Component {
       <Container>
         <Row className={styles.mTop}>
           <Col width="12">
+            <a className={styles.goto_search}>去搜索企业>></a>
             <Tabs defaultActiveKey="1">
               <TabPane tab="我的账号" key="1">
                  <MyAccount />

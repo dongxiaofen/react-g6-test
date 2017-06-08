@@ -41,6 +41,8 @@ import {
     Tax,
     TaxCheck,
     AssetTransaction,
+    InLoanAnalysis,
+
     InvestAndOffice,
     ComprehenEval,
     ProfitEval,
@@ -83,6 +85,7 @@ export default () => {
       <Route path="account" component={ Account } onEnter={requireAuth} />
       <Route path="homePage" component={ HomePage } onEnter={requireAuth} />
       <Route path="monitorList" component={ MonitorList } onEnter={requireAuth} />
+      <Route path="inLoanAnalysis" component= { InLoanAnalysis } onEnter={ requireAuth } />
       <Route path="companyHome" component={ CompanyHome } >
         <IndexRedirect to="corpDetail" />
         <Route path="corpDetail" component={CorpDetail} onEnter={requireAuth} />
@@ -91,14 +94,12 @@ export default () => {
         <Route path="assets" component={ Assets } onEnter={requireAuth} />
         <Route path="stock" component={ Stock } onEnter={requireAuth} />
         <Route path="network" component={ Network } onEnter={requireAuth} />
-        <Route path="relPerCheck" component={ RelPerCheck } onEnter={requireAuth} />
         <Route path="alertAnalysis" component={ AlertAnalysis } onEnter={requireAuth} />
         <Route path="timeAxis" component={ TimeAxis } onEnter={requireAuth} />
         <Route path="blackNetwork" component={ BlackNetwork } onEnter={requireAuth} />
         <Route path="forceNetwork" component={ ForceNetwork } onEnter={requireAuth} />
         <Route path="nowRecord" component={ NowRecord } onEnter={requireAuth} />
         <Route path="tax" component={ Tax } onEnter={requireAuth} />
-        <Route path="taxCheck" component={ TaxCheck } onEnter={requireAuth} />
         <Route path="investAndOffice" component={ InvestAndOffice } />
         <Route path="riskTax" component={ RiskTax } />
         <Route path="riskCourt" component={ RiskCourt } />
@@ -111,6 +112,8 @@ export default () => {
         {/* 贷后*/}
 {/* third append here from plop */}
       </Route>
+      <Route path="relPerCheck" component={ RelPerCheck } onEnter={requireAuth} />
+      <Route path="taxCheck" component={ TaxCheck } onEnter={requireAuth} />
       <Route path="solution" component={ Solution } />
       <Route path="about" component={ About } />
       {/* 测试modal用 */}
