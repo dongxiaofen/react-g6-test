@@ -9,7 +9,7 @@ import { runInAction } from 'mobx';
 function TaxCheckMain({ modalStore, taxCheckStore, routing }) {
   const handleClick = () => {
     this.props.modalStore.openCompModal({
-      title: '税务核查',
+      title: '企业税务核查',
       width: '695px',
       isSingleBtn: true,
       confirmText: '确定',
