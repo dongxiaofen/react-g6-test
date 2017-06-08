@@ -18,8 +18,16 @@ function LeftBar({ leftBarStore, bannerStore, routing, companyHomeStore}) {
       }
     });
   };
-  const changeItem = (itemKey, access) => {
-    if (!access) return false;
+  const changeItem = (itemKey, access, type) => {
+    if (!access) {
+      if (type === 'report') {
+        companyHomeStore.openUpReportModal();
+      } else if (type === 'loaning') {
+        companyHomeStore.openLoanModal();
+      } else if (type === 'monitor') {
+        companyHomeStore.createMonitor();
+      }
+    }
     runInAction('切换报告二级目录', () => {
       leftBarStore.activeItem = itemKey;
     });
@@ -29,14 +37,18 @@ function LeftBar({ leftBarStore, bannerStore, routing, companyHomeStore}) {
     });
   };
   const isLock = (itemObj, type) => {
-    if (type === 'report' && itemObj.lock) {
-      return false;
-    }
-    if (type === 'loaning' && itemObj.lock) {
-      return false;
-    }
-    if (type === 'monitor' && itemObj.lock) {
-      return false;
+    const reportInfo = companyHomeStore.reportInfo;
+    console.log(reportInfo.dimensions, itemObj.moduleKey, reportInfo.dimensions.includes(itemObj.moduleKey));
+    if (itemObj.lock) {
+      if (type === 'report' && reportInfo.reportId === '') {
+        return false;
+      }
+      if (type === 'loaning' && !reportInfo.dimensions.includes(itemObj.moduleKey)) {
+        return false;
+      }
+      if (type === 'monitor' && reportInfo.monitorId === '') {
+        return false;
+      }
     }
     return true;
   };
@@ -67,7 +79,7 @@ function LeftBar({ leftBarStore, bannerStore, routing, companyHomeStore}) {
               <div
                 key={itemObj.menuText + itemIdx}
                 className={itemCss}
-                onClick={changeItem.bind(this, itemObj.menuKey, accessItem)}
+                onClick={changeItem.bind(this, itemObj.menuKey, accessItem, type)}
               >
                 {itemObj.menuText}
                 {accessItem ? '' : <i className={styles.lock}></i>}
@@ -80,7 +92,7 @@ function LeftBar({ leftBarStore, bannerStore, routing, companyHomeStore}) {
           <div
             key={menuObj.menuKey}
             className={menuCss}
-            onClick={changeItem.bind(this, menuObj.menuKey, true)}
+            onClick={changeItem.bind(this, menuObj.menuKey, accessMenu, type)}
           >
             {menuObj.menuText}
             {accessMenu ? '' : <i className={styles.lock}></i>}
@@ -92,34 +104,49 @@ function LeftBar({ leftBarStore, bannerStore, routing, companyHomeStore}) {
     return menuRow;
   };
   const companyName = routing.location.query.companyName;
+  const reportTitle = companyHomeStore.reportInfo.reportId !== '' ? '贷前高级报告' : '贷前基础报告';
   return (
     <div>
       <div className={styles.wrap}>
         <div className={`${styles.title} clearfix`}>
-          <p className={styles.reportType}>贷前基础报告</p>
-          <Button btnType="primary" className={styles.btnReport}>升级报告</Button>
+          <p className={styles.reportType}>{reportTitle}</p>
+          {
+            companyHomeStore.reportInfo.reportId === '' ?
+            <Button btnType="primary"
+              className={styles.btnReport}
+              onClick={companyHomeStore.openUpReportModal}>升级报告</Button>
+            : ''
+          }
         </div>
         {geneBar('report')}
       </div>
       <div className={styles.wrap}>
         <div className={`${styles.title} clearfix`}>
           <p className={styles.reportType}>贷中分析</p>
-          <Button
-            btnType="primary"
-            className={styles.btnMonitor}
-            onClick={companyHomeStore.openLoanModal.bind(null, companyName)}>创建分析</Button>
+          {
+            companyHomeStore.reportInfo.dimensions.length < 4 ?
+            <Button
+              btnType="primary"
+              className={styles.btnMonitor}
+              onClick={companyHomeStore.openLoanModal}>创建分析</Button>
+            : ''
+          }
         </div>
         {geneBar('loaning')}
       </div>
       <div className={styles.wrap}>
         <div className={`${styles.title} clearfix`}>
           <p className={styles.reportType}>贷后监控</p>
-          <Button
-            btnType="primary"
-            className={styles.btnMonitor}
-            onClick={companyHomeStore.createMonitor.bind(null, companyName)}>
-            加入监控
-          </Button>
+          {
+            companyHomeStore.reportInfo.monitorId === '' ?
+            <Button
+              btnType="primary"
+              className={styles.btnMonitor}
+              onClick={companyHomeStore.createMonitor.bind(null, companyName)}>
+              加入监控
+            </Button>
+            : ''
+          }
         </div>
         {geneBar('monitor')}
       </div>

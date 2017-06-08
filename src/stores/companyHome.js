@@ -1,13 +1,15 @@
 import { observable, action, computed} from 'mobx';
-import payModalStore from './payModal';
+// import payModalStore from './payModal';
 import modalStore from './modal';
 import messageStore from './message';
-import { browserHistory } from 'react-router';
+// import { browserHistory } from 'react-router';
 import { companyHomeApi } from 'api';
 import pathval from 'pathval';
 class CompanyHomeStore {
   @observable reportInfo = {
     analysisReportId: '',
+    basicReportId: '',
+    reportId: '',
     monitorId: '',
     dimensions: [],
   }
@@ -52,14 +54,13 @@ class CompanyHomeStore {
     };
     companyHomeApi.createMonitor(params)
       .then(action('createMonitor', (resp) => {
-        payModalStore.closeAction();
+        modalStore.closeAction();
         messageStore.openMessage({ ...text });
         this.reportInfo.monitorId = resp.data.monitorId;
-        browserHistory.push(`/companyHome/monitorTimeAxis/?companyName=${params.companyName}`);
       }))
       .catch(action('createMonitor error', (err) => {
         console.log(err.response, '=====createMonitor error');
-        payModalStore.closeAction();
+        modalStore.closeAction();
         text = {
           type: 'warning',
           content: err.response.data.message
@@ -90,14 +91,14 @@ class CompanyHomeStore {
     };
     companyHomeApi.createAnalyRep({companyName, items: this.loanOptValue})
     .then(action('createAnalyRep', (resp) => {
-      payModalStore.closeAction();
+      modalStore.closeAction();
       messageStore.openMessage({ ...text });
-      this.reportInfo.monitorId = resp;
-      browserHistory.push(`/companyHome/monitorTimeAxis/?companyName=${companyName}`);
+      this.reportInfo.analysisReportId = resp.data.analysisReportId;
+      this.reportInfo.dimensions = this.reportInfo.dimensions.concat(this.loanOptValue);
     }))
     .catch(action('createMonitor error', (err) => {
       console.log(err.response, '=====createMonitor error');
-      payModalStore.closeAction();
+      modalStore.closeAction();
       text = {
         type: 'warning',
         content: err.response.data.message
@@ -122,11 +123,25 @@ class CompanyHomeStore {
     };
     modalStore.openCompModal({ ...args });
   }
+  @action.bound openUpReportModal() {
+    const args = {
+      title: '升级报告',
+      pointText: true,
+      isSingleBtn: true,
+      loader: (cb) => {
+        require.ensure([], (require) => {
+          cb(require('components/common/reportOper/UpgradeReport'));
+        });
+      }
+    };
+    modalStore.openCompModal({ ...args });
+  }
   @action.bound updateLoanOption(idx, value) {
     this.loanOption[idx].checked = value;
   }
   @action.bound updateValue(keyPath, value) {
     pathval.setPathValue(this, keyPath, value);
   }
+
 }
 export default new CompanyHomeStore();

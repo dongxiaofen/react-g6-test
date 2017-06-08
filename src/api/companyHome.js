@@ -276,3 +276,6 @@ export const getPersonNodeInfo = (monitorId, params) => {
 export const createAnalyRep = (params) => {
   return axios.post('/api/analysisReport', params);
 };
+// 贷前基础报告,升级
+export const upgradeReport = ()=>{
+};

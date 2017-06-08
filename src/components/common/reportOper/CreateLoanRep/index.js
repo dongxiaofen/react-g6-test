@@ -6,10 +6,11 @@ import DemoSlider from '../DemoSlider';
 import lockImg from 'imgs/companyHome/leftBar/lock.png';
 import Button from 'components/lib/button';
 
-function CreateLoanRep({companyHomeStore}) {
+function CreateLoanRep({companyHomeStore, routing}) {
   const judegeStatus = (key)=>{
-    if (key === 'SCORE') {
-      return false;
+    const reportInfo = companyHomeStore.reportInfo;
+    if (reportInfo.dimensions.includes(key)) {
+      return true;
     }
     return false;
   };
@@ -37,6 +38,10 @@ function CreateLoanRep({companyHomeStore}) {
     });
     return output;
   };
+  const createLoanRep = ()=> {
+    const companyName = routing.location.query.companyName;
+    companyHomeStore.createLoanRep(companyName);
+  };
   const imgs = [lockImg, lockImg, lockImg, lockImg];
   const navs = ['多维综合分析', '盈利能力分析', '营运能力分析', '发展能力分析'];
   return (
@@ -48,7 +53,7 @@ function CreateLoanRep({companyHomeStore}) {
       <hr className={styles.line}/>
       <DemoSlider imgs={imgs} navs={navs}/>
       <div style={{margin: 'auto', width: '280px'}}>
-        <Button btnType="primary" className={styles.confirm}>确定</Button>
+        <Button btnType="primary" className={styles.confirm} onClick={createLoanRep}>确定</Button>
       </div>
     </div>
   );
@@ -57,4 +62,4 @@ function CreateLoanRep({companyHomeStore}) {
 CreateLoanRep.propTypes = {
   foo: PropTypes.string,
 };
-export default inject('companyHomeStore')(observer(CreateLoanRep));
+export default inject('companyHomeStore', 'routing')(observer(CreateLoanRep));
