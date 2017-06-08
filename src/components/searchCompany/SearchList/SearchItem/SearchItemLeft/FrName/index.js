@@ -8,7 +8,7 @@ function FrName({itemData}) {
   if (itemData.frName) {
     frName = (
       <div className={`${styles.frName}`}>
-        法人：{itemData.frName}
+        企业法人：{itemData.frName}
       </div>
     );
   }

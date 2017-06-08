@@ -4,6 +4,7 @@ import { companyHomeApi } from 'api';
 import modalStore from './modal';
 import messageStore from './message';
 import payModalStore from './payModal';
+import companyHomeStore from './companyHome';
 class BannerStore {
   windowReload() {
     window.location.reload();
@@ -123,11 +124,35 @@ class BannerStore {
   @action.bound extendContact(key) {
     this.contactExtended = this.contactExtended === key ? '' : key;
   }
-  @action.bound getBannerInfo({ monitorId, reportId }) {
-    this.monitorId = monitorId;
-    this.reportId = reportId;
+  @action.bound createBasicReport(params) {
+    companyHomeApi.createBasicReport({companyName: params.companyName})
+    .then(action('createBasicReport', (resp)=>{
+      companyHomeStore.reportInfo.basicReportId = resp.data.basicReportId;
+      this.getBannerInfo({companyName: params.companyName});
+    }))
+    .catch(action('createBasicReport err', (error)=>{
+      console.log(error);
+    }));
+  }
+  @action.bound getReportStatus(params) {
     this.isLoading = true;
-    companyHomeApi.getBannerInfo({ monitorId, reportId })
+    companyHomeApi.getReportStatus(params)
+    .then(action('getReportStatus', (resp)=>{
+      if (resp.data.basicReportId || resp.data.reportId) {
+        this.getBannerInfo({companyName: params.companyName});
+        companyHomeStore.updateValue('reportInfo', Object.assign(companyHomeStore.reportInfo, resp.data));
+      } else {
+        this.createBasicReport({companyName: params.companyName});
+      }
+    }))
+    .catch(action('getReportStatus err', (error)=>{
+      console.log(error);
+    }));
+  }
+
+  @action.bound getBannerInfo(params) {
+    this.isLoading = true;
+    companyHomeApi.getBannerInfo(params)
       .then(action('get banner info...', (resp) => {
         const whatThisBannerInfo = resp.data.bannerInfo.bannerInfo;
         this.companyName = resp.data.name;

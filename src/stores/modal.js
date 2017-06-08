@@ -1,6 +1,7 @@
 import { observable, action, runInAction } from 'mobx';
 class ModalStore {
   @observable visible = false;
+  @observable boxStyle = {};
   @observable title;
   // 是否是自定义modal
   @observable isCustomize = false;
@@ -55,7 +56,8 @@ class ModalStore {
     cancelLoading,
     confirmLoading,
     confirmDisable,
-    loader
+    loader,
+    boxStyle,
   }) {
     this.visible = true;
     this.title = title;
@@ -64,6 +66,7 @@ class ModalStore {
     if (pointText !== undefined) { this.pointText = pointText; }
     if (isCustomize !== undefined) { this.isCustomize = isCustomize; }
     if (isSingleBtn !== undefined) { this.isSingleBtn = isSingleBtn; }
+    if (boxStyle !== undefined) { this.boxStyle = boxStyle; }
     // action
     this.confirmAction = confirmAction;
     this.cancelAction = cancelAction;
