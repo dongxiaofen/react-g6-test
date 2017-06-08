@@ -24,7 +24,8 @@ import styles from './index.less';
   'nowRecordStore',
   'stockStore',
   'taxStore',
-  'taxCheckStore'
+  'taxCheckStore',
+  'payModalStore'
 )
 @observer
 export default class CompanyHome extends Component {
