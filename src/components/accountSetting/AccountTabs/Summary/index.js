@@ -9,10 +9,16 @@ function Summary({accountSettingStore, clientStore}) {
   const taxTypeMap = accountSettingStore.taxTypeMap;
   const handleConsumeInfo = (value, item) => {
     const nameStr = item.companyName ? `企业：${item.companyName}` : '';
-    const timeStr = item.timeType ? `；监控时长：${timeMap[item.timeType]}` : '';
-    const personStr = item.checkPerson ? `；核查人姓名：${item.checkPerson}` : '';
-    const taxStr = item.taxIndex ? `；核查${taxTypeMap[item.taxIndex]}` : '';
-    return nameStr + `${item.consumeOperationType === 'MONITOR_MAIN' || item.consumeOperationType === 'MONITOR_MAIN_RENEWAL' || item.consumeOperationType === 'REPORT_TO_MONITOR' ? timeStr : ''}` + personStr + taxStr;
+    const timeStr = item.timeType ? `监控时长：${timeMap[item.timeType]}` : '';
+    const personStr = item.checkPerson ? `核查人姓名：${item.checkPerson}` : '';
+    const taxStr = item.taxIndex ? `核查${taxTypeMap[item.taxIndex]}` : '';
+    return [
+      nameStr,
+      `${item.consumeOperationType === 'MONITOR_MAIN' || item.consumeOperationType === 'MONITOR_MAIN_RENEWAL' || item.consumeOperationType === 'REPORT_TO_MONITOR' ? timeStr : ''}`,
+      personStr,
+      taxStr
+    ].filter( (val) => val !== '').join(';');
+    // return nameStr + `${item.consumeOperationType === 'MONITOR_MAIN' || item.consumeOperationType === 'MONITOR_MAIN_RENEWAL' || item.consumeOperationType === 'REPORT_TO_MONITOR' ? timeStr : ''}` + personStr + taxStr;
   };
   const handleConsumeType = (value) => {
     return consumeTypeMap[value];
