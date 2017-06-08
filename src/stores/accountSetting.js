@@ -394,6 +394,7 @@ class AccountSettingStore {
     delete params.totalElements;
     accountSettingApi.getConsume(uId, params)
       .then(action('getConsume_success', resp => {
+        console.log(resp.data);
         const noData = resp.data.content === undefined || resp.data.content.length === 0;
         this.tabs.consume = noData ? {error: {message: '暂无消费记录'}, content: []} : resp.data;
         uiStore.updateUiStore('accountConsume.totalElements', pathval.getPathValue(resp, 'data.totalElements') || 0);

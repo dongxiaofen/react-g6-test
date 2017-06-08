@@ -93,14 +93,12 @@ export default () => {
         <Route path="assets" component={ Assets } onEnter={requireAuth} />
         <Route path="stock" component={ Stock } onEnter={requireAuth} />
         <Route path="network" component={ Network } onEnter={requireAuth} />
-        <Route path="relPerCheck" component={ RelPerCheck } onEnter={requireAuth} />
         <Route path="alertAnalysis" component={ AlertAnalysis } onEnter={requireAuth} />
         <Route path="timeAxis" component={ TimeAxis } onEnter={requireAuth} />
         <Route path="blackNetwork" component={ BlackNetwork } onEnter={requireAuth} />
         <Route path="forceNetwork" component={ ForceNetwork } onEnter={requireAuth} />
         <Route path="nowRecord" component={ NowRecord } onEnter={requireAuth} />
         <Route path="tax" component={ Tax } onEnter={requireAuth} />
-        <Route path="taxCheck" component={ TaxCheck } onEnter={requireAuth} />
         <Route path="investAndOffice" component={ InvestAndOffice } />
         {/* 贷中*/}
         <Route path="comprehenEval" component={ ComprehenEval } />
@@ -110,6 +108,8 @@ export default () => {
         {/* 贷后*/}
 {/* third append here from plop */}
       </Route>
+      <Route path="relPerCheck" component={ RelPerCheck } onEnter={requireAuth} />
+      <Route path="taxCheck" component={ TaxCheck } onEnter={requireAuth} />
       <Route path="solution" component={ Solution } />
       <Route path="about" component={ About } />
       {/* 测试modal用 */}

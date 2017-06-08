@@ -15,8 +15,8 @@ function Menu({ routing }) {
       parent: { module: '核查'},
       children: [
         { module: '个人投资任职', route: '/' },
-        { module: '个人黑名单', route: '/' },
-        { module: '企业年度报税', route: '/' },
+        { module: '个人黑名单', route: 'relPerCheck' },
+        { module: '企业年度报税', route: 'taxCheck' },
       ]
     },
     // {
