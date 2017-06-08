@@ -18,33 +18,48 @@ export const getStockCode = ({ reportId, monitorId }) => {
 export const toggleMonitorStatus = (monitorId, status) => {
   return axios.put(`/api/monitor/${monitorId}/status`, { status: status });
 };
-export const getReportModule = (params) => {
-  const { module, monitorId, reportId, pagesInfo } = params;
+export const getReportModule = (urlStr, idParams) => {
+  const basicUrl = `/api/basicReport/${idParams.basicReportId}/`;
+  const advancedUrl = `/api/report/${idParams.reportId}/`;
+  const analysisUrl = `/api/analysisReport/${idParams.analysisReportId}/`;
+  const monitorUrl = `/api/analysisReport/${idParams.analysisReportId}/`;
+  const reportUrl = idParams.reportId ? advancedUrl : basicUrl;
   let url;
-  if (monitorId) {
-    if (module === 'trademark' || module === 'patent' || module === 'bidding') {
-      url = `/api/monitor/${monitorId}/operation/${module}${module === 'trademark' || module === 'patent' ? '?index=' + pagesInfo.index + '&limit=' + pagesInfo.size : ''}`;
-    } else if (module === 'person/page') {
-      url = `/api/monitor/${monitorId}/person/page?index=1&size=10`;
-    } else if (module === 'blackNetwork') {
-      url = `/api/monitor/${monitorId}/network/blacklist`;
-    } else if (module === 'forceNetwork') {
-      url = `/api/monitor/${monitorId}/expendNetwork`;
-    } else {
-      url = `/api/monitor/${monitorId}/${module}`;
-    }
-  } else if (reportId) {
-    if (module === 'trademark' || module === 'patent' || module === 'bidding') {
-      url = `/api/report/operation/${module}?reportId=${reportId}${module === 'patent' || module === 'trademark' ? '&index=' + pagesInfo.index + '&limit=' + pagesInfo.size : ''}`;
-    } else if (module === 'person/page') {
-      url = `/api/report/${reportId}/person/page?index=1&size=10`;
-    } else if (module === 'blackNetwork') {
-      url = `/api/report/network/blacklist?reportId=${reportId}`;
-    } else if (module === 'forceNetwork') {
-      url = `/api/report/expendNetwork?reportId=${reportId}`;
-    } else {
-      url = `/api/report/${module}?reportId=${reportId}`;
-    }
+  switch (urlStr) {
+    case 'corpDetail':
+    case 'stock/company':
+    case 'stock/announcement':
+    case 'stock/announcement/type':
+    case 'internet':
+    case 'operation/trademark':
+    case 'operation/patent':
+    case 'operation/bidding':
+    case 'team':
+    case 'investment':
+    case 'tax':
+    case 'risk':
+    case 'risk/check':
+    case 'risk/pledge':
+    case 'network':
+    case 'network/blacklist':
+    case 'timeline':
+    case 'alert/page':
+      url = reportUrl + urlStr;
+      break;
+    case 'score':
+    case 'profit':
+    case 'operate':
+    case 'growing':
+      url = analysisUrl + urlStr;
+      break;
+    case 'monitorTimeAxis':
+      url = monitorUrl + 'timeline';
+      break;
+    case 'monitorAlert':
+      url = monitorUrl + 'alert/page';
+      break;
+    default:
+      return false;
   }
   // 设置axios取消事件
   const CancelToken = axios.CancelToken;

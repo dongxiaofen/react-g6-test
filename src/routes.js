@@ -112,6 +112,7 @@ export default () => {
         <Route path="operationEval" component={ OperationEval } />
         <Route path="growthAbilityEval" component={ GrowthAbilityEval } />
         {/* 贷后*/}
+        <Route path="monitorTimeAxis" component={ TimeAxis } onEnter={requireAuth} />
         {/* third append here from plop */}
       </Route>
       <Route path="relPerCheck" component={ RelPerCheck } onEnter={requireAuth} />
