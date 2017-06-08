@@ -5,6 +5,74 @@ import modalStore from './modal';
 import messageStore from './message';
 import payModalStore from './payModal';
 import companyHomeStore from './companyHome';
+const bannerDataTest = {
+  'bannerInfo': {
+    'bannerInfo': {
+      'index': [
+        {
+          'url': 'http://mi.com',
+          'status': null
+        },
+        {
+          'url': 'http://xiaomi.com',
+          'status': null
+        }
+      ],
+      'scale': '1000人以上',
+      'email': [
+        'wulihua@xiaomi.com'
+      ],
+      'phone': [
+        '010-64051516',
+        '010-52255991'
+      ],
+      'address': [
+        {
+          'time': '2017-02-03 00:00:00',
+          'source': 'jobui',
+          'address': '北京市海淀区清河中街68号 华润五彩城写字楼',
+          'location': {
+            'lat': 40.03616174650678,
+            'lon': 116.33936332310091
+          }
+        },
+        {
+          'time': '2016-12-29 00:00:00',
+          'source': 'lagou',
+          'address': '北京北京市海淀区五彩城',
+          'location': {
+            'lat': 40.03620110641631,
+            'lon': 116.34291522308736
+          }
+        },
+        {
+          'time': '2010-04-10 00:00:00',
+          'source': 'yepage',
+          'address': '北京市 朝阳区 望京西路甲50号-1卷 石天地大厦A座13层',
+          'location': {
+            'lat': 39.98941935697803,
+            'lon': 116.4643470049087
+          }
+        }
+      ],
+      'companyStatus': '',
+      'riskInfo': [],
+      'historyName': []
+    },
+    'industryList': [
+      8
+    ],
+    'featureIndustry': {
+      'result': {
+        'industryType': [
+          '软件和信息技术服务业'
+        ]
+      }
+    }
+  },
+  'name': '北京小米科技有限责任公司',
+  collection: false,
+};
 class BannerStore {
   windowReload() {
     window.location.reload();
@@ -13,23 +81,24 @@ class BannerStore {
   // banner
   @observable monitorId = '';
   @observable reportId = '';
-  @observable score = '';
+  // @observable score = '';
 
   @observable isLoading = false;
   @observable hisNameVis = false;
   @observable contactVis = false;
-  @observable historyName = [];
-  @observable riskInfo = [];
-  @observable industryNames = [];
-  @observable bannerData = {};
-  @observable contactExtended = '';
-  @observable monitorStatus = '';
-  @observable lastModifiedTs = '获取中...';
-  @observable refreshStatus = 'complete';
-  @observable searchedCount = '';
-  @observable lastModifiedTs = '';
-  @observable collection = false;
-  @observable mainStatus = '';
+  @observable bannerInfoData = {};
+  // @observable historyName = [];
+  // @observable riskInfo = [];
+  // @observable industryNames = [];
+  // @observable bannerData = {};
+  // @observable contactExtended = '';
+  // @observable monitorStatus = '';
+  // @observable lastModifiedTs = '获取中...';
+  // @observable refreshStatus = 'complete';
+  // @observable searchedCount = '';
+  // @observable lastModifiedTs = '';
+  // @observable collection = false;
+  // @observable mainStatus = '';
 
   // 上市代码
   @observable stockCode = '';
@@ -154,23 +223,8 @@ class BannerStore {
     this.isLoading = true;
     companyHomeApi.getBannerInfo(params)
       .then(action('get banner info...', (resp) => {
-        const whatThisBannerInfo = resp.data.bannerInfo.bannerInfo;
-        this.companyName = resp.data.name;
-        this.score = resp.data.score;
-        if (whatThisBannerInfo) {
-          this.historyName = whatThisBannerInfo.historyName;
-          this.riskInfo = whatThisBannerInfo.riskInfo;
-          this.bannerData = whatThisBannerInfo;
-        }
-        this.industryNames = resp.data.industryNames;
-        this.mainStatus = resp.data.mainStatus;
-        this.monitorStatus = resp.data.monitorStatus;
-        this.lastModifiedTs = resp.data.lastModifiedTs ? resp.data.lastModifiedTs : '无';
-        this.refreshStatus = 'complete';
-        this.searchedCount = resp.data.searchedCount;
-        this.lastModifiedTs = resp.data.lastModifiedTs;
-        this.collection = resp.data.collection;
-
+        console.log(resp.data);
+        this.bannerInfoData = bannerDataTest;
         this.isLoading = false;
       }))
       .catch((err) => {

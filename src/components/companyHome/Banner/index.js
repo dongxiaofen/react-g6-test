@@ -3,7 +3,7 @@ import { observer, inject } from 'mobx-react';
 import styles from './index.less';
 import { Container, Row, Col } from 'components/common/layout';
 import CompanyInfo from './CompanyInfo';
-import ReportAction from './ReportAction';
+// import ReportAction from './ReportAction';
 
 @inject('bannerStore', 'routing')
 @observer
@@ -18,14 +18,14 @@ export default class Banner extends Component {
     // this.props.bannerStore.getStockCode({ monitorId, reportId });
   }
   bannerCountAndDate() {
-    const bannerStore = this.props.bannerStore;
+    const bannerInfoData = this.props.bannerStore.bannerInfoData;
     return (
       <div className={`clearfix ${styles.countAndDate}`}>
         <div className={styles.date}>
-          更新日期：{bannerStore.lastModifiedTs}
+          更新日期：{bannerInfoData.lastModifiedTs}
         </div>
         <div className={styles.count}>
-          被查询次数：{bannerStore.searchedCount}
+          被查询次数：{bannerInfoData.searchedCount}
         </div>
       </div>
     );
@@ -41,9 +41,9 @@ export default class Banner extends Component {
                   <CompanyInfo />
                 </div>
                 <div className={styles.action}>
-                  <ReportAction bannerStore={this.props.bannerStore} />
+                  {/* <ReportAction bannerStore={this.props.bannerStore} />*/}
                 </div>
-                {this.bannerCountAndDate()}
+                {/* {this.bannerCountAndDate()}*/}
               </div>
             </div>
           </Col>
