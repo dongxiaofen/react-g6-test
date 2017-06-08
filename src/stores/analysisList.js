@@ -2,29 +2,29 @@ import { observable, action } from 'mobx';
 import pathval from 'pathval';
 import { analysisListApi } from 'api';
 import uiStore from './ui';
-const testData = {
-  content: [
-    {
-      analysisReportId: 324,
-      companyName: '长安',
-      dimension: 'SCORE',
-      lastModifiedTs: '2017-07-01'
-    },
-    {
-      analysisReportId: 324,
-      companyName: '长安',
-      dimension: 'SCORE',
-      lastModifiedTs: '2017-07-01'
-    },
-    {
-      analysisReportId: 324,
-      companyName: '长安',
-      dimension: 'SCORE',
-      lastModifiedTs: '2017-07-01'
-    }
-  ],
-  totalElements: 100,
-};
+// const testData = {
+//   content: [
+//     {
+//       analysisReportId: 324,
+//       companyName: '长安',
+//       dimension: 'SCORE',
+//       lastModifiedTs: '2017-07-01'
+//     },
+//     {
+//       analysisReportId: 324,
+//       companyName: '长安',
+//       dimension: 'SCORE',
+//       lastModifiedTs: '2017-07-01'
+//     },
+//     {
+//       analysisReportId: 324,
+//       companyName: '长安',
+//       dimension: 'SCORE',
+//       lastModifiedTs: '2017-07-01'
+//     }
+//   ],
+//   totalElements: 100,
+// };
 class AnalysisListStore {
   @observable activeKey = 'multi'; // multi profit operate develop
   @observable listCount = {};
@@ -60,9 +60,9 @@ class AnalysisListStore {
     const params = {index, size};
     this[moduleStr] = {};
     analysisListApi.getAnalysisList(activeKey, params)
-      .then(action('get report page', () => {
-        analysisListPager.totalElements = testData.totalElements;
-        this[moduleStr] = testData;
+      .then(action('get report page', (resp) => {
+        analysisListPager.totalElements = resp.data.totalElements;
+        this[moduleStr] = resp.data;
       }))
       .catch((err) => {
         console.log(err, '-----getAnalysisList');
