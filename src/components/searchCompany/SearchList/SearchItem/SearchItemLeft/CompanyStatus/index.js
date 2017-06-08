@@ -7,13 +7,13 @@ function CompanyStatus({itemData}) {
   let companyStatus = '';
   if (itemData.companyStatus) {
     companyStatus = (
-      <div className={`${styles.labelStyle}`}>
-        {itemData.companyStatus}
+      <div className={`${styles.companyStatus}`}>
+        企业状态：{itemData.companyStatus}
       </div>
     );
   }
   return (
-    <div className={`${styles.companyStatus}`}>
+    <div className={`${styles.companyStatusWrap}`}>
       {companyStatus}
     </div>
   );

@@ -3,7 +3,7 @@ import { observer } from 'mobx-react';
 import styles from './index.less';
 import FilterTotal from './FilterTotal';
 import FilterContent from './FilterContent';
-import FilterToggle from './FilterToggle';
+// import FilterToggle from './FilterToggle';
 
 function FilterSheet({
     filterSheet,
@@ -43,6 +43,7 @@ function FilterSheet({
     <div className={styles.wrap}>
       <FilterTotal
         modalStore={modalStore}
+        updateValue={updateValue}
         filterSheet={filterSheet}
         page={page}
         searchKeyFilter={searchKeyFilter}
@@ -53,9 +54,9 @@ function FilterSheet({
         filterArrayStatus={filterArrayStatus}
         filterSingleShow={filterSingleShow}
         filterItemClick={filterItemClick} />
-      <FilterToggle
+      {/* <FilterToggle
         filterSheet={filterSheet}
-        updateValue={updateValue} />
+        updateValue={updateValue} /> */}
     </div>
   );
 }
