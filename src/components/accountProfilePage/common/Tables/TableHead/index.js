@@ -13,6 +13,12 @@ function TableHead({ companyType, tip, title }) {
       return (styles.top10_blue);
     }
   };
+  const content = (
+    <div>
+      <p className={styles.ppover_tittle}>排名说明</p>
+      <p>{tip}</p>
+    </div>
+  );
   return (
     <div className={`clearfix ${styles.head_box}`}>
       <div className={`${styles.title} pull-left`}>
@@ -23,7 +29,7 @@ function TableHead({ companyType, tip, title }) {
         </div>
       </div>
       <div className="pull-right">
-        <Popover placement="bottomRight" content={tip} trigger="hover">
+        <Popover placement="bottomRight" content={content} trigger="hover">
           <i className={`${styles.infomation_tips} ${styles.questions_icon}`}></i>
         </Popover>
       </div>

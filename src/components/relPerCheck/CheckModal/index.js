@@ -4,9 +4,7 @@ import styles from './index.less';
 import Modal from 'components/lib/Modal';
 import { runInAction } from 'mobx';
 
-function CheckModal({visible, width, closeAction, btnLoading, relPerCheckStore, routing, pointText }) {
-  const relatedType = relPerCheckStore.relatedType;
-  const relatedTypeModelStatus = relPerCheckStore.relatedTypeModelStatus;
+function CheckModal({visible, width, closeAction, btnLoading, relPerCheckStore, pointText }) {
   // 姓名
   const relatedName = relPerCheckStore.relatedName;
   const relatedNameModelStatus = relPerCheckStore.relatedNameModelStatus;
@@ -33,12 +31,6 @@ function CheckModal({visible, width, closeAction, btnLoading, relPerCheckStore, 
     });
   };
 
-  // 输入relatedType
-  const changeRelatedType = (evt)=>{
-    runInAction('input relatedType', () => {
-      relPerCheckStore.relatedType = evt.target.value;
-    });
-  };
   // onFocusStyle
   const onFocusStyle = (modle, modle2) => {
     runInAction('修改对应模块状态', () => {
@@ -61,14 +53,6 @@ function CheckModal({visible, width, closeAction, btnLoading, relPerCheckStore, 
       relPerCheckStore.relatedName = evt.target.value;
     });
   };
-
-  // 打开type下拉选项
-  const onFocusRelatedType = ()=>{
-    runInAction('change ModelStatus', () => {
-      relPerCheckStore.relatedTypeModelStatus = true;
-    });
-  };
-
   // 打开name下拉选项
   const onFocusRelatedName = ()=>{
     runInAction('change relatedNameModelStatus', () => {
@@ -103,21 +87,21 @@ function CheckModal({visible, width, closeAction, btnLoading, relPerCheckStore, 
     const params = {
       id: relPerCheckStore.relatedIdCard.replace(/(^\s*)|(\s*$)/g, ''),
       name: relPerCheckStore.relatedName.replace(/(^\s*)|(\s*$)/g, ''),
-      relationType: relPerCheckStore.relatedType.replace(/(^\s*)|(\s*$)/g, ''),
+      // relationType: relPerCheckStore.relatedType.replace(/(^\s*)|(\s*$)/g, ''),
     };
     let idCardBool = true;
-    const { monitorId, reportId, analysisReportId } = routing.location.query;
     if (reg.test(relPerCheckStore.relatedIdCard) === false) {
       idCardBool = false;
     }
-    if (relPerCheckStore.relatedType.length > 0 && relPerCheckStore.relatedName.length > 0 && idCardBool) {
-      if (monitorId) {
-        relPerCheckStore.submitRelated(`/api/monitor/${monitorId}/person`, params);
-      } else if (reportId) {
-        relPerCheckStore.submitRelated(`/api/report/${reportId}/person`, params);
-      }else if (analysisReportId) {
-        relPerCheckStore.submitRelated(`/api/analysisReport/${analysisReportId}/person`, params);
-      }
+    if (relPerCheckStore.relatedName.length > 0 && idCardBool) {
+      relPerCheckStore.submitRelated(`/api/check/person`, params);
+      // if (monitorId) {
+      //   relPerCheckStore.submitRelated(`/api/monitor/${monitorId}/person`, params);
+      // } else if (reportId) {
+      //   relPerCheckStore.submitRelated(`/api/report/${reportId}/person`, params);
+      // }else if (analysisReportId) {
+      //   relPerCheckStore.submitRelated(`/api/analysisReport/${analysisReportId}/person`, params);
+      // }
     }
     runInAction('change relatedSubmit status', () => {
       relPerCheckStore.relatedSubmit = true;
@@ -155,43 +139,10 @@ function CheckModal({visible, width, closeAction, btnLoading, relPerCheckStore, 
              confirmLoading={btnLoading}
              isNeedBtn
              pointText={pointText}
-             title="关联人核查"
+             title="个人黑名单核查"
              confirmText= "确定">
       <div className={styles.contentWrap}>
         <div className={styles.content}>
-          <div
-            tabIndex="1"
-            onFocus={onFocusRelatedType.bind(this)}
-            className={styles.contentSingle}>
-            {
-              checkStatus({
-                tips: '关联关系',
-                validate: relPerCheckStore.relatedType.length < 1,
-                value: relPerCheckStore.relatedType,
-                isFocus: relPerCheckStore.relationship,
-                htmlFor: 'relation',
-                errorTips: '关联关系必填'})
-            }
-            <input
-              id="relation"
-              onChange={changeRelatedType.bind(this)}
-              onBlur={onBlurRelated.bind(this, 'relationship')}
-              onFocus={onFocusStyle.bind(this, 'relationship', 'relationshipShow')}
-              className={relPerCheckStore.relatedSubmit === true && relPerCheckStore.relatedType.length < 1 ? styles.inputClassError : styles.inputClass}
-              value={relatedType}
-              placeholder="" />
-            <div className={relatedTypeModelStatus ? styles.listWrap : styles.hidden}>
-              <ul>
-                <li onClick={clickHandle.bind(this, '实际控制人', 'type')}>实际控制人</li>
-                <li onClick={clickHandle.bind(this, '法人代表', 'type')}>法人代表</li>
-                <li onClick={clickHandle.bind(this, '个人股东', 'type')}>个人股东</li>
-                <li onClick={clickHandle.bind(this, '董事', 'type')}>董事</li>
-                <li onClick={clickHandle.bind(this, '监事', 'type')}>监事</li>
-                <li onClick={clickHandle.bind(this, '高管', 'type')}>高管</li>
-                <li onClick={clickHandle.bind(this, '历史关联', 'type')}>历史关联</li>
-              </ul>
-            </div>
-          </div>
           <div
             tabIndex="1"
             onFocus={onFocusRelatedName.bind(this)}
