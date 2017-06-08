@@ -1,22 +1,24 @@
 @import '~sc-colors/index.less';
 .wrap {
-  padding: 25px 0;
+  padding: 10px 0;
   font-size: 14px;
+  line-height: 1em;
   background-color: @mdc-white-darker;
   box-shadow: 0 2px 4px 0 rgba(176, 190, 197, 0.5);
+  margin-bottom: 20px;
 }
 .menuCss {
   position: relative;
   line-height: 1;
   padding: 15px 0;
-  padding-left: 30px;
+  padding-left: 20px;
   color: @mdc-grey-800;
   cursor: pointer;
 }
 .menuDisCss {
   composes: menuCss;
   color: @mdc-grey-300;
-  cursor: not-allowed;
+  cursor: pointer;
 }
 .arrow {
   position: absolute;
@@ -33,7 +35,7 @@
 .itemCss {
   line-height: 1;
   padding: 15px 0;
-  padding-left: 60px;
+  padding-left: 50px;
   color: @mdc-grey-600;
   border-right: 3px solid @mdc-white-darker;
   cursor: pointer;
@@ -41,15 +43,14 @@
 .itemActCss {
   composes: itemCss;
   color: @mdc-blue-400;
-  background: @mdc-blue-grey-50-opacity-20;
-  border-right: 3px solid @mdc-blue-400 !important;
 }
 .itemDisCss {
   line-height: 1;
   padding: 15px 0;
-  padding-left: 60px;
+  padding-left: 50px;
   color: @mdc-grey-300;
-  cursor: not-allowed;
+  cursor: pointer;
+  position: relative;
 }
 .itemCss:hover {
   color: @mdc-blue-400;
@@ -58,4 +59,45 @@
 }
 .hide {
   display: none;
+}
+.title {
+  border-bottom: 1px solid @black12;
+  padding: 0 11px 10px 20px ;
+  color: @mdc-grey-600;
+  font-weight: bold;
+}
+.reportType {
+  float: left;
+  margin-top: 5px;
+}
+.btnReport {
+  font-size: 12px;
+  line-height: 24px;
+  height: 24px;
+  padding: 0 7.5px;
+  float: right;
+}
+.btnMonitor {
+  composes: btnReport;
+  background-color: @mdc-orange-500;
+  border: @mdc-orange-500;
+}
+.recordWrap {
+  color: @mdc-blue-400;
+  text-align: center;
+  cursor: pointer;
+}
+.record {
+  font-weight: bold;
+  margin-left: 10px;
+}
+.lock {
+  position: absolute;
+  right: 20px;
+  top: 15px;
+  display: block;
+  width: 15px;
+  height: 15px;
+  background-image: url('imgs/companyHome/leftBar/lock.png');
+  background-size: 100% 100%;
 }

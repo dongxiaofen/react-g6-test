@@ -47,4 +47,5 @@ export assetTransactionStore from './assetTransaction';
 export linkJumpStore from './linkJump';
 export entireLoadingStore from './entireLoading';
 export loaningStore from './loaning';
+export companyHomeStore from './companyHome';
 // append here from plop

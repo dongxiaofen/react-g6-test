@@ -15,7 +15,6 @@ import {
     Solution,
     About,
     CorpDetail,
-    Risk,
     Internet,
     MonitorStatistics,
     AccountSetting,
@@ -49,6 +48,9 @@ import {
     ProfitEval,
     OperationEval,
     GrowthAbilityEval,
+    RiskTax,
+    RiskCourt,
+    RiskMici,
 // first append here from plop
   } from 'containers';
 
@@ -89,7 +91,6 @@ export default () => {
       <Route path="companyHome" component={ CompanyHome } >
         <IndexRedirect to="corpDetail" />
         <Route path="corpDetail" component={CorpDetail} onEnter={requireAuth} />
-        <Route path="risk" component={Risk} onEnter={requireAuth} />
         <Route path="internet" component={ Internet } onEnter={requireAuth} />
         <Route path="team" component={ Team } onEnter={requireAuth} />
         <Route path="assets" component={ Assets } onEnter={requireAuth} />
@@ -102,6 +103,9 @@ export default () => {
         <Route path="nowRecord" component={ NowRecord } onEnter={requireAuth} />
         <Route path="tax" component={ Tax } onEnter={requireAuth} />
         <Route path="investAndOffice" component={ InvestAndOffice } />
+        <Route path="riskTax" component={ RiskTax } />
+        <Route path="riskCourt" component={ RiskCourt } />
+        <Route path="riskMici" component={ RiskMici } />
         {/* 贷中*/}
         <Route path="comprehenEval" component={ ComprehenEval } />
         <Route path="profitEval" component={ ProfitEval } />

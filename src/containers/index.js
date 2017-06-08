@@ -11,7 +11,6 @@ export CompanyHome from './companyHome';
 export Solution from './solution';
 export About from './about';
 export CorpDetail from './report/corpDetail';
-export Risk from './report/risk';
 export AccountSetting from './accountSetting';
 export Internet from './report/internet';
 export MonitorStatistics from './monitorStatistics';
@@ -45,4 +44,7 @@ export ComprehenEval from './report/comprehenEval';
 export ProfitEval from './report/profitEval';
 export OperationEval from './report/operationEval';
 export GrowthAbilityEval from './report/growthAbilityEval';
+export RiskTax from './report/riskTax';
+export RiskCourt from './report/riskCourt';
+export RiskMici from './report/riskMici';
 // append here from plop

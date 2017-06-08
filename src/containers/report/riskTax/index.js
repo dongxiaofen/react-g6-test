@@ -3,8 +3,8 @@ import AsyncComponent from 'components/common/AsyncComponent';
 
 const loader = (cb) => {
   require.ensure([], (require) => {
-    cb(require('./Risk'));
-  }, 'Risk');
+    cb(require('./RiskTax'));
+  }, 'RiskTax');
 };
 
 export default (props) =>

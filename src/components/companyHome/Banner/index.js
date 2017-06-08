@@ -13,9 +13,9 @@ export default class Banner extends Component {
     bannerStore: PropTypes.object,
   };
   componentDidMount() {
-    const { monitorId, reportId } = this.props.routing.location.query;
-    this.props.bannerStore.getBannerInfo({ monitorId, reportId });
-    this.props.bannerStore.getStockCode({ monitorId, reportId });
+    const {companyName} = this.props.routing.location.query;
+    this.props.bannerStore.getReportStatus({companyName});
+    // this.props.bannerStore.getStockCode({ monitorId, reportId });
   }
   bannerCountAndDate() {
     const bannerStore = this.props.bannerStore;
@@ -52,4 +52,3 @@ export default class Banner extends Component {
     );
   }
 }
-
