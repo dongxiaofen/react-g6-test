@@ -1,0 +1,69 @@
+@import '~sc-colors/index.less';
+.item {
+  padding: 20px;
+  margin-bottom: 20px;
+  color: @black7;
+  width: 100%;
+  background: @white1;
+  transition: all .3s;
+  .box-shadow-block;
+  -webikt-transition: all .3s ease-in-out;
+     -moz-transition: all .3s ease-in-out;
+      -ms-transition: all .3s ease-in-out;
+       -o-transition: all .3s ease-in-out;
+          transition: all .3s ease-in-out;
+  &:hover {
+    .box-shadow-block-click;
+  }
+}
+.item:after {
+  display: block;
+  content: '';
+  clear: both;
+}
+.nameArea {
+  float: left;
+  width: 80%;
+}
+.companyName {
+  font-size:16px;
+  line-height: 25px;
+  color: @mdc-grey-900;
+  letter-spacing:0;
+  cursor: pointer;
+  -webikt-transition: all .3s ease-in-out;
+     -moz-transition: all .3s ease-in-out;
+      -ms-transition: all .3s ease-in-out;
+       -o-transition: all .3s ease-in-out;
+          transition: all .3s ease-in-out;
+  &:hover {
+    color: @mdc-blue-400;
+  }
+}
+.keys {
+  margin-right: 10px;
+  line-height: 1;
+  font-size: 14px;
+  color: @mdc-blue-grey-500;
+}
+.values {
+  line-height: 1;
+  font-size: 14px;
+  color: @mdc-blue-grey-500;
+}
+.timeArea {
+  width: 20%;
+  float: right;
+  text-align: right;
+}
+.timeKey {
+  line-height: 16px;
+  font-size: 16px;
+  color: @mdc-blue-grey-500;
+}
+.timeValue {
+  line-height: 13px;
+  font-size: 13px;
+  color: @black7;
+  margin-top: 14px;
+}

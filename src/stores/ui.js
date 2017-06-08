@@ -2,12 +2,13 @@ import { observable, action, reaction, extendObservable } from 'mobx';
 import pathval from 'pathval';
 import bannerStore from './banner';
 import assetsStore from './report/assets';
+import reportListStore from './reportList';
+import analysisListStore from './analysisList';
 import monitorListStore from './monitorList';
 import ruleStore from './rule';
 import ruleCompanyStore from './ruleCompany';
 import accountSettingStore from './accountSetting';
 import alertAnalysisStore from './report/alertAnalysis';
-import reportListStore from './reportList';
 import collectionStore from './collection';
 import relPerCheckStore from './report/relPerCheck';
 import nowRecordStore from './report/nowRecord';
@@ -43,6 +44,34 @@ class UiStore {
       () => {
         document.body.scrollTop = 0;
         reportListStore.getReportList();
+      }
+    );
+    reaction(
+      () => this.uiState.multiAnalysisPager.index,
+      () => {
+        document.body.scrollTop = 0;
+        analysisListStore.getAnalysisList();
+      }
+    );
+    reaction(
+      () => this.uiState.profitAnalysisPager.index,
+      () => {
+        document.body.scrollTop = 0;
+        analysisListStore.getAnalysisList();
+      }
+    );
+    reaction(
+      () => this.uiState.operateAnalysisPager.index,
+      () => {
+        document.body.scrollTop = 0;
+        analysisListStore.getAnalysisList();
+      }
+    );
+    reaction(
+      () => this.uiState.developAnalysisPager.index,
+      () => {
+        document.body.scrollTop = 0;
+        analysisListStore.getAnalysisList();
       }
     );
     reaction(
@@ -162,6 +191,26 @@ class UiStore {
       totalElements: 0,
     },
     advancedReportPager: {
+      index: 1,
+      size: 10,
+      totalElements: 0,
+    },
+    multiAnalysisPager: {
+      index: 1,
+      size: 10,
+      totalElements: 0,
+    },
+    profitAnalysisPager: {
+      index: 1,
+      size: 10,
+      totalElements: 0,
+    },
+    operateAnalysisPager: {
+      index: 1,
+      size: 10,
+      totalElements: 0,
+    },
+    developAnalysisPager: {
       index: 1,
       size: 10,
       totalElements: 0,
@@ -430,6 +479,26 @@ class UiStore {
           totalElements: 0,
         },
         advancedReportPager: {
+          index: 1,
+          size: 10,
+          totalElements: 0,
+        },
+        multiAnalysisPager: {
+          index: 1,
+          size: 10,
+          totalElements: 0,
+        },
+        profitAnalysisPager: {
+          index: 1,
+          size: 10,
+          totalElements: 0,
+        },
+        operateAnalysisPager: {
+          index: 1,
+          size: 10,
+          totalElements: 0,
+        },
+        developAnalysisPager: {
           index: 1,
           size: 10,
           totalElements: 0,

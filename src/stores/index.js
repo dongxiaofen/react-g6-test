@@ -3,6 +3,8 @@
 export relationStore from './relation';
 export alertStore from './alert';
 export modalStore from './modal';
+export reportListStore from './reportList';
+export analysisListStore from './analysisList';
 export monitorListStore from './monitorList';
 export searchCompanyStore from './searchCompany';
 export monitorStatisticsStore from './monitorStatistics';
@@ -19,7 +21,6 @@ export internetStore from './report/internet';
 export addRelationStore from './addRelation';
 export accountSettingStore from './accountSetting';
 export messageStore from './message';
-export reportListStore from './reportList';
 export payModalStore from './payModal';
 export uiStore from './ui';
 export teamStore from './report/team';

@@ -8,6 +8,8 @@ import {
     RiskHeadlines,
     Account,
     HomePage,
+    ReportList,
+    AnalysisList,
     MonitorList,
     CompanyHome,
     Solution,
@@ -17,7 +19,6 @@ import {
     Internet,
     MonitorStatistics,
     AccountSetting,
-    ReportList,
     Team,
     Assets,
     RuleList,
@@ -43,7 +44,6 @@ import {
     TaxCheck,
     AssetTransaction,
     InLoanAnalysis,
-
     InvestAndOffice,
     ComprehenEval,
     ProfitEval,
@@ -82,6 +82,8 @@ export default () => {
       <Route path="riskHeadlines" component={ RiskHeadlines } onEnter={requireAuth} />
       <Route path="account" component={ Account } onEnter={requireAuth} />
       <Route path="homePage" component={ HomePage } onEnter={requireAuth} />
+      <Route path="reportList" component={ ReportList } onEnter={requireAuth} />
+      <Route path="analysisList" component={ AnalysisList } onEnter={requireAuth} />
       <Route path="monitorList" component={ MonitorList } onEnter={requireAuth} />
       <Route path="inLoanAnalysis" component= { InLoanAnalysis } onEnter={ requireAuth } />
       <Route path="companyHome" component={ CompanyHome } >
@@ -108,14 +110,13 @@ export default () => {
         <Route path="operationEval" component={ OperationEval } />
         <Route path="growthAbilityEval" component={ GrowthAbilityEval } />
         {/* 贷后*/}
-{/* third append here from plop */}
+        {/* third append here from plop */}
       </Route>
       <Route path="solution" component={ Solution } />
       <Route path="about" component={ About } />
       {/* 测试modal用 */}
       <Route path="monitorStatistics" component={ MonitorStatistics } onEnter={requireAuth} />
       <Route path="accountSetting" component={ AccountSetting } onEnter={requireAuth} />
-      <Route path="reportList" component={ ReportList } onEnter={requireAuth} />
       <Route path="personReport" component={ PersonReport } onEnter={requireAuth} />
       <Route path="ruleList" component={ RuleList } onEnter={requireAuth} />
       <Route path="ruleAdd" component={ RuleAdd } onEnter={requireAuth} />

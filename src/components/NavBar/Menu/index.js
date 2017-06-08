@@ -37,10 +37,10 @@ function Menu({ routing }) {
     {
       parent: { module: '分析', tagImg: imgLoaning},
       children: [
-        { module: '多维综合评价', route: '/' },
-        { module: '盈利能力分析', route: '/' },
-        { module: '运营能力分析', route: '/' },
-        { module: '发展能力分析', route: '/' },
+        { module: '多维综合评价', route: 'analysisList?activeKey=multi' },
+        { module: '盈利能力分析', route: 'analysisList?activeKey=profit' },
+        { module: '运营能力分析', route: 'analysisList?activeKey=operate' },
+        { module: '发展能力分析', route: 'analysisList?activeKey=develop' },
       ]
     },
     {

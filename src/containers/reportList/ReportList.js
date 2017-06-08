@@ -40,6 +40,11 @@ export default class ReportList extends Component {
   changeTabs = (value) => {
     this.props.routing.push(`/reportList?activeKey=${value}`);
   }
+  numWithLoading = (key, value) => {
+    if (value || value === 0) return `${key}（${value}）`;
+    const loading = React.createElement('i', {className: 'fa fa-spin fa-spinner'});
+    return React.createElement('span', null, key, '（', loading, '）');
+  }
   render() {
     const activeKey = this.props.reportListStore.activeKey;
     const {basicReportNum, reportNum} = this.props.reportListStore.listCount;
@@ -47,10 +52,10 @@ export default class ReportList extends Component {
       <Container className={styles.wrap}>
         <Title {...this.props} />
         <Tabs activeKey={activeKey} onChange={this.changeTabs}>
-          <TabPane tab={`基础报告（${basicReportNum}）`} key="basic">
+          <TabPane tab={this.numWithLoading('基础报告', basicReportNum)} key="basic">
             <BasicList {...this.props} />
           </TabPane>
-          <TabPane tab={`高级报告（${reportNum}）`} key="advanced">
+          <TabPane tab={this.numWithLoading('高级报告', reportNum)} key="advanced">
             <AdvancedList {...this.props} />
           </TabPane>
         </Tabs>
