@@ -1,7 +1,7 @@
 import React, { Component, PropTypes } from 'react';
 import { observer, inject } from 'mobx-react';
 import { runInAction } from 'mobx';
-import Banner from 'components/companyHome/Banner';
+// import Banner from 'components/companyHome/Banner';
 import LeftBar from 'components/companyHome/LeftBar';
 import { Container, Row, Col } from 'components/common/layout';
 import styles from './index.less';
@@ -9,6 +9,7 @@ import styles from './index.less';
 @inject(
   'routing',
   'uiStore',
+  'companyHomeStore',
   'bannerStore',
   'leftBarStore',
   'corpDetailStore',
@@ -34,6 +35,7 @@ export default class CompanyHome extends Component {
     routing: PropTypes.object,
     leftBarStore: PropTypes.object,
     uiStore: PropTypes.object,
+    companyHomeStore: PropTypes.object,
     corpDetailStore: PropTypes.object,
     riskStore: PropTypes.object,
     internetStore: PropTypes.object,
@@ -54,6 +56,10 @@ export default class CompanyHome extends Component {
     runInAction('初始化报告二级目录', () => {
       leftBarStore.activeItem = module;
     });
+  }
+  componentDidMount() {
+    const companyName = this.props.routing.location.query.companyName;
+    this.props.companyHomeStore.getIdParams({companyName});
   }
   componentWillUnmount() {
     console.log('CompanyHome componentWillUnmount', window.reportSourceCancel);
@@ -87,9 +93,14 @@ export default class CompanyHome extends Component {
     });
   }
   render() {
+    const noReport = ['reportId', 'basicReportId'].every(key => {
+      return !this.props.companyHomeStore.reportInfo[key];
+    });
+    if (noReport) {
+      return <div>loading</div>;
+    }
     return (
       <div>
-        <Banner />
         <div className={styles.contentWrap}>
           <Container id="reportContainer">
             <Row>

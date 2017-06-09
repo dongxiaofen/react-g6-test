@@ -8,7 +8,7 @@ import pathval from 'pathval';
 class CompanyHomeStore {
   @observable reportInfo = {
     analysisReportId: '',
-    basicReportId: '22',
+    basicReportId: '',
     reportId: '',
     monitorId: '',
     dimensions: [],
@@ -66,6 +66,19 @@ class CompanyHomeStore {
           content: err.response.data.message
         };
         messageStore.openMessage({ ...text });
+      }));
+  }
+  @action.bound getIdParams(params) {
+    companyHomeApi.getReportStatus(params)
+      .then(action('getIdParams', resp => {
+        this.reportInfo = Object.assign({}, this.reportInfo, resp.data);
+      }))
+      .catch(action('getIdParams', err => {
+        console.log(err, 'getIdParams');
+        messageStore.openMessage({
+          type: 'warning',
+          content: err.response.data.message
+        });
       }));
   }
   @action.bound createMonitor() {

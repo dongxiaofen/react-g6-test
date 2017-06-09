@@ -13,8 +13,8 @@ function ListItem({data}) {
     }
     return str;
   };
-  const viewReport = (reportId) => {
-    browserHistory.push(`/companyHome?reportId=${reportId}`);
+  const viewReport = (companyName) => {
+    browserHistory.push(`/companyHome?companyName=${companyName}`);
   };
   return (
     <Row className={styles.item}>
@@ -23,7 +23,7 @@ function ListItem({data}) {
           <span
             className={styles.name}
             title={data.companyName}
-            onClick={viewReport.bind(data.reportId)}>
+            onClick={viewReport.bind(null, data.companyName)}>
             {data.companyName}
           </span>
           {

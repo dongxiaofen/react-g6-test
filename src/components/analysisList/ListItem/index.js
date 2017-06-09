@@ -3,8 +3,8 @@ import { observer } from 'mobx-react';
 import { browserHistory } from 'react-router';
 import styles from './index.less';
 function ListItem({data}) {
-  const viewReport = (analysisReportId) => {
-    browserHistory.push(`/companyHome?analysisReportId=${analysisReportId}`);
+  const viewReport = (companyName) => {
+    browserHistory.push(`/companyHome?companyName=${companyName}`);
   };
   const keyMap = {
     SCORE: '多维综合评价',
@@ -15,7 +15,7 @@ function ListItem({data}) {
   return (
     <div className={styles.item}>
       <div className={styles.nameArea}>
-        <div className={styles.companyName} onClick={viewReport.bind(data.analysisReportId)}>{data.companyName}</div>
+        <div className={styles.companyName} onClick={viewReport.bind(null, data.companyName)}>{data.companyName}</div>
         <div>
           <span className={styles.keys}>分析模块：</span>
           <span className={styles.values}>{keyMap[data.dimension]}</span>

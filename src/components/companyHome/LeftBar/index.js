@@ -38,7 +38,6 @@ function LeftBar({ leftBarStore, bannerStore, routing, companyHomeStore}) {
   };
   const isLock = (itemObj, type) => {
     const reportInfo = companyHomeStore.reportInfo;
-    console.log(reportInfo.dimensions, itemObj.moduleKey, reportInfo.dimensions.includes(itemObj.moduleKey));
     if (itemObj.lock) {
       if (type === 'report' && reportInfo.reportId === '') {
         return false;
