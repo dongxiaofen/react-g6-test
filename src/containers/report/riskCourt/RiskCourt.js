@@ -4,12 +4,12 @@ import {batchReport} from 'components/hoc';
 import Tabs from 'antd/lib/tabs';
 const TabPane = Tabs.TabPane;
 import loadingComp from 'components/hoc/LoadingComp';
-import JudgeDoc from 'components/companyHome/report/risk/Court/JudgeDoc';
-import CourtAnnouncement from 'components/companyHome/report/risk/Court/CourtAnnouncement';
-import CourtNotice from 'components/companyHome/report/risk/Court/CourtNotice';
-import CourtExecution from 'components/companyHome/report/risk/Court/CourtExecution';
-import DishonestyList from 'components/companyHome/report/risk/Court/DishonestyList';
-import LitigationAssets from 'components/companyHome/report/risk/Court/LitigationAssets';
+import JudgeDoc from 'components/companyHome/report/riskCourt/JudgeDoc';
+import CourtAnnouncement from 'components/companyHome/report/riskCourt/CourtAnnouncement';
+import CourtNotice from 'components/companyHome/report/riskCourt/CourtNotice';
+import CourtExecution from 'components/companyHome/report/riskCourt/CourtExecution';
+import DishonestyList from 'components/companyHome/report/riskCourt/DishonestyList';
+import LitigationAssets from 'components/companyHome/report/riskCourt/LitigationAssets';
 @inject('routing', 'riskCourtStore')
 @batchReport('riskCourtStore')
 @loadingComp({

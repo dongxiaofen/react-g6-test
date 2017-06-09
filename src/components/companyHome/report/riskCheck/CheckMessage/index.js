@@ -1,7 +1,6 @@
 import React from 'react';
 import { observer } from 'mobx-react';
 import { CardTable } from 'components/common/report';
-import loadingComp from 'components/hoc/LoadingComp';
 function CheckMessage({riskCheckStore}) {
   const checkData = riskCheckStore.checkData;
   const isLoading = checkData.content === undefined ? true : false;
