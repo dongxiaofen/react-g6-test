@@ -56,7 +56,14 @@ const bannerDataTest = {
         }
       ],
       'companyStatus': '',
-      'riskInfo': [],
+      'riskInfo': [
+        {
+          historyFlag: 'false',
+          lastestPublishTime: '2016-05-09',
+          name: '中国工商银行股份有限公司',
+          riskType: '被银行起诉',
+        }
+      ],
       'historyName': []
     },
     'industryList': [
@@ -83,15 +90,15 @@ class BannerStore {
   @observable reportId = '';
   // @observable score = '';
 
-  @observable isLoading = false;
+  @observable isLoading = true;
   @observable hisNameVis = false;
   @observable contactVis = false;
   @observable bannerInfoData = {};
+  @observable contactExtended = '';
   // @observable historyName = [];
   // @observable riskInfo = [];
   // @observable industryNames = [];
   // @observable bannerData = {};
-  // @observable contactExtended = '';
   // @observable monitorStatus = '';
   // @observable lastModifiedTs = '获取中...';
   // @observable refreshStatus = 'complete';

@@ -3,20 +3,27 @@ import { observer, inject } from 'mobx-react';
 import styles from './index.less';
 import { Container, Row, Col } from 'components/common/layout';
 import CompanyInfo from './CompanyInfo';
+import loadingComp from 'components/hoc/LoadingComp';
 // import ReportAction from './ReportAction';
 
 @inject('bannerStore', 'routing')
+@loadingComp({
+  mapDataToProps: props => ({
+    loading: props.bannerStore.isLoading,
+    error: !props.bannerStore.bannerInfoData.bannerInfo
+  })
+})
 @observer
 export default class Banner extends Component {
   static propTypes = {
     routing: PropTypes.object,
     bannerStore: PropTypes.object,
   };
-  componentDidMount() {
-    const {companyName} = this.props.routing.location.query;
-    this.props.bannerStore.getReportStatus({companyName});
-    // this.props.bannerStore.getStockCode({ monitorId, reportId });
-  }
+  // componentDidMount() {
+  //   const {companyName} = this.props.routing.location.query;
+  //   this.props.bannerStore.getReportStatus({companyName});
+  //   // this.props.bannerStore.getStockCode({ monitorId, reportId });
+  // }
   bannerCountAndDate() {
     const bannerInfoData = this.props.bannerStore.bannerInfoData;
     return (
@@ -35,7 +42,7 @@ export default class Banner extends Component {
       <Container>
         <Row>
           <Col>
-            <div className={`clearfix ${styles.bannerInfoWrap}`}>
+            <div className={`clearfix`}>
               <div className={`clearfix ${styles.bannerContent}`}>
                 <div className={styles.companyInfo}>
                   <CompanyInfo />

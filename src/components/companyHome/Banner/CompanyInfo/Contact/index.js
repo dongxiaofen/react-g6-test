@@ -5,7 +5,7 @@ import Popover from 'components/lib/popover';
 
 function Contact({
   contactVis,
-  bannerData,
+  bannerInfoData,
   closeContactPopoverAlias,
   openContactPopoverAlias,
   contactExtended,
@@ -17,6 +17,7 @@ function Contact({
     { key: 'index', value: '公司网址', subKey: 'url' },
     { key: 'address', value: '公司地址', subKey: 'address'}
   ];
+  const bannerData = bannerInfoData.bannerInfo.bannerInfo;
   const removeRepeat = (ary, key) => {
     const output = [];
     ary.map((item) => {
