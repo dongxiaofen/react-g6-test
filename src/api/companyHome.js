@@ -22,7 +22,7 @@ export const getReportModule = (urlStr, idParams) => {
   const basicUrl = `/api/basicReport/${idParams.basicReportId}/`;
   const advancedUrl = `/api/report/${idParams.reportId}/`;
   const analysisUrl = `/api/analysisReport/${idParams.analysisReportId}/`;
-  const monitorUrl = `/api/monitorId/${idParams.monitorId}/`;
+  const monitorUrl = `/api/monitor/${idParams.monitorId}/`;
   const reportUrl = idParams.reportId ? advancedUrl : basicUrl;
   let url;
   switch (urlStr) {
