@@ -27,14 +27,15 @@ function LeftBar({ leftBarStore, bannerStore, routing, companyHomeStore}) {
       } else if (type === 'monitor') {
         companyHomeStore.createMonitor();
       }
+    } else {
+      runInAction('切换报告二级目录', () => {
+        leftBarStore.activeItem = itemKey;
+      });
+      routing.push({
+        pathname: `/companyHome/${itemKey}`,
+        query: routing.location.query,
+      });
     }
-    runInAction('切换报告二级目录', () => {
-      leftBarStore.activeItem = itemKey;
-    });
-    routing.push({
-      pathname: `/companyHome/${itemKey}`,
-      query: routing.location.query,
-    });
   };
   const isLock = (itemObj, type) => {
     const reportInfo = companyHomeStore.reportInfo;

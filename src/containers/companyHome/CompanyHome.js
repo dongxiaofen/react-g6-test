@@ -47,6 +47,7 @@ export default class CompanyHome extends Component {
     nowRecordStore: PropTypes.object,
     taxStore: PropTypes.object,
     taxCheckStore: PropTypes.object,
+    bannerStore: PropTypes.object,
   };
   componentWillMount() {
     const leftBarStore = this.props.leftBarStore;
@@ -54,6 +55,11 @@ export default class CompanyHome extends Component {
     runInAction('初始化报告二级目录', () => {
       leftBarStore.activeItem = module;
     });
+  }
+  componentDidMount() {
+    const {companyName} = this.props.routing.location.query;
+    this.props.bannerStore.getReportStatus({companyName});
+    // this.props.bannerStore.getStockCode({ monitorId, reportId });
   }
   componentWillUnmount() {
     console.log('CompanyHome componentWillUnmount', window.reportSourceCancel);
@@ -89,7 +95,11 @@ export default class CompanyHome extends Component {
   render() {
     return (
       <div>
-        <Banner />
+        <Container>
+          <div className={styles.bannerBox}>
+            <Banner />
+          </div>
+        </Container>
         <div className={styles.contentWrap}>
           <Container id="reportContainer">
             <Row>
