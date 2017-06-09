@@ -38,9 +38,9 @@ class PdfStore {
       'STOCK_INFO',
       'STOCK_ANNOUNCEMENT',
       'NEWS',
-      'OPERATION_BIDDING',
-      'OPERATION_PATENT',
-      'OPERATION_TRADEMARK',
+      // 'OPERATION_BIDDING',
+      // 'OPERATION_PATENT',
+      // 'OPERATION_TRADEMARK',
       'TEAM_RECRUITMENT_RESUME',
       'RISK_TAXATION',
       'RISK_JUDGEMENT',
@@ -90,7 +90,7 @@ class PdfStore {
       'NETWORK_RELEVANCE',
       'NETWORK_BLACKLIST',
     ];
-    console.log(baseReport, report, analysiReport);
+    console.log(baseReport.join(','), report, analysiReport);
     // 获取pdf
     axios.get(`/api/pdf/basicReport?basicReportId=${id}&types=${baseReport.join(',')}`)
       .then(action((response) => {
