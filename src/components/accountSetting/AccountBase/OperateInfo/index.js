@@ -40,7 +40,7 @@ function OperateInfo({accountSettingStore, clientStore, className}) {
       },
       {
         name: '消费点数',
-        keys: 'subUserConsumePoint',
+        keys: 'userConsumePoint',
         remainKey: 'subUserConsumePoint',
         none: consumeType !== 'POINT' || data.parentUserId ? true : false,
         unit: '',

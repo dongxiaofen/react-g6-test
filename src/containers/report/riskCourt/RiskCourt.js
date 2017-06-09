@@ -38,7 +38,7 @@ export default class RiskCourt extends Component {
           tab={`判决文书（${countCount['判决文书']}）`}
           key="判决文书"
           disabled={countCount['判决文书'] > 0 ? false : true}>
-          <JudgeDoc courtData={courtData.judgeDoc.data} regTime={this.regTime} riskCourtStore={riskCourtStore}/>
+          <JudgeDoc courtData={courtData.judgeDoc.data} regTime={this.regTime} riskStore={riskCourtStore}/>
         </TabPane>
         <TabPane
           tab={`法院公告（${countCount['法院公告']}）`}
