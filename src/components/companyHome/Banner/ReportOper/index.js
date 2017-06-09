@@ -6,6 +6,14 @@ import Button from 'components/lib/button';
 function ReportOper({companyHomeStore, routing, bannerStore}) {
   const companyName = routing.location.query.companyName;
   const collection = bannerStore.bannerInfoData.collection;
+  const createCollecIcon = ()=> {
+    if (bannerStore.collectionLoading) {
+      return 'anticon anticon-spin anticon-loading';
+    } else if (collection) {
+      return 'fa fa-star';
+    }
+    return 'fa fa-star-o';
+  };
   return (
     <div>
       {
@@ -34,7 +42,7 @@ function ReportOper({companyHomeStore, routing, bannerStore}) {
         : ''
       }
       <Button className={styles.btnColec} onClick={bannerStore.addOrCancelCollection.bind(null, {collection, companyName})}>
-        <i className={collection ? 'fa fa-star' : 'fa fa-star-o'} aria-hidden="true"></i>
+        <i className={`${createCollecIcon()} ${styles.collection}`} aria-hidden="true"></i>
         {collection ? '取消收藏' : '加入收藏'}
       </Button>
     </div>

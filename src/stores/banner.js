@@ -346,7 +346,7 @@ class BannerStore {
   reStoreLoadingAction(monitorStatus) {
     if (monitorStatus === 'PAUSE') {
       runInAction(() => {
-        this.reStoreLoading = true;
+        this.reStoreLoading = false;
       });
     } else {
       runInAction(() => {
@@ -521,12 +521,12 @@ class BannerStore {
   };
   @action.bound pauseOrRestoreMonitor(monitorId, status) {
     modalStore.confirmLoading = true;
-    this.reStoreLoadingAction(status);
+    this.reStoreLoading = true;
     companyHomeApi.pauseOrRestoreMonitor(monitorId, status)
       .then(action('pause or restore monitor', () => {
         modalStore.confirmLoading = false;
         modalStore.closeAction();
-        this.reStoreLoadingAction(status);
+        this.reStoreLoading = false;
         companyHomeStore.updateValue('reportInfo.monitorStatus', status);
         messageStore.openMessage({ content: '操作成功' });
       }))
@@ -534,7 +534,7 @@ class BannerStore {
         runInAction(() => {
           modalStore.confirmLoading = false;
           modalStore.closeAction();
-          this.reStoreLoadingAction(status);
+          this.reStoreLoading = false;
           messageStore.openMessage({ type: 'warning', content: err.response.data.message });
         });
       });
