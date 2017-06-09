@@ -1,10 +1,9 @@
 import React, {Component, PropTypes} from 'react';
 import { observer, inject } from 'mobx-react';
-import { runInAction } from 'mobx';
 import styles from './index.less';
 import TaxCheckItem from './TaxCheckItem';
 import Button from 'components/lib/button';
-import noData from 'imgs/tax/bd.png';
+
 @inject('routing', 'taxCheckStore', 'uiStore', 'modalStore')
 @observer
 export default class TaxCheckList extends Component {
@@ -21,43 +20,6 @@ export default class TaxCheckList extends Component {
   componentWillUnmount() {
     this.props.taxCheckStore.resetStore();
   }
-  handleClick = () => {
-    this.props.modalStore.openCompModal({
-      title: '税务核查',
-      width: '695px',
-      isSingleBtn: true,
-      confirmText: '确定',
-      confirmWidth: 280,
-      pointText: true,
-      loader: (cb) => {
-        require.ensure([], (require) => {
-          cb(require('../TaxCheckModal'));
-        }, 'TaxCheckModal');
-      },
-      confirmAction: () => {
-        this.props.taxCheckStore.selectConf.forEach((item, idx) => {
-          if (item.input === '') {
-            this.props.taxCheckStore.changeValue(`selectConf[${idx}].msg`, '金额不能为空');
-          }
-        });
-        const selectNoMsg = this.props.taxCheckStore.selectConf.every(item => item.msg === '');
-        if (selectNoMsg) {
-          runInAction(() => {
-            const { monitorId, reportId } = this.props.routing.location.query;
-            this.props.modalStore.confirmLoading = true;
-            this.props.taxCheckStore.postSelectInfo(monitorId, reportId);
-          });
-        }
-      },
-      closeAction: () => {
-        this.props.taxCheckStore.resetSelectModal();
-        runInAction(() => {
-          this.props.modalStore.confirmLoading = false;
-          this.props.modalStore.visible = false;
-        });
-      }
-    });
-  }
   render() {
     const taxListData = this.props.taxCheckStore.taxListData.content;
     let listDom = '';
@@ -73,16 +35,6 @@ export default class TaxCheckList extends Component {
           <TaxCheckItem
             taxCheckStore={this.props.taxCheckStore}
             uiStore={this.props.uiStore} />
-        </div>
-      );
-    } else {
-      listDom = (
-        <div className={styles.noData}>
-          <img className={styles.img} src={noData} />
-          <div className={styles.noDataInfo}>
-            还没有税务核查结果，请添加核查
-          </div>
-          <Button className={styles.noDataButton} onClick={this.handleClick.bind(this)}>添加核查</Button>
         </div>
       );
     }

@@ -47,4 +47,7 @@ export GrowthAbilityEval from './report/growthAbilityEval';
 export RiskTax from './report/riskTax';
 export RiskCourt from './report/riskCourt';
 export RiskMici from './report/riskMici';
+export EntinvItem from './report/entinvItem';
+export FrPosAndInv from './report/frPosAndInv';
+export ManagePosAndInv from './report/managePosAndInv';
 // append here from plop

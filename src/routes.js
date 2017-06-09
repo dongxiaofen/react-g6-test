@@ -51,6 +51,9 @@ import {
     RiskTax,
     RiskCourt,
     RiskMici,
+    EntinvItem,
+    FrPosAndInv,
+    ManagePosAndInv,
 // first append here from plop
   } from 'containers';
 
@@ -113,6 +116,9 @@ export default () => {
         <Route path="growthAbilityEval" component={ GrowthAbilityEval } />
         {/* 贷后*/}
         <Route path="monitorTimeAxis" component={ TimeAxis } onEnter={requireAuth} />
+        <Route path="entinvItem" component={ EntinvItem } />
+        <Route path="frPosAndInv" component={ FrPosAndInv } />
+        <Route path="managePosAndInv" component={ ManagePosAndInv } />
         {/* third append here from plop */}
       </Route>
       <Route path="relPerCheck" component={ RelPerCheck } onEnter={requireAuth} />

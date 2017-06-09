@@ -91,19 +91,6 @@ export const getNewsDetail = (url, source) => {
 export const getBiddingDetail = (url, source) => {
   return axios.get(url, { cancelToken: source.token });
 };
-export const getPersonCheckInfo = ({ monitorId, reportId, params, source }) => {
-  if (monitorId) {
-    return axios.get(`/api/monitor/${monitorId}/person/page`, { params: params, cancelToken: source.token });
-  } else if (reportId) {
-    return axios.get(`/api/report/${reportId}/person/page`, { params: params, cancelToken: source.token });
-  }
-};
-export const checkPersonInfo = (url, params) => {
-  return axios.post(url, params);
-};
-export const getIdCard = (url) => {
-  return axios.get(url);
-};
 
 // 获取上市公告
 export const changeAnnouncement = ({ stockType, monitorId, reportId }) => {
@@ -180,10 +167,6 @@ export const addOrCancelCollection = ({ reportId, monitorId, params }) => {
   return axios.put(url, params);
 };
 
-// 获取核查人的列表
-export const getPersonName = (url) => {
-  return axios.get(url);
-};
 
 // 获取评估分析列表
 export const getAlertAnalysisList = (monitorId, analysisReportId, params, source) => {

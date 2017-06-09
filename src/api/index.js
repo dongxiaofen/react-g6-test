@@ -19,4 +19,5 @@ export * as highRiskCorpApi from './highRiskCorp';
 export * as accountProfileApi from './accountProfile';
 export * as assetTransactionApi from './assetTransaction';
 export * as linkJumpApi from './linkJump';
+export * as relPerCheckApi from './relPerCheck';
 // append here from plop

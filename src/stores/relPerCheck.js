@@ -1,8 +1,8 @@
 import { observable, action } from 'mobx';
-import { companyHomeApi } from 'api';
-import uiStore from '../ui';
-import messageStore from '../message';
-import axios from 'axios';
+import { relPerCheckApi } from 'api';
+import uiStore from './ui';
+import messageStore from './message';
+// import axios from 'axios';
 
 class RelPerCheckStore {
   @observable personCheckInfoData = [];
@@ -17,8 +17,7 @@ class RelPerCheckStore {
   // 弹窗
   @observable showCheckModal = false;
   @observable isLoading = false;
-  // 关联关系
-  @observable relatedType = '';
+  @observable getDataLoading = true;
   // 关联关系下拉列表状态
   @observable relatedTypeModelStatus = false;
   // 姓名
@@ -33,34 +32,32 @@ class RelPerCheckStore {
   @observable relatedSubmit = false;
   @observable reloadMonitorId = {};
   @action.bound getReportModule({monitorId, reportId, analysisReportId}) {
-    // 设置axios取消事件
-    const CancelToken = axios.CancelToken;
-    const source = CancelToken.source();
-    if (window.reportSourceCancel === undefined) {
-      window.reportSourceCancel = [];
-    }
-    window.reportSourceCancel.push(source.cancel);
     this.isMount = true;
-    this.getPersonName(monitorId, reportId, analysisReportId);
-    companyHomeApi.getPersonCheckInfo({monitorId, reportId, analysisReportId, 'params': uiStore.uiState.relPerCheck, source})
+    this.getDataLoading = true;
+    // this.getPersonName(monitorId, reportId, analysisReportId);
+    relPerCheckApi.getPersonCheckInfo({'params': {
+      index: uiStore.uiState.relPerCheck.index,
+      size: uiStore.uiState.relPerCheck.size,
+    }})
       .then(action( (response) => {
+        this.getDataLoading = false;
         this.reloadMonitorId = {monitorId: monitorId, reportId: reportId, analysisReportId: analysisReportId};
         this.personCheckInfoData = response.data.content;
         uiStore.uiState.relPerCheck.totalElements = response.data.totalElements;
       }))
       .catch(action( (error) => {
+        this.getDataLoading = false;
         console.log(error);
       }));
   }
   @action.bound submitRelated(url, params) {
     this.isLoading = true;
-    companyHomeApi.checkPersonInfo(url, params)
+    relPerCheckApi.checkPersonInfo(url, params)
       .then( action( () => {
         this.isLoading = false;
         this.showCheckModal = false;
         this.relatedIdCard = '';
         this.relatedName = '';
-        this.relatedType = '';
         // 清空数据
         this.idCardShow = false;
         this.relationshipShow = false;
@@ -73,19 +70,12 @@ class RelPerCheckStore {
         this.isLoading = false;
         this.relatedIdCard = '';
         this.relatedName = '';
-        this.relatedType = '';
         this.relatedSubmit = false;
         messageStore.openMessage({type: 'warning', content: error.response.data.message, duration: '1500'});
       }));
   }
-  @action.bound getIdCard({monitorId, reportId, personCheckId}) {
-    let url;
-    if (monitorId) {
-      url = `/api/monitor/${monitorId}/person/cardId?personCheckId=${personCheckId}`;
-    } else if (reportId) {
-      url = `/api/report/${reportId}/person/cardId?personCheckId=${personCheckId}`;
-    }
-    companyHomeApi.getIdCard(url)
+  @action.bound getIdCard({personCheckId}) {
+    relPerCheckApi.getIdCard(`/api/check/person/cardId?personCheckId=${personCheckId}`)
       .then( action( (response) => {
         this.showId.set(personCheckId, true);
         this.idCard.set(personCheckId, response.data);
@@ -110,7 +100,7 @@ class RelPerCheckStore {
       url = `/api/analysisReport/${analysisReportId}/person/names`;
     }
 
-    companyHomeApi.getPersonName(url)
+    relPerCheckApi.getPersonName(url)
       .then(action((response) => {
         this.relatedNameData = response.data;
       }))
@@ -128,7 +118,6 @@ class RelPerCheckStore {
     this.idCard = observable.map({});
     this.showCheckModal = false;
     this.isLoading = false;
-    this.relatedType = '';
     this.relatedTypeModelStatus = false;
     this.relatedName = '';
     this.relatedNameModelStatus = false;
@@ -140,6 +129,7 @@ class RelPerCheckStore {
     this.relationshipShow = false;
     this.personNameShow = false;
     this.isMount = false;
+    this.getDataLoading = false;
   }
 }
 export default new RelPerCheckStore();

@@ -1,7 +1,7 @@
 import React, { Component, PropTypes } from 'react';
 import { observer, inject } from 'mobx-react';
 import { runInAction } from 'mobx';
-// import Banner from 'components/companyHome/Banner';
+import Banner from 'components/companyHome/Banner';
 import LeftBar from 'components/companyHome/LeftBar';
 import { Container, Row, Col } from 'components/common/layout';
 import styles from './index.less';
@@ -49,6 +49,7 @@ export default class CompanyHome extends Component {
     nowRecordStore: PropTypes.object,
     taxStore: PropTypes.object,
     taxCheckStore: PropTypes.object,
+    bannerStore: PropTypes.object,
   };
   componentWillMount() {
     const leftBarStore = this.props.leftBarStore;
@@ -101,6 +102,11 @@ export default class CompanyHome extends Component {
     }
     return (
       <div>
+        <Container>
+          <div className={styles.bannerBox}>
+            <Banner />
+          </div>
+        </Container>
         <div className={styles.contentWrap}>
           <Container id="reportContainer">
             <Row>

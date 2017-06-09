@@ -22,6 +22,14 @@ function NewAccountBody({data, routing, accountSettingStore}) {
       routing.push(`/accountSetting`);
     });
   };
+  const iconShow = (index) => {
+    if (index === 0) {
+      return (<div className={`${styles.icon_new}`}></div>);
+    } else if (index !== 0 && index < 3) {
+      return (<div className={`${styles.icon_number} ${styles[`nomal_${index + 1}`]}`}></div>);
+    }
+    return null;
+  };
   const createList = () => {
     let arrList = [];
     if (data) {
@@ -29,12 +37,14 @@ function NewAccountBody({data, routing, accountSettingStore}) {
         arrList = [...arrList,
           <li key={`${index}newAccount`} className={`${styles.list_item}`}>
             <div className={`${styles.marginRL} clearfix`}>
-            {index === 0 ? <span className={styles.rank_lable_blue}>NEW</span> : <span className={styles.rank_lable}>{index + 1}</span>}
-            <span onClick={jumpAccoutSetting.bind(this, itemData.email, itemData.userId)} className={`${styles.user}`}>
+              <div className="clearfix">
+                {iconShow(index)}
+                <span onClick={jumpAccoutSetting.bind(this, itemData.email, itemData.userId)} className={`${styles.user}`}>
                 <Popover content={`所属账号：${itemData.userName}（${itemData.email}）`}>
                   {spliceString(itemData.userName, itemData.email)}
                 </Popover>
-              </span>
+            </span>
+              </div>
               <div className={`${styles.date}`}>
                 <span>预警日期：</span>
                 <span>{itemData.alertDt}</span>

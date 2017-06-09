@@ -10,9 +10,9 @@ import ruleCompanyStore from './ruleCompany';
 import accountSettingStore from './accountSetting';
 import alertAnalysisStore from './report/alertAnalysis';
 import collectionStore from './collection';
-import relPerCheckStore from './report/relPerCheck';
+import relPerCheckStore from './relPerCheck';
 import nowRecordStore from './report/nowRecord';
-import taxCheckStore from './report/taxCheck';
+import taxCheckStore from './taxCheck';
 import bidMarketStore from './bidMarket';
 import assetTransactionStore from './assetTransaction';
 
