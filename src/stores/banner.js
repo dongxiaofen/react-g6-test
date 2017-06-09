@@ -211,6 +211,7 @@ class BannerStore {
   @action.bound extendContact(key) {
     this.contactExtended = this.contactExtended === key ? '' : key;
   }
+  // 刷新报告
   refreshRepConfirm = () => {
     this.refreshReport();
   };
@@ -257,12 +258,11 @@ class BannerStore {
         this.bannerInfoData = bannerDataTest;
         this.isLoading = false;
       }))
-      .catch((err) => {
+      .catch(action('banner err', (err) => {
         console.log('banner出错', err);
-        runInAction(() => {
-          this.isLoading = false;
-        });
-      });
+        this.bannerInfoData = bannerDataTest;
+        this.isLoading = false;
+      }));
   }
   @action.bound toggleMonitorStatus(monitorId, status) {
     companyHomeApi.toggleMonitorStatus(monitorId, status)
@@ -342,23 +342,6 @@ class BannerStore {
         });
       });
   }
-
-  // 监控续期
-  @action.bound renewalMonitor(monitorId, time) {
-    companyHomeApi.renewalMonitor(monitorId, time)
-      .then(action('renewal monitor', () => {
-        payModalStore.closeAction();
-        messageStore.openMessage({ content: '续期成功', callBack: this.windowReload });
-      }))
-      .catch((err) => {
-        console.log(err.response);
-        runInAction(() => {
-          payModalStore.closeAction();
-          messageStore.openMessage({ type: 'warning', content: err.response.data.message });
-        });
-      });
-  }
-
   // 恢复监控loading
   reStoreLoadingAction(monitorStatus) {
     if (monitorStatus === 'PAUSE') {
@@ -370,28 +353,6 @@ class BannerStore {
         this.reStoreLoading = false;
       });
     }
-  }
-
-  // 暂停或恢复监控
-  @action.bound pauseOrRestoreMonitor(monitorId, status) {
-    modalStore.confirmLoading = true;
-    this.reStoreLoadingAction(this.monitorStatus);
-    companyHomeApi.pauseOrRestoreMonitor(monitorId, status)
-      .then(action('pause or restore monitor', () => {
-        modalStore.confirmLoading = false;
-        modalStore.closeAction();
-        this.reStoreLoadingAction(this.monitorStatus);
-        this.monitorStatus = this.monitorStatus === 'MONITOR' ? 'PAUSE' : 'MONITOR';
-        messageStore.openMessage({ content: '操作成功' });
-      }))
-      .catch((err) => {
-        runInAction(() => {
-          modalStore.confirmLoading = false;
-          modalStore.closeAction();
-          this.reStoreLoadingAction(this.monitorStatus);
-          messageStore.openMessage({ type: 'warning', content: err.response.data.message });
-        });
-      });
   }
   closePdfModal = () => {
     this.clearPdfConfigChecked();
@@ -511,6 +472,71 @@ class BannerStore {
         runInAction(() => {
           this.collectionLoading = false;
           messageStore.openMessage({ content: err.response.data.message });
+        });
+      });
+  }
+  // 监控续期
+  renewalMonitorModal = () => {
+    payModalStore.openCompModal({
+      'modalType': 'continueMonitor',
+      'width': '504px',
+      'callBack': this.renewalConfirm
+    });
+  };
+  renewalConfirm = () => {
+    const {monitorId} = companyHomeStore.reportInfo;
+    this.renewalMonitor(monitorId, payModalStore.selectValue);
+  };
+  @action.bound renewalMonitor(monitorId, time) {
+    companyHomeApi.renewalMonitor(monitorId, time)
+      .then(action('renewal monitor', () => {
+        payModalStore.closeAction();
+        messageStore.openMessage({ content: '续期成功', callBack: this.windowReload });
+      }))
+      .catch((err) => {
+        console.log(err.response);
+        runInAction(() => {
+          payModalStore.closeAction();
+          messageStore.openMessage({ type: 'warning', content: err.response.data.message });
+        });
+      });
+  }
+  // 暂停恢复监控
+  pauseOrRestoreMonitorModal = () => {
+    modalStore.openCompModal({
+      title: '暂停监控',
+      width: 440,
+      confirmAction: this.pauseOrRestoreMonitorConfirm,
+      cancelAction: modalStore.closeAction,
+      loader: (cb) => {
+        require.ensure([], (require) => {
+          cb(require('components/companyHome/Banner/ReportAction/PauseOrRestoreMonitor'));
+        });
+      }
+    });
+  };
+  pauseOrRestoreMonitorConfirm = () => {
+    const {monitorId, monitorStatus} = companyHomeStore.reportInfo;
+    this.pauseOrRestoreMonitor(monitorId, monitorStatus === 'MONITOR' ? 'PAUSE' : 'MONITOR');
+  };
+  @action.bound pauseOrRestoreMonitor(monitorId, status) {
+    modalStore.confirmLoading = true;
+    this.reStoreLoadingAction(status);
+    companyHomeApi.pauseOrRestoreMonitor(monitorId, status)
+      .then(action('pause or restore monitor', () => {
+        modalStore.confirmLoading = false;
+        modalStore.closeAction();
+        this.reStoreLoadingAction(status);
+        const newStatus = status === 'MONITOR' ? 'PAUSE' : 'MONITOR';
+        companyHomeStore.updateValue('reportInfo.monitorStatus', newStatus);
+        messageStore.openMessage({ content: '操作成功' });
+      }))
+      .catch((err) => {
+        runInAction(() => {
+          modalStore.confirmLoading = false;
+          modalStore.closeAction();
+          this.reStoreLoadingAction(status);
+          messageStore.openMessage({ type: 'warning', content: err.response.data.message });
         });
       });
   }

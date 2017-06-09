@@ -8,10 +8,11 @@ import pathval from 'pathval';
 class CompanyHomeStore {
   @observable reportInfo = {
     analysisReportId: '',
-    basicReportId: '22',
+    basicReportId: '',
     reportId: '',
     monitorId: '',
     dimensions: [],
+    monitorStatus: '',
   }
   @observable loanOption = [
     { label: '多维综合评价', value: 'SCORE', checked: true},
@@ -162,6 +163,7 @@ class CompanyHomeStore {
     this.loanOption[idx].checked = value;
   }
   @action.bound updateValue(keyPath, value) {
+    console.log(keyPath, value);
     pathval.setPathValue(this, keyPath, value);
   }
 

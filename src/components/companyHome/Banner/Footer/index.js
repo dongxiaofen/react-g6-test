@@ -3,20 +3,28 @@ import { observer, inject} from 'mobx-react';
 import styles from './index.less';
 
 function Footer({companyHomeStore, routing, bannerStore}) {
+  const reportTypeDict = {monitor: '贷后监控', loan: '贷中分析', report: '贷前高级报告', 'basicReport': '贷前基础报告'};
+  const reportInfo = companyHomeStore.reportInfo;
   const getReportType = ()=> {
     const route = routing.location.pathname.split('/')[2];
     if (/comprehenEval|profitEval|operationEval|growthAbilityEval/.test(route)) {
-      return 'monitor';
-    } else if (/monitorTimeAxis|monitorAlert/.test(route)) {
       return 'loan';
+    } else if (/monitorTimeAxis|monitorAlert/.test(route)) {
+      return 'monitor';
     } else if (companyHomeStore.reportInfo.reportId) {
       return 'report';
     }
     return 'basicReport';
   };
-  const reportTypeDict = {monitor: '贷后监控', loan: '贷中分析', report: '贷前高级报告', 'basicReport': '贷前基础报告'};
+  const pauseOrRestart = ()=> {
+    if (reportInfo.monitorStatus === 'MONITOR') {
+      bannerStore.pauseOrRestoreMonitorModal();
+    } else {
+      bannerStore.pauseOrRestoreMonitorConfirm();
+    }
+  };
   const repType = getReportType();
-  // const reportInfo = companyHomeStore.reportInfo;
+  console.log(reportInfo.monitorStatus);
   return (
     <div className={styles.box}>
       <span className={styles.repType}>当前浏览为 {reportTypeDict[repType]}</span>
@@ -44,12 +52,17 @@ function Footer({companyHomeStore, routing, bannerStore}) {
       }
       {
         repType === 'monitor' ?
-        <span className={styles.item}><i className={styles.renewal}></i>监控续期</span>
+        <span className={styles.item} onClick={bannerStore.renewalMonitorModal}>
+          <i className={styles.renewal}></i>监控续期
+        </span>
         : ''
       }
       {
         repType === 'monitor' ?
-        <span className={styles.item}><i className={styles.pause}></i>暂停监控</span>
+        <span className={styles.item} onClick={pauseOrRestart}>
+          <i className={styles.pause}></i>
+          {reportInfo.monitorStatus === 'MONITOR' ? '暂停监控' : '恢复监控'}
+        </span>
         : ''
       }
     </div>
