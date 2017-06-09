@@ -2,7 +2,7 @@ import { observable, action } from 'mobx';
 import {companyHomeApi} from 'api';
 import pathval from 'pathval';
 import detailModalStore from '../detailModal';
-class RiskStore {
+class RiskCourtStore {
   @observable isLoading = true;
   @observable isMount = false;
   @observable court = {
@@ -22,8 +22,6 @@ class RiskStore {
     },
     hasCourtData: true,
   };
-  @observable corpDetailPunish = {};
-  @observable taxList = [];
   @action.bound getDefaultCourtTab(courtCount) {
     let tabAct = '';
     const courtTab = this.court.courtTab;
@@ -42,13 +40,11 @@ class RiskStore {
   @action.bound getReportModule(params) {
     this.isMount = true;
     this.isLoading = true;
-    companyHomeApi.getReportModule(params)
+    companyHomeApi.getReportModule('risk', params)
       .then(action('get risk data', (resp)=>{
         this.isLoading = false;
-        this.court.courtData = resp.data.data.court;
-        this.court.tabAct = this.getDefaultCourtTab(resp.data.data.court.countCount);
-        this.corpDetailPunish = resp.data.data.corpDetailPunish;
-        this.taxList = resp.data.data.taxList;
+        this.court.courtData = resp.data;
+        this.court.tabAct = this.getDefaultCourtTab(resp.data.countCount);
       }))
       .catch(action('risk error', (error)=>{
         console.log('risk error', error);
@@ -91,21 +87,12 @@ class RiskStore {
   @action.bound updateValue(path, value) {
     pathval.setPathValue(this, path, value);
   }
-  @action.bound resetData(path, type) {
-    let value = '';
-    if (type !== 'str') {
-      value = type === 'obj' ? {} : [];
-    }
-    pathval.setPathValue(this, path, value);
-  }
   @action.bound resetStore() {
-    this.resetData('court.courtData', 'obj');
-    this.resetData('court.tabAct', 'str');
-    this.resetData('corpDetailPunish', 'obj');
-    this.resetData('taxList', 'ary');
+    this.court.courtData = {};
+    this.court.tabAct = '';
     this.court.hasCourtData = true;
     this.isLoading = true;
     this.isMount = false;
   }
 }
-export default new RiskStore();
+export default new RiskCourtStore();

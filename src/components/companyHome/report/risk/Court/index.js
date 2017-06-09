@@ -10,9 +10,9 @@ import CourtExecution from './CourtExecution';
 import DishonestyList from './DishonestyList';
 import LitigationAssets from './LitigationAssets';
 
-function Court({riskStore}) {
-  const court = riskStore.court;
-  const courtData = riskStore.court.courtData;
+function Court({riskCourtStore}) {
+  const court = riskCourtStore.court;
+  const courtData = riskCourtStore.court.courtData;
   const modifyTabData = () => {
     const output = court.courtTab.slice(0);
     output.map((tab)=>{
@@ -21,7 +21,7 @@ function Court({riskStore}) {
     return output;
   };
   const changeTab = (key) => {
-    riskStore.updateValue('court.tabAct', key);
+    riskCourtStore.updateValue('court.tabAct', key);
   };
   const regTime = (value)=>{
     return value ? value.slice(0, 10) : '--';
@@ -29,7 +29,7 @@ function Court({riskStore}) {
   const createModule = ()=> {
     switch (court.tabAct) {
       case 'judeDoc':
-        return <JudgeDoc courtData={courtData.judgeDoc.data} regTime={regTime} riskStore={riskStore}/>;
+        return <JudgeDoc courtData={courtData.judgeDoc.data} regTime={regTime} riskCourtStore={riskCourtStore}/>;
       case 'courtAnnouncement':
         return <CourtAnnouncement courtAnnouncement={courtData.courtAnnouncement} regTime={regTime}/>;
       case 'courtNotice':
@@ -57,8 +57,8 @@ function Court({riskStore}) {
 }
 export default loadingComp({
   mapDataToProps: props => ({
-    loading: props.riskStore.isLoading,
-    error: !props.riskStore.court.hasCourtData,
+    loading: props.riskCourtStore.isLoading,
+    error: !props.riskCourtStore.court.hasCourtData,
     module: '法院公告'
   })
 })(observer(Court));

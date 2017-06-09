@@ -10,27 +10,27 @@ import CourtNotice from 'components/companyHome/report/risk/Court/CourtNotice';
 import CourtExecution from 'components/companyHome/report/risk/Court/CourtExecution';
 import DishonestyList from 'components/companyHome/report/risk/Court/DishonestyList';
 import LitigationAssets from 'components/companyHome/report/risk/Court/LitigationAssets';
-@inject('routing', 'riskStore')
-@batchReport('risk')
+@inject('routing', 'riskCourtStore')
+@batchReport('riskCourtStore')
 @loadingComp({
   mapDataToProps: props => ({
-    loading: props.riskStore.isLoading,
-    error: !props.riskStore.court.hasCourtData,
+    loading: props.riskCourtStore.isLoading,
+    error: !props.riskCourtStore.court.hasCourtData,
     module: '法院公告'
   })
 })
 @observer
 export default class RiskCourt extends Component {
   static propTypes = {
-    riskStore: PropTypes.object
+    riskCourtStore: PropTypes.object
   };
   regTime = (value)=>{
     return value ? value.slice(0, 10) : '--';
   };
   render() {
-    const riskStore = this.props.riskStore;
-    const court = riskStore.court;
-    const courtData = riskStore.court.courtData;
+    const riskCourtStore = this.props.riskCourtStore;
+    const court = riskCourtStore.court;
+    const courtData = riskCourtStore.court.courtData;
     const countCount = courtData.countCount;
     return (
       <Tabs defaultActiveKey={court.tabAct}>
@@ -38,13 +38,13 @@ export default class RiskCourt extends Component {
           tab={`判决文书（${countCount['判决文书']}）`}
           key="判决文书"
           disabled={countCount['判决文书'] > 0 ? false : true}>
-          <JudgeDoc courtData={courtData.judgeDoc.data} regTime={this.regTime} riskStore={riskStore}/>;
+          <JudgeDoc courtData={courtData.judgeDoc.data} regTime={this.regTime} riskCourtStore={riskCourtStore}/>
         </TabPane>
         <TabPane
           tab={`法院公告（${countCount['法院公告']}）`}
           key="法院公告"
           disabled={countCount['法院公告'] > 0 ? false : true}>
-          <CourtAnnouncement courtAnnouncement={courtData.courtAnnouncement} regTime={this.regTime}/>;
+          <CourtAnnouncement courtAnnouncement={courtData.courtAnnouncement} regTime={this.regTime}/>
         </TabPane>
         <TabPane
           tab={`开庭公告（${countCount['开庭公告']}）`}

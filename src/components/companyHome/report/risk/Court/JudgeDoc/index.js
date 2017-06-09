@@ -3,16 +3,16 @@ import { observer, inject} from 'mobx-react';
 import styles from './index.less';
 import JudgeBox from './JudgeBox';
 
-function JudgeDoc({courtData, regTime, routing, riskStore}) {
+function JudgeDoc({courtData, regTime, routing, riskCourtStore}) {
   const getDetail = (data) => {
     const docId = data.docId;
     const trailDate = data.trailDate;
     const params = {docId, trailDate};
     if (routing.location.query.monitorId) {
       const monitorCompanyId = routing.location.query.monitorId;
-      riskStore.getJudgeDetailMonitor(monitorCompanyId, params, data);
+      riskCourtStore.getJudgeDetailMonitor(monitorCompanyId, params, data);
     } else {
-      riskStore.getJudgeDetailReport(params, data);
+      riskCourtStore.getJudgeDetailReport(params, data);
     }
   };
   const modifyTitile = (value, obj)=>{

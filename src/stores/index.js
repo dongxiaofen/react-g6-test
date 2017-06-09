@@ -25,7 +25,7 @@ export assetsStore from './report/assets';
 export teamStore from './report/team';
 export investmentStore from './report/investment';
 export riskTaxStore from './report/riskTax';
-export riskStore from './report/risk';
+export riskCourtStore from './report/riskCourt';
 export riskCheckStore from './report/riskCheck';
 export riskPledgeStore from './report/riskPledge';
 export networkStore from './report/network';

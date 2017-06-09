@@ -1,8 +1,8 @@
 import React from 'react';
 import {observer, inject} from 'mobx-react';
 import JudgeCard from '../JudgeBox/JudgeCard';
-function Info({riskStore}) {
-  const itemData = riskStore.court.detailModalData.info;
+function Info({riskCourtStore}) {
+  const itemData = riskCourtStore.court.detailModalData.info;
   const regTime = (value)=>{
     return value ? value.slice(0, 10) : '无';
   };
@@ -32,4 +32,4 @@ function Info({riskStore}) {
   };
   return <JudgeCard itemData={itemData} data={data} type="modal"/>;
 }
-export default inject('riskStore')(observer(Info));
+export default inject('riskCourtStore')(observer(Info));
