@@ -527,8 +527,7 @@ class BannerStore {
         modalStore.confirmLoading = false;
         modalStore.closeAction();
         this.reStoreLoadingAction(status);
-        const newStatus = status === 'MONITOR' ? 'PAUSE' : 'MONITOR';
-        companyHomeStore.updateValue('reportInfo.monitorStatus', newStatus);
+        companyHomeStore.updateValue('reportInfo.monitorStatus', status);
         messageStore.openMessage({ content: '操作成功' });
       }))
       .catch((err) => {
