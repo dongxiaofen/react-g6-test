@@ -11,7 +11,7 @@ export default class Pdf extends Component {
     routing: PropTypes.object,
   }
   componentDidMount() {
-    console.log(this.props.pdfStore, '===============');
+    console.log(this.props.routing.location.query.monitorId, '===============');
     this.props.pdfStore.getOverviewData(this.props.routing.location.query.monitorId);
   }
   render() {
