@@ -165,15 +165,8 @@ export const pauseOrRestoreMonitor = (monitorId, status) => {
 };
 
 // 添加/删除收藏
-export const addOrCancelCollection = ({ reportId, monitorId, params }) => {
-  let url;
-  if (reportId) {
-    url = `/api/report/${reportId}/collection`;
-  }
-  if (monitorId) {
-    url = `/api/monitor/${monitorId}/collection`;
-  }
-  return axios.put(url, params);
+export const addOrCancelCollection = (params) => {
+  return axios.put('/api/collection', params);
 };
 
 // 获取核查人的列表

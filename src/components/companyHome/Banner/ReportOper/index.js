@@ -3,8 +3,9 @@ import { observer, inject} from 'mobx-react';
 import styles from './index.less';
 import Button from 'components/lib/button';
 
-function ReportOper({companyHomeStore, routing}) {
+function ReportOper({companyHomeStore, routing, bannerStore}) {
   const companyName = routing.location.query.companyName;
+  const collection = bannerStore.bannerInfoData.collection;
   return (
     <div>
       {
@@ -32,6 +33,10 @@ function ReportOper({companyHomeStore, routing}) {
         </Button>
         : ''
       }
+      <Button className={styles.btnColec} onClick={bannerStore.addOrCancelCollection.bind(null, {collection, companyName})}>
+        <i className={collection ? 'fa fa-star' : 'fa fa-star-o'} aria-hidden="true"></i>
+        {collection ? '取消收藏' : '加入收藏'}
+      </Button>
     </div>
   );
 }
@@ -39,4 +44,4 @@ function ReportOper({companyHomeStore, routing}) {
 ReportOper.propTypes = {
   foo: PropTypes.string,
 };
-export default inject('companyHomeStore', 'routing')(observer(ReportOper));
+export default inject('companyHomeStore', 'routing', 'bannerStore')(observer(ReportOper));

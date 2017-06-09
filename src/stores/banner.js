@@ -460,11 +460,11 @@ class BannerStore {
   }
 
   // 添加/取消收藏
-  @action.bound addOrCancelCollection({ reportId, monitorId, params }) {
+  @action.bound addOrCancelCollection(params) {
     this.collectionLoading = true;
-    companyHomeApi.addOrCancelCollection({ reportId, monitorId, params })
+    companyHomeApi.addOrCancelCollection(params)
       .then(action('add or cancel collection', () => {
-        this.collection = !this.collection;
+        this.bannerInfoData.collection = !this.bannerInfoData.collection;
         this.collectionLoading = false;
       }))
       .catch((err) => {
