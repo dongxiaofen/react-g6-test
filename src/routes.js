@@ -109,6 +109,9 @@ export default () => {
         <Route path="riskTax" component={ RiskTax } />
         <Route path="riskCourt" component={ RiskCourt } />
         <Route path="riskMici" component={ RiskMici } />
+        <Route path="entinvItem" component={ EntinvItem } />
+        <Route path="frPosAndInv" component={ FrPosAndInv } />
+        <Route path="managePosAndInv" component={ ManagePosAndInv } />
         {/* 贷中*/}
         <Route path="comprehenEval" component={ ComprehenEval } />
         <Route path="profitEval" component={ ProfitEval } />
@@ -116,9 +119,6 @@ export default () => {
         <Route path="growthAbilityEval" component={ GrowthAbilityEval } />
         {/* 贷后*/}
         <Route path="monitorTimeAxis" component={ TimeAxis } onEnter={requireAuth} />
-        <Route path="entinvItem" component={ EntinvItem } />
-        <Route path="frPosAndInv" component={ FrPosAndInv } />
-        <Route path="managePosAndInv" component={ ManagePosAndInv } />
         {/* third append here from plop */}
       </Route>
       <Route path="relPerCheck" component={ RelPerCheck } onEnter={requireAuth} />

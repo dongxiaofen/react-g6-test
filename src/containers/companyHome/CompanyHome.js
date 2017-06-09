@@ -101,27 +101,21 @@ export default class CompanyHome extends Component {
       return <div>loading</div>;
     }
     return (
-      <div>
-        <Container>
-          <div className={styles.bannerBox}>
-            <Banner />
-          </div>
-        </Container>
-        <div className={styles.contentWrap}>
-          <Container id="reportContainer">
-            <Row>
-              <Col width="2">
-                <LeftBar />
-              </Col>
-              <Col width="10">
-                <div id="tabContentWrap" className={styles.tabContentWrap}>
-                  {this.props.children}
-                </div>
-              </Col>
-            </Row>
-          </Container>
+      <Container id="reportContainer">
+        <div className={styles.bannerBox}>
+          <Banner />
         </div>
-      </div>
+        <Row className={styles.contentWrap}>
+          <Col width="2">
+            <LeftBar />
+          </Col>
+          <Col width="10">
+            <div id="tabContentWrap" className={styles.tabContentWrap}>
+              {this.props.children}
+            </div>
+          </Col>
+        </Row>
+      </Container>
     );
   }
 }

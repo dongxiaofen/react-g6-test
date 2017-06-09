@@ -36,7 +36,7 @@ export const getReportModule = (urlStr, idParams) => {
     case 'operation/bidding':
     case 'team':
     case 'investment':
-    case 'tax':
+    case 'taxation':
     case 'risk':
     case 'risk/check':
     case 'risk/pledge':
