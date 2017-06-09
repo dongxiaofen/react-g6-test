@@ -12,9 +12,9 @@ function TableBody({dateType, data, hasFlag, routing, searchCompanyStore, owner 
     }
     return str;
   };
-  const jumpPage = (companyName, monitorId) => {
+  const jumpPage = (companyName) => {
     if (owner && owner === 'own') {
-      routing.push(`/companyHome/alertAnalysis?companyType=MAIN&monitorId=${monitorId}`);
+      routing.push(`/companyHome/alertAnalysis?companyName=${companyName}`);
     } else {
       searchCompanyStore.searchTabClick('COMPANY_NAME');
       searchCompanyStore.searchChange({target: {value: companyName}});
