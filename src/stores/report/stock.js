@@ -12,10 +12,10 @@ class StockStore {
     return true;
   }
 
+  @observable isMount = false;
   @observable isOverViewLoading = true;
   @observable announcementTypesLoading = true;
   @observable announcementDatasLoading = true;
-  @observable isMount = false;
 
   // 公司概况
   @observable brief = {};
@@ -30,8 +30,7 @@ class StockStore {
 
   // 上市公告-公司概况
   @action.bound getCompany(params) {
-    params.module = 'stock/company';
-    companyHomeApi.getReportModule(params)
+    companyHomeApi.getReportModule('stock/company', params)
       .then(action('get stock company', (resp) => {
         this.brief = resp.data.brief;
         this.shareHolder = resp.data.shareHolder;
@@ -48,8 +47,7 @@ class StockStore {
   }
   // 上市公告-公告列表
   @action.bound getAnnouncement(params) {
-    params.module = 'stock/announcement';
-    companyHomeApi.getReportModule(params)
+    companyHomeApi.getReportModule('stock/announcement', params)
       .then(action('get stock announcement', (resp) => {
         this.announcementDatas = resp.data.data;
         this.announcementDatasLoading = false;
@@ -63,8 +61,7 @@ class StockStore {
   }
   // 上市公告-公告列表-类型列表
   @action.bound getAnnouncementType(params) {
-    params.module = 'stock/announcement/type';
-    companyHomeApi.getReportModule(params)
+    companyHomeApi.getReportModule('stock/announcement/type', params)
       .then(action('get stock announcement type', (resp) => {
         this.announcementTypes = resp.data;
       }))
