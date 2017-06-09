@@ -8,7 +8,7 @@ const TabPane = Tabs.TabPane;
 import { batchReport } from 'components/hoc';
 
 @inject('routing', 'assetsStore')
-@batchReport('assets')
+@batchReport('assetsStore')
 @observer
 export default class Assets extends Component {
   static propTypes = {

@@ -6,7 +6,7 @@ export const getMonitorCount = (params, source) => {
   });
 };
 export const getMainList = (params, source) => {
-  return axios.get(`/api/monitor/companyList/xx`, {
+  return axios.get(`/api/monitor/companyList`, {
     params: params,
     cancelToken: source.token
   });

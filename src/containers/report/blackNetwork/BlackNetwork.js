@@ -4,7 +4,7 @@ import { batchReport } from 'components/hoc';
 import BlackNetwork from 'components/companyHome/report/blackNetwork/BlackNetwork';
 
 @inject('routing', 'blackNetworkStore')
-@batchReport('blackNetwork')
+@batchReport('blackNetworkStore')
 @observer
 export default class BlackNetworkContainer extends Component {
   static propTypes = {

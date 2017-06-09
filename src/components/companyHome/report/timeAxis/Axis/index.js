@@ -61,8 +61,8 @@ class Axis extends Component {
     });
   }
   getDetail() {
-    const {monitorId} = this.props.routing.location.query;
-    this.props.timeAxisStore.getAxisDetail(monitorId, ...arguments);
+    const companyId = this.props.timeAxisStore.companyId;
+    this.props.timeAxisStore.getAxisDetail(companyId, ...arguments);
   }
   createLabel = (labelConf) => {
     return labelConf.map((item, idx) => {
