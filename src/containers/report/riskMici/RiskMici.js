@@ -5,6 +5,7 @@ import Tabs from 'antd/lib/tabs';
 const TabPane = Tabs.TabPane;
 import AbnormalOperation from 'components/companyHome/report/risk/mici/AbnormalOperation';
 import CheckMessage from 'components/companyHome/report/risk/mici/CheckMessage';
+import SpotCheck from 'components/companyHome/report/risk/mici/SpotCheck';
 
 @inject('routing', 'riskStore')
 @batchReport('risk')
@@ -25,7 +26,8 @@ export default class RiskMici extends Component {
           <AbnormalOperation abnormalOperation={corpDetailPunish.abnormalOperation} isLoading={isLoading}/>
         </TabPane>
         <TabPane tab="违法记录" key="违法记录">
-          违法记录
+          <SpotCheck
+            checkMessage={corpDetailPunish.checkMessage} isLoading={isLoading}/>
         </TabPane>
       </Tabs>
     );

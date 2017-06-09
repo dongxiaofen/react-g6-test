@@ -23,9 +23,8 @@ class AssetsStore {
   @observable biddingLoading = true;
 
   @action.bound getPatentData(params) {
-    params.module = 'patent';
     params.pagesInfo = uiStore.uiState.patentInfo;
-    companyHomeApi.getReportModule(params)
+    companyHomeApi.getReportModule('operation/patent', params)
       .then(action( (response) => {
         this.patentLoading = false;
         this.patentData = response.data.content;
@@ -37,9 +36,8 @@ class AssetsStore {
   }
 
   @action.bound getTrademarkData(params) {
-    params.module = 'trademark';
     params.pagesInfo = uiStore.uiState.trademarkLists;
-    companyHomeApi.getReportModule(params)
+    companyHomeApi.getReportModule('operation/trademark', params)
       .then(action( (response) => {
         this.trLoading = false;
         this.trademarkData = response.data.content;
@@ -51,8 +49,7 @@ class AssetsStore {
   }
 
   @action.bound getBiddingData(params) {
-    params.module = 'bidding';
-    companyHomeApi.getReportModule(params)
+    companyHomeApi.getReportModule('operation/bidding', params)
       .then(action( (response) => {
         this.biddingLoading = false;
         this.biddingData = response.data;

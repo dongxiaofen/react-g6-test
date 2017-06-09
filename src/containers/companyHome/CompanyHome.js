@@ -9,17 +9,19 @@ import styles from './index.less';
 @inject(
   'routing',
   'uiStore',
+  'companyHomeStore',
   'bannerStore',
   'leftBarStore',
   'corpDetailStore',
-  'riskStore',
+  'riskCourtStore',
   'internetStore',
   'assetsStore',
   'teamStore',
   'networkStore',
   'blackNetworkStore',
   'alertAnalysisStore',
-  'timeAxisStore',
+  'reportAxisStore',
+  'monitorAxisStore',
   'relPerCheckStore',
   'nowRecordStore',
   'stockStore',
@@ -34,19 +36,22 @@ export default class CompanyHome extends Component {
     routing: PropTypes.object,
     leftBarStore: PropTypes.object,
     uiStore: PropTypes.object,
+    companyHomeStore: PropTypes.object,
     corpDetailStore: PropTypes.object,
-    riskStore: PropTypes.object,
+    riskCourtStore: PropTypes.object,
     internetStore: PropTypes.object,
     assetsStore: PropTypes.object,
     teamStore: PropTypes.object,
     networkStore: PropTypes.object,
     blackNetworkStore: PropTypes.object,
     alertAnalysisStore: PropTypes.object,
-    timeAxisStore: PropTypes.object,
+    reportAxisStore: PropTypes.object,
+    monitorAxisStore: PropTypes.object,
     relPerCheckStore: PropTypes.object,
     nowRecordStore: PropTypes.object,
     taxStore: PropTypes.object,
     taxCheckStore: PropTypes.object,
+    bannerStore: PropTypes.object,
   };
   componentWillMount() {
     const leftBarStore = this.props.leftBarStore;
@@ -54,6 +59,10 @@ export default class CompanyHome extends Component {
     runInAction('初始化报告二级目录', () => {
       leftBarStore.activeItem = module;
     });
+  }
+  componentDidMount() {
+    const companyName = this.props.routing.location.query.companyName;
+    this.props.companyHomeStore.getIdParams({companyName});
   }
   componentWillUnmount() {
     console.log('CompanyHome componentWillUnmount', window.reportSourceCancel);
@@ -67,14 +76,15 @@ export default class CompanyHome extends Component {
       'bannerStore',
       'leftBarStore',
       'corpDetailStore',
-      'riskStore',
+      'riskCourtStore',
       'internetStore',
       'assetsStore',
       'teamStore',
       'networkStore',
       'blackNetworkStore',
       'alertAnalysisStore',
-      'timeAxisStore',
+      'reportAxisStore',
+      'monitorAxisStore',
       'relPerCheckStore',
       'stockStore',
       'nowRecordStore',
@@ -87,24 +97,28 @@ export default class CompanyHome extends Component {
     });
   }
   render() {
+    const noReport = ['reportId', 'basicReportId'].every(key => {
+      return !this.props.companyHomeStore.reportInfo[key];
+    });
+    if (noReport) {
+      return <div>loading</div>;
+    }
     return (
-      <div>
-        <Banner />
-        <div className={styles.contentWrap}>
-          <Container id="reportContainer">
-            <Row>
-              <Col width="2">
-                <LeftBar />
-              </Col>
-              <Col width="10">
-                <div id="tabContentWrap" className={styles.tabContentWrap}>
-                  {this.props.children}
-                </div>
-              </Col>
-            </Row>
-          </Container>
+      <Container id="reportContainer">
+        <div className={styles.bannerBox}>
+          <Banner />
         </div>
-      </div>
+        <Row className={styles.contentWrap}>
+          <Col width="2">
+            <LeftBar />
+          </Col>
+          <Col width="10">
+            <div id="tabContentWrap" className={styles.tabContentWrap}>
+              {this.props.children}
+            </div>
+          </Col>
+        </Row>
+      </Container>
     );
   }
 }

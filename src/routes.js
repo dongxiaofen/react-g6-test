@@ -8,6 +8,8 @@ import {
     RiskHeadlines,
     Account,
     HomePage,
+    ReportList,
+    AnalysisList,
     MonitorList,
     CompanyHome,
     Solution,
@@ -16,7 +18,6 @@ import {
     Internet,
     MonitorStatistics,
     AccountSetting,
-    ReportManage,
     Team,
     Assets,
     RuleList,
@@ -25,7 +26,8 @@ import {
     Network,
     RelPerCheck,
     AlertAnalysis,
-    TimeAxis,
+    ReportTimeAxis,
+    MonitorTimeAxis,
     RuleCompany,
     PersonReport,
     Pdf,
@@ -42,15 +44,16 @@ import {
     TaxCheck,
     AssetTransaction,
     InLoanAnalysis,
-
-    InvestAndOffice,
     ComprehenEval,
     ProfitEval,
     OperationEval,
     GrowthAbilityEval,
     RiskTax,
     RiskCourt,
-    RiskMici,
+    RiskCheck,
+    EntinvItem,
+    FrPosAndInv,
+    ManagePosAndInv,
 // first append here from plop
   } from 'containers';
 
@@ -84,6 +87,8 @@ export default () => {
       <Route path="riskHeadlines" component={ RiskHeadlines } onEnter={requireAuth} />
       <Route path="account" component={ Account } onEnter={requireAuth} />
       <Route path="homePage" component={ HomePage } onEnter={requireAuth} />
+      <Route path="reportList" component={ ReportList } onEnter={requireAuth} />
+      <Route path="analysisList" component={ AnalysisList } onEnter={requireAuth} />
       <Route path="monitorList" component={ MonitorList } onEnter={requireAuth} />
       <Route path="inLoanAnalysis" component= { InLoanAnalysis } onEnter={ requireAuth } />
       <Route path="companyHome" component={ CompanyHome } >
@@ -95,22 +100,25 @@ export default () => {
         <Route path="stock" component={ Stock } onEnter={requireAuth} />
         <Route path="network" component={ Network } onEnter={requireAuth} />
         <Route path="alertAnalysis" component={ AlertAnalysis } onEnter={requireAuth} />
-        <Route path="timeAxis" component={ TimeAxis } onEnter={requireAuth} />
+        <Route path="timeAxis" component={ ReportTimeAxis } onEnter={requireAuth} />
         <Route path="blackNetwork" component={ BlackNetwork } onEnter={requireAuth} />
         <Route path="forceNetwork" component={ ForceNetwork } onEnter={requireAuth} />
         <Route path="nowRecord" component={ NowRecord } onEnter={requireAuth} />
         <Route path="tax" component={ Tax } onEnter={requireAuth} />
-        <Route path="investAndOffice" component={ InvestAndOffice } />
         <Route path="riskTax" component={ RiskTax } />
         <Route path="riskCourt" component={ RiskCourt } />
-        <Route path="riskMici" component={ RiskMici } />
+        <Route path="riskCheck" component={ RiskCheck } />
+        <Route path="entinvItem" component={ EntinvItem } />
+        <Route path="frPosAndInv" component={ FrPosAndInv } />
+        <Route path="managePosAndInv" component={ ManagePosAndInv } />
         {/* 贷中*/}
         <Route path="comprehenEval" component={ ComprehenEval } />
         <Route path="profitEval" component={ ProfitEval } />
         <Route path="operationEval" component={ OperationEval } />
         <Route path="growthAbilityEval" component={ GrowthAbilityEval } />
         {/* 贷后*/}
-{/* third append here from plop */}
+        <Route path="monitorTimeAxis" component={ MonitorTimeAxis } onEnter={requireAuth} />
+        {/* third append here from plop */}
       </Route>
       <Route path="relPerCheck" component={ RelPerCheck } onEnter={requireAuth} />
       <Route path="taxCheck" component={ TaxCheck } onEnter={requireAuth} />
@@ -119,7 +127,6 @@ export default () => {
       {/* 测试modal用 */}
       <Route path="monitorStatistics" component={ MonitorStatistics } onEnter={requireAuth} />
       <Route path="accountSetting" component={ AccountSetting } onEnter={requireAuth} />
-      <Route path="reportManage" component={ ReportManage } onEnter={requireAuth} />
       <Route path="personReport" component={ PersonReport } onEnter={requireAuth} />
       <Route path="ruleList" component={ RuleList } onEnter={requireAuth} />
       <Route path="ruleAdd" component={ RuleAdd } onEnter={requireAuth} />

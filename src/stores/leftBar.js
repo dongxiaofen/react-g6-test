@@ -13,7 +13,7 @@ class LeftBarStore {
   @observable activeMenu = [];
   @observable activeItem = '';
   barConf = {
-    'report': [
+    report: [
       {
         menuText: '基本信息',
         menuKey: 'report',
@@ -21,10 +21,6 @@ class LeftBarStore {
           {
             menuText: '工商信息',
             menuKey: 'corpDetail',
-          },
-          {
-            menuText: '对外投资任职',
-            menuKey: 'investAndOffice',
           },
           {
             menuText: '上市披露',
@@ -45,6 +41,25 @@ class LeftBarStore {
         ],
       },
       {
+        menuText: '对外投资任职',
+        menuKey: 'investAndOffice',
+        children: [
+          {
+            menuText: '企业对外投资任职',
+            menuKey: 'entinvItem',
+          },
+          {
+            menuText: '法人对外投资任职',
+            menuKey: 'frPosAndInv',
+          },
+          {
+            menuText: '董监高对外投资任职',
+            menuKey: 'managePosAndInv',
+            lock: true,
+          },
+        ],
+      },
+      {
         menuText: '风险信息',
         menuKey: 'risk',
         children: [
@@ -58,7 +73,7 @@ class LeftBarStore {
           },
           {
             menuText: '工商抽查',
-            menuKey: 'riskMici',
+            menuKey: 'riskCheck',
           },
         ],
       },

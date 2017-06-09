@@ -1,17 +1,18 @@
 import React, { Component, PropTypes } from 'react';
-import { observer } from 'mobx-react';
+import { observer, inject } from 'mobx-react';
 
-function hoc(module) {
+function hoc(store) {
   return (WrappedComponent) => {
     class BatchReport extends Component {
       static propTypes = {
         routing: PropTypes.object,
-        [`${module}Store`]: PropTypes.object,
+        [store]: PropTypes.object,
+        companyHomeStore: PropTypes.object,
       };
       componentDidMount() {
-        if (!this.props[`${module}Store`].isMount) {
-          const { monitorId, reportId, analysisReportId, companyName, companyType } = this.props.routing.location.query;
-          this.props[`${module}Store`].getReportModule({module, monitorId, reportId, analysisReportId, companyName, companyType});
+        if (!this.props[store].isMount) {
+          const idParams = this.props.companyHomeStore.reportInfo;
+          this.props[store].getReportModule(idParams);
         }
       }
       render() {
@@ -20,7 +21,7 @@ function hoc(module) {
         );
       }
     }
-    return observer(BatchReport);
+    return inject('companyHomeStore')(observer(BatchReport));
   };
 }
 export default hoc;

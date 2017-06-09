@@ -33,7 +33,7 @@ class InternetStore {
     this.statistic = {};
     this.newsData = {};
     const args = arguments;
-    companyHomeApi.getReportModule(params)
+    companyHomeApi.getReportModule('internet', params)
       .then(action('get internet data', (resp)=>{
         this.analysis = {data: resp.data.analysis};
         this.statistic = {data: resp.data.info.statistic};
