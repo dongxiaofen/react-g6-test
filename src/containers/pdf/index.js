@@ -11,7 +11,7 @@ export default class Pdf extends Component {
     companyHomeStore: PropTypes.object,
   }
   componentDidMount() {
-    this.props.pdfStore.getOverviewData(this.props.companyHomeStore.reportInfo.basicReportId);
+    this.props.pdfStore.getOverviewData(25);
   }
   render() {
     return (
