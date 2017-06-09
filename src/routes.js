@@ -26,7 +26,8 @@ import {
     Network,
     RelPerCheck,
     AlertAnalysis,
-    TimeAxis,
+    ReportTimeAxis,
+    MonitorTimeAxis,
     RuleCompany,
     PersonReport,
     Pdf,
@@ -99,7 +100,7 @@ export default () => {
         <Route path="stock" component={ Stock } onEnter={requireAuth} />
         <Route path="network" component={ Network } onEnter={requireAuth} />
         <Route path="alertAnalysis" component={ AlertAnalysis } onEnter={requireAuth} />
-        <Route path="timeAxis" component={ TimeAxis } onEnter={requireAuth} />
+        <Route path="timeAxis" component={ ReportTimeAxis } onEnter={requireAuth} />
         <Route path="blackNetwork" component={ BlackNetwork } onEnter={requireAuth} />
         <Route path="forceNetwork" component={ ForceNetwork } onEnter={requireAuth} />
         <Route path="nowRecord" component={ NowRecord } onEnter={requireAuth} />
@@ -116,7 +117,7 @@ export default () => {
         <Route path="operationEval" component={ OperationEval } />
         <Route path="growthAbilityEval" component={ GrowthAbilityEval } />
         {/* 贷后*/}
-        <Route path="monitorTimeAxis" component={ TimeAxis } onEnter={requireAuth} />
+        <Route path="monitorTimeAxis" component={ MonitorTimeAxis } onEnter={requireAuth} />
         {/* third append here from plop */}
       </Route>
       <Route path="relPerCheck" component={ RelPerCheck } onEnter={requireAuth} />

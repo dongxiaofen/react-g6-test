@@ -55,8 +55,8 @@ class RiskCourtStore {
     detailModalStore.openDetailModal((cp)=>{
       require.ensure([], (require)=>{
         cp(
-          require('components/companyHome/report/risk/Court/JudgeDoc/DetailCom/Info'),
-          require('components/companyHome/report/risk/Court/JudgeDoc/DetailCom/Content')
+          require('components/companyHome/report/riskCourt/JudgeDoc/DetailCom/Info'),
+          require('components/companyHome/report/riskCourt/JudgeDoc/DetailCom/Content')
         );
       });
     }, '法务详情');

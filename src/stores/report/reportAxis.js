@@ -1,8 +1,9 @@
 import { observable, action } from 'mobx';
 import { companyHomeApi } from 'api';
 
-class TimeAxisStore {
+class ReportAxisStore {
   @observable isMount = false;
+  companyId = '';
   @observable axisData = {};
   @observable eventParams = {
     time: '',
@@ -18,11 +19,10 @@ class TimeAxisStore {
     stock: '上市公告',
     team: '团队信息',
   };
-
   @action.bound getReportModule(params) {
-    params.module = 'timeline';
     this.isMount = true;
-    companyHomeApi.getReportModule(params)
+    this.companyId = params.reportId;
+    companyHomeApi.getReportModule('timeline', params)
       .then(action('timeline', resp => {
         const noData = !resp.data || Object.keys(resp.data).length === 0;
         this.axisData = noData ? {error: {message: '暂无信息'}, data: {}} : {data: resp.data};
@@ -34,7 +34,7 @@ class TimeAxisStore {
           Object.keys(firstData).some(type => {
             Object.keys(firstData[type]).some(relation => {
               if (firstData[type][relation] !== 0) {
-                this.getAxisDetail(params.monitorId, type, time, relation);
+                this.getAxisDetail(params.reportId, type, time, relation);
               }
             });
           });
@@ -46,14 +46,14 @@ class TimeAxisStore {
         this.eventData = {error: err.response.data, events: []};
       }));
   }
-  @action.bound getAxisDetail(monitorId, key, time, relation) {
+  @action.bound getAxisDetail(reportId, key, time, relation) {
     this.eventParams = {
       time,
       relation: relation === 'main' ? '主体企业' : '关联企业',
       module: this.moduleDict[key],
     };
     this.eventData = {};
-    companyHomeApi.getAxisDetail(monitorId, key, time, relation)
+    companyHomeApi.getReportAxisDetail(reportId, key, time, relation)
       .then(action('getAxisDetail', resp => {
         const noData = !resp.data || !resp.data.events || resp.data.events.length === 0;
         this.eventData = noData ? {events: [], error: {message: '未查询到相关数据'}} : resp.data;
@@ -74,4 +74,4 @@ class TimeAxisStore {
     this.eventData = {};
   }
 }
-export default new TimeAxisStore();
+export default new ReportAxisStore();

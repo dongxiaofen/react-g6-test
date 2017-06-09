@@ -211,8 +211,13 @@ export const getNowRecordList = (id, params, source) => {
 export const getNowRecordPictures = (id, source) => {
   return axios.get('/api/survey/' + id + '/pictures', { cancelToken: source.token });
 };
-// 时间轴
-export const getAxisDetail = (monitorId, key, time, relation) => {
+// 报告时间轴详情
+export const getReportAxisDetail = (reportId, key, time, relation) => {
+  const module = key === 'legal' ? 'risk' : key;
+  return axios.get(`/api/report/${reportId}/timeline/${relation === 'related' ? `related/${module}` : module}?date=${time}`);
+};
+// 监控时间轴详情
+export const getMonitorAxisDetail = (monitorId, key, time, relation) => {
   const module = key === 'legal' ? 'risk' : key;
   return axios.get(`/api/monitor/${monitorId}/timeline/${relation === 'related' ? `related/${module}` : module}?date=${time}`);
 };

@@ -29,7 +29,7 @@ export riskCourtStore from './report/riskCourt';
 export riskCheckStore from './report/riskCheck';
 export riskPledgeStore from './report/riskPledge';
 export networkStore from './report/network';
-export timeAxisStore from './report/timeAxis';
+export reportAxisStore from './report/reportAxis';
 export alertAnalysisStore from './report/alertAnalysis';
 export analysisSrore from './report/analysis';
 export taxStore from './report/tax';
