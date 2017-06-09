@@ -38,13 +38,13 @@ export default class RiskCourt extends Component {
           tab={`判决文书（${countCount['判决文书']}）`}
           key="判决文书"
           disabled={countCount['判决文书'] > 0 ? false : true}>
-          <JudgeDoc courtData={courtData.judgeDoc.data} regTime={this.regTime} riskStore={riskStore}/>;
+          <JudgeDoc courtData={courtData.judgeDoc.data} regTime={this.regTime} riskStore={riskStore}/>
         </TabPane>
         <TabPane
           tab={`法院公告（${countCount['法院公告']}）`}
           key="法院公告"
           disabled={countCount['法院公告'] > 0 ? false : true}>
-          <CourtAnnouncement courtAnnouncement={courtData.courtAnnouncement} regTime={this.regTime}/>;
+          <CourtAnnouncement courtAnnouncement={courtData.courtAnnouncement} regTime={this.regTime}/>
         </TabPane>
         <TabPane
           tab={`开庭公告（${countCount['开庭公告']}）`}
