@@ -73,7 +73,7 @@ class LeftBarStore {
           },
           {
             menuText: '工商抽查',
-            menuKey: 'riskMici',
+            menuKey: 'riskCheck',
           },
         ],
       },

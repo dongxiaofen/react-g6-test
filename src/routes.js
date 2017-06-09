@@ -49,7 +49,7 @@ import {
     GrowthAbilityEval,
     RiskTax,
     RiskCourt,
-    RiskMici,
+    RiskCheck,
     EntinvItem,
     FrPosAndInv,
     ManagePosAndInv,
@@ -106,7 +106,7 @@ export default () => {
         <Route path="tax" component={ Tax } onEnter={requireAuth} />
         <Route path="riskTax" component={ RiskTax } />
         <Route path="riskCourt" component={ RiskCourt } />
-        <Route path="riskMici" component={ RiskMici } />
+        <Route path="riskCheck" component={ RiskCheck } />
         <Route path="entinvItem" component={ EntinvItem } />
         <Route path="frPosAndInv" component={ FrPosAndInv } />
         <Route path="managePosAndInv" component={ ManagePosAndInv } />

@@ -1,8 +1,9 @@
-import React, {PropTypes} from 'react';
+import React from 'react';
 import { observer } from 'mobx-react';
 import { CardTable } from 'components/common/report';
-import loadingComp from 'components/hoc/LoadingComp';
-function AbnormalOperation({abnormalOperation}) {
+function AbnormalOperation({riskCheckStore}) {
+  const abnormalData = riskCheckStore.abnormalData;
+  const isLoading = abnormalData.content === undefined ? true : false;
   const data = {
     meta: {
       body: [
@@ -14,10 +15,11 @@ function AbnormalOperation({abnormalOperation}) {
       ],
       isExpand: false,
       dict: 'jyErrorData',
-      cData: abnormalOperation
+      cData: abnormalData.content
     },
     module: '经营异常信息',
-    error: abnormalOperation.length === 0
+    isLoading: isLoading,
+    error: abnormalData.error
   };
   return (
     <div>
@@ -26,11 +28,4 @@ function AbnormalOperation({abnormalOperation}) {
   );
 }
 
-AbnormalOperation.propTypes = {
-  foo: PropTypes.string,
-};
-export default loadingComp({
-  mapDataToProps: props => ({
-    loading: props.isLoading,
-  })
-})(observer(AbnormalOperation));
+export default observer(AbnormalOperation);

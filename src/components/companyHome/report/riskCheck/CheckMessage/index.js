@@ -1,8 +1,10 @@
-import React, {PropTypes} from 'react';
+import React from 'react';
 import { observer } from 'mobx-react';
 import { CardTable } from 'components/common/report';
 import loadingComp from 'components/hoc/LoadingComp';
-function CheckMessage({checkMessage}) {
+function CheckMessage({riskCheckStore}) {
+  const checkData = riskCheckStore.checkData;
+  const isLoading = checkData.content === undefined ? true : false;
   const data = {
     meta: {
       body: [
@@ -13,10 +15,11 @@ function CheckMessage({checkMessage}) {
       ],
       isExpand: false,
       dict: 'checkMessage',
-      cData: checkMessage
+      cData: checkData.content
     },
     module: '经营异常信息',
-    error: checkMessage.length === 0
+    isLoading: isLoading,
+    error: checkData.error
   };
   return (
     <div>
@@ -25,11 +28,4 @@ function CheckMessage({checkMessage}) {
   );
 }
 
-CheckMessage.propTypes = {
-  foo: PropTypes.string,
-};
-export default loadingComp({
-  mapDataToProps: props => ({
-    loading: props.isLoading,
-  })
-})(observer(CheckMessage));
+export default observer(CheckMessage);

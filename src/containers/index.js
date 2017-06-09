@@ -45,7 +45,7 @@ export OperationEval from './report/operationEval';
 export GrowthAbilityEval from './report/growthAbilityEval';
 export RiskTax from './report/riskTax';
 export RiskCourt from './report/riskCourt';
-export RiskMici from './report/riskMici';
+export RiskCheck from './report/riskCheck';
 export EntinvItem from './report/entinvItem';
 export FrPosAndInv from './report/frPosAndInv';
 export ManagePosAndInv from './report/managePosAndInv';
