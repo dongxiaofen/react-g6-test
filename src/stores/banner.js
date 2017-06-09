@@ -393,7 +393,21 @@ class BannerStore {
         });
       });
   }
-
+  closePdfModal = () => {
+    this.clearPdfConfigChecked();
+  };
+  openDownLoadPdf = () => {
+    modalStore.openCompModal({
+      width: 750,
+      isCustomize: true,
+      closeAction: this.closePdfModal,
+      loader: (cb) => {
+        require.ensure([], (require) => {
+          cb(require('components/companyHome/Banner/ReportAction/DownloadPdf'));
+        });
+      }
+    });
+  };
   // 设置Pdf弹窗第一层级
   @action.bound setPdfLevelOne(key, value, checked) {
     this.pdfDownloadConfig.levelOne[key].checked = checked;

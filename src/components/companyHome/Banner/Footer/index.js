@@ -37,7 +37,9 @@ function Footer({companyHomeStore, routing, bannerStore}) {
       }
       {
         repType === 'basicReport' || repType === 'report' || repType === 'loan' ?
-        <span className={styles.item}><i className={styles.download}></i>下载PDF</span>
+        <span className={styles.item} onClick={bannerStore.openDownLoadPdf}>
+          <i className={styles.download}></i>下载PDF
+        </span>
         : ''
       }
       {
