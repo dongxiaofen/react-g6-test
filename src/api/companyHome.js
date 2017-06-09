@@ -110,11 +110,22 @@ export const changeAnnouncement = ({ stockType, monitorId, reportId }) => {
   return axios.get(url);
 };
 
-// 刷新报告
-export const refreshHighOrDeep = (reportId) => {
+// 刷新基础报告
+export const updateBasicRep = (basicReportId) => {
+  return axios.put(`/api/basicReport/${basicReportId}`);
+};
+// 获取基础报告的刷新时间
+export const getBasicRepInfo = (basicReportId) => {
+  return axios.get(`/api/basicReport/${basicReportId}/info`);
+};
+// 刷新高级报告
+export const updateReport = (reportId) => {
   return axios.put(`/api/report/${reportId}`);
 };
-
+// 获取高级报告的刷新时间
+export const getReportInfo = (reportId) => {
+  return axios.get(`/api/report/${reportId}/info`);
+};
 // 创建高级报告或者深度报告
 export const createReport = (active, companyName) => {
   let url;

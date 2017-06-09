@@ -2,7 +2,7 @@ import React, {PropTypes} from 'react';
 import { observer, inject} from 'mobx-react';
 import styles from './index.less';
 
-function Footer({companyHomeStore, routing}) {
+function Footer({companyHomeStore, routing, bannerStore}) {
   const getReportType = ()=> {
     const route = routing.location.pathname.split('/')[2];
     if (/comprehenEval|profitEval|operationEval|growthAbilityEval/.test(route)) {
@@ -28,10 +28,10 @@ function Footer({companyHomeStore, routing}) {
       <span className={styles.line}>|</span>
       {
         repType === 'basicReport' || repType === 'report' ?
-        <span className={styles.item}>
+        <span className={styles.item} onClick={bannerStore.refreshModal}>
           <i className={styles.update}></i>
           刷新报告
-          <span className={styles.date}>（刷新日期：2016-02-01）</span>
+          <span className={styles.date}>（刷新日期：{bannerStore.reportDate}）</span>
         </span>
         : ''
       }
@@ -57,4 +57,4 @@ function Footer({companyHomeStore, routing}) {
 Footer.propTypes = {
   foo: PropTypes.string,
 };
-export default inject('companyHomeStore', 'routing')(observer(Footer));
+export default inject('companyHomeStore', 'routing', 'bannerStore')(observer(Footer));

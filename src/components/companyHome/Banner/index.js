@@ -21,23 +21,8 @@ export default class Banner extends Component {
     routing: PropTypes.object,
     bannerStore: PropTypes.object,
   };
-  // componentDidMount() {
-  //   const {companyName} = this.props.routing.location.query;
-  //   this.props.bannerStore.getReportStatus({companyName});
-  //   // this.props.bannerStore.getStockCode({ monitorId, reportId });
-  // }
-  bannerCountAndDate() {
-    const bannerInfoData = this.props.bannerStore.bannerInfoData;
-    return (
-      <div className={`clearfix ${styles.countAndDate}`}>
-        <div className={styles.date}>
-          更新日期：{bannerInfoData.lastModifiedTs}
-        </div>
-        <div className={styles.count}>
-          被查询次数：{bannerInfoData.searchedCount}
-        </div>
-      </div>
-    );
+  componentDidMount() {
+    this.props.bannerStore.getReportInfo();
   }
   render() {
     return (
@@ -49,7 +34,6 @@ export default class Banner extends Component {
           <div className={styles.action}>
             <ReportOper />
           </div>
-          {/* {this.bannerCountAndDate()}*/}
         </div>
         <Footer />
       </div>

@@ -115,7 +115,9 @@ class BannerStore {
   // @observable lastModifiedTs = '';
   // @observable collection = false;
   // @observable mainStatus = '';
-
+  // 时间
+  @observable reportDate = '';
+  @observable monitorDate = '';
   // 上市代码
   @observable stockCode = '';
 
@@ -209,6 +211,18 @@ class BannerStore {
   @action.bound extendContact(key) {
     this.contactExtended = this.contactExtended === key ? '' : key;
   }
+  refreshRepConfirm = () => {
+    this.refreshReport();
+  };
+  @action.bound refreshModal = () => {
+    modalStore.openCompModal({
+      title: '刷新报告',
+      width: 420,
+      isSingleBtn: true,
+      confirmAction: this.refreshRepConfirm,
+      loader: () => {}
+    });
+  };
   @action.bound createBasicReport(params) {
     companyHomeApi.createBasicReport({companyName: params.companyName})
     .then(action('createBasicReport', (resp)=>{
@@ -273,16 +287,29 @@ class BannerStore {
         // }
       });
   }
-
+  @action.bound getReportInfo() {
+    const {reportId, basicReportId} = companyHomeStore.reportInfo;
+    const getRepInfoHandle = reportId !== '' ? companyHomeApi.getReportInfo(reportId) : companyHomeApi.getBasicRepInfo(basicReportId);
+    getRepInfoHandle
+    .then(action('report info', (resp)=>{
+      this.reportDate = resp.data.lastModifiedTs;
+    }))
+    .catch((error)=>{
+      console.log('report info error', error);
+    });
+  }
   // 刷新报告
-  @action.bound refreshHighOrDeep(reportId) {
+  @action.bound refreshReport() {
     modalStore.confirmLoading = true;
-    companyHomeApi.refreshHighOrDeep(reportId)
+    const {reportId, basicReportId} = companyHomeStore.reportInfo;
+    const refreshRepHandle = reportId !== '' ? companyHomeApi.updateReport(reportId) : companyHomeApi.updateBasicRep(basicReportId);
+    refreshRepHandle
       .then(action('refresh high or deep', (resp) => {
         console.log(resp.data);
         modalStore.confirmLoading = false;
         modalStore.closeAction();
         messageStore.openMessage({ content: '刷新成功', callBack: this.windowReload });
+        this.getReportInfo();
       }))
       .catch((err) => {
         console.log(err.response);
@@ -290,6 +317,7 @@ class BannerStore {
           modalStore.confirmLoading = false;
           modalStore.closeAction();
           if (err.response.data.errorCode === 403218) {
+            this.getReportInfo();
             messageStore.openMessage({ type: 'info', content: err.response.data.message });
           } else {
             messageStore.openMessage({ type: 'warning', content: err.response.data.message });
