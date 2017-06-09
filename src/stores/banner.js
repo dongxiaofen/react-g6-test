@@ -64,7 +64,16 @@ const bannerDataTest = {
           riskType: '被银行起诉',
         }
       ],
-      'historyName': []
+      'historyName': [
+        {
+          name: '重庆誉存大数据科技有限公司',
+          time: '2016-11-02'
+        },
+        {
+          name: '杭州誉存科技有限公司',
+          time: '2016-11-02'
+        },
+      ]
     },
     'industryList': [
       8

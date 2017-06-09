@@ -1,10 +1,12 @@
 import React, { Component, PropTypes } from 'react';
 import { observer, inject } from 'mobx-react';
 import styles from './index.less';
-import { Container, Row, Col } from 'components/common/layout';
+// import { Container, Row, Col } from 'components/common/layout';
 import CompanyInfo from './CompanyInfo';
 import loadingComp from 'components/hoc/LoadingComp';
 // import ReportAction from './ReportAction';
+import ReportOper from './ReportOper';
+import Footer from './Footer';
 
 @inject('bannerStore', 'routing')
 @loadingComp({
@@ -39,23 +41,18 @@ export default class Banner extends Component {
   }
   render() {
     return (
-      <Container>
-        <Row>
-          <Col>
-            <div className={`clearfix`}>
-              <div className={`clearfix ${styles.bannerContent}`}>
-                <div className={styles.companyInfo}>
-                  <CompanyInfo />
-                </div>
-                <div className={styles.action}>
-                  {/* <ReportAction bannerStore={this.props.bannerStore} />*/}
-                </div>
-                {/* {this.bannerCountAndDate()}*/}
-              </div>
-            </div>
-          </Col>
-        </Row>
-      </Container>
+      <div className={`clearfix`}>
+        <div className={`clearfix ${styles.bannerContent}`}>
+          <div className={styles.companyInfo}>
+            <CompanyInfo />
+          </div>
+          <div className={styles.action}>
+            <ReportOper />
+          </div>
+          {/* {this.bannerCountAndDate()}*/}
+        </div>
+        <Footer />
+      </div>
     );
   }
 }

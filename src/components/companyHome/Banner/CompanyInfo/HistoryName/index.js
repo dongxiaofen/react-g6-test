@@ -3,7 +3,8 @@ import { observer } from 'mobx-react';
 import styles from './index.less';
 import Popover from 'components/lib/popover';
 
-function HistoryName({hisNameVis, historyName, closeHisNamePopoverAlias, openHisNamePopoverAlias}) {
+function HistoryName({hisNameVis, bannerInfoData, closeHisNamePopoverAlias, openHisNamePopoverAlias}) {
+  const historyName = bannerInfoData.bannerInfo.bannerInfo.historyName;
   if ( historyName && historyName.length > 0) {
     const createHisNameItem = () => {
       const output = [];
