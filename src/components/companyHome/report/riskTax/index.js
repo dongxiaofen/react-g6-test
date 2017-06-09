@@ -1,8 +1,11 @@
-import React, {PropTypes} from 'react';
+import React from 'react';
 import { observer } from 'mobx-react';
-import {CardTable} from 'components/common/report';
+import { CardTable, ModuleTitle } from 'components/common/report';
 
-function TaxInfo({taxList}) {
+function TaxInfo({riskTaxStore}) {
+  const taxData = riskTaxStore.taxData;
+  const isLoading = taxData.content === undefined ? true : false;
+  const isError = taxData.error;
   const regExecMoney = value => {
     let _value;
     if (isNaN(Number(value))) {
@@ -33,19 +36,18 @@ function TaxInfo({taxList}) {
       ],
       isExpand: false,
       dict: 'taxPublicInfo',
-      cData: taxList
+      cData: taxData.content
     },
-    module: '纳税信用',
-    error: taxList.length === 0
+    isLoading: isLoading,
+    module: '纳税公告',
+    error: isError
   };
   return (
     <div>
+      <ModuleTitle module="纳税公告" />
       <CardTable {...data} />
     </div>
   );
 }
 
-TaxInfo.propTypes = {
-  foo: PropTypes.string,
-};
 export default observer(TaxInfo);
