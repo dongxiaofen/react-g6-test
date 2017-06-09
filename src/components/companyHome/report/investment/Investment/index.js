@@ -3,7 +3,11 @@ import { observer } from 'mobx-react';
 import { ModuleTitle, CardTable } from 'components/common/report';
 // import styles from './index.less';
 
-function Investment({ frinvList, isLoading }) {
+function Investment({investmentStore}) {
+  const frData = investmentStore.frinvList;
+  const count = frData.content ? frData.content.length : 0;
+  const isLoading = frData.content === undefined ? true : false;
+  const isError = frData.error;
   const data = {
     meta: {
       title: {
@@ -21,15 +25,15 @@ function Investment({ frinvList, isLoading }) {
       ],
       isExpand: false,
       dict: 'frinvList',
-      cData: frinvList
+      cData: frData.content
     },
     isLoading: isLoading,
     module: '法人对外投资',
-    error: frinvList && frinvList.length === 0
+    error: isError
   };
   return (
     <div>
-      <ModuleTitle module="法人对外投资" count={frinvList.length} />
+      <ModuleTitle module="法人对外投资" count={count} />
       <CardTable {...data} />
     </div>
   );

@@ -3,13 +3,16 @@ import { observer } from 'mobx-react';
 import { ModuleTitle, CardTable } from 'components/common/report';
 // import styles from './index.less';
 
-function Enterprise({ entinvItemList, isLoading }) {
+function Enterprise({investmentStore}) {
+  const evtData = investmentStore.entData;
+  const count = evtData.content ? evtData.content.length : 0;
+  const isLoading = evtData.content === undefined ? true : false;
+  const isError = evtData.error;
   const data = {
     meta: {
       title: {
         main: 'entName',
         sub: ['entStatus', 'entType'],
-        // handleClick: handleClick
       },
       body: [
         { 'key': 'name', 'width': '4' },
@@ -21,15 +24,15 @@ function Enterprise({ entinvItemList, isLoading }) {
         { 'key': 'esDate', 'width': '4', 'hide': true },
       ],
       dict: 'entinvItemLists',
-      cData: entinvItemList
+      cData: evtData.content
     },
     isLoading: isLoading,
     module: '企业对外投资',
-    error: entinvItemList.length === 0
+    error: isError
   };
   return (
     <div>
-      <ModuleTitle module="企业对外投资" count={entinvItemList.length} />
+      <ModuleTitle module="企业对外投资" count={count} />
       <CardTable {...data} />
     </div>
   );

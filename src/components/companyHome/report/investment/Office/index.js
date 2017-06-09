@@ -3,7 +3,11 @@ import { observer } from 'mobx-react';
 import { ModuleTitle, CardTable } from 'components/common/report';
 // import styles from './index.less';
 
-function Office({ frPositionList, isLoading }) {
+function Office({investmentStore}) {
+  const frData = investmentStore.frPositionList;
+  const count = frData.content ? frData.content.length : 0;
+  const isLoading = frData.content === undefined ? true : false;
+  const isError = frData.error;
   const data = {
     meta: {
       title: {
@@ -21,15 +25,15 @@ function Office({ frPositionList, isLoading }) {
       ],
       isExpand: false,
       dict: 'frPositionList',
-      cData: frPositionList
+      cData: frData.content
     },
     isLoading: isLoading,
     module: '法人对外任职',
-    error: frPositionList.length === 0
+    error: isError
   };
   return (
     <div>
-      <ModuleTitle module="法人对外任职" count={frPositionList.length} />
+      <ModuleTitle module="法人对外任职" count={count} />
       <CardTable {...data} />
     </div>
   );

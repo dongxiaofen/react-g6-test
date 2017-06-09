@@ -43,7 +43,6 @@ import {
     TaxCheck,
     AssetTransaction,
     InLoanAnalysis,
-    InvestAndOffice,
     ComprehenEval,
     ProfitEval,
     OperationEval,
@@ -105,7 +104,6 @@ export default () => {
         <Route path="forceNetwork" component={ ForceNetwork } onEnter={requireAuth} />
         <Route path="nowRecord" component={ NowRecord } onEnter={requireAuth} />
         <Route path="tax" component={ Tax } onEnter={requireAuth} />
-        <Route path="investAndOffice" component={ InvestAndOffice } />
         <Route path="riskTax" component={ RiskTax } />
         <Route path="riskCourt" component={ RiskCourt } />
         <Route path="riskMici" component={ RiskMici } />
