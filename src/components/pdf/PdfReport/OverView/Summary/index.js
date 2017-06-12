@@ -2,7 +2,7 @@ import React, {PropTypes} from 'react';
 import { observer } from 'mobx-react';
 import styles from './index.less';
 
-function Summary({mapKey, valueData, unit, title}) {
+function Summary({mapKey, valueData, unit, title, total}) {
   const objParse = (data) => {
     let str;
     if (mapKey && mapKey.action === 'total') {
@@ -32,7 +32,7 @@ function Summary({mapKey, valueData, unit, title}) {
   };
   return (
     <div className={styles.part}>
-      <p className={styles.title} key="summary-title">{title}</p>
+      <p className={styles.title} key="summary-title">{title}{total ? `（${total}）` : ''}</p>
       <div className={styles.info} key="summary-value">
         {
           valueData && valueData.type === 'none' ? valueData.data : <div>

@@ -2,13 +2,12 @@ import React, {PropTypes} from 'react';
 import { observer } from 'mobx-react';
 import styles from './index.less';
 import PdfNotFound from 'components/common/pdf/PdfNotFound';
-import SecondTitle from 'components/common/pdf/SecondTitle';
 
 function NewsAnalyse({moduleData}) {
   if (!moduleData) {
     return (
       <div>
-        <SecondTitle module="新闻分析" />
+        <div className={styles.fill}></div>
         <PdfNotFound />
       </div>
     );
@@ -36,7 +35,7 @@ function NewsAnalyse({moduleData}) {
   };
   return (
     <div>
-      <SecondTitle module="新闻分析" />
+      <div className={styles.fill}></div>
       {createNewsAnalyse(moduleData)}
     </div>
   );
