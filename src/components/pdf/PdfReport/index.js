@@ -13,10 +13,12 @@ import Team from './Team';
 import Tax from './Tax';
 import styles from './index.less';
 
-function PdfReport({pdfStore}) {
+function PdfReport({}) {
   const judgeIsModuleExist = (module) => {
-    const pdfModule = pdfStore.pdfTypesKey;
-    return (pdfModule && pdfModule.includes(module));
+    console.log(module);
+    return true;
+    // const pdfModule = pdfStore.pdfTypesKey;
+    // return (pdfModule && pdfModule.includes(module));
   };
   return (
     <Container>

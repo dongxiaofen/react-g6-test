@@ -39,7 +39,6 @@ function LeftBar({ leftBarStore, bannerStore, routing, companyHomeStore}) {
   };
   const isLock = (itemObj, type) => {
     const reportInfo = companyHomeStore.reportInfo;
-    console.log(reportInfo.dimensions, itemObj.moduleKey, reportInfo.dimensions.includes(itemObj.moduleKey));
     if (itemObj.lock) {
       if (type === 'report' && reportInfo.reportId === '') {
         return false;
@@ -106,6 +105,13 @@ function LeftBar({ leftBarStore, bannerStore, routing, companyHomeStore}) {
   };
   const companyName = routing.location.query.companyName;
   const reportTitle = companyHomeStore.reportInfo.reportId !== '' ? '贷前高级报告' : '贷前基础报告';
+  // 现勘记录路由
+  const changeNowRecord = () => {
+    routing.push({
+      pathname: `/companyHome/nowRecord`,
+      query: routing.location.query,
+    });
+  };
   return (
     <div>
       <div className={styles.wrap}>
@@ -151,7 +157,9 @@ function LeftBar({ leftBarStore, bannerStore, routing, companyHomeStore}) {
         </div>
         {geneBar('monitor')}
       </div>
-      <div className={`${styles.wrap} ${styles.recordWrap}`}>
+      <div
+        onClick={changeNowRecord}
+        className={`${styles.wrap} ${styles.recordWrap}`}>
         <i className="fa fa-pencil-square-o" aria-hidden="true"></i>
         <span className={styles.record}>调查记录</span>
       </div>

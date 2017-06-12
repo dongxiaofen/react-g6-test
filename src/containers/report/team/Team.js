@@ -14,7 +14,7 @@ import TrendAnalysis from 'components/companyHome/report/team/TrendAnalysis';
 import SiteAndJob from 'components/companyHome/report/team/SiteAndJob';
 
 @inject('teamStore', 'routing')
-@batchReport('team')
+@batchReport('teamStore')
 @observer
 export default class Team extends Component {
   static propTypes = {

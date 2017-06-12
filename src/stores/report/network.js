@@ -104,7 +104,7 @@ class NetworkStore {
   }
   @action.bound getReportModule(params) {
     this.isMount = true;
-    companyHomeApi.getReportModule(params)
+    companyHomeApi.getReportModule('network', params)
       .then(action('get currentNetwork data', (resp) => {
         this.isLoading = false;
         let canRenderSvg = true;

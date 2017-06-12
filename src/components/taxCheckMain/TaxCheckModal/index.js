@@ -97,6 +97,16 @@ function TaxCheckModal({taxCheckStore}) {
   };
   return (
     <div className={styles.wrap}>
+      <div className={styles.selectGroup}>
+        <span className={styles.yearLabel}>企业全称</span>
+        <Input
+          className={styles.componayInput}
+          inputType="singleline"
+          onBlur={checkNumber.bind(null)}
+          onChange={inputChange.bind(null)}
+          value=""
+          placeholder="请输入企业全称，如“小米科技有限公司”" />
+      </div>
       {generateSelect()}
       {taxCheckStore.selectConf.length < 6 && <button className={styles.addBtn} onClick={addSelectItem}>添加核查项</button>}
     </div>

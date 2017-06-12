@@ -6,43 +6,15 @@ import Popover from 'antd/lib/popover';
 
 
 function TableBody({dateType, data, hasFlag, routing, searchCompanyStore, owner }) {
-  // const showRigthDate = (latestDt, alertCount, score) => {
-  //   if (dateType === 'singeLine') {
-  //     return (<div className={styles.date}>{latestDt}</div>);
-  //   }else if (dateType === 'comprehensive' || dateType === 'warning') {
-  //     return (
-  //       <div className={`${styles.has_warning_counts} ${dateType === 'comprehensive' ? styles.comprehensive : styles.warning_count}`}>
-  //         <div className={styles.discript}>
-  //                 <span className={styles.count_text}>{dateType === 'comprehensive' ? '综合分' : '预警次数'}</span>
-  //                 <span className={styles.count}>{dateType === 'comprehensive' ? score : alertCount}</span>
-  //         </div>
-  //         <div className={styles.date_time}>{latestDt}</div>
-  //       </div>
-  //     );
-  //   } else if (dateType === 'warningDate') {
-  //     return (
-  //     <span className={`${styles.has_warning_counts} ${styles.warning_date} ${styles.discript}`}>
-  //       <span className={styles.count_text}>预警时间</span>
-  //       <span className={styles.date_time_w}>{latestDt}</span>
-  //     </span>
-  //     );
-  //   }
-  //   return (
-  //     <span className={`${styles.has_warning_counts} ${styles.warning_date} ${styles.discript}`}>
-  //       <span className={styles.count_text}>预警时间</span>
-  //       <span className={styles.date_time_w}>{latestDt}</span>
-  //     </span>
-  //   );
-  // };
   const sliceString = (str) => {
     if (str.length > 20) {
       return (`${str.slice(0, 19)}...`);
     }
     return str;
   };
-  const jumpPage = (companyName, monitorId) => {
+  const jumpPage = (companyName) => {
     if (owner && owner === 'own') {
-      routing.push(`/companyHome/alertAnalysis?companyType=MAIN&monitorId=${monitorId}`);
+      routing.push(`/companyHome/alertAnalysis?companyName=${companyName}`);
     } else {
       searchCompanyStore.searchTabClick('COMPANY_NAME');
       searchCompanyStore.searchChange({target: {value: companyName}});
@@ -60,13 +32,23 @@ function TableBody({dateType, data, hasFlag, routing, searchCompanyStore, owner 
     }
     return name;
   };
+  const iconShow = (index) => {
+    if (dateType === 'warningDate' && index === 0) {
+      return (<div className={`${styles.icon_new}`}></div>);
+    } else if (index === 0) {
+      return (<div className={`${styles.icon_number} ${styles.red_1}`}></div>);
+    } else if (index !== 0 && index < 3) {
+      return (<div className={`${styles.icon_number} ${styles[`nomal_${index + 1}`]}`}></div>);
+    }
+    return null;
+  };
   const createList = () => {
     let listItem = [];
     data.map((itemData, index) => {
       listItem = [...listItem,
         <div key={`${index}list_items`} className={`clearfix ${styles.singe_item}`}>
-            <div className={`${styles.right_discription}`}>
-              {dateType === 'warningDate' && index === 0 ? <span className={styles.rank_lable_red}>NEW</span> : <span className={index === 0 ? styles.rank_lable_index1 : styles.rank_lable}>{index + 1}</span>}
+            <div className={`clearfix ${styles.right_discription}`}>
+              {iconShow(index)}
               <a onClick={jumpPage.bind(this, itemData.companyName, itemData.productId)} className={styles.companyName}>{spliceCompanyName(itemData.companyName)}</a>
               { hasFlag && itemData.productType === 'MONITOR' ? <span className={`${styles.flag} ${styles.monitor}`}>监控</span> : ''}
               { hasFlag && itemData.productType === 'DEEP_MONITOR' ? <span className={`${styles.flag} ${styles.monitor}`}>深度</span> : ''}

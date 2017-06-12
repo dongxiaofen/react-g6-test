@@ -8,8 +8,9 @@ import PdfTitle from 'components/common/pdf/PdfTitle';
 function News({pdfStore}) {
   return (
     <div>
-      <PdfTitle module="新闻信息" subModule="新闻舆情" />
+      <PdfTitle module="新闻信息" subModule="新闻分析" />
       <NewsAnalyse moduleData={pathval.getPathValue(pdfStore, 'internet.analysis')} />
+      <PdfTitle module="新闻信息" subModule="新闻内容" />
       <NewsContent moduleData={pathval.getPathValue(pdfStore, 'internet.info.data.content')} />
     </div>
   );

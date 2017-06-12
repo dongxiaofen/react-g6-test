@@ -14,15 +14,7 @@ function CheckItem({itemData, routing, relPerCheckStore}) {
   const matchStr = match ? 'match' : 'noMatch';
   const cssStr = `${matchStr}_${showStr}`;
   const viewDetail = () => {
-    if (match) {
-      if (monitorId) {
-        window.open(`/personReport?monitorId=${monitorId}&personCheckId=${personCheckId}`);
-      }else if (reportId) {
-        window.open(`/personReport?reportId=${reportId}&personCheckId=${personCheckId}`);
-      }else if (analysisReportId) {
-        window.open(`/personReport?analysisReportId=${analysisReportId}&personCheckId=${personCheckId}`);
-      }
-    }
+    window.open(`/personReport?personCheckId=${personCheckId}`);
   };
   const showIdCard = (evt) => {
     evt.stopPropagation();

@@ -10,7 +10,20 @@ function Recharge({accountSettingStore}) {
     const monitorNum = item.monitorNum ? `监控报告 ${item.monitorNum} 个` : '';
     const personCheckNum = item.personCheckNum ? `个人核查 ${item.personCheckNum} 个` : '';
     const taxCheckNum = item.taxCheckNum ? `税务核查指标 ${item.taxCheckNum} 个` : '';
-    return [point, reportNum, monitorNum, personCheckNum, taxCheckNum].filter(val => val !== '').join('; ');
+    const analysisGrowingNum = item.analysisGrowingNum ? `成长能力分析个数${item.analysisGrowingNum}` : '';
+    const analysisOperationNum = item.analysisOperationNum ? `营运能力分析个数${item.analysisOperationNum}` : '';
+    const analysisProfitNum = item.analysisProfitNum ? `盈利能力分析个数${item.analysisProfitNum}` : '';
+    const basicReportNum = item.basicReportNum ? `基础报告个数${item.basicReportNum}` : '';
+    return [
+      point,
+      reportNum,
+      monitorNum,
+      personCheckNum,
+      taxCheckNum,
+      analysisGrowingNum,
+      analysisOperationNum,
+      analysisProfitNum,
+      basicReportNum].filter(val => val !== '').join('; ');
   };
   const head = [
     {name: '充值编号', key: 'seqNum', width: '25%'},

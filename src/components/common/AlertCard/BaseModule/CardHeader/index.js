@@ -11,7 +11,10 @@ function CardHeader({data, hasSecondType, cardType, modifyDate, module}) {
     return data.typeName;
   };
   const typeName = createTypeName();
-  const companyName = itemData.relatedMonitorCompanyName || itemData.mainMonitorCompanyName;
+  let companyName = itemData.relatedMonitorCompanyName || itemData.mainMonitorCompanyName;
+  if (module === 'timeAxis') {
+    companyName = itemData.companyName;
+  }
   if (cardType === 'modal') {
     return (
       <div>
