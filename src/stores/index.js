@@ -34,7 +34,7 @@ export alertAnalysisStore from './report/alertAnalysis';
 export analysisSrore from './report/analysis';
 export taxStore from './report/tax';
 export monitorAxisStore from './report/monitorAxis';
-export alertMonitorStore from './report/alertMonitor';
+export monitorAlertStore from './report/monitorAlert';
 export nowRecordStore from './report/nowRecord';
 export pdfStore from './pdf';
 // 报告相关store-end

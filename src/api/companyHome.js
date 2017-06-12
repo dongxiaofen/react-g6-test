@@ -192,11 +192,11 @@ export const getAlertNewsMonitor = (companyId, params) => {
 export const getAlertJudgeDocMonitor = (companyId, params) => {
   return axios.get(`/api/monitor/${companyId}/risk/judgeDoc`, { params });
 };
-export const getAlertNewsReport = (params) => {
-  return axios.get('/api/analysisReport/internet/detail', { params });
+export const getAlertNewsReport = (companyId, params) => {
+  return axios.get(`/api/report/${companyId}/internet/detail`, { params });
 };
-export const getAlertJudgeDocReport = (params) => {
-  return axios.get('/api/analysisReport/risk/judgeDoc', { params });
+export const getAlertJudgeDocReport = (companyId, params) => {
+  return axios.get(`/api/report/${companyId}/risk/judgeDoc`, { params });
 };
 // 判断企业报告类型
 export const judgeReportType = (companyName) => {
