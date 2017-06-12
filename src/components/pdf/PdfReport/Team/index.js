@@ -21,13 +21,15 @@ function Team({pdfStore, judgeIsModuleExist}) {
         judgeIsModuleExist('TEAM_RECRUITMENT_RESUME')
           ?
           <div>
-            <PdfTitle id="employeeAnchor" module="团队信息" subModule="招聘/员工背景" />
+            <PdfTitle id="employeeAnchor" module="团队信息" subModule="招聘信息" />
             <EmployeeTop pdfStore={pdfStore} />
             <EmployeeMessage moduleData={pathval.getPathValue(pdfStore, 'team.recruitAndResumeResponse.recruitmentStatisticResponse.categoryInfo')} />
             <EmployeeDegreeInfo moduleData={pathval.getPathValue(pdfStore, 'team.recruitAndResumeResponse.recruitmentStatisticResponse.degreeInfo')} />
             <EmployeeSalaryDis moduleData={pathval.getPathValue(pdfStore, 'team.recruitAndResumeResponse.recruitmentStatisticResponse.salaryDis')} />
+            <PdfTitle id="employeeAnchor" module="团队信息" subModule="员工背景" />
             <EmployeeSchoolInfo moduleData={pathval.getPathValue(pdfStore, 'team.recruitAndResumeResponse.resumeStatisticResponse.schoolInfo')} />
             <EmployeeCategoryTypeInfo moduleData={pathval.getPathValue(pdfStore, 'team.recruitAndResumeResponse.resumeStatisticResponse.majorInfo')} />
+            <PdfTitle id="employeeAnchor" module="团队信息" subModule="近期招聘岗位" />
             <EmployeeList moduleData={pathval.getPathValue(pdfStore, 'team.recruitAndResumeResponse.recruitmentInfo.data')} />
           </div>
           :

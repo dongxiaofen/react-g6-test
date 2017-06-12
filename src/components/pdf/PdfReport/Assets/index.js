@@ -12,17 +12,17 @@ function Assets({pdfStore, judgeIsModuleExist}) {
       <div>
         {judgeIsModuleExist('OPERATION_TRADEMARK') ?
         <div>
-          <PdfTitle module="经营信息" />
+          <PdfTitle module="经营信息" subModule="商标" />
           <TradeMark moduleData={pathval.getPathValue(pdfStore, 'trademark')} />
         </div> : ''}
         {judgeIsModuleExist('OPERATION_PATENT') ?
         <div>
-          <PdfTitle module="经营信息" />
+          <PdfTitle module="经营信息" subModule="专利" />
           <Patent moduleData={pathval.getPathValue(pdfStore, 'patent')} />
         </div> : ''}
         {judgeIsModuleExist('OPERATION_BIDDING') ?
         <div>
-          <PdfTitle module="经营信息" />
+          <PdfTitle module="经营信息" subModule="招投标" />
           <Bidding moduleData={pathval.getPathValue(pdfStore, 'bidding')} />
         </div> : ''}
       </div>

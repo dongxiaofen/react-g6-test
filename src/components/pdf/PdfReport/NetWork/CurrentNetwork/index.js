@@ -3,7 +3,6 @@ import { observer } from 'mobx-react';
 import pathval from 'pathval';
 import PdfTable from 'components/common/pdf/PdfTable';
 import PdfNotFound from 'components/common/pdf/PdfNotFound';
-import SecondTitle from 'components/common/pdf/SecondTitle';
 
 function CurrentNetwork({pdfStore}) {
   const currentNetwork = pathval.getPathValue(pdfStore, 'network.currentNetwork');
@@ -11,7 +10,7 @@ function CurrentNetwork({pdfStore}) {
   if (!moduleData || moduleData.length === 0) {
     return (
       <div>
-        <SecondTitle module="关联图信息" />
+        <div style={{height: '30px'}}></div>
         <PdfNotFound />
       </div>
     );
@@ -106,7 +105,7 @@ function CurrentNetwork({pdfStore}) {
   };
   return (
     <div>
-      <SecondTitle module="关联图信息" />
+      <div style={{height: '30px'}}></div>
       <PdfTable {...data} />
     </div>
   );

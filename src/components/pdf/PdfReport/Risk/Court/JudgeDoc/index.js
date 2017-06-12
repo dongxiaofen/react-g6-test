@@ -1,7 +1,6 @@
 import React, {PropTypes} from 'react';
 import { observer } from 'mobx-react';
 import PdfNotFound from 'components/common/pdf/PdfNotFound';
-import SecondTitle from 'components/common/pdf/SecondTitle';
 import styles from './index.less';
 import KeyValue from 'components/common/pdf/KeyValue';
 import config from 'dict/reportModule';
@@ -10,7 +9,7 @@ function JudgeDoc({moduleData}) {
   if (!moduleData || moduleData.length === 0) {
     return (
       <div>
-        <SecondTitle module="判决文书" />
+        <div style={{height: '30px'}}></div>
         <PdfNotFound />
       </div>
     );
@@ -83,7 +82,7 @@ function JudgeDoc({moduleData}) {
   };
   return (
     <div>
-      <SecondTitle module="判决文书" />
+      <div style={{height: '30px'}}></div>
       <div>
         {createDocList(data)}
       </div>

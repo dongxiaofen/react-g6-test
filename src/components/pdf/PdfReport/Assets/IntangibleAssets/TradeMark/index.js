@@ -4,7 +4,6 @@ import noImg from 'imgs/noData/noimg.jpg';
 import styles from './index.less';
 import PdfNotFound from 'components/common/pdf/PdfNotFound';
 import PdfSimpleKey from 'components/common/pdf/PdfSimpleKey';
-import SecondTitle from 'components/common/pdf/SecondTitle';
 
 
 function TradeMark({moduleData}) {
@@ -18,7 +17,7 @@ function TradeMark({moduleData}) {
   if (!moduleData || moduleData.length === 0) {
     return (
       <div>
-        <SecondTitle module="商标"/>
+        <div style={{height: '30px'}}></div>
         <PdfNotFound />
       </div>
     );
@@ -38,7 +37,7 @@ function TradeMark({moduleData}) {
   };
   return (
     <div>
-      <SecondTitle module="商标" />
+      <div style={{height: '30px'}}></div>
       <PdfSimpleKey {...data} />
     </div>
   );

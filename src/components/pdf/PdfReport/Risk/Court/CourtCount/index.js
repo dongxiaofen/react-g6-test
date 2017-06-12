@@ -2,13 +2,12 @@ import React, {PropTypes} from 'react';
 import { observer } from 'mobx-react';
 import PdfNotFound from 'components/common/pdf/PdfNotFound';
 import PdfTable from 'components/common/pdf/PdfTable';
-import SecondTitle from 'components/common/pdf/SecondTitle';
 
 function CourtCount({moduleData}) {
   if (!moduleData) {
     return (
       <div>
-        <SecondTitle module="法务统计表" />
+        <div style={{height: '30px'}}></div>
         <PdfNotFound />
       </div>
     );
@@ -36,7 +35,7 @@ function CourtCount({moduleData}) {
   };
   return (
     <div>
-      <SecondTitle module="法务统计表" />
+      <div style={{height: '30px'}}></div>
       <PdfTable {...data} />
     </div>
   );
