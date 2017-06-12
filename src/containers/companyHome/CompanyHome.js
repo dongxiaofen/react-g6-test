@@ -89,7 +89,8 @@ export default class CompanyHome extends Component {
       'stockStore',
       'nowRecordStore',
       'taxStore',
-      'taxCheckStore'
+      'taxCheckStore',
+      'companyHomeStore'
     ].map((key)=>{
       if (this.props[key].resetStore) {
         this.props[key].resetStore();

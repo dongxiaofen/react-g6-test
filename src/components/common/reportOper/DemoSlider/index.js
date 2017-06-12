@@ -2,7 +2,7 @@ import React, {PropTypes} from 'react';
 import { observer, inject} from 'mobx-react';
 import styles from './index.less';
 import { Carousel } from 'antd';
-function DemoSlider({imgs, companyHomeStore}) {
+function DemoSlider({imgs}) {
   const createImgs = ()=> {
     const output = [];
     imgs.forEach((img, idx)=>{
@@ -30,13 +30,10 @@ function DemoSlider({imgs, companyHomeStore}) {
   //   });
   //   return output;
   // };
-  const beforeChangeHandle = (from, to)=>{
-    companyHomeStore.updateValue('loanDemoAct', to);
-  };
   return (
     <div className={styles.demoSlider}>
       <div className={styles.carousel}>
-        <Carousel autoplay ref="demoSlider" beforeChange={beforeChangeHandle} dotsClass={styles.dotNavs}>
+        <Carousel autoplay ref="demoSlider" dotsClass={styles.dotNavs}>
           {createImgs()}
         </Carousel>
       </div>

@@ -33,7 +33,10 @@ class BannerStore {
   // @observable mainStatus = '';
   // 时间
   @observable reportDate = '';
-  @observable monitorDate = '';
+  @observable monitorRepInfo = {
+    monitorStatus: '',
+    lastModifiedTs: '',
+  };
   // 上市代码
   @observable stockCode = '';
 
@@ -227,6 +230,16 @@ class BannerStore {
     getRepInfoHandle
     .then(action('report info', (resp)=>{
       this.reportDate = resp.data.lastModifiedTs;
+    }))
+    .catch((error)=>{
+      console.log('report info error', error);
+    });
+  }
+  @action.bound getMonitorRepInfo() {
+    const { monitorId } = companyHomeStore.reportInfo;
+    companyHomeApi.getMonitorInfo(monitorId)
+    .then(action('report info', (resp)=>{
+      this.monitorRepInfo = resp.data;
     }))
     .catch((error)=>{
       console.log('report info error', error);

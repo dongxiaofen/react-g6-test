@@ -128,6 +128,9 @@ export const updateReport = (reportId) => {
 export const getReportInfo = (reportId) => {
   return axios.get(`/api/report/${reportId}/info`);
 };
+export const getMonitorInfo = (monitorId) => {
+  return axios.get(`/api/monitor/${monitorId}/info`);
+};
 // 创建高级报告或者深度报告
 export const createReport = (active, companyName) => {
   let url;

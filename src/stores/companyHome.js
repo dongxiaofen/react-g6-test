@@ -20,8 +20,6 @@ class CompanyHomeStore {
     { label: '营运能力分析', value: 'OPERATION', checked: true},
     { label: '发展能力分析', value: 'GROWING', checked: true},
   ];
-  @observable loanDemoAct = 0;
-  @observable monitorDemoAct = 0;
   @observable monitorTime = 1;
   @observable loanLoading = false;
   @computed get monitorTimeObj() {
@@ -202,9 +200,25 @@ class CompanyHomeStore {
     });
   }
   @action.bound updateValue(keyPath, value) {
-    console.log(keyPath, value);
     pathval.setPathValue(this, keyPath, value);
   }
-
+  @action.bound resetStore() {
+    this.reportInfo = {
+      analysisReportId: '',
+      basicReportId: '',
+      reportId: '',
+      monitorId: '',
+      dimensions: [],
+      monitorStatus: '',
+    };
+    this.loanOption = [
+      { label: '多维综合评价', value: 'SCORE', checked: true},
+      { label: '盈利能力分析', value: 'PROFIT', checked: true},
+      { label: '营运能力分析', value: 'OPERATION', checked: true},
+      { label: '发展能力分析', value: 'GROWING', checked: true},
+    ];
+    this.monitorTime = 1;
+    this.loanLoading = false;
+  }
 }
 export default new CompanyHomeStore();

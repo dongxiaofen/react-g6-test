@@ -13,6 +13,7 @@ export default class Banner extends Component {
     const {companyName} = this.props.routing.location.query;
     this.props.bannerStore.getBannerInfo({companyName});
     this.props.bannerStore.getReportInfo();
+    this.props.bannerStore.getMonitorRepInfo();
   }
   render() {
     return (
