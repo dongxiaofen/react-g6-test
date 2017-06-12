@@ -1,10 +1,10 @@
 import { observable, action, computed } from 'mobx';
-import detailModalStore from './detailModal';
+import detailModalStore from '../detailModal';
 import pathval from 'pathval';
 import axios from 'axios';
 import { companyHomeApi } from 'api';
-import uiStore from './ui';
-import messageStore from './message';
+import uiStore from '../ui';
+import messageStore from '../message';
 const CancelToken = axios.CancelToken;
 class AlertAnalysisStore {
   constructor() {

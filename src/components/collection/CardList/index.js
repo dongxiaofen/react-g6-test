@@ -22,8 +22,8 @@ function CardList({ collectionStore, uiStore }) {
     browserHistory.push(url);
   };
 
-  const cancelCollection = (id, productType) => {
-    collectionStore.cancelCollection(id, productType);
+  const cancelCollection = (companyName) => {
+    collectionStore.cancelCollection(companyName);
   };
 
   const category = (productType) => {
@@ -61,7 +61,7 @@ function CardList({ collectionStore, uiStore }) {
             </div>
           </div>
           <div className={styles.cancelBtn}
-            onClick={cancelCollection.bind(null, id, productType)}>
+            onClick={cancelCollection.bind(item.companyName)}>
             取消收藏
           </div>
           <div className={`clearfix ${styles.lastModifiedTs}`}>

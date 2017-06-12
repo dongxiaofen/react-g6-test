@@ -163,15 +163,8 @@ export const pauseOrRestoreMonitor = (monitorId, status) => {
 };
 
 // 添加/删除收藏
-export const addOrCancelCollection = ({ reportId, monitorId, params }) => {
-  let url;
-  if (reportId) {
-    url = `/api/report/${reportId}/collection`;
-  }
-  if (monitorId) {
-    url = `/api/monitor/${monitorId}/collection`;
-  }
-  return axios.put(url, params);
+export const addOrCancelCollection = ( params) => {
+  return axios.put('/api/collection', params);
 };
 
 // 获取核查人的列表
@@ -271,4 +264,20 @@ export const getSixStar = (id, source) => {
 // 关联图,获取个人信息
 export const getPersonNodeInfo = (monitorId, params) => {
   return axios.get(`/api/monitor/${monitorId}/expendNetwork/personInfo`, {params});
+};
+// 获取营运能力信息
+export const getOperationDataList = (analysisReportId) => {
+  return axios.get(`/api/analysisReport/${analysisReportId}/operation`);
+};
+// 获取营收能力信息
+export const getProfitEvalList = (analysisReportId) => {
+  return axios.get(`/api/analysisReport/${analysisReportId}/profit`);
+};
+// 获取成长能力能力信息
+export const getUpDataList = (analysisReportId) => {
+  return axios.get(`/api/analysisReport/${analysisReportId}/growing`);
+};
+// 获取综合能力分析(企业分数)
+export const getCompanyScore = (analysisReportId) => {
+  return axios.get(`/api/analysisReport/${analysisReportId}/score`);
 };
