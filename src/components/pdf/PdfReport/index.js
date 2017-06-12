@@ -11,6 +11,7 @@ import Assets from './Assets';
 import Network from './NetWork';
 import Team from './Team';
 import Tax from './Tax';
+import EquityRelated from './EquityRelated';
 import styles from './index.less';
 
 function PdfReport({}) {
@@ -30,6 +31,7 @@ function PdfReport({}) {
             {judgeIsModuleExist('STOCK') ? <Stock judgeIsModuleExist={judgeIsModuleExist} /> : ''}
             {judgeIsModuleExist('TAX') ? <Tax judgeIsModuleExist={judgeIsModuleExist} /> : ''}
             {judgeIsModuleExist('RISK') ? <Risk judgeIsModuleExist={judgeIsModuleExist} /> : ''}
+            <EquityRelated />
             {judgeIsModuleExist('NEWS') ? <News judgeIsModuleExist={judgeIsModuleExist} /> : ''}
             {judgeIsModuleExist('OPERATION') ? <Assets judgeIsModuleExist={judgeIsModuleExist} /> : ''}
             {judgeIsModuleExist('NETWORK') ? <Network judgeIsModuleExist={judgeIsModuleExist} /> : ''}

@@ -20,6 +20,53 @@ class PdfStore {
   @observable team = {};
   @observable taxList = [];
   @observable courtData = {};
+  @observable shares = {
+    'sharesFrostList': [
+      {
+        'freDocId': 'string',
+        'freFromDate': 'string',
+        'freMoney': 'string',
+        'freOrgName': 'string',
+        'freRatio': 'string',
+        'freToDate': 'string',
+        'unfreDate': 'string',
+        'unfreDocId': 'string',
+        'unfreInfo': 'string',
+        'unfreOrgName': 'string'
+      },
+      {
+        'freDocId': 'string',
+        'freFromDate': 'string',
+        'freMoney': 'string',
+        'freOrgName': 'string',
+        'freRatio': 'string',
+        'freToDate': 'string',
+        'unfreDate': 'string',
+        'unfreDocId': 'string',
+        'unfreInfo': 'string',
+        'unfreOrgName': 'string'
+      }
+    ],
+    'sharesImpawnList': [
+      {
+        'imporg': 'string',
+        'imporgAmount': 'string',
+        'imporgAthOrg': 'string',
+        'imporgDate': 'string',
+        'imporgRecordDate': 'string',
+        'imporgTo': 'string',
+        'imporgType': 'string'
+      }
+    ],
+    'sharesTransferList': [
+      {
+        'assignee': 'string',
+        'pledgeDate': 'string',
+        'pledgedAmount': 'string',
+        'transferType': 'string',
+        'transfersRatio': 'string'
+      }
+    ]};
   @observable pdfTypesKey = 'SUMMARY,CORP,CORP_BASIC,CORP_INV_POS,STOCK,CORP_ALTER,CORP_YEAR_REPORT,TAX,RISK,RISK_ANNOUNCEMENT,RISK_NOTICE,RISK_JUDGEMENT,RISK_EXECUTE,RISK_DISHONESTY,RISK_LITIGATION,RISK_TAXATION,RISK_ABNORMAL,RISK_CHECK,NEWS,NETWORK,NETWORK_RELEVANCE,NETWORK_BLACKLIST,STOCK_INFO,STOCK_ANNOUNCEMENT,OPERATION,OPERATION_BIDDING,OPERATION_PATENT,OPERATION_TEL,OPERATION_TRADEMARK,NETWORK,NETWORK_RELEVANCE,NETWORK_BLACKLIST,TEAM,TEAM_RECRUITMENT_RESUME,TEAM_ANALYSIS';
   // summary
   @observable summary = {};
@@ -110,6 +157,7 @@ class PdfStore {
         this.team = pathval.getPathValue(response.data, 'recruitTeamResponse');
         this.taxList = pathval.getPathValue(response.data, 'taxList');
         this.corpCheckData = pathval.getPathValue(response.data, 'corpCheck');
+        // this.shares = pathval.getPathValue(response.data, 'shares');
       }))
       .catch((error) => {
         console.log(error.response);
@@ -132,6 +180,7 @@ class PdfStore {
     this.team = pathval.getPathValue(data, 'recruitTeamResponse');
     this.taxList = pathval.getPathValue(data, 'taxList');
     this.corpCheckData = pathval.getPathValue(data, 'corpCheck');
+    this.shares = pathval.getPathValue(data, 'shares');
   }
 }
 export default new PdfStore();

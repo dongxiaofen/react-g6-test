@@ -43,6 +43,31 @@ const config = {
     'punishmentBasis': '处罚依据',
     'illegalActivities': '违法行为'
   },
+  equityFreeze: {
+    freOrgName: '转让主体',
+    unfreOrgName: '受让人',
+    freFromDate: '转让日期',
+    freMoney: '转让金额',
+    freRatio: '转让额所占比例',
+    unfreInfo: '转让类型',
+  },
+  equityPledge: {
+    imporg: '质押主体',
+    imporgAthOrg: '质权人',
+    imporgType: '质权人类别',
+    imporgDate: '质押备案日期',
+    imporgAmount: '质押金额',
+    freRatio: '转让额所占比例',
+    unfreInfo: '转让类型',
+  },
+  equityTransfer: {
+    imporg: 'none',
+    assignee: '受让人',
+    transferType: '转让类型',
+    pledgeDate: '转让日期',
+    pledgedAmount: '转让额',
+    transfersRatio: '转让额所占比例',
+  },
   shareholder: {
     'shareholderName': '股东姓名',
     'subConam': '认缴出资额（万元）',
