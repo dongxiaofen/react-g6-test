@@ -11,6 +11,7 @@ function CheckModal({visible, width, closeAction, btnLoading, relPerCheckStore, 
   const relatedName = relPerCheckStore.relatedName;
   const relatedNameModelStatus = relPerCheckStore.relatedNameModelStatus;
   const reg = /(^\d{15}$)|(^\d{17}(\d|X)$)/;
+  // const reg = /^([1-9]\d{7}((0\d)|(1[0-2]))(([0|1|2]\d)|3[0-1])\d{3})|([1-9]\d{5}[1-9]\d{3}((0\d)|(1[0-2]))(([0|1|2]\d)|3[0-1])\d{3}([\d|x|X]))$/;
   // 点击下拉选择
   const clickHandle = (value, type)=>{
     if (type === 'type') {

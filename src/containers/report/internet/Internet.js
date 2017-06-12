@@ -6,7 +6,7 @@ import { batchReport } from 'components/hoc';
 import Analysis from 'components/companyHome/report/internet/news/Analysis';
 import Content from 'components/companyHome/report/internet/news/Content';
 @inject('routing', 'internetStore')
-@batchReport('internet')
+@batchReport('internetStore')
 @observer
 export default class Internet extends Component {
   render() {

@@ -1,0 +1,37 @@
+@import '~sc-colors/index.less';
+.serviceWrap{
+  float: left;
+  position: relative;
+  margin: -1px 0 0 10px;
+  padding: 0 10px 0 0;
+  border: 1px solid @mdc-blue-400;
+  line-height: 19px;
+  height: 19px;
+  font-size: 14px;
+  &::after{
+    display: block;
+    position: absolute;
+    content: '';
+    width: 10px;
+    height: 10px;
+    top: -1px;
+    right: -1px;
+    background-image: url('imgs/searchCompany/tag_triangle.png');
+    background-size: 10px 10px;
+  }
+}
+.serviceTag{
+  display: inline-block;
+  padding: 0 5px;
+  position: relative;
+  color: @mdc-blue-400;
+  &::after{
+    content: '';
+    position: absolute;
+    top: 2px;
+    left: -1px;
+    width: 1px;
+    height: 13px;
+    background:@mdc-blue-400;
+  }
+}

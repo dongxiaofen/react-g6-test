@@ -8,7 +8,7 @@ function EmployeeCategoryTypeInfo({moduleData}) {
   if (!moduleData) {
     return (
       <div>
-        <SecondTitle module="员工背景－所学专业" />
+        <SecondTitle module="所学专业" />
         <PdfNotFound />
       </div>
     );
@@ -36,7 +36,7 @@ function EmployeeCategoryTypeInfo({moduleData}) {
   };
   return (
     <div>
-      <SecondTitle module="员工背景－所学专业" />
+      <SecondTitle module="所学专业" />
       <PdfTable {...data} />
     </div>
   );

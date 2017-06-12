@@ -12,7 +12,7 @@ import Management from 'components/companyHome/report/stock/Management';
 import AnnouncementList from 'components/companyHome/report/stock/AnnouncementList';
 
 @inject('stockStore', 'routing')
-@batchReport('stock')
+@batchReport('stockStore')
 @observer
 export default class Stock extends Component {
   static propTypes = {

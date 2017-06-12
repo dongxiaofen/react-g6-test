@@ -43,10 +43,10 @@ class HighRiskCorpStore {
       .then(action('getStatistic', resp => {
         this.statistic = resp.data;
       }))
-      .catch('getStatistic', err => {
+      .catch(action('getStatistic', err => {
         console.log(err);
         this.statistic = {latest_month_num: 0, total_num: 0};
-      });
+      }));
   }
   @action.bound getIndustry() {
     this.industryDistribute.data = {};
@@ -56,10 +56,10 @@ class HighRiskCorpStore {
         const noData = !resp.data || !resp.data.indus_dist_list || resp.data.indus_dist_list.length === 0;
         this.industryDistribute.data = noData ? {error: {message: '暂无信息'}, indus_dist_list: []} : resp.data;
       }))
-      .catch('getIndustry', err => {
+      .catch(action('getIndustry', err => {
         console.log(err);
         this.industryDistribute.data = {error: err.response.data, indus_dist_list: []};
-      });
+      }));
   }
   @action.bound getRecent() {
     this.latestEnterprise.data = {};
@@ -69,10 +69,10 @@ class HighRiskCorpStore {
         const noData = !resp.data || !resp.data.indus_comp_list || resp.data.indus_comp_list.length === 0;
         this.latestEnterprise.data = noData ? {error: {message: '暂无信息'}, indus_comp_list: []} : resp.data;
       }))
-      .catch('getRecent', err => {
+      .catch(action('getRecent', err => {
         console.log(err);
         this.latestEnterprise.data = {error: err.response.data, indus_comp_list: []};
-      });
+      }));
   }
   @action.bound getIncrement() {
     this.enterpriseIncrement.data = {};
@@ -83,10 +83,10 @@ class HighRiskCorpStore {
         const noData = !resp.data || !resp.data.blacklist_dist_list || Object.keys(resp.data.blacklist_dist_list).every(item => item.count === 0) || resp.data.blacklist_dist_list.length === 0;
         this.enterpriseIncrement.data = noData ? {error: {message: '暂无信息'}, blacklist_dist_list: []} : resp.data;
       }))
-      .catch('getIncrement', err => {
+      .catch(action('getIncrement', err => {
         console.log(err);
         this.enterpriseIncrement.data = {error: err.response.data, blacklist_dist_list: []};
-      });
+      }));
   }
   @action.bound getArea() {
     this.areaDistribute.data = {};
@@ -96,10 +96,10 @@ class HighRiskCorpStore {
         const noData = !resp.data || !resp.data.results || resp.data.results.length === 0;
         this.areaDistribute.data = noData ? {error: {message: '暂无信息'}, results: []} : resp.data;
       }))
-      .catch('getArea', err => {
+      .catch(action('getArea', err => {
         console.log(err);
         this.areaDistribute.data = {error: err.response.data, results: []};
-      });
+      }));
   }
 }
 

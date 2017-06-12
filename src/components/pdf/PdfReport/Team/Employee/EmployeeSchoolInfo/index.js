@@ -9,14 +9,14 @@ function EmployeeSchoolInfo({moduleData}) {
   if (!moduleData || Object.keys(moduleData).length === 0) {
     return (
       <div>
-        <SecondTitle module="员工背景－毕业学校" />
+        <SecondTitle module="毕业学校" />
         <PdfNotFound />
       </div>
     );
   }
   return (
     <div className={styles.wrap}>
-      <SecondTitle module="员工背景－毕业学校" />
+      <SecondTitle module="毕业学校" />
       <table>
         <thead>
         <tr>

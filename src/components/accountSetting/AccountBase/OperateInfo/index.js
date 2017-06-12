@@ -39,11 +39,18 @@ function OperateInfo({accountSettingStore, clientStore, className}) {
         unit: '个',
       },
       {
+        name: '消费点数',
+        keys: 'userConsumePoint',
+        remainKey: 'subUserConsumePoint',
+        none: consumeType !== 'POINT' || data.parentUserId ? true : false,
+        unit: '',
+      },
+      {
         name: '剩余点数',
         keys: 'point',
         remainKey: 'remainingPoint',
         none: consumeType !== 'POINT' || data.parentUserId ? true : false,
-        unit: '点',
+        unit: '',
       },
     ];
     const content = config.map((item, idx) => {

@@ -58,7 +58,7 @@ class TeamStore {
 
   @action.bound getReportModule(params) {
     this.isMount = true;
-    companyHomeApi.getReportModule(params)
+    companyHomeApi.getReportModule('team', params)
       .then(action('get team data', (resp) => {
         const respData = resp.data;
         const recruitmentData = respData.recruitAndResumeResponse;

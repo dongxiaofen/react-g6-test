@@ -5,11 +5,11 @@
   color: @mdc-grey-900;
 }
 .right_discription{
-  padding: 20px 0 0 20px;
-  .account_user{
-    padding: 10px 0 20px 0;
-    color: @mdc-grey-600;
-  }
+  padding-bottom: 5px;
+}
+.account_user{
+  padding-right: 10px;
+  color: @mdc-grey-600;
 }
 .paddingTop35{
   padding-top: 35px;
@@ -37,6 +37,11 @@
   color: #539e76;
 }
 .singe_item{
+  position: relative;
+  padding: 20px 0 20px 20px;
+  .companyName{
+    float: left;
+  }
   &:hover{
     background-color: #f8f8f8;
     .companyName{
@@ -47,10 +52,25 @@
     margin-bottom: 20px;
   }
   border-bottom: 1px dashed @black12;
+  .text_label_first{
+    position: absolute;
+    top: 33px;
+    right: 20px;
+    border:1px solid @mdc-red-600;
+    padding: 0 6px;
+    color: @mdc-red-600;
+  }
+  .text_label{
+    position: absolute;
+    top: 35px;
+    right: 20px;
+    padding: 0 6px;
+    border:1px solid @mdc-blue-grey-100;
+    color: @mdc-blue-grey-100;
+  }
 }
 .has_warning_counts{
-  padding: 20px 15px 0 0;
-  text-align: right;
+  padding: 0 15px 0 0;
   .count_text {
     font-size: 12px;
   }
@@ -93,12 +113,39 @@
   }
 }
 .warning_date{
-  color: #539e76;
+  color: @mdc-grey-500;
   .count_text{
-    font-size: 14px;
+    font-size: 13px;
   }
   .date_time_w{
-    font-size: 14px;
-    color: #539e76;
+    font-size: 13px;
+    color: @mdc-grey-500;
   }
+}
+
+.icon_number{
+  width: 20px;
+  height: 16px;
+  display: block;
+  float: left;
+}
+.red_1{
+  background: url("imgs/accountProfile/red_1.png") 0 2px no-repeat;
+  background-size: 14px;
+}
+.nomal_2{
+  background: url("imgs/accountProfile/nomal_2.png") 0 2px no-repeat;
+  background-size: 14px;
+}
+.nomal_3{
+  background: url("imgs/accountProfile/nomal_3.png") 0 2px no-repeat;
+  background-size: 14px;
+}
+.icon_new {
+  width: 30px;
+  height: 14px;
+  display: block;
+  background: url("imgs/accountProfile/icon_new.png") 0 2px no-repeat;
+  background-size: 24px;
+  float: left;
 }

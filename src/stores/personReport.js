@@ -9,15 +9,7 @@ class PersonReportStore {
   @observable dishonestyList =[];
   @observable isLoading = true;
   @action.bound getCardId(params) {
-    let url;
-    if (params.monitorId) {
-      url = `/api/monitor/${params.monitorId}/person/cardId?personCheckId=${params.personCheckId}`;
-    }else if (params.reportId) {
-      url = `/api/report/${params.reportId}/person/cardId?&personCheckId=${params.personCheckId}`;
-    }else if (params.analysisReportId) {
-      url = `/api/analysisReport/${params.analysisReportId}/person/cardId?personCheckId=${params.personCheckId}`;
-    }
-    personReportApi.getCardId(url)
+    personReportApi.getCardId(`/api/check/person/cardId?personCheckId=${params.personCheckId}`)
       .then( action( (response) => {
         this.idCard = response.data;
       }))
@@ -26,16 +18,8 @@ class PersonReportStore {
       }));
   }
   @action.bound getDetailInfo(params) {
-    let url;
-    if (params.monitorId) {
-      url = `/api/monitor/${params.monitorId}/person`;
-    }else if (params.reportId) {
-      url = `/api/report/${params.reportId}/person`;
-    }else if (params.analysisReportId) {
-      url = `/api/analysisReport/${params.analysisReportId}/person`;
-    }
-    personReportApi.getDetailInfo(url, params)
-      .then(action( (response) => {
+    personReportApi.getDetailInfo(`/api/check/person?personCheckId=${params.personCheckId}`, params)
+      .then(action((response) => {
         this.blacklistData = response.data.blacklistResponses;
         this.executed = response.data.executedResponses;
         this.dishonestyList = response.data.dishonestyResponses;

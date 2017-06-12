@@ -12,7 +12,7 @@ function NetWork({judgeIsModuleExist, pdfStore}) {
         judgeIsModuleExist('NETWORK_RELEVANCE')
           ?
           <div>
-            <PdfTitle module="关联网络" subModule="关联关系" />
+            <PdfTitle module="关联网络" subModule="关联图信息" />
             <CurrentNetwork pdfStore={pdfStore} />
           </div>
           :
@@ -22,7 +22,7 @@ function NetWork({judgeIsModuleExist, pdfStore}) {
         judgeIsModuleExist('NETWORK_BLACKLIST')
           ?
           <div>
-            <PdfTitle module="关联网络" subModule="风险关系" />
+            <PdfTitle module="关联网络" subModule="风险关联信息" />
             < BlackNetWork moduleData={pathval.getPathValue(pdfStore, 'blacklist')} />
           </div>
           :

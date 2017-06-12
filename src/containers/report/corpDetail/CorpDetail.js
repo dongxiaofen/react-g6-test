@@ -26,7 +26,7 @@ const TabPane = Tabs.TabPane;
 import { batchReport } from 'components/hoc';
 
 @inject('routing', 'corpDetailStore')
-@batchReport('corpDetail')
+@batchReport('corpDetailStore')
 @observer
 export default class CorpDetail extends Component {
   static propTypes = {

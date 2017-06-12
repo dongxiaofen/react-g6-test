@@ -1,0 +1,107 @@
+@import '~sc-colors/index.less';
+.item {
+  padding: 20px;
+  margin-bottom: 20px;
+  color: @black7;
+  width: 100%;
+  background: @white1;
+  transition: all .3s;
+  .box-shadow-block;
+  -webikt-transition: all .3s ease-in-out;
+     -moz-transition: all .3s ease-in-out;
+      -ms-transition: all .3s ease-in-out;
+       -o-transition: all .3s ease-in-out;
+          transition: all .3s ease-in-out;
+  &:hover {
+    .box-shadow-block-click;
+  }
+}
+.nameWrap {
+  span {
+    display: inline-block;
+    vertical-align: middle;
+  }
+}
+.name {
+  font-size:16px;
+  line-height: 25px;
+  color: @mdc-grey-900;
+  letter-spacing:0;
+  cursor: pointer;
+  -webikt-transition: all .3s ease-in-out;
+     -moz-transition: all .3s ease-in-out;
+      -ms-transition: all .3s ease-in-out;
+       -o-transition: all .3s ease-in-out;
+          transition: all .3s ease-in-out;
+  &:hover {
+    color: @mdc-blue-400;
+  }
+}
+.mainLabel{
+  display: inline-block;
+  margin-left: 14px;
+  padding: 0 16px;
+  max-width: 100px;
+  height:25px;
+  font-size: 14px;
+  line-height: 25px;
+  text-align: center;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  color: @mdc-blue-400;
+  border:1px solid @mdc-blue-400;
+  border-radius:100px;
+  overflow: hidden;
+  vertical-align: middle;
+}
+.infoDetail{
+  margin-top: 10px;
+  line-height: 1;
+  font-size: 14px;
+}
+.detailItem{
+  margin-right: 40px;
+  &:last-child {
+    margin-right: 0;
+  }
+}
+.typeCss {
+  width: 100px;
+  text-align: center;
+  font-size: 14px;
+  line-height: 1;
+}
+.typeKey {
+  composes: typeCss;
+  color: @mdc-blue-grey-500;
+}
+.typeValue {
+  composes: typeCss;
+  margin-top: 14px;
+}
+.date {
+  float: left;
+  margin-right: 15%;
+  text-align: center;
+}
+.lastModifiedTs {
+  .date;
+}
+.createdTs {
+  .date;
+}
+.anTime {
+  float: left;
+  text-align: center;
+}
+.timeKey{
+  margin-top: 14px;
+  line-height: 13px;
+  font-size: 13px;
+  color: @black7;
+}
+.timeValue{
+  line-height: 16px;
+  font-size: 16px;
+  color: @mdc-blue-grey-500;
+}

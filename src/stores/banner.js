@@ -4,6 +4,82 @@ import { companyHomeApi } from 'api';
 import modalStore from './modal';
 import messageStore from './message';
 import payModalStore from './payModal';
+import companyHomeStore from './companyHome';
+const bannerDataTest = {
+  'bannerInfo': {
+    'bannerInfo': {
+      'index': [
+        {
+          'url': 'http://mi.com',
+          'status': null
+        },
+        {
+          'url': 'http://xiaomi.com',
+          'status': null
+        }
+      ],
+      'scale': '1000人以上',
+      'email': [
+        'wulihua@xiaomi.com'
+      ],
+      'phone': [
+        '010-64051516',
+        '010-52255991'
+      ],
+      'address': [
+        {
+          'time': '2017-02-03 00:00:00',
+          'source': 'jobui',
+          'address': '北京市海淀区清河中街68号 华润五彩城写字楼',
+          'location': {
+            'lat': 40.03616174650678,
+            'lon': 116.33936332310091
+          }
+        },
+        {
+          'time': '2016-12-29 00:00:00',
+          'source': 'lagou',
+          'address': '北京北京市海淀区五彩城',
+          'location': {
+            'lat': 40.03620110641631,
+            'lon': 116.34291522308736
+          }
+        },
+        {
+          'time': '2010-04-10 00:00:00',
+          'source': 'yepage',
+          'address': '北京市 朝阳区 望京西路甲50号-1卷 石天地大厦A座13层',
+          'location': {
+            'lat': 39.98941935697803,
+            'lon': 116.4643470049087
+          }
+        }
+      ],
+      'companyStatus': '',
+      'riskInfo': [
+        {
+          historyFlag: 'false',
+          lastestPublishTime: '2016-05-09',
+          name: '中国工商银行股份有限公司',
+          riskType: '被银行起诉',
+        }
+      ],
+      'historyName': []
+    },
+    'industryList': [
+      8
+    ],
+    'featureIndustry': {
+      'result': {
+        'industryType': [
+          '软件和信息技术服务业'
+        ]
+      }
+    }
+  },
+  'name': '北京小米科技有限责任公司',
+  collection: false,
+};
 class BannerStore {
   windowReload() {
     window.location.reload();
@@ -12,23 +88,24 @@ class BannerStore {
   // banner
   @observable monitorId = '';
   @observable reportId = '';
-  @observable score = '';
+  // @observable score = '';
 
-  @observable isLoading = false;
+  @observable isLoading = true;
   @observable hisNameVis = false;
   @observable contactVis = false;
-  @observable historyName = [];
-  @observable riskInfo = [];
-  @observable industryNames = [];
-  @observable bannerData = {};
+  @observable bannerInfoData = {};
   @observable contactExtended = '';
-  @observable monitorStatus = '';
-  @observable lastModifiedTs = '获取中...';
-  @observable refreshStatus = 'complete';
-  @observable searchedCount = '';
-  @observable lastModifiedTs = '';
-  @observable collection = false;
-  @observable mainStatus = '';
+  // @observable historyName = [];
+  // @observable riskInfo = [];
+  // @observable industryNames = [];
+  // @observable bannerData = {};
+  // @observable monitorStatus = '';
+  // @observable lastModifiedTs = '获取中...';
+  // @observable refreshStatus = 'complete';
+  // @observable searchedCount = '';
+  // @observable lastModifiedTs = '';
+  // @observable collection = false;
+  // @observable mainStatus = '';
 
   // 上市代码
   @observable stockCode = '';
@@ -36,53 +113,72 @@ class BannerStore {
   // 下载pdf配置
   @observable pdfDownloadConfig = {
     levelOne: [
-      { label: '信息概览', value: 'SUMMARY', checked: false },
-      { label: '企业基本信息', value: 'CORP', checked: false },
-      { label: '税务信息', value: 'TAX', checked: false },
+      // { label: '信息概览', value: 'SUMMARY', checked: false },
+      { label: '工商信息', value: 'CORP', checked: false },
+      { label: '对外投资任职', value: 'INV_POS', checked: false },
       { label: '上市披露', value: 'STOCK', checked: false },
-      { label: '关联网络', value: 'NETWORK', checked: false },
-      { label: '风险信息', value: 'RISK', checked: false },
       { label: '新闻信息', value: 'NEWS', checked: false },
       { label: '经营信息', value: 'OPERATION', checked: false },
-      { label: '团队信息', value: 'TEAM', checked: false },
+      { label: '团队信息', value: 'TEAM', checked: false},
+      { label: '纳税公告', value: 'NEWS', checked: false },
+      { label: '法务信息', value: 'RISK', checked: false },
+      { label: '工商抽查', value: 'BUSINESS', checked: false },
+      { label: '股权相关', value: 'PLEDGE', checked: false },
+      { label: '抵押相关', value: 'MORTGAGE', checked: false },
     ],
     levelTwo: {
       'SUMMARY': [],
       'CORP': [
-        { label: '工商基本信息', value: 'CORP_BASIC', checked: false },
+        { label: '照面信息', value: 'CORP_BASIC', checked: false },
         { label: '工商变更', value: 'CORP_ALTER', checked: false },
-        { label: '对外投资任职', value: 'CORP_INV_POS', checked: false },
         { label: '企业年报', value: 'CORP_YEAR_REPORT', checked: false },
       ],
-      'TAX': [],
+      'INV_POS': [
+        { label: '企业对外投资', value: 'INV_POS_ENT', checked: false },
+        { label: '法人相关', value: 'INV_POS_FR', checked: false },
+        { label: '董监ga高', value: 'INV_POS_MANAGEMENT', checked: false },
+      ],
       'STOCK': [
         { label: '公司概况', value: 'STOCK_INFO', checked: false },
         { label: '公司公告', value: 'STOCK_ANNOUNCEMENT', checked: false },
       ],
-      'NETWORK': [
-        { label: '关联关系', value: 'NETWORK_RELEVANCE', checked: false },
-        { label: '风险关系', value: 'NETWORK_BLACKLIST', checked: false },
+      'NEWS': [],
+      'OPERATION': [
+        { label: '商标', value: 'OPERATION_TRADEMARK', checked: false },
+        { label: '专利', value: 'OPERATION_PATENT', checked: false },
+        { label: '招投标', value: 'OPERATION_BIDDING', checked: false },
+      ],
+      'TEAM': [
+        { label: '招聘/员工背景', value: 'TEAM_RECRUITMENT_RESUME', checked: false },
+        { label: '团队监控分析', value: 'TEAM_ANALYSIS', checked: false },
       ],
       'RISK': [
         { label: '判决文书', value: 'RISK_JUDGEMENT', checked: false },
         { label: '法院公告', value: 'RISK_ANNOUNCEMENT', checked: false },
         { label: '开庭公告', value: 'RISK_NOTICE', checked: false },
         { label: '被执行人信息', value: 'RISK_EXECUTE', checked: false },
-        { label: '失信被执行人', value: 'RISK_DISHONESTY', checked: false },
+        { label: '失信被执行人信息', value: 'RISK_DISHONESTY', checked: false },
         { label: '涉诉资产', value: 'RISK_LITIGATION', checked: false },
-        { label: '纳税信用', value: 'RISK_TAXATION', checked: false },
-        { label: '经营异常', value: 'RISK_ABNORMAL', checked: false },
+      ],
+      'BUSINESS': [
         { label: '抽查检查', value: 'RISK_CHECK', checked: false },
+        { label: '经营异常', value: 'RISK_ABNORMAL', checked: false },
+        { label: '违反记录', value: 'RISK_TAXATION', checked: false },
       ],
-      'NEWS': [],
-      'OPERATION': [
-        { label: '招投标', value: 'OPERATION_BIDDING', checked: false },
-        { label: '专利', value: 'OPERATION_PATENT', checked: false },
-        { label: '商标', value: 'OPERATION_TRADEMARK', checked: false },
+      'NETWORK': [
+        { label: '关联关系', value: 'NETWORK_RELEVANCE', checked: false },
+        { label: '风险关系', value: 'NETWORK_BLACKLIST', checked: false },
       ],
-      'TEAM': [
-        { label: '招聘/员工背景', value: 'TEAM_RECRUITMENT_RESUME', checked: false },
-        { label: '团队监控分析', value: 'TEAM_ANALYSIS', checked: false },
+      'PLEDGE': [
+        { label: '股权冻结', value: 'PLEDGE_EQUITY_SHARE', checked: false },
+        { label: '股权质押', value: 'RISK_ANNOUNCEMENT', checked: false },
+        { label: '股权转让', value: 'RISK_JUDGEMENT', checked: false },
+      ],
+      'MORTGAGE': [
+        { label: '企业抵押', value: 'RISK_ANNOUNCEMENT', checked: false },
+        { label: '动产物抵押', value: 'RISK_JUDGEMENT', checked: false },
+        { label: '抵押人信息', value: 'RISK_ANNOUNCEMENT', checked: false },
+        { label: '抵押变更', value: 'RISK_JUDGEMENT', checked: false },
       ]
     },
   };
@@ -123,29 +219,38 @@ class BannerStore {
   @action.bound extendContact(key) {
     this.contactExtended = this.contactExtended === key ? '' : key;
   }
-  @action.bound getBannerInfo({ monitorId, reportId }) {
-    this.monitorId = monitorId;
-    this.reportId = reportId;
+  @action.bound createBasicReport(params) {
+    companyHomeApi.createBasicReport({companyName: params.companyName})
+    .then(action('createBasicReport', (resp)=>{
+      companyHomeStore.reportInfo.basicReportId = resp.data.basicReportId;
+      this.getBannerInfo({companyName: params.companyName});
+    }))
+    .catch(action('createBasicReport err', (error)=>{
+      console.log(error);
+    }));
+  }
+  @action.bound getReportStatus(params) {
     this.isLoading = true;
-    companyHomeApi.getBannerInfo({ monitorId, reportId })
-      .then(action('get banner info...', (resp) => {
-        const whatThisBannerInfo = resp.data.bannerInfo.bannerInfo;
-        this.companyName = resp.data.name;
-        this.score = resp.data.score;
-        if (whatThisBannerInfo) {
-          this.historyName = whatThisBannerInfo.historyName;
-          this.riskInfo = whatThisBannerInfo.riskInfo;
-          this.bannerData = whatThisBannerInfo;
-        }
-        this.industryNames = resp.data.industryNames;
-        this.mainStatus = resp.data.mainStatus;
-        this.monitorStatus = resp.data.monitorStatus;
-        this.lastModifiedTs = resp.data.lastModifiedTs ? resp.data.lastModifiedTs : '无';
-        this.refreshStatus = 'complete';
-        this.searchedCount = resp.data.searchedCount;
-        this.lastModifiedTs = resp.data.lastModifiedTs;
-        this.collection = resp.data.collection;
+    companyHomeApi.getReportStatus(params)
+    .then(action('getReportStatus', (resp)=>{
+      if (resp.data.basicReportId || resp.data.reportId) {
+        this.getBannerInfo({companyName: params.companyName});
+        companyHomeStore.updateValue('reportInfo', Object.assign(companyHomeStore.reportInfo, resp.data));
+      } else {
+        this.createBasicReport({companyName: params.companyName});
+      }
+    }))
+    .catch(action('getReportStatus err', (error)=>{
+      console.log(error);
+    }));
+  }
 
+  @action.bound getBannerInfo(params) {
+    this.isLoading = true;
+    companyHomeApi.getBannerInfo(params)
+      .then(action('get banner info...', (resp) => {
+        console.log(resp.data);
+        this.bannerInfoData = bannerDataTest;
         this.isLoading = false;
       }))
       .catch((err) => {

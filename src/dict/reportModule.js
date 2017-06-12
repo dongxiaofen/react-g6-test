@@ -29,6 +29,9 @@ const config = {
     'orgNum': '组织机构代码',
     'socialCreditIdentifier': '社会信用代码'
   },
+  punishListInfo: {
+    'illegalFacts': '主要违法事实'
+  },
   shareholder: {
     'shareholderName': '股东姓名',
     'subConam': '认缴出资额（万元）',

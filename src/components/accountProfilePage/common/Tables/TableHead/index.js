@@ -6,22 +6,19 @@ import styles from './index.less';
 function TableHead({ companyType, tip, title }) {
   const createIcon = () => {
     if (companyType === 'warningCompnay') {
-      return (styles.warning_icon01);
+      return (styles.top10_red);
     } else if (companyType === 'riskCompnay') {
-      return (styles.warning_icon02);
+      return (styles.top10_blue);
     }else if (companyType === 'lowScoreCompnay') {
-      return (styles.warning_icon03);
+      return (styles.top10_blue);
     }
   };
-  const createIconTips = () => {
-    if (companyType === 'warningCompnay') {
-      return (styles.questions_01);
-    } else if (companyType === 'riskCompnay') {
-      return (styles.questions_02);
-    }else if (companyType === 'lowScoreCompnay') {
-      return (styles.questions_03);
-    }
-  };
+  const content = (
+    <div>
+      <p className={styles.ppover_tittle}>排名说明</p>
+      <p>{tip}</p>
+    </div>
+  );
   return (
     <div className={`clearfix ${styles.head_box}`}>
       <div className={`${styles.title} pull-left`}>
@@ -32,8 +29,8 @@ function TableHead({ companyType, tip, title }) {
         </div>
       </div>
       <div className="pull-right">
-        <Popover placement="bottomRight" content={tip} trigger="hover">
-          <i className={`${createIconTips()} ${styles.questions_icon}`}></i>
+        <Popover placement="bottomRight" content={content} trigger="hover">
+          <i className={`${styles.infomation_tips} ${styles.questions_icon}`}></i>
         </Popover>
       </div>
     </div>
