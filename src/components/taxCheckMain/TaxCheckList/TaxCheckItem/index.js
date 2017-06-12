@@ -1,11 +1,11 @@
 import React, {PropTypes} from 'react';
-import { observer } from 'mobx-react';
+import { observer, inject } from 'mobx-react';
 import styles from './index.less';
-import { loadingComp } from 'components/hoc';
-import Pager from 'components/common/Pager';
+// import { loadingComp } from 'components/hoc';
+// import Pager from 'components/common/Pager';
 
-function TaxCheckItem({taxCheckStore, uiStore}) {
-  const dataList = taxCheckStore.taxListData.content;
+function TaxCheckItem({taxCheckStore}) {
+  const dataList = taxCheckStore.taxCheckInfo.content;
   const listDom = [];
   if (dataList && dataList.length > 0) {
     dataList.map((obj, idx)=>{
@@ -24,6 +24,10 @@ function TaxCheckItem({taxCheckStore, uiStore}) {
   }
   return (
     <div className={styles.box}>
+      <div className={styles.companyName}>{taxCheckStore.taxCheckInfoCompany}</div>
+      <span className={styles.text}>
+        核查结果提示：<span>税务核查金额和实际金额误差在5%以内时即“匹配”，超过5%即“不匹配”</span>
+      </span>
       <table className={styles.table}>
         <tbody>
           <tr className={styles.title}>
@@ -36,24 +40,27 @@ function TaxCheckItem({taxCheckStore, uiStore}) {
           {listDom}
         </tbody>
       </table>
-      <div className={styles.page}>
+      {/* <div className={styles.page}>
         <Pager tData={taxCheckStore.taxListData.content} module="taxCheckPager"
                uiStore={uiStore} type="large"/>
-      </div>
+      </div> */}
     </div>
   );
 }
 
 TaxCheckItem.propTypes = {
   taxCheckStore: PropTypes.object,
-  uiStore: PropTypes.object,
+  // uiStore: PropTypes.object,
 };
-export default loadingComp({
-  mapDataToProps: props => ({
-    loading: props.taxCheckStore.loading === true ? true : false,
-    category: 2,
-    module: '税务核查列表',
-    errCategory: 2,
-    error: props.taxCheckStore.taxListData.error,
-  }),
-})(observer(TaxCheckItem));
+
+export default inject('taxCheckStore')(observer(TaxCheckItem));
+
+// export default loadingComp({
+//   mapDataToProps: props => ({
+//     loading: props.taxCheckStore.loading === true ? true : false,
+//     category: 2,
+//     module: '税务核查列表',
+//     errCategory: 2,
+//     error: props.taxCheckStore.taxListData.error,
+//   }),
+// })(inject('taxCheckStore')(observer(TaxCheckItem)));

@@ -27,6 +27,6 @@ LinkJump.propTypes = {
   name: PropTypes.string,
   label: PropTypes.string,
   className: PropTypes.string,
-  children: PropTypes.object,
+  children: PropTypes.node,
 };
 export default inject('linkJumpStore')((observer(LinkJump)));
