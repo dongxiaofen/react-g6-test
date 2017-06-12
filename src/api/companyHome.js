@@ -26,40 +26,40 @@ export const getReportModule = (urlStr, idParams) => {
   const reportUrl = idParams.reportId ? advancedUrl : basicUrl;
   let url;
   switch (urlStr) {
-  case 'corpDetail':
-  case 'stock/company':
-  case 'stock/announcement':
-  case 'stock/announcement/type':
-  case 'internet':
-  case 'operation/trademark':
-  case 'operation/patent':
-  case 'operation/bidding':
-  case 'team':
-  case 'investment':
-  case 'taxation':
-  case 'risk':
-  case 'risk/check':
-  case 'risk/pledge':
-  case 'network':
-  case 'network/blacklist':
-  case 'timeline':
-  case 'alert/page':
-    url = reportUrl + urlStr;
-    break;
-  case 'score':
-  case 'profit':
-  case 'operate':
-  case 'growing':
-    url = analysisUrl + urlStr;
-    break;
-  case 'monitorTimeAxis':
-    url = monitorUrl + 'timeline';
-    break;
-  case 'monitorAlert':
-    url = monitorUrl + 'alert/page';
-    break;
-  default:
-    return false;
+    case 'corpDetail':
+    case 'stock/company':
+    case 'stock/announcement':
+    case 'stock/announcement/type':
+    case 'internet':
+    case 'operation/trademark':
+    case 'operation/patent':
+    case 'operation/bidding':
+    case 'team':
+    case 'investment':
+    case 'taxation':
+    case 'risk':
+    case 'risk/check':
+    case 'risk/pledge':
+    case 'network':
+    case 'network/blacklist':
+    case 'timeline':
+    case 'alert/page':
+      url = reportUrl + urlStr;
+      break;
+    case 'score':
+    case 'profit':
+    case 'operate':
+    case 'growing':
+      url = analysisUrl + urlStr;
+      break;
+    case 'monitorTimeAxis':
+      url = monitorUrl + 'timeline';
+      break;
+    case 'monitorAlert':
+      url = monitorUrl + 'alert/page';
+      break;
+    default:
+      return false;
   }
   // 设置axios取消事件
   const CancelToken = axios.CancelToken;
@@ -274,7 +274,7 @@ export const getUpDataList = (analysisReportId) => {
 // 获取综合能力分析(企业分数)
 export const getCompanyScore = (analysisReportId) => {
   return axios.get(`/api/analysisReport/${analysisReportId}/score`);
-}
+};
 // 贷中分析,创建报告
 export const createAnalyRep = (params) => {
   return axios.post('/api/analysisReport', params);
