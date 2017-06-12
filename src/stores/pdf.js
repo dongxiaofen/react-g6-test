@@ -140,7 +140,7 @@ class PdfStore {
     ];
     console.log(baseReport.join(','), report, analysiReport);
     // 获取pdf
-    axios.get(`/api/pdf/basicReport?basicReportId=${id}&types=${baseReport.join(',')}`)
+    axios.get(`/api/pdf/basicReport?reportId=${id}&types=${report.join(',')}`)
       .then(action((response) => {
         this.banner = pathval.getPathValue(response.data, 'banner');
         this.summary = pathval.getPathValue(response.data, 'summary');
