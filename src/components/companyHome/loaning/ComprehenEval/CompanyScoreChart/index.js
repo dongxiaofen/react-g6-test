@@ -1,9 +1,9 @@
-import React, {PropTypes} from 'react';
+import React, { PropTypes } from 'react';
 import { observer } from 'mobx-react';
 import Chart from 'components/common/Charts/BaseChart';
 import styles from './index.less';
 
-function CompanyScoreChart({sixStarData}) {
+function CompanyScoreChart({ sixStarData }) {
   const data = sixStarData;
   const createOption = () => ({
     title: {
@@ -23,12 +23,12 @@ function CompanyScoreChart({sixStarData}) {
         },
       },
       indicator: [
-         { name: '行业状况', max: 100},
-         { name: '经营状况', max: 100},
-         { name: '团队相关', max: 100},
-         { name: '社会影响力', max: 100},
-         { name: '创新能力', max: 100},
-         { name: '合规程度', max: 100}
+        { name: '行业状况', max: 100 },
+        { name: '经营状况', max: 100 },
+        { name: '团队相关', max: 100 },
+        { name: '社会影响力', max: 100 },
+        { name: '创新能力', max: 100 },
+        { name: '合规程度', max: 100 }
       ],
       axisLine: {
         lineStyle: {
@@ -63,12 +63,12 @@ function CompanyScoreChart({sixStarData}) {
       data: [
         {
           value: [
-            data.industry ? sixStarData.industry.score : 0,
-            data.operation ? sixStarData.operation.score : 0,
-            data.team ? sixStarData.team.score : 0,
-            data.influence ? sixStarData.influence.score : 0,
-            data.creativity ? sixStarData.creativity.score : 0,
-            data.law ? sixStarData.law.score : 0
+            data.result.industry ? sixStarData.result.industry.score : 0,
+            data.result.operation ? sixStarData.result.operation.score : 0,
+            data.result.team ? sixStarData.result.team.score : 0,
+            data.result.influence ? sixStarData.result.influence.score : 0,
+            data.result.creativity ? sixStarData.result.creativity.score : 0,
+            data.result.law ? sixStarData.result.law.score : 0
           ],
           name: '企业综合评分',
           label: {

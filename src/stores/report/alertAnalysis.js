@@ -12,23 +12,7 @@ class AlertAnalysisStore {
   }
 
   @observable isMount = false;
-  @observable loadingId = -1;
-  @observable listData = [];
-  // 六芒星data
-  @observable sixStarData = '';
-  // 六芒星loading
-  @observable loading = false;
-  @observable detailData = {
-    activeIndex: 0,
-    page: 1,
-    tabTop: computed(function tabTop() {
-      return 0 - (this.page - 1) * 8 * 60;
-    }),
-    info: {},
-    detail: {},
-    html: '',
-    orgData: {},
-  }
+
   @action.bound changeValue(key, value) {
     pathval.setPathValue(this, key, value);
   }
@@ -36,17 +20,7 @@ class AlertAnalysisStore {
     companyHomeApi.judgeReportType(companyName)
       .then(resp => {
         const {reportId, monitorId, analysisReportId} = resp.data;
-        // const type = resp.data.monitorMapResponse && resp.data.monitorMapResponse.companyType;
         let url;
-        // if (monitorId && type === 'MAIN') {
-        //   url = `corpDetail?companyType=${type}&monitorId=${monitorId}`;
-        // } else if (reportId) {
-        //   url = `corpDetail?companyType=MAIN&reportId=${reportId}`;
-        // } else if (analysisReportId) {
-        //   url = `corpDetail?companyType=MAIN&analysisReportId=${analysisReportId}`;
-        // } else {
-        //   url = `corpDetail?companyName=${companyName}&companyType=FREE`;
-        // }
         if (monitorId) {
           url = `corpDetail?monitorId=${monitorId}`;
         } else if (reportId) {

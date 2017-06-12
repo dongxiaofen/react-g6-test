@@ -2,7 +2,7 @@ import React from 'react';
 import { observer } from 'mobx-react';
 import styles from './index.less';
 import ALERT_CONFIG from 'dict/alertCard';
-function CardHeader({data, hasSecondType, cardType, modifyDate, module}) {
+function CardHeader({data, hasSecondType, cardType, modifyDate}) {
   const itemData = data.items;
   const createTypeName = () => {
     if (hasSecondType) {
@@ -11,10 +11,6 @@ function CardHeader({data, hasSecondType, cardType, modifyDate, module}) {
     return data.typeName;
   };
   const typeName = createTypeName();
-  let companyName = itemData.relatedMonitorCompanyName || itemData.mainMonitorCompanyName;
-  if (module === 'timeAxis') {
-    companyName = itemData.companyName;
-  }
   if (cardType === 'modal') {
     return (
       <div>
@@ -30,7 +26,7 @@ function CardHeader({data, hasSecondType, cardType, modifyDate, module}) {
   return (
     <div className={styles.top}>
       <div className={styles.mainTitle}>
-        <span className={styles.typeName}>{module === 'timeAxis' ? companyName + '-' + typeName : typeName}</span>
+        <span className={styles.typeName}>{typeName}</span>
       </div>
     </div>
   );

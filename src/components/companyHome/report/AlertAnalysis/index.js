@@ -3,7 +3,7 @@ import { observer, inject} from 'mobx-react';
 import { ModuleTitle } from 'components/common/report';
 import TableList from './TableList';
 import styles from './TableList/index.less';
-import CompanyScore from './CompanyScore';
+import CompanyScore from '../../loaning/ComprehenEval/index';
 import Popover from 'antd/lib/popover';
 
 function AlertAnalysis({alertAnalysisStore, uiStore}) {
