@@ -36,7 +36,7 @@ function Footer({companyHomeStore, routing, bannerStore}) {
       <span className={styles.repType}>当前浏览为 {reportTypeDict[repType]}</span>
       {
         repType === 'monitor' ?
-        <span className={styles.date}>（监控截止日期：2016-02-01）</span>
+        <span className={styles.date}>（监控截止日期：{bannerStore.monitorRepInfo.expireDt}）</span>
         : ''
       }
       <span className={styles.line}>|</span>

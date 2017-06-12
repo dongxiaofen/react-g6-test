@@ -35,7 +35,7 @@ class BannerStore {
   @observable reportDate = '';
   @observable monitorRepInfo = {
     monitorStatus: '',
-    lastModifiedTs: '',
+    expireDt: '',
   };
   // 上市代码
   @observable stockCode = '';
@@ -439,6 +439,7 @@ class BannerStore {
       .then(action('renewal monitor', () => {
         payModalStore.closeAction();
         messageStore.openMessage({ content: '续期成功', callBack: this.windowReload });
+        this.getMonitorRepInfo();
       }))
       .catch((err) => {
         console.log(err.response);

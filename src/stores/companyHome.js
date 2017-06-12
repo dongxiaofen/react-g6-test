@@ -3,6 +3,7 @@ import { observable, action, computed} from 'mobx';
 import modalStore from './modal';
 import messageStore from './message';
 // import { browserHistory } from 'react-router';
+import bannerStore from './banner';
 import { companyHomeApi } from 'api';
 import pathval from 'pathval';
 class CompanyHomeStore {
@@ -57,6 +58,7 @@ class CompanyHomeStore {
         modalStore.closeAction();
         messageStore.openMessage({ ...text });
         this.reportInfo.monitorId = resp.data.monitorId;
+        bannerStore.getMonitorRepInfo();
       }))
       .catch(action('createMonitor error', (err) => {
         console.log(err.response, '=====createMonitor error');
