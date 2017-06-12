@@ -28,6 +28,10 @@ let svg;
 let group;
 let clickTime = '';
 let timer = null;
+let reactionFoucusNode;
+let reactionExpanded;
+let reactionDbFocal;
+let reactionShortest;
 // let dblclikTimer = null;
 // nodeStatus 1:active -1灰色 －２灰色变小
 @inject('forceNetworkStore', 'routing')
@@ -81,7 +85,7 @@ export default class ForceNetworkGraph extends Component {
       simulation.restart();
     }, 2000);
     // 监听点击和搜索节点事件
-    reaction(
+    reactionFoucusNode = reaction(
       () => this.props.forceNetworkStore.focalNode,
       () => {
         this.props.forceNetworkStore.resetNodeInfo();
@@ -108,7 +112,7 @@ export default class ForceNetworkGraph extends Component {
       }
     );
     // 监听拓展事件
-    reaction(
+    reactionExpanded = reaction(
       () => this.props.forceNetworkStore.expandNetwork.change,
       () => {
         const { nodes, links } = this.props.forceNetworkStore.expandNetwork;
@@ -127,7 +131,7 @@ export default class ForceNetworkGraph extends Component {
       }
     );
     // 监听聚焦事件
-    reaction(
+    reactionDbFocal = reaction(
       () => this.props.forceNetworkStore.dbFocalNode,
       () => {
         this.props.forceNetworkStore.resetNodeInfo();
@@ -153,7 +157,7 @@ export default class ForceNetworkGraph extends Component {
       }
     );
     // 监听最短路径
-    reaction(
+    reactionShortest = reaction(
       () => this.props.forceNetworkStore.shortestPahth,
       () => {
         const { dbFocalNode, focalNode, shortestPahth} = this.props.forceNetworkStore;
@@ -177,6 +181,15 @@ export default class ForceNetworkGraph extends Component {
         }
       }
     );
+  }
+  componentWillUnmount() {
+    if (simulation) {
+      simulation.stop(); // 停止网络图计算
+    }
+    reactionFoucusNode();
+    reactionExpanded();
+    reactionDbFocal();
+    reactionShortest();
   }
   getNodeInfo = (focalNode) => {
     if (focalNode.cateType === 1) {

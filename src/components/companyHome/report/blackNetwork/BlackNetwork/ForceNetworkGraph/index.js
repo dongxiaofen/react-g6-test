@@ -21,7 +21,8 @@ let nodeG;
 let edgepathsG;
 let edgelabelsG;
 let textsG;
-
+let reactionFoucusNode;
+let reactionExpanded;
 @inject('blackNetworkStore')
 @observer
 export default class ForceNetworkGraph extends Component {
@@ -70,7 +71,7 @@ export default class ForceNetworkGraph extends Component {
 
     this.reDraw();
     // 监听点击节点事件
-    reaction(
+    reactionFoucusNode = reaction(
       () => this.props.blackNetworkStore.focusNodeFlag,
       () => {
         const { focusNodeName } = this.props.blackNetworkStore;
@@ -87,7 +88,7 @@ export default class ForceNetworkGraph extends Component {
       }
     );
     // 监听expand事件
-    reaction(
+    reactionExpanded = reaction(
       () => this.props.blackNetworkStore.expandIdx,
       () => {
         const newExpandIdx = this.props.blackNetworkStore.expandIdx;
@@ -109,6 +110,8 @@ export default class ForceNetworkGraph extends Component {
     isDragging = false;
     zoom = '';
     group = '';
+    reactionFoucusNode();
+    reactionExpanded();
   }
   reDraw = () => {
     simulation.nodes(nodesData);
