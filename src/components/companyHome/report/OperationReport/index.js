@@ -2,25 +2,27 @@ import React, { PropTypes } from 'react';
 import { observer } from 'mobx-react';
 import styles from './index.less';
 
-function OperationReport({ loaningStore }) {
-  const data = loaningStore.operationDataList.data;
+function OperationReport({ operationDataList }) {
+  const data = operationDataList.data;
   const dataDom = [];
   let idx = 0;
-  Object.keys(data).map(key => {
-    dataDom.push(
-      <tr key={`${idx}operation`}>
-        <td>{key}年</td>
-        <td>{data[key].CWFYZB}%</td>
-        <td>{data[key].GLFYZB}%</td>
-        <td>{data[key].XSFYZB}%</td>
-      </tr>
-    );
-    idx++;
-  });
+  if (data) {
+    Object.keys(data).map(key => {
+      dataDom.push(
+        <tr key={`${idx}operation`}>
+          <td>{key}年</td>
+          <td>{data[key].CWFYZB}%</td>
+          <td>{data[key].GLFYZB}%</td>
+          <td>{data[key].XSFYZB}%</td>
+        </tr>
+      );
+      idx++;
+    });
+  }
   return (
     <div>
       <p className={styles.excelTitle}>指标列表
-        <span className={styles.timestamp}>(分析时间：{this.props.loaningStore.operationDataList.date})</span>
+        <span className={styles.timestamp}>(分析时间：{this.props.operationDataList.lastTm})</span>
       </p>
       <table className={styles.table}>
         <thead>
@@ -70,6 +72,6 @@ function OperationReport({ loaningStore }) {
 }
 
 OperationReport.propTypes = {
-  foo: PropTypes.string,
+  loaningStore: PropTypes.object,
 };
 export default observer(OperationReport);
