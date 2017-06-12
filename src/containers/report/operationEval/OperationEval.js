@@ -1,6 +1,6 @@
 import React, { Component, PropTypes } from 'react';
 import { observer, inject } from 'mobx-react';
-import OperationReport from '../../../components/companyHome/report/OperationReport';
+import OperationReport from 'components/companyHome/report/OperationReport';
 
 @inject('loaningStore')
 @observer
@@ -11,7 +11,7 @@ export default class OperationEval extends Component {
   }
 
   componentDidMount() {
-    // this.props.loaningStore.getOperationDataList();
+    this.props.loaningStore.getOperationDataList();
   }
 
   componentWillUnmount() {

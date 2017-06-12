@@ -1,6 +1,6 @@
 import React, { Component, PropTypes } from 'react';
 import { observer, inject } from 'mobx-react';
-import ProfitabilityReport from '../../../components/companyHome/report/ProfitabilityReport';
+import ProfitabilityReport from 'components/companyHome/report/ProfitabilityReport';
 
 @inject('loaningStore')
 @observer
@@ -11,7 +11,7 @@ export default class ProfitEval extends Component {
   }
 
   componentDidMount() {
-    // this.props.loaningStore.getProfitEvalList();
+    this.props.loaningStore.getProfitEvalList();
   }
 
   componentWillUnmount() {

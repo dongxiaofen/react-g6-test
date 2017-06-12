@@ -1,6 +1,6 @@
 import React, { Component, PropTypes } from 'react';
 import { observer, inject } from 'mobx-react';
-import GrowingReport from '../../../components/companyHome/report/GrowingReport';
+import GrowingReport from 'components/companyHome/report/GrowingReport/index';
 @inject('loaningStore')
 @observer
 export default class GrowthAbilityEval extends Component {
@@ -10,7 +10,7 @@ export default class GrowthAbilityEval extends Component {
   }
 
   componentDidMount() {
-    // this.props.loaningStore.getUpDataList();
+    this.props.loaningStore.getUpDataList();
   }
 
   componentWillUnmount() {

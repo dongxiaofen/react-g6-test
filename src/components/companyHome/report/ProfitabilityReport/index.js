@@ -7,17 +7,18 @@ import styles from './index.less';
 
 function ProfitabilityReport({ profitDataList }) {
   const dataDom = [];
+  const data = profitDataList.data;
   let idx = 0;
-  Object.keys(profitDataList).map(key => {
+  Object.keys(data).map(key => {
     dataDom.push(
       <tr key={`${idx}profit`}>
         <td>{key}年</td>
-        <td>{profitDataList[key].XSMLL}%</td>
-        <td>{profitDataList[key].XSJLL}%</td>
-        <td>{profitDataList[key].YYJLL}%</td>
-        <td>{profitDataList[key].CBFYJLL}%</td>
-        <td>{profitDataList[key].ZYYWLRL}%</td>
-        <td>{profitDataList[key].ZCJLL}%</td>
+        <td>{data[key].XSMLL}%</td>
+        <td>{data[key].XSJLL}%</td>
+        <td>{data[key].YYJLL}%</td>
+        <td>{data[key].CBFYJLL}%</td>
+        <td>{data[key].ZYYWLRL}%</td>
+        <td>{data[key].ZCJLL}%</td>
       </tr>
     );
     idx++;
@@ -26,7 +27,7 @@ function ProfitabilityReport({ profitDataList }) {
   return (
     <div className={styles.box}>
       <p className={styles.excelTitle}>指标列表
-        <span className={styles.timestamp}>(分析时间：{this.props.profitDataList.timestamp})</span>
+        <span className={styles.timestamp}>(分析时间：{this.props.profitDataList.date})</span>
       </p>
       <table className={styles.table}>
         <thead>

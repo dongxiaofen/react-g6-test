@@ -3,7 +3,7 @@ import { observer } from 'mobx-react';
 import styles from './index.less';
 
 function OperationReport({ loaningStore }) {
-  const data = loaningStore.operationDataList;
+  const data = loaningStore.operationDataList.data;
   const dataDom = [];
   let idx = 0;
   Object.keys(data).map(key => {
@@ -20,7 +20,7 @@ function OperationReport({ loaningStore }) {
   return (
     <div>
       <p className={styles.excelTitle}>指标列表
-        <span className={styles.timestamp}>(分析时间：{this.props.loaningStore.operationDataList.timestamp})</span>
+        <span className={styles.timestamp}>(分析时间：{this.props.loaningStore.operationDataList.date})</span>
       </p>
       <table className={styles.table}>
         <thead>

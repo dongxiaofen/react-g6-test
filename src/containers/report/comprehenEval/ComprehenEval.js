@@ -1,6 +1,6 @@
 import React, { Component, PropTypes } from 'react';
 import { observer, inject } from 'mobx-react';
-import ComprehenEvalPage from '../../../components/companyHome/loaning/ComprehenEval';
+import ComprehenEvalPage from 'components/companyHome/loaning/ComprehenEval';
 
 @inject('loaningStore')
 @observer
@@ -11,7 +11,7 @@ export default class ComprehenEval extends Component {
   }
 
   componentDidMount() {
-    // this.props.loaningStore.getCompanyScore();
+    this.props.loaningStore.getCompanyScore();
   }
 
   componentWillUnmount() {

@@ -12,7 +12,7 @@ class CompanyHomeStore {
     reportId: '',
     monitorId: '',
     dimensions: [],
-  }
+  };
   @observable loanOption = [
     { label: '多维综合评价', value: 'SCORE', checked: true},
     { label: '盈利能力分析', value: 'PROFIT', checked: true},
@@ -67,7 +67,7 @@ class CompanyHomeStore {
         };
         messageStore.openMessage({ ...text });
       }));
-  }
+  };
   @action.bound getIdParams(params) {
     companyHomeApi.getReportStatus(params)
       .then(action('getIdParams', resp => {

@@ -1,4 +1,4 @@
-import React, {PropTypes} from 'react';
+import React, { PropTypes } from 'react';
 import { observer } from 'mobx-react';
 import { browserHistory } from 'react-router';
 
@@ -46,7 +46,7 @@ function CardList({ collectionStore, uiStore }) {
           <div className={`clearfix ${styles.baseInfo}`}>
             <div className={styles.nameWrap}>
               <span className={styles.name}
-                onClick={viewCompany.bind(null, id, productType)}>
+                    onClick={viewCompany.bind(null, id, productType)}>
                 {item.companyName}
               </span>
               <span className={styles.category}>{category(item.productType)}</span>
@@ -61,7 +61,7 @@ function CardList({ collectionStore, uiStore }) {
             </div>
           </div>
           <div className={styles.cancelBtn}
-            onClick={cancelCollection.bind(item.companyName)}>
+               onClick={cancelCollection.bind(null, item.companyName)}>
             取消收藏
           </div>
           <div className={`clearfix ${styles.lastModifiedTs}`}>
