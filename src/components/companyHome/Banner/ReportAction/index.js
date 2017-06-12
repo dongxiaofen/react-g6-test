@@ -36,8 +36,10 @@ function ReportAction({ bannerStore, modalStore, payModalStore, routing }) {
 
   const bannerActionBtn = () => {
     const outputBtn = [];
-    const addMonitor = <div key="btnAddMonitor" className={styles.actionBtn} onClick={openCreateMonitorModal}>加入监控</div>;
-    const monitorRenewal = <div key="btnRenewalMonitor" className={styles.actionBtn} onClick={renewalMonitorModal}>监控续期</div>;
+    const addMonitor = (<div key="btnAddMonitor" className={styles.actionBtn} onClick={openCreateMonitorModal}>
+      加入监控</div>);
+    const monitorRenewal = (<div key="btnRenewalMonitor" className={styles.actionBtn} onClick={renewalMonitorModal}>
+      监控续期</div>);
     if (reportId) {
       outputBtn.push(addMonitor);
     }
@@ -72,8 +74,11 @@ function ReportAction({ bannerStore, modalStore, payModalStore, routing }) {
   };
 
   const addOrCancelCollection = () => {
-    const params = { collection: !bannerStore.collection };
-    bannerStore.addOrCancelCollection({ reportId, monitorId, params });
+    const params = {
+      collection: !bannerStore.collection,
+      companyName: bannerStore.bannerData.companyName
+    };
+    bannerStore.addOrCancelCollection(params);
   };
 
   const pauseOrRestoreMonitorConfirm = () => {
