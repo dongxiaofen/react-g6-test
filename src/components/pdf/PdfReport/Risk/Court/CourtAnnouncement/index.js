@@ -2,13 +2,12 @@ import React, {PropTypes} from 'react';
 import { observer } from 'mobx-react';
 import PdfNotFound from 'components/common/pdf/PdfNotFound';
 import PdfSimpleKey from 'components/common/pdf/PdfSimpleKey';
-import SecondTitle from 'components/common/pdf/SecondTitle';
 
 function CourtAnnouncement({moduleData}) {
   if (!moduleData || moduleData.length === 0) {
     return (
       <div>
-        <SecondTitle module="法院公告" />
+        <div style={{height: '30px'}}></div>
         <PdfNotFound />
       </div>
     );
@@ -36,7 +35,7 @@ function CourtAnnouncement({moduleData}) {
   };
   return (
     <div>
-      <SecondTitle module="法院公告" />
+      <div style={{height: '30px'}}></div>
       <PdfSimpleKey {...data} />
     </div>
   );

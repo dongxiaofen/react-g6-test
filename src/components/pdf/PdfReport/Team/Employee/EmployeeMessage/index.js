@@ -8,7 +8,7 @@ function EmployeeMessage({ moduleData }) {
   if (!moduleData || moduleData.length === 0) {
     return (
       <div>
-        <SecondTitle module="招聘信息－招聘岗位分布" />
+        <SecondTitle module="招聘岗位分布" />
         <PdfNotFound />
       </div>
     );
@@ -24,7 +24,7 @@ function EmployeeMessage({ moduleData }) {
   };
   return (
     <div>
-      <SecondTitle module="招聘信息－招聘岗位分布" />
+      <SecondTitle module="招聘岗位分布" />
       <PdfTable {...data} />
     </div>
   );

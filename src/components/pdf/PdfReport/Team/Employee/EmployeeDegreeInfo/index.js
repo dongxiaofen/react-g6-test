@@ -8,7 +8,7 @@ function EmployeeDegreeInfo({moduleData}) {
   if (!moduleData || moduleData.length === 0) {
     return (
       <div>
-        <SecondTitle module="招聘信息－招聘学历要求" />
+        <SecondTitle module="招聘学历要求" />
         <PdfNotFound />
       </div>
     );
@@ -24,7 +24,7 @@ function EmployeeDegreeInfo({moduleData}) {
   };
   return (
     <div>
-      <SecondTitle module="招聘信息－招聘学历要求" />
+      <SecondTitle module="招聘学历要求" />
       <PdfTable {...data}/>
     </div>
   );

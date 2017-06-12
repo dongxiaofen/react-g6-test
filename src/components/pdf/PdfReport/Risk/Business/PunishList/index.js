@@ -3,7 +3,8 @@ import { observer } from 'mobx-react';
 import PdfNotFound from 'components/common/pdf/PdfNotFound';
 import PdfSimpleKey from 'components/common/pdf/PdfSimpleKey';
 
-function OperateError({moduleData}) {
+
+function PunishList({moduleData}) {
   if (!moduleData || moduleData.length === 0) {
     return (
       <div>
@@ -12,16 +13,23 @@ function OperateError({moduleData}) {
       </div>
     );
   }
+  const handleRelevantDepartments = (data) => {
+    if (!data || data.length === 0) {
+      return '无';
+    }
+    return data.join(',');
+  };
   const data = {
     dataConfig: [
-      {'key': 'abntime', 'width': '6'},
-      {'key': 'retime', 'width': '6'},
-      {'key': 'recause', 'width': '6'},
-      {'key': 'decorg', 'width': '6'},
-      {'key': 'specause', 'width': '12'}
+      {'key': 'identity', 'width': '6'},
+      {'key': 'caseReason', 'width': '6'},
+      {'key': 'judgeTime', 'width': '6', 'handle': this.regTime},
+      {'key': 'court', 'width': '6'},
+      {'key': 'relevantDepartments', 'width': '12', 'handle': handleRelevantDepartments},
+      {'key': 'illegalFacts', 'width': '12'}
     ],
     item: moduleData,
-    dict: 'jyErrorData',
+    dict: 'punishListInfo',
     type: 'array',
     hasConfig: true,
   };
@@ -33,7 +41,7 @@ function OperateError({moduleData}) {
   );
 }
 
-OperateError.propTypes = {
+PunishList.propTypes = {
   moduleData: PropTypes.object,
 };
-export default observer(OperateError);
+export default observer(PunishList);
