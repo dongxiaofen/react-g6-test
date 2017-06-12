@@ -164,6 +164,20 @@ function OverView({ pdfStore, clientStore }) {
     title: '团队监控分析',
     valueData: summaryData.team ? { data: summaryData.team.recruitmentResume, type: 'object' } : undefined,
   };
+  // 多维分析
+  const comprehensiveAnalysis = {
+    mapKey: {
+      registerInfo: '综合评分',
+      shareholder: '经营状况',
+      mainPerson: '行业相关',
+      branch: '创新能力',
+      // mainPerson: '法务相关',
+      // branch: '团队相关',
+      // mainPerson: '社会影响力'
+    },
+    title: '多维综合分析',
+    valueData: summaryData.basic ? {data: summaryData.basic.corpBasic, type: 'object'} : undefined
+  };
   const taxSummary = {
     mapKey: {
       taxSummary: summaryData.taxOverall && summaryData.taxOverall.length > 0 ? summaryData.taxOverall.join('，') : '暂无信息',
@@ -193,15 +207,6 @@ function OverView({ pdfStore, clientStore }) {
               <Summary {...companySummary}/>
               <Summary {...companyAnnouncement} />
             </div>
-          : ''
-      }
-      {
-        pdfStore.banner.mainStatus === 'MONITOR' ?
-          <div key="taxList">
-            <SecondTitle module="税务分析" />
-            <hr className={styles.hrhr} />
-            <Summary {...taxSummary}/>
-          </div>
           : ''
       }
       <SecondTitle module="新闻信息" />
@@ -238,6 +243,30 @@ function OverView({ pdfStore, clientStore }) {
       <hr className={styles.hrhr} />
       <Summary {...pledgeEquity} />
       {/* <Summary {...riskRelationshipMap} /> */}
+
+      {/* 多维分析 */}
+            <div>
+              <SecondTitle module="多维综合分析" />
+              <hr className={styles.hrhr} />
+              <Summary {...comprehensiveAnalysis} />
+              <Summary {...yearReport} />
+              <Summary {...businessChange} />
+            </div>
+            <div>
+              <SecondTitle module="盈利能力分析" />
+              <hr className={styles.hrhr} />
+              <Summary {...comprehensiveAnalysis} />
+            </div>
+            <div>
+              <SecondTitle module="营运能力分析" />
+              <hr className={styles.hrhr} />
+              <Summary {...taxSummary}/>
+            </div>
+            <div>
+              <SecondTitle module="成长能力分析" />
+              <hr className={styles.hrhr} />
+              <Summary {...taxSummary}/>
+            </div>
     </div>
   );
 }
