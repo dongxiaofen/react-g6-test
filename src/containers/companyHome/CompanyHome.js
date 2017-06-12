@@ -63,6 +63,7 @@ export default class CompanyHome extends Component {
   componentDidMount() {
     const companyName = this.props.routing.location.query.companyName;
     this.props.companyHomeStore.getIdParams({companyName});
+    this.props.bannerStore.getReportStatus({companyName});
   }
   componentWillUnmount() {
     console.log('CompanyHome componentWillUnmount', window.reportSourceCancel);
