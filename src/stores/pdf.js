@@ -18,7 +18,9 @@ class PdfStore {
   @observable network = {};
   @observable blacklist = [];
   @observable team = {};
-  @observable taxList = [];
+  @observable growing = {};
+  @observable operation = {};
+  @observable profit = {};
   @observable courtData = {};
   @observable shares = {
     'sharesFrostList': [
@@ -105,7 +107,7 @@ class PdfStore {
       'NETWORK_BLACKLIST',
     ];
     const analysiReport = [
-      'SCORE',
+      // 'SCORE',
       'PROFIT',
       'OPERATION',
       'GROWING',
@@ -140,7 +142,7 @@ class PdfStore {
     ];
     console.log(baseReport.join(','), report, analysiReport);
     // 获取pdf
-    axios.get(`/api/pdf/basicReport?reportId=${id}&types=${report.join(',')}`)
+    axios.get(`/api/pdf/analysis?analysisReportId=${id}&types=${analysiReport.join(',')}`)
       .then(action((response) => {
         this.banner = pathval.getPathValue(response.data, 'banner');
         this.summary = pathval.getPathValue(response.data, 'summary');
@@ -155,9 +157,12 @@ class PdfStore {
         this.network = pathval.getPathValue(response.data, 'network');
         this.blacklist = pathval.getPathValue(response.data, 'blackList.result[0].paths');
         this.team = pathval.getPathValue(response.data, 'recruitTeamResponse');
-        this.taxList = pathval.getPathValue(response.data, 'taxList');
         this.corpCheckData = pathval.getPathValue(response.data, 'corpCheck');
         // this.shares = pathval.getPathValue(response.data, 'shares');
+        // 分析能力
+        this.growing = pathval.getPathValue(response.data, 'growing');
+        this.operation = pathval.getPathValue(response.data, 'operation');
+        this.profit = pathval.getPathValue(response.data, 'profit');
       }))
       .catch((error) => {
         console.log(error.response);
@@ -178,9 +183,11 @@ class PdfStore {
     this.network = pathval.getPathValue(data, 'network');
     this.blacklist = pathval.getPathValue(data, 'blackList.result[0].paths');
     this.team = pathval.getPathValue(data, 'recruitTeamResponse');
-    this.taxList = pathval.getPathValue(data, 'taxList');
     this.corpCheckData = pathval.getPathValue(data, 'corpCheck');
     this.shares = pathval.getPathValue(data, 'shares');
+    this.growing = pathval.getPathValue(data, 'growing');
+    this.operation = pathval.getPathValue(data, 'operation');
+    this.profit = pathval.getPathValue(data, 'profit');
   }
 }
 export default new PdfStore();

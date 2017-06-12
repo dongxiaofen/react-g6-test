@@ -4,17 +4,16 @@ import styles from './index.less';
 
 function TaxOperationList({moduleData}) {
   const dataDom = [];
-  const data = moduleData.operating_capability;
   let idx = 0;
-  Object.keys(data).map(key => {
+  Object.keys(moduleData).map(key => {
     dataDom.push(
       <tr key={`${idx}operation`}>
         <td>{key}年</td>
-        <td>{data[key].ZZCYSRB}%</td>
-        <td>{data[key].CWFYZB}%</td>
-        <td>{data[key].GLFYZB}%</td>
-        <td>{data[key].GSGM}%</td>
-        <td>{data[key].XSFYZB}%</td>
+        <td>{moduleData[key].ZZCYSRB}%</td>
+        <td>{moduleData[key].CWFYZB}%</td>
+        <td>{moduleData[key].GLFYZB}%</td>
+        <td>{moduleData[key].GSGM}%</td>
+        <td>{moduleData[key].XSFYZB}%</td>
       </tr>
     );
     idx ++;

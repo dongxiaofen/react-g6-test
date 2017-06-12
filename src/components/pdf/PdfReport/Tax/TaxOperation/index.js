@@ -1,21 +1,20 @@
 import React, {PropTypes} from 'react';
 import { observer } from 'mobx-react';
 import TaxOperationList from './TaxOperationList/index';
-import SecondTitle from 'components/common/pdf/SecondTitle';
 import PdfNotFound from 'components/common/pdf/PdfNotFound';
 
 function TaxOperation({moduleData}) {
-  if (!moduleData || !moduleData.operating_capability) {
+  if (!moduleData || Object.keys(moduleData).length === 0) {
     return (
       <div>
-        <SecondTitle module="营运能力指标"/>
+        <div style={{marginTop: '30px'}}></div>
         <PdfNotFound />
       </div>
     );
   }
   return (
     <div>
-      <SecondTitle module="营运能力指标" />
+      <div style={{marginTop: '30px'}}></div>
       <TaxOperationList moduleData={moduleData} />
     </div>
   );

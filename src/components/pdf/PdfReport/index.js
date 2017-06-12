@@ -12,6 +12,7 @@ import Network from './NetWork';
 import Team from './Team';
 import Tax from './Tax';
 import EquityRelated from './EquityRelated';
+import AnalysisReport from './AnalysisReport';
 import styles from './index.less';
 
 function PdfReport({}) {
@@ -29,13 +30,14 @@ function PdfReport({}) {
             {judgeIsModuleExist('SUMMARY') ? <Overview /> : ''}
             {judgeIsModuleExist('CORP') ? <Base judgeIsModuleExist={judgeIsModuleExist} /> : ''}
             {judgeIsModuleExist('STOCK') ? <Stock judgeIsModuleExist={judgeIsModuleExist} /> : ''}
-            {judgeIsModuleExist('TAX') ? <Tax judgeIsModuleExist={judgeIsModuleExist} /> : ''}
             {judgeIsModuleExist('RISK') ? <Risk judgeIsModuleExist={judgeIsModuleExist} /> : ''}
             <EquityRelated />
-            {judgeIsModuleExist('NEWS') ? <News judgeIsModuleExist={judgeIsModuleExist} /> : ''}
+            <News judgeIsModuleExist={judgeIsModuleExist} />
             {judgeIsModuleExist('OPERATION') ? <Assets judgeIsModuleExist={judgeIsModuleExist} /> : ''}
-            {judgeIsModuleExist('NETWORK') ? <Network judgeIsModuleExist={judgeIsModuleExist} /> : ''}
+            <Network judgeIsModuleExist={judgeIsModuleExist} />
             {judgeIsModuleExist('TEAM') ? <Team judgeIsModuleExist={judgeIsModuleExist} /> : '' }
+            <AnalysisReport judgeIsModuleExist={judgeIsModuleExist} />
+            <Tax judgeIsModuleExist={judgeIsModuleExist} />
         </Col>
       </Row>
     </Container>
