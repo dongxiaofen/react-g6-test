@@ -13,22 +13,35 @@ function PunishList({moduleData}) {
       </div>
     );
   }
-  const handleRelevantDepartments = (data) => {
-    if (!data || data.length === 0) {
-      return '无';
-    }
-    return data.join(',');
+  const newData = () => {
+    let newArr = [];
+    moduleData.map( (item) => {
+      Object.keys(item).map( (key) => {
+        if (key === 'isCancel') {
+          item[key] = !item[key] && item[key].length === 0 ? '否' : '是';
+        }
+        item[key] = !item[key] && item[key].length === 0 ? '--' : item[key];
+      });
+      newArr = [...newArr, item];
+    });
+    return newArr;
   };
   const data = {
     dataConfig: [
-      {'key': 'identity', 'width': '6'},
-      {'key': 'caseReason', 'width': '6'},
-      {'key': 'judgeTime', 'width': '6', 'handle': this.regTime},
-      {'key': 'court', 'width': '6'},
-      {'key': 'relevantDepartments', 'width': '12', 'handle': handleRelevantDepartments},
+      {'key': 'illegalIncome', 'width': '4'},
+      {'key': 'penaltyDate', 'width': '4'},
+      {'key': 'isCancel', 'width': '4'},
+      {'key': 'penaltyAmount', 'width': '4'},
+      {'key': 'forfeitureAmount', 'width': '4'},
+      {'key': 'changeAmount', 'width': '4'},
+      {'key': 'lawsuit', 'width': '4'},
+      {'key': 'reconsideration', 'width': '4'},
+      {'key': 'transferJudicialOrg', 'width': '4'},
+      {'key': 'illegalActivities', 'width': '12'},
+      {'key': 'punishmentBasis', 'width': '12'},
       {'key': 'illegalFacts', 'width': '12'}
     ],
-    item: moduleData,
+    item: newData(),
     dict: 'punishListInfo',
     type: 'array',
     hasConfig: true,

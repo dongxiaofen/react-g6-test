@@ -30,7 +30,18 @@ const config = {
     'socialCreditIdentifier': '社会信用代码'
   },
   punishListInfo: {
-    'illegalFacts': '主要违法事实'
+    'illegalFacts': '主要违法事实',
+    'illegalIncome': '违法所得（万元）',
+    'penaltyDate': '处罚决定书签发日期',
+    'isCancel': '是否注销',
+    'penaltyAmount': '罚款金额（万元）',
+    'forfeitureAmount': '没收金额(万元)',
+    'changeAmount': '变更金额（万元）',
+    'lawsuit': '诉讼情况',
+    'reconsideration': '复议情况',
+    'transferJudicialOrg': '移送司法机关情况',
+    'punishmentBasis': '处罚依据',
+    'illegalActivities': '违法行为'
   },
   shareholder: {
     'shareholderName': '股东姓名',
