@@ -1,4 +1,4 @@
-import React, { PropTypes } from 'react';
+import React from 'react';
 import { observer } from 'mobx-react';
 import styles from './index.less';
 
@@ -13,9 +13,5 @@ function CirclesLoading({height = '400px'}) {
     </div>
   );
 }
-
-CirclesLoading.propTypes = {
-  foo: PropTypes.string,
-};
 
 export default observer(CirclesLoading);

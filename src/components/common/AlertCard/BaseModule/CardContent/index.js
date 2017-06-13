@@ -4,9 +4,25 @@ import styles from '../index.less';
 import {Col, Row} from 'components/common/layout';
 import KeyValue from '../KeyValue';
 import DICT from 'dict/reportModule';
-function CardContent({data, show, contentHtml, isModal}) {
+function CardContent({data, show, contentHtml, isModal, module}) {
+  const routeToCompanyHome = (companyName) => {
+    location.href = '/companyHome?companyName=' + companyName;
+  };
+  const handleCompanyName = (value) => {
+    return <span onClick={routeToCompanyHome.bind(null, value)} style={{cursor: 'pointer'}}>{value}</span>;
+  };
   const content = ()=>{
     const output = [];
+    if (module === 'timeAxis') {
+      output.push(
+        <Col key="companyName" width={12} className={styles.col}>
+          <KeyValue
+            theKey="事件公司"
+            handle={handleCompanyName}
+            theValue={data.items.companyName} />
+        </Col>
+      );
+    }
     const config = isModal || show ? data.viewConfig : data.hideConfig;
     config.forEach((item, idx) => {
       let value = data.items.content[item.key];

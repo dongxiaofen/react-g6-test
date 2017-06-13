@@ -45,12 +45,16 @@ function TaxCheckModal({taxCheckStore}) {
   const inputChange = (index, evt) => {
     taxCheckStore.changeValue(`selectConf[${index}].input`, evt.target.value);
   };
+  const inputNameChange = (evt) => {
+    console.log(evt.target.value);
+    taxCheckStore.changeValue('companyName', evt.target.value);
+  };
   const checkNumber = (index, evt) => {
     const inputValue = evt.target.value;
     const pattern = /^\d+(.\d+)?$/;
     let msg = '';
     if (!pattern.test(inputValue)) {
-      msg = '请输入数字';
+      msg = '金额只能为数字';
     }
     taxCheckStore.changeValue(`selectConf[${index}].msg`, msg);
   };
@@ -102,9 +106,8 @@ function TaxCheckModal({taxCheckStore}) {
         <Input
           className={styles.componayInput}
           inputType="singleline"
-          onBlur={checkNumber.bind(null)}
-          onChange={inputChange.bind(null)}
-          value=""
+          onChange={inputNameChange.bind(null)}
+          value={taxCheckStore.companyName}
           placeholder="请输入企业全称，如“小米科技有限公司”" />
       </div>
       {generateSelect()}
