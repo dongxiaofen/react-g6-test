@@ -23,6 +23,7 @@ class CompanyHomeStore {
   ];
   @observable monitorTime = 1;
   @observable loanLoading = false;
+  @observable monitorLoading = false;
   @computed get monitorTimeObj() {
     const init = [
       {text: '1个月', key: 'ONE_MONTH'},
@@ -49,16 +50,18 @@ class CompanyHomeStore {
     });
     return output;
   }
-  createMonitorConfirm = (params)=> {
+  @action.bound createMonitorConfirm = (params)=> {
     let text = {
       content: '监控创建成功'
     };
+    this.monitorLoading = true;
     companyHomeApi.createMonitor(params)
       .then(action('createMonitor', (resp) => {
         modalStore.closeAction();
         messageStore.openMessage({ ...text });
         this.reportInfo.monitorId = resp.data.monitorId;
         bannerStore.getMonitorRepInfo();
+        this.monitorLoading = false;
       }))
       .catch(action('createMonitor error', (err) => {
         console.log(err.response, '=====createMonitor error');
@@ -68,6 +71,7 @@ class CompanyHomeStore {
           content: err.response.data.message
         };
         messageStore.openMessage({ ...text });
+        this.monitorLoading = false;
       }));
   };
   @action.bound createMonitor() {
