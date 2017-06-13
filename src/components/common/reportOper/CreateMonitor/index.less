@@ -1,8 +1,8 @@
 @import "~sc-colors/index.less";
 .title {
-  font-size: 14px;
+  font-size: 16px;
   line-height: 1em;
-  color: @mdc-grey-800;
+  color: @mdc-grey-700;
   margin-bottom: 23px;
   font-weight: bold;
 }
@@ -42,15 +42,17 @@
   width: 100%;
   position: absolute;
   left: 0;
-  margin-top: 20px;
+  margin-top: 27px;
   margin-bottom: 15px;
   border-top: 1px solid @mdc-blue-grey-100;
 }
 .confirm {
-  width: 280px;
-  line-height: 46px;
-  height: 46px;
+  width:100px;
+  line-height: 35px;
+  height: 35px;
   margin: auto;
+  float: left;
+  margin-right: 15px;
 }
 .sliderText {
   float: left;
@@ -66,8 +68,28 @@
   composes: sliderText;
   font-weight: bold;
   color: @mdc-orange-500;
+  margin-left: 15px;
 }
 .slider {
   float: left;
-  width: 728px;
+  width: 573px;
+}
+.pointText {
+  margin-top: 10.5px;
+  font-size: 14px;
+  line-height: 14px;
+  color: #b0bec5;
+  float: left;
+
+  a {
+    font-size: 14px;
+    line-height: 14px;
+    color: #548fc2;
+    text-decoration: underline;
+  }
+
+  i {
+    margin-right: 6px;
+    color: #90caf9;
+  }
 }

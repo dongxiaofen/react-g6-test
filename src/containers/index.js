@@ -50,4 +50,5 @@ export RiskCheck from './report/riskCheck';
 export EntinvItem from './report/entinvItem';
 export FrPosAndInv from './report/frPosAndInv';
 export ManagePosAndInv from './report/managePosAndInv';
+export MonitorAlert from './report/monitorAlert';
 // append here from plop

@@ -30,7 +30,7 @@ import styles from './index.less';
   'analysisSrore',
   'taxStore',
   'monitorAxisStore',
-  'alertMonitorStore',
+  'monitorAlertStore',
   'nowRecordStore',
   'payModalStore',
 )
@@ -60,7 +60,6 @@ export default class CompanyHome extends Component {
     analysisSrore: PropTypes.object,
     taxStore: PropTypes.object,
     monitorAxisStore: PropTypes.object,
-    alertMonitorStore: PropTypes.object,
     nowRecordStore: PropTypes.object,
   };
   componentWillMount() {
@@ -72,7 +71,7 @@ export default class CompanyHome extends Component {
   }
   componentDidMount() {
     const companyName = this.props.routing.location.query.companyName;
-    this.props.companyHomeStore.getIdParams({companyName});
+    this.props.companyHomeStore.getReportStatus({companyName});
   }
   componentWillUnmount() {
     // cancel pending api call
@@ -102,8 +101,10 @@ export default class CompanyHome extends Component {
       'alertAnalysisStore',
       'analysisSrore',
       'taxStore',
+      'taxCheckStore',
+      'companyHomeStore',
       'monitorAxisStore',
-      'alertMonitorStore',
+      'monitorAlert',
       'nowRecordStore'
     ].map((key)=>{
       if (this.props[key].resetStore) {
