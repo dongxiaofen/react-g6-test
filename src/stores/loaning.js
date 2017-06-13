@@ -80,12 +80,22 @@ class LoaningStore {
 
   // 重置营收能力数据
   @action.bound resetProfitEvalStore() {
-    this.profitDatat = [];
+    this.profitDatat = {};
   }
 
-  // 重置营收能力数据
+  // 重置企业分数数据
   @action.bound resetSixStarStore() {
-    this.sixStarData = '';
+    this.sixStarData = {};
+  }
+
+  // 重置营运能力数据
+  @action.bound resetOperationDataList() {
+    this.profitDataList = {};
+  }
+
+  // 重置成长能力数据
+  @action.bound resetUpDataList() {
+    this.upDataList = {};
   }
 }
 export default new LoaningStore();

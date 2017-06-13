@@ -15,7 +15,7 @@ export default class ProfitEval extends Component {
   }
 
   componentWillUnmount() {
-    // this.props.loaningStore.resetProfitEvalStore();
+    this.props.loaningStore.resetProfitEvalStore();
   }
 
   render() {

@@ -14,7 +14,7 @@ export default class GrowthAbilityEval extends Component {
   }
 
   componentWillUnmount() {
-    // this.props.loaningStore.resetgetUpDataListStore();
+    this.props.loaningStore.resetUpDataList();
   }
 
   render() {
