@@ -15,12 +15,10 @@ import EquityRelated from './EquityRelated';
 import AnalysisReport from './AnalysisReport';
 import styles from './index.less';
 
-function PdfReport({}) {
+function PdfReport({pdfStore}) {
   const judgeIsModuleExist = (module) => {
-    console.log(module);
-    return true;
-    // const pdfModule = pdfStore.pdfTypesKey;
-    // return (pdfModule && pdfModule.includes(module));
+    const pdfModule = pdfStore.pdfTypesKey;
+    return (pdfModule && pdfModule.includes(module));
   };
   return (
     <Container>
