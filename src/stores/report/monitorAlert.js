@@ -58,18 +58,17 @@ class MonitorAlertStore {
         this.detailData.detail = info.alertType === 'RULE' ? resp.data.content : resp.data;
         this.detailData.orgData = resp.data;
         this.detailData.info = info;
-        console.log(info, '=====', this.detailData.info);
         this.openDetailModal(this.detailData.info.alertType);
         if (this.detailData.info.alertType === 'RULE') {
           const pattern = this.detailData.detail[0].pattern;
           if (pattern === 'NEWS') {
-            this.getNewsDetail(companyType, companyId);
+            this.getNewsDetail(companyId);
           } else if (pattern === 'JUDGMENT') {
-            this.getJudgeDocDetail(companyType, companyId, this.detailData.detail[this.detailData.activeIndex].content);
+            this.getJudgeDocDetail(companyId, this.detailData.detail[this.detailData.activeIndex].content);
           }
         } else if (this.detailData.info.alertType === 'SYS_RULE') {
           if (resp.data[0].detail[0].type === 'judgeInfo' && this.detailData.detail[0].detail[0].judgeInfo) {
-            this.getJudgeDocDetail(companyType, companyId, this.detailData.detail[0].detail[0].judgeInfo);
+            this.getJudgeDocDetail(companyId, this.detailData.detail[0].detail[0].judgeInfo);
           }
         }
       }))
@@ -90,12 +89,8 @@ class MonitorAlertStore {
     const params = {};
     params.createdAt = detailData.content.createdAt;
     params.url = detailData.content.url;
-    if (type !== 'monitor') {
-      params.analysisReportId = companyId;
-    }
     this.detailData.html = '';
-    const getNewsDetailFunc = type === 'monitor' ? companyHomeApi.getAlertNewsMonitor(companyId, params) : companyHomeApi.getAlertNewsReport(params);
-    getNewsDetailFunc
+    companyHomeApi.getAlertNewsMonitor(companyId, params)
     .then(action('get news', resp=> {
       this.detailData.html = resp.data.html;
     }))
@@ -104,16 +99,12 @@ class MonitorAlertStore {
       this.detailData.html = '--';
     }));
   }
-  @action.bound getJudgeDocDetail(type, companyId, data) {
+  @action.bound getJudgeDocDetail(companyId, data) {
     const params = {};
     params.docId = data.docId;
     params.trailDate = data.trailDate;
     this.detailData.html = '';
-    if (type !== 'monitor') {
-      params.analysisReportId = companyId;
-    }
-    const getJudeDocDetailFunc = type === 'monitor' ? companyHomeApi.getAlertJudgeDocMonitor(companyId, params) : companyHomeApi.getAlertJudgeDocReport(params);
-    getJudeDocDetailFunc
+    companyHomeApi.getAlertJudgeDocMonitor(companyId, params)
     .then(action('get judgeDoc', resp=> {
       this.detailData.html = resp.data.detail;
     }))

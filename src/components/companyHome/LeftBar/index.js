@@ -73,10 +73,10 @@ function LeftBar({ leftBarStore, bannerStore, routing, companyHomeStore}) {
     // onst reportType = leftBarStore.getReportType(routing);
     barConf[type].forEach((menuObj) => {
       const accessMenu = isLock(menuObj, type);
-      const arrowCss = activeMenu.includes(menuObj.menuKey) ? styles.arrow + ` ${styles.arrowAnim}` : styles.arrow;
-      const menuCss = accessMenu ? styles.menuCss : styles.menuDisCss;
       const itemRow = [];
       if (menuObj.children) {
+        const arrowCss = activeMenu.includes(menuObj.menuKey) ? styles.arrow + ` ${styles.arrowAnim}` : styles.arrow;
+        const menuCss = accessMenu ? styles.menuCss : styles.menuDisCss;
         menuRow.push(
           <div key={menuObj.menuKey}
             className={menuCss}
@@ -104,6 +104,8 @@ function LeftBar({ leftBarStore, bannerStore, routing, companyHomeStore}) {
           }
         });
       } else {
+        let menuCss = accessMenu ? styles.menuCss1 : styles.menuDisCss1;
+        menuCss = leftBarStore.activeItem === menuObj.menuKey ? styles.menuCssAct1 : menuCss;
         menuRow.push(
           <div
             key={menuObj.menuKey}
