@@ -2,9 +2,9 @@ import React from 'react';
 import { observer } from 'mobx-react';
 import { browserHistory } from 'react-router';
 import styles from './index.less';
-function ListItem({data}) {
+function ListItem({data, reportRoute}) {
   const viewReport = (companyName) => {
-    browserHistory.push(`/companyHome?companyName=${companyName}`);
+    browserHistory.push(`/companyHome/${reportRoute}?companyName=${companyName}`);
   };
   const keyMap = {
     SCORE: '多维综合评价',
