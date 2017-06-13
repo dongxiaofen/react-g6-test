@@ -45,7 +45,7 @@ export default class MonitorStatisticsGetData extends Component {
         <Row>
           <Col>
             <div className={`clearfix ${ styles.wrap }`}>
-              <div className={styles.title}>头条趋势</div>
+              <div className={styles.title}>头条统计</div>
             </div>
           </Col>
         </Row>

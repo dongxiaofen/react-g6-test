@@ -9,7 +9,7 @@ function MultiList({analysisListStore}) {
   const data = analysisListStore.multiList.content;
   const createList = () => {
     return data.map((item, idx) => {
-      return <ListItem data={item} key={idx} />;
+      return <ListItem reportRoute="comprehenEval" data={item} key={idx} />;
     });
   };
   if (data.length === 0) {
