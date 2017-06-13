@@ -69,7 +69,7 @@ class CompanyHomeStore {
         };
         messageStore.openMessage({ ...text });
       }));
-  }
+  };
   @action.bound createMonitor() {
     const args = {
       width: '900px',

@@ -1,6 +1,6 @@
 import axios from 'axios';
 export const getBannerInfo = (params) => {
-  return axios.get(`/api/common/bannerInfo`, {params});
+  return axios.get(`/api/common/bannerInfo`, { params });
 };
 
 // 获取上市代码，检查该公司是否是上市公司
@@ -187,7 +187,7 @@ export const getAlertAnalysisList = (monitorId, analysisReportId, params, source
 };
 // 获取评估分析列表详情
 export const getAlertDetail = (url, source, params) => {
-  return axios.get(url, { cancelToken: source.token, params});
+  return axios.get(url, { cancelToken: source.token, params });
 };
 export const getAlertNewsMonitor = (companyId, params) => {
   return axios.get(`/api/monitor/${companyId}/internet/detail`, { params });
@@ -213,7 +213,7 @@ export const monitorExistNode = (monitorCompanyId, params) => {
 
 // 现勘记录
 export const getNowRecordList = (id, params, source) => {
-  return axios.get('/api/survey/' + id + '/page', {params: params, cancelToken: source.token});
+  return axios.get('/api/survey/' + id + '/page', { params: params, cancelToken: source.token });
 };
 export const getNowRecordPictures = (id, source) => {
   return axios.get('/api/survey/' + id + '/pictures', { cancelToken: source.token });
@@ -236,7 +236,7 @@ export const getTaxCheckList = (monitorId, reportId, params, source) => {
   } else if (reportId) {
     url = `/api/report/${reportId}/taxCheck/page`;
   }
-  return axios.get(url, {params: params, cancelToken: source.token});
+  return axios.get(url, { params: params, cancelToken: source.token });
 };
 
 // 全网关系图拓展节点
@@ -255,7 +255,7 @@ export const addTaxCheck = (monitorId, reportId, params) => {
 };
 // 税务列表
 export const getTaxList = (id, source) => {
-  return axios.get('/api/monitor/' + id + '/tax', {cancelToken: source.token});
+  return axios.get('/api/monitor/' + id + '/tax', { cancelToken: source.token });
 };
 // 关联图,获取最短路径
 export const getShortPath = (monitorId, params) => {
@@ -263,29 +263,45 @@ export const getShortPath = (monitorId, params) => {
 };
 // 关联图,获取公司信息
 export const getCompNodeInfo = (monitorId, params) => {
-  return axios.get(`/api/monitor/${monitorId}/expendNetwork/nodeInfo`, {params});
+  return axios.get(`/api/monitor/${monitorId}/expendNetwork/nodeInfo`, { params });
 };
 // 六芒星
 export const getSixStar = (id, source) => {
-  return axios.get('/api/monitor/' + id + '/alert/score', {cancelToken: source.token});
+  return axios.get('/api/monitor/' + id + '/alert/score', { cancelToken: source.token });
 };
 // 关联图,获取个人信息
 export const getPersonNodeInfo = (monitorId, params) => {
-  return axios.get(`/api/monitor/${monitorId}/expendNetwork/personInfo`, {params});
+  return axios.get(`/api/monitor/${monitorId}/expendNetwork/personInfo`, { params });
+};
+// 获取营运能力信息
+export const getOperationDataList = (analysisReportId) => {
+  return axios.get(`/api/analysisReport/${analysisReportId}/operation`);
+};
+// 获取营收能力信息
+export const getProfitEvalList = (analysisReportId) => {
+  return axios.get(`/api/analysisReport/${analysisReportId}/profit`);
+};
+// 获取成长能力能力信息
+export const getUpDataList = (analysisReportId) => {
+  return axios.get(`/api/analysisReport/${analysisReportId}/growing`);
+};
+// 获取综合能力分析(企业分数)
+export const getCompanyScore = (analysisReportId) => {
+  return axios.get(`/api/analysisReport/${analysisReportId}/score`);
 };
 // 贷中分析,创建报告
 export const createAnalyRep = (params) => {
   return axios.post('/api/analysisReport', params);
 };
 // 贷前基础报告,升级
-export const upgradeReport = (basicReportId)=>{
+export const upgradeReport = (basicReportId) => {
   return axios.put(`/api/basicReport/${basicReportId}/upgradeReport`);
 };
 // 获取报告的id
 export const getReportStatus = (params) => {
-  return axios.get(`/api/common/status`, {params});
+  return axios.get(`/api/common/status`, { params });
 };
 // 创建基础报告
-export const createBasicReport = (params)=> {
+export const createBasicReport = (params) => {
   return axios.post(`/api/basicReport`, params);
 };

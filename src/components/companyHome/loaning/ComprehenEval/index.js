@@ -1,16 +1,32 @@
-import React, {PropTypes} from 'react';
+import React, { PropTypes } from 'react';
 import { observer } from 'mobx-react';
-// import styles from './index.less';
+import styles from './index.less';
+import CompanyScoreChart from './CompanyScoreChart';
+import CompanyScoreList from './CompanyScoreList';
+import { loadingComp } from '../../../hoc';
 
-function ComprehenEval({}) {
+function ComprehenEval({ loaningStore }) {
   return (
-    <div>
-      多维综合评价分析
+    <div className={styles.box}>
+      <div className={styles.content}>
+        <CompanyScoreChart
+          sixStarData={loaningStore.sixStarData} />
+        <CompanyScoreList
+          sixStarData={loaningStore.sixStarData} />
+      </div>
     </div>
   );
 }
 
 ComprehenEval.propTypes = {
-  foo: PropTypes.string,
+  loaningStore: PropTypes.object,
 };
-export default observer(ComprehenEval);
+export default loadingComp({
+  mapDataToProps: props => ({
+    loading: props.loaningStore.loading === true ? true : false,
+    category: 2,
+    module: '六芒星',
+    errCategory: 0,
+    error: props.loaningStore.sixStarData.error
+  }),
+})(observer(ComprehenEval));

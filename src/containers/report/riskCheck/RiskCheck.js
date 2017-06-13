@@ -5,6 +5,7 @@ import Tabs from 'antd/lib/tabs';
 const TabPane = Tabs.TabPane;
 import AbnormalOperation from 'components/companyHome/report/riskCheck/AbnormalOperation';
 import CheckMessage from 'components/companyHome/report/riskCheck/CheckMessage';
+import IllegalRecord from 'components/companyHome/report/riskCheck/IllegalRecord';
 
 @inject('routing', 'riskCheckStore')
 @batchReport('riskCheckStore')
@@ -20,7 +21,7 @@ export default class RiskCheck extends Component {
           <AbnormalOperation {...this.props} />
         </TabPane>
         <TabPane tab="违法记录" key="违法记录">
-          违法记录
+          <IllegalRecord {...this.props} />
         </TabPane>
       </Tabs>
     );

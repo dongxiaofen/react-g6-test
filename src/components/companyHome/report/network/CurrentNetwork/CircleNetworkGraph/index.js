@@ -40,6 +40,9 @@ let saveNodeXY = false; // 标记坐标存储完成
 let centerNodeX; // 中心节点X坐标
 let centerNodeY; // 中心节点Y坐标
 let nodeAdded = false; // 用户是否新增了节点
+let reactionFocusNodeName;
+let reactionCheckedArrChanged;
+let reactionCurrentLevel;
 
 @inject('networkStore')
 @observer
@@ -86,7 +89,7 @@ export default class CircleNetworkGraph extends Component {
     svgTools.updateLinksDisplay(nodesData, edgesData);
     this.reDraw();
     // 监听点击和搜索节点事件
-    reaction(
+    reactionFocusNodeName = reaction(
       () => this.props.networkStore.focusNodeName,
       () => {
         if (nodesData !== '') {
@@ -109,7 +112,7 @@ export default class CircleNetworkGraph extends Component {
       }
     );
     // 监听类别筛选事件
-    reaction(
+    reactionCheckedArrChanged = reaction(
       () => this.props.networkStore.typeList.checkedArrChanged,
       () => {
         const checkedArr = this.props.networkStore.typeList.checkedArr;
@@ -130,7 +133,7 @@ export default class CircleNetworkGraph extends Component {
       }
     );
     // 监听level选择变化
-    reaction(
+    reactionCurrentLevel = reaction(
       () => this.props.networkStore.currentLevel,
       () => {
         const checkedArr = this.props.networkStore.typeList.checkedArr;
@@ -167,6 +170,9 @@ export default class CircleNetworkGraph extends Component {
     layerCount = {};
     radiusArr = [];
     group = '';
+    reactionFocusNodeName();
+    reactionCheckedArrChanged();
+    reactionCurrentLevel();
   }
   reDraw = () => {
     simulation.nodes(nodesData);
