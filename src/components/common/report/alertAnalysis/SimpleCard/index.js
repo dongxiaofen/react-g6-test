@@ -5,7 +5,7 @@ import {Col, Row} from 'components/common/layout';
 import DICT from 'dict/reportModule';
 import AnimateLoading from 'components/hoc/LoadingComp/AnimateLoading';
 
-function SimpleCard({meta, alertAnalysisStore}) {
+function SimpleCard({meta, dataStore}) {
   const {item, body, dict} = meta;
   const createContent = ()=> {
     const output = [];
@@ -17,11 +17,11 @@ function SimpleCard({meta, alertAnalysisStore}) {
       if (config.modifyBlock) {
         value = config.modifyBlock(item[config.key]);
       }
-      if (config.keyType === 'detail') {
-        if (!alertAnalysisStore.detailData.html) {
+      if (config.keyType === 'detail' && dataStore) {
+        if (!dataStore.detailData.html) {
           value = <AnimateLoading />;
-        } else if (alertAnalysisStore.detailData.html !== '--') {
-          value = <div dangerouslySetInnerHTML={{__html: alertAnalysisStore.detailData.html}} ></div>;
+        } else if (dataStore.detailData.html !== '--') {
+          value = <div dangerouslySetInnerHTML={{__html: dataStore.detailData.html}} ></div>;
         }
       } else if (config.keyType === 'date') {
         if (value) {
