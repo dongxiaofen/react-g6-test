@@ -429,11 +429,11 @@ const config = {
     'decorg': '作出决定机关',
   },
   checkMessage: {
-    'seq_no': '序号',
+    'seqNo': '序号',
     'institution': '检查实施机关',
-    'check_type': '类型',
-    'check_date': '日期',
-    'check_result': '结果',
+    'checkType': '类型',
+    'checkDate': '日期',
+    'checkResult': '结果',
   },
   illegalRecord: {
     'illegalIncome': '违法所得(万元)',
