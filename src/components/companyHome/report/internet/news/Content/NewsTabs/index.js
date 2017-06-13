@@ -2,7 +2,7 @@ import React from 'react';
 import { observer, inject } from 'mobx-react';
 import SimpleTabs from 'components/common/SimpleTabs';
 import styles from './index.less';
-function NewsTabs({internetStore, uiStore, routing}) {
+function NewsTabs({internetStore, uiStore, companyHomeStore}) {
   const statistic = internetStore.statistic.data;
   const activeType = uiStore.uiState.news.type;
   if (!statistic) {
@@ -12,13 +12,10 @@ function NewsTabs({internetStore, uiStore, routing}) {
     if (type !== activeType) {
       uiStore.updateUiStore('news.type', type);
       uiStore.updateUiStore('news.index', 1);
-      const {monitorId, analysisReportId, reportId, companyName, companyType} = routing.location.query;
+      const {reportId, basicReportId} = companyHomeStore.reportInfo;
       const params = {
-        monitorId,
-        analysisReportId,
         reportId,
-        companyName,
-        companyType,
+        basicReportId,
         params: uiStore.uiState.news,
       };
       internetStore.getInternet(params);
@@ -49,4 +46,4 @@ function NewsTabs({internetStore, uiStore, routing}) {
     </div>
   );
 }
-export default inject('uiStore', 'routing')(observer(NewsTabs));
+export default inject('uiStore', 'companyHomeStore')(observer(NewsTabs));
