@@ -212,8 +212,8 @@ export const monitorExistNode = (monitorCompanyId, params) => {
 };
 
 // 现勘记录
-export const getNowRecordList = (id, params, source) => {
-  return axios.get('/api/survey/' + id + '/page', { params: params, cancelToken: source.token });
+export const getNowRecordList = (companyName, params, source) => {
+  return axios.get('/api/survey/' + companyName + '/page', { params: params, cancelToken: source.token });
 };
 export const getNowRecordPictures = (id, source) => {
   return axios.get('/api/survey/' + id + '/pictures', { cancelToken: source.token });
