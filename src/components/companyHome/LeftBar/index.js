@@ -127,6 +127,7 @@ function LeftBar({ leftBarStore, bannerStore, routing, companyHomeStore}) {
       pathname: `/companyHome/nowRecord`,
       query: routing.location.query,
     });
+    backToTopOnClick();
   };
   return (
     <div>
