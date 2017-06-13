@@ -72,12 +72,11 @@ class CompanyHomeStore {
   };
   @action.bound createMonitor() {
     const args = {
-      width: '900px',
+      width: '745px',
       boxStyle: {
         padding: '20px',
       },
       isNeedBtn: false,
-      pointText: true,
       isSingleBtn: true,
       loader: (cb) => {
         require.ensure([], (require) => {
