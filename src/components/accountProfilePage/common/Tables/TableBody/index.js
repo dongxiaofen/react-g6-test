@@ -13,9 +13,11 @@ function TableBody({dateType, data, hasFlag, routing, searchCompanyStore, owner 
     return str;
   };
   const jumpPage = (companyName) => {
-    if (owner && owner === 'own') {
-      routing.push(`/companyHome/alertAnalysis?companyName=${companyName}`);
-    } else {
+    if (dateType && dateType === 'comprehensive') {
+      routing.push(`/companyHome/comprehenEval?companyName=${companyName}`);
+    }else if (owner && owner === 'own') {
+      routing.push(`/companyHome/monitorAlert?companyName=${companyName}`);
+    }else {
       searchCompanyStore.searchTabClick('COMPANY_NAME');
       searchCompanyStore.searchChange({target: {value: companyName}});
       searchCompanyStore.getCompanyList();
@@ -46,10 +48,10 @@ function TableBody({dateType, data, hasFlag, routing, searchCompanyStore, owner 
     let listItem = [];
     data.map((itemData, index) => {
       listItem = [...listItem,
-        <div key={`${index}list_items`} className={`clearfix ${styles.singe_item}`}>
+        <div key={`${index}list_items`} onClick={jumpPage.bind(this, itemData.companyName, itemData.productId)} className={`clearfix ${styles.singe_item}`}>
             <div className={`clearfix ${styles.right_discription}`}>
               {iconShow(index)}
-              <a onClick={jumpPage.bind(this, itemData.companyName, itemData.productId)} className={styles.companyName}>{spliceCompanyName(itemData.companyName)}</a>
+              <a className={styles.companyName}>{spliceCompanyName(itemData.companyName)}</a>
               { hasFlag && itemData.productType === 'MONITOR' ? <span className={`${styles.flag} ${styles.monitor}`}>监控</span> : ''}
               { hasFlag && itemData.productType === 'DEEP_MONITOR' ? <span className={`${styles.flag} ${styles.monitor}`}>深度</span> : ''}
             </div>
@@ -64,7 +66,9 @@ function TableBody({dateType, data, hasFlag, routing, searchCompanyStore, owner 
               }
               {
                 <span className={`${styles.has_warning_counts} ${styles.warning_date} ${styles.discript}`}>
-                  <span className={styles.count_text}>预警日期：</span>
+                  {
+                    dateType !== 'comprehensive' ? <span className={styles.count_text}>预警日期：</span> : <span className={styles.count_text}>最近分析日期：</span>
+                  }
                   <span className={styles.date_time_w}>{itemData.latestDt}</span>
                 </span>
               }
