@@ -1,9 +1,9 @@
 import React, { PropTypes } from 'react';
 import { observer } from 'mobx-react';
 import styles from './index.less';
-import CompanyScoreChart from './CompanyScoreChart';
-import CompanyScoreList from './CompanyScoreList';
-import { loadingComp } from '../../../hoc';
+import CompanyScoreChart from './CompanyScoreChart/index';
+import CompanyScoreList from './CompanyScoreList/index';
+import { loadingComp } from '../../../hoc/index';
 
 function ComprehenEval({ loaningStore }) {
   return (
