@@ -4,7 +4,6 @@ import styles from './index.less';
 import Modal from 'components/lib/Modal';
 
 function PayModal({
-  clientStore,
   visible,
   tittle,
   selectValue,
@@ -32,34 +31,34 @@ function PayModal({
     choiceClick(value);
   };
 
-  const modalBtnList = () => {
-    const init = [
-      {text: '1个月', key: 'ONE_MONTH'},
-      {text: '2个月', key: 'TWO_MONTH'},
-      {text: '3个月', key: 'THREE_MONTH'},
-      {text: '4个月', key: 'FOUR_MONTH'},
-      {text: '5个月', key: 'FIVE_MONTH'},
-      {text: '6个月', key: 'SIX_MONTH'},
-      {text: '7个月', key: 'SEVEN_MONTH'},
-      {text: '8个月', key: 'EIGHT_MONTH'},
-      {text: '9个月', key: 'NINE_MONTH'},
-      {text: '10个月', key: 'ONE_YEAR'},
-    ];
-    return init.map((item, key) => {
-      return (
-        <div
-          key={`payModalSelectKey${key}`}
-          className={styles.selectPoint}>
-          <div
-            className={selectValue === item.key ? styles.active : styles.selectDiv}
-            onClick={selectClick.bind(null, item.key)}>
-            {item.text}
-            {item.key === 'ONE_YEAR' ? <i className={styles.lable}></i> : ''}
-          </div>
-        </div>
-      );
-    });
-  };
+  // const modalBtnList = () => {
+  //   const init = [
+  //     {text: '1个月', key: 'ONE_MONTH'},
+  //     {text: '2个月', key: 'TWO_MONTH'},
+  //     {text: '3个月', key: 'THREE_MONTH'},
+  //     {text: '4个月', key: 'FOUR_MONTH'},
+  //     {text: '5个月', key: 'FIVE_MONTH'},
+  //     {text: '6个月', key: 'SIX_MONTH'},
+  //     {text: '7个月', key: 'SEVEN_MONTH'},
+  //     {text: '8个月', key: 'EIGHT_MONTH'},
+  //     {text: '9个月', key: 'NINE_MONTH'},
+  //     {text: '10个月', key: 'ONE_YEAR'},
+  //   ];
+  //   return init.map((item, key) => {
+  //     return (
+  //       <div
+  //         key={`payModalSelectKey${key}`}
+  //         className={styles.selectPoint}>
+  //         <div
+  //           className={selectValue === item.key ? styles.active : styles.selectDiv}
+  //           onClick={selectClick.bind(null, item.key)}>
+  //           {item.text}
+  //           {item.key === 'ONE_YEAR' ? <i className={styles.lable}></i> : ''}
+  //         </div>
+  //       </div>
+  //     );
+  //   });
+  // };
 
   const modalPackage = () => {
     const init = [
@@ -93,7 +92,7 @@ function PayModal({
 
   const modalConfig = {
     title: tittle,
-    width: clientStore.userInfo.consumeType === 'FEESET' ? '580px' : '504px',
+    width: '580px',
     visible: visible,
     isNeedBtn: true,
     confirmText: '确定',
@@ -105,12 +104,12 @@ function PayModal({
     pointText: pointText,
     isSingleBtn: isSingleBtn,
   };
-  let modalContent = null;
-  if (clientStore.userInfo.consumeType === 'FEESET') {
-    modalContent = modalPackage();
-  }else if (!clientStore.userInfo.consumeType || clientStore.userInfo.consumeType === 'POINT') {
-    modalContent = modalBtnList();
-  }
+  const modalContent = modalPackage();
+  // if (clientStore.userInfo.consumeType === 'FEESET') {
+  //   modalContent = modalPackage();
+  // }else if (!clientStore.userInfo.consumeType || clientStore.userInfo.consumeType === 'POINT') {
+  //   modalContent = modalBtnList();
+  // }
   return (
     <div>
       <Modal {...modalConfig}>
