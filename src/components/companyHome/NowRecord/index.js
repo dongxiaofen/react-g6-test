@@ -12,8 +12,8 @@ export default class NowRecordMain extends Component {
     uiStore: PropTypes.object,
   }
   componentDidMount() {
-    const { monitorId } = this.props.routing.location.query;
-    this.props.nowRecordStore.getNowRecordList(monitorId);
+    const { companyName } = this.props.routing.location.query;
+    this.props.nowRecordStore.getNowRecordList(companyName);
   }
   componentWillUnmount() {
     this.props.nowRecordStore.resetStore();
