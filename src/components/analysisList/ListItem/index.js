@@ -9,7 +9,7 @@ function ListItem({data}) {
   const keyMap = {
     SCORE: '多维综合评价',
     PROFIT: '盈利能力分析',
-    OPRATION: '营运能力分析',
+    OPERATION: '营运能力分析',
     GROWING: '成长能力分析',
   };
   return (
