@@ -126,15 +126,29 @@ app.use((req, res) => {
       if (reqPathName === '/pdfDown') {
         const routingStore = new RouterStore();
         allStores.routing = routingStore;
-        const params = req.query.monitorId ? {
-          monitorId: req.query.monitorId,
-          types: req.query.type
-        } :
-          {
+        let urlPanth = '';
+        let params = '';
+        if (req.query.reportId){
+          urlPanth = '/api/pdf/report';
+          params = {
             reportId: req.query.reportId,
             types: req.query.type
-          };
-        axios.get(config.backendApi + '/api/pdf', { params })
+          }
+        } else if (req.query.basicReportId) {
+          urlPanth = '/api/pdf/basicReport';
+          params = {
+            basicReportId: req.query.basicReportId,
+            types: req.query.type
+          }
+        } else if (req.query.analysisReportId) {
+          urlPanth = '/api/pdf/analysis';
+          params = {
+            analysisReportId: req.query.analysisReportId,
+            types: req.query.type
+          }
+        }
+        console.log(urlPanth, 'urlPanth-----------', params);
+        axios.get(config.backendApi + urlPanth, { params })
           .then((resp) => {
             // writeDataToFile('resp', resp.data);
             allStores.pdfStore.setTypes(params.types, params.monitorId);

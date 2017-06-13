@@ -91,7 +91,7 @@ class PdfStore {
       'NEWS',
       'OPERATION_BIDDING',
       'OPERATION_PATENT',
-      // 'OPERATION_TRADEMARK',
+      'OPERATION_TRADEMARK',
       'TEAM_RECRUITMENT_RESUME',
       'RISK_TAXATION',
       'RISK_JUDGEMENT',
