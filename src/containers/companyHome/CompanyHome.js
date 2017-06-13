@@ -119,6 +119,10 @@ export default class CompanyHome extends Component {
   }
 
   render() {
+    const error = this.props.companyHomeStore.createBasicErr;
+    if (!error.value) {
+      return <div>{error.response && error.response.data && error.response.data.message || '创建失败'}</div>;
+    }
     const noReport = ['reportId', 'basicReportId'].every(key => {
       return !this.props.companyHomeStore.reportInfo[key];
     });
