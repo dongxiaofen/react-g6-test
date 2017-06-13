@@ -39,7 +39,7 @@ function AccountBase(props) {
   }
   return (
     <div className={`${styles.wrapper} clearfix`}>
-      <div className={`${styles.child_base_info} pull-left`}>
+      <div className={`${data && data.parentUserId ? styles.child_base_info_100 : styles.child_base_info } pull-left`}>
         <BaseInfo {...props} />
       </div>
       <div className={`${data && data.parentUserId ? styles.child_record_sub : styles.child_record} pull-right`}>
