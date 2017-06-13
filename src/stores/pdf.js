@@ -107,7 +107,7 @@ class PdfStore {
       'NETWORK_BLACKLIST',
     ];
     const analysiReport = [
-      // 'SCORE',
+      'SCORE',
       'PROFIT',
       'OPERATION',
       'GROWING',
@@ -146,6 +146,7 @@ class PdfStore {
       .then(action((response) => {
         this.banner = pathval.getPathValue(response.data, 'banner');
         this.summary = pathval.getPathValue(response.data, 'summary');
+        console.log(this.summary, '--------------------');
         this.report = pathval.getPathValue(response.data, 'corpDetail');
         this.company = pathval.getPathValue(response.data, 'stock.info');
         this.announcement = pathval.getPathValue(response.data, 'stock.announcement');

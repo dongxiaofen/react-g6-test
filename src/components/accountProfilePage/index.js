@@ -22,7 +22,7 @@ export default class AccountProfileBody extends Component {
       <Container>
         <Row className={styles.mTop}>
           <Col width="12">
-            <Tabs defaultActiveKey="1">
+            <Tabs className={styles.showBox} defaultActiveKey="1">
               <TabPane tab="我的账号" key="1">
                  <MyAccount />
               </TabPane>
