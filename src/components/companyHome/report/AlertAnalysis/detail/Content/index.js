@@ -19,11 +19,14 @@ import {
   News,
   ExcuteInfo,
 } from './module';
-function Content({alertAnalysisStore}) {
+function Content({alertAnalysisStore, monitorAlertStore, routing}) {
+  const pathname = routing.location.pathname;
+  const dataStore = pathname === '/companyHome/monitorAlert' ? monitorAlertStore : alertAnalysisStore;
   const createModule = () => {
-    const detailData = alertAnalysisStore.detailData;
+    const detailData = dataStore.detailData;
     const info = detailData.info;
     const detail = detailData.detail;
+    console.log(info, detail, '=====12', dataStore);
     if (info.alertType === 'RULE') {
       const singleDetail = detail[detailData.activeIndex];
       // console.log(singleDetail, 'singleDetail-----------');
@@ -102,4 +105,4 @@ function Content({alertAnalysisStore}) {
 Content.propTypes = {
   foo: PropTypes.string,
 };
-export default inject('alertAnalysisStore')(observer(Content));
+export default inject('alertAnalysisStore', 'monitorAlertStore', 'routing')(observer(Content));

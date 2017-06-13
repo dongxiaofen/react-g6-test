@@ -3,6 +3,7 @@ import { observable, action, computed} from 'mobx';
 import modalStore from './modal';
 import messageStore from './message';
 // import { browserHistory } from 'react-router';
+import bannerStore from './banner';
 import { companyHomeApi } from 'api';
 import pathval from 'pathval';
 class CompanyHomeStore {
@@ -12,16 +13,16 @@ class CompanyHomeStore {
     reportId: '',
     monitorId: '',
     dimensions: [],
-  };
+    monitorStatus: '',
+  }
   @observable loanOption = [
     { label: '多维综合评价', value: 'SCORE', checked: true},
     { label: '盈利能力分析', value: 'PROFIT', checked: true},
     { label: '营运能力分析', value: 'OPERATION', checked: true},
     { label: '发展能力分析', value: 'GROWING', checked: true},
   ];
-  @observable loanDemoAct = 0;
-  @observable monitorDemoAct = 0;
   @observable monitorTime = 1;
+  @observable loanLoading = false;
   @computed get monitorTimeObj() {
     const init = [
       {text: '1个月', key: 'ONE_MONTH'},
@@ -57,6 +58,7 @@ class CompanyHomeStore {
         modalStore.closeAction();
         messageStore.openMessage({ ...text });
         this.reportInfo.monitorId = resp.data.monitorId;
+        bannerStore.getMonitorRepInfo();
       }))
       .catch(action('createMonitor error', (err) => {
         console.log(err.response, '=====createMonitor error');
@@ -68,19 +70,6 @@ class CompanyHomeStore {
         messageStore.openMessage({ ...text });
       }));
   };
-  @action.bound getIdParams(params) {
-    companyHomeApi.getReportStatus(params)
-      .then(action('getIdParams', resp => {
-        this.reportInfo = Object.assign({}, this.reportInfo, resp.data);
-      }))
-      .catch(action('getIdParams', err => {
-        console.log(err, 'getIdParams');
-        messageStore.openMessage({
-          type: 'warning',
-          content: err.response.data.message
-        });
-      }));
-  }
   @action.bound createMonitor() {
     const args = {
       width: '900px',
@@ -102,12 +91,14 @@ class CompanyHomeStore {
     let text = {
       content: '分析报告创建成功'
     };
+    this.loanLoading = true;
     companyHomeApi.createAnalyRep({companyName, items: this.loanOptValue})
     .then(action('createAnalyRep', (resp) => {
       modalStore.closeAction();
       messageStore.openMessage({ ...text });
       this.reportInfo.analysisReportId = resp.data.analysisReportId;
       this.reportInfo.dimensions = this.reportInfo.dimensions.concat(this.loanOptValue);
+      this.loanLoading = false;
     }))
     .catch(action('createMonitor error', (err) => {
       console.log(err.response, '=====createMonitor error');
@@ -117,17 +108,16 @@ class CompanyHomeStore {
         content: err.response.data.message
       };
       messageStore.openMessage({ ...text });
+      this.loanLoading = false;
     }));
   }
   @action.bound openLoanModal() {
     const args = {
-      width: '900px',
+      width: '745px',
       boxStyle: {
         padding: '20px',
       },
       isNeedBtn: false,
-      pointText: true,
-      isSingleBtn: true,
       loader: (cb) => {
         require.ensure([], (require) => {
           cb(require('components/common/reportOper/CreateLoanRep'));
@@ -174,9 +164,63 @@ class CompanyHomeStore {
   @action.bound updateLoanOption(idx, value) {
     this.loanOption[idx].checked = value;
   }
+  @action.bound createBasicReport(params) {
+    companyHomeApi.createBasicReport({companyName: params.companyName})
+    .then(action('createBasicReport', (resp)=>{
+      this.reportInfo.basicReportId = resp.data.basicReportId;
+    }))
+    .catch(action('createBasicReport err', (error)=>{
+      console.log(error);
+    }));
+  }
+
+  @action.bound getReportStatus(params) {
+    this.isLoading = true;
+    companyHomeApi.getReportStatus(params)
+    .then(action('getReportStatus', (resp)=>{
+      if (resp.data.basicReportId || resp.data.reportId) {
+        this.reportInfo = Object.assign(this.reportInfo, resp.data);
+        if (resp.data.dimensions) {
+          this.initDimensions(resp.data.dimensions);
+        }
+      } else {
+        this.createBasicReport({companyName: params.companyName});
+      }
+    }))
+    .catch(action('getReportStatus err', (error)=>{
+      console.log(error);
+    }));
+  }
+  @action.bound initDimensions(dimensions) {
+    dimensions.map((key)=>{
+      const idx = this.loanOption.findIndex((item)=>{
+        return item.value === key;
+      });
+      if (idx > -1) {
+        this.loanOption[idx].checked = false;
+      }
+    });
+  }
   @action.bound updateValue(keyPath, value) {
     pathval.setPathValue(this, keyPath, value);
   }
-
+  @action.bound resetStore() {
+    this.reportInfo = {
+      analysisReportId: '',
+      basicReportId: '',
+      reportId: '',
+      monitorId: '',
+      dimensions: [],
+      monitorStatus: '',
+    };
+    this.loanOption = [
+      { label: '多维综合评价', value: 'SCORE', checked: true},
+      { label: '盈利能力分析', value: 'PROFIT', checked: true},
+      { label: '营运能力分析', value: 'OPERATION', checked: true},
+      { label: '发展能力分析', value: 'GROWING', checked: true},
+    ];
+    this.monitorTime = 1;
+    this.loanLoading = false;
+  }
 }
 export default new CompanyHomeStore();
