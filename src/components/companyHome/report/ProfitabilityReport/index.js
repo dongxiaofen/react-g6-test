@@ -9,25 +9,26 @@ function ProfitabilityReport({ profitDataList }) {
   const dataDom = [];
   const data = profitDataList.data;
   let idx = 0;
-  Object.keys(data).map(key => {
-    dataDom.push(
-      <tr key={`${idx}profit`}>
-        <td>{key}年</td>
-        <td>{data[key].XSMLL}%</td>
-        <td>{data[key].XSJLL}%</td>
-        <td>{data[key].YYJLL}%</td>
-        <td>{data[key].CBFYJLL}%</td>
-        <td>{data[key].ZYYWLRL}%</td>
-        <td>{data[key].ZCJLL}%</td>
-      </tr>
-    );
-    idx++;
-  });
-
+  if (data) {
+    Object.keys(data).map(key => {
+      dataDom.push(
+        <tr key={`${idx}profit`}>
+          <td>{key}年</td>
+          <td>{data[key].XSMLL}%</td>
+          <td>{data[key].XSJLL}%</td>
+          <td>{data[key].YYJLL}%</td>
+          <td>{data[key].CBFYJLL}%</td>
+          <td>{data[key].ZYYWLRL}%</td>
+          <td>{data[key].ZCJLL}%</td>
+        </tr>
+      );
+      idx++;
+    });
+  }
   return (
     <div className={styles.box}>
       <p className={styles.excelTitle}>指标列表
-        <span className={styles.timestamp}>(分析时间：{this.props.profitDataList.date})</span>
+        <span className={styles.timestamp}>(分析时间：{this.props.profitDataList.lastTm})</span>
       </p>
       <table className={styles.table}>
         <thead>
@@ -89,6 +90,6 @@ function ProfitabilityReport({ profitDataList }) {
 }
 
 ProfitabilityReport.propTypes = {
-  foo: PropTypes.string,
+  profitDataList: PropTypes.object,
 };
 export default observer(ProfitabilityReport);

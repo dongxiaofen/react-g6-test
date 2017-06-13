@@ -5,147 +5,156 @@ import styles from './index.less';
 function CompanyScoreList({ sixStarData }) {
   // 综合评分
   let allInfo = '';
-  if (sixStarData && sixStarData.result.allInfo) {
+  const data = sixStarData.data;
+  if (data && data.result && data.result.allInfo) {
     allInfo = (
       <div className={styles.title}>
         该企业综合评分
         <span className={styles.blueFonts}>
-          {sixStarData.result.allInfo.score ? sixStarData.result.allInfo.score : '0'}
+          { data.result.allInfo.score ? data.result.allInfo.score : '0'}
         </span>
         分
-        {<span className={styles.data}>超过同行业同地区<span className={styles.blueFonts}>70%</span>企业</span>}
+        {data.result.influence.comparation ?
+          <span className={styles.data}>超过同行业同地区<span
+            className={styles.blueFonts}>{data.result.influence.comparation}%</span>企业</span> : ''}
       </div>
     );
   }
   // 经营状况
   let operation = '';
-  if (sixStarData && sixStarData.result.operation) {
+  if (data && data.result && data.result.operation) {
     operation = (
       <div className={styles.single}>
         <div className={styles.top}>
-          <i className={styles.img1}/>
+          <i className={styles.img1} />
           <span className={styles.type}>
-            {sixStarData.result.operation.name}
+            { data.result.operation.name}
           </span>
           <span className={styles.score}>
-            <span>{sixStarData.result.operation.score}</span>
+            <span>{ data.result.operation.score}</span>
             分
           </span>
-          {<span className={styles.data}>(超过<span>70%</span>企业)</span>}
+          {data.result.operation.comparation ?
+            <span className={styles.data}>(超过<span>{data.result.operation.comparation}%</span>企业)</span> : ''}
         </div>
         <div className={styles.text}>
-          {sixStarData.result.operation.description}
+          { data.result.operation.description}
         </div>
       </div>
     );
   }
   // 行业相关
   let industry = '';
-  if (sixStarData && sixStarData.result.industry) {
+  if (data && data.result && data.result.industry) {
     industry = (
       <div className={styles.single}>
         <div className={styles.top}>
-          <i className={styles.img2}/>
+          <i className={styles.img2} />
           <span className={styles.type}>
-            {sixStarData.result.industry.name}
+            { data.result.industry.name}
           </span>
           <span className={styles.score}>
-            <span>{sixStarData.result.industry.score}</span>
+            <span>{ data.result.industry.score}</span>
             分
           </span>
-          { <span className={styles.data}>(超过<span>70%</span>企业)</span>}
+          { data.result.industry.comparation ?
+            <span className={styles.data}>(超过<span>{data.result.industry.comparation}%</span>企业)</span> : ''}
         </div>
         <div className={styles.text}>
-          {sixStarData.result.industry.description}
+          { data.result.industry.description}
         </div>
       </div>
     );
   }
   // 创新能力
   let creativity = '';
-  if (sixStarData && sixStarData.result.creativity) {
+  if (data && data.result && data.result.creativity) {
     creativity = (
       <div className={styles.single}>
         <div className={styles.top}>
-          <i className={styles.img3}/>
+          <i className={styles.img3} />
           <span className={styles.type}>
-            {sixStarData.result.creativity.name}
+            { data.result.creativity.name}
           </span>
           <span className={styles.score}>
-            <span>{sixStarData.result.creativity.score}</span>
+            <span>{ data.result.creativity.score}</span>
             分
           </span>
-          { <span className={styles.data}>(超过<span>70%</span>企业)</span>}
+          { data.result.creativity.comparation ?
+            <span className={styles.data}>(超过<span>{data.result.creativity.comparation}%</span>企业)</span> : ''}
         </div>
         <div className={styles.text}>
-          {sixStarData.result.creativity.description}
+          { data.result.creativity.description}
         </div>
       </div>
     );
   }
   // 法务相关
   let law = '';
-  if (sixStarData && sixStarData.result.law) {
+  if (data && data.result && data.result.law) {
     law = (
       <div className={styles.single}>
         <div className={styles.top}>
           <i className={styles.img4}></i>
           <span className={styles.type}>
             合规程度
-            {/* {sixStarData.result.law.name} */}
+            {/* { data.result.law.name} */}
           </span>
           <span className={styles.score}>
-            <span>{sixStarData.result.law.score}</span>
+            <span>{ data.result.law.score}</span>
             分
           </span>
-          { <span className={styles.data}>(超过<span>70%</span>企业)</span> }
+          { data.result.law.comparation ?
+            <span className={styles.data}>(超过<span>{data.result.law.comparation}%</span>企业)</span> : ''}
         </div>
         <div className={styles.text}>
-          {sixStarData.result.law.description}
+          { data.result.law.description}
         </div>
       </div>
     );
   }
   // 团队相关
   let team = '';
-  if (sixStarData && sixStarData.result.team) {
+  if (data && data.result && data.result.team) {
     team = (
       <div className={styles.single}>
         <div className={styles.top}>
-          <i className={styles.img5}/>
+          <i className={styles.img5} />
           <span className={styles.type}>
-            {sixStarData.result.team.name}
+            { data.result.team.name}
           </span>
           <span className={styles.score}>
-            <span>{sixStarData.result.team.score}</span>
+            <span>{ data.result.team.score}</span>
             分
           </span>
-          {<span className={styles.data}>(超过<span>70%</span>企业)</span> }
+          {data.result.team.comparation ?
+            <span className={styles.data}>(超过<span>{data.result.team.comparation}%</span>企业)</span> : ''}
         </div>
         <div className={styles.text}>
-          {sixStarData.result.team.description}
+          { data.result.team.description}
         </div>
       </div>
     );
   }
   // 社会影响力
   let influence = '';
-  if (sixStarData && sixStarData.result.influence) {
+  if (data && data.result && data.result.influence) {
     influence = (
       <div className={styles.single}>
         <div className={styles.top}>
-          <i className={styles.img6}/>
+          <i className={styles.img6} />
           <span className={styles.type}>
-            {sixStarData.result.influence.name}
+            { data.result.influence.name}
           </span>
           <span className={styles.score}>
-            <span>{sixStarData.result.influence.score}</span>
+            <span>{ data.result.influence.score}</span>
             分
           </span>
-          {<span className={styles.data}>(超过<span>70%</span>企业)</span> }
+          {data.result.influence.comparation ?
+            <span className={styles.data}>(超过<span>{data.result.influence.comparation}%</span>企业)</span> : ''}
         </div>
         <div className={styles.text}>
-          {sixStarData.result.influence.description}
+          { data.result.influence.description}
         </div>
       </div>
     );

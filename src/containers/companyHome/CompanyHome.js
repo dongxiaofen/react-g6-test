@@ -101,8 +101,6 @@ export default class CompanyHome extends Component {
       'alertAnalysisStore',
       'analysisSrore',
       'taxStore',
-      'taxCheckStore',
-      'companyHomeStore',
       'monitorAxisStore',
       'monitorAlert',
       'nowRecordStore'
