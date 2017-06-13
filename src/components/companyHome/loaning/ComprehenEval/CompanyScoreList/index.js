@@ -14,7 +14,9 @@ function CompanyScoreList({ sixStarData }) {
           { data.result.allInfo.score ? data.result.allInfo.score : '0'}
         </span>
         分
-        {<span className={styles.data}>超过同行业同地区<span className={styles.blueFonts}>70%</span>企业</span>}
+        {data.result.influence.comparation ?
+          <span className={styles.data}>超过同行业同地区<span
+            className={styles.blueFonts}>{data.result.influence.comparation}%</span>企业</span> : ''}
       </div>
     );
   }
@@ -32,7 +34,8 @@ function CompanyScoreList({ sixStarData }) {
             <span>{ data.result.operation.score}</span>
             分
           </span>
-          {<span className={styles.data}>(超过<span>70%</span>企业)</span>}
+          {data.result.operation.comparation ?
+            <span className={styles.data}>(超过<span>{data.result.operation.comparation}%</span>企业)</span> : ''}
         </div>
         <div className={styles.text}>
           { data.result.operation.description}
@@ -54,7 +57,8 @@ function CompanyScoreList({ sixStarData }) {
             <span>{ data.result.industry.score}</span>
             分
           </span>
-          { <span className={styles.data}>(超过<span>70%</span>企业)</span>}
+          { data.result.industry.comparation ?
+            <span className={styles.data}>(超过<span>{data.result.industry.comparation}%</span>企业)</span> : ''}
         </div>
         <div className={styles.text}>
           { data.result.industry.description}
@@ -76,7 +80,8 @@ function CompanyScoreList({ sixStarData }) {
             <span>{ data.result.creativity.score}</span>
             分
           </span>
-          { <span className={styles.data}>(超过<span>70%</span>企业)</span>}
+          { data.result.creativity.comparation ?
+            <span className={styles.data}>(超过<span>{data.result.creativity.comparation}%</span>企业)</span> : ''}
         </div>
         <div className={styles.text}>
           { data.result.creativity.description}
@@ -99,7 +104,8 @@ function CompanyScoreList({ sixStarData }) {
             <span>{ data.result.law.score}</span>
             分
           </span>
-          { <span className={styles.data}>(超过<span>70%</span>企业)</span> }
+          { data.result.law.comparation ?
+            <span className={styles.data}>(超过<span>{data.result.law.comparation}%</span>企业)</span> : ''}
         </div>
         <div className={styles.text}>
           { data.result.law.description}
@@ -121,7 +127,8 @@ function CompanyScoreList({ sixStarData }) {
             <span>{ data.result.team.score}</span>
             分
           </span>
-          {<span className={styles.data}>(超过<span>70%</span>企业)</span> }
+          {data.result.team.comparation ?
+            <span className={styles.data}>(超过<span>{data.result.team.comparation}%</span>企业)</span> : ''}
         </div>
         <div className={styles.text}>
           { data.result.team.description}
@@ -143,7 +150,8 @@ function CompanyScoreList({ sixStarData }) {
             <span>{ data.result.influence.score}</span>
             分
           </span>
-          {<span className={styles.data}>(超过<span>70%</span>企业)</span> }
+          {data.result.influence.comparation ?
+            <span className={styles.data}>(超过<span>{data.result.influence.comparation}%</span>企业)</span> : ''}
         </div>
         <div className={styles.text}>
           { data.result.influence.description}
