@@ -7,6 +7,9 @@ import uiStore from './ui';
 import modalStore from './modal';
 import messageStore from './message';
 class TaxCheckStore {
+
+  @observable companyName = '';
+
   @observable selectConf = [
     {year: '2015', taxIndex: 'R001', input: '', msg: ''},
   ];
@@ -16,7 +19,10 @@ class TaxCheckStore {
   // loading
   @observable loading = false;
   // monitorId
-  @observable monitorId = '';
+  // @observable monitorId = '';
+
+  @observable taxCheckInfo = {};
+  @observable taxCheckInfoCompany = '';
 
   @action.bound addSelectItem() {
     this.selectConf.push({
@@ -40,9 +46,21 @@ class TaxCheckStore {
       {year: '2015', taxIndex: 'R001', input: '', msg: ''},
     ];
   }
-  @action.bound postSelectInfo(monitorId, reportId) {
-    const params = this.selectConf;
-    companyHomeApi.addTaxCheck(monitorId, reportId, params)
+  @action.bound postSelectInfo() {
+    const selectConf = [];
+    this.selectConf.forEach((item) => {
+      const obj = {};
+      obj.input = item.input;
+      obj.taxIndex = item.taxIndex;
+      obj.year = item.year;
+      selectConf.push(obj);
+    });
+    // const params = this.selectConf;
+    const sendParams = {
+      companyName: this.companyName,
+      detailRequests: selectConf
+    };
+    companyHomeApi.addTaxCheck(sendParams)
       .then(action('addTaxCheck', () => {
         modalStore.confirmLoading = false;
         modalStore.visible = false;
@@ -51,7 +69,7 @@ class TaxCheckStore {
           type: 'info',
           content: '添加成功'
         });
-        this.getTaxCheckList(monitorId, reportId);
+        // this.getTaxCheckList(monitorId, reportId);
       }))
       .catch(action('addTaxCheck', err => {
         console.log(err);
@@ -63,7 +81,7 @@ class TaxCheckStore {
       }));
   }
   // 获取列表数据
-  @action.bound getTaxCheckList(monitorId, reportId) {
+  @action.bound getTaxCheckList() {
     this.taxState = true;
     if (window.reportSourceCancel === undefined) {
       window.reportSourceCancel = [];
@@ -76,21 +94,32 @@ class TaxCheckStore {
       index: uiStore.uiState.taxCheckPager.index,
       size: uiStore.uiState.taxCheckPager.size,
     };
-    if (monitorId) {
-      this.monitorId = monitorId;
-    }
+    // if (monitorId) {
+    //   this.monitorId = monitorId;
+    // }
     // 获取列表数据
-    companyHomeApi.getTaxCheckList(this.monitorId, reportId, params, source)
+    companyHomeApi.getTaxCheckList(params, source)
       .then(action('taxList list', (resp) => {
         this.taxListData = resp.data;
         // 关闭loading
         this.loading = false;
-        uiStore.uiState.taxCheckPager.totalElements = resp.data.totalElements;
+        // uiStore.uiState.taxCheckPager.totalElements = resp.data.totalElements;
       }))
       .catch(action('taxList error', (err) => {
         // 关闭loading
         this.loading = false;
         this.taxListData = {error: err.response.data};
+        console.log(err.response, '=====taxList error');
+      }));
+  }
+
+  @action.bound getTaxCheckInfo(companyId, companyName) {
+    companyHomeApi.getTaxInfo(companyId)
+      .then(action('taxCheckInfo', (resp) => {
+        this.taxCheckInfo = resp.data;
+        this.taxCheckInfoCompany = companyName || '';
+      }))
+      .catch(action('taxCheckInfo error', (err) => {
         console.log(err.response, '=====taxList error');
       }));
   }
