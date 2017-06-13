@@ -14,6 +14,7 @@ function LeftBar({ leftBarStore, bannerStore, routing, companyHomeStore}) {
       if (index >= 0) {
         activeMenu.splice(index, 1);
       } else {
+        activeMenu.pop();
         activeMenu.push(menuKey);
       }
     });
