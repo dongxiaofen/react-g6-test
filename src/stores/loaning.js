@@ -78,24 +78,19 @@ class LoaningStore {
                   }));
   }
 
-  // 重置营收能力数据
-  @action.bound resetProfitEvalStore() {
-    this.profitDatat = {};
-  }
-
-  // 重置企业分数数据
-  @action.bound resetSixStarStore() {
-    this.sixStarData = {};
-  }
-
-  // 重置营运能力数据
-  @action.bound resetOperationDataList() {
+  @action.bound resetStore() {
+    this.isLoading = true;
+    this.isMount = false;
     this.profitDataList = {};
-  }
-
-  // 重置成长能力数据
-  @action.bound resetUpDataList() {
+    // 营运能力指标数据
+    this.operationDataList = {};
+    // 成长能力指标数据
     this.upDataList = {};
+    this.loading = false;
+    this.loadingId = -1;
+    this.listData = [];
+    // 六芒星data
+    this.sixStarData = {};
   }
 }
 export default new LoaningStore();

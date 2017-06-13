@@ -14,10 +14,6 @@ export default class ComprehenEval extends Component {
     this.props.loaningStore.getCompanyScore();
   }
 
-  componentWillUnmount() {
-    this.props.loaningStore.resetSixStarStore();
-  }
-
   render() {
     return (
       <div>
