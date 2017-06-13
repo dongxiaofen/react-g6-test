@@ -15,13 +15,13 @@ export default class OperationEval extends Component {
   }
 
   componentWillUnmount() {
-    this.props.loaningStore.resetProfitEvalStore();
+    // this.props.loaningStore.resetProfitEvalStore();
   }
 
   render() {
     return (
       <div>
-        <OperationReport loaningStore={this.props.loaningStore} />
+        <OperationReport operationDataList={this.props.loaningStore.operationDataList} />
       </div>
     );
   }

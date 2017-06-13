@@ -20,7 +20,7 @@ export default class GrowthAbilityEval extends Component {
   render() {
     return (
       <div>
-        <GrowingReport loaningStore={this.props.loaningStore} />
+        <GrowingReport upDataList={this.props.loaningStore.upDataList} />
       </div>
     );
   }
