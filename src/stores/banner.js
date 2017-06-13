@@ -5,81 +5,6 @@ import modalStore from './modal';
 import messageStore from './message';
 import payModalStore from './payModal';
 import companyHomeStore from './companyHome';
-const bannerDataTest = {
-  'bannerInfo': {
-    'bannerInfo': {
-      'index': [
-        {
-          'url': 'http://mi.com',
-          'status': null
-        },
-        {
-          'url': 'http://xiaomi.com',
-          'status': null
-        }
-      ],
-      'scale': '1000人以上',
-      'email': [
-        'wulihua@xiaomi.com'
-      ],
-      'phone': [
-        '010-64051516',
-        '010-52255991'
-      ],
-      'address': [
-        {
-          'time': '2017-02-03 00:00:00',
-          'source': 'jobui',
-          'address': '北京市海淀区清河中街68号 华润五彩城写字楼',
-          'location': {
-            'lat': 40.03616174650678,
-            'lon': 116.33936332310091
-          }
-        },
-        {
-          'time': '2016-12-29 00:00:00',
-          'source': 'lagou',
-          'address': '北京北京市海淀区五彩城',
-          'location': {
-            'lat': 40.03620110641631,
-            'lon': 116.34291522308736
-          }
-        },
-        {
-          'time': '2010-04-10 00:00:00',
-          'source': 'yepage',
-          'address': '北京市 朝阳区 望京西路甲50号-1卷 石天地大厦A座13层',
-          'location': {
-            'lat': 39.98941935697803,
-            'lon': 116.4643470049087
-          }
-        }
-      ],
-      'companyStatus': '',
-      'riskInfo': [
-        {
-          historyFlag: 'false',
-          lastestPublishTime: '2016-05-09',
-          name: '中国工商银行股份有限公司',
-          riskType: '被银行起诉',
-        }
-      ],
-      'historyName': []
-    },
-    'industryList': [
-      8
-    ],
-    'featureIndustry': {
-      'result': {
-        'industryType': [
-          '软件和信息技术服务业'
-        ]
-      }
-    }
-  },
-  'name': '北京小米科技有限责任公司',
-  collection: false,
-};
 class BannerStore {
   windowReload() {
     window.location.reload();
@@ -106,7 +31,12 @@ class BannerStore {
   // @observable lastModifiedTs = '';
   // @observable collection = false;
   // @observable mainStatus = '';
-
+  // 时间
+  @observable reportDate = '';
+  @observable monitorRepInfo = {
+    monitorStatus: '',
+    expireDt: '',
+  };
   // 上市代码
   @observable stockCode = '';
 
@@ -219,6 +149,19 @@ class BannerStore {
   @action.bound extendContact(key) {
     this.contactExtended = this.contactExtended === key ? '' : key;
   }
+  // 刷新报告
+  refreshRepConfirm = () => {
+    this.refreshReport();
+  };
+  @action.bound refreshModal = () => {
+    modalStore.openCompModal({
+      title: '刷新报告',
+      width: 420,
+      isSingleBtn: true,
+      confirmAction: this.refreshRepConfirm,
+      loader: () => {}
+    });
+  };
   @action.bound createBasicReport(params) {
     companyHomeApi.createBasicReport({companyName: params.companyName})
     .then(action('createBasicReport', (resp)=>{
@@ -250,15 +193,13 @@ class BannerStore {
     companyHomeApi.getBannerInfo(params)
       .then(action('get banner info...', (resp) => {
         console.log(resp.data);
-        this.bannerInfoData = bannerDataTest;
+        this.bannerInfoData = resp.data;
         this.isLoading = false;
       }))
-      .catch((err) => {
+      .catch(action('banner err', (err) => {
         console.log('banner出错', err);
-        runInAction(() => {
-          this.isLoading = false;
-        });
-      });
+        this.isLoading = false;
+      }));
   }
   @action.bound toggleMonitorStatus(monitorId, status) {
     companyHomeApi.toggleMonitorStatus(monitorId, status)
@@ -283,16 +224,39 @@ class BannerStore {
         // }
       });
   }
-
+  @action.bound getReportInfo() {
+    const {reportId, basicReportId} = companyHomeStore.reportInfo;
+    const getRepInfoHandle = reportId !== '' ? companyHomeApi.getReportInfo(reportId) : companyHomeApi.getBasicRepInfo(basicReportId);
+    getRepInfoHandle
+    .then(action('report info', (resp)=>{
+      this.reportDate = resp.data.lastModifiedTs;
+    }))
+    .catch((error)=>{
+      console.log('report info error', error);
+    });
+  }
+  @action.bound getMonitorRepInfo() {
+    const { monitorId } = companyHomeStore.reportInfo;
+    companyHomeApi.getMonitorInfo(monitorId)
+    .then(action('report info', (resp)=>{
+      this.monitorRepInfo = resp.data;
+    }))
+    .catch((error)=>{
+      console.log('report info error', error);
+    });
+  }
   // 刷新报告
-  @action.bound refreshHighOrDeep(reportId) {
+  @action.bound refreshReport() {
     modalStore.confirmLoading = true;
-    companyHomeApi.refreshHighOrDeep(reportId)
+    const {reportId, basicReportId} = companyHomeStore.reportInfo;
+    const refreshRepHandle = reportId !== '' ? companyHomeApi.updateReport(reportId) : companyHomeApi.updateBasicRep(basicReportId);
+    refreshRepHandle
       .then(action('refresh high or deep', (resp) => {
         console.log(resp.data);
         modalStore.confirmLoading = false;
         modalStore.closeAction();
         messageStore.openMessage({ content: '刷新成功', callBack: this.windowReload });
+        this.getReportInfo();
       }))
       .catch((err) => {
         console.log(err.response);
@@ -300,6 +264,7 @@ class BannerStore {
           modalStore.confirmLoading = false;
           modalStore.closeAction();
           if (err.response.data.errorCode === 403218) {
+            this.getReportInfo();
             messageStore.openMessage({ type: 'info', content: err.response.data.message });
           } else {
             messageStore.openMessage({ type: 'warning', content: err.response.data.message });
@@ -324,28 +289,11 @@ class BannerStore {
         });
       });
   }
-
-  // 监控续期
-  @action.bound renewalMonitor(monitorId, time) {
-    companyHomeApi.renewalMonitor(monitorId, time)
-      .then(action('renewal monitor', () => {
-        payModalStore.closeAction();
-        messageStore.openMessage({ content: '续期成功', callBack: this.windowReload });
-      }))
-      .catch((err) => {
-        console.log(err.response);
-        runInAction(() => {
-          payModalStore.closeAction();
-          messageStore.openMessage({ type: 'warning', content: err.response.data.message });
-        });
-      });
-  }
-
   // 恢复监控loading
   reStoreLoadingAction(monitorStatus) {
     if (monitorStatus === 'PAUSE') {
       runInAction(() => {
-        this.reStoreLoading = true;
+        this.reStoreLoading = false;
       });
     } else {
       runInAction(() => {
@@ -353,29 +301,21 @@ class BannerStore {
       });
     }
   }
-
-  // 暂停或恢复监控
-  @action.bound pauseOrRestoreMonitor(monitorId, status) {
-    modalStore.confirmLoading = true;
-    this.reStoreLoadingAction(this.monitorStatus);
-    companyHomeApi.pauseOrRestoreMonitor(monitorId, status)
-      .then(action('pause or restore monitor', () => {
-        modalStore.confirmLoading = false;
-        modalStore.closeAction();
-        this.reStoreLoadingAction(this.monitorStatus);
-        this.monitorStatus = this.monitorStatus === 'MONITOR' ? 'PAUSE' : 'MONITOR';
-        messageStore.openMessage({ content: '操作成功' });
-      }))
-      .catch((err) => {
-        runInAction(() => {
-          modalStore.confirmLoading = false;
-          modalStore.closeAction();
-          this.reStoreLoadingAction(this.monitorStatus);
-          messageStore.openMessage({ type: 'warning', content: err.response.data.message });
+  closePdfModal = () => {
+    this.clearPdfConfigChecked();
+  };
+  openDownLoadPdf = () => {
+    modalStore.openCompModal({
+      width: 750,
+      isCustomize: true,
+      closeAction: this.closePdfModal,
+      loader: (cb) => {
+        require.ensure([], (require) => {
+          cb(require('components/companyHome/Banner/ReportAction/DownloadPdf'));
         });
-      });
-  }
-
+      }
+    });
+  };
   // 设置Pdf弹窗第一层级
   @action.bound setPdfLevelOne(key, value, checked) {
     this.pdfDownloadConfig.levelOne[key].checked = checked;
@@ -467,11 +407,11 @@ class BannerStore {
   }
 
   // 添加/取消收藏
-  @action.bound addOrCancelCollection({ reportId, monitorId, params }) {
+  @action.bound addOrCancelCollection(params) {
     this.collectionLoading = true;
-    companyHomeApi.addOrCancelCollection({ reportId, monitorId, params })
+    companyHomeApi.addOrCancelCollection(params)
       .then(action('add or cancel collection', () => {
-        this.collection = !this.collection;
+        this.bannerInfoData.collection = !this.bannerInfoData.collection;
         this.collectionLoading = false;
       }))
       .catch((err) => {
@@ -479,6 +419,71 @@ class BannerStore {
         runInAction(() => {
           this.collectionLoading = false;
           messageStore.openMessage({ content: err.response.data.message });
+        });
+      });
+  }
+  // 监控续期
+  renewalMonitorModal = () => {
+    payModalStore.openCompModal({
+      'modalType': 'continueMonitor',
+      'width': '504px',
+      'callBack': this.renewalConfirm
+    });
+  };
+  renewalConfirm = () => {
+    const {monitorId} = companyHomeStore.reportInfo;
+    this.renewalMonitor(monitorId, payModalStore.selectValue);
+  };
+  @action.bound renewalMonitor(monitorId, time) {
+    companyHomeApi.renewalMonitor(monitorId, time)
+      .then(action('renewal monitor', () => {
+        payModalStore.closeAction();
+        messageStore.openMessage({ content: '续期成功'});
+        this.getMonitorRepInfo();
+      }))
+      .catch((err) => {
+        console.log(err.response);
+        runInAction(() => {
+          payModalStore.closeAction();
+          messageStore.openMessage({ type: 'warning', content: err.response.data.message });
+        });
+      });
+  }
+  // 暂停恢复监控
+  pauseOrRestoreMonitorModal = () => {
+    modalStore.openCompModal({
+      title: '暂停监控',
+      width: 440,
+      confirmAction: this.pauseOrRestoreMonitorConfirm,
+      cancelAction: modalStore.closeAction,
+      loader: (cb) => {
+        require.ensure([], (require) => {
+          cb(require('components/companyHome/Banner/ReportAction/PauseOrRestoreMonitor'));
+        });
+      }
+    });
+  };
+  pauseOrRestoreMonitorConfirm = () => {
+    const {monitorId, monitorStatus} = companyHomeStore.reportInfo;
+    this.pauseOrRestoreMonitor(monitorId, monitorStatus === 'MONITOR' ? 'PAUSE' : 'MONITOR');
+  };
+  @action.bound pauseOrRestoreMonitor(monitorId, status) {
+    modalStore.confirmLoading = true;
+    this.reStoreLoading = true;
+    companyHomeApi.pauseOrRestoreMonitor(monitorId, status)
+      .then(action('pause or restore monitor', () => {
+        modalStore.confirmLoading = false;
+        modalStore.closeAction();
+        this.reStoreLoading = false;
+        companyHomeStore.updateValue('reportInfo.monitorStatus', status);
+        messageStore.openMessage({ content: '操作成功' });
+      }))
+      .catch((err) => {
+        runInAction(() => {
+          modalStore.confirmLoading = false;
+          modalStore.closeAction();
+          this.reStoreLoading = false;
+          messageStore.openMessage({ type: 'warning', content: err.response.data.message });
         });
       });
   }

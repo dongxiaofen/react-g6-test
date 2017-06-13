@@ -1,21 +1,36 @@
 import React, {PropTypes} from 'react';
 import { observer, inject } from 'mobx-react';
 import TaxProfit from './TaxProfit/index';
-import TaxOperation from './TaxOperation/index';
-import TaxUp from './TaxUp/index';
+import TaxUp from './TaxOperation/index';
+import TaxOperation from './TaxUp/index';
 import pathval from 'pathval';
 import PdfTitle from 'components/common/pdf/PdfTitle';
 
-function Tax({pdfStore}) {
-  const moduleData = pathval.getPathValue(pdfStore, 'taxList');
+function Tax({pdfStore, judgeIsModuleExist}) {
   return (
-        pdfStore.banner.mainStatus === 'MONITOR' ?
         <div>
-          <PdfTitle module="税务信息" />
-          <TaxProfit moduleData={moduleData} />
-          <TaxOperation moduleData={moduleData} />
-          <TaxUp moduleData={moduleData} />
-        </div> : null
+          {
+            judgeIsModuleExist('PROFIT') ?
+            <div>
+                <PdfTitle module="盈利能力分析" subModule="盈利能力分析" />
+                <TaxProfit moduleData={pathval.getPathValue(pdfStore, 'profit')} />
+            </div> : ''
+          }
+          {
+            judgeIsModuleExist('OPERATION') ?
+              <div>
+                <PdfTitle module="盈利能力分析" subModule="营运能力分析" />
+                <TaxOperation moduleData={pathval.getPathValue(pdfStore, 'operation')} />
+              </div> : ''
+          }
+          {
+            judgeIsModuleExist('GROWING') ?
+              <div>
+                <PdfTitle module="盈利能力分析" subModule="成长能力分析" />
+                <TaxUp moduleData={pathval.getPathValue(pdfStore, 'growing')} />
+              </div> : ''
+          }
+        </div>
   );
 }
 

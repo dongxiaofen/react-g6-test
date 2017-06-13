@@ -13,16 +13,6 @@ class ModalStore {
   // action
   @observable confirmAction;
   @observable cancelAction;
-  @action.bound closeAction() {
-    this.visible = false;
-    this.isCustomize = false;
-    this.isSingleBtn = false;
-    this.pointText = false;
-    this.width = '440px';
-    this.cancelText = '取消';
-    this.confirmText = '确定';
-  }
-
   // button text
   @observable cancelText = '取消';
   @observable confirmText = '确定';
@@ -40,6 +30,21 @@ class ModalStore {
 
   @observable compComponent = null;
 
+  @action.bound closeAction() {
+    this.resetStore();
+  }
+  @action.bound resetStore() {
+    this.visible = false;
+    this.boxStyle = {};
+    this.isCustomize = false;
+    this.isSingleBtn = false;
+    this.pointText = false;
+    this.width = '440px';
+    this.cancelText = '取消';
+    this.confirmText = '确定';
+    this.isNeedBtn = true;
+    this.compComponent = null;
+  }
   @action.bound openCompModal({
     width,
     title,
@@ -71,7 +76,12 @@ class ModalStore {
     this.confirmAction = confirmAction;
     this.cancelAction = cancelAction;
     this.confirmWidth = confirmWidth;
-    if (closeAction) { this.closeAction = closeAction; }
+    if (closeAction) {
+      this.closeAction = ()=>{
+        this.resetStore();
+        closeAction();
+      };
+    }
     // button text
     if (cancelText) { this.cancelText = cancelText; }
     if (confirmText) { this.confirmText = confirmText; }

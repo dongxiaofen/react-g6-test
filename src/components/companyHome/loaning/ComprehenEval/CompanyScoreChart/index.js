@@ -1,10 +1,10 @@
-import React, {PropTypes} from 'react';
+import React, { PropTypes } from 'react';
 import { observer } from 'mobx-react';
 import Chart from 'components/common/Charts/BaseChart';
 import styles from './index.less';
 
-function CompanyScoreChart({sixStarData}) {
-  const data = sixStarData;
+function CompanyScoreChart({ sixStarData }) {
+  const data = sixStarData.data;
   const createOption = () => ({
     title: {
       text: ''
@@ -23,12 +23,12 @@ function CompanyScoreChart({sixStarData}) {
         },
       },
       indicator: [
-         { name: '行业状况', max: 100},
-         { name: '经营状况', max: 100},
-         { name: '团队相关', max: 100},
-         { name: '社会影响力', max: 100},
-         { name: '创新能力', max: 100},
-         { name: '合规程度', max: 100}
+        { name: '行业状况', max: 100 },
+        { name: '经营状况', max: 100 },
+        { name: '团队相关', max: 100 },
+        { name: '社会影响力', max: 100 },
+        { name: '创新能力', max: 100 },
+        { name: '合规程度', max: 100 }
       ],
       axisLine: {
         lineStyle: {
@@ -63,12 +63,12 @@ function CompanyScoreChart({sixStarData}) {
       data: [
         {
           value: [
-            data.industry ? sixStarData.industry.score : 0,
-            data.operation ? sixStarData.operation.score : 0,
-            data.team ? sixStarData.team.score : 0,
-            data.influence ? sixStarData.influence.score : 0,
-            data.creativity ? sixStarData.creativity.score : 0,
-            data.law ? sixStarData.law.score : 0
+            data && data.result && data.result.industry ? data.result.industry.score : 0,
+            data && data.result && data.result.operation ? data.result.operation.score : 0,
+            data && data.result && data.result.team ? data.result.team.score : 0,
+            data && data.result && data.result.influence ? data.result.influence.score : 0,
+            data && data.result && data.result.creativity ? data.result.creativity.score : 0,
+            data && data.result && data.result.law ? data.result.law.score : 0
           ],
           name: '企业综合评分',
           label: {

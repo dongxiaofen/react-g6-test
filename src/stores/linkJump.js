@@ -57,10 +57,14 @@ class LinkJumpStore {
       }))
       .catch(action('link company report err', (err) => {
         console.log(err.response, '======= link company report err');
-        searchCompanyStore.searchTabClick('COMPANY_NAME');
-        searchCompanyStore.searchChangeOther(name);
-        searchCompanyStore.getCompanyList();
-        browserHistory.push(`/searchCompany`);
+        // searchCompanyStore.searchTabClick('COMPANY_NAME');
+        // searchCompanyStore.searchChangeOther(name);
+        // searchCompanyStore.getCompanyList();
+        // browserHistory.push(`/searchCompany`);
+        messageStore.openMessage({
+          type: 'error',
+          content: '没有找到该公司',
+        });
       }));
   }
 }

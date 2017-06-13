@@ -9,6 +9,13 @@ import Summary from './Summary';
 function OverView({ pdfStore, clientStore }) {
   const summaryData = pdfStore.summary ? pdfStore.summary : '';
   // const isStock = pathval.getPathValue(pdfStore, 'banner.stockCode');
+  const objectPase = (data) => {
+    let newArr = [];
+    Object.keys(data).map( (key) => {
+      newArr = [...newArr, `${key}（${data[key]}）`];
+    });
+    return newArr.join('，');
+  };
 
   const isStock = true;
   const corpBasicMap = {
@@ -164,12 +171,31 @@ function OverView({ pdfStore, clientStore }) {
     title: '团队监控分析',
     valueData: summaryData.team ? { data: summaryData.team.recruitmentResume, type: 'object' } : undefined,
   };
-  const taxSummary = {
+  // 多维分析
+  const comprehensiveAnalysis = {
     mapKey: {
-      taxSummary: summaryData.taxOverall && summaryData.taxOverall.length > 0 ? summaryData.taxOverall.join('，') : '暂无信息',
+      allScore: '综合评分',
+      operationScore: '经营状况',
+      industryScore: '行业相关',
+      creativityScore: '创新能力',
+      lawScore: '法务相关',
+      teamScore: '团队相关',
+      influenceScore: '社会影响力'
     },
-    title: '税务信息',
-    valueData: {type: 'none', data: (summaryData.taxOverall && summaryData.taxOverall.length > 0 ? summaryData.taxOverall.join('，') : '暂无信息')},
+    title: '多维综合分析',
+    valueData: summaryData.scoreStatistic ? {data: summaryData.scoreStatistic, type: 'object'} : undefined
+  };
+  const profitabilityAnalysis = {
+    title: '盈利能力分析',
+    valueData: {type: 'none', data: (summaryData.profitStatistic && Object.keys(summaryData.profitStatistic).length > 0 ? objectPase(summaryData.profitStatistic) : '暂无信息')},
+  };
+  const operationalAnalysis = {
+    title: '营运能力分析',
+    valueData: {type: 'none', data: (summaryData.operationStatistic && Object.keys(summaryData.operationStatistic).length > 0 ? objectPase(summaryData.operationStatistic) : '暂无信息')},
+  };
+  const growthAnalysis = {
+    title: '成长能力分析',
+    valueData: {type: 'none', data: (summaryData.growingStatistic && Object.keys(summaryData.growingStatistic).length > 0 ? objectPase(summaryData.growingStatistic) : '暂无信息')},
   };
   return (
     <div>
@@ -193,15 +219,6 @@ function OverView({ pdfStore, clientStore }) {
               <Summary {...companySummary}/>
               <Summary {...companyAnnouncement} />
             </div>
-          : ''
-      }
-      {
-        pdfStore.banner.mainStatus === 'MONITOR' ?
-          <div key="taxList">
-            <SecondTitle module="税务分析" />
-            <hr className={styles.hrhr} />
-            <Summary {...taxSummary}/>
-          </div>
           : ''
       }
       <SecondTitle module="新闻信息" />
@@ -238,6 +255,28 @@ function OverView({ pdfStore, clientStore }) {
       <hr className={styles.hrhr} />
       <Summary {...pledgeEquity} />
       {/* <Summary {...riskRelationshipMap} /> */}
+
+      {/* 多维分析 */}
+            <div>
+              <SecondTitle module="多维综合分析" />
+              <hr className={styles.hrhr} />
+              <Summary {...comprehensiveAnalysis} />
+            </div>
+            <div>
+              <SecondTitle module="盈利能力分析" />
+              <hr className={styles.hrhr} />
+              <Summary {...profitabilityAnalysis} />
+            </div>
+            <div>
+              <SecondTitle module="营运能力分析" />
+              <hr className={styles.hrhr} />
+              <Summary {...operationalAnalysis}/>
+            </div>
+            <div>
+              <SecondTitle module="成长能力分析" />
+              <hr className={styles.hrhr} />
+              <Summary {...growthAnalysis}/>
+            </div>
     </div>
   );
 }

@@ -4,7 +4,7 @@ import RelPerInfo from 'components/relPerCheck';
 import { batchReport } from 'components/hoc';
 
 @inject('routing', 'relPerCheckStore')
-@batchReport('relPerCheck')
+@batchReport('relPerCheckStore')
 @observer
 
 export default class RelPerCheck extends Component {

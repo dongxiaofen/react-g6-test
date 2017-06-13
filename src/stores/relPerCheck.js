@@ -10,6 +10,7 @@ class RelPerCheckStore {
   @observable idCardStatus = false;
   @observable relationship = false;
   @observable personName = false;
+  @observable isMount = false;
 
 
   showId = observable.map({});
