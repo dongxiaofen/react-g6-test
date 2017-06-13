@@ -9,7 +9,7 @@ function ProfitList({analysisListStore}) {
   const data = analysisListStore.profitList.content;
   const createList = () => {
     return data.map((item, idx) => {
-      return <ListItem data={item} key={idx} />;
+      return <ListItem reportRoute="profitEval" data={item} key={idx} />;
     });
   };
   if (data.length === 0) {

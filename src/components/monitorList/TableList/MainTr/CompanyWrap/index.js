@@ -9,7 +9,7 @@ function CompanyWrap({data, monitorListStore}) {
   const angle = relStatus === 'show' ? 'up' : 'down';
   const btnText = relStatus === 'show' ? '收起' : '展开';
   const viewReport = () => {
-    browserHistory.push(`/companyHome?companyName=${data.companyName}`);
+    browserHistory.push(`/companyHome/monitorTimeAxis?companyName=${data.companyName}`);
   };
   const stockTableType = (stockType) => {
     let str = '';
