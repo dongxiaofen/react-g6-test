@@ -136,11 +136,13 @@ class CompanyHomeStore {
     let text = {
       content: '升级成功'
     };
+    modalStore.confirmLoading = true;
     companyHomeApi.upgradeReport(basicReportId)
     .then(action('upgradeReport', (resp) => {
       modalStore.closeAction();
       messageStore.openMessage({ ...text });
       this.reportInfo.reportId = resp.data.reportId;
+      modalStore.confirmLoading = false;
     }))
     .catch(action('upgradeReport error', (err) => {
       console.log(err.response, '=====upgradeReport error');
@@ -150,6 +152,7 @@ class CompanyHomeStore {
         content: err.response.data.message
       };
       messageStore.openMessage({ ...text });
+      modalStore.confirmLoading = false;
     }));
   }
   @action.bound openUpReportModal() {
