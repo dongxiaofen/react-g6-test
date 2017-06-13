@@ -382,6 +382,11 @@ class UiStore {
       size: 10,
       show: observable.map({}),
     },
+    illegalRecord: {
+      index: 1,
+      size: 10,
+      show: observable.map({}),
+    },
     taxPublicInfo: {
       index: 1,
       size: 10,
@@ -672,6 +677,11 @@ class UiStore {
           show: observable.map({}),
         },
         checkMessage: {
+          index: 1,
+          size: 10,
+          show: observable.map({}),
+        },
+        illegalRecord: {
           index: 1,
           size: 10,
           show: observable.map({}),
