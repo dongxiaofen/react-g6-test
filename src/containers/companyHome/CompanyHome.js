@@ -123,10 +123,10 @@ export default class CompanyHome extends Component {
           <Banner />
         </div>
         <Row className={styles.contentWrap}>
-          <Col width="2">
+          <Col width="2" className={styles.leftBar}>
             <LeftBar />
           </Col>
-          <Col width="10">
+          <Col width="10" className={styles.content}>
             <div id="tabContentWrap" className={styles.tabContentWrap}>
               {this.props.children}
             </div>
