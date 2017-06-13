@@ -7,6 +7,7 @@ function LeftBar({ leftBarStore, bannerStore, routing, companyHomeStore}) {
   const activeMenu = leftBarStore.activeMenu;
   const stockCode = bannerStore.stockCode;
   const barConf = leftBarStore.barConf;
+  let timer;
   const changeMenu = (menuKey, access) => {
     if (!access) return false;
     runInAction('切换报告一级目录', () => {
@@ -18,6 +19,19 @@ function LeftBar({ leftBarStore, bannerStore, routing, companyHomeStore}) {
         activeMenu.push(menuKey);
       }
     });
+  };
+  const backToTopOnClick = () => {
+    if (timer) {
+      clearInterval(timer);
+    }
+    timer = setInterval(() => {
+      const toTop = document.body.scrollTop || document.documentElement.scrollTop;
+      const speed = Math.ceil(toTop / 5);
+      document.documentElement.scrollTop = document.body.scrollTop = toTop - speed;
+      if (toTop <= 0) {
+        clearInterval(timer);
+      }
+    }, 10);
   };
   const changeItem = (itemKey, access, type) => {
     if (!access) {
@@ -36,6 +50,7 @@ function LeftBar({ leftBarStore, bannerStore, routing, companyHomeStore}) {
         pathname: `/companyHome/${itemKey}`,
         query: routing.location.query,
       });
+      backToTopOnClick();
     }
   };
   const isLock = (itemObj, type) => {
