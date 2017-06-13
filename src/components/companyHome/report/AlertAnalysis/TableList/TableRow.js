@@ -1,8 +1,8 @@
 import React from 'react';
 import { observer, inject } from 'mobx-react';
 import styles from './index.less';
-function TableRow({data, routing, alertAnalysisStore, networkStore}) {
-  const loadingId = alertAnalysisStore.loadingId;
+function TableRow({data, routing, dataStore, networkStore, companyHomeStore}) {
+  const loadingId = dataStore.loadingId;
   const viewDetail = () => {
     if (loadingId === data.id) {
       return false;
@@ -16,24 +16,26 @@ function TableRow({data, routing, alertAnalysisStore, networkStore}) {
       networkStore.jumpBlackNode(data.description.slice(index, data.description.length - index), routing.location.search);
       return false;
     }
-    const {monitorId, analysisReportId} = routing.location.query;
+
+    const {monitorId, reportId} = companyHomeStore.reportInfo;
+    const isMonitor = routing.location.pathname === '/companyHome/monitorAlert';
     const ruleMap = {
       RULE: 'rule',
       SYS_RULE: 'sysRule'
     };
     let url;
     let type;
-    if (monitorId) {
+    if (isMonitor) {
       url = `/api/monitor/${monitorId}/alert/${ruleMap[alertType]}/${data.id}`;
       type = 'monitor';
     } else {
-      url = `/api/analysisReport/${analysisReportId}/alert/${ruleMap[alertType]}/${data.id}`;
+      url = `/api/report/${reportId}/alert/sysRule/${data.id}`;
       type = 'report';
     }
-    alertAnalysisStore.changeValue('loadingId', data.id);
-    // alertAnalysisStore.changeValue('detailData.info', data);
+    dataStore.changeValue('loadingId', data.id);
+    // dataStore.changeValue('detailData.info', data);
     const params = alertType === 'RULE' ? {index: 1, size: 8} : {};
-    alertAnalysisStore.getAlertDetail(url, type, monitorId || analysisReportId, data, params);
+    dataStore.getAlertDetail(url, type, isMonitor ? monitorId : reportId, data, params);
   };
   const alertTypeMap = {
     'RULE': '我的预警',
@@ -62,4 +64,4 @@ function TableRow({data, routing, alertAnalysisStore, networkStore}) {
     </div>
   );
 }
-export default inject('routing', 'networkStore')(observer(TableRow));
+export default inject('routing', 'networkStore', 'companyHomeStore')(observer(TableRow));

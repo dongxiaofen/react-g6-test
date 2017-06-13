@@ -10,6 +10,7 @@ function hoc(store) {
         companyHomeStore: PropTypes.object,
       };
       componentDidMount() {
+        console.log('store', store);
         if (!this.props[store].isMount) {
           const idParams = this.props.companyHomeStore.reportInfo;
           this.props[store].getReportModule(idParams);

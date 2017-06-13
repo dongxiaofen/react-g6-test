@@ -3,8 +3,12 @@ import { observer, inject} from 'mobx-react';
 import styles from './index.less';
 import { Checkbox } from 'antd';
 import DemoSlider from '../DemoSlider';
-import lockImg from 'imgs/companyHome/leftBar/lock.png';
+import loanSlider1 from 'imgs/companyHome/loanSlider1.png';
+import loanSlider2 from 'imgs/companyHome/loanSlider2.png';
+import loanSlider3 from 'imgs/companyHome/loanSlider3.png';
+import loanSlider4 from 'imgs/companyHome/loanSlider4.png';
 import Button from 'components/lib/button';
+import { Link } from 'react-router';
 
 function CreateLoanRep({companyHomeStore, routing}) {
   const judegeStatus = (key)=>{
@@ -42,7 +46,7 @@ function CreateLoanRep({companyHomeStore, routing}) {
     const companyName = routing.location.query.companyName;
     companyHomeStore.createLoanRep(companyName);
   };
-  const imgs = [lockImg, lockImg, lockImg, lockImg];
+  const imgs = [loanSlider1, loanSlider2, loanSlider3, loanSlider4];
   const navs = ['多维综合分析', '盈利能力分析', '营运能力分析', '发展能力分析'];
   return (
     <div className={styles.createLoanRep}>
@@ -50,11 +54,20 @@ function CreateLoanRep({companyHomeStore, routing}) {
         <p className={styles.title}>请选择所需贷中分析信息</p>
         <div className={`${styles.operation} clearfix`}>{createOper()}</div>
       </div>
-      <hr className={styles.line}/>
-      <DemoSlider imgs={imgs} navs={navs}/>
-      <div style={{margin: 'auto', width: '280px'}}>
-        <Button btnType="primary" className={styles.confirm} onClick={createLoanRep}>确定</Button>
+      <div className="clearfix">
+        <Button
+          btnType="primary"
+          className={styles.confirm}
+          onClick={createLoanRep}
+          loading={companyHomeStore.loanLoading}>确定</Button>
+        <div className={styles.pointText}>
+          <i className="fa fa-exclamation-circle"></i>
+          确定即视为同意
+          《<Link to="/disclaimer" target="_blank">免责声明</Link>》
+        </div>
       </div>
+      <hr className={styles.line}/>
+      <DemoSlider imgs={imgs} navs={navs} autoplay/>
     </div>
   );
 }

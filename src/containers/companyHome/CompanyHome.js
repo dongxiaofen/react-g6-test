@@ -4,30 +4,35 @@ import { runInAction } from 'mobx';
 import Banner from 'components/companyHome/Banner';
 import LeftBar from 'components/companyHome/LeftBar';
 import { Container, Row, Col } from 'components/common/layout';
+import CirclesLoading from 'components/common/CirclesLoading';
 import styles from './index.less';
 
 @inject(
   'routing',
+  'leftBarStore',
   'uiStore',
   'companyHomeStore',
   'bannerStore',
-  'leftBarStore',
   'corpDetailStore',
-  'riskCourtStore',
+  'stockStore',
   'internetStore',
   'assetsStore',
   'teamStore',
+  'investmentStore',
+  'riskTaxStore',
+  'riskCourtStore',
+  'riskCheckStore',
+  'riskPledgeStore',
   'networkStore',
   'blackNetworkStore',
-  'alertAnalysisStore',
   'reportAxisStore',
-  'monitorAxisStore',
-  'relPerCheckStore',
-  'nowRecordStore',
-  'stockStore',
+  'alertAnalysisStore',
+  'analysisSrore',
   'taxStore',
-  'taxCheckStore',
-  'payModalStore'
+  'monitorAxisStore',
+  'monitorAlertStore',
+  'nowRecordStore',
+  'payModalStore',
 )
 @observer
 export default class CompanyHome extends Component {
@@ -37,21 +42,25 @@ export default class CompanyHome extends Component {
     leftBarStore: PropTypes.object,
     uiStore: PropTypes.object,
     companyHomeStore: PropTypes.object,
+    bannerStore: PropTypes.object,
     corpDetailStore: PropTypes.object,
-    riskCourtStore: PropTypes.object,
+    stockStore: PropTypes.object,
     internetStore: PropTypes.object,
     assetsStore: PropTypes.object,
     teamStore: PropTypes.object,
+    investmentStore: PropTypes.object,
+    riskTaxStore: PropTypes.object,
+    riskCourtStore: PropTypes.object,
+    riskCheckStore: PropTypes.object,
+    riskPledgeStore: PropTypes.object,
     networkStore: PropTypes.object,
     blackNetworkStore: PropTypes.object,
-    alertAnalysisStore: PropTypes.object,
     reportAxisStore: PropTypes.object,
-    monitorAxisStore: PropTypes.object,
-    relPerCheckStore: PropTypes.object,
-    nowRecordStore: PropTypes.object,
+    alertAnalysisStore: PropTypes.object,
+    analysisSrore: PropTypes.object,
     taxStore: PropTypes.object,
-    taxCheckStore: PropTypes.object,
-    bannerStore: PropTypes.object,
+    monitorAxisStore: PropTypes.object,
+    nowRecordStore: PropTypes.object,
   };
   componentWillMount() {
     const leftBarStore = this.props.leftBarStore;
@@ -62,34 +71,41 @@ export default class CompanyHome extends Component {
   }
   componentDidMount() {
     const companyName = this.props.routing.location.query.companyName;
-    this.props.companyHomeStore.getIdParams({companyName});
+    this.props.companyHomeStore.getReportStatus({companyName});
   }
   componentWillUnmount() {
-    console.log('CompanyHome componentWillUnmount', window.reportSourceCancel);
     // cancel pending api call
-    window.reportSourceCancel.forEach((cancel) => {
-      cancel();
-    });
+    if (window.reportSourceCancel) {
+      window.reportSourceCancel.forEach((cancel) => {
+        cancel();
+      });
+    }
     // reset report store data
     [
       'uiStore',
+      'companyHomeStore',
       'bannerStore',
-      'leftBarStore',
       'corpDetailStore',
-      'riskCourtStore',
+      'stockStore',
       'internetStore',
       'assetsStore',
       'teamStore',
+      'investmentStore',
+      'riskTaxStore',
+      'riskCourtStore',
+      'riskCheckStore',
+      'riskPledgeStore',
       'networkStore',
       'blackNetworkStore',
-      'alertAnalysisStore',
       'reportAxisStore',
-      'monitorAxisStore',
-      'relPerCheckStore',
-      'stockStore',
-      'nowRecordStore',
+      'alertAnalysisStore',
+      'analysisSrore',
       'taxStore',
-      'taxCheckStore'
+      'taxCheckStore',
+      'companyHomeStore',
+      'monitorAxisStore',
+      'monitorAlert',
+      'nowRecordStore'
     ].map((key)=>{
       if (this.props[key].resetStore) {
         this.props[key].resetStore();
@@ -101,7 +117,7 @@ export default class CompanyHome extends Component {
       return !this.props.companyHomeStore.reportInfo[key];
     });
     if (noReport) {
-      return <div>loading</div>;
+      return <CirclesLoading />;
     }
     return (
       <Container id="reportContainer">

@@ -12,6 +12,7 @@ class AlertAnalysisStore {
   }
 
   @observable isMount = false;
+
   @observable loadingId = -1;
   @observable listData = [];
   // 六芒星data
@@ -29,6 +30,24 @@ class AlertAnalysisStore {
     html: '',
     orgData: {},
   }
+  @action.bound getReportModule(params) {
+    this.isMount = true;
+    this.listData = {};
+    companyHomeApi.getReportModule('alert/page', params)
+    .then(action('getAlert_success', resp => {
+      let data = null;
+      if (resp.data.content && resp.data.content.length > 0) {
+        uiStore.updateUiStore('alertAnalysis.totalElements', resp.data.totalElements);
+        data = resp.data;
+      } else {
+        data = {error: {message: '暂无信息'}, content: []};
+      }
+      this.listData = data;
+    }))
+    .catch(action('getAlert_error', err => {
+      this.listData = err.response && {error: err.response.data, content: []} || {error: {message: '暂无信息'}, content: []};
+    }));
+  }
   @action.bound changeValue(key, value) {
     pathval.setPathValue(this, key, value);
   }
@@ -36,17 +55,7 @@ class AlertAnalysisStore {
     companyHomeApi.judgeReportType(companyName)
       .then(resp => {
         const {reportId, monitorId, analysisReportId} = resp.data;
-        // const type = resp.data.monitorMapResponse && resp.data.monitorMapResponse.companyType;
         let url;
-        // if (monitorId && type === 'MAIN') {
-        //   url = `corpDetail?companyType=${type}&monitorId=${monitorId}`;
-        // } else if (reportId) {
-        //   url = `corpDetail?companyType=MAIN&reportId=${reportId}`;
-        // } else if (analysisReportId) {
-        //   url = `corpDetail?companyType=MAIN&analysisReportId=${analysisReportId}`;
-        // } else {
-        //   url = `corpDetail?companyName=${companyName}&companyType=FREE`;
-        // }
         if (monitorId) {
           url = `corpDetail?monitorId=${monitorId}`;
         } else if (reportId) {
@@ -85,13 +94,13 @@ class AlertAnalysisStore {
         if (this.detailData.info.alertType === 'RULE') {
           const pattern = this.detailData.detail[0].pattern;
           if (pattern === 'NEWS') {
-            this.getNewsDetail(companyType, companyId);
+            this.getNewsDetail(companyId);
           } else if (pattern === 'JUDGMENT') {
-            this.getJudgeDocDetail(companyType, companyId, this.detailData.detail[this.detailData.activeIndex].content);
+            this.getJudgeDocDetail(companyId, this.detailData.detail[this.detailData.activeIndex].content);
           }
         } else if (this.detailData.info.alertType === 'SYS_RULE') {
           if (resp.data[0].detail[0].type === 'judgeInfo' && this.detailData.detail[0].detail[0].judgeInfo) {
-            this.getJudgeDocDetail(companyType, companyId, this.detailData.detail[0].detail[0].judgeInfo);
+            this.getJudgeDocDetail(companyId, this.detailData.detail[0].detail[0].judgeInfo);
           }
         }
       }))
@@ -107,17 +116,13 @@ class AlertAnalysisStore {
         }
       }));
   }
-  @action.bound getNewsDetail(type, companyId) {
+  @action.bound getNewsDetail(companyId) {
     const detailData = this.detailData.detail[this.detailData.activeIndex];
     const params = {};
     params.createdAt = detailData.content.createdAt;
     params.url = detailData.content.url;
-    if (type !== 'monitor') {
-      params.analysisReportId = companyId;
-    }
     this.detailData.html = '';
-    const getNewsDetailFunc = type === 'monitor' ? companyHomeApi.getAlertNewsMonitor(companyId, params) : companyHomeApi.getAlertNewsReport(params);
-    getNewsDetailFunc
+    companyHomeApi.getAlertNewsReport(companyId, params)
     .then(action('get news', resp=> {
       this.detailData.html = resp.data.html;
     }))
@@ -126,16 +131,12 @@ class AlertAnalysisStore {
       this.detailData.html = '--';
     }));
   }
-  @action.bound getJudgeDocDetail(type, companyId, data) {
+  @action.bound getJudgeDocDetail(companyId, data) {
     const params = {};
     params.docId = data.docId;
     params.trailDate = data.trailDate;
     this.detailData.html = '';
-    if (type !== 'monitor') {
-      params.analysisReportId = companyId;
-    }
-    const getJudeDocDetailFunc = type === 'monitor' ? companyHomeApi.getAlertJudgeDocMonitor(companyId, params) : companyHomeApi.getAlertJudgeDocReport(params);
-    getJudeDocDetailFunc
+    companyHomeApi.getAlertJudgeDocReport(companyId, params)
     .then(action('get judgeDoc', resp=> {
       this.detailData.html = resp.data.detail;
     }))
