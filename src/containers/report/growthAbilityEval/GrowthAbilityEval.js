@@ -13,14 +13,10 @@ export default class GrowthAbilityEval extends Component {
     this.props.loaningStore.getUpDataList();
   }
 
-  componentWillUnmount() {
-    // this.props.loaningStore.resetgetUpDataListStore();
-  }
-
   render() {
     return (
       <div>
-        <GrowingReport loaningStore={this.props.loaningStore} />
+        <GrowingReport upDataList={this.props.loaningStore.upDataList} />
       </div>
     );
   }

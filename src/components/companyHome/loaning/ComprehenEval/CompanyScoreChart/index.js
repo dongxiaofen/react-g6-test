@@ -4,7 +4,7 @@ import Chart from 'components/common/Charts/BaseChart';
 import styles from './index.less';
 
 function CompanyScoreChart({ sixStarData }) {
-  const data = sixStarData;
+  const data = sixStarData.data;
   const createOption = () => ({
     title: {
       text: ''
@@ -63,12 +63,12 @@ function CompanyScoreChart({ sixStarData }) {
       data: [
         {
           value: [
-            data.result.industry ? sixStarData.result.industry.score : 0,
-            data.result.operation ? sixStarData.result.operation.score : 0,
-            data.result.team ? sixStarData.result.team.score : 0,
-            data.result.influence ? sixStarData.result.influence.score : 0,
-            data.result.creativity ? sixStarData.result.creativity.score : 0,
-            data.result.law ? sixStarData.result.law.score : 0
+            data && data.result && data.result.industry ? data.result.industry.score : 0,
+            data && data.result && data.result.operation ? data.result.operation.score : 0,
+            data && data.result && data.result.team ? data.result.team.score : 0,
+            data && data.result && data.result.influence ? data.result.influence.score : 0,
+            data && data.result && data.result.creativity ? data.result.creativity.score : 0,
+            data && data.result && data.result.law ? data.result.law.score : 0
           ],
           name: '企业综合评分',
           label: {

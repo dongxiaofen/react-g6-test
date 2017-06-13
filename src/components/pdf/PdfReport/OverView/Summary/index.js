@@ -22,6 +22,9 @@ function Summary({mapKey, valueData, unit, title, total}) {
       if (typeof data[item] === 'number' && data[item] > 0) {
         emptyFlag = false;
       }
+      if (!isNaN(parseFloat(data[item]))) {
+        emptyFlag = false;
+      }
       str += mapKey[item] + (data[item] === true ? '，' : `（${data[item]}），`);
       if (typeof data[item] === 'boolean' && data[item] === false) {
         str = str.replace(`${mapKey[item]}（${data[item]}），`, '');
