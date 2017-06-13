@@ -9,7 +9,7 @@ function OperateList({analysisListStore}) {
   const data = analysisListStore.operateList.content;
   const createList = () => {
     return data.map((item, idx) => {
-      return <ListItem data={item} key={idx} />;
+      return <ListItem reportRoute="operationEval" data={item} key={idx} />;
     });
   };
   if (data.length === 0) {
