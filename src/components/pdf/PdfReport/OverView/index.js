@@ -9,6 +9,13 @@ import Summary from './Summary';
 function OverView({ pdfStore, clientStore }) {
   const summaryData = pdfStore.summary ? pdfStore.summary : '';
   // const isStock = pathval.getPathValue(pdfStore, 'banner.stockCode');
+  const objectPase = (data) => {
+    let newArr = [];
+    Object.keys(data).map( (key) => {
+      newArr = [...newArr, `${key}（${data[key]}）`];
+    });
+    return newArr.join('，');
+  };
 
   const isStock = true;
   const corpBasicMap = {
@@ -179,25 +186,16 @@ function OverView({ pdfStore, clientStore }) {
     valueData: summaryData.scoreStatistic ? {data: summaryData.scoreStatistic, type: 'object'} : undefined
   };
   const profitabilityAnalysis = {
-    mapKey: {
-      taxSummary: summaryData.profitStatistic && Object.keys(summaryData.profitStatistic).length > 0 ? summaryData.taxOverall.join('，') : '暂无信息',
-    },
     title: '盈利能力分析',
-    valueData: {type: 'none', data: (summaryData.taxOverall && summaryData.taxOverall.length > 0 ? summaryData.taxOverall.join('，') : '暂无信息')},
+    valueData: {type: 'none', data: (summaryData.profitStatistic && Object.keys(summaryData.profitStatistic).length > 0 ? objectPase(summaryData.profitStatistic) : '暂无信息')},
   };
   const operationalAnalysis = {
-    mapKey: {
-      taxSummary: summaryData.taxOverall && summaryData.taxOverall.length > 0 ? summaryData.taxOverall.join('，') : '暂无信息',
-    },
     title: '营运能力分析',
-    valueData: {type: 'none', data: (summaryData.taxOverall && summaryData.taxOverall.length > 0 ? summaryData.taxOverall.join('，') : '暂无信息')},
+    valueData: {type: 'none', data: (summaryData.operationStatistic && Object.keys(summaryData.operationStatistic).length > 0 ? objectPase(summaryData.operationStatistic) : '暂无信息')},
   };
   const growthAnalysis = {
-    mapKey: {
-      taxSummary: summaryData.taxOverall && summaryData.taxOverall.length > 0 ? summaryData.taxOverall.join('，') : '暂无信息',
-    },
     title: '成长能力分析',
-    valueData: {type: 'none', data: (summaryData.taxOverall && summaryData.taxOverall.length > 0 ? summaryData.taxOverall.join('，') : '暂无信息')},
+    valueData: {type: 'none', data: (summaryData.growingStatistic && Object.keys(summaryData.growingStatistic).length > 0 ? objectPase(summaryData.growingStatistic) : '暂无信息')},
   };
   return (
     <div>
