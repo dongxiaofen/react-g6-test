@@ -30,7 +30,7 @@ function FeedBack({getFeedBack, modalStore, searchKeyFilter}) {
   };
 
   return (
-    <div className={`${styles.wrap}`}>
+    <div className={searchKeyFilter ? styles.wrap : styles.none}>
       <div onClick={feedBack} className={searchKeyFilter ? styles.noResult : styles.none}>
         没有想要的结果？提供关键词
       </div>
