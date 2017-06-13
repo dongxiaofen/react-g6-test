@@ -7,10 +7,10 @@ function CheckMessage({riskCheckStore}) {
   const data = {
     meta: {
       body: [
-        {'key': 'check_date', 'width': '6'},
+        {'key': 'checkDate', 'width': '6'},
         {'key': 'institution', 'width': '6'},
-        {'key': 'check_type', 'width': '6', hide: true},
-        {'key': 'check_result', 'width': '6', hide: true}
+        {'key': 'checkType', 'width': '6', hide: true},
+        {'key': 'checkResult', 'width': '6', hide: true}
       ],
       isExpand: false,
       dict: 'checkMessage',
