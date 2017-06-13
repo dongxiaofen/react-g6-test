@@ -30,7 +30,7 @@ function NowRecordList({nowRecordStore, uiStore}) {
       // 列表
       if (obj.item) {
         listDom.push(
-          <div key={`${idx}record`} className={dataList.length < 10 ? styles.singleShort : styles.single}>
+          <div key={`${idx}record`} className={dataList.length < 11 ? styles.singleShort : styles.single}>
             <div className={styles.head}>
               <div className={styles.title}>
                 {obj.item.title ? obj.item.title : '暂无标题'}
@@ -62,7 +62,7 @@ function NowRecordList({nowRecordStore, uiStore}) {
       <div className={styles.wrapCon}>
         {listDom}
       </div>
-      <div className={dataList && dataList.length < 10 ? styles.pageShort : styles.page}>
+      <div className={dataList && dataList.length < 11 ? styles.pageShort : styles.page}>
         <Pager tData={dataList} module="nowRecordPager"
                uiStore={uiStore} type="large"/>
       </div>
