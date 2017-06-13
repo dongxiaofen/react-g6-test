@@ -2,14 +2,14 @@ import React from 'react';
 import { observer } from 'mobx-react';
 import { browserHistory } from 'react-router';
 import styles from './index.less';
-function ListItem({data}) {
+function ListItem({data, reportRoute}) {
   const viewReport = (companyName) => {
-    browserHistory.push(`/companyHome?companyName=${companyName}`);
+    browserHistory.push(`/companyHome/${reportRoute}?companyName=${companyName}`);
   };
   const keyMap = {
     SCORE: '多维综合评价',
     PROFIT: '盈利能力分析',
-    OPRATION: '营运能力分析',
+    OPERATION: '营运能力分析',
     GROWING: '成长能力分析',
   };
   return (

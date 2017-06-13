@@ -47,9 +47,9 @@ function Content({alertAnalysisStore, monitorAlertStore, routing}) {
         case 'DISHONESTY':
           return <DishonestInfo data={singleDetail} type={info.alertType}/>;
         case 'JUDGMENT':
-          return <JudgeDoc data={singleDetail} type={info.alertType}/>;
+          return <JudgeDoc data={singleDetail} type={info.alertType} dataStore={dataStore}/>;
         case 'NEWS':
-          return <News data={singleDetail}/>;
+          return <News data={singleDetail} dataStore={dataStore}/>;
         case 'COURT_LITIGATION':
           return <LitigationAssets data={singleDetail}/>;
         default:
@@ -71,7 +71,7 @@ function Content({alertAnalysisStore, monitorAlertStore, routing}) {
       }
       switch (typeId) {
         case 1:
-          return <JudgeDoc data={detail[detailData.activeIndex]} type={info.alertTyp} ruleId={ruleId}/>;
+          return <JudgeDoc data={detail[detailData.activeIndex]} type={info.alertTyp} ruleId={ruleId} dataStore={dataStore}/>;
         case 3:
           return <DishonestInfo data={detail[detailData.activeIndex]} type={info.alertTyp} ruleId={ruleId}/>;
         case 7:

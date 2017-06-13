@@ -14,10 +14,6 @@ export default class OperationEval extends Component {
     this.props.loaningStore.getOperationDataList();
   }
 
-  componentWillUnmount() {
-    // this.props.loaningStore.resetProfitEvalStore();
-  }
-
   render() {
     return (
       <div>

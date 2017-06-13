@@ -1,7 +1,7 @@
 import React, {PropTypes} from 'react';
 import { observer } from 'mobx-react';
 import SimpleCard from 'components/common/report/alertAnalysis/SimpleCard';
-function JudgeDoc({data, type, ruleId}) {
+function JudgeDoc({data, type, ruleId, dataStore}) {
   const modifyLitiganti = (value)=> {
     if (value) {
       const newsData = value.map((item)=>{
@@ -45,7 +45,7 @@ function JudgeDoc({data, type, ruleId}) {
     item: itemData,
   };
   return (
-    <SimpleCard meta={meta} />
+    <SimpleCard meta={meta} dataStore={dataStore}/>
   );
 }
 

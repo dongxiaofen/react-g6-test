@@ -14,7 +14,7 @@ function ChangeTrendBody({ msStore }) {
     <Row>
       <Col width="9">
         <ChangeTrendChart
-          chartOption={changeTrend.chartOption}
+          changeTrendData={msStore.changeTrendData}
           setChangeTable={msStore.setChangeTable} />
       </Col>
       <Col width="3">
@@ -28,11 +28,16 @@ ChangeTrendBody.propTypes = {
   msStore: PropTypes.object,
 };
 export default loadingComp({
-  mapDataToProps: props => ({
-    loading: props.msStore.loadingGroup.changeTrend,
-    category: 0,
-    height: 363,
-    error: !props.msStore.isEmptyObject('errorBody', 'changeTrend') || !props.msStore.changeTrend.result.length,
-    errCategory: 1,
-  })
+  mapDataToProps: props => {
+    const msStore = props.msStore;
+    const changeTrendData = msStore.changeTrendData;
+    const isErr = changeTrendData.companyData.length === 0 && changeTrendData.eventData.length === 0;
+    return {
+      loading: msStore.loadingGroup.changeTrend,
+      category: 0,
+      height: 363,
+      error: isErr,
+      errCategory: 1,
+    };
+  }
 })(observer(ChangeTrendBody));
