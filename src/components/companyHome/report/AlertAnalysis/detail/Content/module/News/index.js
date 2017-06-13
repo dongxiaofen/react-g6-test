@@ -1,7 +1,7 @@
 import React, {PropTypes} from 'react';
 import { observer } from 'mobx-react';
 import SimpleCard from 'components/common/report/alertAnalysis/SimpleCard';
-function News({data}) {
+function News({data, dataStore}) {
   data.content.alterDt = data.alterDt;
   const meta = {
     dict: 'news',
@@ -13,7 +13,7 @@ function News({data}) {
     item: data.content,
   };
   return (
-    <SimpleCard meta={meta} />
+    <SimpleCard meta={meta} dataStore={dataStore}/>
   );
 }
 
