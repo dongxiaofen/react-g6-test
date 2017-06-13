@@ -167,22 +167,36 @@ function OverView({ pdfStore, clientStore }) {
   // 多维分析
   const comprehensiveAnalysis = {
     mapKey: {
-      registerInfo: '综合评分',
-      shareholder: '经营状况',
-      mainPerson: '行业相关',
-      branch: '创新能力',
-      // mainPerson: '法务相关',
-      // branch: '团队相关',
-      // mainPerson: '社会影响力'
+      allScore: '综合评分',
+      operationScore: '经营状况',
+      industryScore: '行业相关',
+      creativityScore: '创新能力',
+      lawScore: '法务相关',
+      teamScore: '团队相关',
+      influenceScore: '社会影响力'
     },
     title: '多维综合分析',
-    valueData: summaryData.basic ? {data: summaryData.basic.corpBasic, type: 'object'} : undefined
+    valueData: summaryData.scoreStatistic ? {data: summaryData.scoreStatistic, type: 'object'} : undefined
   };
-  const taxSummary = {
+  const profitabilityAnalysis = {
+    mapKey: {
+      taxSummary: summaryData.profitStatistic && Object.keys(summaryData.profitStatistic).length > 0 ? summaryData.taxOverall.join('，') : '暂无信息',
+    },
+    title: '盈利能力分析',
+    valueData: {type: 'none', data: (summaryData.taxOverall && summaryData.taxOverall.length > 0 ? summaryData.taxOverall.join('，') : '暂无信息')},
+  };
+  const operationalAnalysis = {
     mapKey: {
       taxSummary: summaryData.taxOverall && summaryData.taxOverall.length > 0 ? summaryData.taxOverall.join('，') : '暂无信息',
     },
-    title: '税务信息',
+    title: '营运能力分析',
+    valueData: {type: 'none', data: (summaryData.taxOverall && summaryData.taxOverall.length > 0 ? summaryData.taxOverall.join('，') : '暂无信息')},
+  };
+  const growthAnalysis = {
+    mapKey: {
+      taxSummary: summaryData.taxOverall && summaryData.taxOverall.length > 0 ? summaryData.taxOverall.join('，') : '暂无信息',
+    },
+    title: '成长能力分析',
     valueData: {type: 'none', data: (summaryData.taxOverall && summaryData.taxOverall.length > 0 ? summaryData.taxOverall.join('，') : '暂无信息')},
   };
   return (
@@ -249,23 +263,21 @@ function OverView({ pdfStore, clientStore }) {
               <SecondTitle module="多维综合分析" />
               <hr className={styles.hrhr} />
               <Summary {...comprehensiveAnalysis} />
-              <Summary {...yearReport} />
-              <Summary {...businessChange} />
             </div>
             <div>
               <SecondTitle module="盈利能力分析" />
               <hr className={styles.hrhr} />
-              <Summary {...comprehensiveAnalysis} />
+              <Summary {...profitabilityAnalysis} />
             </div>
             <div>
               <SecondTitle module="营运能力分析" />
               <hr className={styles.hrhr} />
-              <Summary {...taxSummary}/>
+              <Summary {...operationalAnalysis}/>
             </div>
             <div>
               <SecondTitle module="成长能力分析" />
               <hr className={styles.hrhr} />
-              <Summary {...taxSummary}/>
+              <Summary {...growthAnalysis}/>
             </div>
     </div>
   );
