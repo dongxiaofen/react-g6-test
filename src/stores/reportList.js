@@ -18,13 +18,13 @@ class ReportListStore {
       .then(action('getReportCount_success', resp => {
         this.listCount = resp.data;
       }))
-      .catch('getReportCount_error', err => {
+      .catch(action('getReportCount_error', err => {
         console.log(err);
         this.listCount = {
           basicReportNum: 0,
           reportNum: 0,
         };
-      });
+      }));
   }
   @action.bound getReportList() {
     const activeKey = this.activeKey;
@@ -38,10 +38,10 @@ class ReportListStore {
         reportListPager.totalElements = resp.data.totalElements;
         this[moduleStr] = resp.data;
       }))
-      .catch((err) => {
+      .catch(action('get report page', (err) => {
         console.log(err, '-----getReportList');
         this[moduleStr] = {error: pathval.getPathInfo(err, 'response.data') || {message: '暂无信息'}, content: []};
-      });
+      }));
   }
 }
 export default new ReportListStore();
