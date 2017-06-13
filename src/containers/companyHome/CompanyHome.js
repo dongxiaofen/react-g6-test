@@ -22,17 +22,18 @@ import styles from './index.less';
   'riskTaxStore',
   'riskCourtStore',
   'riskCheckStore',
-  'riskPledgeStore',
+  // 'riskPledgeStore',
   'networkStore',
   'blackNetworkStore',
   'reportAxisStore',
   'alertAnalysisStore',
-  'analysisSrore',
+  // 'analysisSrore',
   'taxStore',
   'monitorAxisStore',
-  'alertMonitorStore',
+  'monitorAlertStore',
   'nowRecordStore',
   'payModalStore',
+  'loaningStore',
 )
 @observer
 export default class CompanyHome extends Component {
@@ -60,9 +61,10 @@ export default class CompanyHome extends Component {
     analysisSrore: PropTypes.object,
     taxStore: PropTypes.object,
     monitorAxisStore: PropTypes.object,
-    alertMonitorStore: PropTypes.object,
     nowRecordStore: PropTypes.object,
+    loaningStore: PropTypes.object,
   };
+
   componentWillMount() {
     const leftBarStore = this.props.leftBarStore;
     const module = this.props.routing.location.pathname.split('/')[2];
@@ -70,10 +72,12 @@ export default class CompanyHome extends Component {
       leftBarStore.activeItem = module;
     });
   }
+
   componentDidMount() {
     const companyName = this.props.routing.location.query.companyName;
-    this.props.companyHomeStore.getIdParams({companyName});
+    this.props.companyHomeStore.getReportStatus({ companyName });
   }
+
   componentWillUnmount() {
     // cancel pending api call
     if (window.reportSourceCancel) {
@@ -86,6 +90,7 @@ export default class CompanyHome extends Component {
       'uiStore',
       'companyHomeStore',
       'bannerStore',
+      'loaningStore',
       'corpDetailStore',
       'stockStore',
       'internetStore',
@@ -95,22 +100,24 @@ export default class CompanyHome extends Component {
       'riskTaxStore',
       'riskCourtStore',
       'riskCheckStore',
-      'riskPledgeStore',
+      // 'riskPledgeStore',
       'networkStore',
       'blackNetworkStore',
       'reportAxisStore',
       'alertAnalysisStore',
-      'analysisSrore',
+      // 'analysisSrore',
       'taxStore',
+      'taxCheckStore',
       'monitorAxisStore',
-      'alertMonitorStore',
-      'nowRecordStore'
-    ].map((key)=>{
-      if (this.props[key].resetStore) {
+      'monitorAlert',
+      'nowRecordStore',
+    ].map((key) => {
+      if (this.props[key] && this.props[key].resetStore) {
         this.props[key].resetStore();
       }
     });
   }
+
   render() {
     const noReport = ['reportId', 'basicReportId'].every(key => {
       return !this.props.companyHomeStore.reportInfo[key];
@@ -124,10 +131,10 @@ export default class CompanyHome extends Component {
           <Banner />
         </div>
         <Row className={styles.contentWrap}>
-          <Col width="2">
+          <Col width="2" className={styles.leftBar}>
             <LeftBar />
           </Col>
-          <Col width="10">
+          <Col width="10" className={styles.content}>
             <div id="tabContentWrap" className={styles.tabContentWrap}>
               {this.props.children}
             </div>

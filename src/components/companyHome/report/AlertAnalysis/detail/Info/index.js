@@ -2,13 +2,15 @@ import React, {PropTypes} from 'react';
 import { observer, inject} from 'mobx-react';
 import styles from './index.less';
 
-function Info({alertAnalysisStore}) {
-  const info = alertAnalysisStore.detailData.info;
+function Info({alertAnalysisStore, monitorAlertStore, routing}) {
+  const pathname = routing.location.pathname;
+  const dataStore = pathname === '/companyHome/monitorAlert' ? monitorAlertStore : alertAnalysisStore;
+  const info = dataStore.detailData.info;
   let relation = '';
   let hasRelation = false;
   let detail = {};
   if (info.alertType === 'SYS_RULE') {
-    detail = alertAnalysisStore.detailData.detail[0];
+    detail = dataStore.detailData.detail[0];
     const type = detail.type;
     hasRelation = info.alertType === 'SYS_RULE' && (type === 'judgeInfo' || type === 'dishonesty') && detail.relation;
     relation = detail.relation && detail.relation.length > 0 ? `（${detail.relation.join('／')}）` : '';
@@ -27,4 +29,4 @@ function Info({alertAnalysisStore}) {
 Info.propTypes = {
   foo: PropTypes.string,
 };
-export default inject('alertAnalysisStore')(observer(Info));
+export default inject('alertAnalysisStore', 'monitorAlertStore', 'routing')(observer(Info));

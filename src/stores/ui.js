@@ -293,7 +293,8 @@ class UiStore {
     },
     filiationList: {
       index: 1,
-      size: 10
+      size: 10,
+      show: observable.map({})
     },
     entinvItemLists: {
       index: 1,
@@ -382,6 +383,11 @@ class UiStore {
       show: observable.map({}),
     },
     checkMessage: {
+      index: 1,
+      size: 10,
+      show: observable.map({}),
+    },
+    illegalRecord: {
       index: 1,
       size: 10,
       show: observable.map({}),
@@ -591,7 +597,8 @@ class UiStore {
         },
         filiationList: {
           index: 1,
-          size: 10
+          size: 10,
+          show: observable.map({})
         },
         entinvItemLists: {
           index: 1,
@@ -675,6 +682,11 @@ class UiStore {
           show: observable.map({}),
         },
         checkMessage: {
+          index: 1,
+          size: 10,
+          show: observable.map({}),
+        },
+        illegalRecord: {
           index: 1,
           size: 10,
           show: observable.map({}),

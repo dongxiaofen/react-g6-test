@@ -112,11 +112,25 @@ export const changeAnnouncement = ({ stockType, monitorId, reportId }) => {
   return axios.get(url);
 };
 
-// 刷新报告
-export const refreshHighOrDeep = (reportId) => {
+// 刷新基础报告
+export const updateBasicRep = (basicReportId) => {
+  return axios.put(`/api/basicReport/${basicReportId}`);
+};
+// 获取基础报告的刷新时间
+export const getBasicRepInfo = (basicReportId) => {
+  return axios.get(`/api/basicReport/${basicReportId}/info`);
+};
+// 刷新高级报告
+export const updateReport = (reportId) => {
   return axios.put(`/api/report/${reportId}`);
 };
-
+// 获取高级报告的刷新时间
+export const getReportInfo = (reportId) => {
+  return axios.get(`/api/report/${reportId}/info`);
+};
+export const getMonitorInfo = (monitorId) => {
+  return axios.get(`/api/monitor/${monitorId}/info`);
+};
 // 创建高级报告或者深度报告
 export const createReport = (active, companyName) => {
   let url;
@@ -181,11 +195,11 @@ export const getAlertNewsMonitor = (companyId, params) => {
 export const getAlertJudgeDocMonitor = (companyId, params) => {
   return axios.get(`/api/monitor/${companyId}/risk/judgeDoc`, { params });
 };
-export const getAlertNewsReport = (params) => {
-  return axios.get('/api/analysisReport/internet/detail', { params });
+export const getAlertNewsReport = (companyId, params) => {
+  return axios.get(`/api/report/${companyId}/internet/detail`, { params });
 };
-export const getAlertJudgeDocReport = (params) => {
-  return axios.get('/api/analysisReport/risk/judgeDoc', { params });
+export const getAlertJudgeDocReport = (companyId, params) => {
+  return axios.get(`/api/report/${companyId}/risk/judgeDoc`, { params });
 };
 // 判断企业报告类型
 export const judgeReportType = (companyName) => {
@@ -198,8 +212,8 @@ export const monitorExistNode = (monitorCompanyId, params) => {
 };
 
 // 现勘记录
-export const getNowRecordList = (id, params, source) => {
-  return axios.get('/api/survey/' + id + '/page', { params: params, cancelToken: source.token });
+export const getNowRecordList = (companyName, params, source) => {
+  return axios.get('/api/survey/' + companyName + '/page', { params: params, cancelToken: source.token });
 };
 export const getNowRecordPictures = (id, source) => {
   return axios.get('/api/survey/' + id + '/pictures', { cancelToken: source.token });

@@ -14,7 +14,9 @@ function CheckItem({itemData, routing, relPerCheckStore}) {
   const matchStr = match ? 'match' : 'noMatch';
   const cssStr = `${matchStr}_${showStr}`;
   const viewDetail = () => {
-    window.open(`/personReport?personCheckId=${personCheckId}`);
+    if (matchStr === 'match') {
+      window.open(`/personReport?personCheckId=${personCheckId}`);
+    }
   };
   const showIdCard = (evt) => {
     evt.stopPropagation();

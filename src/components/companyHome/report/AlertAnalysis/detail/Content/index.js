@@ -19,11 +19,14 @@ import {
   News,
   ExcuteInfo,
 } from './module';
-function Content({alertAnalysisStore}) {
+function Content({alertAnalysisStore, monitorAlertStore, routing}) {
+  const pathname = routing.location.pathname;
+  const dataStore = pathname === '/companyHome/monitorAlert' ? monitorAlertStore : alertAnalysisStore;
   const createModule = () => {
-    const detailData = alertAnalysisStore.detailData;
+    const detailData = dataStore.detailData;
     const info = detailData.info;
     const detail = detailData.detail;
+    console.log(info, detail, '=====12', dataStore);
     if (info.alertType === 'RULE') {
       const singleDetail = detail[detailData.activeIndex];
       // console.log(singleDetail, 'singleDetail-----------');
@@ -44,9 +47,9 @@ function Content({alertAnalysisStore}) {
         case 'DISHONESTY':
           return <DishonestInfo data={singleDetail} type={info.alertType}/>;
         case 'JUDGMENT':
-          return <JudgeDoc data={singleDetail} type={info.alertType}/>;
+          return <JudgeDoc data={singleDetail} type={info.alertType} dataStore={dataStore}/>;
         case 'NEWS':
-          return <News data={singleDetail}/>;
+          return <News data={singleDetail} dataStore={dataStore}/>;
         case 'COURT_LITIGATION':
           return <LitigationAssets data={singleDetail}/>;
         default:
@@ -68,7 +71,7 @@ function Content({alertAnalysisStore}) {
       }
       switch (typeId) {
         case 1:
-          return <JudgeDoc data={detail[detailData.activeIndex]} type={info.alertTyp} ruleId={ruleId}/>;
+          return <JudgeDoc data={detail[detailData.activeIndex]} type={info.alertTyp} ruleId={ruleId} dataStore={dataStore}/>;
         case 3:
           return <DishonestInfo data={detail[detailData.activeIndex]} type={info.alertTyp} ruleId={ruleId}/>;
         case 7:
@@ -102,4 +105,4 @@ function Content({alertAnalysisStore}) {
 Content.propTypes = {
   foo: PropTypes.string,
 };
-export default inject('alertAnalysisStore')(observer(Content));
+export default inject('alertAnalysisStore', 'monitorAlertStore', 'routing')(observer(Content));

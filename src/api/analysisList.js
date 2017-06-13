@@ -2,7 +2,7 @@ import axios from 'axios';
 const activeKeyMap = {
   multi: 'SCORE',
   profit: 'PROFIT',
-  operate: 'OPRATION',
+  operate: 'OPERATION',
   develop: 'GROWING',
 };
 // 获取统计

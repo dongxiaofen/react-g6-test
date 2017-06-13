@@ -2,27 +2,29 @@ import React, { PropTypes } from 'react';
 import { observer } from 'mobx-react';
 import styles from './index.less';
 
-function GrowingReport({ loaningStore }) {
-  const data = loaningStore.upDataList.data;
+function GrowingReport({ upDataList }) {
+  const data = upDataList.data;
   const dataDom = [];
   let idx = 0;
-  Object.keys(data).map(key => {
-    dataDom.push(
-      <tr key={`${idx}up`}>
-        <td>{key}年</td>
-        <td>{data[key].ZCZZL}%</td>
-        <td>{data[key].XSZZL}%</td>
-        <td>{data[key].JLRZZL}%</td>
-        <td>{data[key].YYLRZZL}%</td>
-        <td>{data[key].ZYYWSRBDL}%</td>
-      </tr>
-    );
-    idx++;
-  });
+  if (data) {
+    Object.keys(data).map(key => {
+      dataDom.push(
+        <tr key={`${idx}up`}>
+          <td>{key}年</td>
+          <td>{data[key].ZCZZL}%</td>
+          <td>{data[key].XSZZL}%</td>
+          <td>{data[key].JLRZZL}%</td>
+          <td>{data[key].YYLRZZL}%</td>
+          <td>{data[key].ZYYWSRBDL}%</td>
+        </tr>
+      );
+      idx++;
+    });
+  }
   return (
     <div className={styles.box}>
       <p className={styles.excelTitle}>指标列表
-        <span className={styles.timestamp}>(分析时间：{this.props.loaningStore.upDataList.date})</span>
+        <span className={styles.timestamp}>(分析时间：{this.props.upDataList.lastTm})</span>
       </p>
       <table className={styles.table}>
         <thead>
@@ -78,6 +80,6 @@ function GrowingReport({ loaningStore }) {
 }
 
 GrowingReport.propTypes = {
-  foo: PropTypes.string,
+  upDataList: PropTypes.object,
 };
 export default observer(GrowingReport);

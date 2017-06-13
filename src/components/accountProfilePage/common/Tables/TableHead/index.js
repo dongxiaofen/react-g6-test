@@ -6,17 +6,17 @@ import styles from './index.less';
 function TableHead({ companyType, tip, title }) {
   const createIcon = () => {
     if (companyType === 'warningCompnay') {
-      return (styles.top10_red);
+      return (styles.top10_blue);
     } else if (companyType === 'riskCompnay') {
-      return (styles.top10_blue);
+      return (styles.top10_red);
     }else if (companyType === 'lowScoreCompnay') {
-      return (styles.top10_blue);
+      return (styles.top10_red);
     }
   };
   const content = (
-    <div>
+    <div className={styles.popover_with}>
       <p className={styles.ppover_tittle}>排名说明</p>
-      <p>{tip}</p>
+      <p className={styles.tips}>{tip}</p>
     </div>
   );
   return (

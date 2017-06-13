@@ -24,3 +24,6 @@
   color:#78909c;
   height: auto;
 }
+.ant-carousel .slick-active button{
+    background:  #757575;
+  }

@@ -7,6 +7,7 @@ function LeftBar({ leftBarStore, bannerStore, routing, companyHomeStore}) {
   const activeMenu = leftBarStore.activeMenu;
   const stockCode = bannerStore.stockCode;
   const barConf = leftBarStore.barConf;
+  let timer;
   const changeMenu = (menuKey, access) => {
     if (!access) return false;
     runInAction('切换报告一级目录', () => {
@@ -14,9 +15,23 @@ function LeftBar({ leftBarStore, bannerStore, routing, companyHomeStore}) {
       if (index >= 0) {
         activeMenu.splice(index, 1);
       } else {
+        activeMenu.pop();
         activeMenu.push(menuKey);
       }
     });
+  };
+  const backToTopOnClick = () => {
+    if (timer) {
+      clearInterval(timer);
+    }
+    timer = setInterval(() => {
+      const toTop = document.body.scrollTop || document.documentElement.scrollTop;
+      const speed = Math.ceil(toTop / 5);
+      document.documentElement.scrollTop = document.body.scrollTop = toTop - speed;
+      if (toTop <= 0) {
+        clearInterval(timer);
+      }
+    }, 10);
   };
   const changeItem = (itemKey, access, type) => {
     if (!access) {
@@ -35,6 +50,7 @@ function LeftBar({ leftBarStore, bannerStore, routing, companyHomeStore}) {
         pathname: `/companyHome/${itemKey}`,
         query: routing.location.query,
       });
+      backToTopOnClick();
     }
   };
   const isLock = (itemObj, type) => {
@@ -57,10 +73,10 @@ function LeftBar({ leftBarStore, bannerStore, routing, companyHomeStore}) {
     // onst reportType = leftBarStore.getReportType(routing);
     barConf[type].forEach((menuObj) => {
       const accessMenu = isLock(menuObj, type);
-      const arrowCss = activeMenu.includes(menuObj.menuKey) ? styles.arrow + ` ${styles.arrowAnim}` : styles.arrow;
-      const menuCss = accessMenu ? styles.menuCss : styles.menuDisCss;
       const itemRow = [];
       if (menuObj.children) {
+        const arrowCss = activeMenu.includes(menuObj.menuKey) ? styles.arrow + ` ${styles.arrowAnim}` : styles.arrow;
+        const menuCss = accessMenu ? styles.menuCss : styles.menuDisCss;
         menuRow.push(
           <div key={menuObj.menuKey}
             className={menuCss}
@@ -88,6 +104,8 @@ function LeftBar({ leftBarStore, bannerStore, routing, companyHomeStore}) {
           }
         });
       } else {
+        let menuCss = accessMenu ? styles.menuCss1 : styles.menuDisCss1;
+        menuCss = leftBarStore.activeItem === menuObj.menuKey ? styles.menuCssAct1 : menuCss;
         menuRow.push(
           <div
             key={menuObj.menuKey}
@@ -111,6 +129,7 @@ function LeftBar({ leftBarStore, bannerStore, routing, companyHomeStore}) {
       pathname: `/companyHome/nowRecord`,
       query: routing.location.query,
     });
+    backToTopOnClick();
   };
   return (
     <div>
@@ -161,7 +180,7 @@ function LeftBar({ leftBarStore, bannerStore, routing, companyHomeStore}) {
         onClick={changeNowRecord}
         className={`${styles.wrap} ${styles.recordWrap}`}>
         <i className="fa fa-pencil-square-o" aria-hidden="true"></i>
-        <span className={styles.record}>调查记录</span>
+        <span className={styles.record}>现勘记录</span>
       </div>
     </div>
   );

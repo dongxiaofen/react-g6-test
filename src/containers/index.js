@@ -51,4 +51,5 @@ export EntinvItem from './report/entinvItem';
 export FrPosAndInv from './report/frPosAndInv';
 export ManagePosAndInv from './report/managePosAndInv';
 export EquityRela from './report/equityRela';
+export MonitorAlert from './report/monitorAlert';
 // append here from plop

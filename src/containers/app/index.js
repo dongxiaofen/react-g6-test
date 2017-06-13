@@ -24,6 +24,15 @@ export default class App extends Component {
     payModalStore: PropTypes.object,
     entireLoadingStore: PropTypes.object,
   };
+  componentDidMount() {
+    this.reloadCom();
+  }
+  reloadCom() {
+    require.ensure([], (require) => {
+      require('components/common/reportOper/CreateLoanRep');
+      require('components/common/reportOper/CreateMonitor');
+    });
+  }
   render() {
     const pathname = this.props.location.pathname;
     if (pathname === '/' || pathname === '/pdfDown' || pathname === '/solution' || pathname === '/about') {

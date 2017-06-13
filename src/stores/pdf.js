@@ -22,6 +22,7 @@ class PdfStore {
   @observable operation = {};
   @observable profit = {};
   @observable courtData = {};
+  @observable star = {};
   @observable shares = {
     'sharesFrostList': [
       {
@@ -90,7 +91,7 @@ class PdfStore {
       'NEWS',
       'OPERATION_BIDDING',
       'OPERATION_PATENT',
-      // 'OPERATION_TRADEMARK',
+      'OPERATION_TRADEMARK',
       'TEAM_RECRUITMENT_RESUME',
       'RISK_TAXATION',
       'RISK_JUDGEMENT',
@@ -107,7 +108,7 @@ class PdfStore {
       'NETWORK_BLACKLIST',
     ];
     const analysiReport = [
-      // 'SCORE',
+      'SCORE',
       'PROFIT',
       'OPERATION',
       'GROWING',
@@ -146,6 +147,7 @@ class PdfStore {
       .then(action((response) => {
         this.banner = pathval.getPathValue(response.data, 'banner');
         this.summary = pathval.getPathValue(response.data, 'summary');
+        console.log(this.summary, '--------------------');
         this.report = pathval.getPathValue(response.data, 'corpDetail');
         this.company = pathval.getPathValue(response.data, 'stock.info');
         this.announcement = pathval.getPathValue(response.data, 'stock.announcement');
@@ -160,6 +162,7 @@ class PdfStore {
         this.corpCheckData = pathval.getPathValue(response.data, 'corpCheck');
         // this.shares = pathval.getPathValue(response.data, 'shares');
         // 分析能力
+        this.star = pathval.getPathValue(response.data, 'star');
         this.growing = pathval.getPathValue(response.data, 'growing');
         this.operation = pathval.getPathValue(response.data, 'operation');
         this.profit = pathval.getPathValue(response.data, 'profit');
@@ -185,6 +188,7 @@ class PdfStore {
     this.team = pathval.getPathValue(data, 'recruitTeamResponse');
     this.corpCheckData = pathval.getPathValue(data, 'corpCheck');
     this.shares = pathval.getPathValue(data, 'shares');
+    this.star = pathval.getPathValue(data, 'star');
     this.growing = pathval.getPathValue(data, 'growing');
     this.operation = pathval.getPathValue(data, 'operation');
     this.profit = pathval.getPathValue(data, 'profit');

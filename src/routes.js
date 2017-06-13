@@ -54,7 +54,8 @@ import {
     EntinvItem,
     FrPosAndInv,
     ManagePosAndInv,
-    EquityRela
+    EquityRela,
+    MonitorAlert,
 // first append here from plop
   } from 'containers';
 
@@ -121,7 +122,8 @@ export default () => {
         <Route path="growthAbilityEval" component={ GrowthAbilityEval } />
         {/* 贷后*/}
         <Route path="monitorTimeAxis" component={ MonitorTimeAxis } onEnter={requireAuth} />
-        {/* third append here from plop */}
+        <Route path="monitorAlert" component={ MonitorAlert } />
+{/* third append here from plop */}
       </Route>
       <Route path="relPerCheck" component={ RelPerCheck } onEnter={requireAuth} />
       <Route path="taxCheck" component={ TaxCheck } onEnter={requireAuth} />

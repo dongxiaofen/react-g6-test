@@ -1,7 +1,7 @@
 import axios from 'axios';
 // 获取规则列表
 export const getRuleList = (params) => {
-  return axios.get('/api/rule/xx/page', {params: params});
+  return axios.get('/api/rule/page', {params: params});
 };
 // 关闭或开启规则
 export const getRuleStatus = (params) => {
@@ -17,9 +17,9 @@ export const getTypeList = (type) => {
 };
 // 监控公司列表
 export const getMonitorCompany = (params) => {
-  return axios.get('/api/rule/xx/monitors', {params: params});
+  return axios.get('/api/rule/monitors', {params: params});
 };
 // 提交创建监控
 export const createRule = (params) => {
-  return axios.post('/api/rule/xx', params);
+  return axios.post('/api/rule', params);
 };
