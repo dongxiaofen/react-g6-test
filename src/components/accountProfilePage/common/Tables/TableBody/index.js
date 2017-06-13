@@ -23,10 +23,10 @@ function TableBody({dateType, data, hasFlag, routing, searchCompanyStore, owner 
     }
   };
   const spliceCompanyName = (name) => {
-    if (name.length > 14) {
+    if (name.length > 19) {
       return (
         <Popover content={name}>
-          {`${name.slice(0, 13)}...`}
+          {`${name.slice(0, 18)}...`}
         </Popover>
       );
     }
@@ -58,7 +58,7 @@ function TableBody({dateType, data, hasFlag, routing, searchCompanyStore, owner 
                 owner !== 'own' &&
                 <span className={styles.account_user}>
                     <Popover content={`所属帐号：${itemData.userName}（${itemData.email}）`}>
-                      {`所属帐号：${sliceString(itemData.userName.concat(itemData.email))}`}
+                      {`所属帐号：${sliceString(itemData.userName.concat(`（${itemData.email}）`))}`}
                     </Popover>
                 </span>
               }

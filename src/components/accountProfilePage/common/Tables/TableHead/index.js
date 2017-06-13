@@ -14,9 +14,9 @@ function TableHead({ companyType, tip, title }) {
     }
   };
   const content = (
-    <div>
+    <div className={styles.popover_with}>
       <p className={styles.ppover_tittle}>排名说明</p>
-      <p>{tip}</p>
+      <p className={styles.tips}>{tip}</p>
     </div>
   );
   return (
