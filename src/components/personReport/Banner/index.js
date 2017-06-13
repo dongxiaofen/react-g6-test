@@ -44,8 +44,8 @@ function Banner({personReportStore, params}) {
   const config = [
     {key: 'name', width: '6', name: '姓名'},
     {key: 'idCard', width: '6', name: '身份证号', handle: modifyIdcard},
-    {key: 'companyName', width: '6', name: '所属企业'},
-    {key: 'relationship', width: '6', name: '关联关系'},
+    // {key: 'companyName', width: '6', name: '所属企业'},
+    // {key: 'relationship', width: '6', name: '关联关系'},
     // {key: 'crimeResponses', width: '12', name: '犯罪记录', handle: modifyCrimeResponses},
   ];
   const createContent = ()=> {
