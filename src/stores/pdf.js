@@ -22,6 +22,7 @@ class PdfStore {
   @observable operation = {};
   @observable profit = {};
   @observable courtData = {};
+  @observable punishList = {};
   @observable shares = {
     'sharesFrostList': [
       {
@@ -161,6 +162,7 @@ class PdfStore {
         this.corpCheckData = pathval.getPathValue(response.data, 'corpCheck');
         // this.shares = pathval.getPathValue(response.data, 'shares');
         // 分析能力
+        this.punishList = pathval.getPathValue(response.data, 'star');
         this.growing = pathval.getPathValue(response.data, 'growing');
         this.operation = pathval.getPathValue(response.data, 'operation');
         this.profit = pathval.getPathValue(response.data, 'profit');
@@ -186,6 +188,7 @@ class PdfStore {
     this.team = pathval.getPathValue(data, 'recruitTeamResponse');
     this.corpCheckData = pathval.getPathValue(data, 'corpCheck');
     this.shares = pathval.getPathValue(data, 'shares');
+    this.punishList = pathval.getPathValue(data, 'star');
     this.growing = pathval.getPathValue(data, 'growing');
     this.operation = pathval.getPathValue(data, 'operation');
     this.profit = pathval.getPathValue(data, 'profit');
