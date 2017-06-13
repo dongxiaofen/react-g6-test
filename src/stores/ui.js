@@ -310,6 +310,11 @@ class UiStore {
       size: 10,
       show: observable.map({})
     },
+    sharesFrostListItemLists: {
+      index: 1,
+      size: 10,
+      show: observable.map({})
+    },
     alterList: {
       index: 1,
       size: 10,

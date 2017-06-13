@@ -50,4 +50,5 @@ export RiskCheck from './report/riskCheck';
 export EntinvItem from './report/entinvItem';
 export FrPosAndInv from './report/frPosAndInv';
 export ManagePosAndInv from './report/managePosAndInv';
+export EquityRela from './report/equityRela';
 // append here from plop

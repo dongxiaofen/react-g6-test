@@ -54,6 +54,7 @@ import {
     EntinvItem,
     FrPosAndInv,
     ManagePosAndInv,
+    EquityRela
 // first append here from plop
   } from 'containers';
 
@@ -111,6 +112,8 @@ export default () => {
         <Route path="entinvItem" component={ EntinvItem } />
         <Route path="frPosAndInv" component={ FrPosAndInv } />
         <Route path="managePosAndInv" component={ ManagePosAndInv } />
+        <Route path="equityRela" component={ EquityRela } />
+        {/* <Route path="mortgageRela" component={ ManagePosAndInv } /> */}
         {/* 贷中*/}
         <Route path="comprehenEval" component={ ComprehenEval } />
         <Route path="profitEval" component={ ProfitEval } />

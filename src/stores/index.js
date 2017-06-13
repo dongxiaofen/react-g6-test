@@ -36,6 +36,7 @@ export analysisSrore from './report/analysis';
 export taxStore from './report/tax';
 export monitorAxisStore from './report/monitorAxis';
 export alertMonitorStore from './report/alertMonitor';
+export MortageStore from './report/mortage';
 export nowRecordStore from './report/nowRecord';
 export pdfStore from './pdf';
 // 报告相关store-end
