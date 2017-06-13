@@ -2,13 +2,13 @@ import React, {PropTypes} from 'react';
 import { observer, inject} from 'mobx-react';
 import styles from './index.less';
 import DemoSlider from '../DemoSlider';
-import lockImg from 'imgs/companyHome/leftBar/lock.png';
+import monitorSlider1 from 'imgs/companyHome/monitorSlider1.png';
 import Button from 'components/lib/button';
-import {Slider} from 'antd';
+import { Slider } from 'antd';
+import { Link } from 'react-router';
 
 function CreateMonitor({companyHomeStore, routing}) {
-  const imgs = [lockImg, lockImg, lockImg, lockImg];
-  const navs = ['头条推送', '头条统计', '企业事件时间轴', '企业预警'];
+  const imgs = [monitorSlider1];
   const companyName = routing.location.query.companyName;
   const initMarks = ()=> {
     const marks = {};
@@ -35,12 +35,20 @@ function CreateMonitor({companyHomeStore, routing}) {
           </div>
           <p className={styles.lable}>{companyHomeStore.monitorTimeObj.text}</p>
         </div>
+        <div className="clearfix">
+          <Button
+            btnType="primary"
+            className={styles.confirm}
+            onClick={createMonitor}>确定</Button>
+          <div className={styles.pointText}>
+            <i className="fa fa-exclamation-circle"></i>
+            确定即视为同意
+            《<Link to="/disclaimer" target="_blank">免责声明</Link>》
+          </div>
+        </div>
       </div>
       <hr className={styles.line}/>
-      <DemoSlider imgs={imgs} navs={navs}/>
-      <div style={{margin: 'auto', width: '280px'}}>
-        <Button btnType="primary" className={styles.confirm} onClick={createMonitor}>确定</Button>
-      </div>
+      <DemoSlider imgs={imgs} autoplay={false}/>
     </div>
   );
 }

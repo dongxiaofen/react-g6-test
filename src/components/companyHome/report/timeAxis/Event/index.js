@@ -2,10 +2,15 @@ import React from 'react';
 import { observer, inject } from 'mobx-react';
 import { loadingComp } from 'components/hoc';
 import AlterCard from 'components/common/AlertCard';
+import styles from './index.less';
 function Event({timeAxisStore, riskHeadlinesStore}) {
-  console.log(timeAxisStore.eventData);
+  const {time, module, relation} = timeAxisStore.eventParams;
   return (
-    <div style={{marginTop: '30px'}}>
+    <div className={styles.box}>
+      <div className={styles.infoRow}>
+        <span className={relation === '主体企业' ? styles.mainIcon : styles.relatedIcon}></span>
+        {`${relation}-${module}（${time}）`}
+      </div>
       <AlterCard
         module="timeAxis"
         data={timeAxisStore.eventData.events}

@@ -4,18 +4,17 @@ import styles from './index.less';
 
 function TaxProfitList({moduleData}) {
   const dataDom = [];
-  const data = moduleData.operating_profit;
   let idx = 0;
-  Object.keys(data).map(key => {
+  Object.keys(moduleData).map(key => {
     dataDom.push(
       <tr key={`${idx}profit`}>
         <td>{key}年</td>
-        <td>{data[key].XSMLL}%</td>
-        <td>{data[key].XSJLL}%</td>
-        <td>{data[key].YYJLL}%</td>
-        <td>{data[key].CBFYJLL}%</td>
-        <td>{data[key].ZYYWLRL}%</td>
-        <td>{data[key].ZCJLL}%</td>
+        <td>{moduleData[key].XSMLL}%</td>
+        <td>{moduleData[key].XSJLL}%</td>
+        <td>{moduleData[key].YYJLL}%</td>
+        <td>{moduleData[key].CBFYJLL}%</td>
+        <td>{moduleData[key].ZYYWLRL}%</td>
+        <td>{moduleData[key].ZCJLL}%</td>
       </tr>
     );
     idx ++;

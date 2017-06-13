@@ -178,22 +178,25 @@ class Axis extends Component {
           <span className={styles.mainIcon}></span><span>主体公司</span>
           <span className={styles.relationIcon}></span><span>关联公司</span>
         </div>
-        <div className={styles.labelCon}>
-          {this.createLabel(labelConf)}
-        </div>
-        <div id="scrollConWrap" className={styles.lineCon}>
-          <div className={styles.scollConWrap}>
-            <div
-              id="scrollCon"
-              className={styles.scrollCon}
-              style={{width: sortedTime.length >= 9 ? sortedTime.length / 9 * 100 + '%' : '100%', transition: 'all .3s linear'}}
-              >
-              {this.createLine(sortedTime, labelConf, moduleData)}
-            </div>
+        <div className={styles.lineWrap}>
+          <div className={styles.labelWrap}>
+            {this.createLabel(labelConf)}
+            <div className={styles.eventTime}>事件时间</div>
           </div>
-          {size > 9 && <div id="scrollBarWrap" className={styles.barWrap}>
-            <div id="scrollBar" style={{transition: 'all .3s linear'}} className={styles.scrollBar} onMouseDown={this.startScroll}></div>
-          </div>}
+          <div id="scrollConWrap" className={styles.lineCon}>
+            <div className={styles.scollConWrap}>
+              <div
+                id="scrollCon"
+                className={styles.scrollCon}
+                style={{width: sortedTime.length >= 9 ? sortedTime.length / 9 * 100 + '%' : '100%', transition: 'all .3s linear'}}
+                >
+                {this.createLine(sortedTime, labelConf, moduleData)}
+              </div>
+            </div>
+            {size > 9 && <div id="scrollBarWrap" className={styles.barWrap}>
+              <div id="scrollBar" style={{transition: 'all .3s linear'}} className={styles.scrollBar} onMouseDown={this.startScroll}></div>
+            </div>}
+          </div>
         </div>
       </div>
     );

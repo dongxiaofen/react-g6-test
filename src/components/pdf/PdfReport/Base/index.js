@@ -11,6 +11,7 @@ import Office from '../Base/Foreign/Office';
 import AlterAnalysis from '../Base/Alter/AlterAnalysis';
 import AlterList from '../Base/Alter/AlterList';
 import YearReportList from '../Base/YearReport/YearReportList';
+import Managements from '../Base/Foreign/Managements';
 import pathval from 'pathval';
 
 
@@ -52,14 +53,32 @@ function Base({ judgeIsModuleExist, pdfStore }) {
           ''
       }
       {
-        judgeIsModuleExist('CORP_INV_POS')
+        judgeIsModuleExist('INV_POS_ENT')
           ?
           <div>
             <PdfTitle module="对外投资任职" subModule="企业对外投资" />
             <Enterprise moduleData = {pathval.getPathValue(pdfStore, 'report.corpDetail.entinvItemList')} />
+          </div>
+          :
+          ''
+      }
+      {
+        judgeIsModuleExist('INV_POS_FR')
+          ?
+          <div>
             <PdfTitle module="对外投资任职" subModule="法人对外投资任职" />
             <Investment moduleData = {pathval.getPathValue(pdfStore, 'report.corpDetail.frinvList')} />
             <Office moduleData = {pathval.getPathValue(pdfStore, 'report.corpDetail.frPositionList')} />
+          </div>
+          :
+          ''
+      }
+      {
+        judgeIsModuleExist('INV_POS_MANAGEMENT')
+          ?
+          <div>
+            <PdfTitle module="对外投资任职" subModule="董监高对外投资任职" />
+            <Managements moduleData = {pathval.getPathValue(pdfStore, 'report.corpDetail.entinvItemList')} />
           </div>
           :
           ''

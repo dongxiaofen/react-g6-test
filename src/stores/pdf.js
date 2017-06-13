@@ -18,8 +18,57 @@ class PdfStore {
   @observable network = {};
   @observable blacklist = [];
   @observable team = {};
-  @observable taxList = [];
+  @observable growing = {};
+  @observable operation = {};
+  @observable profit = {};
   @observable courtData = {};
+  @observable shares = {
+    'sharesFrostList': [
+      {
+        'freDocId': 'string',
+        'freFromDate': 'string',
+        'freMoney': 'string',
+        'freOrgName': 'string',
+        'freRatio': 'string',
+        'freToDate': 'string',
+        'unfreDate': 'string',
+        'unfreDocId': 'string',
+        'unfreInfo': 'string',
+        'unfreOrgName': 'string'
+      },
+      {
+        'freDocId': 'string',
+        'freFromDate': 'string',
+        'freMoney': 'string',
+        'freOrgName': 'string',
+        'freRatio': 'string',
+        'freToDate': 'string',
+        'unfreDate': 'string',
+        'unfreDocId': 'string',
+        'unfreInfo': 'string',
+        'unfreOrgName': 'string'
+      }
+    ],
+    'sharesImpawnList': [
+      {
+        'imporg': 'string',
+        'imporgAmount': 'string',
+        'imporgAthOrg': 'string',
+        'imporgDate': 'string',
+        'imporgRecordDate': 'string',
+        'imporgTo': 'string',
+        'imporgType': 'string'
+      }
+    ],
+    'sharesTransferList': [
+      {
+        'assignee': 'string',
+        'pledgeDate': 'string',
+        'pledgedAmount': 'string',
+        'transferType': 'string',
+        'transfersRatio': 'string'
+      }
+    ]};
   @observable pdfTypesKey = 'SUMMARY,CORP,CORP_BASIC,CORP_INV_POS,STOCK,CORP_ALTER,CORP_YEAR_REPORT,TAX,RISK,RISK_ANNOUNCEMENT,RISK_NOTICE,RISK_JUDGEMENT,RISK_EXECUTE,RISK_DISHONESTY,RISK_LITIGATION,RISK_TAXATION,RISK_ABNORMAL,RISK_CHECK,NEWS,NETWORK,NETWORK_RELEVANCE,NETWORK_BLACKLIST,STOCK_INFO,STOCK_ANNOUNCEMENT,OPERATION,OPERATION_BIDDING,OPERATION_PATENT,OPERATION_TEL,OPERATION_TRADEMARK,NETWORK,NETWORK_RELEVANCE,NETWORK_BLACKLIST,TEAM,TEAM_RECRUITMENT_RESUME,TEAM_ANALYSIS';
   // summary
   @observable summary = {};
@@ -58,7 +107,7 @@ class PdfStore {
       'NETWORK_BLACKLIST',
     ];
     const analysiReport = [
-      'SCORE',
+      // 'SCORE',
       'PROFIT',
       'OPERATION',
       'GROWING',
@@ -93,7 +142,7 @@ class PdfStore {
     ];
     console.log(baseReport.join(','), report, analysiReport);
     // 获取pdf
-    axios.get(`/api/pdf/basicReport?basicReportId=${id}&types=${baseReport.join(',')}`)
+    axios.get(`/api/pdf/analysis?analysisReportId=${id}&types=${analysiReport.join(',')}`)
       .then(action((response) => {
         this.banner = pathval.getPathValue(response.data, 'banner');
         this.summary = pathval.getPathValue(response.data, 'summary');
@@ -108,8 +157,12 @@ class PdfStore {
         this.network = pathval.getPathValue(response.data, 'network');
         this.blacklist = pathval.getPathValue(response.data, 'blackList.result[0].paths');
         this.team = pathval.getPathValue(response.data, 'recruitTeamResponse');
-        this.taxList = pathval.getPathValue(response.data, 'taxList');
         this.corpCheckData = pathval.getPathValue(response.data, 'corpCheck');
+        // this.shares = pathval.getPathValue(response.data, 'shares');
+        // 分析能力
+        this.growing = pathval.getPathValue(response.data, 'growing');
+        this.operation = pathval.getPathValue(response.data, 'operation');
+        this.profit = pathval.getPathValue(response.data, 'profit');
       }))
       .catch((error) => {
         console.log(error.response);
@@ -130,8 +183,11 @@ class PdfStore {
     this.network = pathval.getPathValue(data, 'network');
     this.blacklist = pathval.getPathValue(data, 'blackList.result[0].paths');
     this.team = pathval.getPathValue(data, 'recruitTeamResponse');
-    this.taxList = pathval.getPathValue(data, 'taxList');
     this.corpCheckData = pathval.getPathValue(data, 'corpCheck');
+    this.shares = pathval.getPathValue(data, 'shares');
+    this.growing = pathval.getPathValue(data, 'growing');
+    this.operation = pathval.getPathValue(data, 'operation');
+    this.profit = pathval.getPathValue(data, 'profit');
   }
 }
 export default new PdfStore();
