@@ -67,7 +67,7 @@ function CreateLoanRep({companyHomeStore, routing}) {
         </div>
       </div>
       <hr className={styles.line}/>
-      <DemoSlider imgs={imgs} navs={navs}/>
+      <DemoSlider imgs={imgs} navs={navs} autoplay/>
     </div>
   );
 }

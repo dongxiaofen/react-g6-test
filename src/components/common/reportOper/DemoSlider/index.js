@@ -2,7 +2,7 @@ import React, {PropTypes} from 'react';
 import { observer, inject} from 'mobx-react';
 import styles from './index.less';
 import { Carousel } from 'antd';
-function DemoSlider({imgs}) {
+function DemoSlider({imgs, autoplay}) {
   const createImgs = ()=> {
     const output = [];
     imgs.forEach((img, idx)=>{
@@ -33,7 +33,7 @@ function DemoSlider({imgs}) {
   return (
     <div className={styles.demoSlider}>
       <div className={styles.carousel}>
-        <Carousel autoplay ref="demoSlider" dotsClass={styles.dotNavs}>
+        <Carousel autoplay={autoplay} ref="demoSlider" dotsClass={styles.dotNavs}>
           {createImgs()}
         </Carousel>
       </div>
