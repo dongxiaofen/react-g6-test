@@ -22,7 +22,7 @@ function TableList({dataStore}) {
       <div className={styles.tableList}>
         {createTable()}
       </div>
-      <Pager module="alertAnalysis" type="small" />
+      <Pager module={dataStore.module} type="small" />
     </div>
   );
 }

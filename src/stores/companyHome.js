@@ -175,7 +175,7 @@ class CompanyHomeStore {
   @action.bound createBasicReport(params) {
     companyHomeApi.createBasicReport({companyName: params.companyName})
     .then(action('createBasicReport', (resp)=>{
-      this.reportInfo.basicReportId = resp.data.basicReportId;
+      this.reportInfo = Object.assign(this.reportInfo, resp.data);
     }))
     .catch(action('createBasicReport err', (error)=>{
       console.log(error);
@@ -186,8 +186,8 @@ class CompanyHomeStore {
     this.isLoading = true;
     companyHomeApi.getReportStatus(params)
     .then(action('getReportStatus', (resp)=>{
+      this.reportInfo = Object.assign(this.reportInfo, resp.data);
       if (resp.data.basicReportId || resp.data.reportId) {
-        this.reportInfo = Object.assign(this.reportInfo, resp.data);
         if (resp.data.dimensions) {
           this.initDimensions(resp.data.dimensions);
         }
