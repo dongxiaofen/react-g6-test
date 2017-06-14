@@ -476,7 +476,8 @@ class BannerStore {
     });
   };
   pauseOrRestoreMonitorConfirm = () => {
-    const {monitorId, monitorStatus} = companyHomeStore.reportInfo;
+    const {monitorId} = companyHomeStore.reportInfo;
+    const {monitorStatus} = this.monitorRepInfo;
     this.pauseOrRestoreMonitor(monitorId, monitorStatus === 'MONITOR' ? 'PAUSE' : 'MONITOR');
   };
   @action.bound pauseOrRestoreMonitor(monitorId, status) {
@@ -487,7 +488,7 @@ class BannerStore {
         modalStore.confirmLoading = false;
         modalStore.closeAction();
         this.reStoreLoading = false;
-        companyHomeStore.updateValue('reportInfo.monitorStatus', status);
+        this.monitorRepInfo.monitorStatus = status;
         messageStore.openMessage({ content: '操作成功' });
       }))
       .catch((err) => {
