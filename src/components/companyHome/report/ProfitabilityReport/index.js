@@ -33,7 +33,9 @@ function ProfitabilityReport({ profitDataList }) {
       <table className={styles.table}>
         <thead>
         <tr>
-          <th className={styles.first}></th>
+          <th className={styles.first}>
+            <div className={styles.slash} />
+          </th>
           <th className={styles.two}>销售毛利率</th>
           <th className={styles.three}>销售净利率</th>
           <th className={styles.four}>营业净利率</th>

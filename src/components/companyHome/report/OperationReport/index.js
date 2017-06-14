@@ -27,7 +27,9 @@ function OperationReport({ operationDataList }) {
       <table className={styles.table}>
         <thead>
         <tr>
-          <th className={styles.first}></th>
+          <th className={styles.first}>
+            <div className={styles.slash} />
+          </th>
           <th className={styles.two}>财务费用率</th>
           <th className={styles.three}>管理费用率</th>
           <th className={styles.four}>销售费用率</th>

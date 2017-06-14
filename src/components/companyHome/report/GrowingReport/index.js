@@ -29,7 +29,9 @@ function GrowingReport({ upDataList }) {
       <table className={styles.table}>
         <thead>
         <tr>
-          <th className={styles.first}></th>
+          <th className={styles.first}>
+            <div className={styles.slash} />
+          </th>
           <th className={styles.two}>资产增长率</th>
           <th className={styles.three}>销售增长率</th>
           <th className={styles.four}>净利润增长率</th>
