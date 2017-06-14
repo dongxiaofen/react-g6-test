@@ -17,8 +17,9 @@ import styles from './index.less';
 
 function PdfReport({pdfStore}) {
   const judgeIsModuleExist = (module) => {
-    const pdfModule = pdfStore.pdfTypesKey;
-    return (pdfModule && pdfModule.includes(module));
+    // const pdfModule = pdfStore.pdfTypesKey;
+    // return (pdfModule && pdfModule.includes(module));
+    return true;
   };
   return (
     <Container>
