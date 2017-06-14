@@ -7,6 +7,10 @@ import bannerStore from './banner';
 import { companyHomeApi } from 'api';
 import pathval from 'pathval';
 class CompanyHomeStore {
+  @observable createBasicErr = {
+    value: false,
+    err: {},
+  }
   @observable reportInfo = {
     analysisReportId: '',
     basicReportId: '',
@@ -186,6 +190,10 @@ class CompanyHomeStore {
       this.reportInfo = Object.assign(this.reportInfo, resp.data);
     }))
     .catch(action('createBasicReport err', (error)=>{
+      this.createBasicErr = {
+        value: true,
+        err: error,
+      };
       console.log(error);
     }));
   }
@@ -227,6 +235,10 @@ class CompanyHomeStore {
     this.monitorTime = 1;
   }
   @action.bound resetStore() {
+    this.createBasicErr = {
+      value: false,
+      err: {},
+    };
     this.reportInfo = {
       analysisReportId: '',
       basicReportId: '',

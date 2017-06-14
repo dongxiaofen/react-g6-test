@@ -2,7 +2,7 @@ import React from 'react';
 import { observer, inject } from 'mobx-react';
 import Config from 'dict/reportModule';
 import styles from './index.less';
-function Table({data, routing, internetStore}) {
+function Table({data, internetStore, companyHomeStore}) {
   const activeUrl = internetStore.activeUrl;
   const mapLabelToType = (label) => {
     if (!label) {
@@ -15,17 +15,13 @@ function Table({data, routing, internetStore}) {
     });
   };
   const viewNews = (item) => {
-    const {createdAt, url} = item;
-    const { monitorId, reportId, analysisReportId, companyType} = routing.location.query;
+    const { createdAt, url } = item;
+    const { reportId, basicReportId } = companyHomeStore.reportInfo;
     let getUrl;
-    if (monitorId) {
-      getUrl = `/api/monitor/${monitorId}/internet/detail?createdAt=${createdAt}&url=${url}`;
-    } else if (reportId) {
-      getUrl = `/api/report/internet/detail?reportId=${reportId}&createdAt=${createdAt}&url=${url}`;
-    } else if (companyType === 'FREE') {
-      getUrl = `/api/free/xx/internet/detail?createdAt=${createdAt}&url=${url}`;
-    } else if (analysisReportId) {
-      getUrl = `/api/report/internet/detail?analysisReportId=${analysisReportId}&createdAt=${createdAt}&url=${url}`;
+    if (reportId) {
+      getUrl = `/api/report/${reportId}/internet/detail?createdAt=${createdAt}&url=${url}`;
+    } else if (basicReportId) {
+      getUrl = `/api/basicReport/${basicReportId}/internet/detail?createdAt=${createdAt}&url=${url}`;
     } else {
       return false;
     }
@@ -68,4 +64,4 @@ function Table({data, routing, internetStore}) {
     </div>
   );
 }
-export default inject('internetStore', 'routing')(observer(Table));
+export default inject('internetStore', 'companyHomeStore')(observer(Table));

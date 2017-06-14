@@ -46,7 +46,9 @@ function NowRecordList({nowRecordStore, uiStore}) {
               {obj.item.content ? obj.item.content : '暂无内容'}
             </div>
             <div className={pictures.length > 0 ? styles.imgWrap : styles.displayNone}>
-              {pictures}
+              <div className={pictures.length > 6 ? styles.imgWrapLong : styles.imgWrapShort}>
+                {pictures}
+              </div>
             </div>
             <div className={styles.address}>
               <i className={styles.icon + ' fa fa-map-marker '}></i>

@@ -5,20 +5,16 @@ import { CardTable } from 'components/common/report/';
 import Select from 'components/lib/Select';
 const Option = Select.Option;
 function AnnouncementList({
-  routing,
   selectValue,
   setSelectValue,
   announcementTypes,
   announcementDatas,
   announcementDatasLoading,
-  changeAnnouncement
+  changeAnnouncement,
+  reportInfo,
 }) {
   const _getAnnouncement = (stockType) => {
-    const query = routing.location.query;
-    const monitorId = query.monitorId;
-    const reportId = query.reportId;
-    const analysisReportId = query.analysisReportId;
-    changeAnnouncement({ stockType, monitorId, reportId, analysisReportId });
+    changeAnnouncement(stockType, reportInfo);
     setSelectValue(stockType);
   };
   const selectOptionList = () => {
@@ -67,7 +63,6 @@ function AnnouncementList({
 }
 
 AnnouncementList.propTypes = {
-  routing: PropTypes.object,
   selectValue: PropTypes.string,
   announcementTypes: PropTypes.oneOfType([PropTypes.object, PropTypes.array]),
   changeAnnouncement: PropTypes.func,
