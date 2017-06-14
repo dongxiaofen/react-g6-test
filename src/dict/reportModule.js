@@ -172,6 +172,22 @@ const config = {
     'unfreDate': '解冻日期',
     'unfreInfo': '股权冻结数额',
   },
+  sharesTransferListItemLists: {
+    'assignee': '受让人',
+    'transferType': '转让类型',
+    'pledgeDate': '转让日期',
+    'pledgedAmount': '股权转让数额',
+    'transfersRatio': '转让额所占比例',
+  },
+  sharesImpawnListItemLists: {
+    'imporg': '质权人姓名',
+    'imporgType': '出质人类别',
+    'imporgAmount': '出质金额',
+    'imporgRecordDate': '出质备案日期',
+    'imporgAthOrg': '出质审批部门',
+    'imporgDate': '出质批准日期',
+    'imporgTo': '出质截至日期'
+  },
   alterList: {
     'altDate': '变更日期',
     'altItem': '变更事项',
