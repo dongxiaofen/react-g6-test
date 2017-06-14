@@ -54,7 +54,7 @@ function PdfSimpleKey({dataConfig, item, type, dict, hasConfig}) {
           <KeyValue
             key = {`${configItem.key}objectValue`}
             theKey= {hasConfig ? config[dict][configItem.key] : configItem.key}
-            theValue={configItem.handle ? configItem.handle(item[configItem.key]) : item[configItem.key]}
+            theValue={configItem.handle ? configItem.handle(item[configItem.key], item) : item[configItem.key]}
             keyClass="key"
             styleClass="styleClass"
             valueClass="value"

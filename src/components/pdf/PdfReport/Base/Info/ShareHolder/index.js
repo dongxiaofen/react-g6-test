@@ -27,7 +27,7 @@ function ShareHolder({ moduleData }) {
     dataConfig: [
       {'key': 'shareholderName', 'width': '4'},
       {'key': 'subConam', 'width': '2'},
-      {'key': 'regCapCur', 'width': '1.2'},
+      {'key': 'relConam', 'width': '1.2'},
       {'key': 'fundedRatio', 'width': '1.4'},
       {'key': 'conDate', 'width': '1.4'},
     ],
