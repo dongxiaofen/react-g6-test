@@ -7,8 +7,8 @@ import Popover from 'antd/lib/popover';
 
 function TableBody({dateType, data, hasFlag, routing, searchCompanyStore, owner }) {
   const sliceString = (str) => {
-    if (str.length > 20) {
-      return (`${str.slice(0, 19)}...`);
+    if (str.length > 16) {
+      return (`${str.slice(0, 15)}...`);
     }
     return str;
   };
