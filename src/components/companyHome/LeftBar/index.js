@@ -5,7 +5,7 @@ import styles from './index.less';
 import Button from 'components/lib/button';
 function LeftBar({ leftBarStore, bannerStore, routing, companyHomeStore}) {
   const activeMenu = leftBarStore.activeMenu;
-  const stockCode = bannerStore.stockCode;
+  const stockCode = bannerStore.bannerInfoData.stockCode;
   const barConf = leftBarStore.barConf;
   let timer;
   const changeMenu = (menuKey, access) => {
