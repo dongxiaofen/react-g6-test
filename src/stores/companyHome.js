@@ -103,11 +103,13 @@ class CompanyHomeStore {
     companyHomeApi.createAnalyRep({companyName, items: this.loanOptValue})
     .then(action('createAnalyRep', (resp) => {
       let options = this.loanOptValue;
-      if (!resp.data.existTaxDetail) {
+      const onlyScore = this.loanOptValue.length === 1 && this.loanOptValue[0] === 'SCORE' ? true : false;
+      if (!onlyScore && !resp.data.existTaxDetail) {
         const idx = this.loanOptValue.indexOf('SCORE');
         options = idx > -1 ? ['SCORE'] : [];
         text = {
-          content: '税务分析模块分析失败'
+          content: '抱歉，由于企业不存在盈利、运营、成长数据，分析失败',
+          duration: 3000
         };
       }
       this.reportInfo.dimensions = this.reportInfo.dimensions.concat(options);

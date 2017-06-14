@@ -125,6 +125,9 @@ function LeftBar({ leftBarStore, bannerStore, routing, companyHomeStore}) {
   const reportTitle = companyHomeStore.reportInfo.reportId !== '' ? '贷前高级报告' : '贷前基础报告';
   // 现勘记录路由
   const changeNowRecord = () => {
+    runInAction('切换报告二级目录', () => {
+      leftBarStore.activeItem = 'nowRecord';
+    });
     routing.push({
       pathname: `/companyHome/nowRecord`,
       query: routing.location.query,
