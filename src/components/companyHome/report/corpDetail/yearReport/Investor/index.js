@@ -23,16 +23,22 @@ function Investor({yearReportList, yearReportTab, isLoading}) {
       }
     }
   }
+  const fixToTwoPoint = (value) => {
+    if (value) {
+      return Number(value).toFixed(2);
+    }
+    return '无';
+  };
   const data = {
     meta: {
       tData: listData,
       dict: 'yearInvestor',
       body: [
         { 'key': 'shareholderName', 'width': '2' },
-        { 'key': 'subConam', 'width': '2' },
+        { 'key': 'subConam', 'width': '2', modifyText: fixToTwoPoint },
         { 'key': 'subConDate', 'width': '1' },
         { 'key': 'subConType', 'width': '1' },
-        { 'key': 'paidConMoney', 'width': '2' },
+        { 'key': 'paidConMoney', 'width': '2', modifyText: fixToTwoPoint },
         { 'key': 'paidTime', 'width': '1' },
         { 'key': 'paidType', 'width': '1' },
       ]

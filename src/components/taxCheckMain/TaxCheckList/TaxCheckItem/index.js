@@ -26,8 +26,7 @@ function TaxCheckItem({taxCheckStore}) {
       listGroup.push(group);
     }
   }
-  console.log(listGroup);
-  const tableDoms = [];
+  let tableDoms = null;
   if (listGroup.length > 0) {
     listGroup.map((item, _idx) => {
       const tableBody = [];
@@ -52,7 +51,7 @@ function TaxCheckItem({taxCheckStore}) {
           </tbody>
         </table>
       );
-      tableDoms.push(tableDom);
+      tableDoms = tableDom;
     });
   }
 

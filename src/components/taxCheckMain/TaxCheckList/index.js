@@ -3,6 +3,7 @@ import { observer, inject } from 'mobx-react';
 import { runInAction } from 'mobx';
 import styles from './index.less';
 // import TaxCheckItem from './TaxCheckItem';
+import ErrorText from 'components/common/ErrorText';
 import Button from 'components/lib/button';
 
 @inject('taxCheckStore', 'uiStore', 'modalStore')
@@ -16,7 +17,6 @@ export default class TaxCheckList extends Component {
     modalStore: PropTypes.object,
   }
   componentDidMount() {
-    // const { monitorId, reportId } = this.props.routing.location.query;
     this.props.taxCheckStore.getTaxCheckList();
   }
   componentWillUnmount() {
@@ -72,8 +72,9 @@ export default class TaxCheckList extends Component {
             <div className={styles.checkTime}>最后核查日期：{item.checkTime}</div>
           </div>
         );
-        return listDom;
       });
+    } else {
+      listDom.push(<ErrorText error={{message: '你还没有添加企业税务核查，请点击右上角‘添加企业核查按钮’添加'}} key="ErrorText"/>);
     }
     return (
       <div className={styles.box}>
