@@ -40,9 +40,9 @@ const config = {
   equityFreeze: {
     freOrgName: '转让主体',
     unfreOrgName: '受让人',
-    freFromDate: '转让日期',
-    freMoney: '转让金额',
-    freRatio: '转让额所占比例',
+    freFromDate: '冻结开始日期',
+    freMoney: '股权冻结数额',
+    freRatio: '股权冻结比例',
     unfreInfo: '转让类型',
   },
   equityPledge: {
