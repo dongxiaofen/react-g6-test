@@ -5,7 +5,6 @@ import SecondTitle from 'components/common/pdf/SecondTitle';
 import styles from '../EmployeeSalaryDis/index.less';
 
 function EmployeeSchoolInfo({moduleData}) {
-  console.log(moduleData, '统计');
   if (!moduleData || Object.keys(moduleData).length === 0) {
     return (
       <div>

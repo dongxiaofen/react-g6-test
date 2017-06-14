@@ -70,6 +70,8 @@ export default loadingComp({
   mapDataToProps: props => ({
     loading: props.isLoading,
     category: 0,
+    errCategory: 3,
+    errorWords: '',
     error: props.error,
     module: props.module
   })
