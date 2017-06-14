@@ -4,8 +4,8 @@ import styles from './index.less';
 
 function Footer({companyHomeStore, routing, bannerStore}) {
   const reportTypeDict = {monitor: '贷后监控', loan: '贷中分析', report: '贷前高级报告', 'basicReport': '贷前基础报告', 'nowRecord': '现勘记录'};
-  const reportInfo = companyHomeStore.reportInfo;
-  const {monitorStatus} = reportInfo;
+  const {reportId} = companyHomeStore.reportInfo;
+  const {monitorStatus} = bannerStore.monitorRepInfo;
   const getReportType = ()=> {
     const route = routing.location.pathname.split('/')[2];
     if (/comprehenEval|profitEval|operationEval|growthAbilityEval/.test(route)) {
@@ -14,7 +14,7 @@ function Footer({companyHomeStore, routing, bannerStore}) {
       return 'monitor';
     } else if (route === 'nowRecord') {
       return 'nowRecord';
-    } else if (companyHomeStore.reportInfo.reportId) {
+    } else if (reportId !== '') {
       return 'report';
     }
     return 'basicReport';
