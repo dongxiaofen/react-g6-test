@@ -180,7 +180,7 @@ function LeftBar({ leftBarStore, bannerStore, routing, companyHomeStore}) {
         onClick={changeNowRecord}
         className={`${styles.wrap} ${styles.recordWrap}`}>
         <i className="fa fa-pencil-square-o" aria-hidden="true"></i>
-        <span className={styles.record}>调查记录</span>
+        <span className={styles.record}>现勘记录</span>
       </div>
     </div>
   );

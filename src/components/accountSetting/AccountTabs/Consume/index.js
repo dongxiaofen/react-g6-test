@@ -13,7 +13,7 @@ function Consume({accountSettingStore, clientStore}) {
     const personStr = item.checkPerson ? `核查人姓名：${item.checkPerson}` : '';
     const taxStr = item.taxIndex ? `核查${taxTypeMap[item.taxIndex]}` : '';
     return [
-      nameStr,
+      `${item.consumeOperationType === 'PERSON_CHECK' ? '' : nameStr}`,
       `${item.consumeOperationType === 'MONITOR_MAIN' || item.consumeOperationType === 'MONITOR_MAIN_RENEWAL' || item.consumeOperationType === 'REPORT_TO_MONITOR' ? timeStr : ''}`,
       personStr,
       taxStr

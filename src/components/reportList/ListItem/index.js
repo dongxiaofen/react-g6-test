@@ -3,7 +3,7 @@ import { observer } from 'mobx-react';
 import { browserHistory } from 'react-router';
 import { Row, Col } from 'components/common/layout';
 import styles from './index.less';
-function ListItem({data}) {
+function ListItem({data, listType}) {
   const stockTableType = (stockType) => {
     let str = '';
     if (stockType === 'A') {
@@ -44,7 +44,7 @@ function ListItem({data}) {
       </Col>
       <Col width="2">
         <div className={styles.typeKey}>报告类型</div>
-        <div className={styles.typeValue}>基础报告</div>
+        <div className={styles.typeValue}>{listType === 'basic' ? '基础' : '高级'}报告</div>
       </Col>
       <Col width="4">
         <div className="clearfix">

@@ -29,6 +29,13 @@ class InvestmentStore {
         this.manageData = errorData;
       }));
   }
+  @action.bound resetStore() {
+    this.isMount = false;
+    this.entData = {};
+    this.frPositionList = {};
+    this.frinvList = {};
+    this.manageData = {};
+  }
 }
 
 export default new InvestmentStore();

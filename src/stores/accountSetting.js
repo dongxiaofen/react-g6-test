@@ -31,6 +31,7 @@ class AccountSettingStore {
     PERSON_CHECK: '关联人核查',
     TAX_CHECK: '税务核查',
     BASIC_REPORT: '基础报告',
+    BASIC_REPORT_UPGRADE_TO_REPORT: '基础报告升级为高级报告'
   };
   taxTypeMap = {
     R001: 'A类营业收入',
