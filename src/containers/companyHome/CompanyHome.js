@@ -88,6 +88,7 @@ export default class CompanyHome extends Component {
     // reset report store data
     [
       'uiStore',
+      'leftBarStore',
       'companyHomeStore',
       'bannerStore',
       'loaningStore',
