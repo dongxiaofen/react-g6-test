@@ -8,6 +8,7 @@ import messageStore from '../message';
 const CancelToken = axios.CancelToken;
 class MonitorAlertStore {
   @observable isMount = false;
+  @observable isLoading = true;
   @observable loadingId = -1;
   @observable listData = [];
   @observable detailData = {
@@ -36,8 +37,10 @@ class MonitorAlertStore {
         data = {error: {message: '暂无信息'}, content: []};
       }
       this.listData = data;
+      this.isLoading = false;
     }))
     .catch(action('getAlert_error', err => {
+      this.isLoading = false;
       this.listData = err.response && {error: err.response.data, content: []} || {error: {message: '暂无信息'}, content: []};
     }));
   }

@@ -109,7 +109,7 @@ export default class CompanyHome extends Component {
       'taxStore',
       'taxCheckStore',
       'monitorAxisStore',
-      'monitorAlert',
+      'monitorAlertStore',
       'nowRecordStore',
     ].map((key) => {
       if (this.props[key] && this.props[key].resetStore) {
