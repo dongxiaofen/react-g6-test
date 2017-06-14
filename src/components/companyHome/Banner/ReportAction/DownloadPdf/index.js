@@ -111,22 +111,32 @@ export default class DownloadPdf extends Component {
     };
 
     const output = [];
-    const monitorId = this.props.routing.location.query.monitorId;
+    // const monitorId = this.props.routing.location.query.monitorId;
     const pdfDownloadConfig = this.props.bannerStore.pdfDownloadConfig;
     const levelOne = pdfDownloadConfig.levelOne;
-    const stockCode = this.props.bannerStore.stockCode;
+    // const stockCode = this.props.bannerStore.stockCode;
     levelOne.forEach((item, key) => {
-      if (item.value === 'STOCK') {
-        if (stockCode) {
-          output.push(checkComp(item, key));
-        }
-      } else if (item.value === 'TAX') {
-        if (monitorId) {
-          output.push(checkComp(item, key));
-        }
-      } else {
+      output.push(checkComp(item, key));
+      if (item.type === this.getReportType() === 'basicReport') {
+        output.push(checkComp(item, key));
+      } else if (item.type === this.getReportType() === 'report' || item.type === this.getReportType() === 'basicReport') {
+        output.push(checkComp(item, key));
+      } else if (item.type === this.getReportType() === 'loan') {
         output.push(checkComp(item, key));
       }
+
+      console.log(item, '-----------------------');
+      // if (item.value === 'STOCK') {
+      //   if (stockCode) {
+      //     output.push(checkComp(item, key));
+      //   }
+      // } else if (item.value === 'TAX') {
+      //   if (monitorId) {
+      //     output.push(checkComp(item, key));
+      //   }
+      // } else {
+      //   output.push(checkComp(item, key));
+      // }
     });
     return output;
   }
