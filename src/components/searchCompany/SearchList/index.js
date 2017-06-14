@@ -122,4 +122,3 @@ export default inject('searchCompanyStore', 'modalStore', 'payModalStore')(loadi
     module: '搜索列表',
   }),
 })(observer(SearchList)));
-// export default inject('searchCompanyStore', 'modalStore', 'payModalStore')(observer(SearchList));

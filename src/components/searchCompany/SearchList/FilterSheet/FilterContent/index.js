@@ -155,7 +155,7 @@ export default class FilterContent extends Component {
   render() {
     const filterSheet = this.props.filterSheet;
     return (
-      <div className={`${filterSheet.filterSheetStatus ? styles.none : styles.filterWrap}`}>
+      <div className={`${filterSheet.filterSheetStatus ? styles.filterWrap : styles.none}`}>
         {this.createFilter(filterSheet)}
       </div>
     );
