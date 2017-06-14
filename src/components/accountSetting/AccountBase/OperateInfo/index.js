@@ -38,13 +38,13 @@ function OperateInfo({accountSettingStore, clientStore, className}) {
         remainKey: 'leftTaxCheckNum',
         unit: '个',
       },
-      {
-        name: '消费点数',
-        keys: 'userConsumePoint',
-        remainKey: 'subUserConsumePoint',
-        none: consumeType !== 'POINT' || data.parentUserId ? true : false,
-        unit: '',
-      },
+      // {
+      //   name: '消费点数',
+      //   keys: 'userConsumePoint',
+      //   remainKey: 'subUserConsumePoint',
+      //   none: consumeType !== 'POINT' || data.parentUserId ? true : false,
+      //   unit: '',
+      // },
       {
         name: '剩余点数',
         keys: 'point',

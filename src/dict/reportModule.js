@@ -54,8 +54,14 @@ const config = {
     freRatio: '转让额所占比例',
     unfreInfo: '转让类型',
   },
+  equityPledgePdf: {
+    assignee: '受让人',
+    transferType: '转让类型',
+    pledgeDate: '转让日期',
+    pledgedAmount: '转让额',
+    transfersRatio: '转让额所占比例',
+  },
   equityTransfer: {
-    imporg: 'none',
     assignee: '受让人',
     transferType: '转让类型',
     pledgeDate: '转让日期',
@@ -63,7 +69,6 @@ const config = {
     transfersRatio: '转让额所占比例',
   },
   corporateMortgage: {
-    imporg: 'none',
     assignee: '受让人',
     transferType: '转让类型',
     pledgeDate: '转让日期',

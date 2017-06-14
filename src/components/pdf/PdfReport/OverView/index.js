@@ -4,11 +4,11 @@ import PdfTitle from 'components/common/pdf/PdfTitle';
 import SecondTitle from 'components/common/pdf/SecondTitle';
 import styles from './index.less';
 import Summary from './Summary';
-// import pathval from 'pathval';
+import pathval from 'pathval';
 
 function OverView({ pdfStore, clientStore }) {
   const summaryData = pdfStore.summary ? pdfStore.summary : '';
-  // const isStock = pathval.getPathValue(pdfStore, 'banner.stockCode');
+  const isStock = pathval.getPathValue(pdfStore, 'banner.stockCode');
   const objectPase = (data, type) => {
     let newArr = [];
     Object.keys(data).map( (key) => {
@@ -21,7 +21,6 @@ function OverView({ pdfStore, clientStore }) {
     return newArr.join('，');
   };
 
-  const isStock = true;
   const corpBasicMap = {
     mapKey: {
       registerInfo: '注册信息',
@@ -124,13 +123,13 @@ function OverView({ pdfStore, clientStore }) {
     title: '无形资产/招投标',
     valueData: summaryData.operation ? {data: summaryData.operation.operationInfo, type: 'object'} : undefined,
   };
-  // const riskRelationshipMap = {
-  //   mapKey: {
-  //     riskRelationship: '风险关联信息'
-  //   },
-  //   title: '风险关系',
-  //   valueData: summaryData.network ? {data: summaryData.network, type: 'object'} : undefined,
-  // };
+  const riskRelationshipMap = {
+    mapKey: {
+      riskRelationship: '风险关联信息'
+    },
+    title: '风险关系',
+    valueData: summaryData.network ? {data: summaryData.network, type: 'object'} : undefined,
+  };
   const pledgeEquity = {
     mapKey: {
       sharesFrostCount: '股权冻结',
@@ -186,6 +185,7 @@ function OverView({ pdfStore, clientStore }) {
       teamScore: '团队相关',
       influenceScore: '社会影响力'
     },
+    unit: '分',
     title: '多维综合分析',
     valueData: summaryData.scoreStatistic ? {data: summaryData.scoreStatistic, type: 'object'} : undefined
   };
@@ -261,7 +261,9 @@ function OverView({ pdfStore, clientStore }) {
       <SecondTitle module="抵质押信息" />
       <hr className={styles.hrhr} />
       <Summary {...pledgeEquity} />
-      {/* <Summary {...riskRelationshipMap} /> */}
+      <SecondTitle module="关联图信息" />
+      <hr className={styles.hrhr} />
+      <Summary {...riskRelationshipMap} />
 
       {/* 多维分析 */}
             <div>
