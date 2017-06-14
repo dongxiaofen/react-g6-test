@@ -2,6 +2,7 @@ import { observable, action } from 'mobx';
 import {companyHomeApi} from 'api';
 import pathval from 'pathval';
 import detailModalStore from '../detailModal';
+import companyHomeStore from '../companyHome';
 class RiskCourtStore {
   @observable isLoading = true;
   @observable isMount = false;
@@ -61,20 +62,21 @@ class RiskCourtStore {
       });
     }, '法务详情');
   }
-  @action.bound getJudgeDetailMonitor(monitorCompanyId, params, info) {
-    companyHomeApi.getJudgeDetailMonitor(monitorCompanyId, params)
-      .then(action('judeDoc detail', (resp)=>{
-        this.court.detailModalData.content = resp.data.detail;
-        this.court.detailModalData.info = info;
-        this.openDetailModal();
-      }))
-      .catch((error)=>{
-        // window.open(info.url, '_blank');
-        console.log('risk error', error);
-      });
-  }
+  // @action.bound getJudgeDetailMonitor(monitorCompanyId, params, info) {
+  //   companyHomeApi.getJudgeDetailMonitor(monitorCompanyId, params)
+  //     .then(action('judeDoc detail', (resp)=>{
+  //       this.court.detailModalData.content = resp.data.detail;
+  //       this.court.detailModalData.info = info;
+  //       this.openDetailModal();
+  //     }))
+  //     .catch((error)=>{
+  //       // window.open(info.url, '_blank');
+  //       console.log('risk error', error);
+  //     });
+  // }
   @action.bound getJudgeDetailReport(params, info) {
-    companyHomeApi.getJudgeDetailReport(params)
+    const reportInfo = companyHomeStore.reportInfo;
+    companyHomeApi.getJudgeDetailReport(reportInfo, params)
       .then(action('judeDoc detail', (resp)=>{
         this.court.detailModalData.content = resp.data.detail;
         this.court.detailModalData.info = info;

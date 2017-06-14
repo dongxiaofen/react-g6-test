@@ -73,8 +73,12 @@ export const getReportModule = (urlStr, idParams, params) => {
 export const getJudgeDetailMonitor = (monitorCompanyId, params) => {
   return axios.get(`/api/monitor/${monitorCompanyId}/risk/judgeDoc`, { params });
 };
-export const getJudgeDetailReport = (params) => {
-  return axios.get(`/api/report/risk/judgeDoc`, { params });
+export const getJudgeDetailReport = (idParams, params) => {
+  const {reportId, basicReportId} = idParams;
+  if (reportId !== '') {
+    return axios.get(`/api/report/${reportId}/risk/judgeDoc`, { params });
+  }
+  return axios.get(`/api/basicReport/${basicReportId}/risk/judgeDoc`, { params });
 };
 export const getInternet = ({ monitorId, reportId, params }, source) => {
   let url;
