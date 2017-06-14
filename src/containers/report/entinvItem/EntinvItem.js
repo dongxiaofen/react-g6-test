@@ -11,8 +11,8 @@ export default class EntinvItem extends Component {
   render() {
     return (
       <div>
-        <Tabs tab="企业对外投资任职">
-          <TabPane tab="企业对外投资任职" key="企业对外投资任职">
+        <Tabs tab="企业对外投资">
+          <TabPane tab="企业对外投资" key="企业对外投资">
             <Enterprise {...this.props} />
           </TabPane>
         </Tabs>

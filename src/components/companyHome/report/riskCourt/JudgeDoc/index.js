@@ -8,12 +8,7 @@ function JudgeDoc({courtData, regTime, routing, riskCourtStore}) {
     const docId = data.docId;
     const trailDate = data.trailDate;
     const params = {docId, trailDate};
-    if (routing.location.query.monitorId) {
-      const monitorCompanyId = routing.location.query.monitorId;
-      riskCourtStore.getJudgeDetailMonitor(monitorCompanyId, params, data);
-    } else {
-      riskCourtStore.getJudgeDetailReport(params, data);
-    }
+    riskCourtStore.getJudgeDetailReport(params, data);
   };
   const modifyTitile = (value, obj)=>{
     return <span className={styles.docTitle} onClick={getDetail.bind(null, obj)}>{value}</span>;
@@ -58,4 +53,4 @@ function JudgeDoc({courtData, regTime, routing, riskCourtStore}) {
 JudgeDoc.propTypes = {
   foo: PropTypes.string,
 };
-export default inject('routing')(observer(JudgeDoc));
+export default inject('routing', 'riskCourtStore')(observer(JudgeDoc));

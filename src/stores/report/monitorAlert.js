@@ -8,6 +8,7 @@ import messageStore from '../message';
 const CancelToken = axios.CancelToken;
 class MonitorAlertStore {
   @observable isMount = false;
+  @observable isLoading = true;
   @observable loadingId = -1;
   @observable listData = [];
   @observable detailData = {
@@ -21,21 +22,25 @@ class MonitorAlertStore {
     html: '',
     orgData: {},
   }
+  @observable module = 'monitorAlert';
   @action.bound getReportModule(params) {
     this.isMount = true;
     this.listData = {};
-    companyHomeApi.getReportModule('monitorAlert', params)
+    const {index, size} = uiStore.uiState.monitorAlert;
+    companyHomeApi.getReportModule('monitorAlert', params, {index, size})
     .then(action('getAlert_success', resp => {
       let data = null;
       if (resp.data.content && resp.data.content.length > 0) {
-        uiStore.updateUiStore('alertAnalysis.totalElements', resp.data.totalElements);
+        uiStore.updateUiStore('monitorAlert.totalElements', resp.data.totalElements);
         data = resp.data;
       } else {
         data = {error: {message: '暂无信息'}, content: []};
       }
       this.listData = data;
+      this.isLoading = false;
     }))
     .catch(action('getAlert_error', err => {
+      this.isLoading = false;
       this.listData = err.response && {error: err.response.data, content: []} || {error: {message: '暂无信息'}, content: []};
     }));
   }

@@ -5,7 +5,7 @@ import styles from './index.less';
 import Button from 'components/lib/button';
 function LeftBar({ leftBarStore, bannerStore, routing, companyHomeStore}) {
   const activeMenu = leftBarStore.activeMenu;
-  const stockCode = bannerStore.stockCode;
+  const stockCode = bannerStore.bannerInfoData.stockCode;
   const barConf = leftBarStore.barConf;
   let timer;
   const changeMenu = (menuKey, access) => {
@@ -125,6 +125,9 @@ function LeftBar({ leftBarStore, bannerStore, routing, companyHomeStore}) {
   const reportTitle = companyHomeStore.reportInfo.reportId !== '' ? '贷前高级报告' : '贷前基础报告';
   // 现勘记录路由
   const changeNowRecord = () => {
+    runInAction('切换报告二级目录', () => {
+      leftBarStore.activeItem = 'nowRecord';
+    });
     routing.push({
       pathname: `/companyHome/nowRecord`,
       query: routing.location.query,

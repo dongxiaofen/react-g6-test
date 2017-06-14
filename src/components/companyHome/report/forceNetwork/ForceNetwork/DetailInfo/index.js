@@ -4,7 +4,7 @@ import styles from './index.less';
 import CompanyInfo from './CompanyInfo';
 import PersonInfo from './PersonInfo';
 import AnimateLoading from 'components/hoc/LoadingComp/AnimateLoading';
-import { Slider } from 'antd';
+import Slider from 'antd/lib/slider';
 
 function DetailInfo({forceNetworkStore, handleZoom, resetNetWork}) {
   const isShowInfo = forceNetworkStore.nodeInfo.isShowInfo;
