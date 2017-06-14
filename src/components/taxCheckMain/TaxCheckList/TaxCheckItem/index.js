@@ -47,7 +47,7 @@ function TaxCheckItem({taxCheckStore}) {
       const tableDom = (
         <table className={styles.table}>
           <tbody key={`${_idx}checkListTbale`}>
-            <tr className={styles.title}><td>年度</td><td>指标</td><td>核查金额</td><td>与实际金额核查结果</td><td>核查时间</td></tr>
+            <tr className={styles.title}><td width="100">年度</td><td width="200">指标</td><td width="150">核查金额</td><td width="200">与实际金额核查结果</td><td>核查时间</td></tr>
             {tableBody}
           </tbody>
         </table>
