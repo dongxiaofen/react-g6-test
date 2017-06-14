@@ -116,12 +116,11 @@ export default class DownloadPdf extends Component {
     const levelOne = pdfDownloadConfig.levelOne;
     // const stockCode = this.props.bannerStore.stockCode;
     levelOne.forEach((item, key) => {
-      output.push(checkComp(item, key));
-      if (item.type === this.getReportType() === 'basicReport') {
+      if (item.type === 'basicReport' && this.getReportType() === 'basicReport') {
         output.push(checkComp(item, key));
-      } else if (item.type === this.getReportType() === 'report' || item.type === this.getReportType() === 'basicReport') {
+      } else if ((item.type === 'report' && item.type === this.getReportType()) || (item.type === 'basicReport' && this.getReportType() === 'report')) {
         output.push(checkComp(item, key));
-      } else if (item.type === this.getReportType() === 'loan') {
+      } else if (item.type === 'loan' && item.type === this.getReportType()) {
         output.push(checkComp(item, key));
       }
 
@@ -158,7 +157,6 @@ export default class DownloadPdf extends Component {
       );
     };
     const output = [];
-    const monitorId = this.props.routing.location.query.monitorId;
     const levelTwo = this.props.bannerStore.pdfDownloadConfig.levelTwo[key];
     if (levelTwo.length) {
       levelTwo.forEach((item, idx) => {
@@ -168,12 +166,14 @@ export default class DownloadPdf extends Component {
           _key: key,
           _levelOneKey: levelOneKey
         };
-        if (item.value === 'TEAM_ANALYSIS') {
-          if (monitorId) {
+        if (this.getReportType() === 'report') {
+          output.push(checkComp(argConfig));
+        } else {
+          if (item.value === 'INV_POS_MANAGEMENT') {
+            output.push();
+          } else {
             output.push(checkComp(argConfig));
           }
-        } else {
-          output.push(checkComp(argConfig));
         }
       });
     }
