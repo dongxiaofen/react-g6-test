@@ -69,7 +69,7 @@ class TaxCheckStore {
           type: 'info',
           content: '添加成功'
         });
-        // this.getTaxCheckList(monitorId, reportId);
+        this.getTaxCheckList();
       }))
       .catch(action('addTaxCheck', err => {
         console.log(err);
