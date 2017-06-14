@@ -85,7 +85,7 @@ function FilterTotal({updateValue, filterSheet, page, searchKeyFilter}) {
         为你找到<span className={searchKeyFilter ? styles.text : styles.none}>{searchKeyFilter}</span>
       </div>
       {totalNumDom}
-      {toggleButton.bind(this)}
+      {toggleButton()}
       {/*
         <div onClick={feedBack} className={searchKeyFilter ? styles.noResult : styles.none}>
           没有想要的结果？提供关键词

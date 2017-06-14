@@ -61,6 +61,7 @@ function TaxCheckMain({ modalStore, messageStore, taxCheckStore }) {
   const handleAddTaxCheckClick = () => {
     showAddTaxCheck();
     this.props.taxCheckStore.changeValue('companyName', '');
+    this.props.taxCheckStore.changeValue('isLockCompanyName', false);
   };
   return (
     <Container>
