@@ -579,6 +579,11 @@ class UiStore {
           size: 10,
           totalElements: 0,
         },
+        monitorAlert: {
+          index: 1,
+          size: 10,
+          totalElements: 0,
+        },
         ruleListPager: {
           index: 1,
           size: 10,

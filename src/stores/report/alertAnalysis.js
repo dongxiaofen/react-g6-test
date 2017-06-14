@@ -12,6 +12,7 @@ class AlertAnalysisStore {
   }
 
   @observable isMount = false;
+  @observable isLoading = true;
 
   @observable loadingId = -1;
   @observable listData = [];
@@ -45,8 +46,10 @@ class AlertAnalysisStore {
         data = {error: {message: '暂无信息'}, content: []};
       }
       this.listData = data;
+      this.isLoading = false;
     }))
     .catch(action('getAlert_error', err => {
+      this.isLoading = false;
       this.listData = err.response && {error: err.response.data, content: []} || {error: {message: '暂无信息'}, content: []};
     }));
   }

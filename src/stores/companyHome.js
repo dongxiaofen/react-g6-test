@@ -98,7 +98,15 @@ class CompanyHomeStore {
     this.loanLoading = true;
     companyHomeApi.createAnalyRep({companyName, items: this.loanOptValue})
     .then(action('createAnalyRep', (resp) => {
-      this.reportInfo.dimensions = this.reportInfo.dimensions.concat(this.loanOptValue);
+      let options = this.loanOptValue;
+      if (!resp.data.existTaxDetail) {
+        const idx = this.loanOptValue.indexOf('SCORE');
+        options = idx > -1 ? ['SCORE'] : [];
+        text = {
+          content: '税务分析模块分析失败'
+        };
+      }
+      this.reportInfo.dimensions = this.reportInfo.dimensions.concat(options);
       modalStore.closeAction();
       messageStore.openMessage({ ...text });
       this.reportInfo.analysisReportId = resp.data.analysisReportId;
