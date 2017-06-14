@@ -1,7 +1,7 @@
 import React, {PropTypes} from 'react';
 import { observer, inject} from 'mobx-react';
 import styles from './index.less';
-import { Checkbox } from 'antd';
+import  Checkbox from 'antd/lib/checkbox';
 import DemoSlider from '../DemoSlider';
 import loanSlider1 from 'imgs/companyHome/loanSlider1.png';
 import loanSlider2 from 'imgs/companyHome/loanSlider2.png';
