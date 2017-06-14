@@ -14,12 +14,12 @@ export const getSubCompanyList = (dimGroupTypeStr, monitorId, params, source)=> 
 export const getMonitorMap = (id) => {
   return axios.get(`/api/monitor/map?monitorId=${id}`);
 };
-export const getNewsDetail = (companyId, params)=> {
-  return axios.get(`/api/monitor/${companyId}/internet/detail`, {params});
+export const getNewsDetail = (strWithId, params)=> {
+  return axios.get(`/api/${strWithId}/internet/detail`, {params});
 };
-export const getBiddingDetail = (companyId, params)=>{
-  return axios.get(`/api/monitor/${companyId}/operation/bidding/detail`, {params});
+export const getBiddingDetail = (strWithId, params)=>{
+  return axios.get(`/api/${strWithId}/operation/bidding/detail`, {params});
 };
-export const getJudgeDocDetail = (companyId, params) => {
-  return axios.get(`/api/monitor/${companyId}/risk/judgeDoc`, {params});
+export const getJudgeDocDetail = (strWithId, params) => {
+  return axios.get(`/api/${strWithId}/risk/judgeDoc`, {params});
 };
