@@ -1,7 +1,7 @@
 import React, {PropTypes} from 'react';
 import { observer, inject} from 'mobx-react';
 import styles from './index.less';
-import { Carousel } from 'antd';
+import Carousel from 'antd/lib/carousel';
 function DemoSlider({imgs, autoplay}) {
   const createImgs = ()=> {
     const output = [];

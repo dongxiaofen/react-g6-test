@@ -18,7 +18,7 @@ export const getStockCode = ({ reportId, monitorId }) => {
 export const toggleMonitorStatus = (monitorId, status) => {
   return axios.put(`/api/monitor/${monitorId}/status`, { status: status });
 };
-export const getReportModule = (urlStr, idParams) => {
+export const getReportModule = (urlStr, idParams, params) => {
   const basicUrl = `/api/basicReport/${idParams.basicReportId}/`;
   const advancedUrl = `/api/report/${idParams.reportId}/`;
   const analysisUrl = `/api/analysisReport/${idParams.analysisReportId}/`;
@@ -68,7 +68,7 @@ export const getReportModule = (urlStr, idParams) => {
     window.reportSourceCancel = [];
   }
   window.reportSourceCancel.push(source.cancel);
-  return axios.get(url, { cancelToken: source.token });
+  return axios.get(url, { cancelToken: source.token, params});
 };
 export const getJudgeDetailMonitor = (monitorCompanyId, params) => {
   return axios.get(`/api/monitor/${monitorCompanyId}/risk/judgeDoc`, { params });

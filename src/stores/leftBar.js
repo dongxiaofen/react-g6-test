@@ -45,7 +45,7 @@ class LeftBarStore {
         menuKey: 'investAndOffice',
         children: [
           {
-            menuText: '企业对外投资任职',
+            menuText: '企业对外投资',
             menuKey: 'entinvItem',
           },
           {
