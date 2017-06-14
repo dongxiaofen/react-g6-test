@@ -27,6 +27,7 @@ class PdfStore {
   @observable frData = {};
   @observable shares = {};
   @observable pdfTypesKey = '';
+  @observable managements = [];
   // summary
   @observable summary = {};
   @observable companyName = '';
@@ -121,6 +122,7 @@ class PdfStore {
         this.entinvItemList = pathval.getPathValue(response.data, 'ent.entinvItemList');
         this.frData = pathval.getPathValue(response.data, 'fr');
         this.shares = pathval.getPathValue(response.data, 'shares');
+        this.managements = pathval.getPathValue(response.data, 'managements');
         // 分析能力
         this.star = pathval.getPathValue(response.data, 'star');
         this.growing = pathval.getPathValue(response.data, 'growing');
@@ -156,6 +158,7 @@ class PdfStore {
     this.growing = pathval.getPathValue(data, 'growing');
     this.operation = pathval.getPathValue(data, 'operation');
     this.profit = pathval.getPathValue(data, 'profit');
+    this.managements = pathval.getPathValue(data, 'managements');
   }
 }
 export default new PdfStore();
