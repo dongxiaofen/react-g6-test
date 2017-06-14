@@ -9,7 +9,7 @@ export const getRuleStatus = (params) => {
 };
 // 获取行业
 export const getIndustryList = () => {
-  return axios.get('/api/monitor/industry');
+  return axios.get('/api/common/industry');
 };
 // 获取事件类型
 export const getTypeList = (type) => {
