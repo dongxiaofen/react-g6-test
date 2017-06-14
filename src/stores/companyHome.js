@@ -208,14 +208,12 @@ class CompanyHomeStore {
     }));
   }
   @action.bound initDimensions(dimensions) {
-    dimensions.map((key)=>{
-      const idx = this.loanOption.findIndex((item)=>{
-        return item.value === key;
-      });
+    this.loanOption.forEach((option, index)=>{
+      const idx = dimensions.indexOf(option.value);
       if (idx > -1) {
-        this.loanOption[idx].checked = false;
+        this.loanOption[index].checked = false;
       } else {
-        this.loanOption[idx].checked = true;
+        this.loanOption[index].checked = true;
       }
     });
   }
