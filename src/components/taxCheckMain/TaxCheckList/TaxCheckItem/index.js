@@ -58,11 +58,15 @@ function TaxCheckItem({taxCheckStore}) {
 
   return (
     <div className={styles.box}>
-      <div className={styles.companyName}>{taxCheckStore.taxCheckInfoCompany}</div>
-      <span className={styles.text}>
+      <div className={styles.boxTop}>
+        <div className={styles.companyName}>{taxCheckStore.taxCheckInfoCompany}</div>
+        <span className={styles.text}>
         核查结果提示：<span>税务核查金额和实际金额误差在5%以内时即“匹配”，超过5%即“不匹配”</span>
-      </span>
-      {tableDoms}
+        </span>
+      </div>
+      <div className={styles.tableWrap}>
+        {tableDoms}
+      </div>
       {/* <div className={styles.page}>
         <Pager tData={taxCheckStore.taxListData.content} module="taxCheckPager"
                uiStore={uiStore} type="large"/>

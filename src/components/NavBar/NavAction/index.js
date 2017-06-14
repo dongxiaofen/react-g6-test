@@ -59,7 +59,7 @@ export default class NavAction extends Component {
 
   userList = () => {
     const config = [
-      {text: '我的搜藏', handleClick: this.collection, icoClass: styles.collection},
+      {text: '我的收藏', handleClick: this.collection, icoClass: styles.collection},
       {text: '账号中心', handleClick: this.account, icoClass: styles.account},
       {text: '退出登陆', handleClick: this.logout, icoClass: styles.logout},
     ];
