@@ -1,8 +1,8 @@
 import React, {PropTypes} from 'react';
 import { observer, inject } from 'mobx-react';
 import TaxProfit from './TaxProfit/index';
-import TaxUp from './TaxOperation/index';
-import TaxOperation from './TaxUp/index';
+import TaxUp from './TaxUp/index';
+import TaxOperation from './TaxOperation/index';
 import pathval from 'pathval';
 import PdfTitle from 'components/common/pdf/PdfTitle';
 

@@ -1,5 +1,6 @@
 import React, {PropTypes} from 'react';
 import { observer } from 'mobx-react';
+import { toJS } from 'mobx';
 
 import styles from './index.less';
 import MapChart from 'components/common/Charts/MapChart';
@@ -13,6 +14,82 @@ function ProvinceAllChart({ msStore }) {
       msStore.getProvince({params});
       msStore.setProvinceName(chartData.name);
     }
+  };
+
+  const provinceAll = msStore.provinceAll;
+
+  const option = {
+    tooltip: {
+      backgroundColor: '#ffffff',
+      padding: [0, 0],
+      textStyle: {
+        color: '#4d4d4d',
+      },
+      formatter: (ticket) => {
+        const str = `
+          <div style="box-shadow: 0 0 4px #ccc; padding: 10px 20px;">
+            <p style="text-align: center;">
+              <a style="color:#999999;">
+                ${ticket.name}
+              </a>
+              <a style="color: ${ticket.color};">
+                <span style="padding-left: 15px">
+                  ${ticket.value[2]}
+                </span>家
+              </a>
+            </p>
+          </div>`;
+        return str;
+      }
+    },
+    geo: {
+      map: 'china',
+      label: {
+        emphasis: {
+          show: false,
+        }
+      },
+      layoutCenter: ['50%', '50%'],
+      layoutSize: '130%',
+      itemStyle: {
+        normal: {
+          areaColor: '#E7E8EA',
+          borderColor: '#ffffff',
+        },
+        emphasis: {
+          areaColor: '#E7E8EA',
+          borderColor: '#ffffff',
+        },
+      },
+    },
+    series: [
+      {
+        type: 'scatter',
+        coordinateSystem: 'geo',
+        symbolSize: (data) => {
+          const value = data[2];
+          if (value >= 1 && value <= 10) {
+            return 20;
+          } else if (value >= 11 && value <= 20) {
+            return 25;
+          } else if (value >= 21 && value <= 50) {
+            return 30;
+          }
+          return 40;
+        },
+        label: {
+          normal: {
+            formatter: '{b}',
+            position: 'inside',
+            show: true,
+            textStyle: {
+              color: '#333333',
+            }
+          },
+        },
+        data: toJS(provinceAll)
+      },
+    ]
   };
 
   return (
@@ -37,7 +114,7 @@ function ProvinceAllChart({ msStore }) {
       </div>
       <MapChart
         chartId="ProvinceAllChart"
-        option={msStore.provinceAll.chartOption}
+        option={option}
         height="400px"
         clickAction={dateOnClick}
         />
@@ -53,7 +130,7 @@ export default loadingComp({
     loading: props.msStore.loadingGroup.provinceAll,
     category: 0,
     height: 400,
-    error: !props.msStore.isEmptyObject('errorBody', 'provinceAll') || !props.msStore.provinceAll.result.length,
+    error: props.msStore.provinceAll.length === 0,
     errCategory: 1,
   })
 })(observer(ProvinceAllChart));

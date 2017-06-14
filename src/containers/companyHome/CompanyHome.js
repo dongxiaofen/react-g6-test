@@ -22,12 +22,12 @@ import styles from './index.less';
   'riskTaxStore',
   'riskCourtStore',
   'riskCheckStore',
-  'riskPledgeStore',
+  // 'riskPledgeStore',
   'networkStore',
   'blackNetworkStore',
   'reportAxisStore',
   'alertAnalysisStore',
-  'analysisSrore',
+  // 'analysisSrore',
   'taxStore',
   'monitorAxisStore',
   'monitorAlertStore',
@@ -100,19 +100,19 @@ export default class CompanyHome extends Component {
       'riskTaxStore',
       'riskCourtStore',
       'riskCheckStore',
-      'riskPledgeStore',
+      // 'riskPledgeStore',
       'networkStore',
       'blackNetworkStore',
       'reportAxisStore',
       'alertAnalysisStore',
-      'analysisSrore',
+      // 'analysisSrore',
       'taxStore',
       'taxCheckStore',
       'monitorAxisStore',
       'monitorAlert',
       'nowRecordStore',
     ].map((key) => {
-      if (this.props[key].resetStore) {
+      if (this.props[key] && this.props[key].resetStore) {
         this.props[key].resetStore();
       }
     });

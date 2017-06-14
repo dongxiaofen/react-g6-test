@@ -1,5 +1,5 @@
 import React, {PropTypes} from 'react';
-import { observer, inject } from 'mobx-react';
+import {observer, inject} from 'mobx-react';
 import {Container, Row, Col} from 'components/common/layout';
 import Header from './Header';
 import Overview from './OverView';
@@ -15,29 +15,27 @@ import EquityRelated from './EquityRelated';
 import AnalysisReport from './AnalysisReport';
 import styles from './index.less';
 
-function PdfReport({}) {
+function PdfReport({pdfStore}) {
   const judgeIsModuleExist = (module) => {
-    console.log(module);
-    return true;
-    // const pdfModule = pdfStore.pdfTypesKey;
-    // return (pdfModule && pdfModule.includes(module));
+    const pdfModule = pdfStore.pdfTypesKey;
+    return (pdfModule && pdfModule.includes(module));
   };
   return (
     <Container>
       <Row>
         <Col className={styles.pdf_body} width="12">
-            <Header />
-            {judgeIsModuleExist('SUMMARY') ? <Overview /> : ''}
-            {judgeIsModuleExist('CORP') ? <Base judgeIsModuleExist={judgeIsModuleExist} /> : ''}
-            {judgeIsModuleExist('STOCK') ? <Stock judgeIsModuleExist={judgeIsModuleExist} /> : ''}
-            {judgeIsModuleExist('RISK') ? <Risk judgeIsModuleExist={judgeIsModuleExist} /> : ''}
-            <EquityRelated />
-            <News judgeIsModuleExist={judgeIsModuleExist} />
-            {judgeIsModuleExist('OPERATION') ? <Assets judgeIsModuleExist={judgeIsModuleExist} /> : ''}
-            <Network judgeIsModuleExist={judgeIsModuleExist} />
-            {judgeIsModuleExist('TEAM') ? <Team judgeIsModuleExist={judgeIsModuleExist} /> : '' }
-            <AnalysisReport judgeIsModuleExist={judgeIsModuleExist} />
-            <Tax judgeIsModuleExist={judgeIsModuleExist} />
+          <Header />
+          <Overview />
+          <Base judgeIsModuleExist={judgeIsModuleExist}/>
+          <Stock judgeIsModuleExist={judgeIsModuleExist}/>
+          <Risk judgeIsModuleExist={judgeIsModuleExist}/>
+          <EquityRelated judgeIsModuleExist={judgeIsModuleExist}/>
+          <News judgeIsModuleExist={judgeIsModuleExist}/>
+          <Assets judgeIsModuleExist={judgeIsModuleExist}/>
+          <Network judgeIsModuleExist={judgeIsModuleExist}/>
+          <Team judgeIsModuleExist={judgeIsModuleExist}/>
+          <AnalysisReport judgeIsModuleExist={judgeIsModuleExist}/>
+          <Tax judgeIsModuleExist={judgeIsModuleExist}/>
         </Col>
       </Row>
     </Container>
