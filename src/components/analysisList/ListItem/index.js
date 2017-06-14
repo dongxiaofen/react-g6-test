@@ -22,7 +22,7 @@ function ListItem({data, reportRoute}) {
         </div>
       </div>
       <div className={styles.timeArea}>
-        <div className={styles.timeKey}>查询日期</div>
+        <div className={styles.timeKey}>最近分析日期</div>
         <div className={styles.timeValue}>{data.lastModifiedTs}</div>
       </div>
     </div>
