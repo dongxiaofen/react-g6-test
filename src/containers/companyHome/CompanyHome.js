@@ -4,7 +4,7 @@ import { runInAction } from 'mobx';
 import Banner from 'components/companyHome/Banner';
 import LeftBar from 'components/companyHome/LeftBar';
 import { Container, Row, Col } from 'components/common/layout';
-import CirclesLoading from 'components/common/CirclesLoading';
+import BarLoading from 'components/common/BarLoading';
 import styles from './index.less';
 
 @inject(
@@ -127,7 +127,7 @@ export default class CompanyHome extends Component {
       return !this.props.companyHomeStore.reportInfo[key];
     });
     if (noReport) {
-      return <CirclesLoading />;
+      return <BarLoading />;
     }
     return (
       <Container id="reportContainer">
