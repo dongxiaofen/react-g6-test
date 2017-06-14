@@ -111,7 +111,7 @@ function TaxCheckModal({taxCheckStore}) {
           placeholder="请输入企业全称，如“小米科技有限公司”" />
       </div>
       {generateSelect()}
-      {taxCheckStore.selectConf.length < 6 && <button className={styles.addBtn} onClick={addSelectItem}>添加核查项</button>}
+      {taxCheckStore.selectConf.length < 20 && <button className={styles.addBtn} onClick={addSelectItem}>添加核查项</button>}
     </div>
   );
 }
