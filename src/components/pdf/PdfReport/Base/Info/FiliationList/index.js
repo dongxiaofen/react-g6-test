@@ -15,9 +15,12 @@ function FiliationList({ moduleData }) {
   }
   const data = {
     dataConfig: [
-      {'key': 'brName', 'width': '4'},
-      {'key': 'brRegno', 'width': '2'},
-      {'key': 'belong_org', 'width': '4'},
+      {'key': 'brName', 'width': '2'},
+      {'key': 'brRegno', 'width': '1'},
+      {'key': 'belong_org', 'width': '2'},
+      {'key': 'brPrincipal', 'width': '1'},
+      {'key': 'cbuItem', 'width': '2'},
+      {'key': 'brAddr', 'width': '2'},
     ],
     items: moduleData,
     dict: 'filiationList',
