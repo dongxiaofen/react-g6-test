@@ -327,6 +327,16 @@ class UiStore {
       size: 10,
       show: observable.map({})
     },
+    sharesTransferListItemLists: {
+      index: 1,
+      size: 10,
+      show: observable.map({})
+    },
+    sharesImpawnListItemLists: {
+      index: 1,
+      size: 10,
+      show: observable.map({})
+    },
     alterList: {
       index: 1,
       size: 10,
