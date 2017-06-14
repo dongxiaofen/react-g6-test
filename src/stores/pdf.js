@@ -23,6 +23,8 @@ class PdfStore {
   @observable profit = {};
   @observable courtData = {};
   @observable star = {};
+  @observable entinvItemList = [];
+  @observable frData = {};
   @observable shares = {
     'sharesFrostList': [
       {
@@ -144,13 +146,11 @@ class PdfStore {
         'NETWORK_BLACKLIST',
       ]
     };
-    console.log(type, types[type], '------------------');
     // 获取pdf
     axios.get(`/api/pdf/${type}?${idType}=${id}&types=${types[type].join(',')}`)
       .then(action((response) => {
         this.banner = pathval.getPathValue(response.data, 'banner');
         this.summary = pathval.getPathValue(response.data, 'summary');
-        console.log(this.summary, '--------------------');
         this.report = pathval.getPathValue(response.data, 'corpDetail');
         this.company = pathval.getPathValue(response.data, 'stock.info');
         this.announcement = pathval.getPathValue(response.data, 'stock.announcement');
@@ -163,6 +163,8 @@ class PdfStore {
         this.blacklist = pathval.getPathValue(response.data, 'blackList.result[0].paths');
         this.team = pathval.getPathValue(response.data, 'recruitTeamResponse');
         this.corpCheckData = pathval.getPathValue(response.data, 'corpCheck');
+        this.entinvItemList = pathval.getPathValue(response.data, 'ent.entinvItemList');
+        this.frData = pathval.getPathValue(response.data, 'fr');
         // this.shares = pathval.getPathValue(response.data, 'shares');
         // 分析能力
         this.star = pathval.getPathValue(response.data, 'star');
@@ -193,6 +195,8 @@ class PdfStore {
     this.corpCheckData = pathval.getPathValue(data, 'corpCheck');
     this.shares = pathval.getPathValue(data, 'shares');
     this.star = pathval.getPathValue(data, 'star');
+    this.entinvItemList = pathval.getPathValue(data, 'ent.entinvItemList');
+    this.frData = pathval.getPathValue(data, 'fr');
     this.growing = pathval.getPathValue(data, 'growing');
     this.operation = pathval.getPathValue(data, 'operation');
     this.profit = pathval.getPathValue(data, 'profit');

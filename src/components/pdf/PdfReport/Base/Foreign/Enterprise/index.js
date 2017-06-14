@@ -5,7 +5,7 @@ import PdfNotFound from 'components/common/pdf/PdfNotFound';
 import SecondTitle from 'components/common/pdf/SecondTitle';
 
 function Enterprise({moduleData}) {
-  if (moduleData === null || moduleData.length === 0) {
+  if (!moduleData || moduleData.length === 0) {
     return (
       <div>
         <SecondTitle module="企业对外投资"/>
