@@ -9,31 +9,16 @@ function News({data, module, store, cardType}) {
     if (!url) {
       url = dealWithDate(data.content.title);
     }
-    let companyId = '';
+    let urlWithId = '';
     if (module === 'timeAxis') {
-      companyId = data.relatedMonitorId || data.mainMonitorId;
+      urlWithId = data.monitorId ? `monitor/${data.monitorId}` : `report/${data.reportId}`;
     } else {
-      companyId = store.events.info.monitorId;
+      urlWithId = `monitor/${store.events.info.monitorId}`;
     }
     const params = {};
     params.url = url;
     params.createdAt = data.content.createdAt;
-    store.getDetail('getNewsDetail', companyId, params, data, 'news');
-    // const createdAt = data.content.createdAt;
-    // const enUrl = encodeURIComponent(url);
-    // const getUrl = `/api/monitor/${companyId}/internet/detail?createdAt=${createdAt}&url=${enUrl}`;
-    // this.props.commonBoundAC.getDetail(
-    //   getUrl, ['newsData', 'data'],
-    //   'DETAILS_MODAL_UPDATE',
-    //   data,
-    //   this.actionId,
-    //   url,
-    //   './news/newsTitle',
-    //   './news/newsContent',
-    //   './news/newsSource',
-    //   'RISK_UPDATE_VALUE',
-    //   ['events', 'loading', data.eventId]
-    // );
+    store.getDetail('getNewsDetail', urlWithId, params, data, 'news');
   };
   const moduleData = {
     'hideConfig': [

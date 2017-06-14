@@ -7,6 +7,10 @@ import bannerStore from './banner';
 import { companyHomeApi } from 'api';
 import pathval from 'pathval';
 class CompanyHomeStore {
+  @observable createBasicErr = {
+    value: false,
+    err: {},
+  }
   @observable reportInfo = {
     analysisReportId: '',
     basicReportId: '',
@@ -136,11 +140,13 @@ class CompanyHomeStore {
     let text = {
       content: '升级成功'
     };
+    modalStore.confirmLoading = true;
     companyHomeApi.upgradeReport(basicReportId)
     .then(action('upgradeReport', (resp) => {
       modalStore.closeAction();
       messageStore.openMessage({ ...text });
       this.reportInfo.reportId = resp.data.reportId;
+      modalStore.confirmLoading = false;
     }))
     .catch(action('upgradeReport error', (err) => {
       console.log(err.response, '=====upgradeReport error');
@@ -150,6 +156,7 @@ class CompanyHomeStore {
         content: err.response.data.message
       };
       messageStore.openMessage({ ...text });
+      modalStore.confirmLoading = false;
     }));
   }
   @action.bound openUpReportModal() {
@@ -172,9 +179,13 @@ class CompanyHomeStore {
   @action.bound createBasicReport(params) {
     companyHomeApi.createBasicReport({companyName: params.companyName})
     .then(action('createBasicReport', (resp)=>{
-      this.reportInfo.basicReportId = resp.data.basicReportId;
+      this.reportInfo = Object.assign(this.reportInfo, resp.data);
     }))
     .catch(action('createBasicReport err', (error)=>{
+      this.createBasicErr = {
+        value: true,
+        err: error,
+      };
       console.log(error);
     }));
   }
@@ -183,8 +194,8 @@ class CompanyHomeStore {
     this.isLoading = true;
     companyHomeApi.getReportStatus(params)
     .then(action('getReportStatus', (resp)=>{
+      this.reportInfo = Object.assign(this.reportInfo, resp.data);
       if (resp.data.basicReportId || resp.data.reportId) {
-        this.reportInfo = Object.assign(this.reportInfo, resp.data);
         if (resp.data.dimensions) {
           this.initDimensions(resp.data.dimensions);
         }
@@ -218,6 +229,10 @@ class CompanyHomeStore {
     this.monitorTime = 1;
   }
   @action.bound resetStore() {
+    this.createBasicErr = {
+      value: false,
+      err: {},
+    };
     this.reportInfo = {
       analysisReportId: '',
       basicReportId: '',

@@ -4,7 +4,7 @@ import styles from './index.less';
 import DemoSlider from '../DemoSlider';
 import monitorSlider1 from 'imgs/companyHome/monitorSlider1.png';
 import Button from 'components/lib/button';
-import { Slider } from 'antd';
+import Slider from 'antd/lib/slider';
 import { Link } from 'react-router';
 
 function CreateMonitor({companyHomeStore, routing}) {

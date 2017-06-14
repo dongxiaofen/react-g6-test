@@ -18,7 +18,7 @@ export const getStockCode = ({ reportId, monitorId }) => {
 export const toggleMonitorStatus = (monitorId, status) => {
   return axios.put(`/api/monitor/${monitorId}/status`, { status: status });
 };
-export const getReportModule = (urlStr, idParams) => {
+export const getReportModule = (urlStr, idParams, params) => {
   const basicUrl = `/api/basicReport/${idParams.basicReportId}/`;
   const advancedUrl = `/api/report/${idParams.reportId}/`;
   const analysisUrl = `/api/analysisReport/${idParams.analysisReportId}/`;
@@ -68,20 +68,28 @@ export const getReportModule = (urlStr, idParams) => {
     window.reportSourceCancel = [];
   }
   window.reportSourceCancel.push(source.cancel);
-  return axios.get(url, { cancelToken: source.token });
+  return axios.get(url, { cancelToken: source.token, params});
 };
 export const getJudgeDetailMonitor = (monitorCompanyId, params) => {
   return axios.get(`/api/monitor/${monitorCompanyId}/risk/judgeDoc`, { params });
 };
-export const getJudgeDetailReport = (params) => {
-  return axios.get(`/api/report/risk/judgeDoc`, { params });
+export const getJudgeDetailReport = (idParams, params) => {
+  const {reportId, basicReportId} = idParams;
+  if (reportId !== '') {
+    return axios.get(`/api/report/${reportId}/risk/judgeDoc`, { params });
+  }
+  return axios.get(`/api/basicReport/${basicReportId}/risk/judgeDoc`, { params });
 };
-export const getInternet = ({ monitorId, reportId, params }, source) => {
+export const getInternet = ({basicReportId, reportId}, params, source) => {
   let url;
-  if (monitorId) {
-    url = `/api/monitor/${monitorId}/internet`;
-  } else if (reportId) {
-    url = `/api/report/internet?reportId=${reportId}`;
+  const basicUrl = `/api/basicReport/${basicReportId}/internet`;
+  const advancedUrl = `/api/report/${reportId}/internet`;
+  if (reportId) {
+    url = advancedUrl;
+  } else if (basicReportId) {
+    url = basicUrl;
+  } else {
+    throw new Error('新闻api url出错');
   }
   return axios.get(url, { cancelToken: source.token, params: params });
 };
@@ -90,26 +98,6 @@ export const getNewsDetail = (url, source) => {
 };
 export const getBiddingDetail = (url, source) => {
   return axios.get(url, { cancelToken: source.token });
-};
-
-// 获取上市公告
-export const changeAnnouncement = ({ stockType, monitorId, reportId }) => {
-  let url;
-  if (monitorId) {
-    if (stockType) {
-      url = `/api/monitor/${monitorId}/stock/announcement?stockType=${stockType}`;
-    } else {
-      url = `/api/monitor/${monitorId}/stock/announcement`;
-    }
-  }
-  if (reportId) {
-    if (stockType) {
-      url = `/api/report/stock/announcement?reportId=${reportId}&stockType=${stockType}`;
-    } else {
-      url = `/api/report/stock/announcement?reportId=${reportId}`;
-    }
-  }
-  return axios.get(url);
 };
 
 // 刷新基础报告

@@ -162,7 +162,7 @@ class Axis extends Component {
   render() {
     const moduleData = this.props.timeAxisStore.axisData.data;
     const sortedTime = Object.keys(moduleData).sort().reverse();
-    const stockCode = this.props.bannerStore.stockCode;
+    const stockCode = this.props.bannerStore.bannerInfoData.stockCode;
     const labelConf = [
       {label: '工商信息', key: 'corp'},
       {label: '法务信息', key: 'legal'},
