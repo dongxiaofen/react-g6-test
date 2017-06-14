@@ -4,6 +4,8 @@ const config = {
     'regNo': '工商注册号',
     'esDate': '成立日期',
     'frName': '法人姓名',
+    'socialCreditIdentifier': '社会信用代码',
+    'orgNum': '组织机构代码',
     'regCap': '注册金',
     'recCap': '实收资本',
     'enterpriseStatus': '经营状态',
@@ -38,9 +40,9 @@ const config = {
   equityFreeze: {
     freOrgName: '转让主体',
     unfreOrgName: '受让人',
-    freFromDate: '转让日期',
-    freMoney: '转让金额',
-    freRatio: '转让额所占比例',
+    freFromDate: '冻结开始日期',
+    freMoney: '股权冻结数额',
+    freRatio: '股权冻结比例',
     unfreInfo: '转让类型',
   },
   equityPledge: {
@@ -52,8 +54,14 @@ const config = {
     freRatio: '转让额所占比例',
     unfreInfo: '转让类型',
   },
+  equityPledgePdf: {
+    assignee: '受让人',
+    transferType: '转让类型',
+    pledgeDate: '转让日期',
+    pledgedAmount: '转让额',
+    transfersRatio: '转让额所占比例',
+  },
   equityTransfer: {
-    imporg: 'none',
     assignee: '受让人',
     transferType: '转让类型',
     pledgeDate: '转让日期',
@@ -61,7 +69,6 @@ const config = {
     transfersRatio: '转让额所占比例',
   },
   corporateMortgage: {
-    imporg: 'none',
     assignee: '受让人',
     transferType: '转让类型',
     pledgeDate: '转让日期',
@@ -171,6 +178,22 @@ const config = {
     'unfreDocId': '解冻文号',
     'unfreDate': '解冻日期',
     'unfreInfo': '股权冻结数额',
+  },
+  sharesTransferListItemLists: {
+    'assignee': '受让人',
+    'transferType': '转让类型',
+    'pledgeDate': '转让日期',
+    'pledgedAmount': '股权转让数额',
+    'transfersRatio': '转让额所占比例',
+  },
+  sharesImpawnListItemLists: {
+    'imporg': '质权人姓名',
+    'imporgType': '出质人类别',
+    'imporgAmount': '出质金额',
+    'imporgRecordDate': '出质备案日期',
+    'imporgAthOrg': '出质审批部门',
+    'imporgDate': '出质批准日期',
+    'imporgTo': '出质截至日期'
   },
   alterList: {
     'altDate': '变更日期',

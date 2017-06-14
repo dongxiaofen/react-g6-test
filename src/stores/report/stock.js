@@ -46,11 +46,13 @@ class StockStore {
       });
   }
   // 上市公告-公告列表
-  @action.bound getAnnouncement(params) {
-    companyHomeApi.getReportModule('stock/announcement', params)
+  @action.bound getAnnouncement(idInfo, params) {
+    this.announcementDatasLoading = true;
+    companyHomeApi.getReportModule('stock/announcement', idInfo, params)
       .then(action('get stock announcement', (resp) => {
         this.announcementDatas = resp.data.data;
         this.announcementDatasLoading = false;
+        uiStore.uiState.stockAnnouncement.index = 1;
       }))
       .catch((err) => {
         console.log(err.response);
@@ -72,19 +74,7 @@ class StockStore {
 
   // 切换公告类型
   @action.bound changeAnnouncement(stockType, params) {
-    this.announcementDatasLoading = true;
-    companyHomeApi.getReportModule('stock/announcement/type', params, {stockType})
-      .then(action('change announcement', (resp) => {
-        this.announcementDatas = resp.data;
-        this.announcementDatasLoading = false;
-        uiStore.uiState.stockAnnouncement.index = 1;
-      }))
-      .catch((err) => {
-        console.log(err.response);
-        runInAction(() => {
-          this.announcementDatasLoading = false;
-        });
-      });
+    this.getAnnouncement(params, {stockType});
   }
 
   // 设置selectValue

@@ -13,7 +13,7 @@ export default class ReportTimeAxis extends Component {
   render() {
     const store = this.props.reportAxisStore;
     return (
-      <TimeAxisComp {...this.props} timeAxisStore={store} />
+      <TimeAxisComp {...this.props} title="历史时间轴" timeAxisStore={store} />
     );
   }
 }
