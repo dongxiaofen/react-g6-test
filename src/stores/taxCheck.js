@@ -8,6 +8,7 @@ import modalStore from './modal';
 import messageStore from './message';
 class TaxCheckStore {
 
+  @observable isLockCompanyName = false;
   @observable companyName = '';
 
   @observable selectConf = [
