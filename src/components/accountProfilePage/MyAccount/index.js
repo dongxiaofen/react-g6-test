@@ -33,6 +33,8 @@ function MyAccount({accountProfileStore}) {
     isLoading: accountProfileStore.ownWarningCompnayIsLoading,
     error: accountProfileStore.ownWarningCompnay.length === 0,
     module: '我的账号最新预警企业（已创建）',
+    errCategory: 3,
+    errorWords: '',
     owner: 'own',
   };
   const riskCompnay = {
@@ -46,6 +48,8 @@ function MyAccount({accountProfileStore}) {
     isLoading: accountProfileStore.ownRiskCompnayIsLoading,
     error: accountProfileStore.ownHighRisk.length === 0,
     module: '',
+    errCategory: 3,
+    errorWords: '',
     owner: 'own',
   };
   const lowScoreCompnay = {
@@ -59,6 +63,8 @@ function MyAccount({accountProfileStore}) {
     isLoading: accountProfileStore.ownLowScoreCompnayIsLoading,
     error: accountProfileStore.ownLowestScore.length === 0,
     module: '',
+    errCategory: 3,
+    errorWords: '',
     owner: 'own',
   };
   return (

@@ -49,6 +49,8 @@ function SubAccount({ accountProfileStore }) {
     title: '预警风险排名',
     isLoading: accountProfileStore.subRiskCompnayIsLoading,
     error: accountProfileStore.subHighRisk.length === 0,
+    errCategory: 3,
+    errorWords: '',
     module: '',
   };
   const lowScoreCompnay = {
@@ -61,6 +63,8 @@ function SubAccount({ accountProfileStore }) {
     title: '综合评分最低',
     isLoading: accountProfileStore.subLowScoreCompnayIsLoading,
     error: accountProfileStore.subLowestScore.length === 0,
+    errCategory: 3,
+    errorWords: '',
     module: '',
   };
   return (
