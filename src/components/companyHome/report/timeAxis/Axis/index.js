@@ -13,52 +13,53 @@ class Axis extends Component {
     this.currStep = 0;
   }
   componentDidMount() {
-    let size = Object.keys(this.props.timeAxisStore.axisData.data).length;
-    size = size < 9 ? 9 : size;
-    const scrollCon = document.getElementById('scrollCon');
-    const scrollBar = document.getElementById('scrollBar');
-    const scrollConWrap = document.getElementById('scrollConWrap');
-    const barStep = 90 / (size - 9);
-    const conStep = 1 / 9 * 100;
-    const totalStep = size - 9;
-    scrollConWrap.addEventListener('mousewheel', (evt) => {
-      if (evt.wheelDelta > 0) {
-        if (this.currStep >= 1) {
-          this.currStep--;
-          evt.preventDefault();
+    const size = Object.keys(this.props.timeAxisStore.axisData.data).length;
+    if (size > 9) {
+      const scrollCon = document.getElementById('scrollCon');
+      const scrollBar = document.getElementById('scrollBar');
+      const scrollConWrap = document.getElementById('scrollConWrap');
+      const barStep = 90 / (size - 9);
+      const conStep = 1 / 9 * 100;
+      const totalStep = size - 9;
+      scrollConWrap.addEventListener('mousewheel', (evt) => {
+        if (evt.wheelDelta > 0) {
+          if (this.currStep >= 1) {
+            this.currStep--;
+            evt.preventDefault();
+          } else {
+            this.currStep = 0;
+          }
         } else {
-          this.currStep = 0;
+          if (Math.abs(this.currStep) <= totalStep - 1) {
+            this.currStep++;
+            evt.preventDefault();
+          } else {
+            this.currStep = totalStep;
+          }
         }
-      } else {
-        if (Math.abs(this.currStep) <= totalStep - 1) {
-          this.currStep++;
-          evt.preventDefault();
+        scrollBar.style.left = this.currStep * barStep + '%';
+        scrollCon.style.left = -this.currStep * conStep + '%';
+      });
+      scrollConWrap.addEventListener('DOMMouseScroll', (evt) => {
+        if (evt.detail <= 0) {
+          if (this.currStep > 0) {
+            this.currStep--;
+            evt.preventDefault();
+          } else {
+            this.currStep = 0;
+          }
         } else {
-          this.currStep = totalStep;
+          if (Math.abs(this.currStep) < totalStep) {
+            this.currStep++;
+            evt.preventDefault();
+          } else {
+            this.currStep = totalStep;
+          }
         }
-      }
-      scrollBar.style.left = this.currStep * barStep + '%';
-      scrollCon.style.left = -this.currStep * conStep + '%';
-    });
-    scrollConWrap.addEventListener('DOMMouseScroll', (evt) => {
-      if (evt.detail <= 0) {
-        if (this.currStep > 0) {
-          this.currStep--;
-          evt.preventDefault();
-        } else {
-          this.currStep = 0;
-        }
-      } else {
-        if (Math.abs(this.currStep) < totalStep) {
-          this.currStep++;
-          evt.preventDefault();
-        } else {
-          this.currStep = totalStep;
-        }
-      }
-      scrollBar.style.left = this.currStep * barStep + '%';
-      scrollCon.style.left = -this.currStep * conStep + '%';
-    });
+        scrollBar.style.left = this.currStep * barStep + '%';
+        scrollCon.style.left = -this.currStep * conStep + '%';
+      });
+    }
   }
   getDetail() {
     const companyId = this.props.timeAxisStore.companyId;
