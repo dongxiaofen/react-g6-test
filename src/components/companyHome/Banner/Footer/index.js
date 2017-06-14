@@ -3,7 +3,7 @@ import { observer, inject} from 'mobx-react';
 import styles from './index.less';
 
 function Footer({companyHomeStore, routing, bannerStore}) {
-  const reportTypeDict = {monitor: '贷后监控', loan: '贷中分析', report: '贷前高级报告', 'basicReport': '贷前基础报告'};
+  const reportTypeDict = {monitor: '贷后监控', loan: '贷中分析', report: '贷前高级报告', 'basicReport': '贷前基础报告', 'nowRecord': '现勘记录'};
   const reportInfo = companyHomeStore.reportInfo;
   const {monitorStatus} = reportInfo;
   const getReportType = ()=> {
@@ -12,6 +12,8 @@ function Footer({companyHomeStore, routing, bannerStore}) {
       return 'loan';
     } else if (/monitorTimeAxis|monitorAlert/.test(route)) {
       return 'monitor';
+    } else if (route === 'nowRecord') {
+      return 'nowRecord';
     } else if (companyHomeStore.reportInfo.reportId) {
       return 'report';
     }
@@ -39,7 +41,10 @@ function Footer({companyHomeStore, routing, bannerStore}) {
         <span className={styles.date}>（监控截止日期：{bannerStore.monitorRepInfo.expireDt}）</span>
         : ''
       }
-      <span className={styles.line}>|</span>
+      {
+        repType === 'nowRecord' ? ''
+        : <span className={styles.line}>|</span>
+      }
       {
         repType === 'basicReport' || repType === 'report' ?
         <span className={styles.item} onClick={bannerStore.refreshModal}>
@@ -64,7 +69,7 @@ function Footer({companyHomeStore, routing, bannerStore}) {
         : ''
       }
       {
-        repType === 'monitor' ?
+        repType === 'monitor' && monitorStatus !== 'EXPIRED' ?
         <span className={styles.item} onClick={pauseOrRestart}>
           <i className={monitorCss()}></i>
           {monitorStatus === 'MONITOR' ? '暂停监控' : '恢复监控'}
