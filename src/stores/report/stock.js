@@ -71,11 +71,11 @@ class StockStore {
   }
 
   // 切换公告类型
-  @action.bound changeAnnouncement({ stockType, monitorId, reportId, analysisReportId }) {
+  @action.bound changeAnnouncement(stockType, params) {
     this.announcementDatasLoading = true;
-    companyHomeApi.changeAnnouncement({ stockType, monitorId, reportId, analysisReportId })
+    companyHomeApi.getReportModule('stock/announcement/type', params, {stockType})
       .then(action('change announcement', (resp) => {
-        this.announcementDatas = resp.data.data;
+        this.announcementDatas = resp.data;
         this.announcementDatasLoading = false;
         uiStore.uiState.stockAnnouncement.index = 1;
       }))
