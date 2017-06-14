@@ -36,7 +36,7 @@ function GrowingReport({ upDataList }) {
           <th className={styles.three}>销售增长率</th>
           <th className={styles.four}>净利润增长率</th>
           <th className={styles.five}>营业利润增长率</th>
-          <th>主营业务收入变动率</th>
+          <th className={styles.five}>主营业务收入变动率</th>
         </tr>
         </thead>
         <tbody>
