@@ -1,6 +1,7 @@
 import { observable, action, reaction, extendObservable } from 'mobx';
 import pathval from 'pathval';
 import bannerStore from './banner';
+import companyHomeStore from './companyHome';
 import assetsStore from './report/assets';
 import reportListStore from './reportList';
 import analysisListStore from './analysisList';
@@ -9,6 +10,7 @@ import ruleStore from './rule';
 import ruleCompanyStore from './ruleCompany';
 import accountSettingStore from './accountSetting';
 import alertAnalysisStore from './report/alertAnalysis';
+import monitorAlertStore from './report/monitorAlert';
 import collectionStore from './collection';
 import relPerCheckStore from './relPerCheck';
 import nowRecordStore from './report/nowRecord';
@@ -84,8 +86,13 @@ class UiStore {
     reaction(
       () => this.uiState.alertAnalysis.index,
       () => {
-        const { monitorId, analysisReportId } = bannerStore;
-        alertAnalysisStore.getAlertAnalysisList(monitorId, analysisReportId);
+        alertAnalysisStore.getReportModule(companyHomeStore.reportInfo);
+      }
+    );
+    reaction(
+      () => this.uiState.monitorAlert.index,
+      () => {
+        monitorAlertStore.getReportModule(companyHomeStore.reportInfo);
       }
     );
     reaction(
@@ -263,6 +270,11 @@ class UiStore {
       size: 10,
       totalElements: 0,
     },
+    monitorAlert: {
+      index: 1,
+      size: 10,
+      totalElements: 0,
+    },
     ruleListPager: {
       index: 1,
       size: 10,
@@ -307,6 +319,11 @@ class UiStore {
       show: observable.map({})
     },
     frPositionList: {
+      index: 1,
+      size: 10,
+      show: observable.map({})
+    },
+    sharesFrostListItemLists: {
       index: 1,
       size: 10,
       show: observable.map({})

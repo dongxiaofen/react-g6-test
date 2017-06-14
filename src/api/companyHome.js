@@ -18,7 +18,7 @@ export const getStockCode = ({ reportId, monitorId }) => {
 export const toggleMonitorStatus = (monitorId, status) => {
   return axios.put(`/api/monitor/${monitorId}/status`, { status: status });
 };
-export const getReportModule = (urlStr, idParams) => {
+export const getReportModule = (urlStr, idParams, params) => {
   const basicUrl = `/api/basicReport/${idParams.basicReportId}/`;
   const advancedUrl = `/api/report/${idParams.reportId}/`;
   const analysisUrl = `/api/analysisReport/${idParams.analysisReportId}/`;
@@ -68,7 +68,7 @@ export const getReportModule = (urlStr, idParams) => {
     window.reportSourceCancel = [];
   }
   window.reportSourceCancel.push(source.cancel);
-  return axios.get(url, { cancelToken: source.token });
+  return axios.get(url, { cancelToken: source.token, params});
 };
 export const getJudgeDetailMonitor = (monitorCompanyId, params) => {
   return axios.get(`/api/monitor/${monitorCompanyId}/risk/judgeDoc`, { params });
@@ -229,25 +229,8 @@ export const getMonitorAxisDetail = (monitorId, key, time, relation) => {
   return axios.get(`/api/monitor/${monitorId}/timeline/${relation === 'related' ? `related/${module}` : module}?date=${time}`);
 };
 // 税务核查列表
-// <<<<<<< HEAD
 export const getTaxCheckList = (params, source) => {
-  // let url = '';
-  // if (monitorId) {
-  //   url = `/api/monitor/${monitorId}/taxCheck/page`;
-  // } else if (reportId) {
-  //   url = `/api/report/${reportId}/taxCheck/page`;
-  // }
   return axios.get('/api/check/tax/page', {params: params, cancelToken: source.token});
-  // =======
-  // export const getTaxCheckList = (monitorId, reportId, params, source) => {
-  //   let url = '';
-  //   if (monitorId) {
-  //     url = `/api/monitor/${monitorId}/taxCheck/page`;
-  //   } else if (reportId) {
-  //     url = `/api/report/${reportId}/taxCheck/page`;
-  //   }
-  //   return axios.get(url, { params: params, cancelToken: source.token });
-  // >>>>>>> dx-mobx-4.0.0-dev
 };
 
 // 全网关系图拓展节点
@@ -256,13 +239,6 @@ export const expandNetwork = (monitorCompanyId, params) => {
 };
 // 税务核查添加
 export const addTaxCheck = (params) => {
-  // let url;
-  // if (monitorId) {
-  //   url = `/api/monitor/${monitorId}/taxCheck`;
-  // } else if (reportId) {
-  //   url = `/api/report/${reportId}/taxCheck`;
-  // }
-  // return axios.post(url, params);
   return axios.post(`api/check/tax`, params);
 };
 // 获取核查详情

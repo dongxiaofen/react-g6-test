@@ -160,6 +160,18 @@ const config = {
     'regNo': '注册号',
     'regOrg': '登记机关',
   },
+  sharesFrostListItemLists: {
+    'freMoney': '股权冻结数额',
+    'freRatio': '股权冻结比例',
+    'freFromDate': '冻结开始日期',
+    'freOrgName': '冻结机关',
+    'freDocId': '冻结文号',
+    'freToDate': '冻结截止日期',
+    'unfreOrgName': '解冻机关',
+    'unfreDocId': '解冻文号',
+    'unfreDate': '解冻日期',
+    'unfreInfo': '股权冻结数额',
+  },
   alterList: {
     'altDate': '变更日期',
     'altItem': '变更事项',

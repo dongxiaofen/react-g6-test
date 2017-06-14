@@ -5,7 +5,7 @@ import TableList from './TableList';
 import styles from './TableList/index.less';
 
 function AlertAnalysis({dataStore, uiStore}) {
-  const len = uiStore.uiState.alertAnalysis.totalElements;
+  const len = uiStore.uiState[dataStore.module].totalElements;
   return (
     <div className={styles.box}>
       <ModuleTitle module="预警信息" count={len} />

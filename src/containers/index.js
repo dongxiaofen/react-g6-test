@@ -39,7 +39,6 @@ export UserAgreement from './userAgreement';
 export Disclaimer from './disclaimer';
 export Tax from './report/tax';
 export AssetTransaction from './assetTransaction';
-export InLoanAnalysis from './inLoanAnalysis';
 export ComprehenEval from './report/comprehenEval';
 export ProfitEval from './report/profitEval';
 export OperationEval from './report/operationEval';
@@ -50,5 +49,6 @@ export RiskCheck from './report/riskCheck';
 export EntinvItem from './report/entinvItem';
 export FrPosAndInv from './report/frPosAndInv';
 export ManagePosAndInv from './report/managePosAndInv';
+export EquityRela from './report/equityRela';
 export MonitorAlert from './report/monitorAlert';
 // append here from plop

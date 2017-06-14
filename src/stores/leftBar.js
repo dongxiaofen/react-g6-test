@@ -45,7 +45,7 @@ class LeftBarStore {
         menuKey: 'investAndOffice',
         children: [
           {
-            menuText: '企业对外投资任职',
+            menuText: '企业对外投资',
             menuKey: 'entinvItem',
           },
           {
@@ -85,10 +85,10 @@ class LeftBarStore {
             menuText: '股权相关',
             menuKey: 'equityRela',
           },
-          {
-            menuText: '抵押相关',
-            menuKey: 'mortgageRela',
-          },
+          // {
+          //   menuText: '抵押相关',
+          //   menuKey: 'mortgageRela',
+          // },
         ],
       },
       {
