@@ -51,25 +51,25 @@ function GrowingReport({ upDataList }) {
           </div>
           <p className={styles.formula}>
             <span className={styles.point} />
-            <span className={styles.formulaFonts}>销售增长率=((本期营业收入-上期营业收入)÷上期营业收入)×100%</span>
+            <span className={styles.formulaFonts}>销售增长率=（（本期营业收入-上期营业收入）÷上期营业收入）×100%</span>
           </p>
           <p className={styles.content}>
             衡量企业经营状况和市场占有能力，预测企业经营业务拓展趋势的重要指标，也是企业扩张增量资本和存量资本的重要前提</p>
           <p className={styles.formula}>
             <span className={styles.point} />
-            <span className={styles.formulaFonts}>净利润增长率=((本期净利润-上期净利润)÷上期净利润)×100%</span>
+            <span className={styles.formulaFonts}>净利润增长率=（（本期净利润-上期净利润)÷上期净利润）×100%</span>
           </p>
           <p className={styles.content}>净利润增长率越大，代表企业盈利能力越强</p>
           <p className={styles.line} />
           <p className={styles.formula}>
             <span className={styles.point} />
-            <span className={styles.formulaFonts}>营业利润增长率=((本期营业利润-上期营业利润)÷上期营业利润)×100%</span>
+            <span className={styles.formulaFonts}>营业利润增长率=（（本期营业利润-上期营业利润)÷上期营业利润）×100%</span>
           </p>
           <p className={styles.content}>反映企业营业利润的增长变动情况，营业利润越高，说明企业商品销售额提供的营业利润越多，企业的营业能力越强</p>
           <p className={styles.line} />
           <p className={styles.formula}>
             <span className={styles.point} />
-            <span className={styles.formulaFonts}>主营业务收入变动率=(本期主营业务收入-基期主营业务收入)÷基期主营业务收入×100%</span>
+            <span className={styles.formulaFonts}>主营业务收入变动率=（本期主营业务收入-基期主营业务收入）÷基期主营业务收入×100%</span>
           </p>
           <p className={styles.content}>反映企业经营稳定性与增长情况（注：对于年度数据，基期指上期；对于月度（季度）数据基期指上一年相同月度（季度）)</p>
           <p className={styles.line} />

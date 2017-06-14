@@ -49,7 +49,7 @@ function OperationReport({ operationDataList }) {
           </div>
           <p className={styles.formula}>
             <span className={styles.point} />
-            <span className={styles.formulaFonts}>财务费用率=（财务费用÷销售收入)×100%</span>
+            <span className={styles.formulaFonts}>财务费用率=（财务费用÷销售收入）×100%</span>
           </p>
           <p className={styles.content}>
             分析企业的财务负担，调整筹资渠道，改善资金结构，提高盈利水平</p>
