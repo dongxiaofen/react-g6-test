@@ -126,7 +126,8 @@ export default class NavAction extends Component {
           <HoverBox width="140px" left="-50px">
             <div className={`clearfix ${styles.code}`}>
               <img src={codeImg} />
-              <div className={styles.codeText}>下载星象应用</div>
+              <div className={styles.deving}>敬请期待</div>
+              {/* <div className={styles.codeText}>下载星象应用</div> */}
             </div>
           </HoverBox>
         </div>

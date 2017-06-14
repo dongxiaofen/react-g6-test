@@ -46,7 +46,6 @@ function TaxCheckModal({taxCheckStore}) {
     taxCheckStore.changeValue(`selectConf[${index}].input`, evt.target.value);
   };
   const inputNameChange = (evt) => {
-    console.log(evt.target.value);
     taxCheckStore.changeValue('companyName', evt.target.value);
   };
   const checkNumber = (index, evt) => {

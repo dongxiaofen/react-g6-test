@@ -4,18 +4,19 @@ import styles from './index.less';
 
 function Capital({itemData}) {
   // 地址
-  let capital = '';
+  let capitalDom = '';
   if (itemData.capital) {
-    capital = (
+    const capital = Number(itemData.capital);
+    capitalDom = (
       <div className={`${styles.capital}`}>
-        注册资金：{itemData.capital}
+        注册资金：{isNaN(capital) ? '--' : capital.toFixed(2)}万元
       </div>
     );
   }
 
   return (
     <div className={`${styles.capitalWrap}`}>
-      {capital}
+      {capitalDom}
     </div>
   );
 }

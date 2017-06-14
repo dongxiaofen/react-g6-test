@@ -47,7 +47,7 @@ function CreateLoanRep({companyHomeStore, routing}) {
     companyHomeStore.createLoanRep(companyName);
   };
   const imgs = [loanSlider1, loanSlider2, loanSlider3, loanSlider4];
-  const navs = ['多维综合分析', '盈利能力分析', '营运能力分析', '发展能力分析'];
+  const navs = ['多维综合分析', '盈利能力分析', '营运能力分析', '成长能力分析'];
   return (
     <div className={styles.createLoanRep}>
       <div>
