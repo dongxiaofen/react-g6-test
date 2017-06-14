@@ -59,9 +59,8 @@ export default class TaxCheckList extends Component {
     this.props.taxCheckStore.changeValue('isLockCompanyName', true);
   };
   render() {
-    let taxListData = this.props.taxCheckStore.taxListData.content;
+    const taxListData = this.props.taxCheckStore.taxListData.content;
     const listDom = [];
-    taxListData = [];
     if (taxListData && taxListData.length > 0) {
       taxListData.forEach((item, idx) => {
         listDom.push(
