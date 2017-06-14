@@ -85,10 +85,10 @@ class LeftBarStore {
             menuText: '股权相关',
             menuKey: 'equityRela',
           },
-          {
-            menuText: '抵押相关',
-            menuKey: 'mortgageRela',
-          },
+          // {
+          //   menuText: '抵押相关',
+          //   menuKey: 'mortgageRela',
+          // },
         ],
       },
       {
