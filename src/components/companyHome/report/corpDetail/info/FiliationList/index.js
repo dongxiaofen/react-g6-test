@@ -15,7 +15,7 @@ function FiliationList({ filiationList, isLoading, errText }) {
         { 'key': 'brRegno', 'width': '3' },
         { 'key': 'brAddr', 'width': '3' },
         { 'key': 'belong_org', 'width': '3' },
-        { 'key': 'cbuItem', 'width': '12', 'hide': true },
+        // { 'key': 'cbuItem', 'width': '12', 'hide': true },
       ],
       isExpand: false,
       dict: 'filiationList',

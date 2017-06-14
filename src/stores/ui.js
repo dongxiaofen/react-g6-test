@@ -305,7 +305,7 @@ class UiStore {
     filiationList: {
       index: 1,
       size: 10,
-      show: observable.map({})
+      // show: observable.map({})
     },
     entinvItemLists: {
       index: 1,
@@ -614,7 +614,7 @@ class UiStore {
         filiationList: {
           index: 1,
           size: 10,
-          show: observable.map({})
+          // show: observable.map({})
         },
         entinvItemLists: {
           index: 1,
