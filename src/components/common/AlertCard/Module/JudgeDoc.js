@@ -25,14 +25,14 @@ function JudgeDoc({data, store, module, cardType}) {
   const viewDetail = (obj)=>{
     const docId = obj.content.docId;
     const trailDate = obj.content.trailDate;
-    let companyId = '';
-    if (this.props.module === 'timeAxis') {
-      companyId = obj.relatedMonitorId || obj.mainMonitorId;
+    let urlWithId = '';
+    if (module === 'timeAxis') {
+      urlWithId = data.monitorId ? `monitor/${data.monitorId}` : `report/${data.reportId}`;
     } else {
-      companyId = store.events.info.monitorId;
+      urlWithId = `monitor/${store.events.info.monitorId}`;
     }
     const params = {docId, trailDate};
-    store.getDetail('getJudgeDocDetail', companyId, params, data);
+    store.getDetail('getJudgeDocDetail', urlWithId, params, data);
   };
   const eventId = data.eventId;
   const moduleData = {

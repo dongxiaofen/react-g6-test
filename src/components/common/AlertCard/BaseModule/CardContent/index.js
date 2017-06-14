@@ -15,7 +15,7 @@ function CardContent({data, show, contentHtml, isModal, module}) {
     const output = [];
     if (module === 'timeAxis') {
       output.push(
-        <Col key="companyName" width={12} className={styles.col}>
+        <Col key="companyName" width="12" className={styles.col}>
           <KeyValue
             theKey="事件公司"
             handle={handleCompanyName}
