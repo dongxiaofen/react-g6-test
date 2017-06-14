@@ -4,6 +4,8 @@ const config = {
     'regNo': '工商注册号',
     'esDate': '成立日期',
     'frName': '法人姓名',
+    'socialCreditIdentifier': '社会信用代码',
+    'orgNum': '组织机构代码',
     'regCap': '注册金',
     'recCap': '实收资本',
     'enterpriseStatus': '经营状态',
