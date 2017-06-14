@@ -76,19 +76,6 @@ export const getJudgeDetailMonitor = (monitorCompanyId, params) => {
 export const getJudgeDetailReport = (params) => {
   return axios.get(`/api/report/risk/judgeDoc`, { params });
 };
-export const getInternet = ({basicReportId, reportId}, params, source) => {
-  let url;
-  const basicUrl = `/api/basicReport/${basicReportId}/internet`;
-  const advancedUrl = `/api/report/${reportId}/internet`;
-  if (reportId) {
-    url = advancedUrl;
-  } else if (basicReportId) {
-    url = basicUrl;
-  } else {
-    throw new Error('新闻api url出错');
-  }
-  return axios.get(url, { cancelToken: source.token, params: params });
-};
 export const getNewsDetail = (url, source) => {
   return axios.get(url, { cancelToken: source.token });
 };
