@@ -24,9 +24,9 @@ export default class componentName extends Component {
     const messageBoxClass = this.props.type === 'info' ? styles.messageBoxInfo : styles.messageBoxWarning;
     return (
       <div className={messageClass}>
-        <div className={messageBoxClass}>
+        <span className={messageBoxClass}>
           {this.props.content}
-        </div>
+        </span>
       </div>
     );
   }
