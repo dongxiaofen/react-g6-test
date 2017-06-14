@@ -1,6 +1,6 @@
 import React, { Component, PropTypes } from 'react';
 import { observer, inject } from 'mobx-react';
-import ComprehenEvalPage from 'components/companyHome/loaning/ComprehenEval';
+import ComprehenEvalPage from 'components/companyHome/report/ComprehenEval';
 
 @inject('loaningStore')
 @observer
