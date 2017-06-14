@@ -31,6 +31,9 @@ class ModalStore {
   @observable compComponent = null;
 
   @action.bound closeAction() {
+    this.resetStore();
+  }
+  @action.bound resetStore() {
     this.visible = false;
     this.boxStyle = {};
     this.isCustomize = false;
@@ -42,7 +45,6 @@ class ModalStore {
     this.isNeedBtn = true;
     this.compComponent = null;
   }
-
   @action.bound openCompModal({
     width,
     title,
@@ -74,7 +76,12 @@ class ModalStore {
     this.confirmAction = confirmAction;
     this.cancelAction = cancelAction;
     this.confirmWidth = confirmWidth;
-    if (closeAction) { this.closeAction = closeAction; }
+    if (closeAction) {
+      this.closeAction = ()=>{
+        this.resetStore();
+        closeAction();
+      };
+    }
     // button text
     if (cancelText) { this.cancelText = cancelText; }
     if (confirmText) { this.confirmText = confirmText; }

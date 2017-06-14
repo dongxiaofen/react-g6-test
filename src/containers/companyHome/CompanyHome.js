@@ -22,12 +22,12 @@ import styles from './index.less';
   'riskTaxStore',
   'riskCourtStore',
   'riskCheckStore',
-  'riskPledgeStore',
+  // 'riskPledgeStore',
   'networkStore',
   'blackNetworkStore',
   'reportAxisStore',
   'alertAnalysisStore',
-  'analysisSrore',
+  // 'analysisSrore',
   'taxStore',
   'monitorAxisStore',
   'monitorAlertStore',
@@ -100,25 +100,29 @@ export default class CompanyHome extends Component {
       'riskTaxStore',
       'riskCourtStore',
       'riskCheckStore',
-      'riskPledgeStore',
+      // 'riskPledgeStore',
       'networkStore',
       'blackNetworkStore',
       'reportAxisStore',
       'alertAnalysisStore',
-      'analysisSrore',
+      // 'analysisSrore',
       'taxStore',
       'taxCheckStore',
       'monitorAxisStore',
-      'monitorAlert',
+      'monitorAlertStore',
       'nowRecordStore',
     ].map((key) => {
-      if (this.props[key].resetStore) {
+      if (this.props[key] && this.props[key].resetStore) {
         this.props[key].resetStore();
       }
     });
   }
 
   render() {
+    const error = this.props.companyHomeStore.createBasicErr;
+    if (error.value) {
+      return <div>{error.response && error.response.data && error.response.data.message || '创建失败'}</div>;
+    }
     const noReport = ['reportId', 'basicReportId'].every(key => {
       return !this.props.companyHomeStore.reportInfo[key];
     });
@@ -131,10 +135,10 @@ export default class CompanyHome extends Component {
           <Banner />
         </div>
         <Row className={styles.contentWrap}>
-          <Col width="2">
+          <Col width="2" className={styles.leftBar}>
             <LeftBar />
           </Col>
-          <Col width="10">
+          <Col width="10" className={styles.content}>
             <div id="tabContentWrap" className={styles.tabContentWrap}>
               {this.props.children}
             </div>

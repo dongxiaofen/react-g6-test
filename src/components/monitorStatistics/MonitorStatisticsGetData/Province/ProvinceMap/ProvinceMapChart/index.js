@@ -1,5 +1,7 @@
 import React, {PropTypes} from 'react';
 import { observer } from 'mobx-react';
+import { toJS } from 'mobx';
+import Popover from 'antd/lib/popover';
 
 import styles from './index.less';
 // import Popover from 'components/lib/popover';
@@ -17,21 +19,75 @@ function ProvinceMapChart({ msStore }) {
       } else {
         listTop = <div className={styles.rankListTitle}>{idx + 1}</div>;
       }
+      const title = `${provinceRank[idx].area}（${provinceRank[idx].companyCount}家）`;
       output.push(
         <li className={'clearfix'} key={idx}>
           {listTop}
-          {/* <div className={styles.rankListContent}>
-            <Popover content={`${provinceRank[idx].area}（${provinceRank[idx].companyCount}家）`}>
-              <span>{`${provinceRank[idx].area}（${provinceRank[idx].companyCount}家）`}</span>
-            </Popover>
-          </div> */}
            <div className={styles.rankListContent}>
-            <span>{`${provinceRank[idx].area}（${provinceRank[idx].companyCount}家）`}</span>
+            <Popover content={title}>
+              <span>{title}</span>
+             </Popover>
           </div>
         </li>
       );
     }
     return output;
+  };
+
+  const mapOption = msStore.provinceMap.mapOption;
+
+  const option = {
+    tooltip: {
+      trigger: 'item',
+      axisPointer: {
+        lineStyle: {
+          color: '#e5e5e5',
+        }
+      },
+      backgroundColor: '#ffffff',
+      padding: [0, 0],
+      formatter: (ticket) => {
+        let str = '';
+        if (ticket.value) {
+          str = `
+              <div style="box-shadow: 0 0 7px #dddddd; padding: 15px 20px; background-color: #ffffff">
+                <p style="text-align: center;">
+                  <a style="color:#999999;">
+                    ${ticket.name}
+                  </a>
+                  <a style="color: #a5d6a7;">
+                    <span style="padding-left: 15px">
+                      ${ticket.value}
+                    </span>家
+                  </a>
+                </p>
+              </div>`;
+        }
+        return str;
+      },
+    },
+    series: [
+      {
+        type: 'map',
+        mapType: mapOption.mapType,
+        label: {
+          emphasis: {
+            show: false,
+          }
+        },
+        itemStyle: {
+          normal: {
+            areaColor: '#E7E8EA',
+            borderColor: '#ffffff',
+          },
+          emphasis: {
+            areaColor: '#E7E8EA',
+            borderColor: '#ffffff',
+          },
+        },
+        data: toJS(mapOption.data),
+      }
+    ]
   };
 
   return (
@@ -43,7 +99,7 @@ function ProvinceMapChart({ msStore }) {
         <div className={styles.rankChart}>
           <MapChart
             chartId="ProvinceMapChart"
-            option={msStore.provinceMap.chartOption}
+            option={option}
             height="330px"
           />
         </div>
@@ -60,7 +116,7 @@ export default loadingComp({
     loading: props.msStore.loadingGroup.province,
     category: 0,
     height: 330,
-    error: !props.msStore.isEmptyObject('errorBody', 'province') || !props.msStore.provinceMap.result.length,
+    error: props.msStore.provinceMap.mapOption.data.length === 0,
     errCategory: 1,
   })
 })(observer(ProvinceMapChart));

@@ -22,9 +22,22 @@ class AssetsStore {
   @observable patentLoading = true;
   @observable biddingLoading = true;
 
-  @action.bound getPatentData(params) {
-    params.pagesInfo = uiStore.uiState.patentInfo;
-    companyHomeApi.getReportModule('operation/patent', params)
+  @action.bound getTrademarkData(idInfo) {
+    const {index, size} = uiStore.uiState.trademarkLists;
+    companyHomeApi.getReportModule('operation/trademark', idInfo, {index, size})
+    .then(action( (response) => {
+      this.trLoading = false;
+      this.trademarkData = response.data.content;
+      uiStore.uiState.trademarkLists.totalElements = response.data.totalElements;
+    }))
+    .catch(action( () => {
+      this.trLoading = false;
+    }));
+  }
+
+  @action.bound getPatentData(idInfo) {
+    const {index, size} = uiStore.uiState.patentInfo;
+    companyHomeApi.getReportModule('operation/patent', idInfo, {index, size})
       .then(action( (response) => {
         this.patentLoading = false;
         this.patentData = response.data.content;
@@ -32,19 +45,6 @@ class AssetsStore {
       }))
       .catch(action( () => {
         this.patentLoading = false;
-      }));
-  }
-
-  @action.bound getTrademarkData(params) {
-    params.pagesInfo = uiStore.uiState.trademarkLists;
-    companyHomeApi.getReportModule('operation/trademark', params)
-      .then(action( (response) => {
-        this.trLoading = false;
-        this.trademarkData = response.data.content;
-        uiStore.uiState.trademarkLists.totalElements = response.data.totalElements;
-      }))
-      .catch(action( () => {
-        this.trLoading = false;
       }));
   }
 

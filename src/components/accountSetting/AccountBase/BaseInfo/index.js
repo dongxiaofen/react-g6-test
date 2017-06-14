@@ -50,6 +50,16 @@ function BaseInfo({accountSettingStore}) {
       return values;
     }
     const level = tree.data.content[activeIndex].level;
+    if (values.length > 14) {
+      return (
+        <div className={level < 2 ? styles.editBox : styles.editDisable}>
+          <Popover content={values}>
+            {`${values.slice(0, 13)}...`}
+          </Popover>
+          {level < 2 && <span className={styles.editBtn} onClick={editUserInfo.bind(null, name, values)}>修改</span>}
+        </div>
+      );
+    }
     return (
       <div className={level < 2 ? styles.editBox : styles.editDisable}>
         <span className={styles.value}>{values}</span>

@@ -4,16 +4,16 @@ import {observer} from 'mobx-react';
 // 经营招投标
 function Bidding({data, module, store, cardType}) {
   const viewDetail = () => {
-    let companyId = '';
+    let urlWithId = '';
     if (module === 'timeAxis') {
-      companyId = data.relatedMonitorId || data.mainMonitorId;
+      urlWithId = data.monitorId ? `monitor/${data.monitorId}` : `report/${data.reportId}`;
     } else {
-      companyId = store.events.info.monitorId;
+      urlWithId = `monitor/${store.events.info.monitorId}`;
     }
     const announceId = data.content.announceID;
     const params = {};
     params.announceId = announceId;
-    store.getDetail('getBiddingDetail', companyId, params, data, 'bidding');
+    store.getDetail('getBiddingDetail', urlWithId, params, data, 'bidding');
   };
   const eventId = data.eventId;
   const moduleData = {

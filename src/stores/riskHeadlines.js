@@ -228,9 +228,9 @@ class RiskHeadlinesStore {
       console.log(error, 'risk getMonitorMap');
     });
   }
-  @action.bound getDetail(api, monitorId, params, info, type = 'other') {
+  @action.bound getDetail(api, strWithId, params, info, type = 'other') {
     this.detailLoading.set(info.eventId, true);
-    riskHeadlinesApi[api](monitorId, params)
+    riskHeadlinesApi[api](strWithId, params)
     .then(action('detail', (resp)=>{
       this.detailModalData.info = info;
       let detailType = '法务详情';

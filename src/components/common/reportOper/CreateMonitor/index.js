@@ -4,7 +4,7 @@ import styles from './index.less';
 import DemoSlider from '../DemoSlider';
 import monitorSlider1 from 'imgs/companyHome/monitorSlider1.png';
 import Button from 'components/lib/button';
-import { Slider } from 'antd';
+import Slider from 'antd/lib/slider';
 import { Link } from 'react-router';
 
 function CreateMonitor({companyHomeStore, routing}) {
@@ -39,7 +39,8 @@ function CreateMonitor({companyHomeStore, routing}) {
           <Button
             btnType="primary"
             className={styles.confirm}
-            onClick={createMonitor}>确定</Button>
+            onClick={createMonitor}
+            loading={companyHomeStore.monitorLoading}>确定</Button>
           <div className={styles.pointText}>
             <i className="fa fa-exclamation-circle"></i>
             确定即视为同意

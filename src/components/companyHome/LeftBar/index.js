@@ -5,7 +5,7 @@ import styles from './index.less';
 import Button from 'components/lib/button';
 function LeftBar({ leftBarStore, bannerStore, routing, companyHomeStore}) {
   const activeMenu = leftBarStore.activeMenu;
-  const stockCode = bannerStore.stockCode;
+  const stockCode = bannerStore.bannerInfoData.stockCode;
   const barConf = leftBarStore.barConf;
   let timer;
   const changeMenu = (menuKey, access) => {
@@ -73,10 +73,10 @@ function LeftBar({ leftBarStore, bannerStore, routing, companyHomeStore}) {
     // onst reportType = leftBarStore.getReportType(routing);
     barConf[type].forEach((menuObj) => {
       const accessMenu = isLock(menuObj, type);
-      const arrowCss = activeMenu.includes(menuObj.menuKey) ? styles.arrow + ` ${styles.arrowAnim}` : styles.arrow;
-      const menuCss = accessMenu ? styles.menuCss : styles.menuDisCss;
       const itemRow = [];
       if (menuObj.children) {
+        const arrowCss = activeMenu.includes(menuObj.menuKey) ? styles.arrow + ` ${styles.arrowAnim}` : styles.arrow;
+        const menuCss = accessMenu ? styles.menuCss : styles.menuDisCss;
         menuRow.push(
           <div key={menuObj.menuKey}
             className={menuCss}
@@ -104,6 +104,8 @@ function LeftBar({ leftBarStore, bannerStore, routing, companyHomeStore}) {
           }
         });
       } else {
+        let menuCss = accessMenu ? styles.menuCss1 : styles.menuDisCss1;
+        menuCss = leftBarStore.activeItem === menuObj.menuKey ? styles.menuCssAct1 : menuCss;
         menuRow.push(
           <div
             key={menuObj.menuKey}
@@ -123,10 +125,14 @@ function LeftBar({ leftBarStore, bannerStore, routing, companyHomeStore}) {
   const reportTitle = companyHomeStore.reportInfo.reportId !== '' ? '贷前高级报告' : '贷前基础报告';
   // 现勘记录路由
   const changeNowRecord = () => {
+    runInAction('切换报告二级目录', () => {
+      leftBarStore.activeItem = 'nowRecord';
+    });
     routing.push({
       pathname: `/companyHome/nowRecord`,
       query: routing.location.query,
     });
+    backToTopOnClick();
   };
   return (
     <div>
@@ -177,7 +183,7 @@ function LeftBar({ leftBarStore, bannerStore, routing, companyHomeStore}) {
         onClick={changeNowRecord}
         className={`${styles.wrap} ${styles.recordWrap}`}>
         <i className="fa fa-pencil-square-o" aria-hidden="true"></i>
-        <span className={styles.record}>调查记录</span>
+        <span className={styles.record}>现勘记录</span>
       </div>
     </div>
   );
