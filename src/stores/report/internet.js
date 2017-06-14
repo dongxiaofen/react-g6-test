@@ -51,14 +51,14 @@ class InternetStore {
         this.newsData = {error: err.response.data};
       }));
   }
-  @action.bound getInternet(params) {
+  @action.bound getInternet(idInfo, params) {
     this.newsData = {};
     if (this.newsCancel) {
       this.newsCancel();
     }
     const source = CancelToken.source();
     this.newsCancel = source.cancel;
-    companyHomeApi.getInternet(params, source)
+    companyHomeApi.getInternet(idInfo, params, source)
       .then(action('get internet info success', resp => {
         this.newsCancel = null;
         this.newsData = {data: resp.data.info.data};

@@ -12,13 +12,9 @@ function NewsTabs({internetStore, uiStore, companyHomeStore}) {
     if (type !== activeType) {
       uiStore.updateUiStore('news.type', type);
       uiStore.updateUiStore('news.index', 1);
-      const {reportId, basicReportId} = companyHomeStore.reportInfo;
-      const params = {
-        reportId,
-        basicReportId,
-        params: uiStore.uiState.news,
-      };
-      internetStore.getInternet(params);
+      const reportInfo = companyHomeStore.reportInfo;
+      const params = uiStore.uiState.news;
+      internetStore.getInternet(reportInfo, params);
     }
   };
   const getCount = key => {
