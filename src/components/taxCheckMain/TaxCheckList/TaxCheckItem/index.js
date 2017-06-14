@@ -47,7 +47,7 @@ function TaxCheckItem({taxCheckStore}) {
       const tableDom = (
         <table className={styles.table}>
           <tbody key={`${_idx}checkListTbale`}>
-            <tr className={styles.title}><td>年度</td><td>指标</td><td>核查金额</td><td>与实际金额核查结果</td><td>核查时间</td></tr>
+            <tr className={styles.title}><td width="100">年度</td><td width="200">指标</td><td width="150">核查金额</td><td width="200">与实际金额核查结果</td><td>核查时间</td></tr>
             {tableBody}
           </tbody>
         </table>
@@ -58,11 +58,15 @@ function TaxCheckItem({taxCheckStore}) {
 
   return (
     <div className={styles.box}>
-      <div className={styles.companyName}>{taxCheckStore.taxCheckInfoCompany}</div>
-      <span className={styles.text}>
+      <div className={styles.boxTop}>
+        <div className={styles.companyName}>{taxCheckStore.taxCheckInfoCompany}</div>
+        <span className={styles.text}>
         核查结果提示：<span>税务核查金额和实际金额误差在5%以内时即“匹配”，超过5%即“不匹配”</span>
-      </span>
-      {tableDoms}
+        </span>
+      </div>
+      <div className={styles.tableWrap}>
+        {tableDoms}
+      </div>
       {/* <div className={styles.page}>
         <Pager tData={taxCheckStore.taxListData.content} module="taxCheckPager"
                uiStore={uiStore} type="large"/>

@@ -4,22 +4,20 @@ import { ModuleTitle, CardTable } from 'components/common/report';
 // import styles from './index.less';
 
 function EquityTransfer({MortageStore}) {
-  const evtData = MortageStore.sharesImpawnList;
+  const evtData = MortageStore.sharesTransferList;
   const count = evtData.content ? evtData.content.length : 0;
   const isLoading = evtData.content === undefined ? true : false;
   const isError = evtData.error;
   const data = {
     meta: {
       body: [
-        { 'key': 'freMoney', 'width': '4' },
-        { 'key': 'freRatio', 'width': '4' },
-        { 'key': 'freFromDate', 'width': '4' },
-        { 'key': 'freOrgName', 'width': '4', 'hide': true },
-        { 'key': 'freDocId', 'width': '4', 'hide': true },
-        { 'key': 'freToDate', 'width': '4', 'hide': true },
-        { 'key': 'unfreOrgName', 'width': '4', 'hide': true },
+        { 'key': 'assignee', 'width': '4' },
+        { 'key': 'transferType', 'width': '4' },
+        { 'key': 'pledgeDate', 'width': '4' },
+        { 'key': 'pledgedAmount', 'width': '4', 'hide': true },
+        { 'key': 'transfersRatio', 'width': '4', 'hide': true},
       ],
-      dict: 'sharesFrostListItemLists',
+      dict: 'sharesTransferListItemLists',
       cData: evtData.content
     },
     isLoading: isLoading,

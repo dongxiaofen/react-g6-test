@@ -40,9 +40,9 @@ const config = {
   equityFreeze: {
     freOrgName: '转让主体',
     unfreOrgName: '受让人',
-    freFromDate: '转让日期',
-    freMoney: '转让金额',
-    freRatio: '转让额所占比例',
+    freFromDate: '冻结开始日期',
+    freMoney: '股权冻结数额',
+    freRatio: '股权冻结比例',
     unfreInfo: '转让类型',
   },
   equityPledge: {
@@ -173,6 +173,22 @@ const config = {
     'unfreDocId': '解冻文号',
     'unfreDate': '解冻日期',
     'unfreInfo': '股权冻结数额',
+  },
+  sharesTransferListItemLists: {
+    'assignee': '受让人',
+    'transferType': '转让类型',
+    'pledgeDate': '转让日期',
+    'pledgedAmount': '股权转让数额',
+    'transfersRatio': '转让额所占比例',
+  },
+  sharesImpawnListItemLists: {
+    'imporg': '质权人姓名',
+    'imporgType': '出质人类别',
+    'imporgAmount': '出质金额',
+    'imporgRecordDate': '出质备案日期',
+    'imporgAthOrg': '出质审批部门',
+    'imporgDate': '出质批准日期',
+    'imporgTo': '出质截至日期'
   },
   alterList: {
     'altDate': '变更日期',

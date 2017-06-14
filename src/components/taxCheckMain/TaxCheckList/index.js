@@ -56,6 +56,7 @@ export default class TaxCheckList extends Component {
   handleClick = (companyName) => {
     this.props.showAddTaxCheck();
     this.props.taxCheckStore.changeValue('companyName', companyName);
+    this.props.taxCheckStore.changeValue('isLockCompanyName', true);
   };
   render() {
     const taxListData = this.props.taxCheckStore.taxListData.content;
