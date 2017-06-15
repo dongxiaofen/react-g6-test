@@ -82,8 +82,8 @@ function SearchList({searchCompanyStore, modalStore, payModalStore}) {
       );
     } else {
       result = (
-        <div className={`${styles.wrapList}`}>
-          <FilterSheet
+         <div className={`${styles.wrapList}`}>
+      {/* <FilterSheet
             filterSheet={filterSheet}
             filterArray={filterArray}
             modalStore={modalStore}
@@ -96,7 +96,7 @@ function SearchList({searchCompanyStore, modalStore, payModalStore}) {
             getFeedBack={getFeedBack} />
           <Feedback getFeedBack={getFeedBack}
             modalStore={modalStore}
-            searchKeyFilter={searchKeyFilter} />
+            searchKeyFilter={searchKeyFilter} /> */}
           <div className={`${styles.noCompany}`}>没有找到相关公司</div>
         </div>
       );
