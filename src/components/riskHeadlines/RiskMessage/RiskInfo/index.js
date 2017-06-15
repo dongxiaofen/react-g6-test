@@ -15,7 +15,7 @@ function RiskInfo({riskHeadlinesStore}) {
       <p className={isSubCom ? styles.subCom : styles.mainCom}>
         {events.info.companyName}
         <i></i>
-        <LinkJump name={events.info.companyName} label="查看企业" className={styles.name} className={isSubCom ? styles.subJump : styles.mainJump} />
+        <LinkJump name={events.info.companyName} label="查看企业" className={isSubCom ? styles.subJump : styles.mainJump} />
       </p>
       <RiskTab riskHeadlinesStore={riskHeadlinesStore}/>
     </div>

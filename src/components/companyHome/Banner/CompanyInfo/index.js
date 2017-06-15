@@ -8,6 +8,7 @@ import Contact from './Contact';
 import reportIcon from 'imgs/bannerInfo/report.png';
 import loanIcon from 'imgs/bannerInfo/loan.png';
 import monitorIcon from 'imgs/bannerInfo/monitor.png';
+import nowRecordIcon from 'imgs/bannerInfo/nowRecord.png';
 
 function CompanyInfo({ bannerStore, routing}) {
   const bannerInfoData = bannerStore.bannerInfoData;
@@ -17,6 +18,8 @@ function CompanyInfo({ bannerStore, routing}) {
       return loanIcon;
     } else if (/monitorTimeAxis|monitorAlert/.test(route)) {
       return monitorIcon;
+    } else if (route === 'nowRecord') {
+      return nowRecordIcon;
     }
     return reportIcon;
   };

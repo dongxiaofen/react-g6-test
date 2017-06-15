@@ -166,6 +166,7 @@ class LeftBarStore {
 
   @action.bound setMenuByItem() {
     const barConf = this.barConf;
+    this.activeMenu.pop();
     Object.keys(barConf).forEach((moduleKey)=>{
       barConf[moduleKey].forEach(item => {
         if (item.children) {
