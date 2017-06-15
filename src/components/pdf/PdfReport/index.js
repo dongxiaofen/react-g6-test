@@ -14,13 +14,13 @@ import Tax from './Tax';
 import EquityRelated from './EquityRelated';
 import AnalysisReport from './AnalysisReport';
 import styles from './index.less';
+import getPermissionMeta from 'helpers/getPermissionMeta';
 
-function PdfReport({pdfStore}) {
+function PdfReport({pdfStore, clientStore}) {
   const judgeIsModuleExist = (module) => {
     const pdfModule = pdfStore.pdfTypesKey;
     return (pdfModule && pdfModule.includes(module));
     // return true;
-
   };
   return (
     <Container>

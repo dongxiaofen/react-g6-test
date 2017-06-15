@@ -263,26 +263,38 @@ function OverView({ pdfStore, clientStore }) {
       <Summary {...riskRelationshipMap} />
 
       {/* 多维分析 */}
-            <div>
-              <SecondTitle module="多维综合分析" />
-              <hr className={styles.hrhr} />
-              <Summary {...comprehensiveAnalysis} />
-            </div>
-            <div>
-              <SecondTitle module="盈利能力分析" />
-              <hr className={styles.hrhr} />
-              <Summary {...profitabilityAnalysis} />
-            </div>
-            <div>
-              <SecondTitle module="营运能力分析" />
-              <hr className={styles.hrhr} />
-              <Summary {...operationalAnalysis}/>
-            </div>
-            <div>
-              <SecondTitle module="成长能力分析" />
-              <hr className={styles.hrhr} />
-              <Summary {...growthAnalysis}/>
-            </div>
+      {
+        pdfStore.pdfTypesKey.includes('SCORE') ?
+        <div>
+          <SecondTitle module="多维综合分析" />
+          <hr className={styles.hrhr} />
+          <Summary {...comprehensiveAnalysis} />
+        </div> : ''
+      }
+      {
+        pdfStore.pdfTypesKey.includes('PROFIT') ?
+        <div>
+          <SecondTitle module="盈利能力分析" />
+          <hr className={styles.hrhr} />
+          <Summary {...profitabilityAnalysis} />
+        </div> : ''
+      }
+      {
+        pdfStore.pdfTypesKey.includes('OPERATION') ?
+          <div>
+            <SecondTitle module="营运能力分析" />
+            <hr className={styles.hrhr} />
+            <Summary {...operationalAnalysis}/>
+          </div> : ''
+      }
+      {
+        pdfStore.pdfTypesKey.includes('GROWING') ?
+          <div>
+            <SecondTitle module="成长能力分析" />
+            <hr className={styles.hrhr} />
+            <Summary {...growthAnalysis}/>
+          </div> : ''
+      }
     </div>
   );
 }
