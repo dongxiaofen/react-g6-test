@@ -3,6 +3,7 @@ import {companyHomeApi} from 'api';
 import pathval from 'pathval';
 import detailModalStore from '../detailModal';
 import companyHomeStore from '../companyHome';
+import entireLoadingStore from '../entireLoading';
 class RiskCourtStore {
   @observable isLoading = true;
   @observable isMount = false;
@@ -76,14 +77,17 @@ class RiskCourtStore {
   // }
   @action.bound getJudgeDetailReport(params, info) {
     const reportInfo = companyHomeStore.reportInfo;
+    entireLoadingStore.openEntireLoading();
     companyHomeApi.getJudgeDetailReport(reportInfo, params)
       .then(action('judeDoc detail', (resp)=>{
         this.court.detailModalData.content = resp.data.detail;
         this.court.detailModalData.info = info;
         this.openDetailModal();
+        entireLoadingStore.closeEntireLoading();
       }))
       .catch((error)=>{
         console.log('risk error', error);
+        entireLoadingStore.closeEntireLoading();
       });
   }
   @action.bound updateValue(path, value) {

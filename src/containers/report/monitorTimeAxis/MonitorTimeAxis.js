@@ -13,7 +13,7 @@ export default class MonitorTimeAxis extends Component {
   render() {
     const store = this.props.monitorAxisStore;
     return (
-      <TimeAxisComp {...this.props} timeAxisStore={store} />
+      <TimeAxisComp {...this.props} title="监控时间轴" timeAxisStore={store} />
     );
   }
 }

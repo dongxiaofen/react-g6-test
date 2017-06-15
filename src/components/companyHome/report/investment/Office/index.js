@@ -8,6 +8,10 @@ function Office({investmentStore}) {
   const count = frData.content ? frData.content.length : 0;
   const isLoading = frData.content === undefined ? true : false;
   const isError = frData.error;
+  let frName = '';
+  if (count > 0) {
+    frName = frData.content[0].name;
+  }
   const data = {
     meta: {
       title: {
@@ -33,7 +37,7 @@ function Office({investmentStore}) {
   };
   return (
     <div>
-      <ModuleTitle module="法人对外任职" count={count} />
+      <ModuleTitle module={frName ? `法人（${frName}）对外任职` : '法人对外任职'} count={count} />
       <CardTable {...data} />
     </div>
   );

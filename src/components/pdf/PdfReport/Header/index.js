@@ -78,7 +78,7 @@ function Header({clientStore, pdfStore}) {
   const phoneData = pathval.getPathValue(moduleData, 'bannerInfo.bannerInfo.phone');
   let phoneList = '';
   let phoneDom = '';
-  if (phoneData !== null && phoneData.size > 0) {
+  if (phoneData !== null && phoneData.length > 0) {
     phoneData.forEach((item) => {
       phoneList = phoneList + item + '　　';
     });
@@ -117,7 +117,7 @@ function Header({clientStore, pdfStore}) {
           :
           ''
       }
-      <div className={styles.companyName}>{moduleData.name}</div>
+      <div className={styles.companyName}>{pdfStore.companyName}</div>
       <div className={styles.bannerWrap}>
         {phoneDom}
         {indexDom}
