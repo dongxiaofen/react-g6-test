@@ -136,29 +136,30 @@ class PdfStore {
 
   @action.bound getPdfDownData(data) {
     console.log('data', data);
-    this.companyName = pathval.getPathValue(data.companyName);
     this.banner = pathval.getPathValue(data, 'banner');
+    this.companyName = pathval.getPathValue(data, 'companyName');
     this.summary = pathval.getPathValue(data, 'summary');
     this.report = pathval.getPathValue(data, 'corpDetail');
     this.company = pathval.getPathValue(data, 'stock.info');
     this.announcement = pathval.getPathValue(data, 'stock.announcement');
-    this.internet = pathval.getPathValue(data, 'internet');
-    this.trademark = pathval.getPathValue(data, 'trademark');
-    this.patent = pathval.getPathValue(data, 'patent');
     this.courtData = pathval.getPathValue(data, 'court');
+    this.internet = pathval.getPathValue(data, 'internet');
+    this.trademark = pathval.getPathValue(data, 'trademark'); // 没有数据
+    this.patent = pathval.getPathValue(data, 'patent');
     this.bidding = pathval.getPathValue(data, 'biddingList');
     this.network = pathval.getPathValue(data, 'network');
     this.blacklist = pathval.getPathValue(data, 'blackList.result[0].paths');
     this.team = pathval.getPathValue(data, 'recruitTeamResponse');
     this.corpCheckData = pathval.getPathValue(data, 'corpCheck');
-    this.shares = pathval.getPathValue(data, 'shares');
-    this.star = pathval.getPathValue(data, 'star');
     this.entinvItemList = pathval.getPathValue(data, 'ent.entinvItemList');
     this.frData = pathval.getPathValue(data, 'fr');
+    this.shares = pathval.getPathValue(data, 'shares');
+    this.managements = pathval.getPathValue(data, 'managements');
+    // 分析能力
+    this.star = pathval.getPathValue(data, 'star');
     this.growing = pathval.getPathValue(data, 'growing');
     this.operation = pathval.getPathValue(data, 'operation');
     this.profit = pathval.getPathValue(data, 'profit');
-    this.managements = pathval.getPathValue(data, 'managements');
   }
 }
 export default new PdfStore();

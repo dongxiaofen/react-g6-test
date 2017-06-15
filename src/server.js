@@ -151,14 +151,17 @@ app.use((req, res) => {
         axios.get(config.backendApi + urlPanth, { params })
           .then((resp) => {
             // writeDataToFile('resp', resp.data);
-            allStores.pdfStore.setTypes(params.types, params.monitorId);
+            allStores.pdfStore.setTypes(params.types);
             allStores.clientStore.envConfig = config.target;
             allStores.pdfStore.getPdfDownData(resp.data);
+
+            console.log(config.target, 'config.target++++++++++++++++');
             const component = (
               <Provider { ...allStores } key="provided">
                 <RouterContext {...renderProps} />
               </Provider>
             );
+            console.log(component, 'component-----------------');
             const reportHtml = ReactDOM.renderToString(<Html pdfDown="1" assets={webpackIsomorphicTools.assets()} component={component} {...allStores} />);
             const companyName = resp.data.companyName;
             const username = resp.data.email;
