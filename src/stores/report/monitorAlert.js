@@ -118,30 +118,30 @@ class MonitorAlertStore {
       this.detailData.html = '--';
     }));
   }
-  @action.bound getAlertAnalysisList(monitorId, analysisReportId) {
-    this.isMount = true;
-    this.listData = {};
-    if (window.reportSourceCancel === undefined) {
-      window.reportSourceCancel = [];
-    }
-    const source = CancelToken.source();
-    window.reportSourceCancel.push(source.cancel);
-    const {index, size} = uiStore.uiState.alertAnalysis;
-    companyHomeApi.getAlertAnalysisList(monitorId, analysisReportId, {index, size}, source)
-      .then(action('getAlert_success', resp => {
-        let data = null;
-        if (resp.data.content && resp.data.content.length > 0) {
-          uiStore.updateUiStore('alertAnalysis.totalElements', resp.data.totalElements);
-          data = resp.data;
-        } else {
-          data = {error: {message: '暂无信息'}, content: []};
-        }
-        this.listData = data;
-      }))
-      .catch(action('getAlert_error', err => {
-        this.listData = err.response && {error: err.response.data, content: []} || {error: {message: '暂无信息'}, content: []};
-      }));
-  }
+  // @action.bound getAlertAnalysisList(monitorId, analysisReportId) {
+  //   this.isMount = true;
+  //   this.listData = {};
+  //   if (window.reportSourceCancel === undefined) {
+  //     window.reportSourceCancel = [];
+  //   }
+  //   const source = CancelToken.source();
+  //   window.reportSourceCancel.push(source.cancel);
+  //   const {index, size} = uiStore.uiState.alertAnalysis;
+  //   companyHomeApi.getAlertAnalysisList(monitorId, analysisReportId, {index, size}, source)
+  //     .then(action('getAlert_success', resp => {
+  //       let data = null;
+  //       if (resp.data.content && resp.data.content.length > 0) {
+  //         uiStore.updateUiStore('alertAnalysis.totalElements', resp.data.totalElements);
+  //         data = resp.data;
+  //       } else {
+  //         data = {error: {message: '暂无信息'}, content: []};
+  //       }
+  //       this.listData = data;
+  //     }))
+  //     .catch(action('getAlert_error', err => {
+  //       this.listData = err.response && {error: err.response.data, content: []} || {error: {message: '暂无信息'}, content: []};
+  //     }));
+  // }
   @action.bound openDetailModal() {
     const companyName = this.detailData.info.companyName;
     detailModalStore.openDetailModal((cp)=>{
