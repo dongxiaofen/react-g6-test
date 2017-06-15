@@ -130,7 +130,7 @@ export default class CompanyHome extends Component {
       return !this.props.companyHomeStore.reportInfo[key];
     });
     if (noReport) {
-      return <BarLoading />;
+      return <div className={styles.loadingBox}><BarLoading /></div>;
     }
     return (
       <Container id="reportContainer">

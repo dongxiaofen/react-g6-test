@@ -1,8 +1,8 @@
 import React from 'react';
 import styles from './index.less';
-function BarLoading() {
+function BarLoading({message, size}) {
   return (
-    <div className={styles.wrap}>
+    <div style={{transform: `scale(${size})`}} className={styles.wrap}>
       <ul>
         <li></li>
         <li></li>
@@ -11,8 +11,14 @@ function BarLoading() {
         <li></li>
         <li></li>
       </ul>
+      <p>{message}</p>
     </div>
   );
 }
+
+BarLoading.defaultProps = {
+  message: '数据加载中',
+  size: 0.9,
+};
 
 export default BarLoading;
