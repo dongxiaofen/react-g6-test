@@ -25,7 +25,7 @@ function Office({moduleData}) {
     dataConfig: [
       {'key': 'entName', 'width': '6'},
       {'key': 'entStatus', 'width': '6'},
-      {'key': 'entType', 'width': '6'},
+      // {'key': 'entType', 'width': '6'},
       {'key': 'esDate', 'width': '6'},
       {'key': 'position', 'width': '6'},
       {'key': 'lerepsign', 'width': '6'},

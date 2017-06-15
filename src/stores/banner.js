@@ -65,9 +65,9 @@ class BannerStore {
         { label: '企业年报', value: 'CORP_YEAR_REPORT', checked: false },
       ],
       'INV_POS': [
-        { label: '法人相关', value: 'INV_POS_FR', checked: false, },
         { label: '企业对外投资', value: 'INV_POS_ENT', checked: false, },
-        { label: '董监高', value: 'INV_POS_MANAGEMENT', checked: false, },
+        { label: '法人对外投资任职', value: 'INV_POS_FR', checked: false, },
+        { label: '董监高对外投资任职', value: 'INV_POS_MANAGEMENT', checked: false, },
       ],
       'STOCK': [
         { label: '公司概况', value: 'STOCK_INFO', checked: false },
