@@ -1,5 +1,5 @@
 import React, {PropTypes} from 'react';
-import { observer } from 'mobx-react';
+import {observer} from 'mobx-react';
 import PdfNotFound from 'components/common/pdf/PdfNotFound';
 import ManagementItem from './ManagementItem';
 
@@ -13,7 +13,10 @@ function Managements({moduleData}) {
     );
   }
 
-  moduleData.map( (item, index) => <ManagementItem key={index} personData={item} /> );
+  return (
+    <div>
+      { moduleData.map((item, index) => <ManagementItem key={index} personData={item}/>)}
+    </div>);
 }
 
 Managements.propTypes = {

@@ -6,7 +6,18 @@ import PdfSimpleKey from 'components/common/pdf/PdfSimpleKey';
 import styles from './index.less';
 
 function ManagementItem({personData}) {
-  console.log(personData, '====================');
+  const parseObject = (data) => {
+    let newArr = [];
+    data.map( (item) => {
+      Object.keys(item).map( (key) => {
+        if (item[key] !== '' && !isNaN(item[key])) {
+          item[key] = parseFloat(item[key]).toFixed(2);
+        }
+      });
+      newArr = [...newArr, item];
+    });
+    return newArr;
+  };
   if (!personData || Object.keys(personData).length === 0) {
     return (
       <div>
@@ -15,11 +26,11 @@ function ManagementItem({personData}) {
       </div>
     );
   }
+
   const externalPerson = {
     dataConfig: [
-      {'key': 'entName', 'width': '6'},
-      {'key': 'entStatus', 'width': '6'},
-      {'key': 'entType', 'width': '6'},
+      // {'key': 'entName', 'width': '6'},
+      // {'key': 'entType', 'width': '6'},
       {'key': 'esDate', 'width': '6'},
       {'key': 'fundedRatio', 'width': '6'},
       {'key': 'subConam', 'width': '6'},
@@ -28,16 +39,15 @@ function ManagementItem({personData}) {
       {'key': 'regNo', 'width': '6'},
       {'key': 'regOrg', 'width': '6'},
     ],
-    item: personData.frPositionList,
+    item: parseObject(personData.frPositionList),
     dict: 'frinvListPdf',
     hasConfig: true,
     type: 'array',
   };
   const ForeignInvestment = {
     dataConfig: [
-      {'key': 'entName', 'width': '6'},
-      {'key': 'entStatus', 'width': '6'},
-      {'key': 'entType', 'width': '6'},
+      // {'key': 'entName', 'width': '6'},
+      // {'key': 'entType', 'width': '6'},
       {'key': 'esDate', 'width': '6'},
       {'key': 'fundedRatio', 'width': '6'},
       {'key': 'subConam', 'width': '6'},
@@ -46,16 +56,16 @@ function ManagementItem({personData}) {
       {'key': 'regNo', 'width': '6'},
       {'key': 'regOrg', 'width': '6'},
     ],
-    item: personData.managementInvList,
+    item: parseObject(personData.managementInvList),
     dict: 'frinvListPdf',
     hasConfig: true,
     type: 'array',
   };
   const ExternalService = {
     dataConfig: [
-      {'key': 'entName', 'width': '6'},
-      {'key': 'entStatus', 'width': '6'},
-      {'key': 'entType', 'width': '6'},
+      // {'key': 'entName', 'width': '6'},
+      // {'key': 'entStatus', 'width': '6'},
+      // {'key': 'entType', 'width': '6'},
       {'key': 'esDate', 'width': '6'},
       {'key': 'fundedRatio', 'width': '6'},
       {'key': 'subConam', 'width': '6'},
@@ -64,7 +74,7 @@ function ManagementItem({personData}) {
       {'key': 'regNo', 'width': '6'},
       {'key': 'regOrg', 'width': '6'},
     ],
-    item: personData.managementPositionList,
+    item: parseObject(personData.managementInvList),
     dict: 'frinvListPdf',
     hasConfig: true,
     type: 'array',
@@ -75,15 +85,15 @@ function ManagementItem({personData}) {
       <SecondTitle module={personData.name} />
       <p>对外担任法人（{personData.frPositionList.length}）</p>
       <PdfSimpleKey {...externalPerson} />
-      <p>对外投资（{personData.managementInvList}）</p>
+      <p>对外投资（{personData.managementInvList.length}）</p>
       <PdfSimpleKey {...ForeignInvestment} />
-      <p>对外任职（{personData.managementPositionList}）</p>
+      <p>对外任职（{personData.managementPositionList.length}）</p>
       <PdfSimpleKey {...ExternalService} />
     </div>
   );
 }
 
 ManagementItem.propTypes = {
-  foo: PropTypes.string,
+  personData: PropTypes.object,
 };
 export default observer(ManagementItem);
