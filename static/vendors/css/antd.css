@@ -26,7 +26,7 @@
 }
 .ant-carousel .slick-active button{
     background:  #757575;
- }
+}
 .ant-tabs-tabpane::before {
 	display: block;
 	content: '';
@@ -36,4 +36,12 @@
 	display: block;
 	content: '';
 	margin-bottom: 30px;
+}
+
+.ant-slider-handle {
+	width: 16px;
+	height: 16px;
+	border: 2px solid #42a5f5;
+	background-color: #42a5f5;
+	margin-top: -6px;
 }

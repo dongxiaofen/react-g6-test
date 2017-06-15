@@ -53,7 +53,7 @@ function JudgeBox({data, uiStore}) {
     return output;
   };
   return (
-    <div className="clearfix">
+    <div className={`clearfix ${styles.box}`}>
       {createTable()}
       <Pager module={module} type="small" tData={data.items}/>
     </div>

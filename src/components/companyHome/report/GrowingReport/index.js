@@ -24,7 +24,7 @@ function GrowingReport({ upDataList }) {
   return (
     <div className={styles.box}>
       <p className={styles.excelTitle}>指标列表
-        <span className={styles.timestamp}>（分析时间：{this.props.upDataList.lastTm}）</span>
+        <span className={styles.timestamp}>（最近分析时间：{this.props.upDataList.lastTm}）</span>
       </p>
       <table className={styles.table}>
         <thead>

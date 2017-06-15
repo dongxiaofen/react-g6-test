@@ -82,7 +82,7 @@ export default loadingComp({
     imgCategory: 14,
     category: 2,
     module: '现勘列表',
-    errCategory: 2,
+    errCategory: 4,
     error: props.nowRecordStore.dataList.length === 0,
   }),
 })(observer(NowRecordList));
