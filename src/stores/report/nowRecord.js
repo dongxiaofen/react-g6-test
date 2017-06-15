@@ -20,17 +20,18 @@ class NowRecordStore {
   @observable loading = false;
   // 公司名
   @observable companyName = '';
+  @observable companyId = '';
 
   // 获取列表
-  @action.bound getNowRecordList(companyName) {
+  @action.bound getNowRecordList(companyId) {
     if (window.reportSourceCancel === undefined) {
       window.reportSourceCancel = [];
     }
     const source = CancelToken.source();
     window.reportSourceCancel.push(source.cancel);
     // 获取公司id
-    if (companyName) {
-      this.companyName = companyName;
+    if (companyId) {
+      this.companyId = companyId;
     }
     // 打开loading
     this.loading = true;
@@ -39,7 +40,7 @@ class NowRecordStore {
       size: uiStore.uiState.nowRecordPager.size,
     };
     // 获取列表数据
-    companyHomeApi.getNowRecordList(this.companyName, params, source)
+    companyHomeApi.getNowRecordList(this.companyId, params, source)
       .then(action('nowRecordList list', (resp) => {
         // 关闭loading
         this.loading = false;

@@ -38,14 +38,18 @@ class LinkJumpStore {
       }));
   }
 
-  @action.bound getCompanyExist(name) {
+  @action.bound getCompanyExist(name, referer) {
     const params = {
       companyName: name,
     };
     linkJumpApi.getCompanyExist(params)
       .then(action('link company report', (resp) => {
         if (resp.data) {
-          browserHistory.push(`/companyHome?companyName=${name}`);
+          if (referer === 'other') {
+            browserHistory.push(`/companyHome?companyName=${name}`);
+          } else if (referer === 'self') {
+            location.href = `/companyHome?companyName=${name}`;
+          }
         } else {
           messageStore.openMessage({
             type: 'error',

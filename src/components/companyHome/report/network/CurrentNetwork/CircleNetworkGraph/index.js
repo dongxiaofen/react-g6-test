@@ -265,7 +265,7 @@ export default class CircleNetworkGraph extends Component {
     simulation.alpha(1).restart();
   }
   ticked = () => {
-    // console.log('tick', saveNodeXY);
+    // console.log('tick');
     if (!saveNodeXY) { // 只跑一次,然后存到nodeXY
       svgTools.getInitNodeXY(nodeXY, layerCount, nodesData, radiusArr, centerNodeX, centerNodeY);
       saveNodeXY = true;
@@ -374,6 +374,13 @@ export default class CircleNetworkGraph extends Component {
     // zoom.scale([1]);
     // const svg = d3.select('svg g');
     svg.call(zoom.transform, d3.zoomIdentity);
+    nodesData.forEach((node) => {
+      if (node.layer !== 0) {
+        node.fx = nodeXY[node.index].x;
+        node.fy = nodeXY[node.index].y;
+      }
+    });
+    simulation.alpha(1).restart();
     // zoom.translateBy(svg, 0, 0);
     // svg.attr('transform', 'translate(0,0) scale(1)');
     // nodesData.map((node)=>{

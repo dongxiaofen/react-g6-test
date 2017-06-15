@@ -20,11 +20,12 @@ function PdfReport({pdfStore}) {
     const pdfModule = pdfStore.pdfTypesKey;
     return (pdfModule && pdfModule.includes(module));
     // return true;
+
   };
   return (
     <Container>
       <Row>
-        <Col className={styles.pdf_body} width="12">
+        <Col className={styles[getPermissionMeta(clientStore.envConfig).pdfStyle]} width="12">
           <Header />
           <Overview />
           <Base judgeIsModuleExist={judgeIsModuleExist}/>
@@ -46,4 +47,4 @@ function PdfReport({pdfStore}) {
 PdfReport.propTypes = {
   judgeIsModuleExist: PropTypes.func,
 };
-export default inject('pdfStore')(observer(PdfReport));
+export default inject('pdfStore', 'clientStore')(observer(PdfReport));

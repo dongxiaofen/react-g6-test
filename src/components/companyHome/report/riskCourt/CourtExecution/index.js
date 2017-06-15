@@ -3,6 +3,9 @@ import { observer } from 'mobx-react';
 import {CardTable } from 'components/common/report';
 
 function CourtExecution({courtExecution, regTime}) {
+  const modifyCaseState = ()=> {
+    return '--';
+  };
   const data = {
     meta: {
       body: [
@@ -11,7 +14,7 @@ function CourtExecution({courtExecution, regTime}) {
         {'key': 'caseCreateTime', 'width': '6', modifyText: regTime},
         {'key': 'caseCode', 'width': '6'},
         {'key': 'execMoney', 'width': '6'},
-        {'key': 'caseState', 'width': '6'},
+        {'key': 'caseState', 'width': '6', modifyText: modifyCaseState},
       ],
       isExpand: false,
       dict: 'courtExecution',
