@@ -4,44 +4,43 @@ import styles from './index.less';
 import colseImg from 'imgs/close.png';
 import NodeType from './NodeType';
 import InvestInfo from './InvestInfo';
-// import MonitorStatus from './MonitorStatus';
 import ReportStatus from './ReportStatus';
 import LinkJump from 'components/common/LinkJump';
-import networkType from 'dict/networkType';
+// import networkType from 'dict/networkType';
 
-function NodePanel({ networkStore, companyHomeStore, modalStore, routing, exitFull }) {
+function NodePanel({ networkStore, routing, exitFull }) {
   const { show, nodeData } = networkStore.nodePanel;
   if (!show || !nodeData) {
     return null;
   }
-  const monitorId = companyHomeStore.reportInfo.monitorId;
+  // const monitorId = companyHomeStore.reportInfo.monitorId;
   const monitorInfo = networkStore.monitorInfoList[networkStore.monitorInfoList.findIndex((item) => item.companyName === nodeData.name)];
   const hidePanel = () => {
     networkStore.closePanel();
   };
-  const handleCreateMonitor = () => {
-    const params = {
-      name: nodeData.name,
-      type: networkType[networkType.findIndex((item) => item.id === nodeData.category)].subType,
-      position: 'NETWORK'
-    };
-    networkStore.monitorExistNode(monitorId, params);
-  };
-  const openCreateMonitorModal = () => {
-    const args = {
-      title: '添加关联监控',
-      width: '420px',
-      pointText: true,
-      confirmAction: handleCreateMonitor,
-      cancelAction: modalStore.closeAction,
-      loader: (cb) => {
-        require.ensure([], (require) => {
-          cb(require('./CreateMonitor'));
-        });
-      }
-    };
-    modalStore.openCompModal({ ...args });
-  };
+  // const handleCreateMonitor = () => {
+  //   const params = {
+  //     name: nodeData.name,
+  //     type: networkType[networkType.findIndex((item) => item.id === nodeData.category)].subType,
+  //     position: 'NETWORK'
+  //   };
+  //   networkStore.monitorExistNode(monitorId, params);
+  // };
+  // const openCreateMonitorModal = () => {
+  //   const args = {
+  //     title: '添加关联监控',
+  //     width: '420px',
+  //     pointText: true,
+  //     confirmAction: handleCreateMonitor,
+  //     cancelAction: modalStore.closeAction,
+  //     loader: (cb) => {
+  //       require.ensure([], (require) => {
+  //         cb(require('./CreateMonitor'));
+  //       });
+  //     }
+  //   };
+  //   modalStore.openCompModal({ ...args });
+  // };
   const goToBlackList = (nodeName) => {
     if (networkStore.showFullScreen) {
       exitFull();
@@ -72,12 +71,12 @@ function NodePanel({ networkStore, companyHomeStore, modalStore, routing, exitFu
         nodeData.cateType !== 2 ?
           <LinkJump referer="self" name={nodeData.name} label="查看企业" className={styles.link} /> : ''
       }
-      {
+      {/*{
         nodeData.cateType !== 2 && monitorId && !monitorInfo ?
           <a onClick={openCreateMonitorModal} className={styles.link}>
             关联监控
               </a> : ''
-      }
+      }*/}
       {
         nodeData.blackList && nodeData.category !== 7 ?
           <a className={styles.link} onClick={goToBlackList.bind(this, nodeData.name)}>{`高风险记录（${nodeData.caseRecord.length}）`}</a> : ''
@@ -89,4 +88,4 @@ function NodePanel({ networkStore, companyHomeStore, modalStore, routing, exitFu
 NodePanel.propTypes = {
   foo: PropTypes.string,
 };
-export default inject('networkStore', 'companyHomeStore', 'modalStore', 'routing')(observer(NodePanel));
+export default inject('networkStore', 'routing')(observer(NodePanel));
