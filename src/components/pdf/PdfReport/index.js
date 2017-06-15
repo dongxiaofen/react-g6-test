@@ -14,7 +14,7 @@ import Tax from './Tax';
 import EquityRelated from './EquityRelated';
 import AnalysisReport from './AnalysisReport';
 import styles from './index.less';
-
+import getPermissionMeta from 'helpers/getPermissionMeta';
 function PdfReport({}) {
   const judgeIsModuleExist = () => {
     // const pdfModule = pdfStore.pdfTypesKey;
@@ -24,7 +24,7 @@ function PdfReport({}) {
   return (
     <Container>
       <Row>
-        <Col className={styles.pdf_body} width="12">
+        <Col className={styles[getPermissionMeta(envConfig).pdfStyle]} width="12">
           <Header />
           <Overview />
           <Base judgeIsModuleExist={judgeIsModuleExist}/>
