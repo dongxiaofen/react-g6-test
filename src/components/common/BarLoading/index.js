@@ -11,6 +11,7 @@ function BarLoading() {
         <li></li>
         <li></li>
       </ul>
+      <p>数据加载中</p>
     </div>
   );
 }
