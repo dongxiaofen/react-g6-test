@@ -171,7 +171,7 @@ function OverView({ pdfStore, clientStore }) {
       recruitmentPost: '新增招聘岗位',
       resumeTrend: '离职意向趋势'
     },
-    title: '团队监控分析',
+    title: '团队发展趋势',
     valueData: summaryData.team ? { data: summaryData.team.recruitmentResume, type: 'object' } : undefined,
   };
   // 多维分析
@@ -247,10 +247,7 @@ function OverView({ pdfStore, clientStore }) {
       <Summary {...recruitmentEmployee} />
       <Summary {...staffBackground} />
       <Summary {...staffPosition} />
-      {
-        pdfStore.banner.mainStatus === 'MONITOR' ?
-          <Summary {...recruitmentResumeMap} /> : ''
-      }
+      <Summary {...recruitmentResumeMap} />
 
       <SecondTitle module="风险信息" />
       <hr className={styles.hrhr} />
