@@ -171,7 +171,7 @@ function OverView({ pdfStore, clientStore }) {
       recruitmentPost: '新增招聘岗位',
       resumeTrend: '离职意向趋势'
     },
-    title: '团队监控分析',
+    title: '团队发展趋势',
     valueData: summaryData.team ? { data: summaryData.team.recruitmentResume, type: 'object' } : undefined,
   };
   // 多维分析
@@ -247,10 +247,7 @@ function OverView({ pdfStore, clientStore }) {
       <Summary {...recruitmentEmployee} />
       <Summary {...staffBackground} />
       <Summary {...staffPosition} />
-      {
-        pdfStore.banner.mainStatus === 'MONITOR' ?
-          <Summary {...recruitmentResumeMap} /> : ''
-      }
+      <Summary {...recruitmentResumeMap} />
 
       <SecondTitle module="风险信息" />
       <hr className={styles.hrhr} />
@@ -266,26 +263,38 @@ function OverView({ pdfStore, clientStore }) {
       <Summary {...riskRelationshipMap} />
 
       {/* 多维分析 */}
-            <div>
-              <SecondTitle module="多维综合分析" />
-              <hr className={styles.hrhr} />
-              <Summary {...comprehensiveAnalysis} />
-            </div>
-            <div>
-              <SecondTitle module="盈利能力分析" />
-              <hr className={styles.hrhr} />
-              <Summary {...profitabilityAnalysis} />
-            </div>
-            <div>
-              <SecondTitle module="营运能力分析" />
-              <hr className={styles.hrhr} />
-              <Summary {...operationalAnalysis}/>
-            </div>
-            <div>
-              <SecondTitle module="成长能力分析" />
-              <hr className={styles.hrhr} />
-              <Summary {...growthAnalysis}/>
-            </div>
+      {
+        pdfStore.pdfTypesKey.includes('SCORE') ?
+        <div>
+          <SecondTitle module="多维综合分析" />
+          <hr className={styles.hrhr} />
+          <Summary {...comprehensiveAnalysis} />
+        </div> : ''
+      }
+      {
+        pdfStore.pdfTypesKey.includes('PROFIT') ?
+        <div>
+          <SecondTitle module="盈利能力分析" />
+          <hr className={styles.hrhr} />
+          <Summary {...profitabilityAnalysis} />
+        </div> : ''
+      }
+      {
+        pdfStore.pdfTypesKey.includes('OPERATION') ?
+          <div>
+            <SecondTitle module="营运能力分析" />
+            <hr className={styles.hrhr} />
+            <Summary {...operationalAnalysis}/>
+          </div> : ''
+      }
+      {
+        pdfStore.pdfTypesKey.includes('GROWING') ?
+          <div>
+            <SecondTitle module="成长能力分析" />
+            <hr className={styles.hrhr} />
+            <Summary {...growthAnalysis}/>
+          </div> : ''
+      }
     </div>
   );
 }

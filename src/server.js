@@ -151,7 +151,7 @@ app.use((req, res) => {
         axios.get(config.backendApi + urlPanth, { params })
           .then((resp) => {
             // writeDataToFile('resp', resp.data);
-            allStores.pdfStore.setTypes(params.types, params.monitorId);
+            allStores.pdfStore.setTypes(params.types);
             allStores.clientStore.envConfig = config.target;
             allStores.pdfStore.getPdfDownData(resp.data);
             const component = (

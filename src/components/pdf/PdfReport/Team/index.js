@@ -39,7 +39,7 @@ function Team({pdfStore, judgeIsModuleExist}) {
         judgeIsModuleExist('TEAM_ANALYSIS')
           ?
           <div>
-            <PdfTitle module="团队信息" subModule="团队监控分析" />
+            <PdfTitle module="团队信息" subModule="团队发展趋势" />
             <RecruitAddress moduleData = {pathval.getPathValue(pdfStore, 'team.teamResponse.recruitMonitorAnalyze')} />
             <RecruitPosition moduleData = {pathval.getPathValue(pdfStore, 'team.teamResponse.recruitMonitorAnalyze')} />
             <AvgSalary moduleData = {pathval.getPathValue(pdfStore, 'team.teamResponse.salaryAvg')} />
