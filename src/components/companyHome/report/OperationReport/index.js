@@ -22,7 +22,7 @@ function OperationReport({ operationDataList }) {
   return (
     <div>
       <p className={styles.excelTitle}>指标列表
-        <span className={styles.timestamp}>（分析时间：{this.props.operationDataList.lastTm}）</span>
+        <span className={styles.timestamp}>（最近分析时间：{this.props.operationDataList.lastTm}）</span>
       </p>
       <table className={styles.table}>
         <thead>
