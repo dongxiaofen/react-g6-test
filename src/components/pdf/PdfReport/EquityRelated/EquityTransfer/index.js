@@ -14,7 +14,6 @@ function EquityTransfer({moduleData}) {
   }
   const data = {
     dataConfig: [
-      {'key': 'imporg', 'width': '4'},
       {'key': 'assignee', 'width': '4'},
       {'key': 'pledgeDate', 'width': '4'},
       {'key': 'pledgedAmount', 'width': '4'},

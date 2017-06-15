@@ -14,16 +14,16 @@ function EquityPledge({moduleData}) {
   }
   const data = {
     dataConfig: [
-      {'key': 'imporg', 'width': '4'},
       {'key': 'imporgAthOrg', 'width': '4'},
       {'key': 'imporgType', 'width': '4'},
       {'key': 'pledgedAmount', 'width': '4'},
       {'key': 'imporgDate', 'width': '4'},
-      // {'key': 'unfreInfo', 'width': '4'},
+      {'key': 'freRatio', 'width': '4'},
+      {'key': 'unfreInfo', 'width': '4'},
     ],
     hasConfig: true,
     item: moduleData,
-    dict: 'equityPledge',
+    dict: 'equityPledgePdf',
     type: 'array'
   };
   return (

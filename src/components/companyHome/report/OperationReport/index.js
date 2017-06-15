@@ -22,12 +22,14 @@ function OperationReport({ operationDataList }) {
   return (
     <div>
       <p className={styles.excelTitle}>指标列表
-        <span className={styles.timestamp}>(分析时间：{this.props.operationDataList.lastTm})</span>
+        <span className={styles.timestamp}>（分析时间：{this.props.operationDataList.lastTm}）</span>
       </p>
       <table className={styles.table}>
         <thead>
         <tr>
-          <th className={styles.first}></th>
+          <th className={styles.first}>
+            <div className={styles.slash} />
+          </th>
           <th className={styles.two}>财务费用率</th>
           <th className={styles.three}>管理费用率</th>
           <th className={styles.four}>销售费用率</th>
@@ -49,7 +51,7 @@ function OperationReport({ operationDataList }) {
           </div>
           <p className={styles.formula}>
             <span className={styles.point} />
-            <span className={styles.formulaFonts}>财务费用率=（财务费用÷销售收入)×100%</span>
+            <span className={styles.formulaFonts}>财务费用率=（财务费用÷销售收入）×100%</span>
           </p>
           <p className={styles.content}>
             分析企业的财务负担，调整筹资渠道，改善资金结构，提高盈利水平</p>

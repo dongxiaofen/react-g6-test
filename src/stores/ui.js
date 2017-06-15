@@ -305,7 +305,7 @@ class UiStore {
     filiationList: {
       index: 1,
       size: 10,
-      show: observable.map({})
+      // show: observable.map({})
     },
     entinvItemLists: {
       index: 1,
@@ -323,6 +323,16 @@ class UiStore {
       show: observable.map({})
     },
     sharesFrostListItemLists: {
+      index: 1,
+      size: 10,
+      show: observable.map({})
+    },
+    sharesTransferListItemLists: {
+      index: 1,
+      size: 10,
+      show: observable.map({})
+    },
+    sharesImpawnListItemLists: {
       index: 1,
       size: 10,
       show: observable.map({})
@@ -614,7 +624,7 @@ class UiStore {
         filiationList: {
           index: 1,
           size: 10,
-          show: observable.map({})
+          // show: observable.map({})
         },
         entinvItemLists: {
           index: 1,

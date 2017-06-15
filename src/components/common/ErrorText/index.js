@@ -179,7 +179,7 @@ function ErrorText({module, error, errCategory = 0, height, errorWords, path}) {
       );
     case 3:
       return (
-        <div className={styles.msgBox}>
+        <div className={styles.msgBox_noColor}>
           <div className={`clearfix ${styles.msgItem}`}>
             <div className={styles.msgImg}></div>
             <div className={styles.msgText}>

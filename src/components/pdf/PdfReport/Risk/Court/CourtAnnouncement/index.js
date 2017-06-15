@@ -20,7 +20,7 @@ function CourtAnnouncement({moduleData}) {
   };
   const data = {
     dataConfig: [
-      {'key': 'type', 'width': '6'},
+      {'key': 'typeName', 'width': '6'},
       {'key': 'publishTime', 'width': '6'},
       {'key': 'identity', 'width': '6'},
       {'key': 'caseReason', 'width': '6'},

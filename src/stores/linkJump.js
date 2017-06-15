@@ -38,29 +38,27 @@ class LinkJumpStore {
       }));
   }
 
-  @action.bound getCompanyExist(name) {
+  @action.bound getCompanyExist(name, referer) {
     const params = {
       companyName: name,
     };
     linkJumpApi.getCompanyExist(params)
       .then(action('link company report', (resp) => {
-        // resp.body 返回值为布尔类型。接口暂未实现，暂时设置默认为true， 需要false请自行在下一行修改。
-        resp.body = true;
-        if (resp.body) {
-          browserHistory.push(`/companyHome?companyName=${name}`);
+        if (resp.data) {
+          if (referer === 'other') {
+            browserHistory.push(`/companyHome?companyName=${name}`);
+          } else if (referer === 'self') {
+            location.href = `/companyHome?companyName=${name}`;
+          }
         } else {
           messageStore.openMessage({
             type: 'error',
-            content: '没有找到该公司',
+            content: '查询数据失败，该企业无工商登记信息',
           });
         }
       }))
       .catch(action('link company report err', (err) => {
         console.log(err.response, '======= link company report err');
-        // searchCompanyStore.searchTabClick('COMPANY_NAME');
-        // searchCompanyStore.searchChangeOther(name);
-        // searchCompanyStore.getCompanyList();
-        // browserHistory.push(`/searchCompany`);
         messageStore.openMessage({
           type: 'error',
           content: '没有找到该公司',
