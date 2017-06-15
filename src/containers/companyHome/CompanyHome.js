@@ -128,8 +128,8 @@ export default class CompanyHome extends Component {
     const noReport = ['reportId', 'basicReportId'].every(key => {
       return !this.props.companyHomeStore.reportInfo[key];
     });
-    if (noReport) {
-      return <BarLoading />;
+    if (!noReport) {
+      return <div className={styles.loadingBox}><BarLoading /></div>;
     }
     return (
       <Container id="reportContainer">

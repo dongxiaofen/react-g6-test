@@ -1,7 +1,6 @@
 import React from 'react';
 import styles from './index.less';
 function BarLoading({message, size}) {
-  console.log(size, message);
   return (
     <div style={{transform: `scale(${size})`}} className={styles.wrap}>
       <ul>
