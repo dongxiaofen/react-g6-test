@@ -60,7 +60,7 @@ function PosItemInfo({investmentStore, bannerStore}) {
     <div className={styles.box}>
       <div className={styles.boxTop}>
         <div className={styles.name}>{name}（{postion}）</div>
-        <span className={styles.text}>主题公司名称：{companyName}</span>
+        <span className={styles.text}>主体公司名称：{companyName}</span>
       </div>
       <div className={styles.boxBody}>
         <div className={styles.tableWrap}>
