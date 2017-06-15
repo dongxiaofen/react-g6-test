@@ -4,7 +4,8 @@ import { runInAction } from 'mobx';
 import Banner from 'components/companyHome/Banner';
 import LeftBar from 'components/companyHome/LeftBar';
 import { Container, Row, Col } from 'components/common/layout';
-import CirclesLoading from 'components/common/CirclesLoading';
+import BarLoading from 'components/common/BarLoading';
+import NoBalance from 'components/common/NoBalance';
 import styles from './index.less';
 
 @inject(
@@ -120,15 +121,16 @@ export default class CompanyHome extends Component {
   }
 
   render() {
-    const error = this.props.companyHomeStore.createBasicErr;
-    if (error.value) {
-      return <div>{error.response && error.response.data && error.response.data.message || '创建失败'}</div>;
+    const errorInfo = this.props.companyHomeStore.createBasicErr;
+    if (errorInfo.value) {
+      const errorCode = errorInfo.err.response && errorInfo.err.response.data.errorCode;
+      return <NoBalance message={errorCode === 403204 ? '套餐额度不足，请联系管理员充值 400-139-1819' : '创建失败'} />;
     }
     const noReport = ['reportId', 'basicReportId'].every(key => {
       return !this.props.companyHomeStore.reportInfo[key];
     });
     if (noReport) {
-      return <CirclesLoading />;
+      return <BarLoading />;
     }
     return (
       <Container id="reportContainer">

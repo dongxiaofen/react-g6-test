@@ -15,10 +15,31 @@ export default class MonitorList extends Component {
   static propTypes = {
     monitorListStore: PropTypes.object,
     routing: PropTypes.object,
+    uiStore: PropTypes.object,
   };
   componentDidMount() {
     this.props.monitorListStore.getMainCount();
     this.props.monitorListStore.getMainList();
+  }
+  componentWillUnmount() {
+    this.props.uiStore.updateUiStore('monitorList', {
+      searchInput: '',
+      sortDirection: {
+        start_tm: 'DESC',
+        expire_dt: 'DESC',
+        latestTs: 'DESC',
+      },
+      params: {
+        companyName: '',
+        sort: 'start_tm,DESC',
+        monitorStatus: '',
+      }
+    });
+    this.props.uiStore.updateUiStore('monitorListPager', {
+      index: 1,
+      size: 10,
+      totalElements: 0,
+    });
   }
   render() {
     return (
