@@ -44,7 +44,7 @@ class LinkJumpStore {
     };
     linkJumpApi.getCompanyExist(params)
       .then(action('link company report', (resp) => {
-        if (resp.body) {
+        if (resp.data) {
           if (referer === 'other') {
             browserHistory.push(`/companyHome?companyName=${name}`);
           } else if (referer === 'self') {
