@@ -104,7 +104,7 @@ class TaxCheckStore {
         this.taxListData = resp.data;
         // 关闭loading
         this.loading = false;
-        // uiStore.uiState.taxCheckPager.totalElements = resp.data.totalElements;
+        uiStore.uiState.taxCheckPager.totalElements = resp.data.totalElements;
       }))
       .catch(action('taxList error', (err) => {
         // 关闭loading

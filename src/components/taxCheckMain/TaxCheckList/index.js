@@ -3,6 +3,7 @@ import { observer, inject } from 'mobx-react';
 import { runInAction } from 'mobx';
 import styles from './index.less';
 // import TaxCheckItem from './TaxCheckItem';
+import Pager from 'components/common/Pager';
 import ErrorText from 'components/common/ErrorText';
 import Button from 'components/lib/button';
 
@@ -79,6 +80,7 @@ export default class TaxCheckList extends Component {
     return (
       <div className={styles.box}>
         {listDom}
+        <Pager tData={taxListData} module="taxCheckPager" type="large" />
       </div>
     );
   }
