@@ -25,7 +25,7 @@ function Bidding({biddingItemList, isLoading, detailModalStore, companyHomeStore
     const { basicReportId, reportId } = companyHomeStore.reportInfo;
     let getUrl = '';
     if (reportId) {
-      getUrl = `/api/reportId/${reportId}/operation/bidding/detail?announceId=${bar.announceID}`;
+      getUrl = `/api/report/${reportId}/operation/bidding/detail?announceId=${bar.announceID}`;
     } else if (basicReportId) {
       getUrl = `/api/basicReport/${basicReportId}/operation/bidding/detail?announceId=${bar.announceID}`;
     } else {
