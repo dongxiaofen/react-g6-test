@@ -1,14 +1,14 @@
 import React, {PropTypes} from 'react';
-import { observer, inject } from 'mobx-react';
-import PdfSimpleKey from 'components/common/pdf/PdfSimpleKey';
+import {observer} from 'mobx-react';
 import PdfNotFound from 'components/common/pdf/PdfNotFound';
 import SecondTitle from 'components/common/pdf/SecondTitle';
+import PdfSimpleKey from 'components/common/pdf/PdfSimpleKey';
 
-function Investment({ moduleData }) {
+function ExternalPerson({moduleData}) {
   if (!moduleData || moduleData.length === 0) {
     return (
       <div>
-        <SecondTitle module="法人对外投资"/>
+        <SecondTitle module="对外投资"/>
         <PdfNotFound />
       </div>
     );
@@ -33,13 +33,13 @@ function Investment({ moduleData }) {
   };
   return (
     <div>
-      <SecondTitle module="法人对外投资" />
+      <SecondTitle module="对外投资"/>
       <PdfSimpleKey {...data} />
     </div>
   );
 }
 
-Investment.propTypes = {
-  foo: PropTypes.object,
+ExternalPerson.propTypes = {
+  foo: PropTypes.string,
 };
-export default inject('pdfStore')(observer(Investment));
+export default observer(ExternalPerson);

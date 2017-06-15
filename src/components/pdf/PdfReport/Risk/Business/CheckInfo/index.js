@@ -14,10 +14,11 @@ function CheckInfo({moduleData}) {
   }
   const data = {
     dataConfig: [
-      {'key': 'check_date', 'width': '6'},
+      {'key': 'seqNo', 'width': '6'},
+      {'key': 'checkDate', 'width': '6'},
+      {'key': 'checkResult', 'width': '6'},
+      {'key': 'checkType', 'width': '6'},
       {'key': 'institution', 'width': '6'},
-      {'key': 'check_type', 'width': '6'},
-      {'key': 'check_result', 'width': '6'}
     ],
     item: moduleData,
     dict: 'checkMessage',

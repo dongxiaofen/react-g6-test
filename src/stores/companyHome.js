@@ -23,7 +23,7 @@ class CompanyHomeStore {
     { label: '多维综合评价', value: 'SCORE', checked: true},
     { label: '盈利能力分析', value: 'PROFIT', checked: true},
     { label: '营运能力分析', value: 'OPERATION', checked: true},
-    { label: '发展能力分析', value: 'GROWING', checked: true},
+    { label: '成长能力分析', value: 'GROWING', checked: true},
   ];
   @observable monitorTime = 1;
   @observable loanLoading = false;
@@ -102,7 +102,17 @@ class CompanyHomeStore {
     this.loanLoading = true;
     companyHomeApi.createAnalyRep({companyName, items: this.loanOptValue})
     .then(action('createAnalyRep', (resp) => {
-      this.reportInfo.dimensions = this.reportInfo.dimensions.concat(this.loanOptValue);
+      let options = this.loanOptValue;
+      const onlyScore = this.loanOptValue.length === 1 && this.loanOptValue[0] === 'SCORE' ? true : false;
+      if (!onlyScore && !resp.data.existTaxDetail) {
+        const idx = this.loanOptValue.indexOf('SCORE');
+        options = idx > -1 ? ['SCORE'] : [];
+        text = {
+          content: '抱歉，由于企业不存在盈利、运营、成长数据，分析失败',
+          duration: 3000
+        };
+      }
+      this.reportInfo.dimensions = this.reportInfo.dimensions.concat(options);
       modalStore.closeAction();
       messageStore.openMessage({ ...text });
       this.reportInfo.analysisReportId = resp.data.analysisReportId;
@@ -208,14 +218,12 @@ class CompanyHomeStore {
     }));
   }
   @action.bound initDimensions(dimensions) {
-    dimensions.map((key)=>{
-      const idx = this.loanOption.findIndex((item)=>{
-        return item.value === key;
-      });
+    this.loanOption.forEach((option, index)=>{
+      const idx = dimensions.indexOf(option.value);
       if (idx > -1) {
-        this.loanOption[idx].checked = false;
+        this.loanOption[index].checked = false;
       } else {
-        this.loanOption[idx].checked = true;
+        this.loanOption[index].checked = true;
       }
     });
   }
@@ -245,7 +253,7 @@ class CompanyHomeStore {
       { label: '多维综合评价', value: 'SCORE', checked: true},
       { label: '盈利能力分析', value: 'PROFIT', checked: true},
       { label: '营运能力分析', value: 'OPERATION', checked: true},
-      { label: '发展能力分析', value: 'GROWING', checked: true},
+      { label: '成长能力分析', value: 'GROWING', checked: true},
     ];
     this.resetMonitorModal();
     this.loanLoading = false;

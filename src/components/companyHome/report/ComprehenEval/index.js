@@ -6,15 +6,22 @@ import CompanyScoreList from './CompanyScoreList/index';
 import { loadingComp } from '../../../hoc/index';
 
 function ComprehenEval({ loaningStore }) {
+  const sixStarData = loaningStore.sixStarData;
   return (
-    <div className={styles.box}>
-      <div className={styles.content}>
-        <CompanyScoreChart
-          sixStarData={loaningStore.sixStarData} />
-        <CompanyScoreList
-          sixStarData={loaningStore.sixStarData} />
+    <div>
+      <p className={styles.title}>多维综合评价
+        <span className={styles.timestamp}>（分析时间：{sixStarData.lastTm}）</span>
+      </p>
+      <div className={styles.box}>
+        <div className={styles.content}>
+          <CompanyScoreChart
+            sixStarData={sixStarData} />
+          <CompanyScoreList
+            sixStarData={sixStarData} />
+        </div>
       </div>
     </div>
+
   );
 }
 

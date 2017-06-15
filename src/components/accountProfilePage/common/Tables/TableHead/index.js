@@ -29,7 +29,7 @@ function TableHead({ companyType, tip, title }) {
         </div>
       </div>
       <div className="pull-right">
-        <Popover placement="bottomRight" content={content} trigger="hover">
+        <Popover className={styles.popo} placement="bottomRight" content={content} trigger="hover">
           <i className={`${styles.infomation_tips} ${styles.questions_icon}`}></i>
         </Popover>
       </div>

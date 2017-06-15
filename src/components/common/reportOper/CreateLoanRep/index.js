@@ -10,7 +10,7 @@ import loanSlider4 from 'imgs/companyHome/loanSlider4.png';
 import Button from 'components/lib/button';
 import { Link } from 'react-router';
 
-function CreateLoanRep({companyHomeStore, routing}) {
+function CreateLoanRep({companyHomeStore, routing, messageStore}) {
   const judegeStatus = (key)=>{
     const reportInfo = companyHomeStore.reportInfo;
     if (reportInfo.dimensions.includes(key)) {
@@ -43,11 +43,15 @@ function CreateLoanRep({companyHomeStore, routing}) {
     return output;
   };
   const createLoanRep = ()=> {
-    const companyName = routing.location.query.companyName;
-    companyHomeStore.createLoanRep(companyName);
+    if (companyHomeStore.loanOptValue < 1) {
+      messageStore.openMessage({type: 'warning', content: '分析模块不能为空'});
+    } else {
+      const companyName = routing.location.query.companyName;
+      companyHomeStore.createLoanRep(companyName);
+    }
   };
   const imgs = [loanSlider1, loanSlider2, loanSlider3, loanSlider4];
-  const navs = ['多维综合分析', '盈利能力分析', '营运能力分析', '发展能力分析'];
+  const navs = ['多维综合分析', '盈利能力分析', '营运能力分析', '成长能力分析'];
   return (
     <div className={styles.createLoanRep}>
       <div>
@@ -75,4 +79,4 @@ function CreateLoanRep({companyHomeStore, routing}) {
 CreateLoanRep.propTypes = {
   foo: PropTypes.string,
 };
-export default inject('companyHomeStore', 'routing')(observer(CreateLoanRep));
+export default inject('companyHomeStore', 'routing', 'messageStore')(observer(CreateLoanRep));

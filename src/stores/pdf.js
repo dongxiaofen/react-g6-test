@@ -23,57 +23,14 @@ class PdfStore {
   @observable profit = {};
   @observable courtData = {};
   @observable star = {};
-  @observable shares = {
-    'sharesFrostList': [
-      {
-        'freDocId': 'string',
-        'freFromDate': 'string',
-        'freMoney': 'string',
-        'freOrgName': 'string',
-        'freRatio': 'string',
-        'freToDate': 'string',
-        'unfreDate': 'string',
-        'unfreDocId': 'string',
-        'unfreInfo': 'string',
-        'unfreOrgName': 'string'
-      },
-      {
-        'freDocId': 'string',
-        'freFromDate': 'string',
-        'freMoney': 'string',
-        'freOrgName': 'string',
-        'freRatio': 'string',
-        'freToDate': 'string',
-        'unfreDate': 'string',
-        'unfreDocId': 'string',
-        'unfreInfo': 'string',
-        'unfreOrgName': 'string'
-      }
-    ],
-    'sharesImpawnList': [
-      {
-        'imporg': 'string',
-        'imporgAmount': 'string',
-        'imporgAthOrg': 'string',
-        'imporgDate': 'string',
-        'imporgRecordDate': 'string',
-        'imporgTo': 'string',
-        'imporgType': 'string'
-      }
-    ],
-    'sharesTransferList': [
-      {
-        'assignee': 'string',
-        'pledgeDate': 'string',
-        'pledgedAmount': 'string',
-        'transferType': 'string',
-        'transfersRatio': 'string'
-      }
-    ]
-  };
+  @observable entinvItemList = [];
+  @observable frData = {};
+  @observable shares = {};
   @observable pdfTypesKey = '';
+  @observable managements = [];
   // summary
   @observable summary = {};
+  @observable companyName = '';
 
   @action.bound setTypes(types) {
     this.pdfTypesKey = types;
@@ -144,13 +101,12 @@ class PdfStore {
         'NETWORK_BLACKLIST',
       ]
     };
-    console.log(type, types[type], '------------------');
     // 获取pdf
     axios.get(`/api/pdf/${type}?${idType}=${id}&types=${types[type].join(',')}`)
       .then(action((response) => {
         this.banner = pathval.getPathValue(response.data, 'banner');
+        this.companyName = pathval.getPathValue(response.data, 'companyName');
         this.summary = pathval.getPathValue(response.data, 'summary');
-        console.log(this.summary, '--------------------');
         this.report = pathval.getPathValue(response.data, 'corpDetail');
         this.company = pathval.getPathValue(response.data, 'stock.info');
         this.announcement = pathval.getPathValue(response.data, 'stock.announcement');
@@ -163,7 +119,10 @@ class PdfStore {
         this.blacklist = pathval.getPathValue(response.data, 'blackList.result[0].paths');
         this.team = pathval.getPathValue(response.data, 'recruitTeamResponse');
         this.corpCheckData = pathval.getPathValue(response.data, 'corpCheck');
-        // this.shares = pathval.getPathValue(response.data, 'shares');
+        this.entinvItemList = pathval.getPathValue(response.data, 'ent.entinvItemList');
+        this.frData = pathval.getPathValue(response.data, 'fr');
+        this.shares = pathval.getPathValue(response.data, 'shares');
+        this.managements = pathval.getPathValue(response.data, 'managements');
         // 分析能力
         this.star = pathval.getPathValue(response.data, 'star');
         this.growing = pathval.getPathValue(response.data, 'growing');
@@ -177,6 +136,7 @@ class PdfStore {
 
   @action.bound getPdfDownData(data) {
     console.log('data', data);
+    this.companyName = pathval.getPathValue(data.companyName);
     this.banner = pathval.getPathValue(data, 'banner');
     this.summary = pathval.getPathValue(data, 'summary');
     this.report = pathval.getPathValue(data, 'corpDetail');
@@ -193,9 +153,12 @@ class PdfStore {
     this.corpCheckData = pathval.getPathValue(data, 'corpCheck');
     this.shares = pathval.getPathValue(data, 'shares');
     this.star = pathval.getPathValue(data, 'star');
+    this.entinvItemList = pathval.getPathValue(data, 'ent.entinvItemList');
+    this.frData = pathval.getPathValue(data, 'fr');
     this.growing = pathval.getPathValue(data, 'growing');
     this.operation = pathval.getPathValue(data, 'operation');
     this.profit = pathval.getPathValue(data, 'profit');
+    this.managements = pathval.getPathValue(data, 'managements');
   }
 }
 export default new PdfStore();

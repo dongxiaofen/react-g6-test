@@ -73,7 +73,7 @@ function FilterTotal({updateValue, filterSheet, page, searchKeyFilter}) {
       `${styles.toggleButton} ${styles.toggleButtonShow}`;
     const output = (
       <a className={toggleButtonClass}
-        onClick={updateValue.bind(this, 'filterSheetStatus', !status)}>{status ? '查看精确筛选' : '收起精确筛选'}<i></i></a>
+        onClick={updateValue.bind(this, 'filterSheetStatus', !status)}>{status ? '收起精确筛选' : '查看精确筛选'}<i></i></a>
     );
     return output;
   };
@@ -85,7 +85,7 @@ function FilterTotal({updateValue, filterSheet, page, searchKeyFilter}) {
         为你找到<span className={searchKeyFilter ? styles.text : styles.none}>{searchKeyFilter}</span>
       </div>
       {totalNumDom}
-      {toggleButton.bind(this)}
+      {toggleButton()}
       {/*
         <div onClick={feedBack} className={searchKeyFilter ? styles.noResult : styles.none}>
           没有想要的结果？提供关键词
