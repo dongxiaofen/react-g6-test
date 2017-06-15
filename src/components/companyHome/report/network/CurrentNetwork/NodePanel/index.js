@@ -65,7 +65,7 @@ function NodePanel({ networkStore, companyHomeStore, modalStore, routing, exitFu
       <NodeType nodeData={nodeData} {...networkStore} />
       <InvestInfo nodeData={nodeData} {...networkStore} />
       {
-        nodeData.cateType !== 2 ? <hr /> : ''
+        nodeData.cateType !== 2 ? <hr className={styles.hr} /> : ''
       }
       <ReportStatus monitorInfo={monitorInfo} />
       {
