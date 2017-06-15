@@ -13,8 +13,6 @@ import AlterList from '../Base/Alter/AlterList';
 import YearReportList from '../Base/YearReport/YearReportList';
 import Managements from '../Base/Foreign/Managements';
 import pathval from 'pathval';
-import ExternalPerson from '../Base/Foreign/ExternalPerson';
-import ExternalService from '../Base/Foreign/ExternalService';
 
 
 function Base({ judgeIsModuleExist, pdfStore }) {
@@ -80,9 +78,7 @@ function Base({ judgeIsModuleExist, pdfStore }) {
           ?
           <div>
             <PdfTitle module="对外投资任职" subModule="董监高对外投资任职" />
-            <Managements moduleData = {pathval.getPathValue(pdfStore, 'managements[0].frPositionList')} />
-            <ExternalPerson moduleData = {pathval.getPathValue(pdfStore, 'managements[0]')} />
-            <ExternalService moduleData = {pathval.getPathValue(pdfStore, 'managements[0]')} />
+            <Managements moduleData = {pathval.getPathValue(pdfStore, 'managements')} />
           </div>
           :
           ''

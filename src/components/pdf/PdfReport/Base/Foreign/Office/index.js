@@ -33,7 +33,7 @@ function Office({moduleData}) {
   };
   return (
     <div>
-      <SecondTitle module="法人对外任职" />
+      <SecondTitle module={`法人（${moduleData[0].name}）对外任职`} />
       <PdfSimpleKey {...data} />
     </div>
   );
