@@ -1,20 +1,22 @@
 import React, {PropTypes} from 'react';
 import { observer } from 'mobx-react';
 import PdfNotFound from 'components/common/pdf/PdfNotFound';
-import SecondTitle from 'components/common/pdf/SecondTitle';
+import ManagementItem from './ManagementItem';
 
 function Managements({moduleData}) {
   if (!moduleData || moduleData.length === 0) {
     return (
       <div>
-        <SecondTitle module="对外担任法人"/>
+        <div style={{marginTop: '30px'}}></div>
         <PdfNotFound />
       </div>
     );
   }
+
+  moduleData.map( (item, index) => <ManagementItem key={index} personData={item} /> );
 }
 
 Managements.propTypes = {
-  foo: PropTypes.string,
+  moduleData: PropTypes.object,
 };
 export default observer(Managements);
