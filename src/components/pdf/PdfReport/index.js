@@ -14,8 +14,8 @@ import Tax from './Tax';
 import EquityRelated from './EquityRelated';
 import AnalysisReport from './AnalysisReport';
 import styles from './index.less';
-
-function PdfReport({}) {
+import getPermissionMeta from 'helpers/getPermissionMeta';
+function PdfReport({clientStore}) {
   const judgeIsModuleExist = () => {
     // const pdfModule = pdfStore.pdfTypesKey;
     // return (pdfModule && pdfModule.includes(module));
@@ -24,7 +24,7 @@ function PdfReport({}) {
   return (
     <Container>
       <Row>
-        <Col className={styles.pdf_body} width="12">
+        <Col className={styles[getPermissionMeta(clientStore.envConfig).pdfStyle]} width="12">
           <Header />
           <Overview />
           <Base judgeIsModuleExist={judgeIsModuleExist}/>
@@ -46,4 +46,4 @@ function PdfReport({}) {
 PdfReport.propTypes = {
   judgeIsModuleExist: PropTypes.func,
 };
-export default inject('pdfStore')(observer(PdfReport));
+export default inject('pdfStore', 'clientStore')(observer(PdfReport));
