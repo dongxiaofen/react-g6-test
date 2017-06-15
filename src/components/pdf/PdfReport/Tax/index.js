@@ -24,7 +24,7 @@ function Tax({pdfStore, judgeIsModuleExist}) {
               </div> : ''
           }
           {
-            judgeIsModuleExist('GROWING') ?
+            judgeIsModuleExist('GROWING') && pathval.getPathValue(pdfStore, 'growing') ?
               <div>
                 <PdfTitle module="盈利能力分析" subModule="成长能力分析" />
                 <TaxUp moduleData={pathval.getPathValue(pdfStore, 'growing')} />
