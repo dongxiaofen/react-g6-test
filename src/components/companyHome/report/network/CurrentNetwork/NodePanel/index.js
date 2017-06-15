@@ -3,44 +3,51 @@ import { observer, inject } from 'mobx-react';
 import styles from './index.less';
 import colseImg from 'imgs/close.png';
 import NodeType from './NodeType';
-import MonitorStatus from './MonitorStatus';
+import InvestInfo from './InvestInfo';
+import ReportStatus from './ReportStatus';
+import LinkJump from 'components/common/LinkJump';
+// import networkType from 'dict/networkType';
 
 function NodePanel({ networkStore, routing, exitFull }) {
   const { show, nodeData } = networkStore.nodePanel;
+  if (!show || !nodeData) {
+    return null;
+  }
+  // const monitorId = companyHomeStore.reportInfo.monitorId;
+  const monitorInfo = networkStore.monitorInfoList[networkStore.monitorInfoList.findIndex((item) => item.companyName === nodeData.name)];
   const hidePanel = () => {
     networkStore.closePanel();
   };
-  const getCancelStatus = () => {
-    if (nodeData.status === 0) {
-      return (
-        <div>
-          已注销
-        </div>
-      );
-    }
-    return null;
-  };
+  // const handleCreateMonitor = () => {
+  //   const params = {
+  //     name: nodeData.name,
+  //     type: networkType[networkType.findIndex((item) => item.id === nodeData.category)].subType,
+  //     position: 'NETWORK'
+  //   };
+  //   networkStore.monitorExistNode(monitorId, params);
+  // };
+  // const openCreateMonitorModal = () => {
+  //   const args = {
+  //     title: '添加关联监控',
+  //     width: '420px',
+  //     pointText: true,
+  //     confirmAction: handleCreateMonitor,
+  //     cancelAction: modalStore.closeAction,
+  //     loader: (cb) => {
+  //       require.ensure([], (require) => {
+  //         cb(require('./CreateMonitor'));
+  //       });
+  //     }
+  //   };
+  //   modalStore.openCompModal({ ...args });
+  // };
   const goToBlackList = (nodeName) => {
     if (networkStore.showFullScreen) {
       exitFull();
       networkStore.toggleFullScreen();
     }
     networkStore.jumpBlackNode(nodeName, routing.location.search);
-    // routing.push(`/companyHome/blackNetwork${routing.location.search}`);
   };
-  const getRiskInfo = () => {
-    if (nodeData.blackList && nodeData.category !== 7) {
-      return (
-        <div>
-          <a className={styles.blackLink} onClick={goToBlackList.bind(this, nodeData.name)}>{`高风险记录（${nodeData.caseRecord.length}）`}</a>
-        </div>
-      );
-    }
-    return '';
-  };
-  if (!show) {
-    return null;
-  }
   return (
     <div className={styles.box}>
       <div
@@ -48,13 +55,32 @@ function NodePanel({ networkStore, routing, exitFull }) {
         onClick={hidePanel}>
         <img className={styles.colseImg} src={colseImg} alt="" />
       </div>
-      <div className={styles.nodeName}>
-        {nodeData.name}
+      <div>
+        {
+          nodeData.status === 0 ? <span className={styles.cancelStatus}>已注销</span> : ''
+        }
+        <span className={styles.nodeName}>{nodeData.name}</span>
       </div>
-      {getCancelStatus()}
       <NodeType nodeData={nodeData} {...networkStore} />
-      {getRiskInfo()}
-      <MonitorStatus nodeData={nodeData} monitorInfoList={networkStore.monitorInfoList} />
+      <InvestInfo nodeData={nodeData} {...networkStore} />
+      {
+        nodeData.cateType !== 2 ? <hr className={styles.hr} /> : ''
+      }
+      <ReportStatus monitorInfo={monitorInfo} />
+      {
+        nodeData.cateType !== 2 ?
+          <LinkJump referer="self" name={nodeData.name} label="查看企业" className={styles.link} /> : ''
+      }
+      {/*{
+        nodeData.cateType !== 2 && monitorId && !monitorInfo ?
+          <a onClick={openCreateMonitorModal} className={styles.link}>
+            关联监控
+              </a> : ''
+      }*/}
+      {
+        nodeData.blackList && nodeData.category !== 7 ?
+          <a className={styles.link} onClick={goToBlackList.bind(this, nodeData.name)}>{`高风险记录（${nodeData.caseRecord.length}）`}</a> : ''
+      }
     </div>
   );
 }
