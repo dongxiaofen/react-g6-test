@@ -38,7 +38,7 @@ class LinkJumpStore {
       }));
   }
 
-  @action.bound getCompanyExist(name) {
+  @action.bound getCompanyExist(name, referer) {
     const params = {
       companyName: name,
     };
@@ -47,7 +47,11 @@ class LinkJumpStore {
         // resp.body 返回值为布尔类型。接口暂未实现，暂时设置默认为true， 需要false请自行在下一行修改。
         resp.body = true;
         if (resp.body) {
-          browserHistory.push(`/companyHome?companyName=${name}`);
+          if (referer === 'other') {
+            browserHistory.push(`/companyHome?companyName=${name}`);
+          } else if (referer === 'self') {
+            location.href = `/companyHome?companyName=${name}`;
+          }
         } else {
           messageStore.openMessage({
             type: 'error',

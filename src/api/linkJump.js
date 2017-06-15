@@ -5,5 +5,5 @@ export const getNameType = (params) => {
 };
 // 公司是否存在
 export const getCompanyExist = (params) => {
-  return axios.get('api/common/exist', {params});
+  return axios.get('/api/common/exist', {params});
 };
