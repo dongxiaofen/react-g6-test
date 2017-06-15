@@ -91,7 +91,7 @@ function ErrorText({module, error, errCategory = 0, height, errorWords, path}) {
     '监控列表': '抱歉，没有找到相关的结果',
     '企业预警列表': '抱歉，没有找到相关的结果',
     '预警列表': '暂无预警设置',
-    '现勘列表': '暂无现勘相关结果',
+    '现勘列表': '还没有该公司的现勘记录，可以通过手机端添加~',
     '盈利能力指标': '暂无信息，可能存在时间相对滞后或未公示情况，仅供参考',
     '成长能力指标': '暂无信息，可能存在时间相对滞后或未公示情况，仅供参考',
     '营运能力指标': '暂无信息，可能存在时间相对滞后或未公示情况，仅供参考',
@@ -185,6 +185,15 @@ function ErrorText({module, error, errCategory = 0, height, errorWords, path}) {
             <div className={styles.msgText}>
               { linkText() }
             </div>
+          </div>
+        </div>
+      );
+    case 4:
+      return (
+        <div className={styles.noDataList}>
+          <div className={styles.imageBoxNowRecord}></div>
+          <div className={styles.tipsNowRecord}>
+            {dict[module] || error.message || '暂无信息'}
           </div>
         </div>
       );
