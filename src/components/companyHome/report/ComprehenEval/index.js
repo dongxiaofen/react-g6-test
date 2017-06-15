@@ -10,7 +10,7 @@ function ComprehenEval({ loaningStore }) {
   return (
     <div>
       <p className={styles.title}>多维综合评价
-        <span className={styles.timestamp}>（分析时间：{sixStarData.lastTm}）</span>
+        <span className={styles.timestamp}>（最近分析时间：{sixStarData.lastTm}）</span>
       </p>
       <div className={styles.box}>
         <div className={styles.content}>
