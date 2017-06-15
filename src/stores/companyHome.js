@@ -95,6 +95,20 @@ class CompanyHomeStore {
     };
     modalStore.openCompModal({ ...args });
   }
+  getMessageText(data) {
+    const status = ['existProfitDetail', 'existOperationDetail', 'existGrowingDetail'];
+    const textConfig = ['盈利', '运营', '成长'];
+    const text = [];
+    status.forEach((item, idx)=>{
+      if (data.hasOwnProperty(item) && data[item] === false) {
+        text.push(textConfig[idx]);
+      }
+    });
+    if (text.length > 0) {
+      return text.join('、');
+    }
+    return '';
+  }
   @action.bound createLoanRep(companyName) {
     let text = {
       content: '分析报告创建成功'
@@ -103,12 +117,12 @@ class CompanyHomeStore {
     companyHomeApi.createAnalyRep({companyName, items: this.loanOptValue})
     .then(action('createAnalyRep', (resp) => {
       let options = this.loanOptValue;
-      const onlyScore = this.loanOptValue.length === 1 && this.loanOptValue[0] === 'SCORE' ? true : false;
-      if (!onlyScore && !resp.data.existTaxDetail) {
+      const msgText = this.getMessageText(resp.data);
+      if (msgText !== '') {
         const idx = this.loanOptValue.indexOf('SCORE');
         options = idx > -1 ? ['SCORE'] : [];
         text = {
-          content: '抱歉，由于企业不存在盈利、运营、成长数据，分析失败',
+          content: `抱歉，由于企业不存在${msgText}数据，分析失败`,
           duration: 3000
         };
       }
