@@ -8,7 +8,7 @@ function ShareHolder({moduleData}) {
   const modifyProportion = (value) => {
     return (value * 100).toFixed(2);
   };
-  if (!moduleData) {
+  if (!moduleData || Object.keys(moduleData).length === 0) {
     return (
       <div>
         <SecondTitle module="十大股东"/>

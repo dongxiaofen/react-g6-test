@@ -45,12 +45,12 @@ export default class DownloadPdf extends Component {
     return 'basicReport';
   };
 
-  downloadAll = (evt) => {
-    if (evt.target.checked) {
-      this.setState({tipInfo: false});
-    }
-    this.props.bannerStore.setDownloadAll(evt.target.checked);
-  };
+  // downloadAll = (evt) => {
+  //   if (evt.target.checked) {
+  //     this.setState({tipInfo: false});
+  //   }
+  //   this.props.bannerStore.setDownloadAll(evt.target.checked);
+  // };
 
   downloadAllChecked() {
     const isAllChecked = this.props.bannerStore.isAllChecked;
@@ -191,7 +191,6 @@ export default class DownloadPdf extends Component {
     let queryStr = '&type=';
     let queryArray = [];
     const bannerStore = this.props.bannerStore;
-    // const levelOne = bannerStore.pdfDownloadConfig.levelOne;
     const levelTwo = bannerStore.pdfDownloadConfig.levelTwo;
     const levelTwoKeys = Object.keys(levelTwo);
     if (findIndexLevelOneChecked('RISK_TAXATION')) {
@@ -239,13 +238,13 @@ export default class DownloadPdf extends Component {
         </div>
         <div className={styles.pdfDownModaBtnBox}>
           <div className={styles.selectAll}>
-            <Checkbox
-              style={{fontSize: '14px'}}
-              className={styles.checkbox_style}
-              checked={this.downloadAllChecked()}
-              onChange={this.downloadAll}>
-              全部信息
-            </Checkbox>
+            {/*<Checkbox*/}
+              {/*style={{fontSize: '14px'}}*/}
+              {/*className={styles.checkbox_style}*/}
+              {/*checked={this.downloadAllChecked()}*/}
+              {/*onChange={this.downloadAll}>*/}
+            <span style={{fontSize: '14px'}}>{this.state.reportTypeDict[this.getReportType()]}报告下载</span>
+            {/*</Checkbox>*/}
             {
               this.state.tipInfo && isShowTipInfo
                 ? <span className={styles['tip-info']}>请选择需要下载的板块</span>

@@ -1,5 +1,6 @@
 import { observable, action } from 'mobx';
 import { companyHomeApi } from 'api';
+import pathval from 'pathval';
 // import axios from 'axios';
 
 class InvestmentStore {
@@ -8,6 +9,7 @@ class InvestmentStore {
   @observable frPositionList = {};
   @observable frinvList = {};
   @observable manageData = {};
+  @observable manageDataInfoIndex = -1;
   @action.bound getReportModule(params) {
     this.isMount = true;
     companyHomeApi.getReportModule('investment', params)
@@ -35,6 +37,9 @@ class InvestmentStore {
     this.frPositionList = {};
     this.frinvList = {};
     this.manageData = {};
+  }
+  @action.bound changeValue(path, value) {
+    pathval.setPathValue(this, path, value);
   }
 }
 

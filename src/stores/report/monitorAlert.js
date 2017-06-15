@@ -89,7 +89,7 @@ class MonitorAlertStore {
         }
       }));
   }
-  @action.bound getNewsDetail(type, companyId) {
+  @action.bound getNewsDetail(companyId) {
     const detailData = this.detailData.detail[this.detailData.activeIndex];
     const params = {};
     params.createdAt = detailData.content.createdAt;
