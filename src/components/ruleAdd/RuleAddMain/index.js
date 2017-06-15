@@ -36,7 +36,7 @@ export default class RuleAddMain extends Component {
       <div
         tabIndex="1"
         onClick={this.eventToggle.bind()}
-        className={styles.box}>
+        className={this.props.ruleStore.selectRange === 'range' ? styles.boxRange : styles.boxCompnay}>
         <Container>
           <Row>
             <Col>
