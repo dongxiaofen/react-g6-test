@@ -233,6 +233,8 @@ class SearchCompanyStore {
     if (evt.keyCode === 13) {
       // 重置页数
       this.pageParams.index = 1;
+      // 重置筛选条件
+      this.resetFilter();
       // 发送请求
       this.getCompanyList();
     }
