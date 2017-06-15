@@ -17,14 +17,14 @@ function Tax({pdfStore, judgeIsModuleExist}) {
             </div> : ''
           }
           {
-            judgeIsModuleExist('OPERATION') ?
+            !pathval.getPathValue(pdfStore, 'operation.biddingList') && judgeIsModuleExist('OPERATION') ?
               <div>
                 <PdfTitle module="盈利能力分析" subModule="营运能力分析" />
                 <TaxOperation moduleData={pathval.getPathValue(pdfStore, 'operation')} />
               </div> : ''
           }
           {
-            judgeIsModuleExist('GROWING') && pathval.getPathValue(pdfStore, 'growing') ?
+            judgeIsModuleExist('GROWING') ?
               <div>
                 <PdfTitle module="盈利能力分析" subModule="成长能力分析" />
                 <TaxUp moduleData={pathval.getPathValue(pdfStore, 'growing')} />
