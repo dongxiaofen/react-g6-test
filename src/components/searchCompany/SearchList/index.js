@@ -82,8 +82,8 @@ function SearchList({searchCompanyStore, modalStore, payModalStore}) {
       );
     } else {
       result = (
-        {/* <div className={`${styles.wrapList}`}>
-          <FilterSheet
+         <div className={`${styles.wrapList}`}>
+      {/* <FilterSheet
             filterSheet={filterSheet}
             filterArray={filterArray}
             modalStore={modalStore}
