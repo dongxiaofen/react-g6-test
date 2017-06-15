@@ -53,14 +53,14 @@ export default class RiskCourt extends Component {
           <CourtNotice courtNotice={courtData.courtNotice} regTime={this.regTime} />
         </TabPane>
         <TabPane
-          tab={`被执行人信息（${countCount['被执行人信息']}）`}
-          key="被执行人信息"
+          tab={`被执行人（${countCount['被执行人信息']}）`}
+          key="被执行人"
           disabled={countCount['被执行人信息'] > 0 ? false : true}>
           <CourtExecution courtExecution={courtData.courtExecution} regTime={this.regTime} />
         </TabPane>
         <TabPane
-          tab={`失信被执行人信息（${countCount['失信被执行人信息']}）`}
-          key="失信被执行人信息"
+          tab={`失信被执行人（${countCount['失信被执行人信息']}）`}
+          key="失信被执行人"
           disabled={countCount['失信被执行人信息'] > 0 ? false : true}>
           <DishonestyList dishonestyList={courtData.dishonestyList} regTime={this.regTime} />
         </TabPane>
