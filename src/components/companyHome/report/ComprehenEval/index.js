@@ -21,7 +21,6 @@ function ComprehenEval({ loaningStore }) {
         </div>
       </div>
     </div>
-
   );
 }
 
