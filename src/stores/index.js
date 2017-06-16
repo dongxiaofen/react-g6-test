@@ -8,6 +8,7 @@ export reportListStore from './reportList';
 export analysisListStore from './analysisList';
 export monitorListStore from './monitorList';
 export searchCompanyStore from './searchCompany';
+export searchStore from './search';
 export monitorStatisticsStore from './monitorStatistics';
 export myHomePageStore from './myHomePage';
 export clientStore from './client';
