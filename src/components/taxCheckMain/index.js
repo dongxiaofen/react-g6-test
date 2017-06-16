@@ -70,10 +70,9 @@ function TaxCheckMain({ modalStore, messageStore, taxCheckStore }) {
           <div className="clearfix">
             <h1 className={styles.title}>企业年度报税</h1>
             <Button btnType="primary" className={styles.noDataButton} onClick={handleAddTaxCheckClick}>添加企业核查</Button>
-            {/* <CheckModal {...checkModalConfig} /> */}
           </div>
           <div className={styles.listArea}>
-            <TaxCheckList showAddTaxCheck={showAddTaxCheck} />
+            <TaxCheckList showAddTaxCheck={showAddTaxCheck} loading={taxCheckStore.loading} listData={taxCheckStore.taxListData} />
           </div>
         </Col>
       </Row>
