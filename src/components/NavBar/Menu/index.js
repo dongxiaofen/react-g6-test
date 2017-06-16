@@ -10,7 +10,7 @@ import imgLoanAfter from 'imgs/navbar/loanAfter.png';
 function Menu({ routing }) {
   const config = [
     { parent: { module: '首页', route: 'accountProfile' } },
-    { parent: { module: '搜索', route: 'searchCompany' } },
+    { parent: { module: '搜索', route: 'search' } },
     {
       parent: { module: '核查'},
       children: [

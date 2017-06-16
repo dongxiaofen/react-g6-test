@@ -51,4 +51,5 @@ export FrPosAndInv from './report/frPosAndInv';
 export ManagePosAndInv from './report/managePosAndInv';
 export EquityRela from './report/equityRela';
 export MonitorAlert from './report/monitorAlert';
+export Search from './search';
 // append here from plop

@@ -5,7 +5,7 @@ import SearchTab from './SearchTab';
 import SearchInput from './SearchInput';
 import History from './History';
 
-function SearchBar({searchCompanyStore}) {
+function SearchBar({searchStore}) {
   const {
     searchTypeConfig,
     plholderConfig,
@@ -18,7 +18,7 @@ function SearchBar({searchCompanyStore}) {
     getHistory,
     historyResult,
     historyClick,
-  } = searchCompanyStore;
+  } = searchStore;
   // SearchTab 为搜索选择类型  SearchInput 为搜索框和按钮  History 为历史记录
   return (
     <div className={styles.bar}>
@@ -42,7 +42,7 @@ function SearchBar({searchCompanyStore}) {
 }
 
 SearchBar.propTypes = {
-  searchCompanyStore: PropTypes.object,
+  searchStore: PropTypes.object,
 };
 
-export default inject('searchCompanyStore')(observer(SearchBar));
+export default inject('searchStore')(observer(SearchBar));

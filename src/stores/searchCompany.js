@@ -95,6 +95,11 @@ class SearchCompanyStore {
   @observable singleItemData = {};
   // 选择那种报告 'analysis'深度 'report'高级 'free'快速
   @observable reportType = 'report';
+  // 是否显示下拉效果
+  @observable down = false;
+  @action.bound setDown() {
+    this.down = true;
+  }
   // 获取搜索公司列表
   @action.bound getCompanyList() {
     // 是否已搜索
@@ -123,6 +128,8 @@ class SearchCompanyStore {
         this.searchResult = resp.data.data;
         // filterSheet相关
         if (resp.data.aggregations) {
+          // 状态
+          // this.filterSheet.filterSheetStatus = true;
           // 放入初始数据
           this.filterSheet.data = resp.data.aggregations;
           resp.data.aggregations.map((obj)=>{
@@ -217,6 +224,7 @@ class SearchCompanyStore {
   }
   // 点击历史记录
   @action.bound historyClick(obj) {
+    browserHistory.push('/searchCompany');
     this.searchType = obj.type;
     this.searchKey = obj.keyword;
     this.getCompanyList();
@@ -245,6 +253,7 @@ class SearchCompanyStore {
   // 搜索handleEnter
   @action.bound handleEnter(evt) {
     if (evt.keyCode === 13) {
+      browserHistory.push('/searchCompany');
       // 重置页数
       this.pageParams.index = 1;
       // 重置筛选条件
