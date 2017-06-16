@@ -15,6 +15,7 @@ function SubAccount({ accountProfileStore }) {
     } else if (code === 404231) {
       return '子账号最新预警账号（有子账号，未创建）';
     }
+    return '暂无信息';
   };
   const keyWords = (code) => {
     if (code === 404210) {
@@ -24,6 +25,7 @@ function SubAccount({ accountProfileStore }) {
     }else if (code === 404231) {
       return '';
     }
+    return '';
   };
   const path = (code) => {
     if (code === 404210) {
@@ -33,6 +35,7 @@ function SubAccount({ accountProfileStore }) {
     } else if (code === 404231) {
       return '';
     }
+    return '';
   };
   const statistics = {
     titleData: {
@@ -60,7 +63,7 @@ function SubAccount({ accountProfileStore }) {
     tip: '系统选取您账号下最新预警的10家企业，仅供参考',
     title: '最新预警企业',
     isLoading: accountProfileStore.subWarningCompnayIsLoading,
-    error: !accountProfileStore.subWarningCompnay.data || accountProfileStore.subWarningCompnay.errorCode || accountProfileStore.subWarningCompnay.data.length === 0,
+    error: !accountProfileStore.subWarningCompnay.data || accountProfileStore.subWarningCompnay.data.length === 0,
     module: erroeModule(accountProfileStore.subWarningCompnay.errorCode),
     errCategory: 3,
     errorWords: keyWords(accountProfileStore.subWarningCompnay.errorCode),
@@ -75,7 +78,7 @@ function SubAccount({ accountProfileStore }) {
     tip: '系统选取您账号下预警次数最多的10家企业，仅供参考',
     title: '预警风险排名',
     isLoading: accountProfileStore.subRiskCompnayIsLoading,
-    error: !accountProfileStore.subHighRisk.data || accountProfileStore.subHighRisk.errorCode || accountProfileStore.subHighRisk.length === 0,
+    error: !accountProfileStore.subHighRisk.data || accountProfileStore.subHighRisk.data.length === 0,
     module: erroeModule(accountProfileStore.subHighRisk.errorCode),
     errCategory: 3,
     errorWords: keyWords(accountProfileStore.subHighRisk.errorCode),
@@ -90,7 +93,7 @@ function SubAccount({ accountProfileStore }) {
     tip: '系统选取您账号下评分最低的10家企业，仅供参考',
     title: '综合评分最低',
     isLoading: accountProfileStore.subLowScoreCompnayIsLoading,
-    error: !accountProfileStore.subLowestScore.data || accountProfileStore.subLowestScore.errorCode || accountProfileStore.subLowestScore.data.length === 0,
+    error: !accountProfileStore.subLowestScore.data || accountProfileStore.subLowestScore.data.length === 0,
     errCategory: 3,
     errorWords: keyWords(accountProfileStore.subLowestScore.errorCode),
     module: erroeModule(accountProfileStore.subLowestScore.errorCode),
