@@ -69,8 +69,8 @@ function FilterTotal({updateValue, filterSheet, page, searchKeyFilter}) {
 
   const toggleButton = () => {
     const toggleButtonClass = status ?
-      `${styles.toggleButton} ${styles.toggleButtonHidden}` :
-      `${styles.toggleButton} ${styles.toggleButtonShow}`;
+      `${styles.toggleButton} ${styles.toggleButtonShow}` :
+      `${styles.toggleButton} ${styles.toggleButtonHidden}`;
     const output = (
       <a className={toggleButtonClass}
         onClick={updateValue.bind(this, 'filterSheetStatus', !status)}>{status ? '收起精确筛选' : '查看精确筛选'}<i></i></a>
