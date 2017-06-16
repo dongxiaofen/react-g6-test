@@ -127,6 +127,7 @@ export default class CompanyHome extends Component {
       '403223': '当前额度不足，请联系管理员充值 400-139-1819',
       '404202': '该企业无工商登记信息',
       '404214': '公司不存在',
+      '403226': '套餐已过期',
     };
     if (errorInfo.value) {
       const errorCode = errorInfo.err.response && errorInfo.err.response.data.errorCode;
