@@ -15,6 +15,7 @@ function MyAccount({accountProfileStore}) {
     } else if (code === 404213) {
       return '我的账号综合评分最低企业（未创建）';
     }
+    return '暂无信息';
   };
   const keyWords = (code) => {
     if (code === 404210) {
@@ -26,6 +27,7 @@ function MyAccount({accountProfileStore}) {
     } else if (code === 404213) {
       return '搜索';
     }
+    return '';
   };
   const path = (code) => {
     if (code === 404210) {
@@ -64,7 +66,7 @@ function MyAccount({accountProfileStore}) {
     tip: '系统选取您账号下最新预警的10家企业，仅供参考',
     title: '最新预警企业',
     isLoading: accountProfileStore.ownWarningCompnayIsLoading,
-    error: !accountProfileStore.ownWarningCompnay.data || accountProfileStore.ownWarningCompnay.errorCode || accountProfileStore.ownWarningCompnay.data.length === 0,
+    error: !accountProfileStore.ownWarningCompnay.data || accountProfileStore.ownWarningCompnay.data.length === 0,
     module: erroeModule(accountProfileStore.ownWarningCompnay.errorCode),
     errCategory: 3,
     errorWords: keyWords(accountProfileStore.ownWarningCompnay.errorCode),
@@ -80,7 +82,7 @@ function MyAccount({accountProfileStore}) {
     tip: '系统选取您账号下预警次数最多的10家企业，仅供参考',
     title: '预警风险排名',
     isLoading: accountProfileStore.ownRiskCompnayIsLoading,
-    error: !accountProfileStore.ownHighRisk.data || accountProfileStore.ownHighRisk.errorCode || accountProfileStore.ownHighRisk.data.length === 0,
+    error: !accountProfileStore.ownHighRisk.data || accountProfileStore.ownHighRisk.data.length === 0,
     module: erroeModule(accountProfileStore.ownHighRisk.errorCode),
     errCategory: 3,
     errorWords: keyWords(accountProfileStore.ownHighRisk.errorCode),
@@ -96,7 +98,7 @@ function MyAccount({accountProfileStore}) {
     tip: '系统选取您账号下评分最低的10家企业，仅供参考',
     title: '综合评分最低',
     isLoading: accountProfileStore.ownLowScoreCompnayIsLoading,
-    error: !accountProfileStore.ownLowestScore.data || accountProfileStore.ownLowestScore.errorCode || accountProfileStore.ownLowestScore.data.length === 0,
+    error: !accountProfileStore.ownLowestScore.data || accountProfileStore.ownLowestScore.data.length === 0,
     module: erroeModule(accountProfileStore.ownLowestScore.errorCode),
     errCategory: 3,
     errorWords: keyWords(accountProfileStore.ownLowestScore.errorCode),
