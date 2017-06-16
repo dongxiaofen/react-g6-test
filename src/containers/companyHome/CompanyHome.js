@@ -6,6 +6,7 @@ import LeftBar from 'components/companyHome/LeftBar';
 import { Container, Row, Col } from 'components/common/layout';
 import BarLoading from 'components/common/BarLoading';
 import NoBalance from 'components/common/NoBalance';
+// import pathval from 'pathval';
 import styles from './index.less';
 
 @inject(
