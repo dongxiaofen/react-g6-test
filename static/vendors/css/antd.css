@@ -45,3 +45,6 @@
 	background-color: #42a5f5;
 	margin-top: -6px;
 }
+.ant-checkbox-inner {
+	border-radius:  0px;
+}
