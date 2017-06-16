@@ -31,7 +31,7 @@ function Bidding({biddingItemList, isLoading, detailModalStore, companyHomeStore
     } else {
       return false;
     }
-    assetsStore.getDetail(getUrl, showDetail);
+    assetsStore.getDetail(getUrl, bar.url, showDetail);
   };
   const data = {
     meta: {
