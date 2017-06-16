@@ -8,6 +8,9 @@ function Office({investmentStore}) {
   const count = frData.content ? frData.content.length : 0;
   const isLoading = frData.content === undefined ? true : false;
   const isError = frData.error;
+  const modifyTextNumber = (value) => {
+    return Number(value).toFixed(2);
+  };
   let frName = '';
   if (count > 0) {
     frName = frData.content[0].name;
@@ -22,7 +25,7 @@ function Office({investmentStore}) {
         { 'key': 'esDate', 'width': '4' },
         { 'key': 'position', 'width': '4' },
         { 'key': 'lerepsign', 'width': '4' },
-        { 'key': 'regCap', 'width': '4', 'hide': true },
+        { 'key': 'regCap', 'width': '4', 'hide': true, 'modifyText': modifyTextNumber },
         { 'key': 'frName', 'width': '4', 'hide': true },
         { 'key': 'regNo', 'width': '4', 'hide': true },
         { 'key': 'regOrg', 'width': '4', 'hide': true },

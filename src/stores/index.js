@@ -2,7 +2,6 @@
 // export searchStore from './search';
 export uiStore from './ui';
 export relationStore from './relation';
-export alertStore from './alert';
 export modalStore from './modal';
 export reportListStore from './reportList';
 export analysisListStore from './analysisList';

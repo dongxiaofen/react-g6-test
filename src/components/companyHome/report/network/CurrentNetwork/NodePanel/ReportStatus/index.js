@@ -19,7 +19,7 @@ function ReportStatus({ monitorInfo }) {
   };
   if (monitorInfo) {
     return (
-      <div className="clearfix">
+      <div className={`clearfix ${styles.box}`}>
         <span className={styles.text}>已有</span>
         {getService()}
       </div>

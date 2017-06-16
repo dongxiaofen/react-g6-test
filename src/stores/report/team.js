@@ -267,10 +267,10 @@ class TeamStore {
         }
         this.isLoading = false;
       }))
-      .catch((err) => {
+      .catch(action('get team data catch', (err) => {
         console.log(err);
         this.isLoading = false;
-      });
+      }));
   }
 
   @action.bound setSiteAndJob(calendarData, month) {

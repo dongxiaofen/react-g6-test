@@ -9,12 +9,15 @@ function FYAnnouncement({data, module}) {
     }
     return arr_;
   };
+  const modifyTypeName = (obj) => {
+    return obj.content.typeName || obj.content.type || '--';
+  };
   const moduleData = {
     'hideConfig': [
       {'key': 'content', 'width': '12'}
     ],
     'viewConfig': [
-      {'key': 'type', 'width': '6'},
+      {'key': 'typeName', 'width': '6', handleBlock: modifyTypeName},
       {'key': 'identity', 'width': '6'},
       {'key': 'court', 'width': '6'},
       {'key': 'relevantDepartments', 'width': '12', 'handle': arrayToString},

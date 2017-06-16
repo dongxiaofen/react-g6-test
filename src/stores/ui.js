@@ -122,7 +122,7 @@ class UiStore {
     reaction(
       () => this.uiState.taxCheckPager.index,
       () => {
-        taxCheckStore.getTaxCheckList();
+        taxCheckStore.getReportModule();
       }
     );
     reaction(
@@ -637,6 +637,21 @@ class UiStore {
           show: observable.map({})
         },
         frPositionList: {
+          index: 1,
+          size: 10,
+          show: observable.map({})
+        },
+        sharesFrostListItemLists: {
+          index: 1,
+          size: 10,
+          show: observable.map({})
+        },
+        sharesTransferListItemLists: {
+          index: 1,
+          size: 10,
+          show: observable.map({})
+        },
+        sharesImpawnListItemLists: {
           index: 1,
           size: 10,
           show: observable.map({})

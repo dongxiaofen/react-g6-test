@@ -57,6 +57,8 @@ import {
     EquityRela,
     MonitorAlert,
     Search,
+    // History,
+    // Result
 // first append here from plop
   } from 'containers';
 

@@ -21,23 +21,22 @@ function ManagementItem({personData}) {
   if (!personData || Object.keys(personData).length === 0) {
     return (
       <div>
-        <SecondTitle module={personData.name} />
+        <div style={{marginTop: '30px'}}></div>
         <PdfNotFound />
       </div>
     );
   }
-
   const externalPerson = {
     dataConfig: [
       // {'key': 'entName', 'width': '6'},
-      // {'key': 'entType', 'width': '6'},
-      {'key': 'esDate', 'width': '6'},
-      {'key': 'fundedRatio', 'width': '6'},
-      {'key': 'subConam', 'width': '6'},
+      {'key': 'entName', 'width': '6'},
+      {'key': 'entStatus', 'width': '6'},
       {'key': 'regCap', 'width': '6'},
-      {'key': 'frName', 'width': '6'},
-      {'key': 'regNo', 'width': '6'},
-      {'key': 'regOrg', 'width': '6'},
+      {'key': 'esDate', 'width': '6'},
+      // {'key': 'regCap', 'width': '6'},
+      // {'key': 'frName', 'width': '6'},
+      // {'key': 'regNo', 'width': '6'},
+      // {'key': 'regOrg', 'width': '6'},
     ],
     item: parseObject(personData.frPositionList),
     dict: 'frinvListPdf',
@@ -46,15 +45,16 @@ function ManagementItem({personData}) {
   };
   const ForeignInvestment = {
     dataConfig: [
-      // {'key': 'entName', 'width': '6'},
+      {'key': 'entName', 'width': '6'},
+      {'key': 'entStatus', 'width': '6'},
       // {'key': 'entType', 'width': '6'},
-      {'key': 'esDate', 'width': '6'},
-      {'key': 'fundedRatio', 'width': '6'},
       {'key': 'subConam', 'width': '6'},
+      {'key': 'fundedRatio', 'width': '6'},
       {'key': 'regCap', 'width': '6'},
-      {'key': 'frName', 'width': '6'},
-      {'key': 'regNo', 'width': '6'},
-      {'key': 'regOrg', 'width': '6'},
+      {'key': 'esDate', 'width': '6'},
+      // {'key': 'frName', 'width': '6'},
+      // {'key': 'regNo', 'width': '6'},
+      // {'key': 'regOrg', 'width': '6'},
     ],
     item: parseObject(personData.managementInvList),
     dict: 'frinvListPdf',
@@ -63,18 +63,18 @@ function ManagementItem({personData}) {
   };
   const ExternalService = {
     dataConfig: [
-      // {'key': 'entName', 'width': '6'},
-      // {'key': 'entStatus', 'width': '6'},
+      {'key': 'entName', 'width': '6'},
+      {'key': 'entStatus', 'width': '6'},
       // {'key': 'entType', 'width': '6'},
-      {'key': 'esDate', 'width': '6'},
-      {'key': 'fundedRatio', 'width': '6'},
-      {'key': 'subConam', 'width': '6'},
+      {'key': 'thisPosition', 'width': '6'},
+      // {'key': 'fundedRatio', 'width': '6'},
       {'key': 'regCap', 'width': '6'},
-      {'key': 'frName', 'width': '6'},
-      {'key': 'regNo', 'width': '6'},
-      {'key': 'regOrg', 'width': '6'},
+      {'key': 'esDate', 'width': '6'},
+      // {'key': 'frName', 'width': '6'},
+      // {'key': 'regNo', 'width': '6'},
+      // {'key': 'regOrg', 'width': '6'},
     ],
-    item: parseObject(personData.managementInvList),
+    item: parseObject(personData.managementPositionList),
     dict: 'frinvListPdf',
     hasConfig: true,
     type: 'array',
@@ -82,7 +82,7 @@ function ManagementItem({personData}) {
 
   return (
     <div className={styles.management}>
-      <SecondTitle module={personData.name} />
+      <SecondTitle module={`${personData.name}（${personData.positions.join(',')}）`} />
       <p>对外担任法人（{personData.frPositionList.length}）</p>
       <PdfSimpleKey {...externalPerson} />
       <p>对外投资（{personData.managementInvList.length}）</p>

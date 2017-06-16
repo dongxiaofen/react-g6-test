@@ -43,6 +43,7 @@ class BannerStore {
   // 下载pdf配置
   @observable pdfDownloadConfig = {
     levelOne: [
+      { label: '信息概览', value: 'SUMMERY', checked: false, type: 'basicReport' },
       { label: '工商信息', value: 'CORP', checked: false, type: 'basicReport' },
       { label: '对外投资任职', value: 'INV_POS', checked: false, type: 'basicReport' },
       { label: '上市披露', value: 'STOCK', checked: false, type: 'basicReport' },
@@ -52,22 +53,22 @@ class BannerStore {
       { label: '纳税公告', value: 'RISK_TAXATION', checked: false, type: 'basicReport' },
       { label: '法务信息', value: 'RISK', checked: false, type: 'basicReport' },
       { label: '工商抽查', value: 'BUSINESS', checked: false, type: 'basicReport' },
-      { label: '股权相关', value: 'PLEDGE', checked: false, type: 'basicReport' },
+      // { label: '股权相关', value: 'PLEDGE', checked: false, type: 'basicReport' },
       { label: '关联图', value: 'NETWORK', checked: false, type: 'report' },
-      { label: '抵押信息', value: 'MORTGAGE', checked: false, type: 'basicReport' },
+      { label: '抵质押信息', value: 'MORTGAGE', checked: false, type: 'basicReport' },
       { label: '分析报告', value: 'ANALYSREPORT', checked: false, type: 'loan' },
     ],
     levelTwo: {
-      'SUMMARY': [],
+      'SUMMERY': [],
       'CORP': [
         { label: '照面信息', value: 'CORP_BASIC', checked: false },
         { label: '工商变更', value: 'CORP_ALTER', checked: false },
         { label: '企业年报', value: 'CORP_YEAR_REPORT', checked: false },
       ],
       'INV_POS': [
-        { label: '法人相关', value: 'INV_POS_FR', checked: false, },
-        { label: '企业对外投资', value: 'INV_POS_ENT', checked: false, },
-        { label: '董监高', value: 'INV_POS_MANAGEMENT', checked: false, },
+        { label: '法人对外投资任职', value: 'INV_POS_FR', checked: false, type: 'basicReport' },
+        { label: '企业对外投资', value: 'INV_POS_ENT', checked: false, type: 'basicReport' },
+        { label: '董监高对外投资任职', value: 'INV_POS_MANAGEMENT', checked: false, type: 'report' },
       ],
       'STOCK': [
         { label: '公司概况', value: 'STOCK_INFO', checked: false },
@@ -81,7 +82,7 @@ class BannerStore {
       ],
       'TEAM': [
         { label: '招聘/员工背景', value: 'TEAM_RECRUITMENT_RESUME', checked: false },
-        { label: '团队监控分析', value: 'TEAM_ANALYSIS', checked: false },
+        { label: '团队发展趋势', value: 'TEAM_ANALYSIS', checked: false },
       ],
       'RISK_TAXATION': [],
       'RISK': [
@@ -102,13 +103,13 @@ class BannerStore {
         { label: '风险关系', value: 'NETWORK_BLACKLIST', checked: false },
       ],
       'PLEDGE': [
-        { label: '股权冻结', value: 'PLEDGE_EQUITY_SHARE', checked: false },
+        // { label: '股权冻结', value: 'PLEDGE_EQUITY_SHARE', checked: false },
         // { label: '股权质押', value: 'RISK_ANNOUNCEMENT', checked: false },
         // { label: '股权转让', value: 'RISK_JUDGEMENT', checked: false },
       ],
       'MORTGAGE': [
         // { label: '股权相关', value: 'RISK_ANNOUNCEMENT', checked: false },
-        { label: '抵押相关', value: 'PLEDGE_EQUITY_SHARE', checked: false },
+        { label: '股权相关', value: 'PLEDGE_EQUITY_SHARE', checked: false },
         // { label: '抵押人信息', value: 'RISK_ANNOUNCEMENT', checked: false },
         // { label: '抵押变更', value: 'RISK_JUDGEMENT', checked: false },
       ],
@@ -522,6 +523,7 @@ class BannerStore {
     this.stockCode = '';
     this.pdfDownloadConfig = {
       levelOne: [
+        { label: '信息概览', value: 'SUMMERY', checked: false, type: 'basicReport' },
         { label: '工商信息', value: 'CORP', checked: false, type: 'basicReport' },
         { label: '对外投资任职', value: 'INV_POS', checked: false, type: 'basicReport' },
         { label: '上市披露', value: 'STOCK', checked: false, type: 'basicReport' },
@@ -531,22 +533,22 @@ class BannerStore {
         { label: '纳税公告', value: 'RISK_TAXATION', checked: false, type: 'basicReport' },
         { label: '法务信息', value: 'RISK', checked: false, type: 'basicReport' },
         { label: '工商抽查', value: 'BUSINESS', checked: false, type: 'basicReport' },
-        { label: '股权相关', value: 'PLEDGE', checked: false, type: 'basicReport' },
+        // { label: '股权相关', value: 'PLEDGE', checked: false, type: 'basicReport' },
         { label: '关联图', value: 'NETWORK', checked: false, type: 'report' },
-        { label: '抵押信息', value: 'MORTGAGE', checked: false, type: 'basicReport' },
+        { label: '抵质押信息', value: 'MORTGAGE', checked: false, type: 'basicReport' },
         { label: '分析报告', value: 'ANALYSREPORT', checked: false, type: 'loan' },
       ],
       levelTwo: {
-        'SUMMARY': [],
+        'SUMMERY': [],
         'CORP': [
           { label: '照面信息', value: 'CORP_BASIC', checked: false },
           { label: '工商变更', value: 'CORP_ALTER', checked: false },
           { label: '企业年报', value: 'CORP_YEAR_REPORT', checked: false },
         ],
         'INV_POS': [
-          { label: '法人相关', value: 'INV_POS_FR', checked: false, type: 'basicReport' },
+          { label: '法人对外投资任职', value: 'INV_POS_FR', checked: false, type: 'basicReport' },
           { label: '企业对外投资', value: 'INV_POS_ENT', checked: false, type: 'basicReport' },
-          { label: '董监高', value: 'INV_POS_MANAGEMENT', checked: false, type: 'report' },
+          { label: '董监高对外投资任职', value: 'INV_POS_MANAGEMENT', checked: false, type: 'report' },
         ],
         'STOCK': [
           { label: '公司概况', value: 'STOCK_INFO', checked: false },
@@ -560,7 +562,7 @@ class BannerStore {
         ],
         'TEAM': [
           { label: '招聘/员工背景', value: 'TEAM_RECRUITMENT_RESUME', checked: false },
-          { label: '团队监控分析', value: 'TEAM_ANALYSIS', checked: false },
+          { label: '团队发展趋势', value: 'TEAM_ANALYSIS', checked: false },
         ],
         'RISK_TAXATION': [],
         'RISK': [
@@ -581,13 +583,13 @@ class BannerStore {
           { label: '风险关系', value: 'NETWORK_BLACKLIST', checked: false },
         ],
         'PLEDGE': [
-          { label: '股权冻结', value: 'PLEDGE_EQUITY_SHARE', checked: false },
+          // { label: '股权冻结', value: 'PLEDGE_EQUITY_SHARE', checked: false },
           // { label: '股权质押', value: 'RISK_ANNOUNCEMENT', checked: false },
           // { label: '股权转让', value: 'RISK_JUDGEMENT', checked: false },
         ],
         'MORTGAGE': [
           // { label: '股权相关', value: 'RISK_ANNOUNCEMENT', checked: false },
-          { label: '抵押相关', value: 'PLEDGE_EQUITY_SHARE', checked: false },
+          { label: '股权相关', value: 'PLEDGE_EQUITY_SHARE', checked: false },
           // { label: '抵押人信息', value: 'RISK_ANNOUNCEMENT', checked: false },
           // { label: '抵押变更', value: 'RISK_JUDGEMENT', checked: false },
         ],

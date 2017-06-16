@@ -108,6 +108,13 @@ class SearchCompanyStore {
     this.searchKeyFilter = this.searchKey;
     // 打开loading
     this.isShowLoading = true;
+    if (!this.searchKey) {
+      messageStore.openMessage({
+        type: 'error',
+        content: '搜索关键字必须填写'
+      });
+      return false;
+    }
     const params = {
       params: {
         keyWord: this.searchKey,
@@ -191,7 +198,13 @@ class SearchCompanyStore {
   }
   // 点击搜索按钮获取搜索列表
   @action.bound searchCompanyClick() {
-    browserHistory.push('/searchCompany');
+    if (!this.searchKey) {
+      messageStore.openMessage({
+        type: 'error',
+        content: '搜索关键字必须填写'
+      });
+      return false;
+    }
     // 重置页数
     this.pageParams.index = 1;
     // 重置筛选条件

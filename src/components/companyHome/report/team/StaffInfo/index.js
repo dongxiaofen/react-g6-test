@@ -17,7 +17,7 @@ function RecruitmentInfo({ finishSchool, majorInfo }) {
           <div style="box-shadow: 0 0 7px #ddd; padding: 15px 20px; background-color: #fff">
             <p style="text-align: center;">
               <a style="color:#9BCB65;">
-                ${ticket.name}：${ticket.value}人
+                ${ticket.name}：${ticket.value}%
               </a>
             </p>
           </div>`;
