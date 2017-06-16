@@ -44,7 +44,7 @@ function PosItem({modalStore, investmentStore}) {
       <div className={styles.itemBody}>
         <div className={styles.listItem}>对外担任法人代表（{frPositionListCount}家）</div>
         <div className={styles.listItem}>对外投资（{managementInvListCount}家）</div>
-        <div className={styles.listItem}>对外任职（{managementPositionListCount}）家</div>
+        <div className={styles.listItem}>对外任职（{managementPositionListCount}家）</div>
       </div>
     </div>
   );
