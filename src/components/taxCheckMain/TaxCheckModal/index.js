@@ -105,7 +105,7 @@ function TaxCheckModal({taxCheckStore}) {
         {taxCheckStore.isLockCompanyName ?
           <Input
             disabled="disabled"
-            className={styles.componayInput}
+            className={`${styles.componayInput} ${styles.componayInputDisabled}`}
             inputType="singleline"
             onChange={inputNameChange.bind(null)}
             value={taxCheckStore.companyName}

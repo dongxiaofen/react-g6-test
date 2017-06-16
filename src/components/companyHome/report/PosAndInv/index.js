@@ -21,7 +21,7 @@ function PosAndInv({investmentStore}) {
   return (
     <div className={styles.box}>
       <ModuleTitle module="董监高对外投资任职" count={count} />
-      {count > 0 ? output : <ErrorText error={{message: '暂无信息'}}/>}
+      {count > 0 ? output : <ErrorText error={{message: '暂无信息，可能存在时间相对滞后或未公示情况，仅供参考'}}/>}
     </div>
   );
 }
