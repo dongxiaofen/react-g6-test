@@ -13,7 +13,7 @@ function TableBody({dateType, data, hasFlag, routing, searchCompanyStore, owner 
     return str;
   };
   const jumpPage = (companyName) => {
-    if (dateType && dateType === 'comprehensive') {
+    if (dateType && dateType === 'comprehensive' && owner && owner === 'own') {
       routing.push(`/companyHome/comprehenEval?companyName=${companyName}`);
     }else if (owner && owner === 'own') {
       routing.push(`/companyHome/monitorAlert?companyName=${companyName}`);
