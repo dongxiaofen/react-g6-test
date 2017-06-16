@@ -43,6 +43,7 @@ class BannerStore {
   // 下载pdf配置
   @observable pdfDownloadConfig = {
     levelOne: [
+      { label: '信息概览', value: 'SUMMERY', checked: false, type: 'basicReport' },
       { label: '工商信息', value: 'CORP', checked: false, type: 'basicReport' },
       { label: '对外投资任职', value: 'INV_POS', checked: false, type: 'basicReport' },
       { label: '上市披露', value: 'STOCK', checked: false, type: 'basicReport' },
@@ -58,16 +59,16 @@ class BannerStore {
       { label: '分析报告', value: 'ANALYSREPORT', checked: false, type: 'loan' },
     ],
     levelTwo: {
-      'SUMMARY': [],
+      'SUMMERY': [],
       'CORP': [
         { label: '照面信息', value: 'CORP_BASIC', checked: false },
         { label: '工商变更', value: 'CORP_ALTER', checked: false },
         { label: '企业年报', value: 'CORP_YEAR_REPORT', checked: false },
       ],
       'INV_POS': [
-        { label: '企业对外投资', value: 'INV_POS_ENT', checked: false, },
-        { label: '法人对外投资任职', value: 'INV_POS_FR', checked: false, },
-        { label: '董监高对外投资任职', value: 'INV_POS_MANAGEMENT', checked: false, },
+        { label: '法人相关', value: 'INV_POS_FR', checked: false, type: 'basicReport' },
+        { label: '企业对外投资', value: 'INV_POS_ENT', checked: false, type: 'basicReport' },
+        { label: '董监高', value: 'INV_POS_MANAGEMENT', checked: false, type: 'report' },
       ],
       'STOCK': [
         { label: '公司概况', value: 'STOCK_INFO', checked: false },
@@ -81,7 +82,7 @@ class BannerStore {
       ],
       'TEAM': [
         { label: '招聘/员工背景', value: 'TEAM_RECRUITMENT_RESUME', checked: false },
-        { label: '团队监控分析', value: 'TEAM_ANALYSIS', checked: false },
+        { label: '团队发展趋势', value: 'TEAM_ANALYSIS', checked: false },
       ],
       'RISK_TAXATION': [],
       'RISK': [
@@ -522,6 +523,7 @@ class BannerStore {
     this.stockCode = '';
     this.pdfDownloadConfig = {
       levelOne: [
+        { label: '信息概览', value: 'SUMMERY', checked: false, type: 'basicReport' },
         { label: '工商信息', value: 'CORP', checked: false, type: 'basicReport' },
         { label: '对外投资任职', value: 'INV_POS', checked: false, type: 'basicReport' },
         { label: '上市披露', value: 'STOCK', checked: false, type: 'basicReport' },
@@ -537,7 +539,7 @@ class BannerStore {
         { label: '分析报告', value: 'ANALYSREPORT', checked: false, type: 'loan' },
       ],
       levelTwo: {
-        'SUMMARY': [],
+        'SUMMERY': [],
         'CORP': [
           { label: '照面信息', value: 'CORP_BASIC', checked: false },
           { label: '工商变更', value: 'CORP_ALTER', checked: false },
@@ -560,7 +562,7 @@ class BannerStore {
         ],
         'TEAM': [
           { label: '招聘/员工背景', value: 'TEAM_RECRUITMENT_RESUME', checked: false },
-          { label: '团队监控分析', value: 'TEAM_ANALYSIS', checked: false },
+          { label: '团队发展趋势', value: 'TEAM_ANALYSIS', checked: false },
         ],
         'RISK_TAXATION': [],
         'RISK': [

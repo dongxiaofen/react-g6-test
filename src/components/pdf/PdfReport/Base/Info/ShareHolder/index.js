@@ -19,6 +19,9 @@ function ShareHolder({ moduleData }) {
       if (item.subConam) {
         item.subConam = parseFloat(item.subConam).toFixed(2);
       }
+      if (item.relConam) {
+        item.relConam = parseFloat(item.relConam).toFixed(2);
+      }
       newArr = [...newArr, item];
     });
     return newArr;

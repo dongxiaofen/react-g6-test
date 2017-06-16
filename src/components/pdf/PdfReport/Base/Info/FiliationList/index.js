@@ -19,7 +19,7 @@ function FiliationList({ moduleData }) {
       {'key': 'brRegno', 'width': '1'},
       {'key': 'belong_org', 'width': '2'},
       {'key': 'brPrincipal', 'width': '1'},
-      {'key': 'cbuItem', 'width': '2'},
+      // {'key': 'cbuItem', 'width': '2'},
       {'key': 'brAddr', 'width': '2'},
     ],
     items: moduleData,
