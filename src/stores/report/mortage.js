@@ -1,5 +1,6 @@
 import { observable, action } from 'mobx';
 import { companyHomeApi } from 'api';
+// import uiStore from './ui';
 // import axios from 'axios';
 
 class MortageStore {
@@ -16,6 +17,7 @@ class MortageStore {
         this.sharesFrostList = sharesFrostListNoData ? noData : {content: resp.data.shares.sharesFrostList};
         this.sharesImpawnList = sharesImpawnListNoDate ? noData : {content: resp.data.shares.sharesImpawnList};
         this.sharesTransferList = sharesTransferListNoData ? noData : {content: resp.data.shares.sharesTransferList};
+        // uiStore.uiState.taxCheckPager.totalElements = resp.data.totalElements;
       }))
       .catch(action('get pledge error', err => {
         const errorData = {error: err.response.data, content: []};

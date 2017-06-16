@@ -39,7 +39,7 @@ function PosItem({modalStore, investmentStore}) {
       <div className={styles.itemBoxTop}>
         <div className={styles.nameTag}>{itemData.name}</div>
         <div className={styles.postion}>{postion}</div>
-        <div className={styles.info}><a onClick={getPosItemInfo}>详情</a></div>
+        <div className={styles.info}><span onClick={getPosItemInfo}>详情</span></div>
       </div>
       <div className={styles.itemBody}>
         <div className={styles.listItem}>对外担任法人代表（{frPositionListCount}家）</div>
