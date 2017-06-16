@@ -290,6 +290,7 @@ class AccountSettingStore {
             const pId = treeData.formatResult[activeIndex].parentUserId;
             this.tree.activeId = uId;
             this.getUserInfo(uId);
+            this.getAlertCorp(uId);
             // this.getReportAndMonitor(uId);
             // this.getProvince(uId);
             // this.getIndustry(uId);
