@@ -25,7 +25,7 @@ function TableHead({ companyType, tip, title }) {
         <i className={`pull-left ${createIcon()} ${styles.nav_icon}`}></i>
         <div className={`${styles.nav_text} pull-left`}>
           <span className={styles.company}>{title}</span>
-          <span className={styles.number}>TOP10</span>
+          {/* <span className={styles.number}>TOP10</span> */}
         </div>
       </div>
       <div className="pull-right">

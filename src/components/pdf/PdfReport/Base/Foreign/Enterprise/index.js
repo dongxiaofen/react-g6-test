@@ -16,7 +16,9 @@ function Enterprise({moduleData}) {
   const parseNumber = () => {
     let newArr = [];
     moduleData.map( (item) => {
-      item.subConam = parseFloat(item.subConam).toFixed(2);
+      if (!isNaN(item.subConam)) {
+        item.subConam = parseFloat(item.subConam).toFixed(2);
+      }
       item.regCap = parseFloat(item.regCap).toFixed(2);
       newArr = [...newArr, item];
     });

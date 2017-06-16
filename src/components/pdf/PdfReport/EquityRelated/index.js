@@ -1,6 +1,6 @@
 import React, {PropTypes} from 'react';
 import { observer, inject } from 'mobx-react';
-// import EquityFreeze from './EquityFreeze';
+import EquityFreeze from './EquityFreeze';
 import EquityPledge from './EquityPledge';
 import EquityTransfer from './EquityTransfer';
 // import CorporateMortgage from './CorporateMortgage';
@@ -10,12 +10,12 @@ import pathval from 'pathval';
 function EquityRelated({pdfStore, judgeIsModuleExist}) {
   return (
     <div>
-      {/*{*/}
-        {/*judgeIsModuleExist('PLEDGE_EQUITY_SHARE') ? <div>*/}
-          {/*<PdfTitle module="股权相关" subModule="股权冻结" />*/}
-          {/*<EquityFreeze moduleData={pathval.getPathValue(pdfStore, 'shares.sharesFrostList')} />*/}
-        {/*</div> : ''*/}
-      {/*}*/}
+      {
+        judgeIsModuleExist('PLEDGE_EQUITY_SHARE') ? <div>
+          <PdfTitle module="股权相关" subModule="股权冻结" />
+          <EquityFreeze moduleData={pathval.getPathValue(pdfStore, 'shares.sharesFrostList')} />
+        </div> : ''
+      }
       {
         judgeIsModuleExist('PLEDGE_EQUITY_SHARE') ? <div>
           <PdfTitle module="股权相关" subModule="股权质押" />
