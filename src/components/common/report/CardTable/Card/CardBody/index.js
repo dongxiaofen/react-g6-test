@@ -23,12 +23,14 @@ function CardBody({ meta, cData, isExpanded }) {
     const output = [];
     meta.body.map((item, idx) => {
       if (isExpanded || !item.hide) {
-        output.push(
-          <Col key={item.key + idx} width={item.width} className={styles.col} >
+        if (!item.noValueNoShow || !cData[item.key] === undefined) {
+          output.push(
+            <Col key={item.key + idx} width={item.width} className={styles.col} >
             <span className={styles.key}>{config[meta.dict][item.key]}：</span>
             {getValue(item, cData[item.key])}
-          </Col>
-        );
+            </Col>
+          );
+        }
       }
     });
     return output;
