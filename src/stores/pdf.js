@@ -87,7 +87,7 @@ class PdfStore {
         'OPERATION_TRADEMARK',
         'TEAM_RECRUITMENT_RESUME',
         'RISK_TAXATION',
-        'RISK_JUDGEMENT',
+        // 'RISK_JUDGEMENT',
         'RISK_ANNOUNCEMENT',
         'RISK_NOTICE',
         'RISK_EXECUTE',
