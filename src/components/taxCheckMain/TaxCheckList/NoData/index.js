@@ -7,7 +7,7 @@ function NoneData({}) {
   return (
     <div className={styles.noneData}>
       <img src={noneDataImage} alt="noneData" />
-      <p>还没有核查结果，请添加核查</p>
+      <p>尚未进行企业年度报税核查，请添加</p>
     </div>
   );
 }
