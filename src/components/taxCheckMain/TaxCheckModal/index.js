@@ -119,7 +119,7 @@ function TaxCheckModal({taxCheckStore}) {
         }
       </div>
       {generateSelect()}
-      {taxCheckStore.selectConf.length < 20 && <button className={styles.addBtn} onClick={addSelectItem}>添加核查项</button>}
+      {taxCheckStore.selectConf.length < 23 && <button className={styles.addBtn} onClick={addSelectItem}>添加核查项</button>}
     </div>
   );
 }
