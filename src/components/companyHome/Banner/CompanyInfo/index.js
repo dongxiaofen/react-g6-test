@@ -23,6 +23,8 @@ function CompanyInfo({ bannerStore, routing}) {
     }
     return reportIcon;
   };
+  const featureIndustry = bannerInfoData.bannerInfo.featureIndustry;
+  const industryType = featureIndustry && featureIndustry.result ? featureIndustry.result.industryType : [];
   return (
     <div className={`clearfix ${styles.companyBox}`}>
       <img src={createIcon()} className={styles.reportIcon}/>
@@ -32,7 +34,7 @@ function CompanyInfo({ bannerStore, routing}) {
            <RiskLabel riskInfo={bannerInfoData.bannerInfo.bannerInfo.riskInfo} />
         </div>
         <div className={`clearfix ${styles.baseInfo}`}>
-          <Industry industryNames={bannerInfoData.bannerInfo.featureIndustry.result.industryType} />
+          <Industry industryNames={industryType} />
           <Contact {...bannerStore} />
           <HistoryName {...bannerStore} />
         </div>

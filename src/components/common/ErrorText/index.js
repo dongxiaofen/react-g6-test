@@ -131,7 +131,6 @@ function ErrorText({module, error, errCategory = 0, height, errorWords, path}) {
     const linkUrl = <span className={styles.errorWords} onClick={jumpPage.bind(this)}>{errorWords}</span>;
     const frontText = errorTips.slice(0, errorTips.indexOf(errorWords));
     const endText = errorTips.slice(errorTips.indexOf(errorWords) + errorWords.length, errorTips.length + 1);
-    console.log(frontText);
     return (
       <span>
         <span>{frontText}</span>

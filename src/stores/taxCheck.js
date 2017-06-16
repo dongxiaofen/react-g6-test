@@ -15,7 +15,7 @@ class TaxCheckStore {
     {year: '2015', taxIndex: 'R001', input: '', msg: ''},
   ];
   // 核查列表数据 假数据
-  @observable taxListData = {};
+  @observable taxListData = [];
   @observable taxState = false;
   // loading
   @observable loading = false;
@@ -24,6 +24,7 @@ class TaxCheckStore {
 
   @observable taxCheckInfo = {};
   @observable taxCheckInfoCompany = '';
+  @observable isMount = false;
 
   @action.bound addSelectItem() {
     this.selectConf.push({
@@ -82,13 +83,14 @@ class TaxCheckStore {
       }));
   }
   // 获取列表数据
-  @action.bound getTaxCheckList() {
+  @action.bound getReportModule() {
     this.taxState = true;
     if (window.reportSourceCancel === undefined) {
       window.reportSourceCancel = [];
     }
     const source = CancelToken.source();
     window.reportSourceCancel.push(source.cancel);
+    this.isMount = true;
     // 打开loading
     this.loading = true;
     const params = {
@@ -101,7 +103,7 @@ class TaxCheckStore {
     // 获取列表数据
     companyHomeApi.getTaxCheckList(params, source)
       .then(action('taxList list', (resp) => {
-        this.taxListData = resp.data;
+        this.taxListData = resp.data.content;
         // 关闭loading
         this.loading = false;
         uiStore.uiState.taxCheckPager.totalElements = resp.data.totalElements;
@@ -109,7 +111,7 @@ class TaxCheckStore {
       .catch(action('taxList error', (err) => {
         // 关闭loading
         this.loading = false;
-        this.taxListData = {error: err.response.data};
+        // this.taxListData = {error: err.response.data};
         console.log(err.response, '=====taxList error');
       }));
   }
@@ -127,10 +129,11 @@ class TaxCheckStore {
 
   // 重置数据
   @action.bound resetStore() {
-    this.taxListData = {};
+    this.taxListData = [];
     this.loading = false;
     this.taxState = false;
     this.monitorId = '';
+    this.isMount = false;
   }
 }
 export default new TaxCheckStore();
