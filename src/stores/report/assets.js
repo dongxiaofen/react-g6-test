@@ -3,7 +3,6 @@ import { companyHomeApi } from 'api';
 import uiStore from '../ui';
 import axios from 'axios';
 const CancelToken = axios.CancelToken;
-import pathval from 'pathval';
 
 class AssetsStore {
   @observable trademarkData = [];
