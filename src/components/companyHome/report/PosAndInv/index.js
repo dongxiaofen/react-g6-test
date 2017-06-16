@@ -2,6 +2,7 @@ import React, { PropTypes } from 'react';
 import { observer, inject } from 'mobx-react';
 // import { ModuleTitle, CardTable } from 'components/common/report';
 import { ModuleTitle } from 'components/common/report';
+import ErrorText from 'components/common/ErrorText';
 import PosItem from './PosItem';
 import styles from './index.less';
 
@@ -20,7 +21,7 @@ function PosAndInv({investmentStore}) {
   return (
     <div className={styles.box}>
       <ModuleTitle module="董监高对外投资任职" count={count} />
-      {output}
+      {count > 0 ? output : <ErrorText error={{message: '暂无信息，可能存在时间相对滞后或未公示情况，仅供参考'}}/>}
     </div>
   );
 }

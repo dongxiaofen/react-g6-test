@@ -24,8 +24,6 @@ export default class Team extends Component {
 
   render() {
     const teamStore = this.props.teamStore;
-    const { reportId, analysisReportId } = this.props.routing.location.query;
-    const disabledTabPane = reportId || analysisReportId;
     return (
       <Tabs defaultActiveKey="招聘/员工背景">
         <TabPane tab="招聘/员工背景" key="招聘/员工背景">
@@ -47,7 +45,7 @@ export default class Team extends Component {
               isLoading={teamStore.isLoading} />
           </div>
         </TabPane>
-        <TabPane tab="团队监控分析" key="团队监控分析" disabled={disabledTabPane}>
+        <TabPane tab="团队发展趋势" key="团队发展趋势">
           <div>
             <ModuleTitle module="新增招聘地点/岗位" />
             <SiteAndJob

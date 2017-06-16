@@ -56,6 +56,8 @@ import {
     ManagePosAndInv,
     EquityRela,
     MonitorAlert,
+    // History,
+    // Result
 // first append here from plop
   } from 'containers';
 
@@ -84,7 +86,11 @@ export default () => {
     <Route path="/" component={ App }>
       <IndexRoute component={ HomePage } />
       <Route path="pdfDown" component={ Pdf } />
-      <Route path="searchCompany" component={ SearchCompany } onEnter={requireAuth} />
+      <Route path="searchCompany" component={ SearchCompany } onEnter={requireAuth} >
+        {/*<IndexRedirect to="history" />
+        <Route path="history" component={History} onEnter={requireAuth} />
+        <Route path="result" component={Result} onEnter={requireAuth} />*/}
+      </Route>
       <Route path="myHomePage" component={ MyHomePage } onEnter={requireAuth} />
       <Route path="riskHeadlines" component={ RiskHeadlines } onEnter={requireAuth} />
       <Route path="account" component={ Account } onEnter={requireAuth} />

@@ -8,6 +8,9 @@ function Enterprise({investmentStore}) {
   const count = evtData.content ? evtData.content.length : 0;
   const isLoading = evtData.content === undefined ? true : false;
   const isError = evtData.error;
+  const modifyTextNumber = (value) => {
+    return Number(value).toFixed(2);
+  };
   const data = {
     meta: {
       title: {
@@ -16,9 +19,9 @@ function Enterprise({investmentStore}) {
       },
       body: [
         { 'key': 'name', 'width': '4' },
-        { 'key': 'subConam', 'width': '4' },
+        { 'key': 'subConam', 'width': '4', 'modifyText': modifyTextNumber},
         { 'key': 'fundedRatio', 'width': '4' },
-        { 'key': 'regCap', 'width': '4', 'hide': true },
+        { 'key': 'regCap', 'width': '4', 'hide': true, 'modifyText': modifyTextNumber},
         { 'key': 'regNo', 'width': '4', 'hide': true },
         { 'key': 'regOrg', 'width': '4', 'hide': true },
         { 'key': 'esDate', 'width': '4', 'hide': true },

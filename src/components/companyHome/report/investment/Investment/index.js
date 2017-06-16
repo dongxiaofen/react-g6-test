@@ -8,6 +8,9 @@ function Investment({investmentStore}) {
   const count = frData.content ? frData.content.length : 0;
   const isLoading = frData.content === undefined ? true : false;
   const isError = frData.error;
+  const modifyTextNumber = (value) => {
+    return Number(value).toFixed(2);
+  };
   let frName = '';
   if (count > 0) {
     frName = frData.content[0].name;
@@ -21,8 +24,8 @@ function Investment({investmentStore}) {
       body: [
         { 'key': 'esDate', 'width': '4' },
         { 'key': 'fundedRatio', 'width': '4' },
-        { 'key': 'subConam', 'width': '4' },
-        { 'key': 'regCap', 'width': '4', 'hide': true },
+        { 'key': 'subConam', 'width': '4', 'modifyText': modifyTextNumber},
+        { 'key': 'regCap', 'width': '4', 'hide': true, 'modifyText': modifyTextNumber},
         { 'key': 'frName', 'width': '4', 'hide': true },
         { 'key': 'regNo', 'width': '4', 'hide': true },
         { 'key': 'regOrg', 'width': '4', 'hide': true },

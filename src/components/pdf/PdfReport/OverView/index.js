@@ -125,7 +125,8 @@ function OverView({ pdfStore, clientStore }) {
   };
   const riskRelationshipMap = {
     mapKey: {
-      riskRelationship: '风险关联信息'
+      riskRelationship: '风险关联信息',
+      linkRelationship: '企业关联信息',
     },
     title: '风险关系',
     valueData: summaryData.network ? {data: summaryData.network, type: 'object'} : undefined,

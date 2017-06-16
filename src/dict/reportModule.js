@@ -136,7 +136,7 @@ const config = {
     'entStatus': '状态',
     'entType': '类型',
     'esDate': '成立日期',
-    'fundedRatio': '认缴出资比例',
+    'fundedRatio': '出资比例',
     'subConam': '认缴出资额（万元）',
     'regCap': '注册资金（万元）',
     'frName': '法人代表',
@@ -313,7 +313,7 @@ const config = {
   biddingList: {
     'title': '招投标标题',
     'type': '公告类型',
-    // 'publishDate': '公告日期',
+    'publishDate': '公告日期', //PDF里面使用不要注释
     'participator': '投标方',
     'date': '公告日期',
     // 'url': '查看详情',
@@ -362,7 +362,7 @@ const config = {
   },
   // 开庭公告
   courtAnnouncement: {
-    'type': '公告类型',
+    'typeName': '公告类型',
     'publishTime': '公告时间',
     'court': '公告法院',
     'judgeTime': '开庭时间',

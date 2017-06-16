@@ -3,6 +3,7 @@ import { observer, inject } from 'mobx-react';
 import { runInAction } from 'mobx';
 import styles from './index.less';
 // import TaxCheckItem from './TaxCheckItem';
+import Pager from 'components/common/Pager';
 import ErrorText from 'components/common/ErrorText';
 import Button from 'components/lib/button';
 
@@ -74,11 +75,12 @@ export default class TaxCheckList extends Component {
         );
       });
     } else {
-      listDom.push(<ErrorText error={{message: '尚未进行企业年度报税核查，请添加（首次点击查询税务的提示文案）'}} key="ErrorText"/>);
+      listDom.push(<ErrorText error={{message: '尚未进行企业年度报税核查，请添加'}} key="ErrorText"/>);
     }
     return (
       <div className={styles.box}>
         {listDom}
+        <Pager tData={taxListData} module="taxCheckPager" type="large" />
       </div>
     );
   }

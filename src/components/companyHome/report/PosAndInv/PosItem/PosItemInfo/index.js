@@ -1,5 +1,6 @@
 import React, { PropTypes } from 'react';
 import { observer, inject } from 'mobx-react';
+import ErrorText from 'components/common/ErrorText';
 import styles from './index.less';
 
 function PosItemInfo({investmentStore, bannerStore}) {
@@ -65,15 +66,15 @@ function PosItemInfo({investmentStore, bannerStore}) {
       <div className={styles.boxBody}>
         <div className={styles.tableWrap}>
           <div className={styles.tableName}>对外担任法人代表（{frPositionCount}）</div>
-          {frPositionTabels}
+          {frPositionCount > 0 ? frPositionTabels : <ErrorText error={{message: '暂无信息'}}/>}
         </div>
         <div className={styles.tableWrap}>
           <div className={styles.tableName}>对外投资（{managementInvCount}）</div>
-          {managementInvTabels}
+          {managementInvCount > 0 ? managementInvTabels : <ErrorText error={{message: '暂无信息'}}/>}
         </div>
         <div className={styles.tableWrap}>
           <div className={styles.tableName}>对外任职（{managementPositionCount}）</div>
-          {managementPositionTabels}
+          {managementPositionCount > 0 ? managementPositionTabels : <ErrorText error={{message: '暂无信息'}}/>}
         </div>
       </div>
     </div>

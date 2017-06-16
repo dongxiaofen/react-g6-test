@@ -5,7 +5,7 @@ import PdfSimpleKey from 'components/common/pdf/PdfSimpleKey';
 import SecondTitle from 'components/common/pdf/SecondTitle';
 
 function RegisterInfo({ moduleData }) {
-  if (moduleData === null || moduleData.length === 0) {
+  if (!moduleData || moduleData.length === 0) {
     return (
       <div>
         <SecondTitle module="注册信息"/>
