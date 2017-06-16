@@ -30,7 +30,7 @@ function Menu({ routing }) {
     {
       parent: { module: '报告', tagImg: imgLoanBefore},
       children: [
-        { module: '基本报告', route: 'reportList?activeKey=basic' },
+        { module: '基础报告', route: 'reportList?activeKey=basic' },
         { module: '高级报告', route: 'reportList?activeKey=advanced' },
       ]
     },
@@ -39,7 +39,7 @@ function Menu({ routing }) {
       children: [
         { module: '多维综合评价', route: 'analysisList?activeKey=multi' },
         { module: '盈利能力分析', route: 'analysisList?activeKey=profit' },
-        { module: '运营能力分析', route: 'analysisList?activeKey=operate' },
+        { module: '营运能力分析', route: 'analysisList?activeKey=operate' },
         { module: '成长能力分析', route: 'analysisList?activeKey=develop' },
       ]
     },

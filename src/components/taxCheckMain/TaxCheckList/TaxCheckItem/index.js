@@ -26,7 +26,7 @@ function TaxCheckItem({taxCheckStore}) {
       listGroup.push(group);
     }
   }
-  let tableDoms = null;
+  const tableDoms = [];
   if (listGroup.length > 0) {
     listGroup.map((item, _idx) => {
       const tableBody = [];
@@ -44,14 +44,14 @@ function TaxCheckItem({taxCheckStore}) {
         );
       });
       const tableDom = (
-        <table className={styles.table}>
-          <tbody key={`${_idx}checkListTbale`}>
+        <table className={styles.table} key={`${_idx}checkListTbale`}>
+          <tbody>
             <tr className={styles.title}><td width="100">年度</td><td width="200">指标</td><td width="150">核查金额</td><td width="200">与实际金额核查结果</td><td>核查时间</td></tr>
             {tableBody}
           </tbody>
         </table>
       );
-      tableDoms = tableDom;
+      tableDoms.push(tableDom);
     });
   }
 

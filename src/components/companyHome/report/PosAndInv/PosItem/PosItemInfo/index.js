@@ -13,11 +13,12 @@ function PosItemInfo({investmentStore, bannerStore}) {
   const frPositionCount = thisPosIttem.frPositionList.length;
   thisPosIttem.frPositionList.map((item, idx) => {
     const showIndex = idx + 1;
+    const regCap = isNaN(item.regCap) ? '--' : Number(item.regCap).toFixed(2);
     frPositionTabels.push(
       <table key={`${idx}frTable`} className={styles.tTable}>
         <tbody>
           <tr><td rowSpan="1000" width="40" className={styles.firstTd}>{showIndex}</td><td width="400px">企业名称：{item.entName}</td><td>状态：{item.entStatus}</td></tr>
-          <tr><td>注册资本：{item.regCap}</td><td>成立日期：{item.esDate}</td></tr>
+          <tr><td>注册资本(万元)：{regCap}</td><td>成立日期：{item.esDate}</td></tr>
         </tbody>
       </table>
     );
@@ -27,12 +28,14 @@ function PosItemInfo({investmentStore, bannerStore}) {
   const managementInvCount = thisPosIttem.managementInvList.length;
   thisPosIttem.managementInvList.map((item, idx) => {
     const showIndex = idx + 1;
+    const regCap = isNaN(item.regCap) ? '--' : Number(item.regCap).toFixed(2);
+    const subConam = isNaN(item.subConam) ? '--' : Number(item.subConam).toFixed(2);
     managementInvTabels.push(
       <table key={`${idx}mmTable`} className={styles.tTable}>
         <tbody>
           <tr><td rowSpan="1000" width="40" className={styles.firstTd}>{showIndex}</td><td width="400px">投资企业名称：{item.entName}</td><td>状态：{item.entStatus}</td></tr>
-          <tr><td>认缴出资额(万元)：{item.subConam}</td><td>出资比例：{item.fundedRatio}</td></tr>
-          <tr><td>注册资本：{item.regCap}</td><td>成立日期：{item.esDate}</td></tr>
+          <tr><td>认缴出资额(万元)：{subConam}</td><td>出资比例：{item.fundedRatio}</td></tr>
+          <tr><td>注册资本(万元)：{regCap}</td><td>成立日期：{item.esDate}</td></tr>
         </tbody>
       </table>
     );
@@ -42,11 +45,12 @@ function PosItemInfo({investmentStore, bannerStore}) {
   const managementPositionCount = thisPosIttem.managementPositionList.length;
   thisPosIttem.managementPositionList.map((item, idx) => {
     const showIndex = idx + 1;
+    const regCap = isNaN(item.regCap) ? '--' : Number(item.regCap).toFixed(2);
     managementPositionTabels.push(
       <table key={`${idx}mmTable`} className={styles.tTable}>
         <tbody>
           <tr><td rowSpan="1000" width="40" className={styles.firstTd}>{showIndex}</td><td width="400px">任职企业名称：{item.entName}</td><td>状态：{item.entStatus}</td></tr>
-          <tr><td>担任职位：{item.thisPosition}</td><td>注册资本：{item.regCap}</td></tr>
+          <tr><td>担任职位：{item.thisPosition}</td><td>注册资本(万元)：{regCap}</td></tr>
           <tr><td>成立日期：{item.esDate}</td><td></td></tr>
         </tbody>
       </table>
@@ -56,7 +60,7 @@ function PosItemInfo({investmentStore, bannerStore}) {
     <div className={styles.box}>
       <div className={styles.boxTop}>
         <div className={styles.name}>{name}（{postion}）</div>
-        <span className={styles.text}>主题公司名称：{companyName}</span>
+        <span className={styles.text}>主体公司名称：{companyName}</span>
       </div>
       <div className={styles.boxBody}>
         <div className={styles.tableWrap}>

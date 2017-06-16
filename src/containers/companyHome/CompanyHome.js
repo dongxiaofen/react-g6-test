@@ -6,6 +6,7 @@ import LeftBar from 'components/companyHome/LeftBar';
 import { Container, Row, Col } from 'components/common/layout';
 import BarLoading from 'components/common/BarLoading';
 import NoBalance from 'components/common/NoBalance';
+import pathval from 'pathval';
 import styles from './index.less';
 
 @inject(
@@ -122,9 +123,15 @@ export default class CompanyHome extends Component {
 
   render() {
     const errorInfo = this.props.companyHomeStore.createBasicErr;
+    const messageMap = {
+      '403204': '当前点数不足，请联系管理员充值 400-139-1819',
+      '403223': '当前额度不足，请联系管理员充值 400-139-1819',
+      '404202': '该企业无工商登记信息',
+      '404214': '公司不存在',
+    };
     if (errorInfo.value) {
       const errorCode = errorInfo.err.response && errorInfo.err.response.data.errorCode;
-      return <NoBalance message={errorCode === 403204 ? '套餐额度不足，请联系管理员充值 400-139-1819' : '创建失败'} />;
+      return <NoBalance message={messageMap[errorCode] ? messageMap[errorCode] : '创建失败'} />;
     }
     const noReport = ['reportId', 'basicReportId'].every(key => {
       return !this.props.companyHomeStore.reportInfo[key];
