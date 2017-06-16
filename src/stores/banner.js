@@ -43,7 +43,7 @@ class BannerStore {
   // 下载pdf配置
   @observable pdfDownloadConfig = {
     levelOne: [
-      { label: '信息概览', value: 'SUMMARY', checked: false, type: 'basicReport' },
+      { label: '信息概览', value: 'SUMMERY', checked: false, type: 'basicReport' },
       { label: '工商信息', value: 'CORP', checked: false, type: 'basicReport' },
       { label: '对外投资任职', value: 'INV_POS', checked: false, type: 'basicReport' },
       { label: '上市披露', value: 'STOCK', checked: false, type: 'basicReport' },
@@ -59,7 +59,7 @@ class BannerStore {
       { label: '分析报告', value: 'ANALYSREPORT', checked: false, type: 'loan' },
     ],
     levelTwo: {
-      'SUMMARY': [],
+      'SUMMERY': [],
       'CORP': [
         { label: '照面信息', value: 'CORP_BASIC', checked: false },
         { label: '工商变更', value: 'CORP_ALTER', checked: false },
@@ -523,7 +523,7 @@ class BannerStore {
     this.stockCode = '';
     this.pdfDownloadConfig = {
       levelOne: [
-        { label: '信息概览', value: 'SUMMARY', checked: false, type: 'basicReport' },
+        { label: '信息概览', value: 'SUMMERY', checked: false, type: 'basicReport' },
         { label: '工商信息', value: 'CORP', checked: false, type: 'basicReport' },
         { label: '对外投资任职', value: 'INV_POS', checked: false, type: 'basicReport' },
         { label: '上市披露', value: 'STOCK', checked: false, type: 'basicReport' },
@@ -539,7 +539,7 @@ class BannerStore {
         { label: '分析报告', value: 'ANALYSREPORT', checked: false, type: 'loan' },
       ],
       levelTwo: {
-        'SUMMARY': [],
+        'SUMMERY': [],
         'CORP': [
           { label: '照面信息', value: 'CORP_BASIC', checked: false },
           { label: '工商变更', value: 'CORP_ALTER', checked: false },

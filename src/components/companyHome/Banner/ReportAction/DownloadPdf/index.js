@@ -199,8 +199,8 @@ export default class DownloadPdf extends Component {
     if (findIndexLevelOneChecked('NEWS')) {
       queryArray.push('NEWS');
     }
-    if (findIndexLevelOneChecked('SUMMARY')) {
-      queryArray.push('SUMMARY');
+    if (findIndexLevelOneChecked('SUMMERY')) {
+      queryArray.push('SUMMERY');
     }
     levelTwoKeys.map((key) => {
       levelTwo[key].map((item) => {
