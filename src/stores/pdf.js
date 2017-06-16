@@ -39,6 +39,7 @@ class PdfStore {
   @action.bound getOverviewData(id, type, idType) {
     const types = {
       basicReport: [
+        'SUMMARY',
         'CORP_BASIC',
         'CORP_ALTER',
         'CORP_YEAR_REPORT',
