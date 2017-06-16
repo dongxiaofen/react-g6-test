@@ -122,7 +122,7 @@ class UiStore {
     reaction(
       () => this.uiState.taxCheckPager.index,
       () => {
-        taxCheckStore.getTaxCheckList();
+        taxCheckStore.getReportModule();
       }
     );
     reaction(
