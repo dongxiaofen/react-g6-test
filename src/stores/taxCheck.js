@@ -57,7 +57,6 @@ class TaxCheckStore {
       obj.year = item.year;
       selectConf.push(obj);
     });
-    // const params = this.selectConf;
     const sendParams = {
       companyName: this.companyName,
       detailRequests: selectConf
@@ -71,7 +70,7 @@ class TaxCheckStore {
           type: 'info',
           content: '添加成功'
         });
-        this.getTaxCheckList();
+        this.getReportModule();
       }))
       .catch(action('addTaxCheck', err => {
         console.log(err);
@@ -97,9 +96,6 @@ class TaxCheckStore {
       index: uiStore.uiState.taxCheckPager.index,
       size: uiStore.uiState.taxCheckPager.size,
     };
-    // if (monitorId) {
-    //   this.monitorId = monitorId;
-    // }
     // 获取列表数据
     companyHomeApi.getTaxCheckList(params, source)
       .then(action('taxList list', (resp) => {
