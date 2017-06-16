@@ -124,7 +124,7 @@ export default class CompanyHome extends Component {
     const errorInfo = this.props.companyHomeStore.createBasicErr;
     if (errorInfo.value) {
       const errorCode = errorInfo.err.response && errorInfo.err.response.data.errorCode;
-      return <NoBalance message={errorCode === 403204 ? '套餐额度不足，请联系管理员充值 400-139-1819' : '创建失败'} />;
+      return <NoBalance message={errorCode === 403204 || errorCode === 403223 ? '套餐额度不足，请联系管理员充值 400-139-1819' : '创建失败'} />;
     }
     const noReport = ['reportId', 'basicReportId'].every(key => {
       return !this.props.companyHomeStore.reportInfo[key];
