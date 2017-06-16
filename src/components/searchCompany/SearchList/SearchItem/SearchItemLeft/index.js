@@ -20,7 +20,7 @@ function SearchItemLeft({itemData, searchParameter}) {
         <CompanyName itemData={itemData} />
         {/* <MonitorStatus itemData={itemData} /> */}
         <Purchasedservice itemData={itemData} />
-        <StockType itemData={itemData} />
+        {/* <StockType itemData={itemData} /> */}
         <Risk itemData={itemData} />
       </div>
       <div className={`${styles.itemMessage}`}>
