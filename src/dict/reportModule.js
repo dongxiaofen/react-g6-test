@@ -46,13 +46,13 @@ const config = {
     unfreInfo: '转让类型',
   },
   equityPledge: {
-    imporg: '质押主体',
-    imporgAthOrg: '质权人',
-    imporgType: '质权人类别',
-    imporgDate: '质押备案日期',
-    imporgAmount: '质押金额',
-    freRatio: '转让额所占比例',
-    unfreInfo: '转让类型',
+    'imporg': '质权人姓名',
+    'imporgType': '出质人类别',
+    'imporgAmount': '出质金额',
+    'imporgRecordDate': '出质备案日期',
+    'imporgAthOrg': '出质审批部门',
+    'imporgDate': '出质批准日期',
+    'imporgTo': '出质截至日期'
   },
   equityPledgePdf: {
     assignee: '受让人',
@@ -138,6 +138,7 @@ const config = {
     'esDate': '成立日期',
     'fundedRatio': '出资比例',
     'subConam': '认缴出资额（万元）',
+    'position': '担任职位',
     'regCap': '注册资金（万元）',
     'frName': '法人代表',
     'regNo': '注册号',
