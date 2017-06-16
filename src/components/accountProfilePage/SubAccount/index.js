@@ -97,6 +97,7 @@ function SubAccount({ accountProfileStore }) {
     errCategory: 3,
     errorWords: keyWords(accountProfileStore.subLowestScore.errorCode),
     module: erroeModule(accountProfileStore.subLowestScore.errorCode),
+    path: path(accountProfileStore.subLowestScore.errorCode),
   };
   return (
     <div className={styles.top}>
