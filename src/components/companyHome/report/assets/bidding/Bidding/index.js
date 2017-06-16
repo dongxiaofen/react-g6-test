@@ -40,7 +40,7 @@ function Bidding({biddingItemList, isLoading, detailModalStore, companyHomeStore
         handleClick: handleClick
       },
       body: [
-        { 'key': 'date', 'width': '12', },
+        { 'key': 'publishDate', 'width': '12', },
         { 'key': 'type', 'width': '12' },
         { 'key': 'participator', 'width': '12' },
       ],
