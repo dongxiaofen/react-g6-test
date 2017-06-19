@@ -64,16 +64,16 @@ class LeftBarStore {
         menuKey: 'risk',
         children: [
           {
-            menuText: '纳税公告',
-            menuKey: 'riskTax',
-          },
-          {
             menuText: '法务信息',
             menuKey: 'riskCourt',
           },
           {
-            menuText: '工商抽查',
+            menuText: '行政信息',
             menuKey: 'riskCheck',
+          },
+          {
+            menuText: '纳税公告',
+            menuKey: 'riskTax',
           },
         ],
       },
