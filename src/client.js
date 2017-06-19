@@ -7,7 +7,7 @@ import ReactDOM from 'react-dom';
 // import useScroll from 'scroll-behavior/lib/useStandardScroll';
 import { Router, browserHistory } from 'react-router';
 import getRoutes from './routes';
-// import fundebug from 'fundebug-javascript';
+import fundebug from 'fundebug-javascript';
 import axios from 'axios';
 import Uuid from 'node-uuid';
 import { Provider } from 'mobx-react';
@@ -56,7 +56,7 @@ import { RouterStore, syncHistoryWithStore } from 'mobx-react-router';
 // };
 // ReactUpdates.injection.injectBatchingStrategy(ReactTryCatchBatchingStrategy);
 // Needed for onTouchTap
-// fundebug.apikey = '45f943a4862476f1895ca38d28def3231ea03ca1e4c94320476f52019f29560f';
+fundebug.apikey = 'd3c3ad8fd8f470b0bd162e9504c98c1984050474f3f550d47b17c54983633c1e';
 // fundebug.notify('Test', 'Hello xx Fundebug!');
 const routingStore = new RouterStore();
 combineServerData(allStore, window.__data);
