@@ -189,7 +189,7 @@ class AlertAnalysisStore {
           require('components/companyHome/report/AlertAnalysis/detail/LeftBar')
         );
       });
-    }, `预警详情（${companyName}）`);
+    }, `推送详情（${companyName}）`);
   }
   @action.bound resetHtml() {
     this.detailData.html = '';
