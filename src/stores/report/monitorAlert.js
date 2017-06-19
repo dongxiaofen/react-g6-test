@@ -21,6 +21,7 @@ class MonitorAlertStore {
     detail: {},
     html: '',
     orgData: {},
+    loading: false,
   }
   @observable module = 'monitorAlert';
   @action.bound getReportModule(params) {
@@ -54,6 +55,7 @@ class MonitorAlertStore {
     }
     this.detailData.activeIndex = 0;
     this.detailData.page = 1;
+    this.detailData.loading = true;
     const source = CancelToken.source();
     this.alertCancel = source.cancel;
     companyHomeApi.getAlertDetail(url, source, params)
@@ -63,6 +65,7 @@ class MonitorAlertStore {
         this.detailData.detail = info.alertType === 'RULE' ? resp.data.content : resp.data;
         this.detailData.orgData = resp.data;
         this.detailData.info = info;
+        this.detailData.loading = false;
         this.openDetailModal(this.detailData.info.alertType);
         if (this.detailData.info.alertType === 'RULE') {
           const pattern = this.detailData.detail[0].pattern;
@@ -81,6 +84,7 @@ class MonitorAlertStore {
         if (!axios.isCancel(err)) {
           console.log(err, '===');
           this.loadingId = -1;
+          this.detailData.loading = false;
           this.alertCancel = null;
           messageStore.openMessage({
             type: 'error',
