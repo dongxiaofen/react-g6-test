@@ -26,6 +26,8 @@ export default class App extends Component {
   };
   componentDidMount() {
     this.reloadCom();
+    const assetsHash = document.querySelector('#mainJs').getAttribute('src').split('main-')[1].split('.')[0];
+    this.props.messageStore.isAssetsNewest(assetsHash, true);
   }
   reloadCom() {
     require.ensure([], (require) => {

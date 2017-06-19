@@ -1,4 +1,6 @@
 import { observable, action, runInAction } from 'mobx';
+import modalStore from './modal';
+import axios from 'axios';
 class MessageStore {
   @observable visible = false;
   @observable type = 'info';
@@ -28,6 +30,55 @@ class MessageStore {
     if (callBack) { this.callBack = callBack; }
     this.visible = true;
     this.content = content;
+  }
+  @action.bound isAssetsNewest(assetsHash, first) {
+    const that = this;
+    setTimeout(() => {
+      axios.get('/front/refresh/assets')
+        .then(resp => {
+          if (assetsHash !== resp.data.assetsHash) {
+            modalStore.openCompModal({
+              title: '温馨提示',
+              width: 540,
+              isSingleBtn: true,
+              confirmText: '刷新',
+              closeAction: () => {
+                location.reload();
+              },
+              confirmAction: () => {
+                location.reload();
+              },
+              loader: (cb) => {
+                require.ensure([], (require) => {
+                  cb(require('../components/assetsRefresh'));
+                });
+              }
+            });
+          }
+          that.isAssetsNewest(resp.data.assetsHash);
+        })
+        .catch(err => {
+          modalStore.openCompModal({
+            title: '温馨提示',
+            width: 540,
+            isSingleBtn: true,
+            confirmText: '刷新',
+            closeAction: () => {
+              location.reload();
+            },
+            confirmAction: () => {
+              location.reload();
+            },
+            loader: (cb) => {
+              require.ensure([], (require) => {
+                cb(require('../components/assetsRefresh'));
+              });
+            }
+          });
+          that.isAssetsNewest(assetsHash);
+          console.log(err);
+        });
+    }, first ? 0 : 2 * 60 * 1000);
   }
 }
 export default new MessageStore();

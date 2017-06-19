@@ -87,7 +87,7 @@ export default class Html extends Component {
           }
 
           {this.props.pdfDown === '1' ? '' :
-            <script src={assets.javascript.main} charSet="UTF-8"/>
+            <script id="mainJs" src={assets.javascript.main} charSet="UTF-8"/>
           }
 
           {this.isFirstLoad() ? '' :
