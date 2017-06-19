@@ -38,15 +38,27 @@ function RegisterInfo({ registerInfo, isLoading, errText }) {
   };
   // 经营期
   const handleOpenFrom = (items) => {
-    if (items.openFrom === '' || items.openFrom === undefined) {
+    if ((items.openFrom === '' || items.openFrom === undefined) && (items.openTo === '' || items.openTo === undefined)) {
       return '--';
+    }
+    if (items.openFrom === '' || items.openFrom === undefined) {
+      return '--至' + items.openTo;
+    }
+    if (items.openTo === '' || items.openTo === undefined) {
+      return items.openFrom + '至--';
     }
     return items.openFrom + '至' + items.openTo;
   };
   // 注销/吊销日期
   const handleCancelDate = (items) => {
-    if (items.cancelDate === '' || items.cancelDate === undefined) {
+    if ((items.cancelDate === '' || items.cancelDate === undefined) && (items.revokeDate === '' || items.revokeDate === undefined)) {
       return '--';
+    }
+    if (items.cancelDate === '' || items.cancelDate === undefined) {
+      return items.revokeDate;
+    }
+    if (items.revokeDate === '' || items.revokeDate === undefined) {
+      return items.cancelDate;
     }
     return items.cancelDate + '/' + items.revokeDate;
   };
