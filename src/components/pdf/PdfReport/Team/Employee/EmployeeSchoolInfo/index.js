@@ -20,7 +20,7 @@ function EmployeeSchoolInfo({moduleData}) {
         <thead>
         <tr>
           <th>学校</th>
-          <th>人数</th>
+          <th>百分比</th>
         </tr>
         </thead>
         <tbody>
