@@ -73,6 +73,7 @@ export default loadingComp({
     errCategory: 3,
     errorWords: '',
     error: props.error,
-    module: props.module
+    module: props.module,
+    path: props.path,
   })
 })(inject('routing', 'accountSettingStore')(observer(NewAccountBody)));

@@ -42,6 +42,7 @@ function TableRow({data, routing, dataStore, networkStore, companyHomeStore}) {
     'BLACKLIST': '系统预警',
     'SYS_RULE': '系统预警',
   };
+  const text = dataStore.module === 'alertAnalysis' ? '推送' : '预警';
   return (
     <div className={styles.itemBox}>
       <div className={styles.lineRow}>
@@ -58,8 +59,8 @@ function TableRow({data, routing, dataStore, networkStore, companyHomeStore}) {
         </span>
       </div>
       <div>
-        <span className={styles.desc}>预警依据：{data.description}</span>
-        <span className={styles.time}>预警日期：{data.ruleTime}</span>
+        <span className={styles.desc}>{`${text}依据 `}：{data.description}</span>
+        <span className={styles.time}>{`${text}日期 `}：{data.ruleTime}</span>
       </div>
     </div>
   );

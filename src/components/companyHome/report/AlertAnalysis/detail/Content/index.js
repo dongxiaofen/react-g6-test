@@ -1,6 +1,7 @@
 import React, {PropTypes} from 'react';
 import { observer, inject} from 'mobx-react';
 import styles from './index.less';
+import AnimateLoading from 'components/hoc/LoadingComp/AnimateLoading';
 import {
   Rule10,
   Rule11,
@@ -26,7 +27,9 @@ function Content({alertAnalysisStore, monitorAlertStore, routing}) {
     const detailData = dataStore.detailData;
     const info = detailData.info;
     const detail = detailData.detail;
-    console.log(info, detail, '=====12', dataStore);
+    if (detailData.loading) {
+      return <AnimateLoading />;
+    }
     if (info.alertType === 'RULE') {
       const singleDetail = detail[detailData.activeIndex];
       // console.log(singleDetail, 'singleDetail-----------');

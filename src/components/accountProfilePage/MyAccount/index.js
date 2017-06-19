@@ -33,11 +33,11 @@ function MyAccount({accountProfileStore}) {
     if (code === 404210) {
       return '/accountSetting';
     } else if (code === 404211) {
-      return '/searchCompany';
+      return '/search';
     } else if (code === 404231) {
       return '';
     } else if (code === 404213) {
-      return '/searchCompany';
+      return '/search';
     }
   };
   const statistics = {

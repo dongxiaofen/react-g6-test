@@ -30,6 +30,7 @@ class AlertAnalysisStore {
     detail: {},
     html: '',
     orgData: {},
+    loading: false,
   }
   @observable module = 'alertAnalysis';
   @action.bound getReportModule(idParams) {
@@ -84,6 +85,7 @@ class AlertAnalysisStore {
       this.alertCancel();
       this.alertCancel = null;
     }
+    this.detailData.loading = true;
     this.detailData.activeIndex = 0;
     this.detailData.page = 1;
     const source = CancelToken.source();
@@ -95,6 +97,7 @@ class AlertAnalysisStore {
         this.detailData.detail = info.alertType === 'RULE' ? resp.data.content : resp.data;
         this.detailData.orgData = resp.data;
         this.detailData.info = info;
+        this.detailData.loading = false;
         this.openDetailModal(this.detailData.info.alertType);
         if (this.detailData.info.alertType === 'RULE') {
           const pattern = this.detailData.detail[0].pattern;
@@ -113,6 +116,7 @@ class AlertAnalysisStore {
         if (!axios.isCancel(err)) {
           console.log(err, '===');
           this.loadingId = -1;
+          this.detailData.loading = false;
           this.alertCancel = null;
           messageStore.openMessage({
             type: 'error',
@@ -185,7 +189,7 @@ class AlertAnalysisStore {
           require('components/companyHome/report/AlertAnalysis/detail/LeftBar')
         );
       });
-    }, `预警详情（${companyName}）`);
+    }, `推送详情（${companyName}）`);
   }
   @action.bound resetHtml() {
     this.detailData.html = '';
