@@ -38,9 +38,10 @@ function Menu({ routing }) {
       parent: { module: '分析', tagImg: imgLoaning},
       children: [
         { module: '多维综合评价', route: 'analysisList?activeKey=multi' },
-        { module: '盈利能力分析', route: 'analysisList?activeKey=profit' },
-        { module: '营运能力分析', route: 'analysisList?activeKey=operate' },
-        { module: '成长能力分析', route: 'analysisList?activeKey=develop' },
+        { module: '敬请期待', splitters: true},
+        { module: '盈利能力分析', deving: true, route: 'analysisList?activeKey=profit' },
+        { module: '营运能力分析', deving: true, route: 'analysisList?activeKey=operate' },
+        { module: '成长能力分析', deving: true, route: 'analysisList?activeKey=develop' },
       ]
     },
     {
@@ -132,13 +133,27 @@ function Menu({ routing }) {
       const children = item.children;
       if (children && children.length > 0) {
         children.forEach((childItem, childIdx) => {
-          const childrenIsActive = childrenIsActiveFun(childItem.route);
-          const itemCss = childrenIsActive ? styles.childItemActive : styles.childItem;
-          childrenArray.push(
-            <div key={`child${childIdx}`} className={itemCss} onClick={routeToPage.bind(this, childItem.route)}>
+          if (childItem.splitters) {
+            childrenArray.push(
+              <div key={`child${childIdx}`} className={styles.splitters}>
+              <span>{childItem.module}</span>
+              </div>
+            );
+          } else if (childItem.deving) {
+            childrenArray.push(
+              <div key={`child${childIdx}`} className={styles.deving}>
               {childItem.module}
-            </div>
-          );
+              </div>
+            );
+          } else {
+            const childrenIsActive = childrenIsActiveFun(childItem.route);
+            const itemCss = childrenIsActive ? styles.childItemActive : styles.childItem;
+            childrenArray.push(
+              <div key={`child${childIdx}`} className={itemCss} onClick={routeToPage.bind(this, childItem.route)}>
+              {childItem.module}
+              </div>
+            );
+          }
         });
         childrenOutput = <div key={`childBox${pIdx}`} className={styles.childBox}>{childrenArray}</div>;
       }
