@@ -2,7 +2,6 @@ import React, { PropTypes } from 'react';
 import { observer } from 'mobx-react';
 import { ModuleTitle, CardTable } from 'components/common/report';
 // import styles from './index.less';
-
 function EquityFreeze({MortageStore}) {
   const evtData = MortageStore.sharesFrostList;
   if (evtData.content && evtData.content.length > 0) {
