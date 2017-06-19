@@ -49,7 +49,7 @@ export default class DownloadPdf extends Component {
   //   if (evt.target.checked) {
   //     this.setState({tipInfo: false});
   //   }
-  //   this.props.bannerStore.setDownloadAll(evt.target.checked);
+  //   this.props.bannerStore.setDownloadAll(evt.target.checked, this.getReportType());
   // };
 
   downloadAllChecked() {
@@ -246,8 +246,9 @@ export default class DownloadPdf extends Component {
               {/*className={styles.checkbox_style}*/}
               {/*checked={this.downloadAllChecked()}*/}
               {/*onChange={this.downloadAll}>*/}
-            <span style={{fontSize: '14px'}}>{this.state.reportTypeDict[this.getReportType()]}报告下载</span>
+              {/*<span style={{fontSize: '14px'}}>全部页面</span>*/}
             {/*</Checkbox>*/}
+             <span style={{fontSize: '14px'}}>{this.state.reportTypeDict[this.getReportType()]}报告下载</span>
             {
               this.state.tipInfo && isShowTipInfo
                 ? <span className={styles['tip-info']}>请选择需要下载的板块</span>

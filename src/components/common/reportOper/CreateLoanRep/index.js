@@ -25,7 +25,14 @@ function CreateLoanRep({companyHomeStore, routing, messageStore}) {
     const options = companyHomeStore.loanOption;
     const output = [];
     options.map((optItem, idx)=>{
-      if (judegeStatus(optItem.value)) {
+      if (optItem.type === 'developing') {
+        output.push(
+          <p className={styles.operaText} key={`option${idx}`}>
+            {optItem.label}
+            <i className={styles.devIcon}></i>
+          </p>
+        );
+      }else if (judegeStatus(optItem.value)) {
         output.push(
           <p className={styles.operaText} key={`option${idx}`}>
             {optItem.label}
