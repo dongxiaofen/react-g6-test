@@ -20,16 +20,24 @@
   color: @mdc-grey-300;
   cursor: pointer;
 }
-.menuCss1 {
+.menuCss1Base {
   position: relative;
   line-height: 1;
   padding: 12.5px 0;
   padding-left: 20px;
   color: @mdc-grey-800;
+}
+.menuCss1 {
+  composes: menuCss1Base;
   cursor: pointer;
 }
 .menuDisCss1 {
-  composes: menuCss1;
+  composes: menuCss1Base;
+  color: @mdc-grey-300;
+  cursor: pointer;
+}
+.menuDevDisCss {
+  composes: menuCss1Base;
   color: @mdc-grey-300;
 }
 .menuCssAct1 {
@@ -120,4 +128,14 @@
   height: 15px;
   background-image: url('imgs/companyHome/leftBar/lock.png');
   background-size: 100% 100%;
+}
+.devIcon {
+  background-image: url('imgs/companyHome/leftBar/developing.png');
+  background-size: 100% 100%;
+  display: block;
+  width: 44px;
+  height: 13px;
+  position: absolute;
+  top: 4px;
+  left: 110px;
 }

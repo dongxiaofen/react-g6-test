@@ -17,8 +17,7 @@
   margin-top: 20px;
 }
 .item {
-  float: left;
-  width: 80%;
+  margin-left: 71px;
 }
 .date {
   composes: item;
@@ -59,8 +58,9 @@
 }
 .checkBox {
   float: left;
-  margin-right: 4px;
+  margin-right: 9px;
   color: @mdc-blue-grey-400;
+  margin-bottom: 10px;
   label {
     font-size: 14px;
   }
@@ -73,7 +73,7 @@
   color: @mdc-blue-grey-400 !important;
 }
 @media (max-width: 1611px) {
-  .item {
-    width: 70%;
+  .checkBox:nth-last-child(3) {
+    margin-right: 0;
   }
 }
