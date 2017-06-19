@@ -16,9 +16,9 @@ class AccountProfileStore {
   @observable ownLowestScore = {};
   @observable subLowestScore = {};
 
-  @observable subAccount10Data = [];
-  @observable subNewestRuleData = [];
-  @observable subFrequentRuleData = [];
+  @observable subAccount10Data = {};
+  @observable subNewestRuleData = {};
+  @observable subFrequentRuleData = {};
 
   // 加载状态
   @observable ownWarningCompnayIsLoading = true;
@@ -67,36 +67,36 @@ class AccountProfileStore {
   @action.bound getFrequentRule() {
     accountProfileApi.frequentRule()
       .then(action( (response) => {
-        this.subFrequentRuleData = response.data;
+        this.subFrequentRuleData = response;
         this.subFrequentRuleIsloading = false;
       }))
       .catch(action( (err) => {
         this.subFrequentRuleIsloading = false;
-        console.log(err);
+        this.subFrequentRuleData = err.response.data;
       }));
   }
 
   @action.bound getSubNewestRule() {
     accountProfileApi.subNewestRule()
       .then(action( (response) => {
-        this.subNewestRuleData = response.data;
+        this.subNewestRuleData = response;
         this.subNewestRuleIsLoading = false;
       }))
       .catch(action( (err) => {
         this.subNewestRuleIsLoading = false;
-        console.log(err);
+        this.subNewestRuleData = err.response.data;
       }));
   }
 
   @action.bound getSubAccount10() {
     accountProfileApi.subWorningAccount10()
       .then(action( (response) => {
-        this.subAccount10Data = response.data;
+        this.subAccount10Data = response;
         this.newAccount10IsLoading = false;
       }))
       .catch(action( (err) => {
         this.newAccount10IsLoading = false;
-        console.log(err);
+        this.subAccount10Data = err.response.data;
       }));
   }
 
