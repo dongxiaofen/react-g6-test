@@ -41,8 +41,7 @@ function LeftBar({alertAnalysisStore, monitorAlertStore, routing, companyHomeSto
         <div
           key={index}
           className={itemCss}
-          onClick={changeTab.bind(null, index)}
-          >
+          onClick={changeTab.bind(null, index)}>
           <div className={styles.time}>{modifyDate(item)}</div>
         </div>
       );

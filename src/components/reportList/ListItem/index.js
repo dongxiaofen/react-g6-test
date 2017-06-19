@@ -4,15 +4,6 @@ import { browserHistory } from 'react-router';
 import { Row, Col } from 'components/common/layout';
 import styles from './index.less';
 function ListItem({data, listType}) {
-  const stockTableType = (stockType) => {
-    let str = '';
-    if (stockType === 'A') {
-      str = <span title="A股" className={styles.mainLabel}>A股</span>;
-    } else if (stockType === 'NEEQ') {
-      str = <span title="新三板" className={styles.mainLabel}>新三板</span>;
-    }
-    return str;
-  };
   const viewReport = (companyName) => {
     browserHistory.push(`/companyHome?companyName=${companyName}`);
   };
@@ -26,12 +17,6 @@ function ListItem({data, listType}) {
             onClick={viewReport.bind(null, data.companyName)}>
             {data.companyName}
           </span>
-          {
-            data.companyStatus
-            ? <span title={data.companyStatus} className={styles.mainLabel}>{data.companyStatus}</span>
-            : null
-          }
-          {stockTableType(data.stockType)}
         </div>
         <div className={styles.infoDetail}>
           <span className={styles.detailItem}>{`法人：${data.frName ? data.frName : '无'}`}</span>
