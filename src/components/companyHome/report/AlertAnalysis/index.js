@@ -7,9 +7,10 @@ import { loadingComp } from 'components/hoc';
 
 function AlertAnalysis({dataStore, uiStore}) {
   const len = uiStore.uiState[dataStore.module].totalElements;
+  const moduleTitle = dataStore.module === 'alertAnalysis' ? '风险信息' : '预警信息';
   return (
     <div className={styles.box}>
-      <ModuleTitle module="预警信息" count={len} />
+      <ModuleTitle module={moduleTitle} count={len} />
       <TableList dataStore={dataStore} />
     </div>
   );
