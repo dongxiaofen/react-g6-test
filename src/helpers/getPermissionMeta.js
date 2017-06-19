@@ -44,7 +44,7 @@ export default function getPermissionMeta(env) {
       loginLogo: cfcaLoginLogo,
       loginLogoStyle: 'cfcaLoginLogoImg',
       beian: '京ICP证120015号 京公网安备110102005601',
-      title: '星象-风险监控平台',
+      title: '洞悉-风险管理平台',
       pdfStyle: 'scPdfBg',
       downloadApp: appCodeImgSc,
     };
@@ -57,7 +57,7 @@ export default function getPermissionMeta(env) {
       loginLogo: loginLogo,
       loginLogoStyle: 'loginLogoImg',
       beian: '渝公网安备 50019002500288号',
-      title: '星象-风险监控平台',
+      title: '星象-风险管理平台',
       pdfStyle: 'scPdfBg',
       downloadApp: appCodeImgSc,
     };
