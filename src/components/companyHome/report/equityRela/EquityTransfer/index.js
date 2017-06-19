@@ -1,11 +1,11 @@
 import React, { PropTypes } from 'react';
 import { observer } from 'mobx-react';
-import { ModuleTitle, CardTable } from 'components/common/report';
+import { CardTable } from 'components/common/report';
 // import styles from './index.less';
 
 function EquityTransfer({MortageStore}) {
   const evtData = MortageStore.sharesTransferList;
-  const count = evtData.content ? evtData.content.length : 0;
+  // const count = evtData.content ? evtData.content.length : 0;
   const isLoading = evtData.content === undefined ? true : false;
   const isError = evtData.error;
   const data = {
@@ -26,7 +26,7 @@ function EquityTransfer({MortageStore}) {
   };
   return (
     <div>
-      <ModuleTitle module="股权转让" count={count} />
+      {/* <ModuleTitle module="股权转让" count={count} /> */}
       <CardTable {...data} />
     </div>
   );
