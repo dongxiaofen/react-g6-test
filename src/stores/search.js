@@ -2,6 +2,7 @@ import { observable, action } from 'mobx';
 import { browserHistory } from 'react-router';
 import {searchApi} from 'api';
 import searchCompanyStore from './searchCompany';
+import messageStore from './message';
 class SearchStore {
   // 搜索类型
   @observable searchTypeConfig = {
@@ -27,6 +28,13 @@ class SearchStore {
   @observable historyResult = [];
   // 点击搜索按钮获取搜索列表
   @action.bound searchCompanyClick() {
+    if (!this.searchKey) {
+      messageStore.openMessage({
+        type: 'error',
+        content: '搜索关键字必须填写'
+      });
+      return false;
+    }
     browserHistory.push('/searchCompany');
     // 重置页数
     searchCompanyStore.pageParams.index = 1;
@@ -74,6 +82,13 @@ class SearchStore {
   // 搜索handleEnter
   @action.bound handleEnter(evt) {
     if (evt.keyCode === 13) {
+      if (!this.searchKey) {
+        messageStore.openMessage({
+          type: 'error',
+          content: '搜索关键字必须填写'
+        });
+        return false;
+      }
       browserHistory.push('/searchCompany');
       // 重置页数
       searchCompanyStore.pageParams.index = 1;
