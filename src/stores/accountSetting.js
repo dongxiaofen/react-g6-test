@@ -387,7 +387,7 @@ class AccountSettingStore {
       .then(action('getAlertCorp_success', resp => {
         const noData = !resp.data || resp.data.content === undefined || resp.data && resp.data.content.length === 0;
         this.tabs.alertCorp = noData ? {error: {message: '暂无预警企业'}, content: []} : resp.data;
-        uiStore.updateUiStore('accountAlertCorp.totalElements', pathval.getPathValue(resp, 'data.content.totalElements') || 0);
+        uiStore.updateUiStore('accountAlertCorp.totalElements', pathval.getPathValue(resp, 'data.totalElements') || 0);
       }))
       .catch(action('getAlertCorp_error', err => {
         console.log('getAlertCorp_error', err);
