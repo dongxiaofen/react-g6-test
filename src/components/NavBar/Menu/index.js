@@ -38,7 +38,7 @@ function Menu({ routing }) {
       parent: { module: '分析', tagImg: imgLoaning},
       children: [
         { module: '多维综合评价', route: 'analysisList?activeKey=multi' },
-        { module: '敬请期待', splitters: true},
+        { module: '敬请期待', splitters: true, route: '' },
         { module: '盈利能力分析', deving: true, route: 'analysisList?activeKey=profit' },
         { module: '营运能力分析', deving: true, route: 'analysisList?activeKey=operate' },
         { module: '成长能力分析', deving: true, route: 'analysisList?activeKey=develop' },
