@@ -7,6 +7,7 @@ import Pager from 'components/common/Pager';
 import ErrorText from 'components/common/ErrorText';
 import Button from 'components/lib/button';
 import { loadingComp } from 'components/hoc';
+import NoData from './NoData';
 
 function TaxCheckList({taxCheckStore, modalStore}) {
   const getTaxCheckInfo = (companyId, companyName) => {
@@ -62,7 +63,7 @@ function TaxCheckList({taxCheckStore, modalStore}) {
   }
   return (
     <div className={styles.box}>
-      {listDom}
+      {taxListData.length > 0 ? listDom : <NoData/>}
       <Pager tData={taxListData} module="taxCheckPager" type="large" />
     </div>
   );
@@ -81,6 +82,6 @@ export default loadingComp(
     category: 2,
     errCategory: 2,
     module: '企业年度报税',
-    error: props.listData.length === 0,
+    error: false,
   })}
 )(inject('taxCheckStore', 'modalStore')(observer(TaxCheckList)));

@@ -42,5 +42,4 @@ class InvestmentStore {
     pathval.setPathValue(this, path, value);
   }
 }
-
 export default new InvestmentStore();
