@@ -178,11 +178,6 @@ app.use((req, res) => {
             });
           })
           .catch((err) => {
-            if (err.response.data.errorCode === 401007) {
-              allStores.messageStore.openMessage({ type: 'warning', content: '没有访问权限', duration: 5000 });
-            } else if (err.response.data.errorCode = 403212) {
-              allStores.messageStore.openMessage({ type: 'warning', content: '用户角色不存在', duration: 5000 });
-            }
             console.log('pdfDown err', err.response.status);
           });
       } else if (reqPathName === '/') { // 访问首页
