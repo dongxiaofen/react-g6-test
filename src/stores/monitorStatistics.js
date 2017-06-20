@@ -362,11 +362,21 @@ class MonitorStatisticsStore {
               }
             }
           }
-          const provinceUndefinedIndex = provinceAllData.findIndex((item) => item.area === '未知' || item.area === '其他');
+
+          // 恶心的未知 -----------------------------------------------------------------------
+          let provinceUndefinedIndex = provinceAllData.findIndex((item) => item.area === '未知');
           if (provinceUndefinedIndex !== -1) {
             this.provinceBarUndefined = provinceAllData[provinceUndefinedIndex].companyCount;
             provinceAllData.splice(provinceUndefinedIndex, 1);
           }
+          // 恶心的其他
+          provinceUndefinedIndex = provinceAllData.findIndex((item) => item.area === '其他');
+          if (provinceUndefinedIndex !== -1) {
+            this.provinceBarUndefined += provinceAllData[provinceUndefinedIndex].companyCount;
+            provinceAllData.splice(provinceUndefinedIndex, 1);
+          }
+          // -----------------------------------------------------------------------------------
+
           provinceAllData.forEach((item, idx) => {
             // 地图数据
             if (item.area !== '未知' && item.area !== '其他') {
@@ -445,11 +455,19 @@ class MonitorStatisticsStore {
               break;
             }
           }
-          const provinceRankUndefinedIndex = provinceRank.findIndex((item) => item.area === '未知');
+          // 恶心的未知----------------------------------------------------------------------------
+          let provinceRankUndefinedIndex = provinceRank.findIndex((item) => item.area === '未知');
           if (provinceRankUndefinedIndex !== -1) {
             this.provinceMapUndefined = provinceRank[provinceRankUndefinedIndex].companyCount;
             provinceRank.splice(provinceRankUndefinedIndex, 1);
           }
+          // 恶心的其他
+          provinceRankUndefinedIndex = provinceRank.findIndex((item) => item.area === '其他');
+          if (provinceRankUndefinedIndex !== -1) {
+            this.provinceMapUndefined += provinceRank[provinceRankUndefinedIndex].companyCount;
+            provinceRank.splice(provinceRankUndefinedIndex, 1);
+          }
+          // ---------------------------------------------------------------------------------------
           if (isRealm) {
             provinceRank.forEach((item) => {
               if (item.area.indexOf('市') === -1
