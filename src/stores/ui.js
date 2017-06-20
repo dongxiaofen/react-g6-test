@@ -109,7 +109,7 @@ class UiStore {
     reaction(
       () => this.uiState.accountAlertCorp.index,
       () => {
-        const uId = accountSettingStore.base.data.id;
+        const uId = accountSettingStore.base.data.id ? accountSettingStore.base.data.id : '';
         accountSettingStore.getAlertCorp(uId);
       }
     );
