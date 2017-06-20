@@ -29,7 +29,7 @@ function DevelopList({analysisListStore}) {
 export default loadingComp({
   mapDataToProps: props => ({
     loading: props.analysisListStore.developList.content === undefined ? true : false,
-    imgCategory: 14,
+    imgCategory: 3,
     category: 2,
     errCategory: 2,
     module: '成长能力分析',
