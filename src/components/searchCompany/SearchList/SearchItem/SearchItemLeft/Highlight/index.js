@@ -5,7 +5,7 @@ import styles from './index.less';
 function Highlight({itemData, searchParameter}) {
   // 曾用名
   const highlight = [];
-  if (itemData.highlight) {
+  if (itemData.highlight && itemData.highlight.length > 0) {
     const searchType = Object.keys(searchParameter)[0];
     const KEYMAP = {'历史名称': '曾用名'};
     itemData.highlight.map((obj, idx)=> {
@@ -18,6 +18,8 @@ function Highlight({itemData, searchParameter}) {
         return true;
       }
     });
+  } else {
+    return null;
   }
   return (
     <div className={`${styles.highlight}`}>
