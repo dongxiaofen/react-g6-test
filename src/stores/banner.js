@@ -418,8 +418,9 @@ class BannerStore {
       });
     });
     this.isAllChecked = false;
-    modalStore.visible = false;
-    modalStore.isCustomize = false;
+    // modalStore.visible = false;
+    // modalStore.isCustomize = false;
+    modalStore.resetStore();
   }
 
   // 添加/取消收藏

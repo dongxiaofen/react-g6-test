@@ -142,30 +142,34 @@ app.use((req, res) => {
         allStores.routing = routingStore;
         let urlPanth = '';
         let params = '';
+        let reportType = '';
         if (req.query.reportId){
           urlPanth = '/api/pdf/report';
           params = {
             reportId: req.query.reportId,
             types: req.query.type
-          }
+          };
+          reportType = '高级报告';
         } else if (req.query.basicReportId) {
           urlPanth = '/api/pdf/basicReport';
           params = {
             basicReportId: req.query.basicReportId,
             types: req.query.type
-          }
+          };
+          reportType = '基础报告';
         } else if (req.query.analysisReportId) {
           urlPanth = '/api/pdf/analysis';
           params = {
             analysisReportId: req.query.analysisReportId,
             types: req.query.type
-          }
+          };
+          reportType = '分析报告';
         }
         console.log(urlPanth, 'urlPanth-----------', params);
         axios.get(config.backendApi + urlPanth, { params })
           .then((resp) => {
             // writeDataToFile('resp', resp.data);
-            allStores.pdfStore.setTypes(params.types);
+            allStores.pdfStore.setTypes(params.types, reportType);
             allStores.clientStore.envConfig = config.target;
             allStores.pdfStore.getPdfDownData(resp.data);
             const component = (
