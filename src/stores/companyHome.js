@@ -171,7 +171,7 @@ class CompanyHomeStore {
     .then(action('upgradeReport', (resp) => {
       modalStore.closeAction();
       messageStore.openMessage({ ...text });
-      if (this.upgradeType !== 'nav') {
+      if (this.upgradeType !== 'nav') { // 预警详情升级报告后自动跳转
         networkStore.jumpBlackNode(companyName, search);
       }
       this.reportInfo.reportId = resp.data.reportId;
