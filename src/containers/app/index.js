@@ -39,6 +39,7 @@ export default class App extends Component {
     require.ensure([], (require) => {
       require('components/common/reportOper/CreateLoanRep');
       require('components/common/reportOper/CreateMonitor');
+      require('components/assetsRefresh');
     });
   }
   render() {

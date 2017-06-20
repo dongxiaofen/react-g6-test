@@ -59,7 +59,7 @@ class MessageStore {
             },
             loader: (cb) => {
               require.ensure([], (require) => {
-                cb(require('../components/assetsRefresh'));
+                cb(require('components/assetsRefresh'));
               });
             }
           });
