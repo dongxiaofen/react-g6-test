@@ -215,7 +215,10 @@ function OverView({ pdfStore, clientStore }) {
       <hr className={styles.hrhr} />
       <Summary {...entinvItem} />
       <Summary {...investPositionMap} />
-      <Summary {...investManagement} />
+      {
+        pdfStore.reportType === '高级报告' ?
+        <Summary {...investManagement} /> : ''
+      }
       {
         isStock ?
             <div key="thisIsSecondTitleObject">
@@ -259,9 +262,14 @@ function OverView({ pdfStore, clientStore }) {
       <SecondTitle module="抵质押信息" />
       <hr className={styles.hrhr} />
       <Summary {...pledgeEquity} />
-      <SecondTitle module="关联图信息" />
-      <hr className={styles.hrhr} />
-      <Summary {...riskRelationshipMap} />
+      {
+        pdfStore.reportType === '高级报告' ?
+        <div>
+          <SecondTitle module="关联图信息" />
+          <hr className={styles.hrhr} />
+          <Summary {...riskRelationshipMap} />
+        </div> : ''
+      }
 
       {/* 多维分析 */}
       {
