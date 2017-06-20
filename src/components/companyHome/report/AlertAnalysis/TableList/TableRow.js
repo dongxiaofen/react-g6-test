@@ -3,6 +3,7 @@ import { observer, inject } from 'mobx-react';
 import styles from './index.less';
 function TableRow({data, routing, dataStore, networkStore, companyHomeStore}) {
   const loadingId = dataStore.loadingId;
+  const {monitorId, reportId} = companyHomeStore.reportInfo;
   const viewDetail = () => {
     if (loadingId === data.id) {
       return false;
@@ -11,13 +12,16 @@ function TableRow({data, routing, dataStore, networkStore, companyHomeStore}) {
     if (alertType === 'BLACKLIST') {
       // console.log(data.description.indexOf('"'), '行数据');
       // 因为后端没有返这个字段，所以要在描述里面去取
-      const index = data.description.indexOf('"') + 1;
-      // console.log(data.description.slice(index, data.description.length - index), '风险关联公司名称');
-      networkStore.jumpBlackNode(data.description.slice(index, data.description.length - index), routing.location.search);
+      if (reportId !== '') {
+        const index = data.description.indexOf('"') + 1;
+        // console.log(data.description.slice(index, data.description.length - index), '风险关联公司名称');
+        networkStore.jumpBlackNode(data.description.slice(index, data.description.length - index), routing.location.search);
+      } else {
+        companyHomeStore.updateValue('upgradeType', 'blacklist');
+        companyHomeStore.openUpReportModal();
+      }
       return false;
     }
-
-    const {monitorId, reportId} = companyHomeStore.reportInfo;
     const isMonitor = routing.location.pathname === '/companyHome/monitorAlert';
     const ruleMap = {
       RULE: 'rule',

@@ -28,6 +28,7 @@ class CompanyHomeStore {
   @observable monitorTime = 1;
   @observable loanLoading = false;
   @observable monitorLoading = false;
+  @observable upgradeType = 'nav';
   @computed get monitorTimeObj() {
     const init = [
       {text: '1个月', key: 'ONE_MONTH'},
@@ -168,12 +169,14 @@ class CompanyHomeStore {
     companyHomeApi.upgradeReport(basicReportId)
     .then(action('upgradeReport', (resp) => {
       modalStore.closeAction();
+      this.upgradeType = 'nav';
       messageStore.openMessage({ ...text });
       this.reportInfo.reportId = resp.data.reportId;
       modalStore.confirmLoading = false;
     }))
     .catch(action('upgradeReport error', (err) => {
       console.log(err.response, '=====upgradeReport error');
+      this.upgradeType = 'nav';
       modalStore.closeAction();
       text = {
         type: 'warning',
