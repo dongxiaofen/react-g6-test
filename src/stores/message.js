@@ -1,5 +1,7 @@
 import { observable, action, runInAction } from 'mobx';
 import modalStore from './modal';
+import clientStore from './client';
+import loginStore from './login';
 import axios from 'axios';
 class MessageStore {
   @observable visible = false;
@@ -31,43 +33,24 @@ class MessageStore {
     this.visible = true;
     this.content = content;
   }
-  @action.bound isAssetsNewest(assetsHash, first) {
-    const that = this;
-    setTimeout(() => {
-      axios.get('/front/refresh/assets')
-        .then(resp => {
-          if (assetsHash !== resp.data.assetsHash) {
-            modalStore.openCompModal({
-              title: '温馨提示',
-              width: 540,
-              isSingleBtn: true,
-              confirmText: '刷新',
-              closeAction: () => {
-                location.reload();
-              },
-              confirmAction: () => {
-                location.reload();
-              },
-              loader: (cb) => {
-                require.ensure([], (require) => {
-                  cb(require('../components/assetsRefresh'));
-                });
-              }
-            });
-          }
-          that.isAssetsNewest(resp.data.assetsHash);
-        })
-        .catch(err => {
+  @action.bound isAssetsNewest(assetsHash) {
+    axios.get('/front/refresh/assets')
+      .then(action('isAssetsNewest', resp => {
+        console.log(resp.data.assetsHash, assetsHash, '---');
+        if (assetsHash !== resp.data.assetsHash) {
+          const notRouteToHome = true;
           modalStore.openCompModal({
             title: '温馨提示',
             width: 540,
             isSingleBtn: true,
-            confirmText: '刷新',
+            confirmText: '重新登录',
             closeAction: () => {
-              location.reload();
+              clientStore.loginOut(notRouteToHome);
+              loginStore.isShowLogin = true;
             },
             confirmAction: () => {
-              location.reload();
+              clientStore.loginOut(notRouteToHome);
+              loginStore.isShowLogin = true;
             },
             loader: (cb) => {
               require.ensure([], (require) => {
@@ -75,10 +58,11 @@ class MessageStore {
               });
             }
           });
-          that.isAssetsNewest(assetsHash);
-          console.log(err);
-        });
-    }, first ? 0 : 2 * 60 * 1000);
+        }
+      }))
+      .catch(err => {
+        console.log(err);
+      });
   }
 }
 export default new MessageStore();

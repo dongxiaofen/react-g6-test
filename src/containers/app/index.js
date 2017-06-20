@@ -12,12 +12,13 @@ import Message from 'components/common/Message';
 import PayModal from 'components/common/PayModal';
 import EntireLoading from 'components/common/EntireLoading';
 
-@inject('modalStore', 'detailModalStore', 'messageStore', 'payModalStore', 'entireLoadingStore')
+@inject('clientStore', 'modalStore', 'detailModalStore', 'messageStore', 'payModalStore', 'entireLoadingStore')
 @observer
 export default class App extends Component {
   static propTypes = {
     children: PropTypes.object.isRequired,
     location: PropTypes.object,
+    clientStore: PropTypes.object,
     modalStore: PropTypes.object,
     detailModalStore: PropTypes.object,
     messageStore: PropTypes.object,
@@ -26,8 +27,13 @@ export default class App extends Component {
   };
   componentDidMount() {
     this.reloadCom();
-    const assetsHash = document.querySelector('#mainJs').getAttribute('src').split('main-')[1].split('.')[0];
-    this.props.messageStore.isAssetsNewest(assetsHash, true);
+    const exg = /.*main-(.*)(?:.js)$/;
+    if (this.props.clientStore.envConfig !== 'local') {
+      setTimeout(() => {
+        const assetsHash = document.querySelector('#mainJs').getAttribute('src').match(exg)[1];
+        this.props.messageStore.isAssetsNewest(assetsHash);
+      }, 2 * 1000);
+    }
   }
   reloadCom() {
     require.ensure([], (require) => {
