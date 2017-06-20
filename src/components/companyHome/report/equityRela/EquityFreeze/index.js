@@ -1,8 +1,7 @@
 import React, { PropTypes } from 'react';
 import { observer } from 'mobx-react';
-import { ModuleTitle, CardTable } from 'components/common/report';
+import { CardTable } from 'components/common/report';
 // import styles from './index.less';
-
 function EquityFreeze({MortageStore}) {
   const evtData = MortageStore.sharesFrostList;
   if (evtData.content && evtData.content.length > 0) {
@@ -27,7 +26,7 @@ function EquityFreeze({MortageStore}) {
     });
     evtData.content = newContent;
   }
-  const count = evtData.content ? evtData.content.length : 0;
+  // const count = evtData.content ? evtData.content.length : 0;
   const isLoading = evtData.content === undefined ? true : false;
   const isError = evtData.error;
   const data = {
@@ -53,7 +52,7 @@ function EquityFreeze({MortageStore}) {
   };
   return (
     <div>
-      <ModuleTitle module="股权冻结" count={count} />
+      {/* <ModuleTitle module="股权冻结" count={count} /> */}
       <CardTable {...data} />
     </div>
   );

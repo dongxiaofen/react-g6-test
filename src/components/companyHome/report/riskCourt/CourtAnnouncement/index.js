@@ -25,10 +25,10 @@ function CourtAnnouncement({courtAnnouncement, regTime}) {
       ],
       isExpand: false,
       dict: 'courtAnnouncement',
-      cData: courtAnnouncement.data
+      cData: courtAnnouncement ? courtAnnouncement.data : {}
     },
     module: '法院公告',
-    error: courtAnnouncement.data === 0
+    error: !courtAnnouncement
   };
   return (
     <CardTable {...data} />
