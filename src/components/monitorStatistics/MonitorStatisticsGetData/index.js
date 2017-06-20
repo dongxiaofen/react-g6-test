@@ -34,6 +34,11 @@ export default class MonitorStatisticsGetData extends Component {
     msStore.setParams(params);
   }
 
+  componentWillUnmount() {
+    this.props.monitorStatisticsStore.resetStore();
+  }
+
+
   testOnChange = () => {
     console.log('this is test onchange');
   }
