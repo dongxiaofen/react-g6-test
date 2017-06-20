@@ -22,6 +22,9 @@ export default class EquityRela extends Component {
   static propTypes = {
     MortageStore: PropTypes.object,
   }
+  componentWillUnmount() {
+    this.props.MortageStore.rsetStore();
+  }
   render() {
     const MortageStore = this.props.MortageStore;
     const {

@@ -11,6 +11,7 @@ class MortageStore {
   @observable sharesFrostListCount = 0;
   @observable sharesImpawnListCount = 0;
   @observable sharesTransferListCount = 0;
+
   @action.bound getReportModule(params) {
     companyHomeApi.getReportModule('risk/pledge', params)
       .then(action('get pledge', resp => {
@@ -33,6 +34,15 @@ class MortageStore {
         this.sharesImpawnList = errorData;
         this.sharesTransferList = errorData;
       }));
+  }
+  @action.bound rsetStore() {
+    this.isLoading = true;
+    this.sharesFrostList = {};
+    this.sharesImpawnList = {};
+    this.sharesTransferList = {};
+    this.sharesFrostListCount = 0;
+    this.sharesImpawnListCount = 0;
+    this.sharesTransferListCount = 0;
   }
 }
 
