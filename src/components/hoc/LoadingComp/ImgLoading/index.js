@@ -25,6 +25,7 @@ import loadingHomepageEarlyTitle from 'imgs/loading/homepage/loading_homepage_ea
 // other
 import loadingMoniterList from 'imgs/loading/loading_moniter_list.png';
 import loadingSearchPage from 'imgs/loading/loading_search_page.png';
+import loadingShortSearchPage from 'imgs/loading/loading_shortSearch_page.png';
 
 function ImgLoading({ imgCategory}) {
   const imgArray = [
@@ -43,6 +44,7 @@ function ImgLoading({ imgCategory}) {
     loadingHomepageEarlyTitle,
     loadingMoniterList,
     loadingSearchPage,
+    loadingShortSearchPage,
   ];
   const imgSrc = imgArray[imgCategory];
   return (
