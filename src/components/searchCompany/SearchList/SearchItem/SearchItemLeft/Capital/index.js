@@ -5,7 +5,7 @@ import styles from './index.less';
 function Capital({itemData}) {
   // 地址
   let capitalDom = '';
-  if (itemData.capital) {
+  if (itemData.capital && Number(itemData.capital) > 0) {
     const capital = Number(itemData.capital);
     capitalDom = (
       <div className={`${styles.capital}`}>
