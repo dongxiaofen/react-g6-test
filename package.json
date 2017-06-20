@@ -26,6 +26,7 @@
   "scripts": {
     "start_test": "concurrent --kill-others \"better-npm-run start-test\"",
     "stop_test": "pm2 delete xx_local_test",
+    "reload_test": "pm2 reload xx_local_test",
     "start_test_pre": "concurrent --kill-others \"better-npm-run start-test-pre\"",
     "stop_test_pre": "pm2 delete xx_local_test_pre",
     "start_remote_test": "concurrent --kill-others \"better-npm-run start-remote-test\"",
