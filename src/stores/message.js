@@ -36,7 +36,7 @@ class MessageStore {
   @action.bound isAssetsNewest(assetsHash) {
     axios.get('/front/refresh/assets')
       .then(action('isAssetsNewest', resp => {
-        console.log(resp.data.assetsHash, assetsHash, '---');
+        console.info(resp.data.assetsHash, assetsHash, '---');
         if (assetsHash !== resp.data.assetsHash) {
           const notRouteToHome = true;
           modalStore.openCompModal({
@@ -46,11 +46,16 @@ class MessageStore {
             confirmText: '重新登录',
             closeAction: () => {
               clientStore.loginOut(notRouteToHome);
-              loginStore.isShowLogin = true;
+              runInAction('set isShowLogin true', () => {
+                loginStore.isShowLogin = true;
+              });
             },
             confirmAction: () => {
               clientStore.loginOut(notRouteToHome);
-              loginStore.isShowLogin = true;
+              runInAction('set isShowLogin true', () => {
+                modalStore.visible = false;
+                loginStore.isShowLogin = true;
+              });
             },
             loader: (cb) => {
               require.ensure([], (require) => {

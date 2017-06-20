@@ -28,11 +28,11 @@ export default class App extends Component {
   componentDidMount() {
     this.reloadCom();
     const exg = /.*main-(.*)(?:.js)$/;
-    if (this.props.clientStore.envConfig !== 'local') {
-      setTimeout(() => {
+    if (this.props.clientStore.envConfig === 'local') {
+      setInterval(() => {
         const assetsHash = document.querySelector('#mainJs').getAttribute('src').match(exg)[1];
         this.props.messageStore.isAssetsNewest(assetsHash);
-      }, 2 * 1000);
+      }, 2 * 60 * 1000);
     }
   }
   reloadCom() {
@@ -50,6 +50,7 @@ export default class App extends Component {
             pathname === '/pdfDown' ? '' :
               <Login pathname={pathname} />
           }
+          <Modal modalStore={this.props.modalStore} />
           {this.props.children}
         </div>
       );
