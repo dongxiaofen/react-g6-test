@@ -4,11 +4,13 @@ import { toJS } from 'mobx';
 
 import BaseChart from 'components/common/Charts/BaseChart';
 import { loadingComp } from 'components/hoc';
+import styles from './index.less';
 
 function ProvinceBarChart({ msStore }) {
   const provinceBar = msStore.provinceBar;
   const axis = toJS(provinceBar.axis);
   const data = toJS(provinceBar.data);
+  const provinceBarUndefined = msStore.provinceBarUndefined;
 
   const option = {
     tooltip: {
@@ -116,11 +118,22 @@ function ProvinceBarChart({ msStore }) {
   };
 
   return (
-    <BaseChart
-      chartId="ProvinceBarChart"
-      height="400px"
-      option={option}
-     />
+    <div className={styles.barChart}>
+      <BaseChart
+        chartId="ProvinceBarChart"
+        height="400px"
+        option={option}
+      />
+      {
+        provinceBarUndefined
+          ?
+          <div className={`clearfix ${styles.barChartText}`}>
+            <div></div>
+            <span>其中有{provinceBarUndefined}家企业地区未知，暂未统计</span>
+          </div>
+          : null
+      }
+    </div>
   );
 }
 
@@ -132,7 +145,7 @@ export default loadingComp({
     loading: props.msStore.loadingGroup.provinceAll,
     category: 0,
     height: 400,
-    error: props.msStore.provinceAll.length === 0,
+    error: props.msStore.provinceAll.length === 0 && props.msStore.provinceBarUndefined === 0,
     errCategory: 1,
   })
 })(observer(ProvinceBarChart));

@@ -200,6 +200,10 @@ class MonitorStatisticsStore {
     provinceRank: [],
     mapOption: { mapType: '', data: [] },
   };
+  // 地区排行未知
+  @observable provinceBarUndefined = 0;
+  // 企业地区分布 TOP10 未知
+  @observable provinceMapUndefined = 0;
 
   /**
    * 行业统计store
@@ -351,14 +355,17 @@ class MonitorStatisticsStore {
             });
           } else {
             provinceName = provinceAllData[provinceAllData.length - 1].area;
-            if (provinceName === '未知'
-              || provinceName === '其他') {
+            if (provinceName === '未知' || provinceName === '其他') {
               provinceName = provinceAllData[provinceAllData.length - 2].area;
-              if (provinceName === '未知'
-                || provinceName === '其他') {
+              if (provinceName === '未知' || provinceName === '其他') {
                 provinceName = provinceAllData[provinceAllData.length - 3].area;
               }
             }
+          }
+          const provinceUndefinedIndex = provinceAllData.findIndex((item) => item.area === '未知' || item.area === '其他');
+          if (provinceUndefinedIndex !== -1) {
+            this.provinceBarUndefined = provinceAllData[provinceUndefinedIndex].companyCount;
+            provinceAllData.splice(provinceUndefinedIndex, 1);
           }
           provinceAllData.forEach((item, idx) => {
             // 地图数据
@@ -437,6 +444,11 @@ class MonitorStatisticsStore {
               isRealm = true;
               break;
             }
+          }
+          const provinceRankUndefinedIndex = provinceRank.findIndex((item) => item.area === '未知');
+          if (provinceRankUndefinedIndex !== -1) {
+            this.provinceMapUndefined = provinceRank[provinceRankUndefinedIndex].companyCount;
+            provinceRank.splice(provinceRankUndefinedIndex, 1);
           }
           if (isRealm) {
             provinceRank.forEach((item) => {
