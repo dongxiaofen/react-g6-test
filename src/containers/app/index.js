@@ -12,12 +12,13 @@ import Message from 'components/common/Message';
 import PayModal from 'components/common/PayModal';
 import EntireLoading from 'components/common/EntireLoading';
 
-@inject('modalStore', 'detailModalStore', 'messageStore', 'payModalStore', 'entireLoadingStore')
+@inject('clientStore', 'modalStore', 'detailModalStore', 'messageStore', 'payModalStore', 'entireLoadingStore')
 @observer
 export default class App extends Component {
   static propTypes = {
     children: PropTypes.object.isRequired,
     location: PropTypes.object,
+    clientStore: PropTypes.object,
     modalStore: PropTypes.object,
     detailModalStore: PropTypes.object,
     messageStore: PropTypes.object,
@@ -26,6 +27,13 @@ export default class App extends Component {
   };
   componentDidMount() {
     this.reloadCom();
+    const exg = /.*main-(.*)(?:.js)$/;
+    if (this.props.clientStore.envConfig === 'local') {
+      setInterval(() => {
+        const assetsHash = document.querySelector('#mainJs').getAttribute('src').match(exg)[1];
+        this.props.messageStore.isAssetsNewest(assetsHash);
+      }, 30 * 1000);
+    }
   }
   reloadCom() {
     require.ensure([], (require) => {
@@ -42,6 +50,7 @@ export default class App extends Component {
             pathname === '/pdfDown' ? '' :
               <Login pathname={pathname} />
           }
+          <Modal modalStore={this.props.modalStore} />
           {this.props.children}
         </div>
       );
