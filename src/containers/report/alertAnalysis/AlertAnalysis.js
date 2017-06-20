@@ -10,6 +10,9 @@ export default class AlertAnalysis extends Component {
     routing: PropTypes.object,
     alertAnalysisStore: PropTypes.object,
   };
+  componentWillUnmount() {
+    this.props.alertAnalysisStore.cancelAlertDetail();
+  }
   render() {
     return (
       <div>
