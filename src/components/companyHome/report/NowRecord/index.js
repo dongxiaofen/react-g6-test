@@ -3,19 +3,22 @@ import { observer, inject } from 'mobx-react';
 import styles from './index.less';
 import NowRecordList from './NowRecordList';
 import NowRecordImg from './NowRecordImg';
-@inject('nowRecordStore', 'uiStore', 'bannerStore')
+@inject('routing', 'nowRecordStore', 'uiStore', 'bannerStore')
 @observer
 export default class NowRecordMain extends Component {
   static propTypes = {
-    // routing: PropTypes.object,
+    routing: PropTypes.object,
     nowRecordStore: PropTypes.object,
     uiStore: PropTypes.object,
     bannerStore: PropTypes.object,
   }
   componentDidMount() {
-    // const { companyName } = this.props.routing.location.query;
+    const { companyName } = this.props.routing.location.query;
     if (this.props.bannerStore && this.props.bannerStore.bannerInfoData && this.props.bannerStore.bannerInfoData.companyId) {
       this.props.nowRecordStore.getNowRecordList(this.props.bannerStore.bannerInfoData.companyId);
+    } else {
+      // 当无法获取companyId时重新请求banner,并获取现勘
+      this.props.nowRecordStore.getNowRecordListBanner({companyName});
     }
   }
   componentWillUnmount() {

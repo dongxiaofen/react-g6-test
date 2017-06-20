@@ -26,7 +26,7 @@ export default class SearchCompany extends Component {
     if (this.props.searchCompanyStore.isShowResult) {
       searchList = (
         <div className={`${styles.searchListWrap}`}>
-          <Container>
+          <Container className={styles.searchComtainer}>
             <Row>
               <Col>
                 <SearchList />
@@ -39,7 +39,7 @@ export default class SearchCompany extends Component {
     return (
       <div className={`${styles.searchWrap}`}>
         <div className={`${styles.searchBarWrapTop} ${styles.bdWhite}  ${topStyle}`}>
-          <Container>
+          <Container className={styles.searchComtainer}>
             <div className={`${styles.searchBarCon}`}>
               <SearchBarTop />
             </div>

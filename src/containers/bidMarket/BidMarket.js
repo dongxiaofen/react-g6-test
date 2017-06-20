@@ -10,9 +10,6 @@ import Info from 'components/bidMarket/Info';
 import Trend from 'components/bidMarket/Trend';
 import Rank from 'components/bidMarket/Rank';
 
-const _from = moment().subtract(29, 'days').format('YYYY-MM-DD');
-const _to = moment().format('YYYY-MM-DD');
-
 @inject('bidMarketStore', 'uiStore')
 @observer
 export default class BidMarket extends Component {
@@ -23,6 +20,8 @@ export default class BidMarket extends Component {
 
   componentDidMount() {
     const bidMarketInfo = this.props.uiStore.uiState.bidMarketInfo;
+    const _from = moment().subtract(29, 'days').format('YYYY-MM-DD');
+    const _to = moment().format('YYYY-MM-DD');
     const params = {
       from: _from,
       to: _to,
@@ -40,6 +39,8 @@ export default class BidMarket extends Component {
 
   render() {
     const bidMarketStore = this.props.bidMarketStore;
+    const _from = moment().subtract(29, 'days').format('YYYY-MM-DD');
+    const _to = moment().format('YYYY-MM-DD');
     return (
       <Container>
         <Row>
