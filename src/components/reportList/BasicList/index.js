@@ -29,7 +29,7 @@ function BasicList({reportListStore}) {
 export default loadingComp({
   mapDataToProps: props => ({
     loading: props.reportListStore.basicList.content === undefined ? true : false,
-    imgCategory: 14,
+    imgCategory: 3,
     category: 2,
     errCategory: 2,
     module: '基础报告',

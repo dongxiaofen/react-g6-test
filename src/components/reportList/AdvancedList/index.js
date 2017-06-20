@@ -29,7 +29,7 @@ function AdvancedList({reportListStore}) {
 export default loadingComp({
   mapDataToProps: props => ({
     loading: props.reportListStore.advancedList.content === undefined ? true : false,
-    imgCategory: 14,
+    imgCategory: 3,
     category: 2,
     errCategory: 2,
     module: '高级报告',

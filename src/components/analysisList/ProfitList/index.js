@@ -29,7 +29,7 @@ function ProfitList({analysisListStore}) {
 export default loadingComp({
   mapDataToProps: props => ({
     loading: props.analysisListStore.profitList.content === undefined ? true : false,
-    imgCategory: 14,
+    imgCategory: 3,
     category: 2,
     errCategory: 2,
     module: '盈利能力分析',
