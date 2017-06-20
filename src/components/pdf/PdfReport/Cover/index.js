@@ -6,7 +6,7 @@ import styles from './index.less';
 function Cover({clientStore, pdfStore}) {
   return (
     <div className={styles.cover}>
-      <div className={`${clientStore.envConfig === 'cfca_prod' ? styles.logo_sc : styles.logo_sc}`}></div>
+      <div className={`${clientStore.envConfig === 'cfca_prod' ? styles.cfca : styles.logo_sc}`}></div>
       <h1>{pdfStore.reportType}</h1>
       <h2>{pdfStore.companyName}</h2>
     </div>
