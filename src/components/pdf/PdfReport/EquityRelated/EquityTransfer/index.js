@@ -17,7 +17,7 @@ function EquityTransfer({moduleData}) {
       {'key': 'assignee', 'width': '4'},
       {'key': 'pledgeDate', 'width': '4'},
       {'key': 'pledgedAmount', 'width': '4'},
-      {'key': 'transfersRatio', 'width': '4'},
+      {'key': 'transferType', 'width': '4'},
       {'key': 'transfersRatio', 'width': '4'},
     ],
     hasConfig: true,

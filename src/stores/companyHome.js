@@ -6,6 +6,7 @@ import messageStore from './message';
 import bannerStore from './banner';
 import { companyHomeApi } from 'api';
 import pathval from 'pathval';
+import networkStore from './report/network';
 class CompanyHomeStore {
   @observable createBasicErr = {
     value: false,
@@ -28,6 +29,7 @@ class CompanyHomeStore {
   @observable monitorTime = 1;
   @observable loanLoading = false;
   @observable monitorLoading = false;
+  @observable upgradeType = 'nav';
   @computed get monitorTimeObj() {
     const init = [
       {text: '1个月', key: 'ONE_MONTH'},
@@ -159,7 +161,7 @@ class CompanyHomeStore {
     };
     modalStore.openCompModal({ ...args });
   }
-  @action.bound upgradeReport() {
+  @action.bound upgradeReport(companyName, search) {
     const basicReportId = this.reportInfo.basicReportId;
     let text = {
       content: '升级成功'
@@ -169,11 +171,16 @@ class CompanyHomeStore {
     .then(action('upgradeReport', (resp) => {
       modalStore.closeAction();
       messageStore.openMessage({ ...text });
+      if (this.upgradeType !== 'nav') { // 预警详情升级报告后自动跳转
+        networkStore.jumpBlackNode(companyName, search);
+      }
       this.reportInfo.reportId = resp.data.reportId;
       modalStore.confirmLoading = false;
+      this.upgradeType = 'nav';
     }))
     .catch(action('upgradeReport error', (err) => {
       console.log(err.response, '=====upgradeReport error');
+      this.upgradeType = 'nav';
       modalStore.closeAction();
       text = {
         type: 'warning',
@@ -183,12 +190,12 @@ class CompanyHomeStore {
       modalStore.confirmLoading = false;
     }));
   }
-  @action.bound openUpReportModal() {
+  @action.bound openUpReportModal(companyName, search) {
     const args = {
       title: '升级报告',
       pointText: true,
       isSingleBtn: true,
-      confirmAction: this.upgradeReport,
+      confirmAction: this.upgradeReport.bind(this, companyName, search),
       loader: (cb) => {
         require.ensure([], (require) => {
           cb(require('components/common/reportOper/UpgradeReport'));
