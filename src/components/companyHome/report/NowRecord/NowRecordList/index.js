@@ -51,7 +51,7 @@ function NowRecordList({nowRecordStore, uiStore}) {
               </div>
             </div>
             <div className={styles.address}>
-              <i className={styles.icon + ' fa fa-map-marker '}></i>
+              <i className={styles.icon}></i>
               <span>{obj.item.location ? obj.item.location : '暂无地址'}</span>
             </div>
           </div>

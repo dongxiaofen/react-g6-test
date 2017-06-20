@@ -22,6 +22,17 @@ class NowRecordStore {
   @observable companyName = '';
   @observable companyId = '';
 
+  // 请求banner获取companyId并重新获取现勘列表
+  @action.bound getNowRecordListBanner(params) {
+    companyHomeApi.getBannerInfo(params)
+      .then(action('get banner info...', (resp) => {
+        this.getNowRecordList(resp.data.companyId);
+      }))
+      .catch(action('banner err', (err) => {
+        console.log('请求banner出错', err);
+      }));
+  }
+
   // 获取列表
   @action.bound getNowRecordList(companyId) {
     if (window.reportSourceCancel === undefined) {

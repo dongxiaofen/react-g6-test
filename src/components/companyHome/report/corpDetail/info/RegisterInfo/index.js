@@ -6,7 +6,6 @@ import { ModuleTitle, KvTable } from 'components/common/report';
 function RegisterInfo({ registerInfo, isLoading, errText }) {
   // 注册金
   const handleRegCap = (items) => {
-    console.log(items.regCap, '====');
     if (items.regCap === '0.0' || items.regCap === '0' || items.regCap === '' || items.regCap === undefined || items.regCap < 0.005) {
       return '--';
     }
