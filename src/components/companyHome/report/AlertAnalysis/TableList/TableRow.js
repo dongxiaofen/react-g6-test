@@ -9,7 +9,7 @@ function TableRow({data, routing, dataStore, networkStore, companyHomeStore}) {
       return false;
     }
     const alertType = data.alertType;
-    if (alertType !== 'BLACKLIST') {
+    if (alertType === 'BLACKLIST') {
       // console.log(data.description.indexOf('"'), '行数据');
       // 因为后端没有返这个字段，所以要在描述里面去取
       if (reportId !== '') {
