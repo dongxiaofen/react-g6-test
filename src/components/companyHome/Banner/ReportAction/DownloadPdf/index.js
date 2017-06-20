@@ -52,34 +52,34 @@ export default class DownloadPdf extends Component {
   //   this.props.bannerStore.setDownloadAll(evt.target.checked, this.getReportType());
   // };
 
-  downloadAllChecked() {
-    const isAllChecked = this.props.bannerStore.isAllChecked;
-    const stockCode = this.props.bannerStore.bannerInfoData.stockCode;
-    const monitorId = this.props.routing.location.query.monitorId;
-    const output = [];
-    this.props.bannerStore.pdfDownloadConfig.levelOne.map((item) => {
-      if (item.value === 'STOCK') {
-        if (stockCode) {
-          output.push(item.checked === true);
-        }
-      } else if (item.value === 'TAX') {
-        if (monitorId) {
-          output.push(item.checked === true);
-        }
-      } else {
-        output.push(item.checked === true);
-      }
-      return output;
-    });
-    const levelOneChecked = output.every((item) => item === true);
-    return isAllChecked || levelOneChecked;
-  }
+  // downloadAllChecked() {
+  //   const isAllChecked = this.props.bannerStore.isAllChecked;
+  //   const stockCode = this.props.bannerStore.bannerInfoData.stockCode;
+  //   const monitorId = this.props.routing.location.query.monitorId;
+  //   const output = [];
+  //   this.props.bannerStore.pdfDownloadConfig.levelOne.map((item) => {
+  //     if (item.value === 'STOCK') {
+  //       if (stockCode) {
+  //         output.push(item.checked === true);
+  //       }
+  //     } else if (item.value === 'TAX') {
+  //       if (monitorId) {
+  //         output.push(item.checked === true);
+  //       }
+  //     } else {
+  //       output.push(item.checked === true);
+  //     }
+  //     return output;
+  //   });
+  //   const levelOneChecked = output.every((item) => item === true);
+  //   return isAllChecked || levelOneChecked;
+  // }
 
   menuLevelOneOnChange = (key, value, evt) => {
     if (evt.target.checked) {
       this.setState({tipInfo: false});
     }
-    this.props.bannerStore.setPdfLevelOne(key, value, evt.target.checked);
+    this.props.bannerStore.setPdfLevelOne(key, value, evt.target.checked, this.getReportType());
   };
 
   menuLevelTwoOnChange = (levelOne, key, levelOneKey, evt) => {

@@ -19,7 +19,8 @@ function Risk({pdfStore, judgeIsModuleExist}) {
   return (
       <div>
         {
-          pathval.getPathValue(pdfStore, 'courtData.countCount.total') && pathval.getPathValue(pdfStore, 'courtData.countCount.total') > 0 ?
+          pathval.getPathValue(pdfStore, 'courtData.total') &&
+          pathval.getPathValue(pdfStore, 'courtData.total') > 0 ?
             <div>
               <PdfTitle module="法务信息" subModule="法务统计"/>
               <CourtCount moduleData={pathval.getPathValue(pdfStore, 'courtData.countCount')}/>
@@ -62,17 +63,17 @@ function Risk({pdfStore, judgeIsModuleExist}) {
           </div> : ''}
         {judgeIsModuleExist('RISK_ABNORMAL') ?
           <div>
-            <PdfTitle module="工商抽查" subModule="经营异常"/>
+            <PdfTitle module="行政信息" subModule="经营异常"/>
             <OperateError moduleData={pathval.getPathValue(pdfStore, 'corpCheckData.abnormalOperation')}/>
           </div> : ''}
         {judgeIsModuleExist('RISK_CHECK') ?
           <div>
-            <PdfTitle module="工商抽查" subModule="抽查检查"/>
+            <PdfTitle module="行政信息" subModule="抽查检查"/>
             <CheckInfo moduleData={pathval.getPathValue(pdfStore, 'corpCheckData.checkMessage')}/>
           </div> : ''}
         {judgeIsModuleExist('RISK_ILLEGAL') ?
           <div>
-            <PdfTitle module="工商抽查" subModule="违法记录"/>
+            <PdfTitle module="行政信息" subModule="违法记录"/>
             <PunishList moduleData={pathval.getPathValue(pdfStore, 'corpCheckData.punishList')}/>
           </div> : ''}
       </div>
