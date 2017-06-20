@@ -173,7 +173,7 @@ export default class DownloadPdf extends Component {
             }
           });
         } else {
-          if (item.value !== 'INV_POS_MANAGEMENT') {
+          if (this.getReportType() === 'basicReport' && item.value !== 'INV_POS_MANAGEMENT') {
             output.push(checkComp(argConfig));
           }
         }

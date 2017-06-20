@@ -31,7 +31,8 @@ class AccountSettingStore {
     PERSON_CHECK: '关联人核查',
     TAX_CHECK: '税务核查',
     BASIC_REPORT: '基础报告',
-    BASIC_REPORT_UPGRADE_TO_REPORT: '基础报告升级为高级报告'
+    BASIC_REPORT_TO_REPORT: '基础报告升级为高级报告',
+    BASIC_REPORT_REFRESH: '基础报告刷新'
   };
   taxTypeMap = {
     R001: 'A类营业收入',
@@ -386,7 +387,7 @@ class AccountSettingStore {
       .then(action('getAlertCorp_success', resp => {
         const noData = !resp.data || resp.data.content === undefined || resp.data && resp.data.content.length === 0;
         this.tabs.alertCorp = noData ? {error: {message: '暂无预警企业'}, content: []} : resp.data;
-        uiStore.updateUiStore('accountAlertCorp.totalElements', pathval.getPathValue(resp, 'data.content.totalElements') || 0);
+        uiStore.updateUiStore('accountAlertCorp.totalElements', pathval.getPathValue(resp, 'data.totalElements') || 0);
       }))
       .catch(action('getAlertCorp_error', err => {
         console.log('getAlertCorp_error', err);

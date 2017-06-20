@@ -11,15 +11,6 @@ function CompanyWrap({data, monitorListStore}) {
   const viewReport = () => {
     browserHistory.push(`/companyHome/monitorTimeAxis?companyName=${data.companyName}`);
   };
-  const stockTableType = (stockType) => {
-    let str = '';
-    if (stockType === 'A') {
-      str = <span title="A股" className={styles.mainLabelBlue}>A股</span>;
-    } else if (stockType === 'NEEQ') {
-      str = <span title="新三板" className={styles.mainLabelBlue}>新三板</span>;
-    }
-    return str;
-  };
   const viewRelation = () => {
     if (!relStatus || relStatus === 'hide') {
       monitorListStore.getRelationList(monitorId, data.relatedCount);
@@ -37,9 +28,6 @@ function CompanyWrap({data, monitorListStore}) {
           >
           {data.companyName}
         </span>
-        {data.companyStatus && <span className={styles.mainLabelBlue}>{data.companyStatus}</span>}
-        {stockTableType(data.stockType)}
-        {data.remainderDays <= 7 && data.remainderDays > 0 && <span className={styles.mainLabelRed}>{`${data.remainderDays}天内即将到期`}</span>}
       </div>
       <div className={styles.viewWrap}>
         {
