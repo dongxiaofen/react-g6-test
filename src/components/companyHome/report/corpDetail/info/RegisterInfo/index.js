@@ -6,14 +6,15 @@ import { ModuleTitle, KvTable } from 'components/common/report';
 function RegisterInfo({ registerInfo, isLoading, errText }) {
   // 注册金
   const handleRegCap = (items) => {
-    if (items.regCap === '0.0' || items.regCap === '0' || items.regCap === '' || items.regCap === undefined) {
+    console.log(items.regCap, '====');
+    if (items.regCap === '0.0' || items.regCap === '0' || items.regCap === '' || items.regCap === undefined || items.regCap < 0.005) {
       return '--';
     }
     return Number(items.regCap).toFixed(2) + items.unit + items.regCapCur;
   };
   // 实收资本
   const handleRecCap = (items) => {
-    if (items.recCap === '0.0' || items.recCap === '0' || items.recCap === '' || items.recCap === undefined) {
+    if (items.recCap === '0.0' || items.recCap === '0' || items.recCap === '' || items.recCap === undefined || items.recCap < 0.005) {
       return '--';
     }
     return Number(items.recCap).toFixed(2) + items.unit + items.regCapCur;
