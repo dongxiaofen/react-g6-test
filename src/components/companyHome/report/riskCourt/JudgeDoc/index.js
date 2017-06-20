@@ -2,6 +2,7 @@ import React, {PropTypes} from 'react';
 import { observer, inject} from 'mobx-react';
 import styles from './index.less';
 import JudgeBox from './JudgeBox';
+import { loadingComp } from 'components/hoc';
 
 function JudgeDoc({courtData, regTime, routing, riskCourtStore}) {
   const getDetail = (data) => {
@@ -40,7 +41,7 @@ function JudgeDoc({courtData, regTime, routing, riskCourtStore}) {
       {'key': 'court', 'width': '6'},
       {'key': 'litigant', 'width': '12', 'handle': modifyLitiganti}
     ],
-    'items': courtData,
+    'items': courtData ? courtData.data : [],
     'dict': 'judgeDoc',
     'module': 'judgeDoc',
   };
@@ -53,4 +54,9 @@ function JudgeDoc({courtData, regTime, routing, riskCourtStore}) {
 JudgeDoc.propTypes = {
   foo: PropTypes.string,
 };
-export default inject('routing', 'riskCourtStore')(observer(JudgeDoc));
+export default loadingComp({
+  mapDataToProps: props => ({
+    error: !props.courtData || props.courtData.data.length < 1,
+    module: '判决文书'
+  })
+})(inject('routing', 'riskCourtStore')(observer(JudgeDoc)));

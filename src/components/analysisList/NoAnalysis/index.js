@@ -4,7 +4,7 @@ import styles from './index.less';
 
 function NoAnalysis() {
   const routeToSearch = () => {
-    browserHistory.push(`/searchCompany`);
+    browserHistory.push(`/search`);
   };
   return (
     <div className={styles.wrap}>
