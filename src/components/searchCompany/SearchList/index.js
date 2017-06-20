@@ -117,7 +117,7 @@ SearchList.propTypes = {
 export default inject('searchCompanyStore', 'modalStore', 'payModalStore')(loadingComp({
   mapDataToProps: props => ({
     loading: props.searchCompanyStore.isShowLoading === true ? true : false,
-    imgCategory: 14,
+    imgCategory: 15,
     category: 2,
     module: '搜索列表',
   }),

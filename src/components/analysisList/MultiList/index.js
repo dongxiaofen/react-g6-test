@@ -29,7 +29,7 @@ function MultiList({analysisListStore}) {
 export default loadingComp({
   mapDataToProps: props => ({
     loading: props.analysisListStore.multiList.content === undefined ? true : false,
-    imgCategory: 14,
+    imgCategory: 3,
     category: 2,
     errCategory: 2,
     module: '多维综合评价',

@@ -29,7 +29,7 @@ function OperateList({analysisListStore}) {
 export default loadingComp({
   mapDataToProps: props => ({
     loading: props.analysisListStore.operateList.content === undefined ? true : false,
-    imgCategory: 14,
+    imgCategory: 3,
     category: 2,
     errCategory: 2,
     module: '营运能力分析',

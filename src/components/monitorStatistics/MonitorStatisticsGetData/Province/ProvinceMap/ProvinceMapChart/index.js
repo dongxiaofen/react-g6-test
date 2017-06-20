@@ -4,7 +4,6 @@ import { toJS } from 'mobx';
 import Popover from 'antd/lib/popover';
 
 import styles from './index.less';
-// import Popover from 'components/lib/popover';
 import MapChart from 'components/common/Charts/MapChart';
 import { loadingComp } from 'components/hoc';
 
@@ -89,9 +88,9 @@ function ProvinceMapChart({ msStore }) {
       }
     ]
   };
-
+  const provinceMapUndefined = msStore.provinceMapUndefined;
   return (
-    <div className={styles.rankBG}>
+    <div className={`clearfix ${styles.rankBG}`}>
       <div>
         <ul className={styles.rankList}>
           {rankList(msStore.provinceMap.provinceRank)}
@@ -102,6 +101,15 @@ function ProvinceMapChart({ msStore }) {
             option={option}
             height="330px"
           />
+          {
+            provinceMapUndefined
+              ?
+              <div className={`clearfix ${styles.rankChartText}`}>
+                <div></div>
+                <span>其中有{provinceMapUndefined}家企业地区未知，暂未统计</span>
+              </div>
+              : null
+          }
         </div>
       </div>
     </div>
