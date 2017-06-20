@@ -239,7 +239,7 @@ class MonitorStatisticsStore {
 
   // 选择指定时间和类别请求数据
   @action.bound getChangeData(params) {
-    this.getStatistic(params);
+    // this.getStatistic(params);
     this.getChangeTrend(params);
     this.getProvinceAll(params);
     this.getIndustryStatistics(params);

@@ -8,7 +8,7 @@ import Col from 'components/common/layout/Col';
 import styles from './index.less';
 
 import SwitchData from './SwitchData';
-import StatisticInfo from './StatisticInfo';
+// import StatisticInfo from './StatisticInfo';
 import ChangeTrend from './ChangeTrend';
 import Province from './Province';
 import Industry from './Industry';
@@ -26,7 +26,7 @@ export default class MonitorStatisticsGetData extends Component {
   };
   componentDidMount() {
     const msStore = this.props.monitorStatisticsStore;
-    msStore.getStatistic(params);
+    // msStore.getStatistic(params);
     msStore.getChangeTrend(params);
     msStore.getProvinceAll(params);
     msStore.getIndustryStatistics(params);
@@ -52,10 +52,10 @@ export default class MonitorStatisticsGetData extends Component {
         <SwitchData
           msStore={msStore}
           params={params} />
-        <StatisticInfo
+        {/*<StatisticInfo
           statistic={msStore.statistic}
           params={msStore.params}
-          loading={msStore.loadingGroup.statistic} />
+          loading={msStore.loadingGroup.statistic} />*/}
         <ChangeTrend msStore={msStore} />
         <Province msStore={msStore} />
         <Industry msStore={msStore} />
