@@ -103,7 +103,7 @@ axios.interceptors.response.use((response) => {
     //   });
     // });
   } else if (error.response.status === 502) {
-    allStore.messageStore.openMessage({ type: 'warning', content: '后端正在部署', duration: 5000 });
+    allStore.messageStore.openMessage({ type: 'warning', content: '后台正在部署， 请稍后使用', duration: 5000 });
   }
   return Promise.reject(error);
 });
