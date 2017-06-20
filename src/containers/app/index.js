@@ -32,7 +32,7 @@ export default class App extends Component {
       setInterval(() => {
         const assetsHash = document.querySelector('#mainJs').getAttribute('src').match(exg)[1];
         this.props.messageStore.isAssetsNewest(assetsHash);
-      }, 30 * 1000);
+      }, 90 * 1000);
     }
   }
   reloadCom() {
