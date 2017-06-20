@@ -12,6 +12,9 @@ export default class NowRecordMain extends Component {
     uiStore: PropTypes.object,
     bannerStore: PropTypes.object,
   }
+  componentWillMount() {
+    this.props.nowRecordStore.resetStore();
+  }
   componentDidMount() {
     const { companyName } = this.props.routing.location.query;
     if (this.props.bannerStore && this.props.bannerStore.bannerInfoData && this.props.bannerStore.bannerInfoData.companyId) {
