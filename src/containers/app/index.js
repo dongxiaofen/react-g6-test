@@ -50,7 +50,6 @@ export default class App extends Component {
             pathname === '/pdfDown' ? '' :
               <Login pathname={pathname} />
           }
-          <Modal modalStore={this.props.modalStore} />
           {this.props.children}
         </div>
       );
