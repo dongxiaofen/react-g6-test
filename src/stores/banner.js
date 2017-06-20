@@ -52,7 +52,7 @@ class BannerStore {
       { label: '团队信息', value: 'TEAM', checked: false, type: 'basicReport'},
       { label: '纳税公告', value: 'RISK_TAXATION', checked: false, type: 'basicReport' },
       { label: '法务信息', value: 'RISK', checked: false, type: 'basicReport' },
-      { label: '工商抽查', value: 'BUSINESS', checked: false, type: 'basicReport' },
+      { label: '行政信息', value: 'BUSINESS', checked: false, type: 'basicReport' },
       // { label: '股权相关', value: 'PLEDGE', checked: false, type: 'basicReport' },
       { label: '关联图', value: 'NETWORK', checked: false, type: 'report' },
       { label: '抵质押信息', value: 'MORTGAGE', checked: false, type: 'basicReport' },
@@ -330,10 +330,16 @@ class BannerStore {
     });
   };
   // 设置Pdf弹窗第一层级
-  @action.bound setPdfLevelOne(key, value, checked) {
+  @action.bound setPdfLevelOne(key, value, checked, reportType) {
     this.pdfDownloadConfig.levelOne[key].checked = checked;
     this.pdfDownloadConfig.levelTwo[value].map((item) => {
-      item.checked = checked;
+      if (reportType === 'basicReport') {
+        if (item.value !== 'INV_POS_MANAGEMENT') {
+          item.checked = checked;
+        }
+      } else {
+        item.checked = checked;
+      }
     });
     if (checked === false) {
       this.isAllChecked = false;
@@ -344,13 +350,10 @@ class BannerStore {
   @action.bound setPdfLevelTwo(_levelOne, key, levelOneKey, checked) {
     const levelOne = this.pdfDownloadConfig.levelOne;
     const levelTwo = this.pdfDownloadConfig.levelTwo;
-    const isHasMonitor = window.location.href.includes('monitorId');
     const levelTwoItem = levelTwo[_levelOne][key];
     levelTwoItem.checked = checked;
     if (levelTwoItem.value === 'TEAM_RECRUITMENT_RESUME') {
-      if (!isHasMonitor) {
-        levelOne[levelOneKey].checked = checked;
-      }
+      levelOne[levelOneKey].checked = checked;
     } else {
       const isAllChecked = levelTwo[_levelOne].every((item) => {
         return item.checked === true;
@@ -532,7 +535,7 @@ class BannerStore {
         { label: '团队信息', value: 'TEAM', checked: false, type: 'basicReport'},
         { label: '纳税公告', value: 'RISK_TAXATION', checked: false, type: 'basicReport' },
         { label: '法务信息', value: 'RISK', checked: false, type: 'basicReport' },
-        { label: '工商抽查', value: 'BUSINESS', checked: false, type: 'basicReport' },
+        { label: '行政信息', value: 'BUSINESS', checked: false, type: 'basicReport' },
         // { label: '股权相关', value: 'PLEDGE', checked: false, type: 'basicReport' },
         { label: '关联图', value: 'NETWORK', checked: false, type: 'report' },
         { label: '抵质押信息', value: 'MORTGAGE', checked: false, type: 'basicReport' },
