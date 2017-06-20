@@ -92,10 +92,12 @@ export default class NavAction extends Component {
     this.setState({
       isShowShearchInput: state,
     });
-    if (state) {
-      const searchInput = this.refs.searchInput;
-      searchInput.focus();
-    }
+    setTimeout(() => {
+      if (state) {
+        const searchInput = this.refs.searchInput;
+        searchInput.focus();
+      }
+    }, 100);
   }
 
   searchBar = () => {
