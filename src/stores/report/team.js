@@ -132,7 +132,7 @@ class TeamStore {
             });
             staffSchool.forEach((item) => {
               staffSchoolAxis.push(item.name);
-              staffSchoolData.push(item.value);
+              staffSchoolData.push(item.value * 100);
             });
           }
 
