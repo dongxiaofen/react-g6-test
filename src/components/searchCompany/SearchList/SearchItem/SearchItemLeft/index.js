@@ -4,7 +4,7 @@ import styles from './index.less';
 import CompanyName from './CompanyName';
 // import MonitorStatus from './MonitorStatus';
 import CompanyStatus from './CompanyStatus';
-import StockType from './StockType';
+// import StockType from './StockType';
 import Risk from './Risk';
 import FrName from './FrName';
 // import Address from './Address';
@@ -20,7 +20,7 @@ function SearchItemLeft({itemData, searchParameter}) {
         <CompanyName itemData={itemData} />
         {/* <MonitorStatus itemData={itemData} /> */}
         <Purchasedservice itemData={itemData} />
-        <StockType itemData={itemData} />
+        {/* <StockType itemData={itemData} /> */}
         <Risk itemData={itemData} />
       </div>
       <div className={`${styles.itemMessage}`}>

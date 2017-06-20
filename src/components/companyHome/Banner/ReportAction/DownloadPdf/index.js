@@ -49,7 +49,7 @@ export default class DownloadPdf extends Component {
   //   if (evt.target.checked) {
   //     this.setState({tipInfo: false});
   //   }
-  //   this.props.bannerStore.setDownloadAll(evt.target.checked);
+  //   this.props.bannerStore.setDownloadAll(evt.target.checked, this.getReportType());
   // };
 
   downloadAllChecked() {
@@ -173,7 +173,7 @@ export default class DownloadPdf extends Component {
             }
           });
         } else {
-          if (item.value !== 'INV_POS_MANAGEMENT') {
+          if (this.getReportType() === 'basicReport' && item.value !== 'INV_POS_MANAGEMENT') {
             output.push(checkComp(argConfig));
           }
         }
@@ -198,6 +198,9 @@ export default class DownloadPdf extends Component {
     }
     if (findIndexLevelOneChecked('NEWS')) {
       queryArray.push('NEWS');
+    }
+    if (findIndexLevelOneChecked('SUMMERY')) {
+      queryArray.push('SUMMERY');
     }
     levelTwoKeys.map((key) => {
       levelTwo[key].map((item) => {
@@ -243,8 +246,9 @@ export default class DownloadPdf extends Component {
               {/*className={styles.checkbox_style}*/}
               {/*checked={this.downloadAllChecked()}*/}
               {/*onChange={this.downloadAll}>*/}
-            <span style={{fontSize: '14px'}}>{this.state.reportTypeDict[this.getReportType()]}报告下载</span>
+              {/*<span style={{fontSize: '14px'}}>全部页面</span>*/}
             {/*</Checkbox>*/}
+             <span style={{fontSize: '14px'}}>{this.state.reportTypeDict[this.getReportType()]}报告下载</span>
             {
               this.state.tipInfo && isShowTipInfo
                 ? <span className={styles['tip-info']}>请选择需要下载的板块</span>

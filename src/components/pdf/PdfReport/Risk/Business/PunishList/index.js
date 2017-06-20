@@ -38,6 +38,7 @@ function PunishList({moduleData}) {
       {'key': 'reconsideration', 'width': '4'},
       {'key': 'transferJudicialOrg', 'width': '4'},
       {'key': 'illegalActivities', 'width': '12'},
+      {'key': 'punishmentExecution', 'width': '12'},
       {'key': 'punishmentBasis', 'width': '12'},
       {'key': 'illegalFacts', 'width': '12'}
     ],

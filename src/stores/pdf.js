@@ -39,6 +39,7 @@ class PdfStore {
   @action.bound getOverviewData(id, type, idType) {
     const types = {
       basicReport: [
+        'SUMMERY',
         'CORP_BASIC',
         'CORP_ALTER',
         'CORP_YEAR_REPORT',
@@ -87,7 +88,7 @@ class PdfStore {
         'OPERATION_TRADEMARK',
         'TEAM_RECRUITMENT_RESUME',
         'RISK_TAXATION',
-        'RISK_JUDGEMENT',
+        // 'RISK_JUDGEMENT',
         'RISK_ANNOUNCEMENT',
         'RISK_NOTICE',
         'RISK_EXECUTE',

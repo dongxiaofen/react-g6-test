@@ -7,18 +7,18 @@ class AccountProfileStore {
   @observable subWarningStatisticsData = {};
 
 
-  @observable ownWarningCompnay = [];
-  @observable subWarningCompnay = [];
+  @observable ownWarningCompnay = {};
+  @observable subWarningCompnay = {};
 
-  @observable ownHighRisk = [];
-  @observable subHighRisk = [];
+  @observable ownHighRisk = {};
+  @observable subHighRisk = {};
 
-  @observable ownLowestScore = [];
-  @observable subLowestScore = [];
+  @observable ownLowestScore = {};
+  @observable subLowestScore = {};
 
-  @observable subAccount10Data = [];
-  @observable subNewestRuleData = [];
-  @observable subFrequentRuleData = [];
+  @observable subAccount10Data = {};
+  @observable subNewestRuleData = {};
+  @observable subFrequentRuleData = {};
 
   // 加载状态
   @observable ownWarningCompnayIsLoading = true;
@@ -67,36 +67,36 @@ class AccountProfileStore {
   @action.bound getFrequentRule() {
     accountProfileApi.frequentRule()
       .then(action( (response) => {
-        this.subFrequentRuleData = response.data;
+        this.subFrequentRuleData = response;
         this.subFrequentRuleIsloading = false;
       }))
       .catch(action( (err) => {
         this.subFrequentRuleIsloading = false;
-        console.log(err);
+        this.subFrequentRuleData = err.response.data;
       }));
   }
 
   @action.bound getSubNewestRule() {
     accountProfileApi.subNewestRule()
       .then(action( (response) => {
-        this.subNewestRuleData = response.data;
+        this.subNewestRuleData = response;
         this.subNewestRuleIsLoading = false;
       }))
       .catch(action( (err) => {
         this.subNewestRuleIsLoading = false;
-        console.log(err);
+        this.subNewestRuleData = err.response.data;
       }));
   }
 
   @action.bound getSubAccount10() {
     accountProfileApi.subWorningAccount10()
       .then(action( (response) => {
-        this.subAccount10Data = response.data;
+        this.subAccount10Data = response;
         this.newAccount10IsLoading = false;
       }))
       .catch(action( (err) => {
         this.newAccount10IsLoading = false;
-        console.log(err);
+        this.subAccount10Data = err.response.data;
       }));
   }
 
@@ -123,72 +123,72 @@ class AccountProfileStore {
   @action.bound getOwnNewest() {
     accountProfileApi.ownNewest()
       .then(action( (response) => {
-        this.ownWarningCompnay = response.data;
+        this.ownWarningCompnay = response;
         this.ownWarningCompnayIsLoading = false;
       }))
       .catch(action( (err) => {
         this.ownWarningCompnayIsLoading = false;
-        console.log(err);
+        this.ownWarningCompnay = err.response.data;
       }));
   }
 
   @action.bound getSubNewest() {
     accountProfileApi.subNewest()
       .then(action( (response) => {
-        this.subWarningCompnay = response.data;
+        this.subWarningCompnay = response;
         this.subWarningCompnayIsLoading = false;
       }))
       .catch(action( (err) => {
         this.subWarningCompnayIsLoading = false;
-        console.log(err);
+        this.subWarningCompnay = err.response.data;
       }));
   }
 
   @action.bound getOwnHightRisk() {
     accountProfileApi.ownHightRisk()
       .then(action( (response) => {
-        this.ownHighRisk = response.data;
+        this.ownHighRisk = response;
         this.ownRiskCompnayIsLoading = false;
       }))
       .catch(action( (err) => {
         this.ownRiskCompnayIsLoading = false;
-        console.log(err);
+        this.ownHighRisk = err.response.data;
       }));
   }
 
   @action.bound getSubHightRisk() {
     accountProfileApi.subHightRisk()
       .then(action( (response) => {
-        this.subHighRisk = response.data;
+        this.subHighRisk = response;
         this.subRiskCompnayIsLoading = false;
       }))
       .catch(action( (err) => {
         this.subRiskCompnayIsLoading = false;
-        console.log(err);
+        this.subHighRisk = err.response.data;
       }));
   }
 
   @action.bound getOwnLowestScore() {
     accountProfileApi.ownLowestScore()
       .then(action( (response) => {
-        this.ownLowestScore = response.data;
+        this.ownLowestScore = response;
         this.ownLowScoreCompnayIsLoading = false;
       }))
       .catch(action( (err) => {
         this.ownLowScoreCompnayIsLoading = false;
-        console.log(err);
+        this.ownLowestScore = err.response.data;
       }));
   }
 
   @action.bound getSubLowestScore() {
     accountProfileApi.subLowestScore()
       .then(action( (response) => {
-        this.subLowestScore = response.data;
+        this.subLowestScore = response;
         this.subLowScoreCompnayIsLoading = false;
       }))
       .catch(action( (err) => {
         this.subLowScoreCompnayIsLoading = false;
-        console.log(err);
+        this.subLowestScore = err.response.data;
       }));
   }
 

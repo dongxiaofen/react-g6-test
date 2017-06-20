@@ -14,12 +14,12 @@ function EquityFreeze({moduleData}) {
   }
   const data = {
     dataConfig: [
-      {'key': 'freOrgName', 'width': '4'},
-      {'key': 'unfreOrgName', 'width': '4'},
-      {'key': 'freFromDate', 'width': '4'},
       {'key': 'freMoney', 'width': '4'},
       {'key': 'freRatio', 'width': '4'},
-      {'key': 'unfreInfo', 'width': '4'},
+      {'key': 'freFromDate', 'width': '4'},
+      {'key': 'freOrgName', 'width': '4'},
+      {'key': 'freDocId', 'width': '4'},
+      {'key': 'freToDate', 'width': '4'},
     ],
     hasConfig: true,
     item: moduleData,

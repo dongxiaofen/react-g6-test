@@ -143,8 +143,8 @@ function OverView({ pdfStore, clientStore }) {
   const recruitmentEmployee = {
     mapKey: {
       job: '招聘岗位分布',
-      education: '招聘学历要求',
       avgSalary: '招聘平均薪资',
+      education: '招聘学历要求',
     },
     title: '招聘信息',
     valueData: summaryData.team ? {data: summaryData.team.recruitmentEmployee, type: 'object'} : undefined,

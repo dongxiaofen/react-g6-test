@@ -64,16 +64,16 @@ class LeftBarStore {
         menuKey: 'risk',
         children: [
           {
-            menuText: '纳税公告',
-            menuKey: 'riskTax',
-          },
-          {
             menuText: '法务信息',
             menuKey: 'riskCourt',
           },
           {
-            menuText: '工商抽查',
+            menuText: '行政信息',
             menuKey: 'riskCheck',
+          },
+          {
+            menuText: '纳税公告',
+            menuKey: 'riskTax',
           },
         ],
       },
@@ -135,18 +135,21 @@ class LeftBarStore {
         menuText: '盈利能力分析',
         menuKey: 'profitEval',
         lock: true,
+        developing: true,
         moduleKey: 'PROFIT',
       },
       {
         menuText: '营运能力分析',
         menuKey: 'operationEval',
         lock: true,
+        developing: true,
         moduleKey: 'OPERATION',
       },
       {
         menuText: '成长能力分析',
         menuKey: 'growthAbilityEval',
         lock: true,
+        developing: true,
         moduleKey: 'GROWING',
       },
     ],

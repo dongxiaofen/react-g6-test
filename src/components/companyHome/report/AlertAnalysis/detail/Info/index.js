@@ -9,6 +9,7 @@ function Info({alertAnalysisStore, monitorAlertStore, routing}) {
   let relation = '';
   let hasRelation = false;
   let detail = {};
+  const text = dataStore.module === 'alertAnalysis' ? '推送' : '预警';
   if (info.alertType === 'SYS_RULE') {
     detail = dataStore.detailData.detail[0];
     const type = detail.type;
@@ -17,7 +18,7 @@ function Info({alertAnalysisStore, monitorAlertStore, routing}) {
   }
   return (
     <div className={styles.wrap}>
-      <p className={styles.description}>{`预警依据：${info.description}`}</p>
+      <p className={styles.description}>{`${text}依据：${info.description}`}</p>
       {hasRelation ?
         <div className={styles.relateCompany}>{`关联公司：${detail.companyName}${relation}`}</div>
         : ''

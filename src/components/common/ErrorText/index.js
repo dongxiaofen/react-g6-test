@@ -41,8 +41,12 @@ function ErrorText({module, error, errCategory = 0, height, errorWords, path}) {
     '抽查检查信息': '暂无信息，可能存在时间相对滞后或工商未公示情况，仅供参考',
     '违法记录': '暂无信息，可能存在时间相对滞后或工商未公示情况，仅供参考',
     '企业对外投资': '暂无信息，可能存在时间相对滞后或未公示情况，仅供参考',
+    '董监高对外投资': '暂无信息，可能存在时间相对滞后或未公示情况，仅供参考',
     '法人对外投资': '暂无信息，可能存在时间相对滞后或未公示情况，仅供参考',
     '法人对外任职': '暂无信息，可能存在时间相对滞后或未公示情况，仅供参考',
+    '股权质押': '暂无信息，可能存在时间相对滞后或未公示情况，仅供参考',
+    '股权转让': '暂无信息，可能存在时间相对滞后或未公示情况，仅供参考',
+    '股权冻结': '暂无信息，可能存在时间相对滞后或未公示情况，仅供参考',
     '关联图': '暂无信息，可能存在时间相对滞后或未公示情况，仅供参考',
     '风险关联图': '没有查询到相关风险信息',
     '关联时序图': '暂无信息，可能存在时间相对滞后或未公示情况，仅供参考',
@@ -131,7 +135,6 @@ function ErrorText({module, error, errCategory = 0, height, errorWords, path}) {
     const linkUrl = <span className={styles.errorWords} onClick={jumpPage.bind(this)}>{errorWords}</span>;
     const frontText = errorTips.slice(0, errorTips.indexOf(errorWords));
     const endText = errorTips.slice(errorTips.indexOf(errorWords) + errorWords.length, errorTips.length + 1);
-    console.log(frontText);
     return (
       <span>
         <span>{frontText}</span>

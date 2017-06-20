@@ -66,10 +66,6 @@ function TaxCheckItem({taxCheckStore}) {
       <div className={styles.tableWrap}>
         {tableDoms}
       </div>
-      {/* <div className={styles.page}>
-        <Pager tData={taxCheckStore.taxListData.content} module="taxCheckPager"
-               uiStore={uiStore} type="large"/>
-      </div> */}
     </div>
   );
 }

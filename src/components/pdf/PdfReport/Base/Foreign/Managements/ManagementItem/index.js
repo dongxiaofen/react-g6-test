@@ -66,7 +66,7 @@ function ManagementItem({personData}) {
       {'key': 'entName', 'width': '6'},
       {'key': 'entStatus', 'width': '6'},
       // {'key': 'entType', 'width': '6'},
-      {'key': 'subConam', 'width': '6'},
+      {'key': 'thisPosition', 'width': '6'},
       // {'key': 'fundedRatio', 'width': '6'},
       {'key': 'regCap', 'width': '6'},
       {'key': 'esDate', 'width': '6'},

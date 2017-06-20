@@ -20,6 +20,7 @@ function PdfReport({pdfStore, clientStore}) {
   const judgeIsModuleExist = (module) => {
     const pdfModule = pdfStore.pdfTypesKey;
     return (pdfModule && pdfModule.includes(module));
+    // console.log(pdfStore, module);
     // return true;
   };
   return (
@@ -27,7 +28,10 @@ function PdfReport({pdfStore, clientStore}) {
       <Row>
         <Col className={styles[getPermissionMeta(clientStore.envConfig).pdfStyle]} width="12">
           <Header />
-          <Overview />
+          {
+            judgeIsModuleExist('SUMMERY') ?
+            <Overview /> : ''
+          }
           <Base judgeIsModuleExist={judgeIsModuleExist}/>
           <Stock judgeIsModuleExist={judgeIsModuleExist}/>
           <Risk judgeIsModuleExist={judgeIsModuleExist}/>

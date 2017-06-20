@@ -15,8 +15,9 @@ export default loadingComp({
     loading: props.isLoading,
     category: 0,
     errCategory: 3,
-    errorWords: '',
+    errorWords: props.errorWords,
     error: props.error,
-    module: props.module
+    module: props.module,
+    path: props.path,
   })
 })(observer(HitRules));

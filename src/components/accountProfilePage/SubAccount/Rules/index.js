@@ -7,15 +7,56 @@ import HitRules from './HitRules';
 import styles from './index.less';
 
 function Rules({accountProfileStore}) {
+  const erroeModule = (code) => {
+    if (code === 404210) {
+      return '子账号最新预警企业（无子账号）';
+    } else if (code === 404211) {
+      return '我的账号最新预警企业（未创建）';
+    } else if (code === 404231) {
+      return '子账号最新预警账号（有子账号，未创建）';
+    } else if (code === 404213) {
+      return '我的账号综合评分最低企业（未创建）';
+    }
+    return '暂无信息';
+  };
+  const keyWords = (code) => {
+    if (code === 404210) {
+      return '账号中心';
+    } else if (code === 404211) {
+      return '搜索';
+    } else if (code === 404231) {
+      return '';
+    } else if (code === 404213) {
+      return '搜索';
+    }
+    return '';
+  };
+  const path = (code) => {
+    if (code === 404210) {
+      return '/accountSetting';
+    } else if (code === 404211) {
+      return '/search';
+    } else if (code === 404231) {
+      return '';
+    } else if (code === 404213) {
+      return '/search';
+    }
+  };
   const hitRuleConfig = {
-    data: accountProfileStore.subNewestRuleData,
+    data: accountProfileStore.subNewestRuleData.data && accountProfileStore.subNewestRuleData.data.length > 0 ? accountProfileStore.subNewestRuleData.data : [],
     isLoading: accountProfileStore.subNewestRuleIsLoading,
-    error: accountProfileStore.subNewestRuleData.length === 0
+    error: !accountProfileStore.subNewestRuleData.data || accountProfileStore.subNewestRuleData.length === 0,
+    errorWords: keyWords(accountProfileStore.subNewestRuleData.errorCode),
+    module: erroeModule(accountProfileStore.subNewestRuleData.errorCode),
+    path: path(accountProfileStore.subNewestRuleData.errorCode),
   };
   const activeConfig = {
-    data: accountProfileStore.subFrequentRuleData,
+    data: accountProfileStore.subFrequentRuleData.data && accountProfileStore.subFrequentRuleData.data.length > 0 ? accountProfileStore.subFrequentRuleData.data : [],
     isLoading: accountProfileStore.subFrequentRuleIsloading,
-    error: accountProfileStore.subFrequentRuleData.length === 0
+    error: !accountProfileStore.subFrequentRuleData.data || accountProfileStore.subFrequentRuleData.length === 0,
+    errorWords: keyWords(accountProfileStore.subFrequentRuleData.errorCode),
+    module: erroeModule(accountProfileStore.subFrequentRuleData.errorCode),
+    path: path(accountProfileStore.subFrequentRuleData.errorCode),
   };
   return (
     <div className={styles.rules_box}>
