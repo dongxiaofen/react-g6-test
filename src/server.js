@@ -99,6 +99,20 @@ app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json())
 app.use(logger('dev'));
 
+app.get('/front/refresh/assets', function(req, res) {
+  const assetsPath = path.resolve(__dirname, '../static/dist');
+  const reg = /^(?:main-)(.*)(?:\.js)$/;
+  fs.readdir(assetsPath, function(err, file) {
+    const mainFile = file.filter(name => reg.test(name))[0];
+    if (mainFile) {
+      const assetsHash = mainFile.match(reg)[1];
+      return res.status(200).send({assetsHash: assetsHash});
+    } else {
+      return res.status(404).send({message: 'file not fount'});
+    }
+  });
+});
+
 app.use((req, res) => {
   console.log('node 被访问');
   // writeDataToFile('cookie', req.cookies);
