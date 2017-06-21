@@ -27,7 +27,7 @@ class RiskCheckStore {
         this.punishData = errorData;
       }));
   }
-  resetStore() {
+  @action.bound resetStore() {
     this.isMount = false;
     this.checkData = {};
     this.abnormalData = {};
