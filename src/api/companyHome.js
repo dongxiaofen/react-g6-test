@@ -272,3 +272,14 @@ export const getReportStatus = (params) => {
 export const createBasicReport = (params) => {
   return axios.post(`/api/basicReport`, params);
 };
+
+// 后台是否已完成
+export const isCompleted = ({basicReportId, reportId}) => {
+  let url;
+  if (basicReportId) {
+    url = `/api/basicReport/${basicReportId}/completed`;
+  } else if (reportId) {
+    url = `/api/report/${reportId}/completed`;
+  }
+  return axios.get(url);
+};
