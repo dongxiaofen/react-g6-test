@@ -55,11 +55,14 @@ function Footer({companyHomeStore, routing, bannerStore}) {
         : ''
       }
       {
-        repType === 'basicReport' || repType === 'report' || repType === 'loan' ?
+        (repType === 'basicReport' || repType === 'report' || repType === 'loan') && companyHomeStore.completed ?
         <span className={styles.item} onClick={bannerStore.openDownLoadPdf}>
           <i className={styles.download}></i>下载PDF
         </span>
-        : ''
+        :
+        <span className={styles.item}>
+          请稍后...
+        </span>
       }
       {
         repType === 'monitor' ?

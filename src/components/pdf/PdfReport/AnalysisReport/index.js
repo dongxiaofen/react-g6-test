@@ -10,7 +10,7 @@ function AnalysisReport({judgeIsModuleExist, pdfStore}) {
       {
         judgeIsModuleExist('SCORE') ?
           <div>
-            <PdfTitle module="多维综合分析" subModule="多维综合分析" />
+            <PdfTitle module="多维综合分析" />
             <ComprehensiveAnalysis moduleData={pathval.getPathValue(pdfStore, 'star')} />
           </div> : ''
       }
