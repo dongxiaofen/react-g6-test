@@ -10,6 +10,9 @@ export default class MonitorAlert extends Component {
     routing: PropTypes.object,
     monitorAlertStore: PropTypes.object,
   };
+  componentWillUnmount() {
+    this.props.monitorAlertStore.cancelAlertDetail();
+  }
   render() {
     return (
       <div>

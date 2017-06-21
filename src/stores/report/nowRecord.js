@@ -165,6 +165,7 @@ class NowRecordStore {
     this.loading = false;
     // 公司id
     this.companyName = '';
+    this.companyId = '';
   }
 }
 export default new NowRecordStore();

@@ -36,7 +36,6 @@ class MessageStore {
   @action.bound isAssetsNewest(assetsHash) {
     axios.get('/front/refresh/assets')
       .then(action('isAssetsNewest', resp => {
-        console.info(resp.data.assetsHash, assetsHash, '---');
         if (assetsHash !== resp.data.assetsHash) {
           const notRouteToHome = true;
           modalStore.openCompModal({
@@ -59,7 +58,7 @@ class MessageStore {
             },
             loader: (cb) => {
               require.ensure([], (require) => {
-                cb(require('../components/assetsRefresh'));
+                cb(require('components/assetsRefresh'));
               });
             }
           });

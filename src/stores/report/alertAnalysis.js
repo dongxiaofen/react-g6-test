@@ -237,5 +237,11 @@ class AlertAnalysisStore {
     this.loading = false;
     this.resetDetailData();
   }
+  @action.bound cancelAlertDetail() {
+    if (this.alertCancel) {
+      this.alertCancel();
+      this.alertCancel = null;
+    }
+  }
 }
 export default new AlertAnalysisStore();
