@@ -71,8 +71,8 @@ function PayModal({
       {text: '7个月', key: 'SEVEN_MONTH'},
       {text: '8个月', key: 'EIGHT_MONTH'},
       {text: '9个月', key: 'NINE_MONTH'},
-      {text: '10个月', key: 'TEN_YEAR'},
-      {text: '11个月', key: 'ELEVEN_YEAR'},
+      {text: '10个月', key: 'TEN_MONTH'},
+      {text: '11个月', key: 'ELEVEN_MONTH'},
       {text: '1年', key: 'ONE_YEAR'},
     ];
     return init.map((item, key) => {
