@@ -194,14 +194,14 @@ export const getNowRecordPictures = (id, source) => {
   return axios.get('/api/survey/' + id + '/pictures', { cancelToken: source.token });
 };
 // 报告时间轴详情
-export const getReportAxisDetail = (reportId, key, time, relation) => {
+export const getReportAxisDetail = (reportId, key, time, relation, source) => {
   const module = key === 'legal' ? 'risk' : key;
-  return axios.get(`/api/report/${reportId}/timeline/${relation === 'related' ? `related/${module}` : module}?date=${time}`);
+  return axios.get(`/api/report/${reportId}/timeline/${relation === 'related' ? `related/${module}` : module}?date=${time}`, { cancelToken: source.token });
 };
 // 监控时间轴详情
-export const getMonitorAxisDetail = (monitorId, key, time, relation) => {
+export const getMonitorAxisDetail = (monitorId, key, time, relation, source) => {
   const module = key === 'legal' ? 'risk' : key;
-  return axios.get(`/api/monitor/${monitorId}/timeline/${relation === 'related' ? `related/${module}` : module}?date=${time}`);
+  return axios.get(`/api/monitor/${monitorId}/timeline/${relation === 'related' ? `related/${module}` : module}?date=${time}`, { cancelToken: source.token });
 };
 // 税务核查列表
 export const getTaxCheckList = (params, source) => {

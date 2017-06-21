@@ -1,8 +1,11 @@
 import { observable, action } from 'mobx';
 import { companyHomeApi } from 'api';
+import axios from 'axios';
+const CancelToken = axios.CancelToken;
 
 class ReportAxisStore {
   @observable isMount = false;
+  getDetailCancel = null;
   companyId = '';
   @observable axisData = {};
   @observable eventParams = {
@@ -42,8 +45,10 @@ class ReportAxisStore {
       }))
       .catch(action('timeline', err => {
         console.log(err);
-        this.axisData = {error: err.response.data, data: {}};
-        this.eventData = {error: err.response.data, events: []};
+        if (!axios.isCancel(err)) {
+          this.axisData = {error: err.response.data, data: {}};
+          this.eventData = {error: err.response.data, events: []};
+        }
       }));
   }
   @action.bound getAxisDetail(reportId, key, time, relation) {
@@ -53,14 +58,24 @@ class ReportAxisStore {
       module: this.moduleDict[key],
     };
     this.eventData = {};
-    companyHomeApi.getReportAxisDetail(reportId, key, time, relation)
+    if (this.getDetailCancel) {
+      this.getDetailCancel();
+      this.getDetailCancel = null;
+    }
+    const source = CancelToken.source();
+    this.getDetailCancel = source.cancel;
+    companyHomeApi.getReportAxisDetail(reportId, key, time, relation, source)
       .then(action('getAxisDetail', resp => {
         const noData = !resp.data || !resp.data.events || resp.data.events.length === 0;
         this.eventData = noData ? {events: [], error: {message: '未查询到相关数据'}} : resp.data;
+        this.getDetailCancel = null;
       }))
       .catch(action('getAxisDetail', err => {
         console.log(err);
-        this.eventData = {error: err.response.data, events: []};
+        if (!axios.isCancel(err)) {
+          this.eventData = {error: err.response.data, events: []};
+          this.getDetailCancel = null;
+        }
       }));
   }
   @action.bound resetStore() {

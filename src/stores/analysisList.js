@@ -42,7 +42,7 @@ class AnalysisListStore {
       .then(action('getAnalysisCount_success', (resp) => {
         this.listCount = resp.data;
       }))
-      .catch('getAnalysisCount_error', err => {
+      .catch(action('getAnalysisCount_error', err => {
         console.log(err);
         this.listCount = {
           scoreNum: 0,
@@ -50,7 +50,7 @@ class AnalysisListStore {
           operationNum: 0,
           growingNum: 0,
         };
-      });
+      }));
   }
   @action.bound getAnalysisList() {
     const activeKey = this.activeKey;
@@ -64,10 +64,10 @@ class AnalysisListStore {
         analysisListPager.totalElements = resp.data.totalElements;
         this[moduleStr] = resp.data;
       }))
-      .catch((err) => {
+      .catch(action('get report page', (err) => {
         console.log(err, '-----getAnalysisList');
         this[moduleStr] = {error: pathval.getPathInfo(err, 'response.data') || {message: '暂无信息'}, content: []};
-      });
+      }));
   }
 }
 export default new AnalysisListStore();
