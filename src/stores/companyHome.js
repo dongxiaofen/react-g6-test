@@ -30,6 +30,8 @@ class CompanyHomeStore {
   @observable loanLoading = false;
   @observable monitorLoading = false;
   @observable upgradeType = 'nav';
+  // 是否已经完成
+  @observable completed = false;
   @computed get monitorTimeObj() {
     const init = [
       {text: '1个月', key: 'ONE_MONTH'},
@@ -230,6 +232,10 @@ class CompanyHomeStore {
         if (resp.data.dimensions) {
           this.initDimensions(resp.data.dimensions);
         }
+        this.isCompleted({
+          reportId: resp.data.reportId,
+          basicReportId: resp.data.basicReportId
+        });
       } else {
         this.createBasicReport({companyName: params.companyName});
       }
@@ -278,6 +284,16 @@ class CompanyHomeStore {
     ];
     this.resetMonitorModal();
     this.loanLoading = false;
+  }
+  // 后台是否已经完成
+  @action.bound isCompleted({basicReportId, reportId}) {
+    companyHomeApi.isCompleted({basicReportId, reportId})
+      .then( action( (response) => {
+        this.completed = response;
+      }))
+      .catch( action( (error) => {
+        console.log(error.response.data);
+      }));
   }
 }
 export default new CompanyHomeStore();

@@ -32,11 +32,11 @@ function SearchItemLeft({itemData, searchParameter}) {
       {/* <div className={`${styles.itemMessage}`}>
         <Address itemData={itemData} />
       </div> */}
-      <div className={`${styles.itemMessage} ${styles.itemMessagePosition}`}>
-        <Highlight
-          itemData={itemData}
-          searchParameter={searchParameter} />
-      </div>
+      {/* <div className={`${styles.itemMessage} ${styles.itemMessagePosition}`}> */}
+      <Highlight
+        itemData={itemData}
+        searchParameter={searchParameter} />
+      {/* </div> */}
     </div>
   );
 }

@@ -13,6 +13,7 @@ import Team from './Team';
 import Tax from './Tax';
 import EquityRelated from './EquityRelated';
 import AnalysisReport from './AnalysisReport';
+import Cover from './Cover';
 import styles from './index.less';
 import getPermissionMeta from 'helpers/getPermissionMeta';
 
@@ -24,27 +25,30 @@ function PdfReport({pdfStore, clientStore}) {
     // return true;
   };
   return (
-    <Container>
-      <Row>
-        <Col className={styles[getPermissionMeta(clientStore.envConfig).pdfStyle]} width="12">
-          <Header />
-          {
-            judgeIsModuleExist('SUMMERY') ?
-            <Overview /> : ''
-          }
-          <Base judgeIsModuleExist={judgeIsModuleExist}/>
-          <Stock judgeIsModuleExist={judgeIsModuleExist}/>
-          <Risk judgeIsModuleExist={judgeIsModuleExist}/>
-          <EquityRelated judgeIsModuleExist={judgeIsModuleExist}/>
-          <News judgeIsModuleExist={judgeIsModuleExist}/>
-          <Assets judgeIsModuleExist={judgeIsModuleExist}/>
-          <Network judgeIsModuleExist={judgeIsModuleExist}/>
-          <Team judgeIsModuleExist={judgeIsModuleExist}/>
-          <AnalysisReport judgeIsModuleExist={judgeIsModuleExist}/>
-          <Tax judgeIsModuleExist={judgeIsModuleExist}/>
-        </Col>
-      </Row>
-    </Container>
+    <div>
+      <Cover/>
+      <Container>
+        <Row>
+          <Col className={styles[getPermissionMeta(clientStore.envConfig).pdfStyle]} width="12">
+            <Header />
+            {
+              judgeIsModuleExist('SUMMERY') ?
+                <Overview /> : ''
+            }
+            <Base judgeIsModuleExist={judgeIsModuleExist}/>
+            <Stock judgeIsModuleExist={judgeIsModuleExist}/>
+            <Risk judgeIsModuleExist={judgeIsModuleExist}/>
+            <EquityRelated judgeIsModuleExist={judgeIsModuleExist}/>
+            <News judgeIsModuleExist={judgeIsModuleExist}/>
+            <Assets judgeIsModuleExist={judgeIsModuleExist}/>
+            <Network judgeIsModuleExist={judgeIsModuleExist}/>
+            <Team judgeIsModuleExist={judgeIsModuleExist}/>
+            <AnalysisReport judgeIsModuleExist={judgeIsModuleExist}/>
+            <Tax judgeIsModuleExist={judgeIsModuleExist}/>
+          </Col>
+        </Row>
+      </Container>
+    </div>
   );
 }
 

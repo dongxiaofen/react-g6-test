@@ -28,12 +28,14 @@ class PdfStore {
   @observable shares = {};
   @observable pdfTypesKey = '';
   @observable managements = [];
+  @observable reportType = '';
   // summary
   @observable summary = {};
   @observable companyName = '';
 
-  @action.bound setTypes(types) {
+  @action.bound setTypes(types, reportType) {
     this.pdfTypesKey = types;
+    this.reportType = reportType;
   }
 
   @action.bound getOverviewData(id, type, idType) {

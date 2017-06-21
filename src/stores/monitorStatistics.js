@@ -188,7 +188,7 @@ class MonitorStatisticsStore {
    * 地区相关store
    */
   @observable provinceName = '';
-  @observable provinceAllSize;
+  @observable provinceAllSize = 0;
   // 地区分布store
   @observable provinceAll = [];
   // 地区排行store
@@ -200,6 +200,10 @@ class MonitorStatisticsStore {
     provinceRank: [],
     mapOption: { mapType: '', data: [] },
   };
+  // 地区排行未知
+  @observable provinceBarUndefined = 0;
+  // 企业地区分布 TOP10 未知
+  @observable provinceMapUndefined = 0;
 
   /**
    * 行业统计store
@@ -239,7 +243,7 @@ class MonitorStatisticsStore {
 
   // 选择指定时间和类别请求数据
   @action.bound getChangeData(params) {
-    this.getStatistic(params);
+    // this.getStatistic(params);
     this.getChangeTrend(params);
     this.getProvinceAll(params);
     this.getIndustryStatistics(params);
@@ -351,15 +355,28 @@ class MonitorStatisticsStore {
             });
           } else {
             provinceName = provinceAllData[provinceAllData.length - 1].area;
-            if (provinceName === '未知'
-              || provinceName === '其他') {
+            if (provinceName === '未知' || provinceName === '其他') {
               provinceName = provinceAllData[provinceAllData.length - 2].area;
-              if (provinceName === '未知'
-                || provinceName === '其他') {
+              if (provinceName === '未知' || provinceName === '其他') {
                 provinceName = provinceAllData[provinceAllData.length - 3].area;
               }
             }
           }
+
+          // 恶心的未知 -----------------------------------------------------------------------
+          let provinceUndefinedIndex = provinceAllData.findIndex((item) => item.area === '未知');
+          if (provinceUndefinedIndex !== -1) {
+            this.provinceBarUndefined = provinceAllData[provinceUndefinedIndex].companyCount;
+            provinceAllData.splice(provinceUndefinedIndex, 1);
+          }
+          // 恶心的其他
+          provinceUndefinedIndex = provinceAllData.findIndex((item) => item.area === '其他');
+          if (provinceUndefinedIndex !== -1) {
+            this.provinceBarUndefined += provinceAllData[provinceUndefinedIndex].companyCount;
+            provinceAllData.splice(provinceUndefinedIndex, 1);
+          }
+          // -----------------------------------------------------------------------------------
+
           provinceAllData.forEach((item, idx) => {
             // 地图数据
             if (item.area !== '未知' && item.area !== '其他') {
@@ -438,6 +455,19 @@ class MonitorStatisticsStore {
               break;
             }
           }
+          // 恶心的未知----------------------------------------------------------------------------
+          let provinceRankUndefinedIndex = provinceRank.findIndex((item) => item.area === '未知');
+          if (provinceRankUndefinedIndex !== -1) {
+            this.provinceMapUndefined = provinceRank[provinceRankUndefinedIndex].companyCount;
+            provinceRank.splice(provinceRankUndefinedIndex, 1);
+          }
+          // 恶心的其他
+          provinceRankUndefinedIndex = provinceRank.findIndex((item) => item.area === '其他');
+          if (provinceRankUndefinedIndex !== -1) {
+            this.provinceMapUndefined += provinceRank[provinceRankUndefinedIndex].companyCount;
+            provinceRank.splice(provinceRankUndefinedIndex, 1);
+          }
+          // ---------------------------------------------------------------------------------------
           if (isRealm) {
             provinceRank.forEach((item) => {
               if (item.area.indexOf('市') === -1
@@ -754,6 +784,98 @@ class MonitorStatisticsStore {
         }
       });
     this.cancel.push(source.cancel);
+  }
+
+  @action.bound resetStore() {
+    this.loadingGroup = {
+      statistic: true,
+      changeTrend: true,
+      province: true,
+      provinceAll: true,
+      industryTrend: true,
+      industryStatistics: true,
+      headlines: true,
+    };
+
+    this.errorBody = {
+      changeTrend: {},
+      province: {},
+      provinceAll: {},
+      industryTrend: {},
+      industryStatistics: {},
+      headlines: {},
+    };
+
+    this.params = {};
+
+    // 顶部四个板块store
+    this.statistic = {};
+
+    // 变化趋势store
+    this.changeTrend = {
+      result: [],
+      mutual: {
+        nowData: {},
+        beforeData: {},
+      }
+    };
+    this.changeTrendData = {
+      axis: [],
+      companyData: [],
+      eventData: []
+    };
+
+    /**
+     * 地区相关store
+     */
+    this.provinceName = '';
+    this.provinceAllSize = 0;
+    // 地区分布store
+    this.provinceAll = [];
+    // 地区排行store
+    this.provinceBar = { axis: [], data: [] };
+    // 地区变化趋势store
+    this.provinceLine = { axis: [], event: [], company: [] };
+    // 企业地区分布store
+    this.provinceMap = {
+      provinceRank: [],
+      mapOption: { mapType: '', data: [] },
+    };
+    // 地区排行未知
+    this.provinceBarUndefined = 0;
+    // 企业地区分布 TOP10 未知
+    this.provinceMapUndefined = 0;
+
+    /**
+     * 行业统计store
+     */
+    // 行业统计显示区块数store，最多显示10个
+    this.industryRankLength = 0;
+    this.industryId = '';
+    this.industryName = '';
+    // 行业统计store
+    this.industryStatistics = [];
+    // 行业统计变化趋势store
+    this.industryTrend = { axis: [], event: [], company: [] };
+
+    /**
+     * 头条相关store
+     */
+    this.typeAll = '';
+    this.typeDefault = '工商更新';
+    // 头条趋势分析store
+    this.headlinesTrend = {
+      axis: [],
+      all: [],
+      corp: [],
+      legal: [],
+      news: [],
+      operation: [],
+      stock: [],
+      team: []
+    };
+    // 头条类型分析store
+    this.headlinesType = [];
   }
 }
 export default new MonitorStatisticsStore();
