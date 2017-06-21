@@ -101,7 +101,7 @@ export default class CircleNetworkGraph extends Component {
             nodesData[0].isFocus = true;
           } else {
             nodesData.map((node) => {
-              if (focusNodeName !== '' && node.name.indexOf(focusNodeName) >= 0 && node.category !== 0) {
+              if (focusNodeName !== '' && node.name === focusNodeName && node.category !== 0) {
                 node.isFocus = true;
               }
             });
