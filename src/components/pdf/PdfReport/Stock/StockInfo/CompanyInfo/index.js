@@ -17,8 +17,12 @@ function CompanyInfo({moduleData, stockCode}) {// stockCode
 
 
   moduleData.stockCode = stockCode;
-  moduleData.reg_cap = (moduleData.reg_cap / 10000).toFixed(2);
-  moduleData.issued_shares = (moduleData.issued_shares / 10000).toFixed(2);
+  if (!isNaN(moduleData.reg_cap)) {
+    moduleData.reg_cap = (moduleData.reg_cap / 10000).toFixed(2);
+  }
+  if (!isNaN(moduleData.issued_shares)) {
+    moduleData.issued_shares = (moduleData.issued_shares / 10000).toFixed(2);
+  }
   const data = {
     dataConfig: [
       {'key': 'stockCode', 'width': '6'},

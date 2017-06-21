@@ -22,6 +22,14 @@ function NewAccountBody({data, routing, accountSettingStore}) {
       routing.push(`/accountSetting`);
     });
   };
+  const iconShow = (index) => {
+    if (index === 0) {
+      return (<div className={`${styles.icon_new}`}></div>);
+    } else if (index !== 0 && index < 3) {
+      return (<div className={`${styles.icon_number} ${styles[`nomal_${index + 1}`]}`}></div>);
+    }
+    return null;
+  };
   const createList = () => {
     let arrList = [];
     if (data) {
@@ -29,14 +37,17 @@ function NewAccountBody({data, routing, accountSettingStore}) {
         arrList = [...arrList,
           <li key={`${index}newAccount`} className={`${styles.list_item}`}>
             <div className={`${styles.marginRL} clearfix`}>
-              <div onClick={jumpAccoutSetting.bind(this, itemData.email, itemData.userId)} className={`${styles.user} pull-left`}>
+              <div className="clearfix">
+                {iconShow(index)}
+                <span onClick={jumpAccoutSetting.bind(this, itemData.email, itemData.userId)} className={`${styles.user}`}>
                 <Popover content={`所属账号：${itemData.userName}（${itemData.email}）`}>
                   {spliceString(itemData.userName, itemData.email)}
                 </Popover>
+            </span>
               </div>
-              <div className={`${styles.date} pull-right`}>
-                <p>最新预警日期</p>
-                <p>{itemData.alertDt}</p>
+              <div className={`${styles.date}`}>
+                <span>预警日期：</span>
+                <span>{itemData.alertDt}</span>
               </div>
             </div>
           </li>
@@ -59,7 +70,10 @@ export default loadingComp({
   mapDataToProps: props => ({
     loading: props.isLoading,
     category: 0,
+    errCategory: 3,
+    errorWords: props.errorWords,
     error: props.error,
-    module: props.module
+    module: props.module,
+    path: props.path,
   })
 })(inject('routing', 'accountSettingStore')(observer(NewAccountBody)));

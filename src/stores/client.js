@@ -11,11 +11,13 @@ class ClientStore {
     this.envConfig = data.envConfig;
   }
 
-  @action.bound loginOut() {
+  @action.bound loginOut(notRouteToHome) {
     clientApi.loginOut()
       .then(() => {
-        browserHistory.push('/');
-        window.location.reload();
+        if (!notRouteToHome) {
+          browserHistory.push('/');
+          window.location.reload();
+        }
       })
       .catch((err) => {
         console.log(err.response);

@@ -1,55 +1,23 @@
-import React, {PropTypes} from 'react';
+import React, { PropTypes } from 'react';
 import { observer } from 'mobx-react';
-import { browserHistory } from 'react-router';
 
 import styles from './index.less';
 import Pager from 'components/common/Pager';
+import LinkJump from 'components/common/LinkJump';
 import { loadingComp } from 'components/hoc';
 
 function CardList({ collectionStore, uiStore }) {
-  const viewCompany = (id, productType) => {
-    let url;
-    switch (productType) {
-      case 'REPORT':
-        url = `/companyHome?reportId=${id}`;
-        break;
-      case 'MONITOR':
-        url = `/companyHome?monitorId=${id}`;
-        break;
-      default:
-        break;
-    }
-    browserHistory.push(url);
-  };
-
-  const cancelCollection = (id, productType) => {
-    collectionStore.cancelCollection(id, productType);
-  };
-
-  const category = (productType) => {
-    switch (productType) {
-      case 'REPORT':
-        return '查询报告';
-      case 'MONITOR':
-        return '监控报告';
-      default:
-        return 'system error';
-    }
+  const cancelCollection = (companyName) => {
+    collectionStore.cancelCollection(companyName);
   };
 
   const collectionList = () => {
     return collectionStore.resultContent.map((item, key) => {
-      const id = item.id;
-      const productType = item.productType;
       return (
         <div className={`clearfix ${styles.item}`} key={`collectionKey${key}`}>
           <div className={`clearfix ${styles.baseInfo}`}>
             <div className={styles.nameWrap}>
-              <span className={styles.name}
-                onClick={viewCompany.bind(null, id, productType)}>
-                {item.companyName}
-              </span>
-              <span className={styles.category}>{category(item.productType)}</span>
+              <LinkJump name={item.companyName} label="公司名称" className={styles.name}>{item.companyName}</LinkJump>
             </div>
             <div className={styles.infoDetail}>
               <span className={styles.detailItem}>{`法人：${item.frName ? item.frName : '无'}`}</span>
@@ -61,17 +29,13 @@ function CardList({ collectionStore, uiStore }) {
             </div>
           </div>
           <div className={styles.cancelBtn}
-            onClick={cancelCollection.bind(null, id, productType)}>
+               onClick={cancelCollection.bind(null, item.companyName)}>
             取消收藏
           </div>
           <div className={`clearfix ${styles.lastModifiedTs}`}>
             <div className={styles.dateItem}>
               <div className={styles.timeValue}>{item.collectionDt}</div>
               <div className={styles.timeKey}>收藏日期</div>
-            </div>
-            <div className={styles.dateItem}>
-              <div className={styles.timeValue}>{item.latestDt}</div>
-              <div className={styles.timeKey}>最近更新日期</div>
             </div>
           </div>
         </div>

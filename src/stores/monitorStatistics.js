@@ -176,539 +176,34 @@ class MonitorStatisticsStore {
     mutual: {
       nowData: {},
       beforeData: {},
-    },
-    chartOption: {
-      dataZoom: [
-        {
-          type: 'slider',
-          bottom: 0,
-          dataBackground: {
-            areaStyle: {
-              color: '#eeeeee',
-            },
-          },
-          fillerColor: 'rgba(230, 230, 230, 0.4)',
-          handleStyle: {
-            color: '#dddddd'
-          },
-        },
-        {
-          type: 'inside',
-        },
-      ],
-      tooltip: {
-        trigger: 'axis',
-        axisPointer: {
-          lineStyle: {
-            color: '#e5e5e5',
-          }
-        },
-        backgroundColor: '#ffffff',
-        padding: [0, 0],
-        formatter: (ticket) => {
-          const str = `
-          <div style="box-shadow: 0 0 7px #dddddd; padding: 15px 20px; background-color: #ffffff">
-            <p style="text-align: center; padding-bottom: 10px;">
-              <a style="color: #999999;">
-                ${ticket[0].name}
-              </a>
-            </p>
-            <p style="text-align: center; padding-bottom: 6px;">
-              <a style="color: #3483e9;">
-                <span style="padding-right: 15px">${ticket[1].seriesName}</span>
-                <span>${ticket[1].value}</span>条
-              </a>
-            </p>
-            <p style="text-align: center;">
-              <a style="color: #ffbd3d;">
-                <span style="padding-right: 15px">${ticket[0].seriesName}</span>
-                <span>${ticket[0].value}</span>家
-              </a>
-            </p>
-          </div>`;
-          return str;
-        },
-      },
-      grid: {
-        top: '10',
-        left: '3%',
-        right: '4%',
-        bottom: '45',
-        containLabel: true
-      },
-      xAxis: {
-        type: 'category',
-        boundaryGap: false,
-        splitLine: {
-          show: true,
-          lineStyle: {
-            type: 'dashed',
-            color: '#f5f5f5'
-          }
-        },
-        axisTick: {
-          show: false,
-        },
-        axisLine: {
-          lineStyle: {
-            color: '#e5e5e5',
-          }
-        },
-        axisLabel: {
-          textStyle: {
-            color: '#999999',
-          },
-        },
-        data: []
-      },
-      yAxis: {
-        type: 'value',
-        splitLine: {
-          show: false,
-        },
-        axisLabel: {
-          textStyle: {
-            color: '#999999',
-          },
-        },
-        axisLine: {
-          show: false,
-        },
-        axisTick: {
-          show: false,
-        },
-      },
-      series: [
-        {
-          name: '头条更新企业',
-          type: 'line',
-          stack: '总量1',
-          lineStyle: {
-            normal: {
-              color: '#ffbd3d',
-              width: 3,
-            }
-          },
-          itemStyle: {
-            normal: {
-              color: '#ffbd3d',
-            }
-          },
-          data: [],
-        },
-        {
-          name: '头条更新信息',
-          type: 'line',
-          stack: '总量2',
-          lineStyle: {
-            normal: {
-              color: '#3483e9',
-              width: 3,
-            }
-          },
-          itemStyle: {
-            normal: {
-              color: '#3483e9'
-            }
-          },
-          data: []
-        },
-      ]
     }
   };
+  @observable changeTrendData = {
+    axis: [],
+    companyData: [],
+    eventData: []
+  }
 
   /**
    * 地区相关store
    */
   @observable provinceName = '';
-  @observable provinceAllSize;
+  @observable provinceAllSize = 0;
   // 地区分布store
-  @observable provinceAll = {
-    result: [],
-    chartOption: {
-      tooltip: {
-        backgroundColor: '#ffffff',
-        padding: [0, 0],
-        textStyle: {
-          color: '#4d4d4d',
-        },
-        formatter: (ticket) => {
-          const str = `
-            <div style="box-shadow: 0 0 4px #ccc; padding: 10px 20px;">
-              <p style="text-align: center;">
-                <a style="color:#999999;">
-                  ${ticket.name}
-                </a>
-                <a style="color: ${ticket.color};">
-                  <span style="padding-left: 15px">
-                    ${ticket.value[2]}
-                  </span>家
-                </a>
-              </p>
-            </div>`;
-          return str;
-        }
-      },
-      geo: {
-        map: 'china',
-        label: {
-          emphasis: {
-            show: false,
-          }
-        },
-        layoutCenter: ['50%', '50%'],
-        layoutSize: '130%',
-        itemStyle: {
-          normal: {
-            areaColor: '#E7E8EA',
-            borderColor: '#ffffff',
-          },
-          emphasis: {
-            areaColor: '#E7E8EA',
-            borderColor: '#ffffff',
-          },
-        },
-      },
-      series: [
-        {
-          type: 'scatter',
-          coordinateSystem: 'geo',
-          symbolSize: (data) => {
-            const value = data[2];
-            if (value >= 1 && value <= 10) {
-              return 20;
-            } else if (value >= 11 && value <= 20) {
-              return 25;
-            } else if (value >= 21 && value <= 50) {
-              return 30;
-            }
-            return 40;
-          },
-          label: {
-            normal: {
-              formatter: '{b}',
-              position: 'inside',
-              show: true,
-              textStyle: {
-                color: '#333333',
-              }
-            },
-          },
-          data: []
-        },
-      ]
-    },
-  };
+  @observable provinceAll = [];
   // 地区排行store
-  @observable provinceBar = {
-    result: [],
-    chartOption: {
-      tooltip: {
-        backgroundColor: '#ffffff',
-        padding: [0, 0],
-        formatter: (ticket) => {
-          const name = ticket.name.split('.');
-          const str = `
-            <div style="box-shadow: 0 0 7px #ddd; padding: 15px 20px; background-color: #fff">
-              <p style="text-align: center;">
-                <a style="color:#999999;">
-                  ${name[1]}
-                </a>
-                <a style="color:#81B3EE;">
-                  <span style="padding-left: 15px">
-                    ${ticket.value}
-                  </span>家
-                </a>
-              </p>
-            </div>`;
-          return str;
-        },
-      },
-      dataZoom: [
-        {
-          type: 'slider',
-          yAxisIndex: 0,
-          right: '2%',
-          dataBackground: {
-            areaStyle: {
-              color: '#eeeeee',
-            },
-          },
-          fillerColor: 'rgba(230, 230, 230, 0.4)',
-          handleStyle: {
-            color: '#dddddd'
-          },
-        },
-        {
-          type: 'inside',
-          yAxisIndex: 0,
-        }
-      ],
-      grid: {
-        top: 0,
-        left: '1%',
-        right: '10%',
-        bottom: 0,
-        containLabel: true
-      },
-      barMaxWidth: 7,
-      xAxis: {
-        type: 'value',
-        boundaryGap: false,
-        splitLine: {
-          show: false,
-        },
-        axisTick: {
-          show: false,
-        },
-        axisLine: {
-          show: false,
-        },
-        axisLabel: {
-          show: false,
-        },
-      },
-      yAxis: {
-        type: 'category',
-        splitLine: {
-          show: false,
-        },
-        axisTick: {
-          show: false,
-        },
-        axisLine: {
-          lineStyle: {
-            color: '#e5e5e5',
-          }
-        },
-        axisLabel: {
-          textStyle: {
-            color: '#999999',
-          },
-        },
-        data: []
-      },
-      series: [
-        {
-          type: 'bar',
-          itemStyle: {
-            normal: {
-              color: '#81B3EE',
-            },
-          },
-          label: {
-            normal: {
-              show: true,
-              position: 'right'
-            }
-          },
-          data: []
-        }
-      ]
-    }
-  };
+  @observable provinceBar = { axis: [], data: [] };
   // 地区变化趋势store
-  @observable provinceLine = {
-    result: [],
-    chartOption: {
-      dataZoom: [
-        {
-          type: 'slider',
-          bottom: 0,
-          dataBackground: {
-            areaStyle: {
-              color: '#eeeeee',
-            },
-          },
-          fillerColor: 'rgba(230, 230, 230, 0.4)',
-          handleStyle: {
-            color: '#dddddd'
-          },
-        },
-        {
-          type: 'inside',
-        },
-      ],
-      tooltip: {
-        trigger: 'axis',
-        axisPointer: {
-          lineStyle: {
-            color: '#e5e5e5',
-          }
-        },
-        backgroundColor: '#ffffff',
-        padding: [0, 0],
-        formatter: (ticket) => {
-          const str = `
-            <div style="box-shadow: 0 0 7px #dddddd; padding: 15px 20px; background-color: #ffffff">
-              <p style="text-align: center; padding-bottom: 10px;">
-                <a style="color:#999999;">
-                  ${ticket[0].name}
-                </a>
-              </p>
-              <p style="text-align: center; padding-bottom: 3px;">
-                <a style="color: #80b3ef;">
-                  <span style="padding-right: 15px">${ticket[0].seriesName}</span>
-                  <span>${ticket[0].value}</span>条
-                </a>
-              </p>
-              <p style="text-align: center;">
-                <a style="color: #c4ebad;">
-                  <span style="padding-right: 15px">${ticket[1].seriesName}</span>
-                  <span>${ticket[1].value}</span>家
-                </a>
-              </p>
-            </div>`;
-          return str;
-        },
-      },
-      grid: {
-        top: '10',
-        left: '4%',
-        right: '120',
-        bottom: '45',
-        containLabel: true
-      },
-      xAxis: {
-        type: 'category',
-        boundaryGap: false,
-        splitLine: {
-          show: true,
-          lineStyle: {
-            type: 'dashed',
-            color: ['#f5f5f5']
-          }
-        },
-        axisTick: {
-          show: false,
-        },
-        axisLine: {
-          lineStyle: {
-            color: '#e5e5e5',
-          }
-        },
-        axisLabel: {
-          textStyle: {
-            color: '#999999',
-          },
-        },
-        data: []
-      },
-      yAxis: {
-        type: 'value',
-        splitLine: {
-          show: false,
-        },
-        axisLabel: {
-          textStyle: {
-            color: '#999999',
-          },
-        },
-        axisLine: {
-          show: false,
-        },
-        axisTick: {
-          show: false,
-        },
-      },
-      series: [
-        {
-          name: '头条更新信息',
-          type: 'line',
-          stack: '总量1',
-          areaStyle: { normal: {} },
-          lineStyle: {
-            normal: {
-              color: '#80b3ef',
-              width: 3,
-            }
-          },
-          itemStyle: {
-            normal: {
-              color: '#80b3ef',
-            }
-          },
-          data: [],
-        },
-        {
-          name: '头条更新企业',
-          type: 'line',
-          stack: '总量2',
-          areaStyle: { normal: {} },
-          lineStyle: {
-            normal: {
-              color: '#c4ebad',
-              width: 3,
-            }
-          },
-          itemStyle: {
-            normal: {
-              color: '#c4ebad'
-            }
-          },
-          data: []
-        },
-      ]
-    },
-  };
+  @observable provinceLine = { axis: [], event: [], company: [] };
   // 企业地区分布store
   @observable provinceMap = {
-    result: [],
     provinceRank: [],
-    chartOption: {
-      tooltip: {
-        trigger: 'item',
-        axisPointer: {
-          lineStyle: {
-            color: '#e5e5e5',
-          }
-        },
-        backgroundColor: '#ffffff',
-        padding: [0, 0],
-        formatter: (ticket) => {
-          let str = '';
-          if (ticket.value) {
-            str = `
-                <div style="box-shadow: 0 0 7px #dddddd; padding: 15px 20px; background-color: #ffffff">
-                  <p style="text-align: center;">
-                    <a style="color:#999999;">
-                      ${ticket.name}
-                    </a>
-                    <a style="color: #a5d6a7;">
-                      <span style="padding-left: 15px">
-                        ${ticket.value}
-                      </span>家
-                    </a>
-                  </p>
-                </div>`;
-          }
-          return str;
-        },
-      },
-      series: [
-        {
-          type: 'map',
-          mapType: '',
-          label: {
-            emphasis: {
-              show: false,
-            }
-          },
-          itemStyle: {
-            normal: {
-              areaColor: '#E7E8EA',
-              borderColor: '#ffffff',
-            },
-            emphasis: {
-              areaColor: '#E7E8EA',
-              borderColor: '#ffffff',
-            },
-          },
-          data: [],
-        }
-      ]
-    },
+    mapOption: { mapType: '', data: [] },
   };
+  // 地区排行未知
+  @observable provinceBarUndefined = 0;
+  // 企业地区分布 TOP10 未知
+  @observable provinceMapUndefined = 0;
 
   /**
    * 行业统计store
@@ -718,205 +213,9 @@ class MonitorStatisticsStore {
   @observable industryId = '';
   @observable industryName = '';
   // 行业统计store
-  @observable industryStatistics = {
-    result: {},
-    chartOption: {
-      tooltip: {
-        backgroundColor: '#ffffff',
-        padding: [0, 0],
-        formatter: (ticket) => {
-          const str = `
-          <div style="box-shadow: 0 0 7px #ddd; padding: 15px 20px; background-color: #fff">
-            <p style="text-align: center; padding-bottom: 10px;">
-              <a style="color:#999999;">
-                ${ticket.name}
-              </a>
-            </p>
-            <p style="text-align: center; padding-bottom: 3px;">
-              <a style="color: #3483e9;">
-                <span style="padding-right: 15px">企业数量</span>
-                <span>${ticket.data.value}</span>家
-              </a>
-            </p>
-            <p style="text-align: center;">
-              <a style="color: #3483e9;">
-                <span style="padding-right: 15px">所占比例</span>
-                <span>${ticket.data.per}</span>%
-              </a>
-            </p>
-          </div>`;
-          return str;
-        },
-      },
-      series: [
-        {
-          type: 'pie',
-          radius: ['63%', '85%'],
-          avoidLabelOverlap: true,
-          labelLine: {
-            normal: {
-              length2: 30,
-              lineStyle: {
-                color: '#999999',
-              }
-            }
-          },
-          label: {
-            normal: {
-              textStyle: {
-                color: '#999999',
-              }
-            }
-          },
-          data: [],
-        }
-      ]
-    },
-  };
+  @observable industryStatistics = [];
   // 行业统计变化趋势store
-  @observable industryTrend = {
-    result: {},
-    chartOption: {
-      dataZoom: [
-        {
-          type: 'slider',
-          bottom: 0,
-          dataBackground: {
-            areaStyle: {
-              color: '#eeeeee',
-            },
-          },
-          fillerColor: 'rgba(230, 230, 230, 0.4)',
-          handleStyle: {
-            color: '#dddddd'
-          },
-        },
-        {
-          type: 'inside',
-        },
-      ],
-      tooltip: {
-        trigger: 'axis',
-        axisPointer: {
-          lineStyle: {
-            color: '#e5e5e5',
-          }
-        },
-        backgroundColor: '#ffffff',
-        padding: [0, 0],
-        formatter: (ticket) => {
-          const str = `
-          <div style="box-shadow: 0 0 7px #dddddd; padding: 15px 20px; background-color: #ffffff">
-            <p style="text-align: center; padding-bottom: 10px;">
-              <a style="color:#999999;">
-                ${ticket[0].name}
-              </a>
-            </p>
-            <p style="text-align: center; padding-bottom: 3px;">
-              <a style="color: #b0bec5;">
-                <span style="padding-right: 15px">${ticket[0].seriesName}</span>
-                <span>${ticket[0].value}</span>条
-              </a>
-            </p>
-            <p style="text-align: center;">
-              <a style="color: #bcaaa4;">
-                <span style="padding-right: 15px">${ticket[1].seriesName}</span>
-                <span>${ticket[1].value}</span>家
-              </a>
-            </p>
-          </div>`;
-          return str;
-        },
-      },
-      grid: {
-        top: '10',
-        left: '4%',
-        right: '66',
-        bottom: '45',
-        containLabel: true
-      },
-      xAxis: {
-        type: 'category',
-        boundaryGap: false,
-        splitLine: {
-          show: true,
-          lineStyle: {
-            type: 'dashed',
-            color: ['#f5f5f5']
-          }
-        },
-        axisTick: {
-          show: false,
-        },
-        axisLine: {
-          lineStyle: {
-            color: '#e5e5e5',
-          }
-        },
-        axisLabel: {
-          textStyle: {
-            color: '#999999',
-          },
-        },
-        data: []
-      },
-      yAxis: {
-        type: 'value',
-        splitLine: {
-          show: false,
-        },
-        axisLabel: {
-          textStyle: {
-            color: '#999999',
-          },
-        },
-        axisLine: {
-          show: false,
-        },
-        axisTick: {
-          show: false,
-        },
-      },
-      series: [
-        {
-          name: '信息',
-          type: 'line',
-          stack: '总量1',
-          areaStyle: { normal: {} },
-          lineStyle: {
-            normal: {
-              color: '#b0bec5',
-              width: 3,
-            }
-          },
-          itemStyle: {
-            normal: {
-              color: '#b0bec5',
-            }
-          },
-          data: [],
-        },
-        {
-          name: '企业',
-          type: 'line',
-          stack: '总量2',
-          areaStyle: { normal: {} },
-          lineStyle: {
-            normal: {
-              color: '#bcaaa4',
-              width: 3,
-            }
-          },
-          itemStyle: {
-            normal: {
-              color: '#bcaaa4'
-            }
-          },
-          data: []
-        },
-      ]
-    }
-  };
+  @observable industryTrend = { axis: [], event: [], company: [] };
 
   /**
    * 头条相关store
@@ -925,277 +224,17 @@ class MonitorStatisticsStore {
   @observable typeDefault = '工商更新';
   // 头条趋势分析store
   @observable headlinesTrend = {
-    result: [],
-    chartOption: {
-      dataZoom: [
-        {
-          type: 'slider',
-          bottom: 0,
-          dataBackground: {
-            areaStyle: {
-              color: '#eeeeee',
-            },
-          },
-          fillerColor: 'rgba(230, 230, 230, 0.4)',
-          handleStyle: {
-            color: '#dddddd'
-          },
-        },
-        {
-          type: 'inside',
-        },
-      ],
-      tooltip: {
-        trigger: 'axis',
-        axisPointer: {
-          lineStyle: {
-            color: '#e5e5e5',
-          }
-        },
-        backgroundColor: '#ffffff',
-        padding: [0, 0],
-        formatter: (ticket) => {
-          let itemStr = '';
-          ticket.forEach((item) => {
-            itemStr +=
-              `<p style="text-align: center;">
-               <a style="color: ${item.color};">
-               <span style="padding-right: 15px">${item.seriesName}</span>
-               <span>${item.value}</span>条
-               </a>
-             </p>`;
-          });
-          const str = `
-          <div style="box-shadow: 0 0 7px #dddddd; padding: 15px 20px; background-color: #ffffff">
-            <p style="text-align: center; padding-bottom: 10px;">
-              <a style="color:#999999;">
-                ${ticket[0].name}
-              </a>
-            </p>
-            ${itemStr}
-          </div>`;
-          return str;
-        },
-      },
-      grid: {
-        top: '10',
-        left: '4%',
-        right: '100',
-        bottom: '45',
-        containLabel: true
-      },
-      xAxis: {
-        type: 'category',
-        boundaryGap: false,
-        splitLine: {
-          show: true,
-          lineStyle: {
-            type: 'dashed',
-            color: ['#f5f5f5']
-          }
-        },
-        axisTick: {
-          show: false,
-        },
-        axisLine: {
-          lineStyle: {
-            color: '#e5e5e5',
-          }
-        },
-        axisLabel: {
-          textStyle: {
-            color: '#999999',
-          },
-        },
-        data: []
-      },
-      yAxis: {
-        type: 'value',
-        splitLine: {
-          show: false,
-        },
-        axisLabel: {
-          textStyle: {
-            color: '#999999',
-          },
-        },
-        axisLine: {
-          show: false,
-        },
-        axisTick: {
-          show: false,
-        },
-      },
-      series: [
-        {
-          name: '全部更新',
-          type: 'line',
-          stack: '总量1',
-          lineStyle: {
-            normal: {
-              color: '#d87c7c',
-              width: 1,
-            }
-          },
-          itemStyle: {
-            normal: {
-              color: '#d87c7c',
-            }
-          },
-          data: [],
-        },
-        {
-          name: '工商更新',
-          type: 'line',
-          stack: '总量2',
-          lineStyle: {
-            normal: {
-              color: '#919e8b',
-              width: 1,
-            }
-          },
-          itemStyle: {
-            normal: {
-              color: '#919e8b'
-            }
-          },
-          data: []
-        },
-        {
-          name: '法务更新',
-          type: 'line',
-          stack: '总量3',
-          lineStyle: {
-            normal: {
-              color: '#d7ab82',
-              width: 1,
-            }
-          },
-          itemStyle: {
-            normal: {
-              color: '#d7ab82'
-            }
-          },
-          data: []
-        },
-        {
-          name: '舆情更新',
-          type: 'line',
-          stack: '总量4',
-          lineStyle: {
-            normal: {
-              color: '#6e7074',
-              width: 1,
-            }
-          },
-          itemStyle: {
-            normal: {
-              color: '#6e7074'
-            }
-          },
-          data: []
-        },
-        {
-          name: '经营更新',
-          type: 'line',
-          stack: '总量5',
-          lineStyle: {
-            normal: {
-              color: '#61a0a8',
-              width: 1,
-            }
-          },
-          itemStyle: {
-            normal: {
-              color: '#61a0a8'
-            }
-          },
-          data: []
-        },
-        {
-          name: '上市公告',
-          type: 'line',
-          stack: '总量6',
-          lineStyle: {
-            normal: {
-              color: '#d7ab82',
-              width: 1,
-            }
-          },
-          itemStyle: {
-            normal: {
-              color: '#d7ab82'
-            }
-          },
-          data: []
-        },
-        {
-          name: '团队更新',
-          type: 'line',
-          stack: '总量7',
-          lineStyle: {
-            normal: {
-              color: '#efa18d',
-              width: 1,
-            }
-          },
-          itemStyle: {
-            normal: {
-              color: '#efa18d'
-            }
-          },
-          data: []
-        },
-      ]
-    }
+    axis: [],
+    all: [],
+    corp: [],
+    legal: [],
+    news: [],
+    operation: [],
+    stock: [],
+    team: []
   };
   // 头条类型分析store
-  @observable headlinesType = {
-    result: [],
-    chartOption: {
-      tooltip: {
-        axisPointer: {
-          lineStyle: {
-            color: '#e5e5e5',
-          }
-        },
-        backgroundColor: '#ffffff',
-        padding: [0, 0],
-        formatter: (ticket) => {
-          const hoverData = ticket.data.data ? ticket.data.data : [];
-          let itemStr = '';
-          hoverData.forEach((item) => {
-            itemStr +=
-              `<p style="text-align: center; padding-bottom: 3px;">
-              <a style="color: #d87c7c;">
-                <span style="padding-right: 15px">${item.key}</span>
-                <span>${item.value}</span>条
-              </a>
-            </p>`;
-          });
-          const str = `
-          <div style="box-shadow: 0 0 7px #dddddd; padding: 15px 20px; background-color: #ffffff">
-            <p style="text-align: center; padding-bottom: 10px;">
-              <a style="color:#999999;">
-                ${ticket.seriesName}
-              </a>
-            </p>
-            ${itemStr}
-          </div>`;
-          return str;
-        },
-      },
-      series: [
-        {
-          name: '头条类型分析',
-          type: 'pie',
-          radius: [30, 110],
-          roseType: 'area',
-          data: []
-        }
-      ]
-    }
-  };
+  @observable headlinesType = [];
 
   // 设置数据
   @action.bound setParams(params) {
@@ -1204,7 +243,7 @@ class MonitorStatisticsStore {
 
   // 选择指定时间和类别请求数据
   @action.bound getChangeData(params) {
-    this.getStatistic(params);
+    // this.getStatistic(params);
     this.getChangeTrend(params);
     this.getProvinceAll(params);
     this.getIndustryStatistics(params);
@@ -1269,13 +308,12 @@ class MonitorStatisticsStore {
             });
           }
         }
-        this.changeTrend.chartOption.xAxis.data = xAxisDate;
-        this.changeTrend.chartOption.series[0].data = companyData;
-        this.changeTrend.chartOption.series[1].data = eventData;
+        this.changeTrendData.axis = xAxisDate;
+        this.changeTrendData.companyData = companyData;
+        this.changeTrendData.eventData = eventData;
         // 设置右边table框的数据，默认是今天和今天的昨天，反正就是最后的两个
         this.changeTrend.mutual.nowData = changeTrendData[changeTrendData.length - 1];
         this.changeTrend.mutual.beforeData = changeTrendData[changeTrendData.length - 2];
-        this.changeTrend.result = resp.data;
         this.setLoading('changeTrend');
       }))
       .catch((err) => {
@@ -1317,15 +355,28 @@ class MonitorStatisticsStore {
             });
           } else {
             provinceName = provinceAllData[provinceAllData.length - 1].area;
-            if (provinceName === '未知'
-              || provinceName === '其他') {
+            if (provinceName === '未知' || provinceName === '其他') {
               provinceName = provinceAllData[provinceAllData.length - 2].area;
-              if (provinceName === '未知'
-                || provinceName === '其他') {
+              if (provinceName === '未知' || provinceName === '其他') {
                 provinceName = provinceAllData[provinceAllData.length - 3].area;
               }
             }
           }
+
+          // 恶心的未知 -----------------------------------------------------------------------
+          let provinceUndefinedIndex = provinceAllData.findIndex((item) => item.area === '未知');
+          if (provinceUndefinedIndex !== -1) {
+            this.provinceBarUndefined = provinceAllData[provinceUndefinedIndex].companyCount;
+            provinceAllData.splice(provinceUndefinedIndex, 1);
+          }
+          // 恶心的其他
+          provinceUndefinedIndex = provinceAllData.findIndex((item) => item.area === '其他');
+          if (provinceUndefinedIndex !== -1) {
+            this.provinceBarUndefined += provinceAllData[provinceUndefinedIndex].companyCount;
+            provinceAllData.splice(provinceUndefinedIndex, 1);
+          }
+          // -----------------------------------------------------------------------------------
+
           provinceAllData.forEach((item, idx) => {
             // 地图数据
             if (item.area !== '未知' && item.area !== '其他') {
@@ -1351,13 +402,11 @@ class MonitorStatisticsStore {
             provinceBarSeriesData.push(item.companyCount);
           });
         }
-        this.provinceAll.chartOption.series[0].data = provinceAllMapData;
+        this.provinceAll = provinceAllMapData;
         this.provinceAllSize = provinceAllData.length;
-        this.provinceBar.chartOption.yAxis.data = provinceBarYAxisData;
-        this.provinceBar.chartOption.series[0].data = provinceBarSeriesData;
+        this.provinceBar.axis = provinceBarYAxisData;
+        this.provinceBar.data = provinceBarSeriesData;
         this.provinceName = provinceName;
-        this.provinceAll.result = provinceAllData;
-        this.provinceBar.result = provinceAllData;
         this.setLoading('provinceAll');
         this.getProvince({ params: { ...params, province: provinceName } });
       }))
@@ -1406,6 +455,19 @@ class MonitorStatisticsStore {
               break;
             }
           }
+          // 恶心的未知----------------------------------------------------------------------------
+          let provinceRankUndefinedIndex = provinceRank.findIndex((item) => item.area === '未知');
+          if (provinceRankUndefinedIndex !== -1) {
+            this.provinceMapUndefined = provinceRank[provinceRankUndefinedIndex].companyCount;
+            provinceRank.splice(provinceRankUndefinedIndex, 1);
+          }
+          // 恶心的其他
+          provinceRankUndefinedIndex = provinceRank.findIndex((item) => item.area === '其他');
+          if (provinceRankUndefinedIndex !== -1) {
+            this.provinceMapUndefined += provinceRank[provinceRankUndefinedIndex].companyCount;
+            provinceRank.splice(provinceRankUndefinedIndex, 1);
+          }
+          // ---------------------------------------------------------------------------------------
           if (isRealm) {
             provinceRank.forEach((item) => {
               if (item.area.indexOf('市') === -1
@@ -1458,14 +520,12 @@ class MonitorStatisticsStore {
         } else {
           provinceData = provinceTrendData = provinceRank = [];
         }
-        this.provinceLine.chartOption.xAxis.data = provinceDate;
-        this.provinceLine.chartOption.series[0].data = provinceEvent;
-        this.provinceLine.chartOption.series[1].data = provinceCompany;
-        this.provinceMap.chartOption.series[0].data = provinceMapData;
-        this.provinceMap.chartOption.series[0].mapType = provinceAreaName;
-        this.provinceLine.result = provinceTrendData;
+        this.provinceLine.axis = provinceDate;
+        this.provinceLine.event = provinceEvent;
+        this.provinceLine.company = provinceCompany;
+        this.provinceMap.mapOption.data = provinceMapData;
+        this.provinceMap.mapOption.mapType = provinceAreaName;
         this.provinceMap.provinceRank = provinceRank;
-        this.provinceMap.result = provinceRank;
         this.setLoading('province');
       }))
       .catch((err) => {
@@ -1548,11 +608,10 @@ class MonitorStatisticsStore {
           industryId = statisticData[0].industryId;
           industryName = statisticData[0].industryName;
         }
-        this.industryStatistics.chartOption.series[0].data = statisticSeriesData;
+        this.industryStatistics = statisticSeriesData;
         this.industryId = industryId;
         this.industryName = industryName;
         this.industryRankLength = statisticData.length;
-        this.industryStatistics.result = statisticData;
         this.setLoading('industryStatistics');
         this.getIndustryTrend({ params: { ...params, industryId: industryId } });
       }))
@@ -1587,10 +646,9 @@ class MonitorStatisticsStore {
             statisticTrendCompany.push(item.companyCount);
           });
         }
-        this.industryTrend.chartOption.xAxis.data = statisticTrendDate;
-        this.industryTrend.chartOption.series[0].data = statisticTrendEvent;
-        this.industryTrend.chartOption.series[1].data = statisticTrendCompany;
-        this.industryTrend.result = statisticTrendData;
+        this.industryTrend.axis = statisticTrendDate;
+        this.industryTrend.event = statisticTrendEvent;
+        this.industryTrend.company = statisticTrendCompany;
         this.setLoading('industryTrend');
       }))
       .catch((err) => {
@@ -1704,19 +762,16 @@ class MonitorStatisticsStore {
             }
           });
         }
-        this.headlinesTrend.chartOption.xAxis.data = sourceTrendDate;
-        this.headlinesTrend.chartOption.series[0].data = sourceTrendAll;
-        this.headlinesTrend.chartOption.series[1].data = sourceTrendCorp;
-        this.headlinesTrend.chartOption.series[2].data = sourceTrendLegal;
-        this.headlinesTrend.chartOption.series[3].data = sourceTrendNews;
-        this.headlinesTrend.chartOption.series[4].data = sourceTrendOperation;
-        this.headlinesTrend.chartOption.series[5].data = sourceTrendStock;
-        this.headlinesTrend.chartOption.series[6].data = sourceTrendTeam;
+        this.headlinesTrend.axis = sourceTrendDate;
+        this.headlinesTrend.all = sourceTrendAll;
+        this.headlinesTrend.corp = sourceTrendCorp;
+        this.headlinesTrend.legal = sourceTrendLegal;
+        this.headlinesTrend.news = sourceTrendNews;
+        this.headlinesTrend.operation = sourceTrendOperation;
+        this.headlinesTrend.stock = sourceTrendStock;
+        this.headlinesTrend.team = sourceTrendTeam;
 
-        this.headlinesType.chartOption.series[0].data = pieSource;
-
-        this.headlinesTrend.result = sourceTrend;
-        this.headlinesType.result = sourceRatioMap;
+        this.headlinesType = pieSource;
         this.setLoading('headlines');
       }))
       .catch((err) => {
@@ -1729,6 +784,98 @@ class MonitorStatisticsStore {
         }
       });
     this.cancel.push(source.cancel);
+  }
+
+  @action.bound resetStore() {
+    this.loadingGroup = {
+      statistic: true,
+      changeTrend: true,
+      province: true,
+      provinceAll: true,
+      industryTrend: true,
+      industryStatistics: true,
+      headlines: true,
+    };
+
+    this.errorBody = {
+      changeTrend: {},
+      province: {},
+      provinceAll: {},
+      industryTrend: {},
+      industryStatistics: {},
+      headlines: {},
+    };
+
+    this.params = {};
+
+    // 顶部四个板块store
+    this.statistic = {};
+
+    // 变化趋势store
+    this.changeTrend = {
+      result: [],
+      mutual: {
+        nowData: {},
+        beforeData: {},
+      }
+    };
+    this.changeTrendData = {
+      axis: [],
+      companyData: [],
+      eventData: []
+    };
+
+    /**
+     * 地区相关store
+     */
+    this.provinceName = '';
+    this.provinceAllSize = 0;
+    // 地区分布store
+    this.provinceAll = [];
+    // 地区排行store
+    this.provinceBar = { axis: [], data: [] };
+    // 地区变化趋势store
+    this.provinceLine = { axis: [], event: [], company: [] };
+    // 企业地区分布store
+    this.provinceMap = {
+      provinceRank: [],
+      mapOption: { mapType: '', data: [] },
+    };
+    // 地区排行未知
+    this.provinceBarUndefined = 0;
+    // 企业地区分布 TOP10 未知
+    this.provinceMapUndefined = 0;
+
+    /**
+     * 行业统计store
+     */
+    // 行业统计显示区块数store，最多显示10个
+    this.industryRankLength = 0;
+    this.industryId = '';
+    this.industryName = '';
+    // 行业统计store
+    this.industryStatistics = [];
+    // 行业统计变化趋势store
+    this.industryTrend = { axis: [], event: [], company: [] };
+
+    /**
+     * 头条相关store
+     */
+    this.typeAll = '';
+    this.typeDefault = '工商更新';
+    // 头条趋势分析store
+    this.headlinesTrend = {
+      axis: [],
+      all: [],
+      corp: [],
+      legal: [],
+      news: [],
+      operation: [],
+      stock: [],
+      team: []
+    };
+    // 头条类型分析store
+    this.headlinesType = [];
   }
 }
 export default new MonitorStatisticsStore();

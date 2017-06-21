@@ -5,7 +5,6 @@ import blackNetworkStore from './blackNetwork';
 import leftBarStore from '../leftBar';
 import modalStore from '../modal';
 import messageStore from '../message';
-import searchCompanyStore from '../searchCompany';
 import { browserHistory } from 'react-router';
 
 class NetworkStore {
@@ -59,13 +58,14 @@ class NetworkStore {
         messageStore.openMessage({ content: err.response.data.message, type: 'warning' });
       }));
   }
-  @action.bound gotoSearch(name) {
-    searchCompanyStore.searchTabClick('COMPANY_NAME');
-    searchCompanyStore.searchChangeOther(name);
-    searchCompanyStore.getCompanyList();
-    browserHistory.push(`/searchCompany`);
-  }
+  // @action.bound gotoSearch(name) {
+  //   searchCompanyStore.searchTabClick('COMPANY_NAME');
+  //   searchCompanyStore.searchChangeOther(name);
+  //   searchCompanyStore.getCompanyList();
+  //   browserHistory.push(`/searchCompany`);
+  // }
   @action.bound jumpBlackNode(name, params) {
+    console.log(blackNetworkStore.jumpNode, name, 'blackNetworkStore.jumpNode---------');
     blackNetworkStore.jumpNode = name;
     // 修改导航高亮
     leftBarStore.activeItem = 'blackNetwork';
@@ -103,7 +103,7 @@ class NetworkStore {
   }
   @action.bound getReportModule(params) {
     this.isMount = true;
-    companyHomeApi.getReportModule(params)
+    companyHomeApi.getReportModule('network', params)
       .then(action('get currentNetwork data', (resp) => {
         this.isLoading = false;
         let canRenderSvg = true;

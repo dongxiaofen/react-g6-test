@@ -18,19 +18,31 @@ class NowRecordStore {
   @observable transform = 0;
   // loading
   @observable loading = false;
-  // 公司id
-  @observable monitorId = '';
+  // 公司名
+  @observable companyName = '';
+  @observable companyId = '';
+
+  // 请求banner获取companyId并重新获取现勘列表
+  @action.bound getNowRecordListBanner(params) {
+    companyHomeApi.getBannerInfo(params)
+      .then(action('get banner info...', (resp) => {
+        this.getNowRecordList(resp.data.companyId);
+      }))
+      .catch(action('banner err', (err) => {
+        console.log('请求banner出错', err);
+      }));
+  }
 
   // 获取列表
-  @action.bound getNowRecordList(monitorId) {
+  @action.bound getNowRecordList(companyId) {
     if (window.reportSourceCancel === undefined) {
       window.reportSourceCancel = [];
     }
     const source = CancelToken.source();
     window.reportSourceCancel.push(source.cancel);
     // 获取公司id
-    if (monitorId) {
-      this.monitorId = monitorId;
+    if (companyId) {
+      this.companyId = companyId;
     }
     // 打开loading
     this.loading = true;
@@ -39,7 +51,7 @@ class NowRecordStore {
       size: uiStore.uiState.nowRecordPager.size,
     };
     // 获取列表数据
-    companyHomeApi.getNowRecordList(this.monitorId, params, source)
+    companyHomeApi.getNowRecordList(this.companyId, params, source)
       .then(action('nowRecordList list', (resp) => {
         // 关闭loading
         this.loading = false;
@@ -152,7 +164,8 @@ class NowRecordStore {
     // loading
     this.loading = false;
     // 公司id
-    this.monitorId = '';
+    this.companyName = '';
+    this.companyId = '';
   }
 }
 export default new NowRecordStore();

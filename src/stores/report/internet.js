@@ -11,7 +11,6 @@ class InternetStore {
   @observable newsData = {};
   @observable activeUrl = '';
   newsDetailCancel = null;
-  newsCancel = null;
   @observable detailInfo = {
     type: '',
     label: '',
@@ -33,7 +32,7 @@ class InternetStore {
     this.statistic = {};
     this.newsData = {};
     const args = arguments;
-    companyHomeApi.getReportModule(params)
+    companyHomeApi.getReportModule('internet', params)
       .then(action('get internet data', (resp)=>{
         this.analysis = {data: resp.data.analysis};
         this.statistic = {data: resp.data.info.statistic};
@@ -51,14 +50,9 @@ class InternetStore {
         this.newsData = {error: err.response.data};
       }));
   }
-  @action.bound getInternet(params) {
+  @action.bound getInternet(idInfo, params) {
     this.newsData = {};
-    if (this.newsCancel) {
-      this.newsCancel();
-    }
-    const source = CancelToken.source();
-    this.newsCancel = source.cancel;
-    companyHomeApi.getInternet(params, source)
+    companyHomeApi.getReportModule('internet', idInfo, params)
       .then(action('get internet info success', resp => {
         this.newsCancel = null;
         this.newsData = {data: resp.data.info.data};
@@ -108,7 +102,6 @@ class InternetStore {
     this.newsData = {};
     this.activeUrl = '';
     this.newsDetailCancel = null;
-    this.newsCancel = null;
     this.detailInfo = {
       type: '',
       label: '',

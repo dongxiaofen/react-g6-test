@@ -5,23 +5,22 @@ import SecondTitle from 'components/common/pdf/SecondTitle';
 import styles from '../EmployeeSalaryDis/index.less';
 
 function EmployeeSchoolInfo({moduleData}) {
-  console.log(moduleData, '统计');
   if (!moduleData || Object.keys(moduleData).length === 0) {
     return (
       <div>
-        <SecondTitle module="员工背景－毕业学校" />
+        <SecondTitle module="毕业学校" />
         <PdfNotFound />
       </div>
     );
   }
   return (
     <div className={styles.wrap}>
-      <SecondTitle module="员工背景－毕业学校" />
+      <SecondTitle module="毕业学校" />
       <table>
         <thead>
         <tr>
           <th>学校</th>
-          <th>人数</th>
+          <th>百分比</th>
         </tr>
         </thead>
         <tbody>

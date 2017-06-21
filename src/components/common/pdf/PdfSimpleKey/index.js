@@ -10,7 +10,7 @@ function PdfSimpleKey({dataConfig, item, type, dict, hasConfig}) {
     if (type === 'array') {
       item.map((dataItem, index)=>{
         const row = [];
-        dataConfig.map((configItem)=>{
+        dataConfig.map((configItem, number)=>{
           const parentProps = {};
           if (configItem.needHtmlParse) {
             parentProps.needHtmlParse = true;
@@ -21,7 +21,7 @@ function PdfSimpleKey({dataConfig, item, type, dict, hasConfig}) {
             row.push(
               <KeyValue
                 {...parentProps}
-                key= {`${configItem.key}arrValue`}
+                key= {`arrValue${number}`}
                 theKey={hasConfig ? config[dict][configItem.key] : configItem.key}
                 theValue={configItem.handle ? configItem.handle(dataItem[configItem.key], dataItem) : dataItem[configItem.key]}
                 keyClass="key"
@@ -54,7 +54,7 @@ function PdfSimpleKey({dataConfig, item, type, dict, hasConfig}) {
           <KeyValue
             key = {`${configItem.key}objectValue`}
             theKey= {hasConfig ? config[dict][configItem.key] : configItem.key}
-            theValue={configItem.handle ? configItem.handle(item[configItem.key]) : item[configItem.key]}
+            theValue={configItem.handle ? configItem.handle(item[configItem.key], item) : item[configItem.key]}
             keyClass="key"
             styleClass="styleClass"
             valueClass="value"

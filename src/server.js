@@ -12,7 +12,7 @@ import http from 'http';
 import fs from 'fs';
 import axios from 'axios';
 import url from 'url';
-// import fundebug from 'fundebug-nodejs';
+import fundebug from 'fundebug-nodejs';
 import logger from 'morgan';
 import { match, RouterContext } from 'react-router';
 import { Provider, useStaticRendering } from 'mobx-react';
@@ -20,7 +20,7 @@ import getRoutes from './routes';
 import { RouterStore } from 'mobx-react-router';
 import * as allStores from 'stores';
 useStaticRendering(true);
-// fundebug.apikey = '45f943a4862476f1895ca38d28def3231ea03ca1e4c94320476f52019f29560f';
+fundebug.apikey = 'd3c3ad8fd8f470b0bd162e9504c98c1984050474f3f550d47b17c54983633c1e';
 const agent = require('superagent-defaults')();
 const BASE_DIRNAME = process.cwd();
 const PDF_DIRNAME = path.join(BASE_DIRNAME, '/static/pdf/');
@@ -99,6 +99,20 @@ app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json())
 app.use(logger('dev'));
 
+app.get('/front/refresh/assets', function(req, res) {
+  const assetsPath = path.resolve(__dirname, '../static/dist');
+  const reg = /^(?:main-)(.*)(?:\.js)$/;
+  fs.readdir(assetsPath, function(err, file) {
+    const mainFile = file.filter(name => reg.test(name))[0];
+    if (mainFile) {
+      const assetsHash = mainFile.match(reg)[1];
+      return res.status(200).send({assetsHash: assetsHash});
+    } else {
+      return res.status(404).send({message: 'file not fount'});
+    }
+  });
+});
+
 app.use((req, res) => {
   console.log('node 被访问');
   // writeDataToFile('cookie', req.cookies);
@@ -126,18 +140,36 @@ app.use((req, res) => {
       if (reqPathName === '/pdfDown') {
         const routingStore = new RouterStore();
         allStores.routing = routingStore;
-        const params = req.query.monitorId ? {
-          monitorId: req.query.monitorId,
-          types: req.query.type
-        } :
-          {
+        let urlPanth = '';
+        let params = '';
+        let reportType = '';
+        if (req.query.reportId){
+          urlPanth = '/api/pdf/report';
+          params = {
             reportId: req.query.reportId,
             types: req.query.type
           };
-        axios.get(config.backendApi + '/api/pdf', { params })
+          reportType = '高级报告';
+        } else if (req.query.basicReportId) {
+          urlPanth = '/api/pdf/basicReport';
+          params = {
+            basicReportId: req.query.basicReportId,
+            types: req.query.type
+          };
+          reportType = '基础报告';
+        } else if (req.query.analysisReportId) {
+          urlPanth = '/api/pdf/analysis';
+          params = {
+            analysisReportId: req.query.analysisReportId,
+            types: req.query.type
+          };
+          reportType = '分析报告';
+        }
+        console.log(urlPanth, 'urlPanth-----------', params);
+        axios.get(config.backendApi + urlPanth, { params })
           .then((resp) => {
             // writeDataToFile('resp', resp.data);
-            allStores.pdfStore.setTypes(params.types, params.monitorId);
+            allStores.pdfStore.setTypes(params.types, reportType);
             allStores.clientStore.envConfig = config.target;
             allStores.pdfStore.getPdfDownData(resp.data);
             const component = (
@@ -167,8 +199,8 @@ app.use((req, res) => {
             console.log('pdfDown err', err.response.status);
           });
       } else if (reqPathName === '/') { // 访问首页
-        // allStores.clientStore.envConfig = config.target;
-        allStores.clientStore.envConfig = 'cfca_prod';
+        allStores.clientStore.envConfig = config.target;
+        // allStores.clientStore.envConfig = 'cfca_prod';
         /*服务端注入RouterStore*/
         const routingStore = new RouterStore();
         allStores.routing = routingStore;

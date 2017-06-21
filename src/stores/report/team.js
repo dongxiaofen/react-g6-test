@@ -58,7 +58,7 @@ class TeamStore {
 
   @action.bound getReportModule(params) {
     this.isMount = true;
-    companyHomeApi.getReportModule(params)
+    companyHomeApi.getReportModule('team', params)
       .then(action('get team data', (resp) => {
         const respData = resp.data;
         const recruitmentData = respData.recruitAndResumeResponse;
@@ -132,7 +132,7 @@ class TeamStore {
             });
             staffSchool.forEach((item) => {
               staffSchoolAxis.push(item.name);
-              staffSchoolData.push(item.value);
+              staffSchoolData.push(parseInt(item.value * 100, 10));
             });
           }
 
@@ -267,10 +267,10 @@ class TeamStore {
         }
         this.isLoading = false;
       }))
-      .catch((err) => {
+      .catch(action('get team data catch', (err) => {
         console.log(err);
         this.isLoading = false;
-      });
+      }));
   }
 
   @action.bound setSiteAndJob(calendarData, month) {

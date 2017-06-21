@@ -1,11 +1,12 @@
 import React from 'react';
 import { observer, inject } from 'mobx-react';
+import { browserHistory } from 'react-router';
 import RelTime from './RelTime';
 import ActionWrap from '../ActionWrap';
 import styles from './index.less';
-function RelTr({data, mainData, index, monitorListStore, uiStore, linkJumpStore}) {
+function RelTr({data, mainData, index, monitorListStore, uiStore}) {
   const viewReport = () => {
-    linkJumpStore.getNameType(data.companyName);
+    browserHistory.push(`/companyHome?companyName=${data.companyName}`);
   };
   const handleRelName = () => {
     const { companyName } = uiStore.uiState.monitorList.params;
@@ -61,4 +62,4 @@ function RelTr({data, mainData, index, monitorListStore, uiStore, linkJumpStore}
     </div>
   );
 }
-export default inject('monitorListStore', 'uiStore', 'linkJumpStore')(observer(RelTr));
+export default inject('monitorListStore', 'uiStore')(observer(RelTr));

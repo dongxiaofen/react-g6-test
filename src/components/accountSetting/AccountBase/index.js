@@ -1,8 +1,8 @@
 import React from 'react';
 import { observer } from 'mobx-react';
 import BaseInfo from './BaseInfo';
-import OperateInfo from './OperateInfo';
-import Remaining from './Remaining';
+// import OperateInfo from './OperateInfo';
+// import Remaining from './Remaining';
 import styles from './index.less';
 
 
@@ -16,9 +16,9 @@ function AccountBase(props) {
         <div className={`${styles.child_base_info} pull-left`}>
           <BaseInfo {...props} />
         </div>
-        <div className={`${data && data.parentUserId ? styles.child_record_sub : styles.child_record} pull-right`}>
-          <OperateInfo {...props} className={styles.operate_info} />
-        </div>
+        {/* <div className={`${data && data.parentUserId ? styles.child_record_sub : styles.child_record} pull-right`}> */}
+          {/* <OperateInfo {...props} className={styles.operate_info} /> */}
+        {/* </div> */}
       </div>
     );
   }
@@ -26,25 +26,25 @@ function AccountBase(props) {
     return (
       <div className={styles.wrapper}>
         <BaseInfo {...props} />
-        <div className={`${styles.host_style} clearfix`}>
-          <div className={`${styles.child} pull-left`}>
-            <OperateInfo {...props} />
-          </div>
-          <div className={`${styles.child} pull-right`}>
-            <Remaining {...props} />
-          </div>
-        </div>
+        {/* <div className={`${styles.host_style} clearfix`}> */}
+          {/* <div className={`${styles.child} pull-left`}> */}
+            {/* <OperateInfo {...props} /> */}
+          {/* </div> */}
+          {/* <div className={`${styles.child} pull-right`}> */}
+            {/* <Remaining {...props} /> */}
+          {/* </div> */}
+        {/* </div> */}
       </div>
     );
   }
   return (
     <div className={`${styles.wrapper} clearfix`}>
-      <div className={`${styles.child_base_info} pull-left`}>
+      <div className={`${data && data.parentUserId ? styles.child_base_info_100 : styles.child_base_info } pull-left`}>
         <BaseInfo {...props} />
       </div>
-      <div className={`${data && data.parentUserId ? styles.child_record_sub : styles.child_record} pull-right`}>
-        <OperateInfo {...props} className={styles.operate_info} />
-      </div>
+      {/* <div className={`${data && data.parentUserId ? styles.child_record_sub : styles.child_record} pull-right`}> */}
+        {/* <OperateInfo {...props} className={styles.operate_info} /> */}
+      {/* </div> */}
     </div>
   );
 }

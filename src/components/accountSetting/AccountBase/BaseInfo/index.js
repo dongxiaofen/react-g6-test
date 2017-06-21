@@ -6,8 +6,8 @@ import PwdModal from '../../userModal/PwdModal';
 import EditModal from '../../userModal/EditModal';
 import styles from './index.less';
 import Popover from 'antd/lib/popover';
-function BaseInfo({accountSettingStore}) {
-  // const consumeType = clientStore.userInfo.consumeType;
+function BaseInfo({accountSettingStore, clientStore}) {
+  const consumeType = clientStore.userInfo.consumeType;
   const baseInfo = accountSettingStore.base;
   const tree = accountSettingStore.tree;
   const activeIndex = tree.activeIndex;
@@ -36,10 +36,10 @@ function BaseInfo({accountSettingStore}) {
       </div>
     );
   };
-  // const addUnit = (unit, value) => {
-  //   if (value === '- -') return value;
-  //   return value + ' ' + unit;
-  // };
+  const addUnit = (unit, value) => {
+    if (value === '- -') return value;
+    return value + ' ' + unit;
+  };
   const editUserInfo = (name, values) => {
     accountSettingStore.changeValue('editModal.actName', name);
     accountSettingStore.changeValue(`editModal.form.${name}.value`, values);
@@ -50,6 +50,16 @@ function BaseInfo({accountSettingStore}) {
       return values;
     }
     const level = tree.data.content[activeIndex].level;
+    if (values.length > 14) {
+      return (
+        <div className={level < 2 ? styles.editBox : styles.editDisable}>
+          <Popover content={values}>
+            {`${values.slice(0, 13)}...`}
+          </Popover>
+          {level < 2 && <span className={styles.editBtn} onClick={editUserInfo.bind(null, name, values)}>修改</span>}
+        </div>
+      );
+    }
     return (
       <div className={level < 2 ? styles.editBox : styles.editDisable}>
         <span className={styles.value}>{values}</span>
@@ -101,12 +111,12 @@ function BaseInfo({accountSettingStore}) {
       //   keys: 'lastLoginTs',
       //   none: consumeType !== 'FEESET' || baseInfo.data.parentUserId ? true : false,
       // },
-      // {
-      //   name: '剩余点数',
-      //   keys: 'point',
-      //   none: consumeType !== 'POINT' || baseInfo.data.parentUserId ? true : false,
-      //   handle: addUnit.bind(null, '点'),
-      // },
+      {
+        name: '剩余点数',
+        keys: 'point',
+        none: consumeType !== 'POINT' || baseInfo.data.parentUserId ? true : false,
+        handle: addUnit.bind(null, '点'),
+      },
     ];
     output = config.map((item, idx) => {
       if (!item.none) {

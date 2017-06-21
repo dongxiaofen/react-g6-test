@@ -4,24 +4,39 @@
   top: 45px;
   left: 15px;
   position: absolute;
-  width: 250px;
+  width: 240px;
   min-height: 90px;
   background: @white1;
   border: 1px @black12 solid;
-  padding: 10px;
-  text-align: center;
+  padding: 25px 15px;
+  text-align: left;
   cursor: auto;
   z-index: 1;
 }
-.nodeName {
-  margin: 5px 0;
-  color: @black4;
-  // font-size: 14px;
+.cancelStatus {
+  color: @mdc-blue-400;
+  font-size: 12px;
+  border: 1px solid @mdc-blue-400;
+  padding: 3px;
+  margin-right: 5px;
 }
-.blackLink {
-  text-decoration: underline;
-  display: inline-block;
-  color: @black1;
+.nodeName {
+  // margin: 5px 0;
+  color: @mdc-grey-900;
+  font-size: 14px;
+}
+.link {
+  display: block;
+  margin: 0 0 10px 0;
+  color: @white;
+  width: 210px;
+  height: 35px;
+  text-align: center;
+  line-height: 35px;
+  background-color: @mdc-blue-400;
+  &:hover {
+    color: @white;
+  }
 }
 .close {
   position: absolute;
@@ -29,7 +44,9 @@
   right: 5px;
   cursor: pointer;
 }
-
+.hr {
+  margin: 15px 0;
+}
 .colseImg:hover {
   -webkit-transform: rotateZ(180deg);
      -moz-transform: rotateZ(180deg);
@@ -40,7 +57,8 @@
 
 .colseImg {
   float: left;
-
+  width: 10px;
+  height: 10px;
   -webkit-transition: all ease-in-out .3s;
      -moz-transition: all ease-in-out .3s;
       -ms-transition: all ease-in-out .3s;

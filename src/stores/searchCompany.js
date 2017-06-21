@@ -95,6 +95,11 @@ class SearchCompanyStore {
   @observable singleItemData = {};
   // 选择那种报告 'analysis'深度 'report'高级 'free'快速
   @observable reportType = 'report';
+  // 是否显示下拉效果
+  @observable down = false;
+  @action.bound setDown() {
+    this.down = true;
+  }
   // 获取搜索公司列表
   @action.bound getCompanyList() {
     // 是否已搜索
@@ -103,6 +108,13 @@ class SearchCompanyStore {
     this.searchKeyFilter = this.searchKey;
     // 打开loading
     this.isShowLoading = true;
+    if (!this.searchKey) {
+      messageStore.openMessage({
+        type: 'error',
+        content: '搜索关键字必须填写'
+      });
+      return false;
+    }
     const params = {
       params: {
         keyWord: this.searchKey,
@@ -116,6 +128,8 @@ class SearchCompanyStore {
         this.searchResult = resp.data.data;
         // filterSheet相关
         if (resp.data.aggregations) {
+          // 状态
+          // this.filterSheet.filterSheetStatus = true;
           // 放入初始数据
           this.filterSheet.data = resp.data.aggregations;
           resp.data.aggregations.map((obj)=>{
@@ -184,8 +198,17 @@ class SearchCompanyStore {
   }
   // 点击搜索按钮获取搜索列表
   @action.bound searchCompanyClick() {
+    if (!this.searchKey) {
+      messageStore.openMessage({
+        type: 'error',
+        content: '搜索关键字必须填写'
+      });
+      return false;
+    }
     // 重置页数
     this.pageParams.index = 1;
+    // 重置筛选条件
+    this.resetFilter();
     // 发送请求
     this.getCompanyList();
   }
@@ -201,6 +224,7 @@ class SearchCompanyStore {
   }
   // 点击历史记录
   @action.bound historyClick(obj) {
+    browserHistory.push('/searchCompany');
     this.searchType = obj.type;
     this.searchKey = obj.keyword;
     this.getCompanyList();
@@ -229,8 +253,11 @@ class SearchCompanyStore {
   // 搜索handleEnter
   @action.bound handleEnter(evt) {
     if (evt.keyCode === 13) {
+      browserHistory.push('/searchCompany');
       // 重置页数
       this.pageParams.index = 1;
+      // 重置筛选条件
+      this.resetFilter();
       // 发送请求
       this.getCompanyList();
     }
@@ -470,6 +497,47 @@ class SearchCompanyStore {
         messageStore.openMessage({ ...text });
         console.log(err.response, '=====getFeedBack error');
       }));
+  }
+  // 重置筛选条件
+  @action.bound resetFilter() {
+    this.filterSheet = {
+      // filterSheet status
+      filterSheetStatus: false,
+      // 配置
+      config: {
+        industryType: '行业类型',
+        scale: '公司规模',
+        province: '省份地区',
+        companyStatus: '经营状态',
+        stockMarket: '上市类型'
+      },
+      // 基础数据
+      data: [],
+      // 选中结果状态
+      filterStatus: {
+        industryType: [],
+        scale: [],
+        province: [],
+        companyStatus: [],
+        stockMarket: [],
+      },
+      // 是否全选
+      filterStatusAll: {
+        industryType: false,
+        scale: false,
+        province: false,
+        companyStatus: false,
+        stockMarket: false,
+      },
+      // 选中结果
+      filterResult: {
+        industryType: [],
+        scale: [],
+        province: [],
+        companyStatus: [],
+        stockMarket: [],
+      },
+    };
   }
   // 重置所有数据
   @action.bound resetData() {

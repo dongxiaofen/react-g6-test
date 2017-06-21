@@ -2,23 +2,23 @@ import React, {PropTypes} from 'react';
 import { observer } from 'mobx-react';
 import PdfNotFound from 'components/common/pdf/PdfNotFound';
 import PdfSimpleKey from 'components/common/pdf/PdfSimpleKey';
-import SecondTitle from 'components/common/pdf/SecondTitle';
 
 function CheckInfo({moduleData}) {
   if (!moduleData || moduleData.length === 0) {
     return (
       <div>
-        <SecondTitle module="抽查检查信息" />
+        <div style={{height: '30px'}}></div>
         <PdfNotFound />
       </div>
     );
   }
   const data = {
     dataConfig: [
-      {'key': 'check_date', 'width': '6'},
+      // {'key': 'seqNo', 'width': '6'},
+      {'key': 'checkDate', 'width': '6'},
       {'key': 'institution', 'width': '6'},
-      {'key': 'check_type', 'width': '6'},
-      {'key': 'check_result', 'width': '6'}
+      {'key': 'checkType', 'width': '6'},
+      {'key': 'checkResult', 'width': '6'},
     ],
     item: moduleData,
     dict: 'checkMessage',
@@ -27,7 +27,7 @@ function CheckInfo({moduleData}) {
   };
   return (
     <div>
-      <SecondTitle module="抽查检查信息" />
+      <div style={{height: '30px'}}></div>
       <PdfSimpleKey {...data} />
     </div>
   );

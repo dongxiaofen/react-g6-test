@@ -5,9 +5,9 @@ import ShareHolder from 'components/companyHome/report/corpDetail/info/ShareHold
 import PersonList from 'components/companyHome/report/corpDetail/info/PersonList';
 import FiliationList from 'components/companyHome/report/corpDetail/info/FiliationList';
 
-import Enterprise from 'components/companyHome/report/corpDetail/foreign/Enterprise';
-import Investment from 'components/companyHome/report/corpDetail/foreign/Investment';
-import Office from 'components/companyHome/report/corpDetail/foreign/Office';
+// import Enterprise from 'components/companyHome/report/corpDetail/foreign/Enterprise';
+// import Investment from 'components/companyHome/report/corpDetail/foreign/Investment';
+// import Office from 'components/companyHome/report/corpDetail/foreign/Office';
 
 import AlterAnalysis from 'components/companyHome/report/corpDetail/alter/AlterAnalysis';
 import AlterList from 'components/companyHome/report/corpDetail/alter/AlterList';
@@ -26,7 +26,7 @@ const TabPane = Tabs.TabPane;
 import { batchReport } from 'components/hoc';
 
 @inject('routing', 'corpDetailStore')
-@batchReport('corpDetail')
+@batchReport('corpDetailStore')
 @observer
 export default class CorpDetail extends Component {
   static propTypes = {
@@ -34,11 +34,11 @@ export default class CorpDetail extends Component {
     routing: PropTypes.object,
   };
   render() {
-    const { companyType } = this.props.routing.location.query;
-    let disabledTabPane = '';
-    if (companyType === 'FREE') {
-      disabledTabPane = true;
-    }
+    // const { companyType } = this.props.routing.location.query;
+    // let disabledTabPane = '';
+    // if (companyType === 'FREE') {
+    //   disabledTabPane = true;
+    // }
     const corpDetailStore = this.props.corpDetailStore;
     const isLoading = corpDetailStore.isLoading;
     const errType = {
@@ -48,18 +48,18 @@ export default class CorpDetail extends Component {
       // '403202': '该企业无工商登记信息',
     };
     return (
-      <Tabs defaultActiveKey="工商基本信息">
-        <TabPane tab="工商基本信息" key="工商基本信息">
+      <Tabs defaultActiveKey="照面信息">
+        <TabPane tab="照面信息" key="照面信息">
           <RegisterInfo registerInfo={corpDetailStore.registerInfo} errText={corpDetailStore.errData.errorCode ? errType[corpDetailStore.errData.errorCode] : null} isLoading={isLoading} />
           <ShareHolder shareHolderList={corpDetailStore.shareHolderList} errText={corpDetailStore.errData.errorCode ? errType[corpDetailStore.errData.errorCode] : null} isLoading={isLoading} />
           <PersonList personList={corpDetailStore.personList} errText={corpDetailStore.errData.errorCode ? errType[corpDetailStore.errData.errorCode] : null} isLoading={isLoading} />
           <FiliationList filiationList={corpDetailStore.filiationList} errText={corpDetailStore.errData.errorCode ? errType[corpDetailStore.errData.errorCode] : null} isLoading={isLoading} />
         </TabPane>
-        <TabPane disabled={disabledTabPane} tab="对外投资任职" key="对外投资任职">
+        {/* <TabPane disabled={disabledTabPane} tab="对外投资任职" key="对外投资任职">
           <Enterprise entinvItemList={corpDetailStore.entinvItemList} isLoading={isLoading} />
           <Investment frinvList={corpDetailStore.frinvList} isLoading={isLoading} />
           <Office frPositionList={corpDetailStore.frPositionList} isLoading={isLoading} />
-        </TabPane>
+        </TabPane>*/}
         <TabPane tab="工商变更" key="工商变更">
           <AlterAnalysis alterAnalysis={corpDetailStore.alterAnalysis} errText={corpDetailStore.errData.errorCode ? errType[corpDetailStore.errData.errorCode] : null} isLoading={isLoading} />
           <AlterList alterList={corpDetailStore.alterList} errText={corpDetailStore.errData.errorCode ? errType[corpDetailStore.errData.errorCode] : null} isLoading={isLoading} />

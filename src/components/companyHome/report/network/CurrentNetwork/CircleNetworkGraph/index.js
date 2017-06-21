@@ -40,6 +40,9 @@ let saveNodeXY = false; // 标记坐标存储完成
 let centerNodeX; // 中心节点X坐标
 let centerNodeY; // 中心节点Y坐标
 let nodeAdded = false; // 用户是否新增了节点
+let reactionFocusNodeName;
+let reactionCheckedArrChanged;
+let reactionCurrentLevel;
 
 @inject('networkStore')
 @observer
@@ -86,7 +89,7 @@ export default class CircleNetworkGraph extends Component {
     svgTools.updateLinksDisplay(nodesData, edgesData);
     this.reDraw();
     // 监听点击和搜索节点事件
-    reaction(
+    reactionFocusNodeName = reaction(
       () => this.props.networkStore.focusNodeName,
       () => {
         if (nodesData !== '') {
@@ -98,7 +101,7 @@ export default class CircleNetworkGraph extends Component {
             nodesData[0].isFocus = true;
           } else {
             nodesData.map((node) => {
-              if (focusNodeName !== '' && node.name.indexOf(focusNodeName) >= 0 && node.category !== 0) {
+              if (focusNodeName !== '' && node.name === focusNodeName && node.category !== 0) {
                 node.isFocus = true;
               }
             });
@@ -109,7 +112,7 @@ export default class CircleNetworkGraph extends Component {
       }
     );
     // 监听类别筛选事件
-    reaction(
+    reactionCheckedArrChanged = reaction(
       () => this.props.networkStore.typeList.checkedArrChanged,
       () => {
         const checkedArr = this.props.networkStore.typeList.checkedArr;
@@ -130,7 +133,7 @@ export default class CircleNetworkGraph extends Component {
       }
     );
     // 监听level选择变化
-    reaction(
+    reactionCurrentLevel = reaction(
       () => this.props.networkStore.currentLevel,
       () => {
         const checkedArr = this.props.networkStore.typeList.checkedArr;
@@ -167,6 +170,9 @@ export default class CircleNetworkGraph extends Component {
     layerCount = {};
     radiusArr = [];
     group = '';
+    reactionFocusNodeName();
+    reactionCheckedArrChanged();
+    reactionCurrentLevel();
   }
   reDraw = () => {
     simulation.nodes(nodesData);
@@ -259,7 +265,7 @@ export default class CircleNetworkGraph extends Component {
     simulation.alpha(1).restart();
   }
   ticked = () => {
-    // console.log('tick', saveNodeXY);
+    // console.log('tick');
     if (!saveNodeXY) { // 只跑一次,然后存到nodeXY
       svgTools.getInitNodeXY(nodeXY, layerCount, nodesData, radiusArr, centerNodeX, centerNodeY);
       saveNodeXY = true;
@@ -368,6 +374,13 @@ export default class CircleNetworkGraph extends Component {
     // zoom.scale([1]);
     // const svg = d3.select('svg g');
     svg.call(zoom.transform, d3.zoomIdentity);
+    nodesData.forEach((node) => {
+      if (node.layer !== 0) {
+        node.fx = nodeXY[node.index].x;
+        node.fy = nodeXY[node.index].y;
+      }
+    });
+    simulation.alpha(1).restart();
     // zoom.translateBy(svg, 0, 0);
     // svg.attr('transform', 'translate(0,0) scale(1)');
     // nodesData.map((node)=>{

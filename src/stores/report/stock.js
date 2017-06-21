@@ -12,10 +12,10 @@ class StockStore {
     return true;
   }
 
+  @observable isMount = false;
   @observable isOverViewLoading = true;
   @observable announcementTypesLoading = true;
   @observable announcementDatasLoading = true;
-  @observable isMount = false;
 
   // 公司概况
   @observable brief = {};
@@ -30,8 +30,7 @@ class StockStore {
 
   // 上市公告-公司概况
   @action.bound getCompany(params) {
-    params.module = 'stock/company';
-    companyHomeApi.getReportModule(params)
+    companyHomeApi.getReportModule('stock/company', params)
       .then(action('get stock company', (resp) => {
         this.brief = resp.data.brief;
         this.shareHolder = resp.data.shareHolder;
@@ -47,37 +46,10 @@ class StockStore {
       });
   }
   // 上市公告-公告列表
-  @action.bound getAnnouncement(params) {
-    params.module = 'stock/announcement';
-    companyHomeApi.getReportModule(params)
-      .then(action('get stock announcement', (resp) => {
-        this.announcementDatas = resp.data.data;
-        this.announcementDatasLoading = false;
-      }))
-      .catch((err) => {
-        console.log(err.response);
-        runInAction(() => {
-          this.announcementDatasLoading = false;
-        });
-      });
-  }
-  // 上市公告-公告列表-类型列表
-  @action.bound getAnnouncementType(params) {
-    params.module = 'stock/announcement/type';
-    companyHomeApi.getReportModule(params)
-      .then(action('get stock announcement type', (resp) => {
-        this.announcementTypes = resp.data;
-      }))
-      .catch((err) => {
-        console.log(err.response);
-      });
-  }
-
-  // 切换公告类型
-  @action.bound changeAnnouncement({ stockType, monitorId, reportId, analysisReportId }) {
+  @action.bound getAnnouncement(idInfo, params) {
     this.announcementDatasLoading = true;
-    companyHomeApi.changeAnnouncement({ stockType, monitorId, reportId, analysisReportId })
-      .then(action('change announcement', (resp) => {
+    companyHomeApi.getReportModule('stock/announcement', idInfo, params)
+      .then(action('get stock announcement', (resp) => {
         this.announcementDatas = resp.data.data;
         this.announcementDatasLoading = false;
         uiStore.uiState.stockAnnouncement.index = 1;
@@ -88,6 +60,21 @@ class StockStore {
           this.announcementDatasLoading = false;
         });
       });
+  }
+  // 上市公告-公告列表-类型列表
+  @action.bound getAnnouncementType(params) {
+    companyHomeApi.getReportModule('stock/announcement/type', params)
+      .then(action('get stock announcement type', (resp) => {
+        this.announcementTypes = resp.data;
+      }))
+      .catch((err) => {
+        console.log(err.response);
+      });
+  }
+
+  // 切换公告类型
+  @action.bound changeAnnouncement(stockType, params) {
+    this.getAnnouncement(params, {stockType});
   }
 
   // 设置selectValue

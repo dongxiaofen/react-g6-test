@@ -9,16 +9,7 @@ function CompanyWrap({data, monitorListStore}) {
   const angle = relStatus === 'show' ? 'up' : 'down';
   const btnText = relStatus === 'show' ? '收起' : '展开';
   const viewReport = () => {
-    browserHistory.push(`/companyHome?monitorId=${monitorId}`);
-  };
-  const stockTableType = (stockType) => {
-    let str = '';
-    if (stockType === 'A') {
-      str = <span title="A股" className={styles.mainLabelBlue}>A股</span>;
-    } else if (stockType === 'NEEQ') {
-      str = <span title="新三板" className={styles.mainLabelBlue}>新三板</span>;
-    }
-    return str;
+    browserHistory.push(`/companyHome/monitorTimeAxis?companyName=${data.companyName}`);
   };
   const viewRelation = () => {
     if (!relStatus || relStatus === 'hide') {
@@ -37,9 +28,6 @@ function CompanyWrap({data, monitorListStore}) {
           >
           {data.companyName}
         </span>
-        {data.companyStatus && <span className={styles.mainLabelBlue}>{data.companyStatus}</span>}
-        {stockTableType(data.stockType)}
-        {data.remainderDays <= 7 && data.remainderDays > 0 && <span className={styles.mainLabelRed}>{`${data.remainderDays}天内即将到期`}</span>}
       </div>
       <div className={styles.viewWrap}>
         {

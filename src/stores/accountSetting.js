@@ -19,15 +19,20 @@ class AccountSettingStore {
     ONE_YEAR: '1年',
   };
   consumeTypeMap = {
-    REPORT_MAIN: '创建查询报告',
-    REPORT_REFRESH: '刷新查询报告',
-    REPORT_TO_MONITOR: '查询报告转为监控报告',
-    MONITOR_MAIN: '创建监控报告',
-    MONITOR_MAIN_RENEWAL: '监控报告续费',
-    REPORT_PERSON_CHECK: '个人核查',
-    MONITOR_PERSON_CHECK: '个人核查',
-    MONITOR_TAX_CHECK: '税务核查',
-    REPORT_TAX_CHECK: '税务核查',
+    REPORT_MAIN: '高级报告',
+    REPORT_REFRESH: '高级报告刷新',
+    REPORT_TO_MONITOR: '高级报告升级为监控',
+    MONITOR_MAIN: '主体监控',
+    MONITOR_MAIN_RENEWAL: '主体续期监控',
+    ANALYSIS_PROFIT: '贷中分析-盈利能力分析',
+    ANALYSIS_SCORE: '贷中分析-多维综合分析',
+    ANALYSIS_OPERATION: '贷中分析-营运能力',
+    ANALYSIS_GROWING: '贷中分析-成长能力',
+    PERSON_CHECK: '关联人核查',
+    TAX_CHECK: '税务核查',
+    BASIC_REPORT: '基础报告',
+    BASIC_REPORT_TO_REPORT: '基础报告升级为高级报告',
+    BASIC_REPORT_REFRESH: '基础报告刷新'
   };
   taxTypeMap = {
     R001: 'A类营业收入',
@@ -286,6 +291,7 @@ class AccountSettingStore {
             const pId = treeData.formatResult[activeIndex].parentUserId;
             this.tree.activeId = uId;
             this.getUserInfo(uId);
+            this.getAlertCorp(uId);
             // this.getReportAndMonitor(uId);
             // this.getProvince(uId);
             // this.getIndustry(uId);
@@ -381,7 +387,7 @@ class AccountSettingStore {
       .then(action('getAlertCorp_success', resp => {
         const noData = !resp.data || resp.data.content === undefined || resp.data && resp.data.content.length === 0;
         this.tabs.alertCorp = noData ? {error: {message: '暂无预警企业'}, content: []} : resp.data;
-        uiStore.updateUiStore('accountAlertCorp.totalElements', pathval.getPathValue(resp, 'data.content.totalElements') || 0);
+        uiStore.updateUiStore('accountAlertCorp.totalElements', pathval.getPathValue(resp, 'data.totalElements') || 0);
       }))
       .catch(action('getAlertCorp_error', err => {
         console.log('getAlertCorp_error', err);
@@ -394,6 +400,7 @@ class AccountSettingStore {
     delete params.totalElements;
     accountSettingApi.getConsume(uId, params)
       .then(action('getConsume_success', resp => {
+        console.log(resp.data);
         const noData = resp.data.content === undefined || resp.data.content.length === 0;
         this.tabs.consume = noData ? {error: {message: '暂无消费记录'}, content: []} : resp.data;
         uiStore.updateUiStore('accountConsume.totalElements', pathval.getPathValue(resp, 'data.totalElements') || 0);

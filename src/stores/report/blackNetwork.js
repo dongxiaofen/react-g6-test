@@ -7,7 +7,7 @@ class BlackNetworkStore {
       () => this.jumpNode,
       () => {
         const tmp = this.blackNetwork.paths.findIndex((path) => path.blackListNode === this.jumpNode);
-        this.expandIdx = tmp > 0 ? tmp : this.expandIdx;
+        this.expandIdx = tmp >= 0 ? tmp : this.expandIdx;
         this.isJump = true;
       }
     );
@@ -29,6 +29,7 @@ class BlackNetworkStore {
   @observable blackList = [];
   @observable modalFocusIdx = -1; // 失信记录点击idx记录
   @observable detailModalData = {};
+  @observable focusNodeFlag = false;
 
   @action.bound openDetailModal(idx, data) {
     this.modalFocusIdx = idx;
@@ -36,6 +37,7 @@ class BlackNetworkStore {
   }
   @action.bound focusNode(name) {
     this.focusNodeName = name;
+    this.focusNodeFlag = !this.focusNodeFlag;
   }
   @action.bound toggleExpand(idx) {
     this.expandIdx = idx;
@@ -44,7 +46,7 @@ class BlackNetworkStore {
   }
   @action.bound getReportModule(params) {
     this.isMount = true;
-    companyHomeApi.getReportModule(params)
+    companyHomeApi.getReportModule('network/blacklist', params)
       .then(action('get blackNetwork data', (resp) => {
         this.isLoading = false;
         this.blackNetwork = resp.data.result[0];

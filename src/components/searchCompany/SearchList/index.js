@@ -3,6 +3,7 @@ import { observer, inject } from 'mobx-react';
 import styles from './index.less';
 import SearchItem from './SearchItem';
 import FilterSheet from './FilterSheet';
+import Feedback from './Feedback';
 import Pagination from 'components/lib/pagination';
 import { loadingComp } from 'components/hoc';
 // import { Container, Row, Col } from 'components/common/Layout';
@@ -64,6 +65,9 @@ function SearchList({searchCompanyStore, modalStore, payModalStore}) {
             searchResult={searchResult}
             modalStore={modalStore}
             getFeedBack={getFeedBack} />
+          <Feedback getFeedBack={getFeedBack}
+            modalStore={modalStore}
+            searchKeyFilter={searchKeyFilter} />
           <div className={`${styles.listDataWrap}`}>
             {listData}
           </div>
@@ -78,8 +82,8 @@ function SearchList({searchCompanyStore, modalStore, payModalStore}) {
       );
     } else {
       result = (
-        <div className={`${styles.wrapList}`}>
-          <FilterSheet
+         <div className={`${styles.wrapList}`}>
+      {/* <FilterSheet
             filterSheet={filterSheet}
             filterArray={filterArray}
             modalStore={modalStore}
@@ -90,6 +94,9 @@ function SearchList({searchCompanyStore, modalStore, payModalStore}) {
             searchKeyFilter={searchKeyFilter}
             updateValue={updateValue}
             getFeedBack={getFeedBack} />
+          <Feedback getFeedBack={getFeedBack}
+            modalStore={modalStore}
+            searchKeyFilter={searchKeyFilter} /> */}
           <div className={`${styles.noCompany}`}>没有找到相关公司</div>
         </div>
       );
@@ -110,9 +117,8 @@ SearchList.propTypes = {
 export default inject('searchCompanyStore', 'modalStore', 'payModalStore')(loadingComp({
   mapDataToProps: props => ({
     loading: props.searchCompanyStore.isShowLoading === true ? true : false,
-    imgCategory: 14,
+    imgCategory: 15,
     category: 2,
     module: '搜索列表',
   }),
 })(observer(SearchList)));
-// export default inject('searchCompanyStore', 'modalStore', 'payModalStore')(observer(SearchList));

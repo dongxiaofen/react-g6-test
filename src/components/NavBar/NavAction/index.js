@@ -17,7 +17,16 @@ export default class NavAction extends Component {
     super(props);
     this.state = {
       inputValue: '',
+      isShowShearchInput: false,
     };
+  }
+
+  onsSearchInputBlur = () => {
+    if (this.state.inputValue === '') {
+      this.setState({
+        isShowShearchInput: false,
+      });
+    }
   }
 
   logout = () => {
@@ -48,41 +57,92 @@ export default class NavAction extends Component {
     browserHistory.push('/collection');
   }
 
+  userList = () => {
+    const config = [
+      {text: '我的收藏', handleClick: this.collection, icoClass: styles.collection},
+      {text: '账号中心', handleClick: this.account, icoClass: styles.account},
+      {text: '退出登录', handleClick: this.logout, icoClass: styles.logout},
+    ];
+    const output = [];
+    config.forEach((item, idx) => {
+      output.push(
+        <div key={`userItem${idx}`} className={styles.userItem} onClick={item.handleClick}>
+          <i className={item.icoClass}></i>{item.text}
+        </div>
+      );
+    });
+    return output;
+  }
+
+  userItemBoxMouseOver = () => {
+    const parentItemRef = this.refs.userItemBox;
+    const preClass = parentItemRef.className;
+    const newClass = `${preClass} ${styles.userItemBoxHover}`;
+    parentItemRef.className = newClass;
+  }
+
+  userItemBoxMouseOut = () => {
+    const parentItemRef = this.refs.userItemBox;
+    const preClass = parentItemRef.className;
+    const newClass = preClass.split(' ')[0];
+    parentItemRef.className = newClass;
+  }
+
+  changSearchInputState = (state) => {
+    this.setState({
+      isShowShearchInput: state,
+    });
+    setTimeout(() => {
+      if (state) {
+        const searchInput = this.refs.searchInput;
+        searchInput.focus();
+      }
+    }, 100);
+  }
+
+  searchBar = () => {
+    const className = this.state.isShowShearchInput ? styles.searchInputShow : styles.searchInputHidden;
+    return (
+      <div className={`clearfix ${styles.searchBox}`} ref="searchBox">
+          <input
+            ref="searchInput"
+            placeholder="请输入查询的公司..."
+            className={className}
+            value={this.state.inputValue}
+            onKeyUp={this.enterToSearch}
+            onBlur={this.onsSearchInputBlur}
+            onChange={this.inputChange} />
+        <span className={styles.searchIcon} onClick={this.changSearchInputState.bind(this, true)}>
+          <i className="fa fa-search" aria-hidden="true"></i>
+        </span>
+      </div>
+    );
+  }
+
   render() {
     return (
       <div className={`clearfix ${styles.wrap}`}>
-        <div className={`clearfix ${styles.searchBox}`} ref="searchBox">
-          <input
-            placeholder="请输入查询的公司..."
-            className={styles.searchInput}
-            value={this.state.inputValue}
-            onKeyUp={this.enterToSearch}
-            onChange={this.inputChange} />
-          <span className={styles.searchIcon}>
-            <i className="fa fa-search" aria-hidden="true"></i>
-          </span>
-        </div>
-        <div className={styles.menuBox} style={{ position: 'relative' }}>
-          <span className={styles.downloadApp}>
-            <i className="fa fa-qrcode" aria-hidden="true"></i>下载APP
-          </span>
-          <HoverBox width="140px" left="-18px">
+        {this.searchBar()}
+        <div className={styles.menuBox}>
+          <span className={styles.downloadApp}></span>
+          <HoverBox width="140px" left="-50px">
             <div className={`clearfix ${styles.code}`}>
               <img src={codeImg} />
-              <div className={styles.codeText}>下载星象应用</div>
+              <div className={styles.deving}>敬请期待</div>
+              {/* <div className={styles.codeText}>下载星象应用</div> */}
             </div>
           </HoverBox>
         </div>
-        <div className={styles.menuBox}>
-          <span onClick={this.account}>
-            <i className="fa fa-user" aria-hidden="true"></i>账号
-          </span>
-          <span onClick={this.collection}>
-            <i className="fa fa-star-o" aria-hidden="true"></i>收藏
-          </span>
-          <span onClick={this.logout}>
-            <i className="fa fa-sign-out" aria-hidden="true"></i>退出
-          </span>
+        <div className={styles.menuBox}
+            ref="userItemBox"
+            onMouseOver={this.userItemBoxMouseOver}
+            onMouseOut={this.userItemBoxMouseOut}>
+          <div className={styles.userIco}></div>
+          <div className={styles.userItemBox}>
+            <div className={styles.userItemBoxMain}>
+              {this.userList()}
+            </div>
+          </div>
         </div>
       </div>
     );

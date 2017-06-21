@@ -1,8 +1,8 @@
 .wrap {
   margin: 0;
   padding: 0;
-  height: 46px;
-  line-height: 46px;
+  height: 55px;
+  line-height: 55px;
   border-bottom: 1px solid #eceff1;
 }
 .searchKeyFilter {
@@ -10,20 +10,66 @@
   font-weight: 700;
   font-size: 14px;
   color: #546e7a;
-  margin-right: 30px;
+  // margin-right: 30px;
 }
 .searchKeyFilter span {
-  color: #42a5f5;
+  color: #E53935;
   margin-right: 4px;
+}
+.toggleButton{
+  position: relative;
+  height: 35px;
+  margin-top: 10px;
+  padding: 0 30px 0 15px;
+  float: right;
+  font-size: 14px;
+  line-height: 35px;
+  border: 1px solid #bbdefb;
+  font-weight: 700;
+  color: #42a5f5;
+  background: #fff;
+  &::before, &::after{
+    position: absolute;
+    top: 17px;
+    content: '';
+    display: inline-block;
+    width: 7px;
+    height: 2px;
+    background-color: #42a5f5;
+    transition: all .3s;
+  }
+  &:hover{
+    color: #42a5f5;
+  }
+}
+.toggleButtonHidden{
+  &::before{
+    right: 12px;
+    transform: rotate(45deg);
+  }
+  &::after{
+    right: 8px;
+    transform: rotate(135deg);
+  }
+}
+.toggleButtonShow{
+  &::before{
+    right: 8px;
+    transform: rotate(45deg);
+  }
+  &::after{
+    right: 12px;
+    transform: rotate(135deg);
+  }
 }
 .totalCon {
   float: left;
-  font-weight: 500;
+  font-weight: 700;
   font-size: 14px;
   color: #546e7a;
 }
 .findNum {
-  color: #42a5f5;
+  color: #E53935;
   margin: 0 3px 0 3px;
 }
 .noResult {
@@ -35,4 +81,7 @@
 }
 .none {
   display: none;
+}
+.text {
+  margin: 0 0 0 3px;
 }

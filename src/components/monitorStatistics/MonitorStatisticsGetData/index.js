@@ -8,7 +8,7 @@ import Col from 'components/common/layout/Col';
 import styles from './index.less';
 
 import SwitchData from './SwitchData';
-import StatisticInfo from './StatisticInfo';
+// import StatisticInfo from './StatisticInfo';
 import ChangeTrend from './ChangeTrend';
 import Province from './Province';
 import Industry from './Industry';
@@ -26,13 +26,18 @@ export default class MonitorStatisticsGetData extends Component {
   };
   componentDidMount() {
     const msStore = this.props.monitorStatisticsStore;
-    msStore.getStatistic(params);
+    // msStore.getStatistic(params);
     msStore.getChangeTrend(params);
     msStore.getProvinceAll(params);
     msStore.getIndustryStatistics(params);
     msStore.getHeadlines(params);
     msStore.setParams(params);
   }
+
+  componentWillUnmount() {
+    this.props.monitorStatisticsStore.resetStore();
+  }
+
 
   testOnChange = () => {
     console.log('this is test onchange');
@@ -45,17 +50,17 @@ export default class MonitorStatisticsGetData extends Component {
         <Row>
           <Col>
             <div className={`clearfix ${ styles.wrap }`}>
-              <div className={styles.title}>头条趋势</div>
+              <div className={styles.title}>头条统计</div>
             </div>
           </Col>
         </Row>
         <SwitchData
           msStore={msStore}
           params={params} />
-        <StatisticInfo
+        {/*<StatisticInfo
           statistic={msStore.statistic}
           params={msStore.params}
-          loading={msStore.loadingGroup.statistic} />
+          loading={msStore.loadingGroup.statistic} />*/}
         <ChangeTrend msStore={msStore} />
         <Province msStore={msStore} />
         <Industry msStore={msStore} />

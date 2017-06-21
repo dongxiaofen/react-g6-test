@@ -19,15 +19,19 @@ function ShareHolder({ moduleData }) {
       if (item.subConam) {
         item.subConam = parseFloat(item.subConam).toFixed(2);
       }
+      if (item.relConam) {
+        item.relConam = parseFloat(item.relConam).toFixed(2);
+      }
       newArr = [...newArr, item];
     });
     return newArr;
   };
   const data = {
     dataConfig: [
-      {'key': 'shareholderName', 'width': '4'},
+      {'key': 'shareholderName', 'width': '2'},
+      {'key': 'shareholderType', 'width': '2'},
       {'key': 'subConam', 'width': '2'},
-      {'key': 'regCapCur', 'width': '1.2'},
+      {'key': 'relConam', 'width': '1.2'},
       {'key': 'fundedRatio', 'width': '1.4'},
       {'key': 'conDate', 'width': '1.4'},
     ],

@@ -1,17 +1,19 @@
 import { observable, action, reaction, extendObservable } from 'mobx';
 import pathval from 'pathval';
-import bannerStore from './banner';
+import companyHomeStore from './companyHome';
 import assetsStore from './report/assets';
+import reportListStore from './reportList';
+import analysisListStore from './analysisList';
 import monitorListStore from './monitorList';
 import ruleStore from './rule';
 import ruleCompanyStore from './ruleCompany';
 import accountSettingStore from './accountSetting';
 import alertAnalysisStore from './report/alertAnalysis';
-import reportManageStore from './reportManage';
+import monitorAlertStore from './report/monitorAlert';
 import collectionStore from './collection';
-import relPerCheckStore from './report/relPerCheck';
+import relPerCheckStore from './relPerCheck';
 import nowRecordStore from './report/nowRecord';
-import taxCheckStore from './report/taxCheck';
+import taxCheckStore from './taxCheck';
 import bidMarketStore from './bidMarket';
 import assetTransactionStore from './assetTransaction';
 
@@ -20,15 +22,57 @@ class UiStore {
     reaction(
       () => this.uiState.trademarkLists.index,
       () => {
-        const { monitorId, reportId, analysisReportId, companyName, companyType} = bannerStore;
-        assetsStore.getTrademarkData({monitorId, reportId, analysisReportId, companyName, companyType});
+        const reportInfo = companyHomeStore.reportInfo;
+        assetsStore.getTrademarkData(reportInfo);
       }
     );
     reaction(
       () => this.uiState.patentInfo.index,
       () => {
-        const {monitorId, reportId, analysisReportId, companyName, companyType} = bannerStore;
-        assetsStore.getPatentData({monitorId, reportId, analysisReportId, companyName, companyType});
+        const reportInfo = companyHomeStore.reportInfo;
+        assetsStore.getPatentData(reportInfo);
+      }
+    );
+    reaction(
+      () => this.uiState.basicReportPager.index,
+      () => {
+        document.body.scrollTop = 0;
+        reportListStore.getReportList();
+      }
+    );
+    reaction(
+      () => this.uiState.advancedReportPager.index,
+      () => {
+        document.body.scrollTop = 0;
+        reportListStore.getReportList();
+      }
+    );
+    reaction(
+      () => this.uiState.multiAnalysisPager.index,
+      () => {
+        document.body.scrollTop = 0;
+        analysisListStore.getAnalysisList();
+      }
+    );
+    reaction(
+      () => this.uiState.profitAnalysisPager.index,
+      () => {
+        document.body.scrollTop = 0;
+        analysisListStore.getAnalysisList();
+      }
+    );
+    reaction(
+      () => this.uiState.operateAnalysisPager.index,
+      () => {
+        document.body.scrollTop = 0;
+        analysisListStore.getAnalysisList();
+      }
+    );
+    reaction(
+      () => this.uiState.developAnalysisPager.index,
+      () => {
+        document.body.scrollTop = 0;
+        analysisListStore.getAnalysisList();
       }
     );
     reaction(
@@ -41,8 +85,13 @@ class UiStore {
     reaction(
       () => this.uiState.alertAnalysis.index,
       () => {
-        const { monitorId, analysisReportId } = bannerStore;
-        alertAnalysisStore.getAlertAnalysisList(monitorId, analysisReportId);
+        alertAnalysisStore.getReportModule(companyHomeStore.reportInfo);
+      }
+    );
+    reaction(
+      () => this.uiState.monitorAlert.index,
+      () => {
+        monitorAlertStore.getReportModule(companyHomeStore.reportInfo);
       }
     );
     reaction(
@@ -61,7 +110,9 @@ class UiStore {
       () => this.uiState.accountAlertCorp.index,
       () => {
         const uId = accountSettingStore.base.data.id;
-        accountSettingStore.getAlertCorp(uId);
+        if (uId) {
+          accountSettingStore.getAlertCorp(uId);
+        }
       }
     );
     reaction(
@@ -73,7 +124,7 @@ class UiStore {
     reaction(
       () => this.uiState.taxCheckPager.index,
       () => {
-        taxCheckStore.getTaxCheckList();
+        taxCheckStore.getReportModule();
       }
     );
     reaction(
@@ -102,17 +153,6 @@ class UiStore {
       () => {
         const uId = accountSettingStore.base.data.id;
         accountSettingStore.getLoginRecord(uId);
-      }
-    );
-    reaction(
-      () => this.uiState.reportManagePager.index,
-      () => {
-        const params = {
-          companyName: reportManageStore.companyName,
-          index: this.uiState.reportManagePager.index,
-          size: this.uiState.reportManagePager.size
-        };
-        reportManageStore.getReportList(params);
       }
     );
     reaction(
@@ -153,6 +193,36 @@ class UiStore {
   }
 
   @observable uiState = {
+    basicReportPager: {
+      index: 1,
+      size: 10,
+      totalElements: 0,
+    },
+    advancedReportPager: {
+      index: 1,
+      size: 10,
+      totalElements: 0,
+    },
+    multiAnalysisPager: {
+      index: 1,
+      size: 10,
+      totalElements: 0,
+    },
+    profitAnalysisPager: {
+      index: 1,
+      size: 10,
+      totalElements: 0,
+    },
+    operateAnalysisPager: {
+      index: 1,
+      size: 10,
+      totalElements: 0,
+    },
+    developAnalysisPager: {
+      index: 1,
+      size: 10,
+      totalElements: 0,
+    },
     monitorList: {
       searchInput: '',
       sortDirection: {
@@ -201,6 +271,11 @@ class UiStore {
       size: 10,
       totalElements: 0,
     },
+    monitorAlert: {
+      index: 1,
+      size: 10,
+      totalElements: 0,
+    },
     ruleListPager: {
       index: 1,
       size: 10,
@@ -231,7 +306,8 @@ class UiStore {
     },
     filiationList: {
       index: 1,
-      size: 10
+      size: 10,
+      // show: observable.map({})
     },
     entinvItemLists: {
       index: 1,
@@ -244,6 +320,21 @@ class UiStore {
       show: observable.map({})
     },
     frPositionList: {
+      index: 1,
+      size: 10,
+      show: observable.map({})
+    },
+    sharesFrostListItemLists: {
+      index: 1,
+      size: 10,
+      show: observable.map({})
+    },
+    sharesTransferListItemLists: {
+      index: 1,
+      size: 10,
+      show: observable.map({})
+    },
+    sharesImpawnListItemLists: {
       index: 1,
       size: 10,
       show: observable.map({})
@@ -319,6 +410,11 @@ class UiStore {
       size: 10,
       show: observable.map({}),
     },
+    illegalRecord: {
+      index: 1,
+      size: 10,
+      show: observable.map({}),
+    },
     taxPublicInfo: {
       index: 1,
       size: 10,
@@ -336,14 +432,6 @@ class UiStore {
     recentRecruitment: {
       index: 1,
       size: 10
-    },
-    reportManageList: {
-      reportStatus: 'report',
-    },
-    reportManagePager: {
-      index: 1,
-      size: 10,
-      totalElements: 0, // 服务端分页
     },
     relPerCheck: {
       index: 1,
@@ -419,6 +507,36 @@ class UiStore {
   @action.bound resetStore() {
     extendObservable(this, {
       uiState: {
+        basicReportPager: {
+          index: 1,
+          size: 10,
+          totalElements: 0,
+        },
+        advancedReportPager: {
+          index: 1,
+          size: 10,
+          totalElements: 0,
+        },
+        multiAnalysisPager: {
+          index: 1,
+          size: 10,
+          totalElements: 0,
+        },
+        profitAnalysisPager: {
+          index: 1,
+          size: 10,
+          totalElements: 0,
+        },
+        operateAnalysisPager: {
+          index: 1,
+          size: 10,
+          totalElements: 0,
+        },
+        developAnalysisPager: {
+          index: 1,
+          size: 10,
+          totalElements: 0,
+        },
         monitorList: {
           searchInput: '',
           sortDirection: {
@@ -472,6 +590,11 @@ class UiStore {
           size: 10,
           totalElements: 0,
         },
+        monitorAlert: {
+          index: 1,
+          size: 10,
+          totalElements: 0,
+        },
         ruleListPager: {
           index: 1,
           size: 10,
@@ -502,7 +625,8 @@ class UiStore {
         },
         filiationList: {
           index: 1,
-          size: 10
+          size: 10,
+          // show: observable.map({})
         },
         entinvItemLists: {
           index: 1,
@@ -515,6 +639,21 @@ class UiStore {
           show: observable.map({})
         },
         frPositionList: {
+          index: 1,
+          size: 10,
+          show: observable.map({})
+        },
+        sharesFrostListItemLists: {
+          index: 1,
+          size: 10,
+          show: observable.map({})
+        },
+        sharesTransferListItemLists: {
+          index: 1,
+          size: 10,
+          show: observable.map({})
+        },
+        sharesImpawnListItemLists: {
           index: 1,
           size: 10,
           show: observable.map({})
@@ -590,6 +729,11 @@ class UiStore {
           size: 10,
           show: observable.map({}),
         },
+        illegalRecord: {
+          index: 1,
+          size: 10,
+          show: observable.map({}),
+        },
         taxPublicInfo: {
           index: 1,
           size: 10,
@@ -607,14 +751,6 @@ class UiStore {
         recentRecruitment: {
           index: 1,
           size: 10
-        },
-        reportManageList: {
-          reportStatus: 'report',
-        },
-        reportManagePager: {
-          index: 1,
-          size: 10,
-          totalElements: 0, // 服务端分页
         },
         stockShareHolder: {
           index: 1,
