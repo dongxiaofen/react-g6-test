@@ -5,6 +5,7 @@ import Formater from 'helpers/formatTreeData';
 import uiStore from './ui';
 import clientStore from './client';
 import messageStore from './message';
+import modalStore from './modal';
 class AccountSettingStore {
   timeMap = {
     ONE_MONTH: '1个月',
@@ -209,6 +210,25 @@ class AccountSettingStore {
     if (this.tree.data.content) {
       return this.tree.data.content[this.tree.activeIndex][name];
     }
+  }
+  @action.bound deleteAccount() {
+    modalStore.confirmLoading = true;
+    const uId = this.base.data.id;
+    accountSettingApi.deleteAccount(uId)
+      .then(action('deleteAccount', () => {
+        modalStore.resetStore();
+        messageStore.openMessage({
+          type: 'info',
+          content: '删除成功',
+        });
+      }))
+      .catch(action('deleteAccount', err => {
+        modalStore.resetStore();
+        messageStore.openMessage({
+          type: 'error',
+          content: this.getErrMsg(err) || '删除失败',
+        });
+      }));
   }
   @action.bound editInfo(url, name, params) {
     this.editModal.loading = true;

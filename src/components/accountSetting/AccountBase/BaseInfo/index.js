@@ -1,18 +1,35 @@
 import React from 'react';
-import { observer } from 'mobx-react';
+import { observer, inject } from 'mobx-react';
 import AnimateLoading from 'components/hoc/LoadingComp/AnimateLoading';
 import Item from '../Item';
 import PwdModal from '../../userModal/PwdModal';
 import EditModal from '../../userModal/EditModal';
 import styles from './index.less';
 import Popover from 'antd/lib/popover';
-function BaseInfo({accountSettingStore, clientStore}) {
+function BaseInfo({accountSettingStore, clientStore, modalStore}) {
   const consumeType = clientStore.userInfo.consumeType;
   const baseInfo = accountSettingStore.base;
   const tree = accountSettingStore.tree;
   const activeIndex = tree.activeIndex;
   const showPwdModal = () => {
     accountSettingStore.changeValue('pwdModal.visible', true);
+  };
+  const deleteAccount = () => {
+    modalStore.openCompModal({
+      width: 460,
+      title: '删除子账号',
+      confirmAction: () => {
+        accountSettingStore.deleteAccount();
+      },
+      cancelAction: () => {
+        modalStore.resetStore();
+      },
+      loader: (cb) => {
+        require.ensure([], (require) => {
+          cb(require('./info'));
+        });
+      }
+    });
   };
   const handleEmail = (values) => {
     if (baseInfo.error) {
@@ -25,6 +42,7 @@ function BaseInfo({accountSettingStore, clientStore}) {
           <Popover content={values}>
             {`${values.slice(0, 17)}...`}
           </Popover>
+          {level !== 0 && <span className={styles.deleteBtn} onClick={deleteAccount}>删除账号</span>}
           {level < 2 && <span className={styles.changePwd} onClick={showPwdModal}>修改密码</span>}
         </div>
       );
@@ -32,6 +50,7 @@ function BaseInfo({accountSettingStore, clientStore}) {
     return (
       <div className={styles.pwdBox}>
         <span className={styles.value}>{values}</span>
+        {level !== 0 && <span className={styles.deleteBtn} onClick={deleteAccount}>删除账号</span>}
         {level < 2 && <span className={styles.changePwd} onClick={showPwdModal}>修改密码</span>}
       </div>
     );
@@ -139,4 +158,4 @@ function BaseInfo({accountSettingStore, clientStore}) {
   );
 }
 
-export default observer(BaseInfo);
+export default inject('modalStore')(observer(BaseInfo));
