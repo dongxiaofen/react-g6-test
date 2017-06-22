@@ -19,6 +19,9 @@ import { Provider, useStaticRendering } from 'mobx-react';
 import getRoutes from './routes';
 import { RouterStore } from 'mobx-react-router';
 import * as allStores from 'stores';
+import {
+  UpFileToQiniu
+} from './helpers/pdfHelper';
 useStaticRendering(true);
 fundebug.apikey = 'd3c3ad8fd8f470b0bd162e9504c98c1984050474f3f550d47b17c54983633c1e';
 const agent = require('superagent-defaults')();
@@ -178,24 +181,36 @@ app.use((req, res) => {
               </Provider>
             );
             const reportHtml = ReactDOM.renderToString(<Html pdfDown="1" assets={webpackIsomorphicTools.assets()} component={component} {...allStores} />);
+            res.status(200);
+            res.json({
+              companyName: companyName,
+              timestamp: timestamp
+            });
             const companyName = resp.data.companyName;
-            const username = resp.data.email;
+            // const username = resp.data.email;
             const timestamp = new Date().getTime();
-            const htmlName = username + timestamp + '.html';
-            const pdfName = username + timestamp + '.pdf';
+            const htmlName = companyName + timestamp + '.html';
+            const pdfName = companyName + timestamp + '.pdf';
             writeStrToHtml(htmlName, reportHtml, () => {
               html2Pdf(htmlName, pdfName, () => {
-                res.download(PDF_DIRNAME + pdfName, companyName + '.pdf', (err) => {
-                  // 删除pdf
-                  const del = cp.spawn("sh", ['./src/helpers/delPdf.sh', PDF_DIRNAME + htmlName, PDF_DIRNAME + pdfName]);
-                  del.stdout.on('end', function () {
-                    console.log('stdout: pdf删除成功');
-                  });
-                });
+                // UpFileToQiniu(`${companyName}${timestamp}`);
               });
             });
           })
           .catch((err) => {
+            const getResponseData = err.response;
+            let returnResponseData = {};
+            let returnState = 501;
+            if (getResponseData.data) {
+              returnState = getResponseData.data.errorCode;
+              returnResponseData = getResponseData.data;
+            } else {
+              responseData.state = 501;
+              returnResponseData.errorCode = 501;
+              returnResponseData.message = '请求pdf数据失败';
+            }
+            res.status(returnState);
+            res.json(returnResponseData);
             console.log('pdfDown err', err.response.status);
           });
       } else if (reqPathName === '/') { // 访问首页
