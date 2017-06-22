@@ -271,7 +271,7 @@ class AccountSettingStore {
         });
       }));
   }
-  @action.bound addNewUser(params) {
+  @action.bound addNewUser(params, judgeNoRemain) {
     this.addModal.loading = true;
     accountSettingApi.addNewUser(params)
       .then(action('addNewUser_success', () => {
@@ -284,10 +284,14 @@ class AccountSettingStore {
       }))
       .catch(action('addNewUser_error', err => {
         this.addModal.loading = false;
-        messageStore.openMessage({
-          type: 'error',
-          content: this.getErrMsg(err) || '新增账号失败',
-        });
+        if (pathval.getPathValue(err, 'response.data.errorCode') === 403229) {
+          judgeNoRemain();
+        } else {
+          messageStore.openMessage({
+            type: 'error',
+            content: this.getErrMsg(err) || '新增账号失败',
+          });
+        }
       }));
   }
   @action.bound getTreeList(afterAddUser) {

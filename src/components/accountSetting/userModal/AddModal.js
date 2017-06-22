@@ -1,12 +1,12 @@
 import React from 'react';
-import { observer } from 'mobx-react';
+import { observer, inject } from 'mobx-react';
 import Input from 'components/lib/input';
 import Modal from 'components/lib/Modal';
 import validate from 'helpers/validate';
 import md5 from 'crypto-js/md5';
 import encHex from 'crypto-js/enc-hex';
 import styles from './index.less';
-function AddModal({accountSettingStore}) {
+function AddModal({accountSettingStore, modalStore}) {
   const moduleData = accountSettingStore.addModal;
   const formVal = moduleData.form;
   const errorMsg = moduleData.errorMsg;
@@ -63,6 +63,28 @@ function AddModal({accountSettingStore}) {
   const modalCancel = () => {
     accountSettingStore.resetAddModal();
   };
+  const judgeNoRemain = () => {
+    accountSettingStore.changeValue('addModal.visible', false);
+    modalStore.openCompModal({
+      width: 490,
+      title: '添加失败',
+      confirmText: '知道了',
+      isSingleBtn: true,
+      confirmAction: () => {
+        modalStore.resetStore();
+        accountSettingStore.changeValue('addModal.visible', true);
+      },
+      cancelAction: () => {
+        modalStore.resetStore();
+        accountSettingStore.changeValue('addModal.visible', true);
+      },
+      loader: (cb) => {
+        require.ensure([], (require) => {
+          cb(require('./info'));
+        });
+      }
+    });
+  };
   const modalConfirm = () => {
     if (allInputCheck()) {
       accountSettingStore.addNewUser({
@@ -73,7 +95,7 @@ function AddModal({accountSettingStore}) {
         contactPosition: formVal.contactPosition.value,
         phone: formVal.phone.value,
         contactEmail: formVal.contactEmail.value,
-      });
+      }, judgeNoRemain);
     }
   };
   const createInput = () => {
@@ -116,4 +138,4 @@ function AddModal({accountSettingStore}) {
   );
 }
 
-export default observer(AddModal);
+export default inject('modalStore')(observer(AddModal));
