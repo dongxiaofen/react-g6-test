@@ -168,7 +168,7 @@ app.use((req, res) => {
         console.log(urlPanth, 'urlPanth-----------', params);
         axios.get(config.backendApi + urlPanth, { params })
           .then((resp) => {
-            // writeDataToFile('resp', resp.data);
+            writeDataToFile('pdf', resp.data);
             allStores.pdfStore.setTypes(params.types, reportType);
             allStores.clientStore.envConfig = config.target;
             allStores.pdfStore.getPdfDownData(resp.data);
