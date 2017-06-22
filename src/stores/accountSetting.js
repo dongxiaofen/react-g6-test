@@ -221,6 +221,7 @@ class AccountSettingStore {
           type: 'info',
           content: '删除成功',
         });
+        this.getTreeList();
       }))
       .catch(action('deleteAccount', err => {
         modalStore.resetStore();
