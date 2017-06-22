@@ -958,24 +958,24 @@ babel-runtime@5.8.19:
   dependencies:
     core-js "^0.9.0"
 
-babel-runtime@6.3.19:
+babel-runtime@6.3.19, babel-runtime@6.x:
   version "6.3.19"
   resolved "http://registry.npm.taobao.org/babel-runtime/download/babel-runtime-6.3.19.tgz#f2db696c3c8c379881e2a53665e02187074dc681"
   dependencies:
     core-js "^1.2.0"
-
-babel-runtime@6.x, babel-runtime@^6.0.0, babel-runtime@^6.11.6, babel-runtime@^6.18.0, babel-runtime@^6.20.0, babel-runtime@^6.6.1, babel-runtime@^6.9.0:
-  version "6.23.0"
-  resolved "http://registry.npm.taobao.org/babel-runtime/download/babel-runtime-6.23.0.tgz#0a9489f144de70efb3ce4300accdb329e2fc543b"
-  dependencies:
-    core-js "^2.4.0"
-    regenerator-runtime "^0.10.0"
 
 babel-runtime@^5.0.0, babel-runtime@^5.6.20:
   version "5.8.38"
   resolved "http://registry.npm.taobao.org/babel-runtime/download/babel-runtime-5.8.38.tgz#1c0b02eb63312f5f087ff20450827b425c9d4c19"
   dependencies:
     core-js "^1.0.0"
+
+babel-runtime@^6.0.0, babel-runtime@^6.11.6, babel-runtime@^6.18.0, babel-runtime@^6.20.0, babel-runtime@^6.6.1, babel-runtime@^6.9.0:
+  version "6.23.0"
+  resolved "http://registry.npm.taobao.org/babel-runtime/download/babel-runtime-6.23.0.tgz#0a9489f144de70efb3ce4300accdb329e2fc543b"
+  dependencies:
+    core-js "^2.4.0"
+    regenerator-runtime "^0.10.0"
 
 babel-runtime@^6.2.0, babel-runtime@^6.9.1:
   version "6.11.6"
