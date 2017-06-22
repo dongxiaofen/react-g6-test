@@ -33,7 +33,7 @@ function CompanyInfo({ bannerStore, routing}) {
         <div className="clearfix">
           <p className={styles.companyName}>{bannerInfoData.name}</p>
            <RiskLabel riskInfo={bannerInfoData.bannerInfo.bannerInfo.riskInfo} />
-           <MultiPartyMonitoring monitorInfo={bannerInfoData.bannerInfo.bannerInfo.riskInfo} />
+           <MultiPartyMonitoring monitorInfo />
         </div>
         <div className={`clearfix ${styles.baseInfo}`}>
           <Industry industryNames={industryType} />

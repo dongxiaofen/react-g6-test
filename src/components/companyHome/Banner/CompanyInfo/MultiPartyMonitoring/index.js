@@ -4,8 +4,8 @@ import styles from './index.less';
 import Popover from 'antd/lib/popover';
 
 function MultiPartyMonitoring({monitorInfo}) {
-  if ( monitorInfo && monitorInfo.length > 0) {
-    const message = monitorInfo[0].historyFlag === 'false' ? '该企业正在被其他用户监控' : '';
+  if ( monitorInfo) {
+    const message = monitorInfo ? '该企业正在被其他用户监控' : '';
     return (
       <Popover placement="bottom" trigger="hover" content={message}>
         <span className={styles.riskLabel}>多方监控</span>
