@@ -68,6 +68,13 @@ export default class RiskCourt extends Component {
     }
   }
 
+  hasTotal(val) {
+    if (val) {
+      return val;
+    }
+    return 0;
+  }
+
   render() {
     const riskCourtStore = this.props.riskCourtStore;
     const courtData = riskCourtStore.courtData;
@@ -77,7 +84,7 @@ export default class RiskCourt extends Component {
     return (
       <Tabs defaultActiveKey={riskCourtStore.courtTabAct}>
         <TabPane
-          tab={`判决文书（${courtData.judgeDoc.totalElements}）`}
+          tab={`判决文书（${this.hasTotal(courtData.judgeDoc.totalElements)}）`}
           key="judgeDoc">
           <div style={checkBoxStyle}>
             <Checkbox onChange={this.filterFinanceData} checked={courtCheckGroup.judgeDoc}>
@@ -87,7 +94,7 @@ export default class RiskCourt extends Component {
           <JudgeDoc courtData={courtData.judgeDoc} regTime={this.regTime} loading={courtLoadingGroup.judgeDoc} riskStore={riskCourtStore}/>
         </TabPane>
         <TabPane
-          tab={`法院公告（${courtData.courtAnnouncement.totalElements}）`}
+          tab={`法院公告（${this.hasTotal(courtData.courtAnnouncement.totalElements)}）`}
           key="courtAnnouncement">
           <div style={checkBoxStyle}>
             <Checkbox onChange={this.filterFinanceData} checked={courtCheckGroup.courtAnnouncement}>
@@ -97,7 +104,7 @@ export default class RiskCourt extends Component {
           <CourtAnnouncement courtAnnouncement={courtData.courtAnnouncement} regTime={this.regTime} loading={courtLoadingGroup.courtAnnouncement}/>
         </TabPane>
         <TabPane
-          tab={`开庭公告（${courtData.courtNotice.totalElements}）`}
+          tab={`开庭公告（${this.hasTotal(courtData.courtNotice.totalElements)}）`}
           key="courtNotice">
           <div style={checkBoxStyle}>
             <Checkbox onChange={this.filterFinanceData} checked={courtCheckGroup.courtNotice}>
@@ -107,17 +114,17 @@ export default class RiskCourt extends Component {
           <CourtNotice courtNotice={courtData.courtNotice} regTime={this.regTime} loading={courtLoadingGroup.courtNotice} />
         </TabPane>
         <TabPane
-          tab={`被执行人（${courtData.courtExecuted.totalElements}）`}
+          tab={`被执行人（${this.hasTotal(courtData.courtExecuted.totalElements)}）`}
           key="courtExecuted">
           <CourtExecution courtExecution={courtData.courtExecuted} regTime={this.regTime} loading={courtLoadingGroup.courtExecuted} />
         </TabPane>
         <TabPane
-          tab={`失信被执行人（${courtData.courtDishonesty.totalElements}）`}
+          tab={`失信被执行人（${this.hasTotal(courtData.courtDishonesty.totalElements)}）`}
           key="courtDishonesty">
           <DishonestyList dishonestyList={courtData.courtDishonesty} regTime={this.regTime} loading={courtLoadingGroup.courtDishonesty} />
         </TabPane>
         <TabPane
-          tab={`涉诉资产（${courtData.courtLitigation.totalElements}）`}
+          tab={`涉诉资产（${this.hasTotal(courtData.courtLitigation.totalElements)}）`}
           key="courtLitigation">
           <LitigationAssets litigationAssets={courtData.courtLitigation} regTime={this.regTime} loading={courtLoadingGroup.courtLitigation} />
         </TabPane>

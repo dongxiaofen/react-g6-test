@@ -22,7 +22,7 @@ function CourtExecution({courtExecution, regTime, loading}) {
     },
     isLoading: loading,
     module: '被执行人信息',
-    error: courtExecution.content.length === 0
+    error: !courtExecution.content || courtExecution.content.length === 0
   };
   return (
     <CardTable {...data} />

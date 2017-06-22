@@ -29,7 +29,7 @@ function CourtAnnouncement({courtAnnouncement, regTime, loading}) {
     },
     isLoading: loading,
     module: '法院公告',
-    error: courtAnnouncement.content.length === 0
+    error: !courtAnnouncement.content || courtAnnouncement.content.length === 0
   };
   return (
     <CardTable {...data} />

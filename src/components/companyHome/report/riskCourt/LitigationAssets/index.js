@@ -20,7 +20,7 @@ function LitigationAssets({litigationAssets, regTime, loading}) {
     },
     isLoading: loading,
     module: '被执行人信息',
-    error: litigationAssets.content.length === 0
+    error: !litigationAssets.content || litigationAssets.content.length === 0
   };
   return (
     <CardTable {...data} />

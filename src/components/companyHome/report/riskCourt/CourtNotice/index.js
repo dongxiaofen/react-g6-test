@@ -25,7 +25,7 @@ function CourtNotice({courtNotice, regTime, loading}) {
     },
     isLoading: loading,
     module: '法院公告',
-    error: courtNotice.content.length === 0
+    error: !courtNotice.content || courtNotice.content.length === 0
   };
   return (
     <CardTable {...data} />

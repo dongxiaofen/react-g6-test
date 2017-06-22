@@ -60,7 +60,7 @@ JudgeDoc.propTypes = {
 export default loadingComp({
   mapDataToProps: props => ({
     loading: props.loading,
-    error: props.courtData.content.length === 0,
+    error: !props.courtData.content || props.courtData.content.length === 0,
     module: '判决文书'
   })
 })(inject('routing', 'riskCourtStore')(observer(JudgeDoc)));
