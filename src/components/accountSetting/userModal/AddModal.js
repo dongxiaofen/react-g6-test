@@ -66,7 +66,7 @@ function AddModal({accountSettingStore, modalStore}) {
   const judgeNoRemain = () => {
     accountSettingStore.changeValue('addModal.visible', false);
     modalStore.openCompModal({
-      width: 490,
+      width: 440,
       title: '添加失败',
       confirmText: '知道了',
       isSingleBtn: true,

@@ -16,7 +16,7 @@ function BaseInfo({accountSettingStore, clientStore, modalStore}) {
   };
   const deleteAccount = () => {
     modalStore.openCompModal({
-      width: 460,
+      width: 440,
       title: '删除子账号',
       confirmAction: () => {
         accountSettingStore.deleteAccount();
