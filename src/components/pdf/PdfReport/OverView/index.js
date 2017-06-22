@@ -9,6 +9,18 @@ import pathval from 'pathval';
 function OverView({ pdfStore, clientStore }) {
   const summaryData = pdfStore.summary ? pdfStore.summary : '';
   const isStock = pathval.getPathValue(pdfStore, 'banner.stockCode');
+  const objectPase = (data, type) => {
+    let newArr = [];
+    Object.keys(data).map( (key) => {
+      if (type === 'operation') {
+        newArr = [...newArr, `${key}（${data[key] - 2}）`];
+      } else {
+        newArr = [...newArr, `${key}（${data[key]}）`];
+      }
+    });
+    return newArr.join('，');
+  };
+
   const corpBasicMap = {
     mapKey: {
       registerInfo: '注册信息',
@@ -16,17 +28,30 @@ function OverView({ pdfStore, clientStore }) {
       mainPerson: '主要人员',
       branch: '分支机构'
     },
-    title: '工商基本信息',
+    title: '照面信息',
     valueData: summaryData.basic ? {data: summaryData.basic.corpBasic, type: 'object'} : undefined
+  };
+  const entinvItem = {
+    title: '企业对外投资',
+    valueData: summaryData.basic ? {data: summaryData.invPos.entinvItemCount, type: 'number'} : undefined,
+    unit: '家'
   };
   const investPositionMap = {
     mapKey: {
-      enterprise: '企业对外投资',
-      frInvest: '法人对外投资',
-      frPosition: '法人对外任职',
+      frinvCount: '法人对外投资',
+      frPositionCount: '法人对外任职',
     },
-    title: '对外投资任职',
-    valueData: summaryData.basic ? {data: summaryData.basic.investPosition, type: 'object'} : undefined,
+    title: '法人对外投资任职',
+    valueData: summaryData.basic ? {data: summaryData.invPos, type: 'object'} : undefined,
+  };
+  const investManagement = {
+    mapKey: {
+      managementFrPositionCount: '董监高对外担任法人',
+      managementInvCount: '董监高对外投资',
+      managementPositionCount: '董监高对外任职',
+    },
+    title: '董监高对外投资任职',
+    valueData: summaryData.basic ? {data: summaryData.invPos, type: 'object'} : undefined,
   };
   const businessChange = {
     title: '工商变更',
@@ -64,16 +89,17 @@ function OverView({ pdfStore, clientStore }) {
     valueData: summaryData.riskInfo ? {data: summaryData.riskInfo.court, type: 'object'} : undefined,
   };
   const taxInfoMap = {
-    title: '纳税信用',
+    title: '纳税公告',
     valueData: summaryData.riskInfo ? {data: summaryData.riskInfo.taxNotice, type: 'number'} : undefined,
   };
   const corpNoticeMap = {
     mapKey: {
       abnormalOperation: '经营异常信息',
-      checkMessage: '抽查检查信息'
+      checkMessage: '抽查检查信息',
+      illegal: '违法记录'
     },
-    title: '工商公示信息',
-    valueData: summaryData.riskInfo ? {data: summaryData.riskInfo.corpNotice, type: 'object'} : undefined,
+    title: '工商抽查',
+    valueData: summaryData.riskInfo ? {data: summaryData.riskInfo.corpCheck, type: 'object'} : undefined,
   };
   const newsContent = {
     title: '新闻内容',
@@ -99,29 +125,45 @@ function OverView({ pdfStore, clientStore }) {
   };
   const riskRelationshipMap = {
     mapKey: {
-      riskRelationship: '风险关联信息'
+      riskRelationship: '风险关联信息',
+      linkRelationship: '企业关联信息',
     },
     title: '风险关系',
     valueData: summaryData.network ? {data: summaryData.network, type: 'object'} : undefined,
   };
-  const linkRelationshipMap = {
+  const pledgeEquity = {
     mapKey: {
-      linkRelationship: '关联图信息'
+      sharesFrostCount: '股权冻结',
+      sharesImpawnCount: '股权质押',
+      sharesTransferCount: '股权转让',
     },
-    title: '关联关系',
-    valueData: summaryData.network ? {data: summaryData.network, type: 'object'} : undefined,
+    title: '股权相关',
+    valueData: summaryData.network ? {data: summaryData.pledgeEquity, type: 'object'} : undefined,
   };
-  const recruitmentEmployeeMap = {
+  const recruitmentEmployee = {
     mapKey: {
+      job: '招聘岗位分布',
       avgSalary: '招聘平均薪资',
       education: '招聘学历要求',
-      graduation: '员工背景－毕业学校',
-      job: '招聘岗位分布',
-      major: '员工背景－所学专业',
-      position: '近期招聘岗位'
     },
-    title: '招聘/员工背景',
+    title: '招聘信息',
     valueData: summaryData.team ? {data: summaryData.team.recruitmentEmployee, type: 'object'} : undefined,
+  };
+  const staffBackground = {
+    mapKey: {
+      major: '毕业学校',
+      graduation: '所学专业',
+    },
+    title: '员工背景',
+    valueData: summaryData.team ? {data: summaryData.team.recruitmentEmployee, type: 'object'} : undefined,
+  };
+  const staffPosition = {
+    mapKey: {
+      position: '近期招聘岗位',
+    },
+    unit: '个',
+    title: '近期招聘岗位',
+    valueData: summaryData.team ? {data: summaryData.team.recruitmentEmployee.position, type: 'number'} : undefined,
   };
   const recruitmentResumeMap = {
     mapKey: {
@@ -130,25 +172,53 @@ function OverView({ pdfStore, clientStore }) {
       recruitmentPost: '新增招聘岗位',
       resumeTrend: '离职意向趋势'
     },
-    title: '团队监控分析',
+    title: '团队发展趋势',
     valueData: summaryData.team ? { data: summaryData.team.recruitmentResume, type: 'object' } : undefined,
   };
-  const taxSummary = {
+  // 多维分析
+  const comprehensiveAnalysis = {
     mapKey: {
-      taxSummary: summaryData.taxOverall && summaryData.taxOverall.length > 0 ? summaryData.taxOverall.join('，') : '暂无信息',
+      allScore: '综合评分',
+      operationScore: '经营状况',
+      industryScore: '行业相关',
+      creativityScore: '创新能力',
+      lawScore: '法务相关',
+      teamScore: '团队相关',
+      influenceScore: '社会影响力'
     },
-    title: '税务信息',
-    valueData: {type: 'none', data: (summaryData.taxOverall && summaryData.taxOverall.length > 0 ? summaryData.taxOverall.join('，') : '暂无信息')},
+    unit: '分',
+    title: '多维综合分析',
+    valueData: summaryData.scoreStatistic ? {data: summaryData.scoreStatistic, type: 'object'} : undefined
+  };
+  const profitabilityAnalysis = {
+    title: '盈利能力分析',
+    valueData: {type: 'none', data: (summaryData.profitStatistic && Object.keys(summaryData.profitStatistic).length > 0 ? objectPase(summaryData.profitStatistic) : '暂无信息')},
+  };
+  const operationalAnalysis = {
+    title: '营运能力分析',
+    valueData: {type: 'none', data: (summaryData.operationStatistic && Object.keys(summaryData.operationStatistic).length > 0 ? objectPase(summaryData.operationStatistic, 'operation') : '暂无信息')},
+  };
+  const growthAnalysis = {
+    title: '成长能力分析',
+    valueData: {type: 'none', data: (summaryData.growingStatistic && Object.keys(summaryData.growingStatistic).length > 0 ? objectPase(summaryData.growingStatistic) : '暂无信息')},
   };
   return (
     <div>
       <PdfTitle module="信息概览" subModule="" />
-      <SecondTitle module="企业基本信息" />
+      <SecondTitle module="工商信息" />
       <hr className={styles.hrhr} />
       <Summary {...corpBasicMap} />
-      <Summary {...investPositionMap} />
-      <Summary {...businessChange} />
       <Summary {...yearReport} />
+      <Summary {...businessChange} />
+
+      <SecondTitle module="对外投资任职" />
+      <hr className={styles.hrhr} />
+      <Summary {...entinvItem} />
+      <Summary {...investPositionMap} />
+      {
+        pdfStore.reportType === '高级报告' ?
+        <Summary {...investManagement} /> : ''
+      }
       {
         isStock ?
             <div key="thisIsSecondTitleObject">
@@ -159,42 +229,80 @@ function OverView({ pdfStore, clientStore }) {
             </div>
           : ''
       }
-      {
-        pdfStore.banner.mainStatus === 'MONITOR' ?
-          <div key="taxList">
-            <SecondTitle module="税务分析" />
-            <hr className={styles.hrhr} />
-            <Summary {...taxSummary}/>
-          </div>
-          : ''
-      }
-      <SecondTitle module="风险信息" />
-      <hr className={styles.hrhr} />
-      <Summary {...courtMap} />
-      <Summary {...taxInfoMap} />
-      <Summary {...corpNoticeMap} />
-      <SecondTitle module="新闻舆情" />
+      <SecondTitle module="新闻信息" />
       <hr className={styles.hrhr} />
       <Summary {...newsContent} />
-      <SecondTitle module="经营信息" />
-      <hr className={styles.hrhr} />
       {
         clientStore.envConfig.indexOf('dianxin') !== -1 ?
-          <Summary {...telMap} />
+          <div>
+            <SecondTitle module="经营信息" />
+            <hr className={styles.hrhr} />
+            <Summary {...telMap} />
+          </div>
           :
           ''
       }
-      <Summary {...operationInfoMap}/>
-      <SecondTitle module="关联网络" />
+      <SecondTitle module="经营信息" />
       <hr className={styles.hrhr} />
-      <Summary {...linkRelationshipMap} />
-      <Summary {...riskRelationshipMap} />
+      <Summary {...operationInfoMap} />
+
       <SecondTitle module="团队信息" />
       <hr className={styles.hrhr} />
-      <Summary {...recruitmentEmployeeMap} />
+      <Summary {...recruitmentEmployee} />
+      <Summary {...staffBackground} />
+      <Summary {...staffPosition} />
+      <Summary {...recruitmentResumeMap} />
+
+      <SecondTitle module="风险信息" />
+      <hr className={styles.hrhr} />
+      <Summary {...taxInfoMap} />
+      <Summary {...courtMap} />
+      <Summary {...corpNoticeMap} />
+
+      <SecondTitle module="抵质押信息" />
+      <hr className={styles.hrhr} />
+      <Summary {...pledgeEquity} />
       {
-        pdfStore.banner.mainStatus === 'MONITOR' ?
-          <Summary {...recruitmentResumeMap} /> : ''
+        pdfStore.reportType === '高级报告' ?
+        <div>
+          <SecondTitle module="关联图信息" />
+          <hr className={styles.hrhr} />
+          <Summary {...riskRelationshipMap} />
+        </div> : ''
+      }
+
+      {/* 多维分析 */}
+      {
+        pdfStore.pdfTypesKey.includes('SCORE') ?
+        <div>
+          <SecondTitle module="多维综合分析" />
+          <hr className={styles.hrhr} />
+          <Summary {...comprehensiveAnalysis} />
+        </div> : ''
+      }
+      {
+        pdfStore.pdfTypesKey.includes('PROFIT') ?
+        <div>
+          <SecondTitle module="盈利能力分析" />
+          <hr className={styles.hrhr} />
+          <Summary {...profitabilityAnalysis} />
+        </div> : ''
+      }
+      {
+        pdfStore.pdfTypesKey.includes('OPERATION') ?
+          <div>
+            <SecondTitle module="营运能力分析" />
+            <hr className={styles.hrhr} />
+            <Summary {...operationalAnalysis}/>
+          </div> : ''
+      }
+      {
+        pdfStore.pdfTypesKey.includes('GROWING') ?
+          <div>
+            <SecondTitle module="成长能力分析" />
+            <hr className={styles.hrhr} />
+            <Summary {...growthAnalysis}/>
+          </div> : ''
       }
     </div>
   );

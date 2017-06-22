@@ -61,6 +61,35 @@
   color: @black7;
 }
 .rankChart {
+  position: relative;
   float: left;
   width: 75.87%;
+}
+
+.rankChartText {
+  position: absolute;
+  left: 14px;
+  bottom: 10px;
+
+  font-size: 12px;
+  line-height: 1em;
+  color: @black7;
+
+  z-index: 1;
+
+  & > div {
+    float: left;
+    width: 5px;
+    height: 5px;
+    margin-top: 3px;
+    margin-right: 6px;
+
+    background-color: @black7;
+    
+    border-radius: 100px;
+  }
+
+  & > span {
+    float: left;
+  }
 }

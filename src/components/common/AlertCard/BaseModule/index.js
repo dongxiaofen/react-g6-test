@@ -38,7 +38,6 @@ export default class BaseModule extends Component {
       <div id={this.props.animateId} className={cssWrap}>
         <CardHeader
           data={this.props.data}
-          module={this.props.module}
           hasSecondType={this.props.hasSecondType}
           cardType={this.props.cardType}
           modifyDate={this.modifyDate}/>
@@ -46,6 +45,7 @@ export default class BaseModule extends Component {
           isModal && data.items.pattern === 'NEWS' ? '' : // 新闻弹窗不展示具体字段
           <CardContent
             data={this.props.data}
+            module={this.props.module}
             show={this.state.show}
             contentHtml={this.props.contentHtml}
             isModal={isModal}/>

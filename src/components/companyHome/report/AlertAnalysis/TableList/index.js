@@ -4,15 +4,15 @@ import { loadingComp } from 'components/hoc';
 import Pager from 'components/common/Pager';
 import TableRow from './TableRow';
 import styles from './index.less';
-function TableList({alertAnalysisStore}) {
-  const data = alertAnalysisStore.listData.content;
+function TableList({dataStore}) {
+  const data = dataStore.listData.content;
   const createTable = () => {
     return data.map( (item, index) => {
       return (
         <TableRow
           key={`keys${index}`}
           data={item}
-          alertAnalysisStore={alertAnalysisStore}
+          dataStore={dataStore}
           />
       );
     });
@@ -22,14 +22,14 @@ function TableList({alertAnalysisStore}) {
       <div className={styles.tableList}>
         {createTable()}
       </div>
-      <Pager module="alertAnalysis" type="small" />
+      <Pager module={dataStore.module} type="small" />
     </div>
   );
 }
 export default loadingComp({
   mapDataToProps: props => ({
-    loading: props.alertAnalysisStore.listData.content === undefined ? true : false,
-    error: props.alertAnalysisStore.listData.error,
+    loading: props.dataStore.listData.content === undefined ? true : false,
+    error: props.dataStore.listData.error,
     height: 100,
   }),
 })(observer(TableList));

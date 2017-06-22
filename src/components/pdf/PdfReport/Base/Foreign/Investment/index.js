@@ -5,19 +5,28 @@ import PdfNotFound from 'components/common/pdf/PdfNotFound';
 import SecondTitle from 'components/common/pdf/SecondTitle';
 
 function Investment({ moduleData }) {
-  if (moduleData === null || moduleData.length === 0) {
+  if (!moduleData || moduleData.length === 0) {
     return (
       <div>
-        <SecondTitle module="法人对外投资"/>
+        <SecondTitle module={`法人对外投资`}/>
         <PdfNotFound />
       </div>
     );
   }
+  const parseNumber = () => {
+    let newArr = [];
+    moduleData.map( (item) => {
+      item.subConam = parseFloat(item.subConam).toFixed(2);
+      item.regCap = parseFloat(item.regCap).toFixed(2);
+      newArr = [...newArr, item];
+    });
+    return newArr;
+  };
   const data = {
     dataConfig: [
       {'key': 'entName', 'width': '6'},
       {'key': 'entStatus', 'width': '6'},
-      {'key': 'entType', 'width': '6'},
+      // {'key': 'entType', 'width': '6'},
       {'key': 'esDate', 'width': '6'},
       {'key': 'fundedRatio', 'width': '6'},
       {'key': 'subConam', 'width': '6'},
@@ -26,14 +35,14 @@ function Investment({ moduleData }) {
       {'key': 'regNo', 'width': '6'},
       {'key': 'regOrg', 'width': '6'},
     ],
-    item: moduleData,
+    item: parseNumber(),
     dict: 'frinvListPdf',
     hasConfig: true,
     type: 'array',
   };
   return (
     <div>
-      <SecondTitle module="法人对外投资" />
+      <SecondTitle module={`法人（${moduleData[0].name}）对外投资`} />
       <PdfSimpleKey {...data} />
     </div>
   );

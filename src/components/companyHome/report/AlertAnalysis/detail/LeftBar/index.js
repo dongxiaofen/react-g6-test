@@ -1,31 +1,30 @@
 import React, {PropTypes} from 'react';
 import { observer, inject } from 'mobx-react';
 import styles from './index.less';
-function LeftBar({alertAnalysisStore, routing}) {
-  const moduleData = alertAnalysisStore.detailData;
+function LeftBar({alertAnalysisStore, monitorAlertStore, routing, companyHomeStore}) {
+  const pathname = routing.location.pathname;
+  const isMonitor = pathname === '/companyHome/monitorAlert';
+  const dataStore = isMonitor ? monitorAlertStore : alertAnalysisStore;
+  const moduleData = dataStore.detailData;
   const data = moduleData.detail;
   const activeIndex = moduleData.activeIndex;
   const tabTop = moduleData.tabTop;
   const page = moduleData.page;
-  const {monitorId, analysisReportId} = routing.location.query;
-  let companyType = 'monitor';
-  const companyId = monitorId || analysisReportId;
-  if (analysisReportId) {
-    companyType = 'analysisReport';
-  }
+  const {monitorId, reportId} = companyHomeStore.reportInfo;
+  const companyId = isMonitor ? monitorId : reportId;
   const changeTab = (index) => {
-    alertAnalysisStore.changeValue('detailData.activeIndex', index);
-    alertAnalysisStore.resetHtml();
+    dataStore.changeValue('detailData.activeIndex', index);
+    dataStore.resetHtml();
     if (moduleData.info.alertType === 'RULE') {
       const pattern = data[activeIndex].pattern;
       if (pattern === 'NEWS') {
-        alertAnalysisStore.getNewsDetail(companyType, companyId);
+        dataStore.getNewsDetail(companyId);
       } else if (pattern === 'JUDGMENT') {
-        alertAnalysisStore.getJudgeDocDetail(companyType, companyId, data[activeIndex].content);
+        dataStore.getJudgeDocDetail(companyId, data[activeIndex].content);
       }
     } else {
       if (data[activeIndex].detail[0].type === 'judgeInfo' && data[activeIndex].detail[0].judgeInfo) {
-        alertAnalysisStore.getJudgeDocDetail(companyType, companyId, data[activeIndex].detail[0].judgeInfo);
+        dataStore.getJudgeDocDetail(companyId, data[activeIndex].detail[0].judgeInfo);
       }
     }
   };
@@ -42,8 +41,7 @@ function LeftBar({alertAnalysisStore, routing}) {
         <div
           key={index}
           className={itemCss}
-          onClick={changeTab.bind(null, index)}
-          >
+          onClick={changeTab.bind(null, index)}>
           <div className={styles.time}>{modifyDate(item)}</div>
         </div>
       );
@@ -61,10 +59,10 @@ function LeftBar({alertAnalysisStore, routing}) {
       url = `/api/monitor/${monitorId}/alert/${ruleMap[alertType]}/${moduleData.info.id}`;
       type = 'monitor';
     } else {
-      url = `/api/analysisReport/${analysisReportId}/alert/${ruleMap[alertType]}/${moduleData.info.id}`;
+      url = `/api/report/${reportId}/alert/${ruleMap[alertType]}/${moduleData.info.id}`;
       type = 'report';
     }
-    alertAnalysisStore.getAlertDetail(url, type, monitorId || analysisReportId, moduleData.info, params);
+    dataStore.getAlertDetail(url, type, isMonitor ? monitorId : reportId, moduleData.info, params);
   };
   const prevClick = () => {
     if (page <= 1) {
@@ -73,19 +71,19 @@ function LeftBar({alertAnalysisStore, routing}) {
     if (moduleData.info.alertType === 'RULE') {
       getDetail({index: page - 1, size: 8});
     }
-    alertAnalysisStore.changeValue('detailData.page', page - 1);
+    dataStore.changeValue('detailData.page', page - 1);
   };
   const nextClick = () => {
-    const maxNum = moduleData.info.alertType === 'RULE' ? alertAnalysisStore.detailData.orgData.totalElements : data.length;
+    const maxNum = moduleData.info.alertType === 'RULE' ? dataStore.detailData.orgData.totalElements : data.length;
     if (page * 8 >= maxNum) {
       return false;
     }
     if (moduleData.info.alertType === 'RULE') {
       getDetail({index: page + 1, size: 8});
     }
-    alertAnalysisStore.changeValue('detailData.page', page + 1);
+    dataStore.changeValue('detailData.page', page + 1);
   };
-  const maxNum = moduleData.info.alertType === 'RULE' ? alertAnalysisStore.detailData.orgData.totalElements : data.length;
+  const maxNum = moduleData.info.alertType === 'RULE' ? dataStore.detailData.orgData.totalElements : data.length;
   const prevCss = page <= 1 ? styles.arrowUpDis : styles.arrowUp;
   const nextCss = page * 8 >= maxNum ? styles.arrowDownDis : styles.arrowDown;
   if (data.length < 2) {
@@ -107,4 +105,4 @@ function LeftBar({alertAnalysisStore, routing}) {
 LeftBar.propTypes = {
   foo: PropTypes.string,
 };
-export default inject('alertAnalysisStore', 'routing')(observer(LeftBar));
+export default inject('alertAnalysisStore', 'monitorAlertStore', 'routing', 'companyHomeStore')(observer(LeftBar));

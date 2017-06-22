@@ -4,17 +4,16 @@ import styles from './index.less';
 
 function TaxUpList({moduleData}) {
   const dataDom = [];
-  const data = moduleData.operating_progress;
   let idx = 0;
-  Object.keys(data).map(key => {
+  Object.keys(moduleData).map(key => {
     dataDom.push(
       <tr key={`${idx}up`}>
         <td>{key}年</td>
-        <td>{data[key].ZCZZL}%</td>
-        <td>{data[key].XSZZL}%</td>
-        <td>{data[key].JLRZZL}%</td>
-        <td>{data[key].YYLRZZL}%</td>
-        <td>{data[key].ZYYWSRBDL}%</td>
+        <td>{moduleData[key].ZCZZL}%</td>
+        <td>{moduleData[key].XSZZL}%</td>
+        <td>{moduleData[key].JLRZZL}%</td>
+        <td>{moduleData[key].YYLRZZL}%</td>
+        <td>{moduleData[key].ZYYWSRBDL}%</td>
       </tr>
     );
     idx ++;

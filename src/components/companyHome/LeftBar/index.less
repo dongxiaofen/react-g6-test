@@ -1,22 +1,48 @@
 @import '~sc-colors/index.less';
 .wrap {
-  padding: 25px 0;
+  padding: 10px 0;
   font-size: 14px;
+  line-height: 1em;
   background-color: @mdc-white-darker;
   box-shadow: 0 2px 4px 0 rgba(176, 190, 197, 0.5);
+  margin-bottom: 20px;
 }
 .menuCss {
   position: relative;
   line-height: 1;
   padding: 15px 0;
-  padding-left: 30px;
+  padding-left: 20px;
   color: @mdc-grey-800;
   cursor: pointer;
 }
 .menuDisCss {
   composes: menuCss;
   color: @mdc-grey-300;
-  cursor: not-allowed;
+  cursor: pointer;
+}
+.menuCss1Base {
+  position: relative;
+  line-height: 1;
+  padding: 12.5px 0;
+  padding-left: 20px;
+  color: @mdc-grey-800;
+}
+.menuCss1 {
+  composes: menuCss1Base;
+  cursor: pointer;
+}
+.menuDisCss1 {
+  composes: menuCss1Base;
+  color: @mdc-grey-300;
+  cursor: pointer;
+}
+.menuDevDisCss {
+  composes: menuCss1Base;
+  color: @mdc-grey-300;
+}
+.menuCssAct1 {
+  composes: menuCss1;
+  color: @mdc-blue-400;
 }
 .arrow {
   position: absolute;
@@ -32,8 +58,8 @@
 }
 .itemCss {
   line-height: 1;
-  padding: 15px 0;
-  padding-left: 60px;
+  padding: 5px 0 20px 0;
+  padding-left: 50px;
   color: @mdc-grey-600;
   border-right: 3px solid @mdc-white-darker;
   cursor: pointer;
@@ -41,21 +67,75 @@
 .itemActCss {
   composes: itemCss;
   color: @mdc-blue-400;
-  background: @mdc-blue-grey-50-opacity-20;
-  border-right: 3px solid @mdc-blue-400 !important;
 }
 .itemDisCss {
   line-height: 1;
-  padding: 15px 0;
-  padding-left: 60px;
+  padding: 5px 0 20px 0;
+  padding-left: 50px;
   color: @mdc-grey-300;
-  cursor: not-allowed;
+  cursor: pointer;
+  position: relative;
+  .lock {
+    top: 2px;
+  }
 }
 .itemCss:hover {
   color: @mdc-blue-400;
-  background: @mdc-blue-grey-50-opacity-20;
-  border-right: 3px solid @mdc-blue-grey-50-opacity-20;
 }
 .hide {
   display: none;
+}
+.title {
+  border-bottom: 1px solid @black12;
+  padding: 0 11px 10px 20px ;
+  color: @mdc-grey-600;
+  font-weight: bold;
+}
+.reportType {
+  float: left;
+  margin-top: 5px;
+}
+.btnReport {
+  font-size: 12px;
+  line-height: 24px;
+  height: 24px;
+  padding: 0 7.5px;
+  float: right;
+  &:hover {
+    opacity: 0.8;
+  }
+}
+.btnMonitor {
+  composes: btnReport;
+  background-color: @mdc-orange-500;
+  border: @mdc-orange-500;
+}
+.recordWrap {
+  color: @mdc-blue-400;
+  text-align: center;
+  cursor: pointer;
+}
+.record {
+  font-weight: bold;
+  margin-left: 10px;
+}
+.lock {
+  position: absolute;
+  right: 20px;
+  top: 15px;
+  display: block;
+  width: 15px;
+  height: 15px;
+  background-image: url('imgs/companyHome/leftBar/lock.png');
+  background-size: 100% 100%;
+}
+.devIcon {
+  background-image: url('imgs/companyHome/leftBar/developing.png');
+  background-size: 100% 100%;
+  display: block;
+  width: 44px;
+  height: 13px;
+  position: absolute;
+  top: 4px;
+  left: 110px;
 }

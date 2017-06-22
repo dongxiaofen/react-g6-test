@@ -17,7 +17,7 @@ function CompanyName({data}) {
   }
   // 跳转监控
   const link = () => {
-    browserHistory.push(`/companyHome/alertAnalysis?monitorId=${data.productId}`);
+    browserHistory.push(`/companyHome/monitorAlert?companyName=${name}`);
   };
   return (
     <div className={styles.box}>

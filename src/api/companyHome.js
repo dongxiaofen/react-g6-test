@@ -1,15 +1,6 @@
 import axios from 'axios';
-export const getBannerInfo = ({
-  monitorId,
-  reportId,
-}) => {
-  let url;
-  if (monitorId) {
-    url = `/api/monitor/${monitorId}/infobanner/xx`;
-  } else if (reportId) {
-    url = `/api/report/infobanner?reportId=${reportId}`;
-  }
-  return axios.get(url);
+export const getBannerInfo = (params) => {
+  return axios.get(`/api/common/bannerInfo`, { params });
 };
 
 // 获取上市代码，检查该公司是否是上市公司
@@ -27,33 +18,48 @@ export const getStockCode = ({ reportId, monitorId }) => {
 export const toggleMonitorStatus = (monitorId, status) => {
   return axios.put(`/api/monitor/${monitorId}/status`, { status: status });
 };
-export const getReportModule = (params) => {
-  const { module, monitorId, reportId, pagesInfo } = params;
+export const getReportModule = (urlStr, idParams, params) => {
+  const basicUrl = `/api/basicReport/${idParams.basicReportId}/`;
+  const advancedUrl = `/api/report/${idParams.reportId}/`;
+  const analysisUrl = `/api/analysisReport/${idParams.analysisReportId}/`;
+  const monitorUrl = `/api/monitor/${idParams.monitorId}/`;
+  const reportUrl = idParams.reportId ? advancedUrl : basicUrl;
   let url;
-  if (monitorId) {
-    if (module === 'trademark' || module === 'patent' || module === 'bidding') {
-      url = `/api/monitor/${monitorId}/operation/${module}${module === 'trademark' || module === 'patent' ? '?index=' + pagesInfo.index + '&limit=' + pagesInfo.size : ''}`;
-    } else if (module === 'person/page') {
-      url = `/api/monitor/${monitorId}/person/page?index=1&size=10`;
-    } else if (module === 'blackNetwork') {
-      url = `/api/monitor/${monitorId}/network/blacklist`;
-    } else if (module === 'forceNetwork') {
-      url = `/api/monitor/${monitorId}/expendNetwork`;
-    } else {
-      url = `/api/monitor/${monitorId}/${module}`;
-    }
-  } else if (reportId) {
-    if (module === 'trademark' || module === 'patent' || module === 'bidding') {
-      url = `/api/report/operation/${module}?reportId=${reportId}${module === 'patent' || module === 'trademark' ? '&index=' + pagesInfo.index + '&limit=' + pagesInfo.size : ''}`;
-    } else if (module === 'person/page') {
-      url = `/api/report/${reportId}/person/page?index=1&size=10`;
-    } else if (module === 'blackNetwork') {
-      url = `/api/report/network/blacklist?reportId=${reportId}`;
-    } else if (module === 'forceNetwork') {
-      url = `/api/report/expendNetwork?reportId=${reportId}`;
-    } else {
-      url = `/api/report/${module}?reportId=${reportId}`;
-    }
+  switch (urlStr) {
+    case 'corpDetail':
+    case 'stock/company':
+    case 'stock/announcement':
+    case 'stock/announcement/type':
+    case 'internet':
+    case 'operation/trademark':
+    case 'operation/patent':
+    case 'operation/bidding':
+    case 'team':
+    case 'investment':
+    case 'taxation':
+    case 'risk':
+    case 'risk/check':
+    case 'risk/pledge':
+    case 'network':
+    case 'network/blacklist':
+    case 'timeline':
+    case 'alert/page':
+      url = reportUrl + urlStr;
+      break;
+    case 'score':
+    case 'profit':
+    case 'operate':
+    case 'growing':
+      url = analysisUrl + urlStr;
+      break;
+    case 'monitorTimeAxis':
+      url = monitorUrl + 'timeline';
+      break;
+    case 'monitorAlert':
+      url = monitorUrl + 'alert/page';
+      break;
+    default:
+      return false;
   }
   // 设置axios取消事件
   const CancelToken = axios.CancelToken;
@@ -62,22 +68,17 @@ export const getReportModule = (params) => {
     window.reportSourceCancel = [];
   }
   window.reportSourceCancel.push(source.cancel);
-  return axios.get(url, { cancelToken: source.token });
+  return axios.get(url, { cancelToken: source.token, params});
 };
 export const getJudgeDetailMonitor = (monitorCompanyId, params) => {
   return axios.get(`/api/monitor/${monitorCompanyId}/risk/judgeDoc`, { params });
 };
-export const getJudgeDetailReport = (params) => {
-  return axios.get(`/api/report/risk/judgeDoc`, { params });
-};
-export const getInternet = ({ monitorId, reportId, params }, source) => {
-  let url;
-  if (monitorId) {
-    url = `/api/monitor/${monitorId}/internet`;
-  } else if (reportId) {
-    url = `/api/report/internet?reportId=${reportId}`;
+export const getJudgeDetailReport = (idParams, params) => {
+  const {reportId, basicReportId} = idParams;
+  if (reportId !== '') {
+    return axios.get(`/api/report/${reportId}/risk/judgeDoc`, { params });
   }
-  return axios.get(url, { cancelToken: source.token, params: params });
+  return axios.get(`/api/basicReport/${basicReportId}/risk/judgeDoc`, { params });
 };
 export const getNewsDetail = (url, source) => {
   return axios.get(url, { cancelToken: source.token });
@@ -85,45 +86,26 @@ export const getNewsDetail = (url, source) => {
 export const getBiddingDetail = (url, source) => {
   return axios.get(url, { cancelToken: source.token });
 };
-export const getPersonCheckInfo = ({ monitorId, reportId, params, source }) => {
-  if (monitorId) {
-    return axios.get(`/api/monitor/${monitorId}/person/page`, { params: params, cancelToken: source.token });
-  } else if (reportId) {
-    return axios.get(`/api/report/${reportId}/person/page`, { params: params, cancelToken: source.token });
-  }
-};
-export const checkPersonInfo = (url, params) => {
-  return axios.post(url, params);
-};
-export const getIdCard = (url) => {
-  return axios.get(url);
-};
 
-// 获取上市公告
-export const changeAnnouncement = ({ stockType, monitorId, reportId }) => {
-  let url;
-  if (monitorId) {
-    if (stockType) {
-      url = `/api/monitor/${monitorId}/stock/announcement?stockType=${stockType}`;
-    } else {
-      url = `/api/monitor/${monitorId}/stock/announcement`;
-    }
-  }
-  if (reportId) {
-    if (stockType) {
-      url = `/api/report/stock/announcement?reportId=${reportId}&stockType=${stockType}`;
-    } else {
-      url = `/api/report/stock/announcement?reportId=${reportId}`;
-    }
-  }
-  return axios.get(url);
+// 刷新基础报告
+export const updateBasicRep = (basicReportId) => {
+  return axios.put(`/api/basicReport/${basicReportId}`);
 };
-
-// 刷新报告
-export const refreshHighOrDeep = (reportId) => {
+// 获取基础报告的刷新时间
+export const getBasicRepInfo = (basicReportId) => {
+  return axios.get(`/api/basicReport/${basicReportId}/info`);
+};
+// 刷新高级报告
+export const updateReport = (reportId) => {
   return axios.put(`/api/report/${reportId}`);
 };
-
+// 获取高级报告的刷新时间
+export const getReportInfo = (reportId) => {
+  return axios.get(`/api/report/${reportId}/info`);
+};
+export const getMonitorInfo = (monitorId) => {
+  return axios.get(`/api/monitor/${monitorId}/info`);
+};
 // 创建高级报告或者深度报告
 export const createReport = (active, companyName) => {
   let url;
@@ -163,21 +145,10 @@ export const pauseOrRestoreMonitor = (monitorId, status) => {
 };
 
 // 添加/删除收藏
-export const addOrCancelCollection = ({ reportId, monitorId, params }) => {
-  let url;
-  if (reportId) {
-    url = `/api/report/${reportId}/collection`;
-  }
-  if (monitorId) {
-    url = `/api/monitor/${monitorId}/collection`;
-  }
-  return axios.put(url, params);
+export const addOrCancelCollection = (params) => {
+  return axios.put('/api/collection', params);
 };
 
-// 获取核查人的列表
-export const getPersonName = (url) => {
-  return axios.get(url);
-};
 
 // 获取评估分析列表
 export const getAlertAnalysisList = (monitorId, analysisReportId, params, source) => {
@@ -191,7 +162,7 @@ export const getAlertAnalysisList = (monitorId, analysisReportId, params, source
 };
 // 获取评估分析列表详情
 export const getAlertDetail = (url, source, params) => {
-  return axios.get(url, { cancelToken: source.token, params});
+  return axios.get(url, { cancelToken: source.token, params });
 };
 export const getAlertNewsMonitor = (companyId, params) => {
   return axios.get(`/api/monitor/${companyId}/internet/detail`, { params });
@@ -199,11 +170,11 @@ export const getAlertNewsMonitor = (companyId, params) => {
 export const getAlertJudgeDocMonitor = (companyId, params) => {
   return axios.get(`/api/monitor/${companyId}/risk/judgeDoc`, { params });
 };
-export const getAlertNewsReport = (params) => {
-  return axios.get('/api/analysisReport/internet/detail', { params });
+export const getAlertNewsReport = (companyId, params) => {
+  return axios.get(`/api/report/${companyId}/internet/detail`, { params });
 };
-export const getAlertJudgeDocReport = (params) => {
-  return axios.get('/api/analysisReport/risk/judgeDoc', { params });
+export const getAlertJudgeDocReport = (companyId, params) => {
+  return axios.get(`/api/report/${companyId}/risk/judgeDoc`, { params });
 };
 // 判断企业报告类型
 export const judgeReportType = (companyName) => {
@@ -216,26 +187,25 @@ export const monitorExistNode = (monitorCompanyId, params) => {
 };
 
 // 现勘记录
-export const getNowRecordList = (id, params, source) => {
-  return axios.get('/api/survey/' + id + '/page', {params: params, cancelToken: source.token});
+export const getNowRecordList = (companyId, params, source) => {
+  return axios.get('/api/survey/' + companyId + '/page', { params: params, cancelToken: source.token });
 };
 export const getNowRecordPictures = (id, source) => {
   return axios.get('/api/survey/' + id + '/pictures', { cancelToken: source.token });
 };
-// 时间轴
-export const getAxisDetail = (monitorId, key, time, relation) => {
+// 报告时间轴详情
+export const getReportAxisDetail = (reportId, key, time, relation, source) => {
   const module = key === 'legal' ? 'risk' : key;
-  return axios.get(`/api/monitor/${monitorId}/timeline/${relation === 'related' ? `related/${module}` : module}?date=${time}`);
+  return axios.get(`/api/report/${reportId}/timeline/${relation === 'related' ? `related/${module}` : module}?date=${time}`, { cancelToken: source.token });
+};
+// 监控时间轴详情
+export const getMonitorAxisDetail = (monitorId, key, time, relation, source) => {
+  const module = key === 'legal' ? 'risk' : key;
+  return axios.get(`/api/monitor/${monitorId}/timeline/${relation === 'related' ? `related/${module}` : module}?date=${time}`, { cancelToken: source.token });
 };
 // 税务核查列表
-export const getTaxCheckList = (monitorId, reportId, params, source) => {
-  let url = '';
-  if (monitorId) {
-    url = `/api/monitor/${monitorId}/taxCheck/page`;
-  } else if (reportId) {
-    url = `/api/report/${reportId}/taxCheck/page`;
-  }
-  return axios.get(url, {params: params, cancelToken: source.token});
+export const getTaxCheckList = (params, source) => {
+  return axios.get('/api/check/tax/page', {params: params, cancelToken: source.token});
 };
 
 // 全网关系图拓展节点
@@ -243,18 +213,16 @@ export const expandNetwork = (monitorCompanyId, params) => {
   return axios.post(`/api/monitor/${monitorCompanyId}/expendNetwork/expend`, params);
 };
 // 税务核查添加
-export const addTaxCheck = (monitorId, reportId, params) => {
-  let url;
-  if (monitorId) {
-    url = `/api/monitor/${monitorId}/taxCheck`;
-  } else if (reportId) {
-    url = `/api/report/${reportId}/taxCheck`;
-  }
-  return axios.post(url, params);
+export const addTaxCheck = (params) => {
+  return axios.post(`api/check/tax`, params);
+};
+// 获取核查详情
+export const getTaxInfo = (companyId) => {
+  return axios.get(`/api/check/tax/${companyId}/page`);
 };
 // 税务列表
 export const getTaxList = (id, source) => {
-  return axios.get('/api/monitor/' + id + '/tax', {cancelToken: source.token});
+  return axios.get('/api/monitor/' + id + '/tax', { cancelToken: source.token });
 };
 // 关联图,获取最短路径
 export const getShortPath = (monitorId, params) => {
@@ -262,13 +230,56 @@ export const getShortPath = (monitorId, params) => {
 };
 // 关联图,获取公司信息
 export const getCompNodeInfo = (monitorId, params) => {
-  return axios.get(`/api/monitor/${monitorId}/expendNetwork/nodeInfo`, {params});
+  return axios.get(`/api/monitor/${monitorId}/expendNetwork/nodeInfo`, { params });
 };
 // 六芒星
 export const getSixStar = (id, source) => {
-  return axios.get('/api/monitor/' + id + '/alert/score', {cancelToken: source.token});
+  return axios.get('/api/monitor/' + id + '/alert/score', { cancelToken: source.token });
 };
 // 关联图,获取个人信息
 export const getPersonNodeInfo = (monitorId, params) => {
-  return axios.get(`/api/monitor/${monitorId}/expendNetwork/personInfo`, {params});
+  return axios.get(`/api/monitor/${monitorId}/expendNetwork/personInfo`, { params });
+};
+// 获取营运能力信息
+export const getOperationDataList = (analysisReportId) => {
+  return axios.get(`/api/analysisReport/${analysisReportId}/operation`);
+};
+// 获取营收能力信息
+export const getProfitEvalList = (analysisReportId) => {
+  return axios.get(`/api/analysisReport/${analysisReportId}/profit`);
+};
+// 获取成长能力能力信息
+export const getUpDataList = (analysisReportId) => {
+  return axios.get(`/api/analysisReport/${analysisReportId}/growing`);
+};
+// 获取综合能力分析(企业分数)
+export const getCompanyScore = (analysisReportId) => {
+  return axios.get(`/api/analysisReport/${analysisReportId}/score`);
+};
+// 贷中分析,创建报告
+export const createAnalyRep = (params) => {
+  return axios.post('/api/analysisReport', params);
+};
+// 贷前基础报告,升级
+export const upgradeReport = (basicReportId) => {
+  return axios.put(`/api/basicReport/${basicReportId}/upgradeReport`);
+};
+// 获取报告的id
+export const getReportStatus = (params) => {
+  return axios.get(`/api/common/status`, { params });
+};
+// 创建基础报告
+export const createBasicReport = (params) => {
+  return axios.post(`/api/basicReport`, params);
+};
+
+// 后台是否已完成
+export const isCompleted = ({basicReportId, reportId}) => {
+  let url;
+  if (basicReportId) {
+    url = `/api/basicReport/${basicReportId}/completed`;
+  } else if (reportId) {
+    url = `/api/report/${reportId}/completed`;
+  }
+  return axios.get(url);
 };

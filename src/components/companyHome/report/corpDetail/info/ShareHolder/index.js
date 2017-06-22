@@ -7,9 +7,10 @@ function ShareHolder({ shareHolderList, isLoading, errText }) {
   const data = {
     meta: {
       body: [
-        { 'key': 'shareholderName', 'width': '4' },
-        { 'key': 'subConam', 'width': '2', modifyBlock: (item) => Number(item.subConam).toFixed(2) },
-        { 'key': 'regCapCur', 'width': '1.2' },
+        { 'key': 'shareholderName', 'width': '2' },
+        { 'key': 'shareholderType', 'width': '2' },
+        { 'key': 'subConam', 'width': '1.6', modifyBlock: (item) => item.subConam ? Number(item.subConam).toFixed(2) : '--' },
+        { 'key': 'relConam', 'width': '1.6', modifyBlock: (item) => item.relConam ? Number(item.relConam).toFixed(2) : '--' },
         { 'key': 'fundedRatio', 'width': '1.4' },
         { 'key': 'conDate', 'width': '1.4' },
       ],

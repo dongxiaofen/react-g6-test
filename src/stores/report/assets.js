@@ -3,8 +3,6 @@ import { companyHomeApi } from 'api';
 import uiStore from '../ui';
 import axios from 'axios';
 const CancelToken = axios.CancelToken;
-import messageStore from '../message';
-import pathval from 'pathval';
 
 class AssetsStore {
   @observable trademarkData = [];
@@ -22,10 +20,22 @@ class AssetsStore {
   @observable patentLoading = true;
   @observable biddingLoading = true;
 
-  @action.bound getPatentData(params) {
-    params.module = 'patent';
-    params.pagesInfo = uiStore.uiState.patentInfo;
-    companyHomeApi.getReportModule(params)
+  @action.bound getTrademarkData(idInfo) {
+    const {index, size} = uiStore.uiState.trademarkLists;
+    companyHomeApi.getReportModule('operation/trademark', idInfo, {index, size})
+    .then(action( (response) => {
+      this.trLoading = false;
+      this.trademarkData = response.data.content;
+      uiStore.uiState.trademarkLists.totalElements = response.data.totalElements;
+    }))
+    .catch(action( () => {
+      this.trLoading = false;
+    }));
+  }
+
+  @action.bound getPatentData(idInfo) {
+    const {index, size} = uiStore.uiState.patentInfo;
+    companyHomeApi.getReportModule('operation/patent', idInfo, {index, size})
       .then(action( (response) => {
         this.patentLoading = false;
         this.patentData = response.data.content;
@@ -36,23 +46,8 @@ class AssetsStore {
       }));
   }
 
-  @action.bound getTrademarkData(params) {
-    params.module = 'trademark';
-    params.pagesInfo = uiStore.uiState.trademarkLists;
-    companyHomeApi.getReportModule(params)
-      .then(action( (response) => {
-        this.trLoading = false;
-        this.trademarkData = response.data.content;
-        uiStore.uiState.trademarkLists.totalElements = response.data.totalElements;
-      }))
-      .catch(action( () => {
-        this.trLoading = false;
-      }));
-  }
-
   @action.bound getBiddingData(params) {
-    params.module = 'bidding';
-    companyHomeApi.getReportModule(params)
+    companyHomeApi.getReportModule('operation/bidding', params)
       .then(action( (response) => {
         this.biddingLoading = false;
         this.biddingData = response.data;
@@ -70,7 +65,7 @@ class AssetsStore {
     this.getTrademarkData(params);
   }
 
-  @action.bound getDetail(url, showDetail) {
+  @action.bound getDetail(url, link, showDetail) {
     if (this.biddingDetailCancel) {
       this.biddingDetailCancel();
       this.biddingDetailCancel = null;
@@ -86,10 +81,7 @@ class AssetsStore {
       .catch((error) => {
         if (!axios.isCancel(error)) {
           this.biddingDetailCancel = null;
-          messageStore.openMessage({
-            type: 'error',
-            content: pathval.getPathValue(error, 'response.data.message') || '获取招投标详情失败'
-          });
+          window.open(link);
         }
       });
   }

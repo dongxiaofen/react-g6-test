@@ -2,7 +2,7 @@ import React, {PropTypes} from 'react';
 import { observer } from 'mobx-react';
 import styles from './index.less';
 
-function Summary({mapKey, valueData, unit, title}) {
+function Summary({mapKey, valueData, unit, title, total}) {
   const objParse = (data) => {
     let str;
     if (mapKey && mapKey.action === 'total') {
@@ -22,7 +22,12 @@ function Summary({mapKey, valueData, unit, title}) {
       if (typeof data[item] === 'number' && data[item] > 0) {
         emptyFlag = false;
       }
-      str += mapKey[item] + (data[item] === true ? '，' : `（${data[item]}），`);
+      if (!isNaN(parseFloat(data[item])) && parseFloat(data[item]) > 0) {
+        emptyFlag = false;
+      }
+      if (data[item]) {
+        str += mapKey[item] + (data[item] === true ? '，' : `（${data[item]} ${unit ? unit : ''}），`);
+      }
       if (typeof data[item] === 'boolean' && data[item] === false) {
         str = str.replace(`${mapKey[item]}（${data[item]}），`, '');
       }
@@ -32,7 +37,7 @@ function Summary({mapKey, valueData, unit, title}) {
   };
   return (
     <div className={styles.part}>
-      <p className={styles.title} key="summary-title">{title}</p>
+      <p className={styles.title} key="summary-title">{title}{total ? `（${total}）` : ''}</p>
       <div className={styles.info} key="summary-value">
         {
           valueData && valueData.type === 'none' ? valueData.data : <div>

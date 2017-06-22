@@ -4,6 +4,7 @@ import { toJS } from 'mobx';
 import DatePicker from 'antd/lib/date-picker';
 import Radio from 'antd/lib/radio';
 import moment from 'moment';
+import 'moment/locale/zh-cn';
 
 import styles from './index.less';
 import assignor from 'components/assetTransaction/assignor';
@@ -74,7 +75,6 @@ function SwitchData({ assetTransactionStore }) {
     setParams(params);
     getAreaDistribution(params);
   };
-
   return (
     <div className="clearfix">
       <div className="clearfix">
@@ -82,6 +82,7 @@ function SwitchData({ assetTransactionStore }) {
         <div className={styles.content}>
           <RangePicker
             style={{ width: 205 }}
+            locale={moment.locale('zh-cn')}
             format="YYYY-MM-DD"
             allowClear={false}
             value={[moment(params.startDate), moment(params.endDate)]}

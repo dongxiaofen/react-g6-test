@@ -1,7 +1,8 @@
 import { action } from 'mobx';
 import { browserHistory } from 'react-router';
-import {linkJumpApi} from 'api';
+import { linkJumpApi } from 'api';
 import searchCompanyStore from './searchCompany';
+import messageStore from './message';
 class LinkJumpStore {
   // 获取报告类型
   @action.bound getNameType(name) {
@@ -34,6 +35,34 @@ class LinkJumpStore {
         searchCompanyStore.searchChangeOther(name);
         searchCompanyStore.getCompanyList();
         browserHistory.push(`/searchCompany`);
+      }));
+  }
+
+  @action.bound getCompanyExist(name, referer) {
+    const params = {
+      companyName: name,
+    };
+    linkJumpApi.getCompanyExist(params)
+      .then(action('link company report', (resp) => {
+        if (resp.data) {
+          if (referer === 'other') {
+            browserHistory.push(`/companyHome?companyName=${name}`);
+          } else if (referer === 'self') {
+            location.href = `/companyHome?companyName=${name}`;
+          }
+        } else {
+          messageStore.openMessage({
+            type: 'error',
+            content: '查询数据失败，该企业无工商登记信息',
+          });
+        }
+      }))
+      .catch(action('link company report err', (err) => {
+        console.log(err.response, '======= link company report err');
+        messageStore.openMessage({
+          type: 'error',
+          content: '没有找到该公司',
+        });
       }));
   }
 }

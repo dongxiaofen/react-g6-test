@@ -6,7 +6,7 @@ function Brief({ brief, isEmptyObject, isOverViewLoading, bannerStore }) {
   if (!isEmptyObject(brief)) {
     brief.issued_shares = brief.issued_shares ? (brief.issued_shares / 10000).toFixed(2) : '';
     brief.reg_cap = brief.reg_cap ? (brief.reg_cap / 10000).toFixed(2) : '';
-    brief.stockCode = bannerStore.stockCode;
+    brief.stockCode = bannerStore.bannerInfoData.stockCode;
   }
   const data = {
     meta: {

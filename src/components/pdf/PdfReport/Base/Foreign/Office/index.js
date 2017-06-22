@@ -13,11 +13,19 @@ function Office({moduleData}) {
       </div>
     );
   }
+  const parseNumber = () => {
+    let newArr = [];
+    moduleData.map( (item) => {
+      item.regCap = parseFloat(item.regCap).toFixed(2);
+      newArr = [...newArr, item];
+    });
+    return newArr;
+  };
   const data = {
     dataConfig: [
       {'key': 'entName', 'width': '6'},
       {'key': 'entStatus', 'width': '6'},
-      {'key': 'entType', 'width': '6'},
+      // {'key': 'entType', 'width': '6'},
       {'key': 'esDate', 'width': '6'},
       {'key': 'position', 'width': '6'},
       {'key': 'lerepsign', 'width': '6'},
@@ -26,14 +34,14 @@ function Office({moduleData}) {
       {'key': 'regNo', 'width': '6'},
       {'key': 'regOrg', 'width': '6'},
     ],
-    item: moduleData,
+    item: parseNumber(),
     dict: 'frPositionListPdf',
     hasConfig: true,
     type: 'array',
   };
   return (
     <div>
-      <SecondTitle module="法人对外任职" />
+      <SecondTitle module={`法人（${moduleData[0].name}）对外任职`} />
       <PdfSimpleKey {...data} />
     </div>
   );

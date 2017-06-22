@@ -11,6 +11,7 @@ import Office from '../Base/Foreign/Office';
 import AlterAnalysis from '../Base/Alter/AlterAnalysis';
 import AlterList from '../Base/Alter/AlterList';
 import YearReportList from '../Base/YearReport/YearReportList';
+import Managements from '../Base/Foreign/Managements';
 import pathval from 'pathval';
 
 
@@ -21,7 +22,7 @@ function Base({ judgeIsModuleExist, pdfStore }) {
         judgeIsModuleExist('CORP_BASIC')
           ?
           <div>
-            <PdfTitle module="企业基本信息" subModule="工商基本信息" />
+            <PdfTitle module="工商信息" subModule="照面信息" />
             <RegisterInfo moduleData={pathval.getPathValue(pdfStore, 'report.corpDetail.basicList')} />
             <ShareHolder moduleData = {pathval.getPathValue(pdfStore, 'report.corpDetail.shareHolderList')} />
             <PersonListData moduleData={pathval.getPathValue(pdfStore, 'report.corpDetail.personList')} />
@@ -31,22 +32,10 @@ function Base({ judgeIsModuleExist, pdfStore }) {
           ''
       }
       {
-        judgeIsModuleExist('CORP_INV_POS')
-          ?
-          <div>
-            <PdfTitle module="企业基本信息" subModule="对外投资任职" />
-            <Enterprise moduleData = {pathval.getPathValue(pdfStore, 'report.corpDetail.entinvItemList')} />
-            <Investment moduleData = {pathval.getPathValue(pdfStore, 'report.corpDetail.frinvList')} />
-            <Office moduleData = {pathval.getPathValue(pdfStore, 'report.corpDetail.frPositionList')} />
-          </div>
-          :
-          ''
-      }
-      {
         judgeIsModuleExist('CORP_ALTER')
           ?
           <div>
-            <PdfTitle module="企业基本信息" subModule="工商变更" />
+            <PdfTitle module="工商信息" subModule="工商变更" />
             <AlterAnalysis moduleData = {pathval.getPathValue(pdfStore, 'report.tendency.result[0].data')} />
             <AlterList moduleData = {pathval.getPathValue(pdfStore, 'report.tendency.result[0].alterList')} />
           </div>
@@ -57,8 +46,39 @@ function Base({ judgeIsModuleExist, pdfStore }) {
         judgeIsModuleExist('CORP_YEAR_REPORT')
           ?
           <div>
-            <PdfTitle module="企业基本信息" subModule="企业年报" />
+            <PdfTitle module="工商信息" subModule="企业年报" />
             <YearReportList moduleData = {pathval.getPathValue(pdfStore, 'report.corpDetail.yearReportList')} />
+          </div>
+          :
+          ''
+      }
+      {
+        judgeIsModuleExist('INV_POS_ENT')
+          ?
+          <div>
+            <PdfTitle module="对外投资任职" subModule="企业对外投资" />
+            <Enterprise moduleData = {pathval.getPathValue(pdfStore, 'entinvItemList')} />
+          </div>
+          :
+          ''
+      }
+      {
+        judgeIsModuleExist('INV_POS_FR')
+          ?
+          <div>
+            <PdfTitle module="对外投资任职" subModule="法人对外投资任职" />
+            <Investment moduleData = {pathval.getPathValue(pdfStore, 'frData.frinvList')} />
+            <Office moduleData = {pathval.getPathValue(pdfStore, 'frData.frPositionList')} />
+          </div>
+          :
+          ''
+      }
+      {
+        judgeIsModuleExist('INV_POS_MANAGEMENT')
+          ?
+          <div>
+            <PdfTitle module="对外投资任职" subModule="董监高对外投资任职" />
+            <Managements moduleData = {pathval.getPathValue(pdfStore, 'managements')} />
           </div>
           :
           ''

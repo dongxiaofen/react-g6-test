@@ -1,19 +1,21 @@
-import React, { Component, PropTypes } from 'react';
-import { observer, inject } from 'mobx-react';
+import React, {Component, PropTypes} from 'react';
+import {observer, inject} from 'mobx-react';
 import Checkbox from 'antd/lib/checkbox';
 import styles from './index.less';
 
-@inject('routing', 'bannerStore')
+@inject('routing', 'bannerStore', 'companyHomeStore')
 @observer
 export default class DownloadPdf extends Component {
   static propTypes = {
     bannerStore: PropTypes.object,
-    routing: PropTypes.object
+    routing: PropTypes.object,
+    companyHomeStore: PropTypes.object,
   };
 
   constructor(props) {
     super(props);
     this.state = {
+      reportTypeDict: {monitor: '贷后监控', loan: '贷中分析', report: '贷前高级报告', 'basicReport': '贷前基础报告'},
       tipInfo: false,
       tipInfoFn: () => {
         const pdfDownloadConfig = this.props.bannerStore.pdfDownloadConfig;
@@ -31,43 +33,61 @@ export default class DownloadPdf extends Component {
     };
   }
 
-  downloadAll = (evt) => {
-    if (evt.target.checked) { this.setState({ tipInfo: false }); }
-    this.props.bannerStore.setDownloadAll(evt.target.checked);
-  }
+  getReportType = () => {
+    const route = this.props.routing.location.pathname.split('/')[2];
+    if (/comprehenEval|profitEval|operationEval|growthAbilityEval/.test(route)) {
+      return 'loan';
+    } else if (/monitorTimeAxis|monitorAlert/.test(route)) {
+      return 'monitor';
+    } else if (this.props.companyHomeStore.reportInfo.reportId) {
+      return 'report';
+    }
+    return 'basicReport';
+  };
 
-  downloadAllChecked() {
-    const isAllChecked = this.props.bannerStore.isAllChecked;
-    const stockCode = this.props.bannerStore.stockCode;
-    const monitorId = this.props.routing.location.query.monitorId;
-    const output = [];
-    this.props.bannerStore.pdfDownloadConfig.levelOne.map((item) => {
-      if (item.value === 'STOCK') {
-        if (stockCode) {
-          output.push(item.checked === true);
-        }
-      } else if (item.value === 'TAX') {
-        if (monitorId) {
-          output.push(item.checked === true);
-        }
-      } else {
-        output.push(item.checked === true);
-      }
-      return output;
-    });
-    const levelOneChecked = output.every((item) => item === true);
-    return isAllChecked || levelOneChecked;
-  }
+  // downloadAll = (evt) => {
+  //   if (evt.target.checked) {
+  //     this.setState({tipInfo: false});
+  //   }
+  //   this.props.bannerStore.setDownloadAll(evt.target.checked, this.getReportType());
+  // };
+
+  // downloadAllChecked() {
+  //   const isAllChecked = this.props.bannerStore.isAllChecked;
+  //   const stockCode = this.props.bannerStore.bannerInfoData.stockCode;
+  //   const monitorId = this.props.routing.location.query.monitorId;
+  //   const output = [];
+  //   this.props.bannerStore.pdfDownloadConfig.levelOne.map((item) => {
+  //     if (item.value === 'STOCK') {
+  //       if (stockCode) {
+  //         output.push(item.checked === true);
+  //       }
+  //     } else if (item.value === 'TAX') {
+  //       if (monitorId) {
+  //         output.push(item.checked === true);
+  //       }
+  //     } else {
+  //       output.push(item.checked === true);
+  //     }
+  //     return output;
+  //   });
+  //   const levelOneChecked = output.every((item) => item === true);
+  //   return isAllChecked || levelOneChecked;
+  // }
 
   menuLevelOneOnChange = (key, value, evt) => {
-    if (evt.target.checked) { this.setState({ tipInfo: false }); }
-    this.props.bannerStore.setPdfLevelOne(key, value, evt.target.checked);
-  }
+    if (evt.target.checked) {
+      this.setState({tipInfo: false});
+    }
+    this.props.bannerStore.setPdfLevelOne(key, value, evt.target.checked, this.getReportType());
+  };
 
   menuLevelTwoOnChange = (levelOne, key, levelOneKey, evt) => {
-    if (evt.target.checked) { this.setState({ tipInfo: false }); }
+    if (evt.target.checked) {
+      this.setState({tipInfo: false});
+    }
     this.props.bannerStore.setPdfLevelTwo(levelOne, key, levelOneKey, evt.target.checked);
-  }
+  };
 
   menuLevelOne() {
     const checkComp = (item, key) => {
@@ -75,6 +95,8 @@ export default class DownloadPdf extends Component {
         <div className={`clearfix ${styles['download-item']}`} key={key}>
           <div className={styles['download-item-title']}>
             <Checkbox
+              style={{fontSize: '14px'}}
+              className={styles.checkbox_style}
               key={key}
               checked={item.checked}
               onChange={this.menuLevelOneOnChange.bind(this, key, item.value)}>
@@ -88,21 +110,28 @@ export default class DownloadPdf extends Component {
       );
     };
 
+    const stockCode = this.props.bannerStore.bannerInfoData.stockCode;
     const output = [];
-    const monitorId = this.props.routing.location.query.monitorId;
     const pdfDownloadConfig = this.props.bannerStore.pdfDownloadConfig;
     const levelOne = pdfDownloadConfig.levelOne;
-    const stockCode = this.props.bannerStore.stockCode;
     levelOne.forEach((item, key) => {
-      if (item.value === 'STOCK') {
-        if (stockCode) {
+      if (item.type === 'basicReport' && this.getReportType() === 'basicReport') {
+        if (item.value === 'STOCK') {
+          if (stockCode) {
+            output.push(checkComp(item, key));
+          }
+        }else {
           output.push(checkComp(item, key));
         }
-      } else if (item.value === 'TAX') {
-        if (monitorId) {
+      } else if ((item.type === 'report' && item.type === this.getReportType()) || (item.type === 'basicReport' && this.getReportType() === 'report')) {
+        if (item.value === 'STOCK') {
+          if (stockCode) {
+            output.push(checkComp(item, key));
+          }
+        }else {
           output.push(checkComp(item, key));
         }
-      } else {
+      } else if (item.type === 'loan' && item.type === this.getReportType()) {
         output.push(checkComp(item, key));
       }
     });
@@ -110,11 +139,13 @@ export default class DownloadPdf extends Component {
   }
 
   menuLevelTwo(key, levelOneKey) {
-    const checkComp = ({ _item, _idx, _key, _levelOneKey }) => {
+    const checkComp = ({_item, _idx, _key, _levelOneKey}) => {
       return (
         <div className={`clearfix ${styles['download-col-4']}`} key={_idx}>
           <div className={styles['download-item-title2']}>
             <Checkbox
+              style={{color: '#4c4c4c'}}
+              className={styles.checkbox_style}
               checked={_item.checked}
               onChange={this.menuLevelTwoOnChange.bind(this, _key, _idx, _levelOneKey)}>
               {_item.label}
@@ -124,7 +155,6 @@ export default class DownloadPdf extends Component {
       );
     };
     const output = [];
-    const monitorId = this.props.routing.location.query.monitorId;
     const levelTwo = this.props.bannerStore.pdfDownloadConfig.levelTwo[key];
     if (levelTwo.length) {
       levelTwo.forEach((item, idx) => {
@@ -134,12 +164,18 @@ export default class DownloadPdf extends Component {
           _key: key,
           _levelOneKey: levelOneKey
         };
-        if (item.value === 'TEAM_ANALYSIS') {
-          if (monitorId) {
+        if (this.getReportType() === 'report') {
+          output.push(checkComp(argConfig));
+        } else if (this.getReportType() === 'loan') {
+          this.props.companyHomeStore.reportInfo.dimensions.map( (words) => {
+            if (item.value === words) {
+              output.push(checkComp(argConfig));
+            }
+          });
+        } else {
+          if (this.getReportType() === 'basicReport' && item.value !== 'INV_POS_MANAGEMENT') {
             output.push(checkComp(argConfig));
           }
-        } else {
-          output.push(checkComp(argConfig));
         }
       });
     }
@@ -152,72 +188,67 @@ export default class DownloadPdf extends Component {
       const index = levelOne.findIndex((item) => item.value === key);
       return levelOne[index].checked;
     };
-    const query = this.props.routing.location.query;
-    const monitorId = query.monitorId;
-    const reportId = query.reportId;
     let queryStr = '&type=';
     let queryArray = [];
     const bannerStore = this.props.bannerStore;
-    // const levelOne = bannerStore.pdfDownloadConfig.levelOne;
     const levelTwo = bannerStore.pdfDownloadConfig.levelTwo;
     const levelTwoKeys = Object.keys(levelTwo);
-    if (findIndexLevelOneChecked('SUMMARY')) {
-      queryArray.push('SUMMARY');
-    }
-    if (findIndexLevelOneChecked('TAX')) {
-      queryArray.push('TAX');
+    if (findIndexLevelOneChecked('RISK_TAXATION')) {
+      queryArray.push('RISK_TAXATION');
     }
     if (findIndexLevelOneChecked('NEWS')) {
       queryArray.push('NEWS');
     }
+    if (findIndexLevelOneChecked('SUMMERY')) {
+      queryArray.push('SUMMERY');
+    }
     levelTwoKeys.map((key) => {
       levelTwo[key].map((item) => {
-        if (item.value === 'TEAM_ANALYSIS') {
-          if (monitorId && item.checked) {
-            queryArray.push(key);
-            queryArray.push(item.value);
-          }
-        } else {
-          if (item.checked) {
-            queryArray.push(key);
-            queryArray.push(item.value);
-          }
+        if (item.checked) {
+          // queryArray.push(key);
+          queryArray.push(item.value);
         }
       });
     });
     queryArray = Array.from(new Set(queryArray));
     if (queryArray.length > 0) {
-      this.setState({ tipInfo: false });
+      this.setState({tipInfo: false});
       queryStr = queryStr + queryArray.join(',');
-      if (monitorId) {
-        window.open(`/pdfDown?monitorId=${monitorId}${queryStr}`);
+      if (this.getReportType() === 'report') {
+        window.open(`/pdfDown?reportId=${this.props.companyHomeStore.reportInfo.reportId}${queryStr}`);
       }
-      if (reportId) {
-        window.open(`/pdfDown?reportId=${reportId}${queryStr}`);
+      if (this.getReportType() === 'basicReport') {
+        window.open(`/pdfDown?basicReportId=${this.props.companyHomeStore.reportInfo.basicReportId}${queryStr}`);
+      }
+      if (this.getReportType() === 'loan') {
+        window.open(`/pdfDown?analysisReportId=${this.props.companyHomeStore.reportInfo.analysisReportId}${queryStr}`);
       }
       this.props.bannerStore.clearPdfConfigChecked();
-      this.props.bannerStore.setPdfDownloadKeys(queryArray);
+      this.props.bannerStore.setPdfDownloadKeys(queryArray, this.getReportType());
     } else {
-      this.setState({ tipInfo: true });
+      this.setState({tipInfo: true});
     }
-    console.log(queryArray, '------queryArray');
-  }
+    console.log(queryArray, '------queryArray', this.getReportType());
+  };
 
   render() {
     const isShowTipInfo = this.state.tipInfoFn();
     return (
       <div className={styles.downloadModal}>
         <div className={styles.downloadTitleBox}>
-          <i className="fa fa-file-text-o" aria-hidden="true"></i>
-          <span>{this.props.bannerStore.companyName}</span>
+          <i className={`${styles.pdf_icon} fa fa-file-text-o`} aria-hidden="true"></i>
+          <span>{`${this.props.routing.location.query.companyName} ${this.state.reportTypeDict[this.getReportType()]}`}</span>
         </div>
         <div className={styles.pdfDownModaBtnBox}>
           <div className={styles.selectAll}>
-            <Checkbox
-              checked={this.downloadAllChecked()}
-              onChange={this.downloadAll}>
-              全部页面
-            </Checkbox>
+            {/*<Checkbox*/}
+              {/*style={{fontSize: '14px'}}*/}
+              {/*className={styles.checkbox_style}*/}
+              {/*checked={this.downloadAllChecked()}*/}
+              {/*onChange={this.downloadAll}>*/}
+              {/*<span style={{fontSize: '14px'}}>全部页面</span>*/}
+            {/*</Checkbox>*/}
+             <span style={{fontSize: '14px'}}>{this.state.reportTypeDict[this.getReportType()]}下载</span>
             {
               this.state.tipInfo && isShowTipInfo
                 ? <span className={styles['tip-info']}>请选择需要下载的板块</span>

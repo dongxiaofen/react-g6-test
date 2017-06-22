@@ -11,13 +11,14 @@ import CirculateShareHolder from 'components/companyHome/report/stock/CirculateS
 import Management from 'components/companyHome/report/stock/Management';
 import AnnouncementList from 'components/companyHome/report/stock/AnnouncementList';
 
-@inject('stockStore', 'routing')
-@batchReport('stock')
+@inject('stockStore', 'routing', 'companyHomeStore')
+@batchReport('stockStore')
 @observer
 export default class Stock extends Component {
   static propTypes = {
     stockStore: PropTypes.object,
     routing: PropTypes.object,
+    companyHomeStore: PropTypes.object,
   }
   render() {
     const stockStore = this.props.stockStore;
@@ -49,7 +50,8 @@ export default class Stock extends Component {
             selectValue={stockStore.selectValue}
             changeAnnouncement={stockStore.changeAnnouncement}
             setSelectValue={stockStore.setSelectValue}
-            routing={this.props.routing}/>
+            reportInfo={this.props.companyHomeStore.reportInfo}
+            />
         </TabPane>
       </Tabs>
     );

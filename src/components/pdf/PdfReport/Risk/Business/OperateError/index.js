@@ -2,13 +2,12 @@ import React, {PropTypes} from 'react';
 import { observer } from 'mobx-react';
 import PdfNotFound from 'components/common/pdf/PdfNotFound';
 import PdfSimpleKey from 'components/common/pdf/PdfSimpleKey';
-import SecondTitle from 'components/common/pdf/SecondTitle';
 
 function OperateError({moduleData}) {
   if (!moduleData || moduleData.length === 0) {
     return (
       <div>
-        <SecondTitle module="经营异常信息" />
+        <div style={{height: '30px'}}></div>
         <PdfNotFound />
       </div>
     );
@@ -28,7 +27,7 @@ function OperateError({moduleData}) {
   };
   return (
     <div>
-      <SecondTitle module="经营异常信息" />
+      <div style={{height: '30px'}}></div>
       <PdfSimpleKey {...data} />
     </div>
   );

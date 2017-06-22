@@ -9,7 +9,7 @@ import styles from './index.less';
 import loadingReportHeader from 'imgs/loading/report/loading_report_header.png';
 import loadingReportBanner from 'imgs/loading/report/loading_report_banner.png';
 import loadingReportContent from 'imgs/loading/report/loading_report_content.png';
-import loadingReportList from 'imgs/loading/report/loading_report_list.png';
+import loadingReportList from 'imgs/loading/report/loading_report_List.png';
 // account
 import loadingAccountList from 'imgs/loading/account/loading_account_list.png';
 import loadingAccountOperate from 'imgs/loading/account/loading_account_operate.png';
@@ -25,6 +25,7 @@ import loadingHomepageEarlyTitle from 'imgs/loading/homepage/loading_homepage_ea
 // other
 import loadingMoniterList from 'imgs/loading/loading_moniter_list.png';
 import loadingSearchPage from 'imgs/loading/loading_search_page.png';
+import loadingShortSearchPage from 'imgs/loading/loading_shortSearch_page.png';
 
 function ImgLoading({ imgCategory}) {
   const imgArray = [
@@ -43,6 +44,7 @@ function ImgLoading({ imgCategory}) {
     loadingHomepageEarlyTitle,
     loadingMoniterList,
     loadingSearchPage,
+    loadingShortSearchPage,
   ];
   const imgSrc = imgArray[imgCategory];
   return (

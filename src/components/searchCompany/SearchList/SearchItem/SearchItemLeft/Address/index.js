@@ -23,4 +23,5 @@ function Address({itemData}) {
 Address.propTypes = {
   itemData: PropTypes.object,
 };
+
 export default observer(Address);

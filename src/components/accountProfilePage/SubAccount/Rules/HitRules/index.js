@@ -14,7 +14,10 @@ export default loadingComp({
   mapDataToProps: props => ({
     loading: props.isLoading,
     category: 0,
+    errCategory: 3,
+    errorWords: props.errorWords,
     error: props.error,
-    module: props.module
+    module: props.module,
+    path: props.path,
   })
 })(observer(HitRules));

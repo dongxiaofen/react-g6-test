@@ -19,7 +19,8 @@ function _Modal({modalStore}) {
     closeAction,
     confirmAction,
     cancelAction,
-    confirmDisable
+    confirmDisable,
+    boxStyle
   } = modalStore;
   return (
     <Modal
@@ -38,7 +39,8 @@ function _Modal({modalStore}) {
       confirmLoading={confirmLoading}
       confirmAction={confirmAction}
       cancelAction={cancelAction}
-      closeAction={closeAction}>
+      closeAction={closeAction}
+      boxStyle={boxStyle}>
       {modalStore.compComponent ? <modalStore.compComponent /> : null}
     </Modal>
   );

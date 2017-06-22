@@ -59,9 +59,9 @@ export default class NavAction extends Component {
 
   userList = () => {
     const config = [
-      {text: '我的搜藏', handleClick: this.collection, icoClass: styles.collection},
+      {text: '我的收藏', handleClick: this.collection, icoClass: styles.collection},
       {text: '账号中心', handleClick: this.account, icoClass: styles.account},
-      {text: '退出登陆', handleClick: this.logout, icoClass: styles.logout},
+      {text: '退出登录', handleClick: this.logout, icoClass: styles.logout},
     ];
     const output = [];
     config.forEach((item, idx) => {
@@ -92,10 +92,12 @@ export default class NavAction extends Component {
     this.setState({
       isShowShearchInput: state,
     });
-    if (state) {
-      const searchInput = this.refs.searchInput;
-      searchInput.focus();
-    }
+    setTimeout(() => {
+      if (state) {
+        const searchInput = this.refs.searchInput;
+        searchInput.focus();
+      }
+    }, 100);
   }
 
   searchBar = () => {
@@ -126,7 +128,8 @@ export default class NavAction extends Component {
           <HoverBox width="140px" left="-50px">
             <div className={`clearfix ${styles.code}`}>
               <img src={codeImg} />
-              <div className={styles.codeText}>下载星象应用</div>
+              <div className={styles.deving}>敬请期待</div>
+              {/* <div className={styles.codeText}>下载星象应用</div> */}
             </div>
           </HoverBox>
         </div>

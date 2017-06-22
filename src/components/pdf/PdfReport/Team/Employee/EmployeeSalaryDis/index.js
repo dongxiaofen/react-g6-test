@@ -8,7 +8,7 @@ function EmployeeSalaryDis({moduleData}) {
   if (!moduleData || Object.keys(moduleData).length === 0) {
     return (
       <div>
-        <SecondTitle module="招聘信息－招聘平均薪资" />
+        <SecondTitle module="招聘平均薪资" />
         <PdfNotFound />
       </div>
     );
@@ -22,7 +22,7 @@ function EmployeeSalaryDis({moduleData}) {
 
   return (
     <div className={styles.wrap}>
-      <SecondTitle module="招聘信息－招聘平均薪资" />
+      <SecondTitle module="招聘平均薪资" />
       <table>
         <thead>
         <tr>

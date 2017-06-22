@@ -3,7 +3,7 @@ import { observer, inject } from 'mobx-react';
 import { CardTable, ModuleTitle } from 'components/common/report/';
 import { runInAction } from 'mobx';
 
-function Bidding({biddingItemList, isLoading, detailModalStore, routing, assetsStore}) {
+function Bidding({biddingItemList, isLoading, detailModalStore, companyHomeStore, assetsStore}) {
   const showDetail = () => {
     detailModalStore.openDetailModal(
       (cb) => {
@@ -19,23 +19,19 @@ function Bidding({biddingItemList, isLoading, detailModalStore, routing, assetsS
     );
   };
   const handleClick = (foo, bar) => {
-    console.log(bar);
     runInAction('show detail', () => {
       assetsStore.titleData = bar;
     });
-    let companyId = '';
+    const { basicReportId, reportId } = companyHomeStore.reportInfo;
     let getUrl = '';
-    if (routing.location.query.monitorId) {
-      companyId = routing.location.query.monitorId;
-      getUrl = `/api/monitor/${companyId}/operation/bidding/detail?announceId=${bar.announceID}`;
-    } else if (routing.location.query.reportId) {
-      companyId = routing.location.query.reportId;
-      getUrl = `/api/report/operation/bidding/detail?reportId=${companyId}&announceId=${bar.announceID}`;
-    } else if (routing.location.query.analysisReportId) {
-      companyId = routing.location.query.analysisReportId;
-      getUrl = `/api/analysisReport/operation/bidding/detail?analysisReportId=${companyId}&announceId=${bar.announceID}`;
+    if (reportId) {
+      getUrl = `/api/report/${reportId}/operation/bidding/detail?announceId=${bar.announceID}`;
+    } else if (basicReportId) {
+      getUrl = `/api/basicReport/${basicReportId}/operation/bidding/detail?announceId=${bar.announceID}`;
+    } else {
+      return false;
     }
-    assetsStore.getDetail(getUrl, showDetail);
+    assetsStore.getDetail(getUrl, bar.url, showDetail);
   };
   const data = {
     meta: {
@@ -44,7 +40,7 @@ function Bidding({biddingItemList, isLoading, detailModalStore, routing, assetsS
         handleClick: handleClick
       },
       body: [
-        { 'key': 'date', 'width': '12', },
+        { 'key': 'publishDate', 'width': '12', },
         { 'key': 'type', 'width': '12' },
         { 'key': 'participator', 'width': '12' },
       ],
@@ -68,4 +64,4 @@ function Bidding({biddingItemList, isLoading, detailModalStore, routing, assetsS
 Bidding.propTypes = {
   foo: PropTypes.string,
 };
-export default inject('detailModalStore', 'routing', 'assetsStore')(observer(Bidding));
+export default inject('detailModalStore', 'companyHomeStore', 'assetsStore')(observer(Bidding));

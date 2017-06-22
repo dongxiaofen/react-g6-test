@@ -12,6 +12,8 @@ class AlertAnalysisStore {
   }
 
   @observable isMount = false;
+  @observable isLoading = true;
+
   @observable loadingId = -1;
   @observable listData = [];
   // 六芒星data
@@ -28,6 +30,29 @@ class AlertAnalysisStore {
     detail: {},
     html: '',
     orgData: {},
+    loading: false,
+  }
+  @observable module = 'alertAnalysis';
+  @action.bound getReportModule(idParams) {
+    this.isMount = true;
+    this.listData = {};
+    const {index, size} = uiStore.uiState.alertAnalysis;
+    companyHomeApi.getReportModule('alert/page', idParams, {index, size})
+    .then(action('getAlert_success', resp => {
+      let data = null;
+      if (resp.data.content && resp.data.content.length > 0) {
+        uiStore.updateUiStore('alertAnalysis.totalElements', resp.data.totalElements);
+        data = resp.data;
+      } else {
+        data = {error: {message: '暂无信息'}, content: []};
+      }
+      this.listData = data;
+      this.isLoading = false;
+    }))
+    .catch(action('getAlert_error', err => {
+      this.isLoading = false;
+      this.listData = err.response && {error: err.response.data, content: []} || {error: {message: '暂无信息'}, content: []};
+    }));
   }
   @action.bound changeValue(key, value) {
     pathval.setPathValue(this, key, value);
@@ -36,17 +61,7 @@ class AlertAnalysisStore {
     companyHomeApi.judgeReportType(companyName)
       .then(resp => {
         const {reportId, monitorId, analysisReportId} = resp.data;
-        // const type = resp.data.monitorMapResponse && resp.data.monitorMapResponse.companyType;
         let url;
-        // if (monitorId && type === 'MAIN') {
-        //   url = `corpDetail?companyType=${type}&monitorId=${monitorId}`;
-        // } else if (reportId) {
-        //   url = `corpDetail?companyType=MAIN&reportId=${reportId}`;
-        // } else if (analysisReportId) {
-        //   url = `corpDetail?companyType=MAIN&analysisReportId=${analysisReportId}`;
-        // } else {
-        //   url = `corpDetail?companyName=${companyName}&companyType=FREE`;
-        // }
         if (monitorId) {
           url = `corpDetail?monitorId=${monitorId}`;
         } else if (reportId) {
@@ -70,6 +85,7 @@ class AlertAnalysisStore {
       this.alertCancel();
       this.alertCancel = null;
     }
+    this.detailData.loading = true;
     this.detailData.activeIndex = 0;
     this.detailData.page = 1;
     const source = CancelToken.source();
@@ -81,17 +97,18 @@ class AlertAnalysisStore {
         this.detailData.detail = info.alertType === 'RULE' ? resp.data.content : resp.data;
         this.detailData.orgData = resp.data;
         this.detailData.info = info;
+        this.detailData.loading = false;
         this.openDetailModal(this.detailData.info.alertType);
         if (this.detailData.info.alertType === 'RULE') {
           const pattern = this.detailData.detail[0].pattern;
           if (pattern === 'NEWS') {
-            this.getNewsDetail(companyType, companyId);
+            this.getNewsDetail(companyId);
           } else if (pattern === 'JUDGMENT') {
-            this.getJudgeDocDetail(companyType, companyId, this.detailData.detail[this.detailData.activeIndex].content);
+            this.getJudgeDocDetail(companyId, this.detailData.detail[this.detailData.activeIndex].content);
           }
         } else if (this.detailData.info.alertType === 'SYS_RULE') {
           if (resp.data[0].detail[0].type === 'judgeInfo' && this.detailData.detail[0].detail[0].judgeInfo) {
-            this.getJudgeDocDetail(companyType, companyId, this.detailData.detail[0].detail[0].judgeInfo);
+            this.getJudgeDocDetail(companyId, this.detailData.detail[0].detail[0].judgeInfo);
           }
         }
       }))
@@ -99,6 +116,7 @@ class AlertAnalysisStore {
         if (!axios.isCancel(err)) {
           console.log(err, '===');
           this.loadingId = -1;
+          this.detailData.loading = false;
           this.alertCancel = null;
           messageStore.openMessage({
             type: 'error',
@@ -107,17 +125,13 @@ class AlertAnalysisStore {
         }
       }));
   }
-  @action.bound getNewsDetail(type, companyId) {
+  @action.bound getNewsDetail(companyId) {
     const detailData = this.detailData.detail[this.detailData.activeIndex];
     const params = {};
     params.createdAt = detailData.content.createdAt;
     params.url = detailData.content.url;
-    if (type !== 'monitor') {
-      params.analysisReportId = companyId;
-    }
     this.detailData.html = '';
-    const getNewsDetailFunc = type === 'monitor' ? companyHomeApi.getAlertNewsMonitor(companyId, params) : companyHomeApi.getAlertNewsReport(params);
-    getNewsDetailFunc
+    companyHomeApi.getAlertNewsReport(companyId, params)
     .then(action('get news', resp=> {
       this.detailData.html = resp.data.html;
     }))
@@ -126,16 +140,12 @@ class AlertAnalysisStore {
       this.detailData.html = '--';
     }));
   }
-  @action.bound getJudgeDocDetail(type, companyId, data) {
+  @action.bound getJudgeDocDetail(companyId, data) {
     const params = {};
     params.docId = data.docId;
     params.trailDate = data.trailDate;
     this.detailData.html = '';
-    if (type !== 'monitor') {
-      params.analysisReportId = companyId;
-    }
-    const getJudeDocDetailFunc = type === 'monitor' ? companyHomeApi.getAlertJudgeDocMonitor(companyId, params) : companyHomeApi.getAlertJudgeDocReport(params);
-    getJudeDocDetailFunc
+    companyHomeApi.getAlertJudgeDocReport(companyId, params)
     .then(action('get judgeDoc', resp=> {
       this.detailData.html = resp.data.detail;
     }))
@@ -144,30 +154,30 @@ class AlertAnalysisStore {
       this.detailData.html = '--';
     }));
   }
-  @action.bound getAlertAnalysisList(monitorId, analysisReportId) {
-    this.isMount = true;
-    this.listData = {};
-    if (window.reportSourceCancel === undefined) {
-      window.reportSourceCancel = [];
-    }
-    const source = CancelToken.source();
-    window.reportSourceCancel.push(source.cancel);
-    const {index, size} = uiStore.uiState.alertAnalysis;
-    companyHomeApi.getAlertAnalysisList(monitorId, analysisReportId, {index, size}, source)
-      .then(action('getAlert_success', resp => {
-        let data = null;
-        if (resp.data.content && resp.data.content.length > 0) {
-          uiStore.updateUiStore('alertAnalysis.totalElements', resp.data.totalElements);
-          data = resp.data;
-        } else {
-          data = {error: {message: '暂无信息'}, content: []};
-        }
-        this.listData = data;
-      }))
-      .catch(action('getAlert_error', err => {
-        this.listData = err.response && {error: err.response.data, content: []} || {error: {message: '暂无信息'}, content: []};
-      }));
-  }
+  // @action.bound getAlertAnalysisList(monitorId, analysisReportId) {
+  //   this.isMount = true;
+  //   this.listData = {};
+  //   if (window.reportSourceCancel === undefined) {
+  //     window.reportSourceCancel = [];
+  //   }
+  //   const source = CancelToken.source();
+  //   window.reportSourceCancel.push(source.cancel);
+  //   const {index, size} = uiStore.uiState.alertAnalysis;
+  //   companyHomeApi.getAlertAnalysisList(monitorId, analysisReportId, {index, size}, source)
+  //     .then(action('getAlert_success', resp => {
+  //       let data = null;
+  //       if (resp.data.content && resp.data.content.length > 0) {
+  //         uiStore.updateUiStore('alertAnalysis.totalElements', resp.data.totalElements);
+  //         data = resp.data;
+  //       } else {
+  //         data = {error: {message: '暂无信息'}, content: []};
+  //       }
+  //       this.listData = data;
+  //     }))
+  //     .catch(action('getAlert_error', err => {
+  //       this.listData = err.response && {error: err.response.data, content: []} || {error: {message: '暂无信息'}, content: []};
+  //     }));
+  // }
   @action.bound openDetailModal() {
     const companyName = this.detailData.info.companyName;
     detailModalStore.openDetailModal((cp)=>{
@@ -179,7 +189,7 @@ class AlertAnalysisStore {
           require('components/companyHome/report/AlertAnalysis/detail/LeftBar')
         );
       });
-    }, `预警详情（${companyName}）`);
+    }, `推送详情（${companyName}）`);
   }
   @action.bound resetHtml() {
     this.detailData.html = '';
@@ -226,6 +236,12 @@ class AlertAnalysisStore {
     this.sixStarData = {};
     this.loading = false;
     this.resetDetailData();
+  }
+  @action.bound cancelAlertDetail() {
+    if (this.alertCancel) {
+      this.alertCancel();
+      this.alertCancel = null;
+    }
   }
 }
 export default new AlertAnalysisStore();
