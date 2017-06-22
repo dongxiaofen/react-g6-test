@@ -1,7 +1,7 @@
 import React, {PropTypes} from 'react';
 import { observer } from 'mobx-react';
 import {CardTable } from 'components/common/report';
-function CourtNotice({courtNotice, regTime}) {
+function CourtNotice({courtNotice, regTime, loading}) {
   const listMapToStr = (value)=>{
     let newValue = value;
     if (typeof value === 'object') {
@@ -21,10 +21,11 @@ function CourtNotice({courtNotice, regTime}) {
       ],
       isExpand: false,
       dict: 'courtNotice',
-      cData: courtNotice.data
+      cData: courtNotice.content
     },
+    isLoading: loading,
     module: '法院公告',
-    error: courtNotice.data.length === 0
+    error: courtNotice.content.length === 0
   };
   return (
     <CardTable {...data} />
@@ -32,6 +33,8 @@ function CourtNotice({courtNotice, regTime}) {
 }
 
 CourtNotice.propTypes = {
-  foo: PropTypes.string,
+  loading: PropTypes.bool,
+  regTime: PropTypes.func,
+  courtNotice: PropTypes.object,
 };
 export default observer(CourtNotice);

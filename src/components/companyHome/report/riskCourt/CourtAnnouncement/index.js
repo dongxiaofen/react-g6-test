@@ -2,7 +2,7 @@ import React, {PropTypes} from 'react';
 import { observer } from 'mobx-react';
 import {CardTable } from 'components/common/report';
 
-function CourtAnnouncement({courtAnnouncement, regTime}) {
+function CourtAnnouncement({courtAnnouncement, regTime, loading}) {
   const listMapToStr = (value)=>{
     if (typeof value === 'object') {
       return value.join('； ') || '--';
@@ -25,10 +25,11 @@ function CourtAnnouncement({courtAnnouncement, regTime}) {
       ],
       isExpand: false,
       dict: 'courtAnnouncement',
-      cData: courtAnnouncement ? courtAnnouncement.data : {}
+      cData: courtAnnouncement.content
     },
+    isLoading: loading,
     module: '法院公告',
-    error: !courtAnnouncement
+    error: courtAnnouncement.content.length === 0
   };
   return (
     <CardTable {...data} />
@@ -36,6 +37,8 @@ function CourtAnnouncement({courtAnnouncement, regTime}) {
 }
 
 CourtAnnouncement.propTypes = {
+  loading: PropTypes.bool,
+  regTime: PropTypes.func,
   courtAnnouncement: PropTypes.object,
 };
 export default observer(CourtAnnouncement);

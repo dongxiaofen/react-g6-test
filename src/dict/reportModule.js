@@ -419,7 +419,7 @@ const config = {
     'litigationAssets': '涉诉资产',
     'blackList': '失信信息'
   },
-  courtExecution: {
+  courtExecuted: {
     'caseCreateTime': '立案时间',
     'pname': '被执行人姓名/名称',
     'orgCode': '被执行人组织机构代码',
@@ -428,7 +428,7 @@ const config = {
     'caseState': '案件状态',
     'execMoney': '执行标的（元）',
   },
-  dishonestyList: {
+  courtDishonesty: {
     'publishDate': '发布日期',
     'companyName': '失信被执行人全称',
     'relation': '关联关系',
@@ -444,7 +444,7 @@ const config = {
     'performance': '被执行履行情况',
     'courtName': '执行法院',
   },
-  litigationAssets: {
+  courtLitigation: {
     'releaseTime': '发布日期',
     'title': '项目名称',
     'category': '资产类别',

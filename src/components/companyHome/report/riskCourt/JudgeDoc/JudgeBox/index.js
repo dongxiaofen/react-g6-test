@@ -7,20 +7,11 @@ import Pager from 'components/common/Pager';
 function JudgeBox({data, uiStore}) {
   const module = data.module;
   const showParams = uiStore.uiState[module];
-  console.log(showParams, uiStore);
   const page = showParams.index;
-  const size = showParams.size;
-  const getCurrData = ()=>{
-    if (showParams.showAll) {
-      return data.items;
-    }
-    return data.items.slice((page - 1) * size, page * size);
-  };
   const createTable = ()=>{
     const output = [];
-    const currData = getCurrData();
     let rowIdx = 0;
-    currData.map((dataAarry, index) => {
+    data.items.map((dataAarry, index) => {
       const itemCard = [];
       dataAarry.map((obj, idx) => {
         itemCard.push(

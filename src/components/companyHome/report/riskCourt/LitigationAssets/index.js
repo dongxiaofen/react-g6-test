@@ -2,7 +2,7 @@ import React, {PropTypes} from 'react';
 import { observer } from 'mobx-react';
 import {CardTable } from 'components/common/report';
 
-function LitigationAssets({litigationAssets, regTime}) {
+function LitigationAssets({litigationAssets, regTime, loading}) {
   const data = {
     meta: {
       body: [
@@ -15,11 +15,12 @@ function LitigationAssets({litigationAssets, regTime}) {
         {'key': 'projectNotice', 'width': '12', hide: true}
       ],
       isExpand: false,
-      dict: 'litigationAssets',
-      cData: litigationAssets.data
+      dict: 'courtLitigation',
+      cData: litigationAssets.content
     },
+    isLoading: loading,
     module: '被执行人信息',
-    error: litigationAssets.data.length === 0
+    error: litigationAssets.content.length === 0
   };
   return (
     <CardTable {...data} />
@@ -27,6 +28,8 @@ function LitigationAssets({litigationAssets, regTime}) {
 }
 
 LitigationAssets.propTypes = {
-  foo: PropTypes.string,
+  loading: PropTypes.bool,
+  regTime: PropTypes.func,
+  litigationAssets: PropTypes.object,
 };
 export default observer(LitigationAssets);

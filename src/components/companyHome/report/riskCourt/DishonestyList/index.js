@@ -2,7 +2,7 @@ import React, {PropTypes} from 'react';
 import { observer } from 'mobx-react';
 import {CardTable } from 'components/common/report';
 
-function DishonestyList({dishonestyList, regTime}) {
+function DishonestyList({dishonestyList, regTime, loading}) {
   const data = {
     meta: {
       body: [
@@ -17,11 +17,12 @@ function DishonestyList({dishonestyList, regTime}) {
         {'key': 'duty', 'width': '12', hide: true},
       ],
       isExpand: false,
-      dict: 'dishonestyList',
-      cData: dishonestyList.data
+      dict: 'courtDishonesty',
+      cData: dishonestyList.content
     },
+    isLoading: loading,
     module: '被执行人信息',
-    error: dishonestyList.data.length === 0
+    error: dishonestyList.content.length === 0
   };
   return (
     <CardTable {...data} />
@@ -29,6 +30,8 @@ function DishonestyList({dishonestyList, regTime}) {
 }
 
 DishonestyList.propTypes = {
-  foo: PropTypes.string,
+  loading: PropTypes.bool,
+  regTime: PropTypes.func,
+  dishonestyList: PropTypes.object,
 };
 export default observer(DishonestyList);

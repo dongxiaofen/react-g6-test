@@ -41,7 +41,7 @@ function JudgeDoc({courtData, regTime, routing, riskCourtStore}) {
       {'key': 'court', 'width': '6'},
       {'key': 'litigant', 'width': '12', 'handle': modifyLitiganti}
     ],
-    'items': courtData ? courtData.data : [],
+    'items': courtData.content,
     'dict': 'judgeDoc',
     'module': 'judgeDoc',
   };
@@ -52,11 +52,15 @@ function JudgeDoc({courtData, regTime, routing, riskCourtStore}) {
 }
 
 JudgeDoc.propTypes = {
-  foo: PropTypes.string,
+  courtData: PropTypes.object,
+  regTime: PropTypes.func,
+  routing: PropTypes.object,
+  riskCourtStore: PropTypes.object,
 };
 export default loadingComp({
   mapDataToProps: props => ({
-    error: !props.courtData || props.courtData.data.length < 1,
+    loading: props.loading,
+    error: props.courtData.content.length === 0,
     module: '判决文书'
   })
 })(inject('routing', 'riskCourtStore')(observer(JudgeDoc)));
