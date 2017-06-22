@@ -214,15 +214,16 @@ export default class DownloadPdf extends Component {
     if (queryArray.length > 0) {
       this.setState({tipInfo: false});
       queryStr = queryStr + queryArray.join(',');
-      if (this.getReportType() === 'report') {
-        window.open(`/pdfDown?reportId=${this.props.companyHomeStore.reportInfo.reportId}${queryStr}`);
-      }
-      if (this.getReportType() === 'basicReport') {
-        window.open(`/pdfDown?basicReportId=${this.props.companyHomeStore.reportInfo.basicReportId}${queryStr}`);
-      }
-      if (this.getReportType() === 'loan') {
-        window.open(`/pdfDown?analysisReportId=${this.props.companyHomeStore.reportInfo.analysisReportId}${queryStr}`);
-      }
+      bannerStore.createPDF(this.getReportType(), queryStr);
+      // if (this.getReportType() === 'report') {
+      //   // window.open(`/pdfDown?reportId=${this.props.companyHomeStore.reportInfo.reportId}${queryStr}`);
+      // }
+      // if (this.getReportType() === 'basicReport') {
+      //   // window.open(`/pdfDown?basicReportId=${this.props.companyHomeStore.reportInfo.basicReportId}${queryStr}`);
+      // }
+      // if (this.getReportType() === 'loan') {
+      //   // window.open(`/pdfDown?analysisReportId=${this.props.companyHomeStore.reportInfo.analysisReportId}${queryStr}`);
+      // }
       this.props.bannerStore.clearPdfConfigChecked();
       this.props.bannerStore.setPdfDownloadKeys(queryArray, this.getReportType());
     } else {

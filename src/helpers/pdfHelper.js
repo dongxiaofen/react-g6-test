@@ -13,9 +13,9 @@ const DOMAIN = 'http://oq4zadj3a.bkt.clouddn.com/';
 const BASE_DIRNAME = process.cwd();
 const PDF_DIRNAME = path.join(BASE_DIRNAME, '/static/pdf/');
 
-const writeToLog = (fileName, str) => {
+const _writeToLog = (fileName, str) => {
   const logPath = path.join(PDF_DIRNAME, `${fileName}.log`);
-  fs.appendFile(logPath, str);
+  fs.writeFile(logPath, str);
 }
 
 const writeDownLoadUrl = (fileName, str) => {
@@ -56,6 +56,7 @@ const uploadFile = (uptoken, key) => {
     if(!err) {
       // console.log(ret.hash, ret.key, ret.persistentId, '=======uploadFile result======');
       // 上传成功，获取下载连接
+      _writeToLog(key, `{"status": "creating", "process": 5, "download": ""}`);
       getDownLoadUrl(key);
       // 上传成功，　删除当前生成的pdf和html文件
       deletePdfHtml(key);
@@ -66,19 +67,38 @@ const uploadFile = (uptoken, key) => {
 }
 
 export const UpFileToQiniu = (fileName) => {
-  console.log(fileName, '=====fileName======');
-  // qiniu.conf.ACCESS_KEY = Access_Key;
-  // qiniu.conf.SECRET_KEY = Secret_Key;
-  // const token = uptoken(Bucket_Name, `${fileName}.pdf`);
-  // uploadFile(token, fileName);
+  _writeToLog(fileName, `{"status": "creating", "process": 4, "downDload": ""}`);
+  qiniu.conf.ACCESS_KEY = Access_Key;
+  qiniu.conf.SECRET_KEY = Secret_Key;
+  const token = uptoken(Bucket_Name, `${fileName}.pdf`);
+  uploadFile(token, fileName);
 }
 
 const getDownLoadUrl = (fileName) => {
   qiniu.conf.ACCESS_KEY = Access_Key;
   qiniu.conf.SECRET_KEY = Secret_Key;
-  const url = `${DOMAIN}${fileName}`;
+  const url = `${DOMAIN}${fileName}.pdf`;
   const policy = new qiniu.rs.GetPolicy();
   const downloadUrl = policy.makeRequest(url);
-  // console.log(downloadUrl,'=====downloadUrl====');
-  writeDownLoadUrl(fileName, downloadUrl);
+  _writeToLog(fileName, `{"status": "sucess", "process": 6, "download": "${downloadUrl}"}`);
 }
+
+export const checkPDF = (req, res) => {
+  const {companyName, stamp} = req.query;
+  const statusFile = path.join(PDF_DIRNAME, `${companyName}${stamp}.log`);
+  fs.exists(statusFile, (exists) => {
+    if (exists) {
+      const restult = fs.readFileSync(statusFile, 'utf-8');
+      res.status = 200;
+      res.json(JSON.parse(restult));
+    } else {
+      res.status = 404;
+      res.json({
+        errorCode: 404,
+        message: '没有找到要下载的PDF文件,请稍后重试'
+      });
+    }
+  });
+}
+
+exports.writeToLog = _writeToLog;

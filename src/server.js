@@ -20,7 +20,9 @@ import getRoutes from './routes';
 import { RouterStore } from 'mobx-react-router';
 import * as allStores from 'stores';
 import {
-  UpFileToQiniu
+  UpFileToQiniu,
+  checkPDF,
+  writeToLog
 } from './helpers/pdfHelper';
 useStaticRendering(true);
 fundebug.apikey = 'd3c3ad8fd8f470b0bd162e9504c98c1984050474f3f550d47b17c54983633c1e';
@@ -130,6 +132,13 @@ app.use((req, res) => {
   axios.defaults.headers.common['Content-Type'] = 'application/json';
   axios.defaults.headers.common['scm-source'] = config.target === 'dianxin_prod' ? 'TEL_WEB' : 'SC_WEB';
   axios.defaults.headers.common['scm-token'] = req.cookies['scm-token'] || {};
+
+  // 检查pdf路径
+  const reqPathName = url.parse(req.url).pathname;
+  if (reqPathName === '/pdfCheck') {
+    checkPDF(req, res);
+    return false;
+  }
   match({ routes: getRoutes('server'), location: req.originalUrl }, (error, redirectLocation, renderProps) => {
     if (redirectLocation) {
       res.redirect(redirectLocation.pathname + redirectLocation.search);
@@ -138,7 +147,7 @@ app.use((req, res) => {
       res.status(500);
       // hydrateOnClient();
     } else if (renderProps) {
-      const reqPathName = url.parse(req.url).pathname;
+      // const reqPathName = url.parse(req.url).pathname;
       console.log('路由被match', url.parse(req.url));
       if (reqPathName === '/pdfDown') {
         const routingStore = new RouterStore();
@@ -181,19 +190,21 @@ app.use((req, res) => {
               </Provider>
             );
             const reportHtml = ReactDOM.renderToString(<Html pdfDown="1" assets={webpackIsomorphicTools.assets()} component={component} {...allStores} />);
-            res.status(200);
-            res.json({
-              companyName: companyName,
-              timestamp: timestamp
-            });
             const companyName = resp.data.companyName;
             // const username = resp.data.email;
             const timestamp = new Date().getTime();
+            res.status(200);
+            res.json({
+              companyName: companyName,
+              stamp: timestamp
+            });
             const htmlName = companyName + timestamp + '.html';
             const pdfName = companyName + timestamp + '.pdf';
+            writeToLog(`${companyName}${timestamp}`, `{"status": "creating", "process": 2, "download": ""}`);
             writeStrToHtml(htmlName, reportHtml, () => {
+              writeToLog(`${companyName}${timestamp}`, `{"status": "creating", "process": 3, "download": ""}`);
               html2Pdf(htmlName, pdfName, () => {
-                // UpFileToQiniu(`${companyName}${timestamp}`);
+                UpFileToQiniu(`${companyName}${timestamp}`);
               });
             });
           })

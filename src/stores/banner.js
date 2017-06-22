@@ -1,6 +1,6 @@
 import { observable, action, runInAction } from 'mobx';
 import { browserHistory } from 'react-router';
-import { companyHomeApi } from 'api';
+import { companyHomeApi, pdfApi } from 'api';
 import modalStore from './modal';
 import messageStore from './message';
 import payModalStore from './payModal';
@@ -141,6 +141,59 @@ class BannerStore {
   closeContactPopoverAlias = this.closeContactPopover;
   openContactPopoverAlias = this.openContactPopover;
   extendContactAlias = this.extendContact;
+
+  // 下载pdf相关
+  @observable pdfCheckStatue = {};
+  @observable checkPDFStatus = 'creating';
+
+  @action.bound createPDF(type, queryStr) {
+    let url = '';
+    if (type === 'report') {
+      url = `/pdfDown?reportId=${companyHomeStore.reportInfo.reportId}${queryStr}`;
+    }
+    if (type === 'basicReport') {
+      url = `/pdfDown?basicReportId=${companyHomeStore.reportInfo.basicReportId}${queryStr}`;
+    }
+    if (type === 'loan') {
+      url = `/pdfDown?analysisReportId=${companyHomeStore.reportInfo.analysisReportId}${queryStr}`;
+    }
+    pdfApi.createPDF(url)
+      .then(action('createPDF', (resp)=>{
+        this.pdfCheckStatue = resp.data;
+        this.intervalCheckPDF(resp.data);
+      }))
+      .catch(action('createPDF err', (error)=>{
+        console.log(error);
+      }));
+  }
+
+  @action.bound intervalCheckPDF(params) {
+    const maxCount = 20;
+    let checkCount = 0;
+    const checkTimeout = () => {
+      pdfApi.checkPDF(params)
+        .then(action('checkPDF', (resp) => {
+          if (resp.status === 200) {
+            if (resp.data.status === 'creating' && checkCount < maxCount) {
+              this.checkPDFStatus = 'creating';
+              setTimeout(() => {
+                checkCount ++;
+                checkTimeout();
+              }, 500);
+            } else if (resp.data.status === 'sucess') {
+              const companyName = this.pdfCheckStatue.companyName;
+              window.location = `${resp.data.download}&attname=${companyName}.pdf`;
+            }
+          } else {
+            this.checkPDFStatus = 'faile';
+          }
+        }))
+        .catch(action('checkPDF err', () => {
+          this.checkPDFStatus = 'faile';
+        }));
+    };
+    checkTimeout();
+  }
 
   @action.bound setPdfDownloadKeys(keys, reportType) {
     this.pdfDownloadKeys = keys;
