@@ -3,6 +3,7 @@ import { observer, inject } from 'mobx-react';
 import styles from './index.less';
 import HistoryName from './HistoryName';
 import RiskLabel from './RiskLabel';
+import MultiPartyMonitoring from './MultiPartyMonitoring';
 import Industry from './Industry';
 import Contact from './Contact';
 import reportIcon from 'imgs/bannerInfo/report.png';
@@ -32,6 +33,7 @@ function CompanyInfo({ bannerStore, routing}) {
         <div className="clearfix">
           <p className={styles.companyName}>{bannerInfoData.name}</p>
            <RiskLabel riskInfo={bannerInfoData.bannerInfo.bannerInfo.riskInfo} />
+           <MultiPartyMonitoring monitorInfo={bannerInfoData.bannerInfo.bannerInfo.riskInfo} />
         </div>
         <div className={`clearfix ${styles.baseInfo}`}>
           <Industry industryNames={industryType} />
