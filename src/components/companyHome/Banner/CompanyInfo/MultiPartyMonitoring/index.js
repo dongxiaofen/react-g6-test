@@ -16,6 +16,6 @@ function MultiPartyMonitoring({monitorInfo}) {
 }
 
 MultiPartyMonitoring.propTypes = {
-  monitorInfo: PropTypes.object,
+  monitorInfo: PropTypes.bool,
 };
 export default observer(MultiPartyMonitoring);
