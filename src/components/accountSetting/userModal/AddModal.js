@@ -72,11 +72,9 @@ function AddModal({accountSettingStore, modalStore}) {
       isSingleBtn: true,
       confirmAction: () => {
         modalStore.resetStore();
-        accountSettingStore.changeValue('addModal.visible', true);
       },
       cancelAction: () => {
         modalStore.resetStore();
-        accountSettingStore.changeValue('addModal.visible', true);
       },
       loader: (cb) => {
         require.ensure([], (require) => {
