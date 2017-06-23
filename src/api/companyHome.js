@@ -272,3 +272,7 @@ export const getReportStatus = (params) => {
 export const createBasicReport = (params) => {
   return axios.post(`/api/basicReport`, params);
 };
+// 基础关联图，获取最短路径
+export const getShortestPath = (params) => {
+  return axios.post('/network/shortestPath', params);
+};

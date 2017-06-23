@@ -3,9 +3,10 @@ import { companyHomeApi } from 'api';
 import networkType from 'dict/networkType';
 import blackNetworkStore from './blackNetwork';
 import leftBarStore from '../leftBar';
-import modalStore from '../modal';
 import messageStore from '../message';
 import { browserHistory } from 'react-router';
+import pathval from 'pathval';
+import modalStore from '../modal';
 
 class NetworkStore {
   constructor() {
@@ -38,11 +39,14 @@ class NetworkStore {
   @observable mainCompanyName = '';
   @observable layout = 'circle';
   @observable focusNodeName = '';
+  @observable focusNodeInfo = {};
   @observable searchKey = '';
   @observable currentLevel = 1;
   @observable totalLevel = 1;
   @observable showFullScreen = false;
-
+  @observable showSearchInput = false;
+  @observable shortestPath = [];
+  @observable shortPathLoading = false;
   @action.bound monitorExistNode(monitorId, params) {
     modalStore.confirmLoading = true;
     companyHomeApi.monitorExistNode(monitorId, params)
@@ -169,6 +173,39 @@ class NetworkStore {
         };
         this.isLoading = false;
       }));
+  }
+  @action.bound showRelation() {
+    const args = {
+      width: '960px',
+      boxStyle: {
+        padding: '20px 0',
+      },
+      isNeedBtn: false,
+      loader: (cb) => {
+        require.ensure([], (require) => {
+          cb(require('components/companyHome/report/network/CurrentNetwork/RelationTable'));
+        });
+      }
+    };
+    modalStore.openCompModal({ ...args });
+  }
+  @action.bound getShortestPath(params) {
+    this.shortPathLoading = true;
+    companyHomeApi.getShortestPath(params)
+    .then(action('shortest ', (resp)=>{
+      console.log(resp.data);
+      this.shortestPath = [['重庆商社（集团）有限公司', '重庆百货大楼股份有限公司', '重庆市国有资产监督管理委员会']];
+      this.shortPathLoading = false;
+    }))
+    .catch(action('shortest error', (error)=>{
+      console.log(error, 'shortest path error');
+      this.shortestPath = [['重庆商社（集团）有限公司', '重庆百货大楼股份有限公司', '重庆市国有资产监督管理委员会']];
+      messageStore.openMessage({ content: '数据获取失败', type: 'warning' });
+      this.shortPathLoading = false;
+    }));
+  }
+  @action.bound updateValue(keyPath, value) {
+    pathval.setPathValue(this, keyPath, value);
   }
   @action.bound resetStore() {
     this.error = '';

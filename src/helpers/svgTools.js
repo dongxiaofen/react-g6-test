@@ -188,6 +188,15 @@ export function findOneLevelNodes(node, ary) {
   }
   return false;
 }
+// 查看是否一度关联,名字
+export function findOneLevelNodesByName(node, ary) {
+  for (const nodeItem of ary) {
+    if (nodeItem === node.name) {
+      return true;
+    }
+  }
+  return false;
+}
 
 // 获取当前网络图的nodeId和linkId
 export function getCurrentNodesLinks(forceNetwork) {
@@ -207,9 +216,12 @@ export function getCurrentNodesLinks(forceNetwork) {
 export function getArrowType(target, nodes) {
   return nodes[nodes.findIndex((node) => node.id === target.id)].cateType;
 }
-export function findShortPath(nodeId, shortestPahth) {
-  const index = shortestPahth[0].findIndex((path)=>{
-    return path === nodeId;
+export function findShortPath(node, shortestPahth) {
+  let index = -1;
+  shortestPahth.forEach((pathArr)=>{
+    index = pathArr.findIndex((item)=>{
+      return node === item;
+    });
   });
   return index > -1;
 }
