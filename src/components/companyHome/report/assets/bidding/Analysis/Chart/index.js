@@ -5,7 +5,8 @@ import styles from './index.less';
 import { Row, Col } from 'components/common/layout';
 import BaseChart from 'components/common/Charts/BaseChart';
 
-function Chart({}) {
+function Chart({ assetsStore }) {
+  const biddingAnalysis = assetsStore.biddingAnalysis;
   const colors = ['#bbe3a6', '#90caf9', '#66bb6a', '#42A5F5'];
   const yAxisColor = '#eeeeee';
   const textStyle = {
@@ -43,8 +44,8 @@ function Chart({}) {
     dataZoom: [
       {
         type: 'slider',
-        left: 70,
-        right: 70,
+        left: 100,
+        right: 100,
         bottom: 0,
         dataBackground: {
           areaStyle: {
@@ -86,7 +87,7 @@ function Chart({}) {
     },
     grid: {
       top: 30,
-      left: '5%',
+      left: '8%',
       right: '5%'
     },
     xAxis: [
@@ -106,7 +107,7 @@ function Chart({}) {
             color: '#757575'
           }
         },
-        data: ['2017-01月', '2017-02月', '2017-03月', '2017-04月', '2017-05月', '2017-06月', '2017-07月', '2017-08月', '2017-09月', '2017-10月', '2017-11月', '2017-12月']
+        data: biddingAnalysis.axis
       }
     ],
     yAxis: [
@@ -151,29 +152,30 @@ function Chart({}) {
       {
         name: '投标金额',
         type: 'bar',
-        barWidth: barWidth,
-        data: [2.0, 4.9, 7.0, 23.2, 25.6, 76.7, 135.6, 162.2, 32.6, 20.0, 6.4, 3.3]
+        barMaxWidth: barWidth,
+        data: biddingAnalysis.data.winMoneyAmount
       },
       {
         name: '中标金额',
         type: 'bar',
-        barWidth: barWidth,
-        data: [2.6, 5.9, 9.0, 26.4, 28.7, 70.7, 175.6, 182.2, 48.7, 18.8, 6.0, 2.3]
+        barMaxWidth: barWidth,
+        data: biddingAnalysis.data.bidMoneyAmount
       },
       {
         name: '投标次数',
         type: 'line',
         yAxisIndex: 1,
-        data: [2.0, 0, 3.3, 4.5, 6.3, 10.2, 20.3, 23.4, 23.0, 16.5, 12.0, 6.2]
+        data: biddingAnalysis.data.winCount
       },
       {
         name: '中标次数',
         type: 'line',
         yAxisIndex: 1,
-        data: [3.0, 3.2, 3.3, 5.5, 6.3, 11.2, 21.3, 22.4, 24.0, 12.5, 11.0, 3.2]
+        data: biddingAnalysis.data.bidCount
       }
     ]
   };
+
   return (
     <div>
       <Row>
@@ -206,13 +208,12 @@ function Chart({}) {
 }
 
 Chart.propTypes = {
-  foo: PropTypes.string,
+  assetsStore: PropTypes.object,
 };
 export default loadingComp({
   mapDataToProps: props => ({
-    loading: props.biddingData.biddingLoading,
+    loading: props.assetsStore.biddingData.biddingLoading,
     module: '招投标分析图',
-    // error: !props.biddingData.analysis || Object.keys(props.biddingData.analysis).length === 0
-    error: false
+    error: !props.assetsStore.biddingData.analysis || Object.keys(props.assetsStore.biddingData.analysis.year).length === 0
   })
 })(observer(Chart));
