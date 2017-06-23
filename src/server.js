@@ -61,7 +61,7 @@ const getStringifyData = (data) => {
 }
 const writeDataToFile = (id, data) => {
   fs.writeFile(
-    path.join(__dirname, id + '.js'),
+    path.join(__dirname, id + '.json'),
     getStringifyData(data),
     (err) => {
       if (!err) {
