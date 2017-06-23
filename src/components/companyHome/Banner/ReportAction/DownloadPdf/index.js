@@ -45,35 +45,35 @@ export default class DownloadPdf extends Component {
     return 'basicReport';
   };
 
-  // downloadAll = (evt) => {
-  //   if (evt.target.checked) {
-  //     this.setState({tipInfo: false});
-  //   }
-  //   this.props.bannerStore.setDownloadAll(evt.target.checked, this.getReportType());
-  // };
+  downloadAll = (evt) => {
+    if (evt.target.checked) {
+      this.setState({tipInfo: false});
+    }
+    this.props.bannerStore.setDownloadAll(evt.target.checked, this.getReportType());
+  };
 
-  // downloadAllChecked() {
-  //   const isAllChecked = this.props.bannerStore.isAllChecked;
-  //   const stockCode = this.props.bannerStore.bannerInfoData.stockCode;
-  //   const monitorId = this.props.routing.location.query.monitorId;
-  //   const output = [];
-  //   this.props.bannerStore.pdfDownloadConfig.levelOne.map((item) => {
-  //     if (item.value === 'STOCK') {
-  //       if (stockCode) {
-  //         output.push(item.checked === true);
-  //       }
-  //     } else if (item.value === 'TAX') {
-  //       if (monitorId) {
-  //         output.push(item.checked === true);
-  //       }
-  //     } else {
-  //       output.push(item.checked === true);
-  //     }
-  //     return output;
-  //   });
-  //   const levelOneChecked = output.every((item) => item === true);
-  //   return isAllChecked || levelOneChecked;
-  // }
+  downloadAllChecked() {
+    const isAllChecked = this.props.bannerStore.isAllChecked;
+    const stockCode = this.props.bannerStore.bannerInfoData.stockCode;
+    const monitorId = this.props.routing.location.query.monitorId;
+    const output = [];
+    this.props.bannerStore.pdfDownloadConfig.levelOne.map((item) => {
+      if (item.value === 'STOCK') {
+        if (stockCode) {
+          output.push(item.checked === true);
+        }
+      } else if (item.value === 'TAX') {
+        if (monitorId) {
+          output.push(item.checked === true);
+        }
+      } else {
+        output.push(item.checked === true);
+      }
+      return output;
+    });
+    const levelOneChecked = output.every((item) => item === true);
+    return isAllChecked || levelOneChecked;
+  }
 
   menuLevelOneOnChange = (key, value, evt) => {
     if (evt.target.checked) {
@@ -242,14 +242,13 @@ export default class DownloadPdf extends Component {
         </div>
         <div className={styles.pdfDownModaBtnBox}>
           <div className={styles.selectAll}>
-            {/*<Checkbox*/}
-              {/*style={{fontSize: '14px'}}*/}
-              {/*className={styles.checkbox_style}*/}
-              {/*checked={this.downloadAllChecked()}*/}
-              {/*onChange={this.downloadAll}>*/}
-              {/*<span style={{fontSize: '14px'}}>全部页面</span>*/}
-            {/*</Checkbox>*/}
-             <span style={{fontSize: '14px'}}>{this.state.reportTypeDict[this.getReportType()]}下载</span>
+            <Checkbox
+              style={{fontSize: '14px'}}
+              className={styles.checkbox_style}
+              checked={this.downloadAllChecked()}
+              onChange={this.downloadAll}>
+              <span style={{fontSize: '14px'}}>全部页面</span>
+            </Checkbox>
             {
               this.state.tipInfo && isShowTipInfo
                 ? <span className={styles['tip-info']}>请选择需要下载的板块</span>
