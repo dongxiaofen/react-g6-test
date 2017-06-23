@@ -25,7 +25,8 @@ function TableRow({data, routing, dataStore, networkStore, companyHomeStore}) {
     const isMonitor = routing.location.pathname === '/companyHome/monitorAlert';
     const ruleMap = {
       RULE: 'rule',
-      SYS_RULE: 'sysRule'
+      SYS_RULE: 'sysRule',
+      SHARED_RULE: 'rule',
     };
     let url;
     let type;

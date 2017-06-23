@@ -65,12 +65,12 @@ class MonitorAlertStore {
       .then(action('getMonitorAlertDetail_success', resp => {
         this.loadingId = -1;
         this.alertCancel = null;
-        this.detailData.detail = info.alertType === 'RULE' ? resp.data.content : resp.data;
+        this.detailData.detail = info.alertType !== 'SYS_RULE' ? resp.data.content : resp.data;
         this.detailData.orgData = resp.data;
         this.detailData.info = info;
         this.detailData.loading = false;
         this.openDetailModal(this.detailData.info.alertType);
-        if (this.detailData.info.alertType === 'RULE') {
+        if (this.detailData.info.alertType !== 'SYS_RULE') {
           const pattern = this.detailData.detail[0].pattern;
           if (pattern === 'NEWS') {
             this.getNewsDetail(companyId);
