@@ -117,7 +117,7 @@ function Header({clientStore, pdfStore}) {
           :
           ''
       }
-      <div className={styles.companyName}>{pdfStore.companyName}</div>
+      {/* <div className={styles.companyName}>{pdfStore.companyName}</div> */}
       <div className={styles.bannerWrap}>
         {phoneDom}
         {indexDom}
