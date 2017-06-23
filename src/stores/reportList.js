@@ -8,6 +8,7 @@ class ReportListStore {
   @observable listCount = {};
   @observable basicList = {};
   @observable advancedList = {};
+  @observable searchInput = '';
 
   @action.bound changeValue(key, value) {
     pathval.setPathValue(this, key, value);
@@ -33,7 +34,7 @@ class ReportListStore {
     const moduleStr = activeKey + 'List';
     const reportListPager = uiStore.uiState[activeKey + 'ReportPager'];
     const {index, size} = reportListPager;
-    const params = {index, size, companyName: uiStore.uiState.reportList.searchInput};
+    const params = {index, size, companyName: this.searchInput};
     this[moduleStr] = {};
     reportListApi.getReportList(activeKey, params)
       .then(action('get report page', (resp) => {

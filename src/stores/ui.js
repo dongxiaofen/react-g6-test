@@ -241,14 +241,6 @@ class UiStore {
       size: 10,
       totalElements: 0,
     },
-    reportList: {
-      searchInput: '',
-      params: {
-        companyName: '',
-        sort: 'start_tm,DESC',
-        monitorStatus: '',
-      }
-    },
     accountAlertCorp: {
       index: 1,
       size: 10,
@@ -806,14 +798,6 @@ class UiStore {
           index: 1,
           size: 10,
           totalElements: 0
-        },
-        reportList: {
-          searchInput: '',
-          params: {
-            companyName: '',
-            sort: 'start_tm,DESC',
-            monitorStatus: '',
-          }
         },
       }
     });

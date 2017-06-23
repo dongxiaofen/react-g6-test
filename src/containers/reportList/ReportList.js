@@ -57,7 +57,7 @@ export default class ReportList extends Component {
   }
 
   inputChange(evt) {
-    this.props.uiStore.updateUiStore(`reportList.searchInput`, evt.target.value);
+    this.props.reportListStore.changeValue(`searchInput`, evt.target.value);
   }
 
   changeTabs = (value) => {
@@ -76,7 +76,7 @@ export default class ReportList extends Component {
         <SearchBar
           handleChange={this.inputChange}
           handleSearch={this.handleSearch}
-          inputValue={this.props.uiStore.uiState.reportList.searchInput}/>
+          inputValue={this.props.reportListStore.searchInput}/>
         <Tabs activeKey={activeKey} onChange={this.changeTabs}>
           <TabPane tab={this.numWithLoading('基础报告')} key="basic">
             <BasicList {...this.props} />
