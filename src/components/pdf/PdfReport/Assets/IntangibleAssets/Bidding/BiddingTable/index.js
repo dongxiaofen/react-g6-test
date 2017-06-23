@@ -1,44 +1,41 @@
 import React, {PropTypes} from 'react';
-import { observer } from 'mobx-react';
-import PdfNotFound from 'components/common/pdf/PdfNotFound';
+import { observer, inject } from 'mobx-react';
 import PdfTable from 'components/common/pdf/PdfTable';
 
-function BiddingTable({moduleData}) {
-  if (!moduleData) {
+function BiddingTable({pdfStore}) {
+  const moduleData = pdfStore.bidding.month;
+  const parseObject = () => {
+    if (moduleData) {
+      let newArr = [];
+      Object.keys(moduleData).map((key) => {
+        newArr = [Object.assign({date: key, ...moduleData[key]}), ...newArr];
+      });
+      return newArr;
+    }
+  };
+  if (parseObject().length > 0) {
+    const data = {
+      dataConfig: [
+        {key: 'date', width: '2'},
+        {key: 'bidCount', width: '2'},
+        {key: 'bidMoneyAmount', width: '2'},
+        {key: 'winCount', width: '2'},
+        {key: 'winMoneyAmount', width: '2'},
+      ],
+      items: parseObject(),
+      dict: 'biddingTable',
+    };
     return (
       <div>
         <div style={{height: '30px'}}></div>
-        <PdfNotFound />
+        <PdfTable {...data} />
       </div>
     );
   }
-  const data = {
-    dataConfig: [
-      {key: 'courtAnnouncement', width: '1.6'},
-      {key: 'courtNotice', width: '1.6'},
-      {key: 'judgeDoc', width: '1.7'},
-      {key: 'courtExecution', width: '1.7'},
-      {key: 'dishonestyList', width: '1.7'},
-    ],
-    items: [
-      {
-        courtAnnouncement: moduleData['总投标'],
-        courtNotice: moduleData['开庭公告'],
-        judgeDoc: moduleData['判决文书'],
-        courtExecution: moduleData['被执行人信息'],
-      },
-    ],
-    dict: 'biddingTable',
-  };
-  return (
-    <div>
-      <div style={{height: '30px'}}></div>
-      <PdfTable {...data} />
-    </div>
-  );
+  return null;
 }
 
 BiddingTable.propTypes = {
   moduleData: PropTypes.object,
 };
-export default observer(BiddingTable);
+export default inject('pdfStore')(observer(BiddingTable));
