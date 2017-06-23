@@ -39,7 +39,7 @@ function TableRow({data, routing, dataStore, networkStore, companyHomeStore}) {
     }
     dataStore.changeValue('loadingId', data.id);
     // dataStore.changeValue('detailData.info', data);
-    const params = alertType === 'RULE' ? {index: 1, size: 8} : {};
+    const params = alertType !== 'SYS_RULE' ? {index: 1, size: 8} : {};
     dataStore.getAlertDetail(url, type, isMonitor ? monitorId : reportId, data, params);
   };
   const alertTypeMap = {

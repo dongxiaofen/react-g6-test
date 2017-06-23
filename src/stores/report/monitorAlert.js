@@ -98,11 +98,12 @@ class MonitorAlertStore {
   }
   @action.bound getNewsDetail(companyId) {
     const detailData = this.detailData.detail[this.detailData.activeIndex];
+    const ruleId = this.detailData.info.id;
     const params = {};
     params.createdAt = detailData.content.createdAt;
     params.url = detailData.content.url;
     this.detailData.html = '';
-    companyHomeApi.getAlertNewsMonitor(companyId, params)
+    companyHomeApi.getAlertNewsMonitor(companyId, ruleId, params)
     .then(action('get news', resp=> {
       this.detailData.html = resp.data.html;
     }))

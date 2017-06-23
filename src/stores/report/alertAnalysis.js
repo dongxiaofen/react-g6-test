@@ -94,22 +94,16 @@ class AlertAnalysisStore {
       .then(action('getAlertDetail_success', resp => {
         this.loadingId = -1;
         this.alertCancel = null;
-        this.detailData.detail = info.alertType !== 'SYS_RULE' ? resp.data.content : resp.data;
+        this.detailData.detail = resp.data;
         this.detailData.orgData = resp.data;
         this.detailData.info = info;
         this.detailData.loading = false;
         this.openDetailModal(this.detailData.info.alertType);
-        if (this.detailData.info.alertType !== 'SYS_RULE') {
-          const pattern = this.detailData.detail[0].pattern;
-          if (pattern === 'NEWS') {
-            this.getNewsDetail(companyId);
-          } else if (pattern === 'JUDGMENT') {
-            this.getJudgeDocDetail(companyId, this.detailData.detail[this.detailData.activeIndex].content);
-          }
-        } else if (this.detailData.info.alertType === 'SYS_RULE') {
-          if (resp.data[0].detail[0].type === 'judgeInfo' && this.detailData.detail[0].detail[0].judgeInfo) {
-            this.getJudgeDocDetail(companyId, this.detailData.detail[0].detail[0].judgeInfo);
-          }
+        if (this.detailData.detail[0].ruleType === 1) {
+          this.getJudgeDocDetail(companyId, this.detailData.detail[0].detail[0].judgeInfo);
+        }
+        if (this.detailData.detail[0].ruleType === 11) {
+          this.getNewsDetail(companyId);
         }
       }))
       .catch(action('getAlertDetail_error', err => {
@@ -127,11 +121,10 @@ class AlertAnalysisStore {
   }
   @action.bound getNewsDetail(companyId) {
     const detailData = this.detailData.detail[this.detailData.activeIndex];
-    const params = {};
-    params.createdAt = detailData.content.createdAt;
-    params.url = detailData.content.url;
+    const ruleId = detailData.ruleId;
+    const scId = detailData.detail[0].id;
     this.detailData.html = '';
-    companyHomeApi.getAlertNewsReport(companyId, params)
+    companyHomeApi.getAlertNewsReport(companyId, ruleId, { scId })
     .then(action('get news', resp=> {
       this.detailData.html = resp.data.html;
     }))

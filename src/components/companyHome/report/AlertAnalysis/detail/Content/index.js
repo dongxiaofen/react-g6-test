@@ -30,7 +30,7 @@ function Content({alertAnalysisStore, monitorAlertStore, routing}) {
     if (detailData.loading) {
       return <AnimateLoading />;
     }
-    if (info.alertType === 'RULE') {
+    if (info.alertType !== 'SYS_RULE') {
       const singleDetail = detail[detailData.activeIndex];
       // console.log(singleDetail, 'singleDetail-----------');
       // if (!singleDetail) { return }
