@@ -88,6 +88,8 @@ class NetworkStore {
   @action.bound closePanel() {
     this.nodePanel.show = false;
     this.focusNodeName = '';
+    this.focusNodeInfo = {};
+    this.shortestPath = [];
   }
   @action.bound switchLayout() {
     this.layout = this.layout === 'circle' ? 'force' : 'circle';

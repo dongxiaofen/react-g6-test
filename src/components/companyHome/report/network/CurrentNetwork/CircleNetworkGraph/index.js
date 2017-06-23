@@ -94,7 +94,7 @@ export default class CircleNetworkGraph extends Component {
       () => this.props.networkStore.focusNodeName,
       () => {
         if (nodesData !== '') {
-          const { focusNodeName, focusNodeInfo} = this.props.networkStore;
+          const { focusNodeName } = this.props.networkStore;
           nodesData.map((node) => {
             node.isFocus = false;
             node.isActive = false;
@@ -102,12 +102,9 @@ export default class CircleNetworkGraph extends Component {
           if (focusNodeName === this.props.networkStore.mainCompanyName) {
             nodesData[0].isFocus = true;
           } else {
-            console.log(focusNodeInfo, focusNodeName);
             nodesData.map((node) => {
-              if (focusNodeName !== '' && node.name.indexOf(focusNodeName) >= 0 && node.category !== 0) {
+              if (focusNodeName !== '' && node.name === focusNodeName && node.category !== 0) {
                 node.isFocus = true;
-              } else if (svgTools.findOneLevelNodesByName(node, focusNodeInfo.OneLevelLinkedNodes)) {
-                node.isActive = true;
               }
             });
           }
@@ -317,6 +314,9 @@ export default class CircleNetworkGraph extends Component {
       .attr('x2', (data) => { return data.target.x; })
       .attr('y2', (data) => { return data.target.y; })
       .attr('class', (data) => {
+        if (this.props.networkStore.shortestPath.length < 1) {
+          return (data.hide && styles.hide) || (data.isFocus && styles.focusLink) || styles.links;
+        }
         return (data.hide && styles.hide) || ((data.source.isActive || data.source.isFocus) && (data.target.isActive || data.target.isFocus) && styles.focusLink) || styles.links;
       });
 
@@ -365,7 +365,10 @@ export default class CircleNetworkGraph extends Component {
         return 'rotate(0)';
       })
       .attr('class', (data) => {
-        return (data.hide && styles.hide) ||((data.source.isActive || data.source.isFocus) && (data.target.isActive || data.target.isFocus) && styles.show) || styles.hide;
+        if (this.props.networkStore.shortestPath.length < 1) {
+          return (data.hide && styles.hide) || (data.isFocus && styles.show) || styles.hide;
+        }
+        return (data.hide && styles.hide) || ((data.source.isActive || data.source.isFocus) && (data.target.isActive || data.target.isFocus) && styles.show) || styles.hide;
       });
   }
   dragstarted = (data) => {
@@ -386,6 +389,7 @@ export default class CircleNetworkGraph extends Component {
   dragended = (data) => {
     if (!d3.event.active) simulation.alphaTarget(0);
     if (!isDragging) {
+      this.props.networkStore.updateValue('shortestPath', []);
       this.props.networkStore.updateValue('focusNodeInfo', data);
       this.props.networkStore.focusNode(data.name);
       console.log(data, '单击', saveNodeXY);
