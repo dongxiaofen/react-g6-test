@@ -40,6 +40,7 @@ export default class App extends Component {
       require('components/common/reportOper/CreateLoanRep');
       require('components/common/reportOper/CreateMonitor');
       require('components/assetsRefresh');
+      // require('containers/companyHome/CompanyHome');
     });
   }
   render() {
