@@ -205,7 +205,6 @@ export default class DownloadPdf extends Component {
     levelTwoKeys.map((key) => {
       levelTwo[key].map((item) => {
         if (item.checked) {
-          // queryArray.push(key);
           queryArray.push(item.value);
         }
       });
@@ -215,15 +214,6 @@ export default class DownloadPdf extends Component {
       this.setState({tipInfo: false});
       queryStr = queryStr + queryArray.join(',');
       bannerStore.createPDF(this.getReportType(), queryStr);
-      // if (this.getReportType() === 'report') {
-      //   // window.open(`/pdfDown?reportId=${this.props.companyHomeStore.reportInfo.reportId}${queryStr}`);
-      // }
-      // if (this.getReportType() === 'basicReport') {
-      //   // window.open(`/pdfDown?basicReportId=${this.props.companyHomeStore.reportInfo.basicReportId}${queryStr}`);
-      // }
-      // if (this.getReportType() === 'loan') {
-      //   // window.open(`/pdfDown?analysisReportId=${this.props.companyHomeStore.reportInfo.analysisReportId}${queryStr}`);
-      // }
       this.props.bannerStore.clearPdfConfigChecked();
       this.props.bannerStore.setPdfDownloadKeys(queryArray, this.getReportType());
     } else {
@@ -234,6 +224,7 @@ export default class DownloadPdf extends Component {
 
   render() {
     const isShowTipInfo = this.state.tipInfoFn();
+    const downPDFLoading = this.props.bannerStore.downPDFLoading;
     return (
       <div className={styles.downloadModal}>
         <div className={styles.downloadTitleBox}>
@@ -256,9 +247,14 @@ export default class DownloadPdf extends Component {
                 : null
             }
           </div>
-          <div onClick={this.downloadPdf} className={styles.pdfDownModaBtn}>
-            <i className="fa fa-download"></i>下载
-          </div>
+          {!downPDFLoading ?
+            <div onClick={this.downloadPdf} className={styles.pdfDownModaBtn}>
+              <i className="fa fa-download"></i>下载{downPDFLoading && <i style={{marginLeft: '5px'}} className="anticon anticon-spin anticon-loading"></i>}
+            </div> :
+            <div className={styles.pdfDownModaBtnDisable}>
+              <i className="fa fa-download"></i>下载{downPDFLoading && <i style={{marginLeft: '5px'}} className="anticon anticon-spin anticon-loading"></i>}
+            </div>
+          }
         </div>
         <div className={styles['download-content-box']}>
           {this.menuLevelOne()}

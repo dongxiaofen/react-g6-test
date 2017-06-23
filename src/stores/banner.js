@@ -145,6 +145,7 @@ class BannerStore {
   // 下载pdf相关
   @observable pdfCheckStatue = {};
   @observable checkPDFStatus = 'creating';
+  @observable downPDFLoading = false;
 
   @action.bound createPDF(type, queryStr) {
     let url = '';
@@ -157,6 +158,7 @@ class BannerStore {
     if (type === 'loan') {
       url = `/pdfDown?analysisReportId=${companyHomeStore.reportInfo.analysisReportId}${queryStr}`;
     }
+    this.downPDFLoading = true;
     pdfApi.createPDF(url)
       .then(action('createPDF', (resp)=>{
         this.pdfCheckStatue = resp.data;
@@ -164,6 +166,9 @@ class BannerStore {
       }))
       .catch(action('createPDF err', (error)=>{
         console.log(error);
+        this.downPDFLoading = false;
+        modalStore.resetStore();
+        messageStore.openMessage({ type: 'error', content: '下载PDF失败，请稍后再试' });
       }));
   }
 
@@ -181,15 +186,21 @@ class BannerStore {
                 checkTimeout();
               }, 500);
             } else if (resp.data.status === 'sucess') {
+              this.downPDFLoading = false;
+              modalStore.resetStore();
               const companyName = this.pdfCheckStatue.companyName;
               window.location = `${resp.data.download}&attname=${companyName}.pdf`;
             }
           } else {
+            this.downPDFLoading = false;
             this.checkPDFStatus = 'faile';
+            messageStore.openMessage({ type: 'error', content: '下载PDF失败，请稍后再试' });
           }
         }))
         .catch(action('checkPDF err', () => {
+          this.downPDFLoading = false;
           this.checkPDFStatus = 'faile';
+          messageStore.openMessage({ type: 'error', content: '下载PDF失败，请稍后再试' });
         }));
     };
     checkTimeout();
@@ -473,7 +484,8 @@ class BannerStore {
     this.isAllChecked = false;
     // modalStore.visible = false;
     // modalStore.isCustomize = false;
-    modalStore.resetStore();
+    // 关闭PDF报告下载选择模块弹窗
+    // modalStore.resetStore();
   }
 
   // 添加/取消收藏
