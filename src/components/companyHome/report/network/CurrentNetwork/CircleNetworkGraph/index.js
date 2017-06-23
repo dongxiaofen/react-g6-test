@@ -158,7 +158,6 @@ export default class CircleNetworkGraph extends Component {
       () => this.props.networkStore.shortestPath,
       () => {
         const {shortestPath, focusNodeName} = this.props.networkStore;
-        console.log(',,,', shortestPath);
         if (nodesData !== '') {
           nodesData.map((node)=> {
             if (focusNodeName.indexOf(node.name) >= 0) {

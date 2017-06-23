@@ -50,8 +50,7 @@ function NodePanel({ networkStore, routing, exitFull }) {
     networkStore.jumpBlackNode(nodeName, routing.location.search);
   };
   const getShortestPath = ()=> {
-    const {currentNetwork} = networkStore;
-    networkStore.getShortestPath({target: nodeData.name, currentNetwork});
+    networkStore.getShortestPath({nodeName: nodeData.name});
   };
   return (
     <div className={styles.box}>

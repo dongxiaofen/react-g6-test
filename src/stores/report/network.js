@@ -4,6 +4,7 @@ import networkType from 'dict/networkType';
 import blackNetworkStore from './blackNetwork';
 import leftBarStore from '../leftBar';
 import messageStore from '../message';
+import companyHomeStore from '../companyHome';
 import { browserHistory } from 'react-router';
 import pathval from 'pathval';
 import modalStore from '../modal';
@@ -193,15 +194,15 @@ class NetworkStore {
   }
   @action.bound getShortestPath(params) {
     this.shortPathLoading = true;
-    companyHomeApi.getShortestPath(params)
+    const {reportId} = companyHomeStore.reportInfo;
+    companyHomeApi.getShortestPath(reportId, params)
     .then(action('shortest ', (resp)=>{
       console.log(resp.data);
-      this.shortestPath = [['重庆商社（集团）有限公司', '重庆百货大楼股份有限公司', '重庆市国有资产监督管理委员会']];
+      this.shortestPath = resp.data;
       this.shortPathLoading = false;
     }))
     .catch(action('shortest error', (error)=>{
       console.log(error, 'shortest path error');
-      this.shortestPath = [['重庆商社（集团）有限公司', '重庆百货大楼股份有限公司', '重庆市国有资产监督管理委员会']];
       messageStore.openMessage({ content: '数据获取失败', type: 'warning' });
       this.shortPathLoading = false;
     }));
