@@ -726,6 +726,12 @@ const config = {
   },
   rule12to31: {
     policy: '政策依据',
+  },
+  biddingStatistic: {
+    winMoneyAmount: '总中标金额（元）',
+    winCount: '总中标次数',
+    bidMoneyAmount: '总投标金额（元）',
+    bidCount: '总投标次数',
   }
 };
 

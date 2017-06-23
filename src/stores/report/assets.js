@@ -2,12 +2,18 @@ import { observable, action } from 'mobx';
 import { companyHomeApi } from 'api';
 import uiStore from '../ui';
 import axios from 'axios';
+import { setPathValue } from 'pathval';
 const CancelToken = axios.CancelToken;
 
 class AssetsStore {
   @observable trademarkData = [];
   @observable patentData = [];
-  @observable biddingData = [];
+  @observable biddingData = {
+    statistic: {},
+    analysis: {},
+    biddingItemList: []
+  };
+  @observable biddingAnalysisActive = '月度';
   @observable isMount = false ;
   // 弹框标题数据||信息来源
   @observable titleData = {};
@@ -19,6 +25,10 @@ class AssetsStore {
   @observable trLoading = true;
   @observable patentLoading = true;
   @observable biddingLoading = true;
+
+  @action.bound updateValue(path, value) {
+    setPathValue(this, path, value);
+  }
 
   @action.bound getTrademarkData(idInfo) {
     const {index, size} = uiStore.uiState.trademarkLists;
@@ -50,7 +60,9 @@ class AssetsStore {
     companyHomeApi.getReportModule('operation/bidding', params)
       .then(action( (response) => {
         this.biddingLoading = false;
-        this.biddingData = response.data;
+        this.biddingData.statistic = response.data.statistic;
+        this.biddingData.analysis = response.data.analysis;
+        this.biddingData.biddingItemList = response.data;
       }))
       .catch( action( (err) => {
         this.biddingLoading = false;
