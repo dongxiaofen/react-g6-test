@@ -164,8 +164,8 @@ export const getAlertAnalysisList = (monitorId, analysisReportId, params, source
 export const getAlertDetail = (url, source, params) => {
   return axios.get(url, { cancelToken: source.token, params });
 };
-export const getAlertNewsMonitor = (companyId, ruleId, params) => {
-  return axios.get(`/api/monitor/${companyId}/alert/rule/${ruleId}/news/detail`, { params });
+export const getAlertNewsMonitor = (companyId, ruleType, ruleId, params) => {
+  return axios.get(`/api/monitor/${companyId}/alert/${ruleType}/${ruleId}/news/detail`, { params });
 };
 export const getAlertJudgeDocMonitor = (companyId, params) => {
   return axios.get(`/api/monitor/${companyId}/risk/judgeDoc`, { params });

@@ -73,13 +73,16 @@ class MonitorAlertStore {
         if (this.detailData.info.alertType !== 'SYS_RULE') {
           const pattern = this.detailData.detail[0].pattern;
           if (pattern === 'NEWS') {
-            this.getNewsDetail(companyId);
+            this.getNewsDetail(companyId, 'rule');
           } else if (pattern === 'JUDGMENT') {
             this.getJudgeDocDetail(companyId, this.detailData.detail[this.detailData.activeIndex].content);
           }
         } else if (this.detailData.info.alertType === 'SYS_RULE') {
-          if (resp.data[0].detail[0].type === 'judgeInfo' && this.detailData.detail[0].detail[0].judgeInfo) {
+          if (this.detailData.detail[0].ruleType === 1) {
             this.getJudgeDocDetail(companyId, this.detailData.detail[0].detail[0].judgeInfo);
+          }
+          if (this.detailData.detail[0].ruleType === 11) {
+            this.getNewsDetail(companyId, 'sysRule');
           }
         }
       }))
@@ -96,14 +99,19 @@ class MonitorAlertStore {
         }
       }));
   }
-  @action.bound getNewsDetail(companyId) {
+  @action.bound getNewsDetail(companyId, ruleType) {
     const detailData = this.detailData.detail[this.detailData.activeIndex];
     const ruleId = this.detailData.info.id;
     const params = {};
-    params.createdAt = detailData.content.createdAt;
-    params.url = detailData.content.url;
+    if (ruleType === 'sysRule') {
+      params.scId = detailData.detail.id;
+    }
+    if (ruleType === 'rule') {
+      params.createdAt = detailData.content.createdAt;
+      params.url = detailData.content.url;
+    }
     this.detailData.html = '';
-    companyHomeApi.getAlertNewsMonitor(companyId, ruleId, params)
+    companyHomeApi.getAlertNewsMonitor(companyId, ruleType, ruleId, params)
     .then(action('get news', resp=> {
       this.detailData.html = resp.data.html;
     }))
