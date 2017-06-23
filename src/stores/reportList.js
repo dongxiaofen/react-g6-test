@@ -1,6 +1,6 @@
-import { observable, action } from 'mobx';
+import {observable, action} from 'mobx';
 import pathval from 'pathval';
-import { reportListApi } from 'api';
+import {reportListApi} from 'api';
 import uiStore from './ui';
 
 class ReportListStore {
@@ -12,6 +12,7 @@ class ReportListStore {
   @action.bound changeValue(key, value) {
     pathval.setPathValue(this, key, value);
   }
+
   @action.bound getReportCount() {
     this.listCount = {};
     reportListApi.getReportCount()
@@ -26,12 +27,13 @@ class ReportListStore {
         };
       }));
   }
+
   @action.bound getReportList() {
     const activeKey = this.activeKey;
     const moduleStr = activeKey + 'List';
     const reportListPager = uiStore.uiState[activeKey + 'ReportPager'];
     const {index, size} = reportListPager;
-    const params = {index, size};
+    const params = {index, size, companyName: uiStore.uiState.reportList.searchInput};
     this[moduleStr] = {};
     reportListApi.getReportList(activeKey, params)
       .then(action('get report page', (resp) => {

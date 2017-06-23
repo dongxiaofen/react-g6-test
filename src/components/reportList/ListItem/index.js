@@ -7,6 +7,12 @@ function ListItem({data}) {
   const viewReport = (companyName) => {
     browserHistory.push(`/companyHome?companyName=${companyName}`);
   };
+  const handleRegCap = (items) => {
+    if (items.capital === '0.0' || items.capital === '0' || items.capital === '' || items.capital === undefined || items.capital < 0.005) {
+      return '--';
+    }
+    return Number(items.capital).toFixed(2) + '万';
+  };
   return (
     <Row className={styles.item}>
       <Col width="8">
@@ -21,8 +27,8 @@ function ListItem({data}) {
         <div className={styles.infoDetail}>
           <span className={styles.detailItem}>{`企业状态：${data.companyStatus ? data.companyStatus : '无'}`}</span>
           <span className={styles.detailItem}>{`法人代表：${data.frName ? data.frName : '无'}`}</span>
-          <span className={styles.detailItem}>{`注册资本：${data.frName ? data.frName : '无'}`}</span>
-          <span className={styles.detailItem}>{`成立日期：${data.frName ? data.frName : '无'}`}</span>
+          <span className={styles.detailItem}>{`注册资本：${data.capital ? handleRegCap(data) : '无'}`}</span>
+          <span className={styles.detailItem}>{`成立日期：${data.regDt ? data.regDt : '无'}`}</span>
         </div>
       </Col>
       <Col width="3">

@@ -102,8 +102,6 @@ axios.interceptors.response.use((response) => {
     //     callback(require('components/test/Test'));
     //   });
     // });
-  } else if (allStore.clientStore.envConfig === 'local' && error.response.status === 502) {
-    allStore.messageStore.openMessage({ type: 'warning', content: '后台正在部署， 请稍后使用', duration: 5000 });
   } else if (error.response.status === 502) {
     allStore.messageStore.openMessage({type: 'warning', content: '后端正在部署', duration: 5000});
   } else if (error.response.data.errorCode === 403232) {
