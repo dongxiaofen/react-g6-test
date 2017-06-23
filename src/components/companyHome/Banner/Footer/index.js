@@ -59,10 +59,7 @@ function Footer({companyHomeStore, routing, bannerStore}) {
         <span className={styles.item} onClick={bannerStore.openDownLoadPdf}>
           <i className={styles.download}></i>下载PDF
         </span>
-        :
-        <span className={styles.item}>
-          请稍后...
-        </span>
+        : ''
       }
       {
         repType === 'monitor' ?

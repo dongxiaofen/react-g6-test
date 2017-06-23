@@ -1,10 +1,11 @@
 import { observable, action, runInAction } from 'mobx';
 import { browserHistory } from 'react-router';
-import { companyHomeApi } from 'api';
+import { companyHomeApi, pdfApi } from 'api';
 import modalStore from './modal';
 import messageStore from './message';
 import payModalStore from './payModal';
 import companyHomeStore from './companyHome';
+import bannerStore from './banner';
 class BannerStore {
   windowReload() {
     window.location.reload();
@@ -43,64 +44,64 @@ class BannerStore {
   // 下载pdf配置
   @observable pdfDownloadConfig = {
     levelOne: [
-      { label: '信息概览', value: 'SUMMERY', checked: false, type: 'basicReport' },
-      { label: '工商信息', value: 'CORP', checked: false, type: 'basicReport' },
-      { label: '对外投资任职', value: 'INV_POS', checked: false, type: 'basicReport' },
-      { label: '上市披露', value: 'STOCK', checked: false, type: 'basicReport' },
-      { label: '新闻信息', value: 'NEWS', checked: false, type: 'basicReport' },
-      { label: '经营信息', value: 'OPERATION', checked: false, type: 'basicReport' },
-      { label: '团队信息', value: 'TEAM', checked: false, type: 'basicReport'},
-      { label: '纳税公告', value: 'RISK_TAXATION', checked: false, type: 'basicReport' },
-      { label: '法务信息', value: 'RISK', checked: false, type: 'basicReport' },
-      { label: '行政信息', value: 'BUSINESS', checked: false, type: 'basicReport' },
+      {label: '信息概览', value: 'SUMMERY', checked: false, type: 'basicReport'},
+      {label: '工商信息', value: 'CORP', checked: false, type: 'basicReport'},
+      {label: '对外投资任职', value: 'INV_POS', checked: false, type: 'basicReport'},
+      {label: '上市披露', value: 'STOCK', checked: false, type: 'basicReport'},
+      {label: '新闻信息', value: 'NEWS', checked: false, type: 'basicReport'},
+      {label: '经营信息', value: 'OPERATION', checked: false, type: 'basicReport'},
+      {label: '团队信息', value: 'TEAM', checked: false, type: 'basicReport'},
+      {label: '纳税公告', value: 'RISK_TAXATION', checked: false, type: 'basicReport'},
+      {label: '法务信息', value: 'RISK', checked: false, type: 'basicReport'},
+      {label: '行政信息', value: 'BUSINESS', checked: false, type: 'basicReport'},
       // { label: '股权相关', value: 'PLEDGE', checked: false, type: 'basicReport' },
-      { label: '关联图', value: 'NETWORK', checked: false, type: 'report' },
-      { label: '抵质押信息', value: 'MORTGAGE', checked: false, type: 'basicReport' },
-      { label: '分析报告', value: 'ANALYSREPORT', checked: false, type: 'loan' },
+      {label: '关联图', value: 'NETWORK', checked: false, type: 'report'},
+      {label: '抵质押信息', value: 'MORTGAGE', checked: false, type: 'basicReport'},
+      {label: '分析报告', value: 'ANALYSREPORT', checked: false, type: 'loan'},
     ],
     levelTwo: {
       'SUMMERY': [],
       'CORP': [
-        { label: '照面信息', value: 'CORP_BASIC', checked: false },
-        { label: '工商变更', value: 'CORP_ALTER', checked: false },
-        { label: '企业年报', value: 'CORP_YEAR_REPORT', checked: false },
+        {label: '照面信息', value: 'CORP_BASIC', checked: false, type: 'basicReport'},
+        {label: '工商变更', value: 'CORP_ALTER', checked: false, type: 'basicReport'},
+        {label: '企业年报', value: 'CORP_YEAR_REPORT', checked: false, type: 'basicReport'},
       ],
       'INV_POS': [
-        { label: '法人对外投资任职', value: 'INV_POS_FR', checked: false, type: 'basicReport' },
-        { label: '企业对外投资', value: 'INV_POS_ENT', checked: false, type: 'basicReport' },
-        { label: '董监高对外投资任职', value: 'INV_POS_MANAGEMENT', checked: false, type: 'report' },
+        {label: '法人对外投资任职', value: 'INV_POS_FR', checked: false, type: 'basicReport'},
+        {label: '企业对外投资', value: 'INV_POS_ENT', checked: false, type: 'basicReport'},
+        {label: '董监高对外投资任职', value: 'INV_POS_MANAGEMENT', checked: false, type: 'report'},
       ],
       'STOCK': [
-        { label: '公司概况', value: 'STOCK_INFO', checked: false },
-        { label: '公司公告', value: 'STOCK_ANNOUNCEMENT', checked: false },
+        {label: '公司概况', value: 'STOCK_INFO', checked: false, type: 'basicReport'},
+        {label: '公司公告', value: 'STOCK_ANNOUNCEMENT', checked: false, type: 'basicReport'},
       ],
       'NEWS': [],
       'OPERATION': [
-        { label: '商标', value: 'OPERATION_TRADEMARK', checked: false },
-        { label: '专利', value: 'OPERATION_PATENT', checked: false },
-        { label: '招投标', value: 'OPERATION_BIDDING', checked: false },
+        {label: '商标', value: 'OPERATION_TRADEMARK', checked: false, type: 'basicReport'},
+        {label: '专利', value: 'OPERATION_PATENT', checked: false, type: 'basicReport'},
+        {label: '招投标', value: 'OPERATION_BIDDING', checked: false, type: 'basicReport'},
       ],
       'TEAM': [
-        { label: '招聘/员工背景', value: 'TEAM_RECRUITMENT_RESUME', checked: false },
-        { label: '团队发展趋势', value: 'TEAM_ANALYSIS', checked: false },
+        {label: '招聘/员工背景', value: 'TEAM_RECRUITMENT_RESUME', checked: false, type: 'basicReport'},
+        {label: '团队发展趋势', value: 'TEAM_ANALYSIS', checked: false, type: 'basicReport'},
       ],
       'RISK_TAXATION': [],
       'RISK': [
-        { label: '判决文书', value: 'RISK_JUDGEMENT', checked: false },
-        { label: '法院公告', value: 'RISK_ANNOUNCEMENT', checked: false },
-        { label: '开庭公告', value: 'RISK_NOTICE', checked: false },
-        { label: '被执行人信息', value: 'RISK_EXECUTE', checked: false },
-        { label: '失信被执行人信息', value: 'RISK_DISHONESTY', checked: false },
-        { label: '涉诉资产', value: 'RISK_LITIGATION', checked: false },
+        {label: '判决文书', value: 'RISK_JUDGEMENT', checked: false, type: 'basicReport'},
+        {label: '法院公告', value: 'RISK_ANNOUNCEMENT', checked: false, type: 'basicReport'},
+        {label: '开庭公告', value: 'RISK_NOTICE', checked: false, type: 'basicReport'},
+        {label: '被执行人信息', value: 'RISK_EXECUTE', checked: false, type: 'basicReport'},
+        {label: '失信被执行人信息', value: 'RISK_DISHONESTY', checked: false, type: 'basicReport'},
+        {label: '涉诉资产', value: 'RISK_LITIGATION', checked: false, type: 'basicReport'},
       ],
       'BUSINESS': [
-        { label: '经营异常', value: 'RISK_ABNORMAL', checked: false },
-        { label: '抽查检查', value: 'RISK_CHECK', checked: false },
-        { label: '违法记录', value: 'RISK_ILLEGAL', checked: false },
+        {label: '经营异常', value: 'RISK_ABNORMAL', checked: false, type: 'basicReport'},
+        {label: '抽查检查', value: 'RISK_CHECK', checked: false, type: 'basicReport'},
+        {label: '违法记录', value: 'RISK_ILLEGAL', checked: false, type: 'basicReport'},
       ],
       'NETWORK': [
-        { label: '关联关系', value: 'NETWORK_RELEVANCE', checked: false },
-        { label: '风险关系', value: 'NETWORK_BLACKLIST', checked: false },
+        {label: '关联关系', value: 'NETWORK_RELEVANCE', checked: false, type: 'report'},
+        {label: '风险关系', value: 'NETWORK_BLACKLIST', checked: false, type: 'report'},
       ],
       'PLEDGE': [
         // { label: '股权冻结', value: 'PLEDGE_EQUITY_SHARE', checked: false },
@@ -109,12 +110,12 @@ class BannerStore {
       ],
       'MORTGAGE': [
         // { label: '股权相关', value: 'RISK_ANNOUNCEMENT', checked: false },
-        { label: '股权相关', value: 'PLEDGE_EQUITY_SHARE', checked: false },
+        {label: '股权相关', value: 'PLEDGE_EQUITY_SHARE', checked: false, type: 'basicReport'},
         // { label: '抵押人信息', value: 'RISK_ANNOUNCEMENT', checked: false },
         // { label: '抵押变更', value: 'RISK_JUDGEMENT', checked: false },
       ],
       'ANALYSREPORT': [
-        { label: '多维综合分析', value: 'SCORE', checked: false },
+        {label: '多维综合分析', value: 'SCORE', checked: false, type: 'loan'},
         // { label: '盈利能力分析', value: 'PROFIT', checked: false },
         // { label: '营运能力分析', value: 'OPERATION', checked: false },
         // { label: '成长能力分析', value: 'GROWING', checked: false },
@@ -142,6 +143,59 @@ class BannerStore {
   openContactPopoverAlias = this.openContactPopover;
   extendContactAlias = this.extendContact;
 
+  // 下载pdf相关
+  @observable pdfCheckStatue = {};
+  @observable checkPDFStatus = 'creating';
+
+  @action.bound createPDF(type, queryStr) {
+    let url = '';
+    if (type === 'report') {
+      url = `/pdfDown?reportId=${companyHomeStore.reportInfo.reportId}${queryStr}`;
+    }
+    if (type === 'basicReport') {
+      url = `/pdfDown?basicReportId=${companyHomeStore.reportInfo.basicReportId}${queryStr}`;
+    }
+    if (type === 'loan') {
+      url = `/pdfDown?analysisReportId=${companyHomeStore.reportInfo.analysisReportId}${queryStr}`;
+    }
+    pdfApi.createPDF(url)
+      .then(action('createPDF', (resp)=>{
+        this.pdfCheckStatue = resp.data;
+        this.intervalCheckPDF(resp.data);
+      }))
+      .catch(action('createPDF err', (error)=>{
+        console.log(error);
+      }));
+  }
+
+  @action.bound intervalCheckPDF(params) {
+    const maxCount = 20;
+    let checkCount = 0;
+    const checkTimeout = () => {
+      pdfApi.checkPDF(params)
+        .then(action('checkPDF', (resp) => {
+          if (resp.status === 200) {
+            if (resp.data.status === 'creating' && checkCount < maxCount) {
+              this.checkPDFStatus = 'creating';
+              setTimeout(() => {
+                checkCount ++;
+                checkTimeout();
+              }, 500);
+            } else if (resp.data.status === 'sucess') {
+              const companyName = this.pdfCheckStatue.companyName;
+              window.location = `${resp.data.download}&attname=${companyName}.pdf`;
+            }
+          } else {
+            this.checkPDFStatus = 'faile';
+          }
+        }))
+        .catch(action('checkPDF err', () => {
+          this.checkPDFStatus = 'faile';
+        }));
+    };
+    checkTimeout();
+  }
+
   @action.bound setPdfDownloadKeys(keys, reportType) {
     this.pdfDownloadKeys = keys;
     this.reportType = reportType;
@@ -150,18 +204,23 @@ class BannerStore {
   @action.bound closeHisNamePopover() {
     this.hisNameVis = false;
   }
+
   @action.bound openHisNamePopover() {
     this.hisNameVis = true;
   }
+
   @action.bound closeContactPopover() {
     this.contactVis = false;
   }
+
   @action.bound openContactPopover() {
     this.contactVis = true;
   }
+
   @action.bound extendContact(key) {
     this.contactExtended = this.contactExtended === key ? '' : key;
   }
+
   // 刷新报告
   refreshRepConfirm = () => {
     this.refreshReport();
@@ -172,33 +231,36 @@ class BannerStore {
       width: 420,
       isSingleBtn: true,
       confirmAction: this.refreshRepConfirm,
-      loader: () => {}
+      loader: () => {
+      }
     });
   };
+
   @action.bound createBasicReport(params) {
     companyHomeApi.createBasicReport({companyName: params.companyName})
-    .then(action('createBasicReport', (resp)=>{
-      companyHomeStore.reportInfo.basicReportId = resp.data.basicReportId;
-      this.getBannerInfo({companyName: params.companyName});
-    }))
-    .catch(action('createBasicReport err', (error)=>{
-      console.log(error);
-    }));
+      .then(action('createBasicReport', (resp) => {
+        companyHomeStore.reportInfo.basicReportId = resp.data.basicReportId;
+        this.getBannerInfo({companyName: params.companyName});
+      }))
+      .catch(action('createBasicReport err', (error) => {
+        console.log(error);
+      }));
   }
+
   @action.bound getReportStatus(params) {
     this.isLoading = true;
     companyHomeApi.getReportStatus(params)
-    .then(action('getReportStatus', (resp)=>{
-      if (resp.data.basicReportId || resp.data.reportId) {
-        this.getBannerInfo({companyName: params.companyName});
-        companyHomeStore.updateValue('reportInfo', Object.assign(companyHomeStore.reportInfo, resp.data));
-      } else {
-        this.createBasicReport({companyName: params.companyName});
-      }
-    }))
-    .catch(action('getReportStatus err', (error)=>{
-      console.log(error);
-    }));
+      .then(action('getReportStatus', (resp) => {
+        if (resp.data.basicReportId || resp.data.reportId) {
+          this.getBannerInfo({companyName: params.companyName});
+          companyHomeStore.updateValue('reportInfo', Object.assign(companyHomeStore.reportInfo, resp.data));
+        } else {
+          this.createBasicReport({companyName: params.companyName});
+        }
+      }))
+      .catch(action('getReportStatus err', (error) => {
+        console.log(error);
+      }));
   }
 
   @action.bound getBannerInfo(params) {
@@ -214,6 +276,7 @@ class BannerStore {
         this.isLoading = false;
       }));
   }
+
   @action.bound toggleMonitorStatus(monitorId, status) {
     companyHomeApi.toggleMonitorStatus(monitorId, status)
       .then(action('toggle monitor status', (resp) => {
@@ -224,40 +287,29 @@ class BannerStore {
       });
   }
 
-  // 获取上市代码
-  @action.bound getStockCode({ reportId, monitorId, analysisReportId }) {
-    companyHomeApi.getStockCode({ reportId, monitorId, analysisReportId })
-      .then(action('get stock code', (resp) => {
-        this.stockCode = resp.data;
-      }))
-      .catch((err) => {
-        console.log(err);
-        // if (err.response.status !== 404) {
-        //   console.log('获取stockCode出错', err.response);
-        // }
-      });
-  }
   @action.bound getReportInfo() {
     const {reportId, basicReportId} = companyHomeStore.reportInfo;
     const getRepInfoHandle = reportId !== '' ? companyHomeApi.getReportInfo(reportId) : companyHomeApi.getBasicRepInfo(basicReportId);
     getRepInfoHandle
-    .then(action('report info', (resp)=>{
-      this.reportDate = resp.data.lastModifiedTs;
-    }))
-    .catch((error)=>{
-      console.log('report info error', error);
-    });
+      .then(action('report info', (resp) => {
+        this.reportDate = resp.data.lastModifiedTs;
+      }))
+      .catch((error) => {
+        console.log('report info error', error);
+      });
   }
+
   @action.bound getMonitorRepInfo() {
-    const { monitorId } = companyHomeStore.reportInfo;
+    const {monitorId} = companyHomeStore.reportInfo;
     companyHomeApi.getMonitorInfo(monitorId)
-    .then(action('report info', (resp)=>{
-      this.monitorRepInfo = resp.data;
-    }))
-    .catch((error)=>{
-      console.log('report info error', error);
-    });
+      .then(action('report info', (resp) => {
+        this.monitorRepInfo = resp.data;
+      }))
+      .catch((error) => {
+        console.log('report info error', error);
+      });
   }
+
   // 刷新报告
   @action.bound refreshReport() {
     modalStore.confirmLoading = true;
@@ -268,7 +320,7 @@ class BannerStore {
         console.log(resp.data);
         modalStore.confirmLoading = false;
         modalStore.closeAction();
-        messageStore.openMessage({ content: '刷新成功', callBack: this.windowReload });
+        messageStore.openMessage({content: '刷新成功', callBack: this.windowReload});
         this.getReportInfo();
       }))
       .catch((err) => {
@@ -278,30 +330,31 @@ class BannerStore {
           modalStore.closeAction();
           if (err.response.data.errorCode === 403218) {
             this.getReportInfo();
-            messageStore.openMessage({ type: 'info', content: err.response.data.message });
+            messageStore.openMessage({type: 'info', content: err.response.data.message});
           } else {
-            messageStore.openMessage({ type: 'warning', content: err.response.data.message });
+            messageStore.openMessage({type: 'warning', content: err.response.data.message});
           }
         });
       });
   }
 
   // 升级为监控
-  @action.bound updateToMonitor({ reportId, time }) {
-    companyHomeApi.updateToMonitor({ reportId, time })
+  @action.bound updateToMonitor({reportId, time}) {
+    companyHomeApi.updateToMonitor({reportId, time})
       .then(action('update to monitor', (resp) => {
         payModalStore.closeAction();
         browserHistory.push(`/companyHome?monitorId=${resp.data.monitorId}`);
-        messageStore.openMessage({ content: '成功创建监控', callBack: this.windowReload });
+        messageStore.openMessage({content: '成功创建监控', callBack: this.windowReload});
       }))
       .catch((err) => {
         console.log(err.response);
         runInAction(() => {
           payModalStore.closeAction();
-          messageStore.openMessage({ type: 'warning', content: err.response.data.message });
+          messageStore.openMessage({type: 'warning', content: err.response.data.message});
         });
       });
   }
+
   // 恢复监控loading
   reStoreLoadingAction(monitorStatus) {
     if (monitorStatus === 'PAUSE') {
@@ -314,6 +367,7 @@ class BannerStore {
       });
     }
   }
+
   closePdfModal = () => {
     this.clearPdfConfigChecked();
   };
@@ -368,36 +422,68 @@ class BannerStore {
   }
 
   // 设置全部下载按钮
-  @action.bound setDownloadAll(checked) {
+  @action.bound setDownloadAll(checked, reportType) {
+    console.log('reportType', reportType);
     this.isAllChecked = checked;
     const levelOne = this.pdfDownloadConfig.levelOne;
     const levelTwo = this.pdfDownloadConfig.levelTwo;
     const levelTwoKeys = Object.keys(levelTwo);
-    const stockCode = this.stockCode;
-    const isMonitor = window.location.href.includes('monitorId');
+    const stockCode = bannerStore.bannerInfoData.stockCode;
     levelOne.map((item) => {
-      if (item.value === 'STOCK') {
-        if (stockCode) {
+      if (reportType === 'basicReport' && item.type === reportType) {
+        if (item.value === 'STOCK') {
+          if (stockCode) {
+            item.checked = checked;
+          }
+        } else {
           item.checked = checked;
         }
-      } else if (item.value === 'TAX') {
-        if (isMonitor) {
+      } else if (reportType === 'report' && (item.type === 'report' || item.type === 'basicReport')) {
+        if (item.value === 'STOCK') {
+          if (stockCode) {
+            item.checked = checked;
+          }
+        } else {
           item.checked = checked;
         }
-      } else {
+      } else if (reportType === 'loan' && item.type === reportType) {
         item.checked = checked;
       }
     });
     levelTwoKeys.map((key) => {
-      if (key === 'STOCK') {
-        if (stockCode) {
+      if (reportType === 'basicReport') {
+        if (key === 'STOCK') {
+          if (stockCode) {
+            levelTwo[key].map((item) => {
+              item.checked = checked;
+            });
+          }
+        } else {
           levelTwo[key].map((item) => {
-            item.checked = checked;
+            if (item.type === 'basicReport') {
+              item.checked = checked;
+            }
           });
         }
-      } else {
+      } else if (reportType === 'report') {
+        if (key === 'STOCK') {
+          if (stockCode) {
+            levelTwo[key].map((item) => {
+              item.checked = checked;
+            });
+          }
+        } else {
+          levelTwo[key].map((item) => {
+            if (item.type === 'basicReport' || item.type === 'report') {
+              item.checked = checked;
+            }
+          });
+        }
+      } else if (reportType === 'loan') {
         levelTwo[key].map((item) => {
-          item.checked = checked;
+          if (item.type === 'loan') {
+            item.checked = checked;
+          }
         });
       }
     });
@@ -435,10 +521,11 @@ class BannerStore {
         console.log(err.response);
         runInAction(() => {
           this.collectionLoading = false;
-          messageStore.openMessage({ content: err.response.data.message });
+          messageStore.openMessage({content: err.response.data.message});
         });
       });
   }
+
   // 监控续期
   renewalMonitorModal = () => {
     payModalStore.openCompModal({
@@ -451,21 +538,23 @@ class BannerStore {
     const {monitorId} = companyHomeStore.reportInfo;
     this.renewalMonitor(monitorId, payModalStore.selectValue);
   };
+
   @action.bound renewalMonitor(monitorId, time) {
     companyHomeApi.renewalMonitor(monitorId, time)
       .then(action('renewal monitor', () => {
         payModalStore.closeAction();
-        messageStore.openMessage({ content: '续期成功'});
+        messageStore.openMessage({content: '续期成功'});
         this.getMonitorRepInfo();
       }))
       .catch((err) => {
         console.log(err.response);
         runInAction(() => {
           payModalStore.closeAction();
-          messageStore.openMessage({ type: 'warning', content: err.response.data.message });
+          messageStore.openMessage({type: 'warning', content: err.response.data.message});
         });
       });
   }
+
   // 暂停恢复监控
   pauseOrRestoreMonitorModal = () => {
     modalStore.openCompModal({
@@ -485,6 +574,7 @@ class BannerStore {
     const {monitorStatus} = this.monitorRepInfo;
     this.pauseOrRestoreMonitor(monitorId, monitorStatus === 'MONITOR' ? 'PAUSE' : 'MONITOR');
   };
+
   @action.bound pauseOrRestoreMonitor(monitorId, status) {
     modalStore.confirmLoading = true;
     this.reStoreLoading = true;
@@ -494,17 +584,18 @@ class BannerStore {
         modalStore.closeAction();
         this.reStoreLoading = false;
         this.monitorRepInfo.monitorStatus = status;
-        messageStore.openMessage({ content: '操作成功' });
+        messageStore.openMessage({content: '操作成功'});
       }))
       .catch((err) => {
         runInAction(() => {
           modalStore.confirmLoading = false;
           modalStore.closeAction();
           this.reStoreLoading = false;
-          messageStore.openMessage({ type: 'warning', content: err.response.data.message });
+          messageStore.openMessage({type: 'warning', content: err.response.data.message});
         });
       });
   }
+
   @action.bound resetStore() {
     this.monitorId = '';
     this.reportId = '';
@@ -527,64 +618,64 @@ class BannerStore {
     this.stockCode = '';
     this.pdfDownloadConfig = {
       levelOne: [
-        { label: '信息概览', value: 'SUMMERY', checked: false, type: 'basicReport' },
-        { label: '工商信息', value: 'CORP', checked: false, type: 'basicReport' },
-        { label: '对外投资任职', value: 'INV_POS', checked: false, type: 'basicReport' },
-        { label: '上市披露', value: 'STOCK', checked: false, type: 'basicReport' },
-        { label: '新闻信息', value: 'NEWS', checked: false, type: 'basicReport' },
-        { label: '经营信息', value: 'OPERATION', checked: false, type: 'basicReport' },
-        { label: '团队信息', value: 'TEAM', checked: false, type: 'basicReport'},
-        { label: '纳税公告', value: 'RISK_TAXATION', checked: false, type: 'basicReport' },
-        { label: '法务信息', value: 'RISK', checked: false, type: 'basicReport' },
-        { label: '行政信息', value: 'BUSINESS', checked: false, type: 'basicReport' },
+        {label: '信息概览', value: 'SUMMERY', checked: false, type: 'basicReport'},
+        {label: '工商信息', value: 'CORP', checked: false, type: 'basicReport'},
+        {label: '对外投资任职', value: 'INV_POS', checked: false, type: 'basicReport'},
+        {label: '上市披露', value: 'STOCK', checked: false, type: 'basicReport'},
+        {label: '新闻信息', value: 'NEWS', checked: false, type: 'basicReport'},
+        {label: '经营信息', value: 'OPERATION', checked: false, type: 'basicReport'},
+        {label: '团队信息', value: 'TEAM', checked: false, type: 'basicReport'},
+        {label: '纳税公告', value: 'RISK_TAXATION', checked: false, type: 'basicReport'},
+        {label: '法务信息', value: 'RISK', checked: false, type: 'basicReport'},
+        {label: '行政信息', value: 'BUSINESS', checked: false, type: 'basicReport'},
         // { label: '股权相关', value: 'PLEDGE', checked: false, type: 'basicReport' },
-        { label: '关联图', value: 'NETWORK', checked: false, type: 'report' },
-        { label: '抵质押信息', value: 'MORTGAGE', checked: false, type: 'basicReport' },
-        { label: '分析报告', value: 'ANALYSREPORT', checked: false, type: 'loan' },
+        {label: '关联图', value: 'NETWORK', checked: false, type: 'report'},
+        {label: '抵质押信息', value: 'MORTGAGE', checked: false, type: 'basicReport'},
+        {label: '分析报告', value: 'ANALYSREPORT', checked: false, type: 'loan'},
       ],
       levelTwo: {
         'SUMMERY': [],
         'CORP': [
-          { label: '照面信息', value: 'CORP_BASIC', checked: false },
-          { label: '工商变更', value: 'CORP_ALTER', checked: false },
-          { label: '企业年报', value: 'CORP_YEAR_REPORT', checked: false },
+          {label: '照面信息', value: 'CORP_BASIC', checked: false, type: 'basicReport'},
+          {label: '工商变更', value: 'CORP_ALTER', checked: false, type: 'basicReport'},
+          {label: '企业年报', value: 'CORP_YEAR_REPORT', checked: false, type: 'basicReport'},
         ],
         'INV_POS': [
-          { label: '法人对外投资任职', value: 'INV_POS_FR', checked: false, type: 'basicReport' },
-          { label: '企业对外投资', value: 'INV_POS_ENT', checked: false, type: 'basicReport' },
-          { label: '董监高对外投资任职', value: 'INV_POS_MANAGEMENT', checked: false, type: 'report' },
+          {label: '法人对外投资任职', value: 'INV_POS_FR', checked: false, type: 'basicReport'},
+          {label: '企业对外投资', value: 'INV_POS_ENT', checked: false, type: 'basicReport'},
+          {label: '董监高对外投资任职', value: 'INV_POS_MANAGEMENT', checked: false, type: 'report'},
         ],
         'STOCK': [
-          { label: '公司概况', value: 'STOCK_INFO', checked: false },
-          { label: '公司公告', value: 'STOCK_ANNOUNCEMENT', checked: false },
+          {label: '公司概况', value: 'STOCK_INFO', checked: false, type: 'basicReport'},
+          {label: '公司公告', value: 'STOCK_ANNOUNCEMENT', checked: false, type: 'basicReport'},
         ],
         'NEWS': [],
         'OPERATION': [
-          { label: '商标', value: 'OPERATION_TRADEMARK', checked: false },
-          { label: '专利', value: 'OPERATION_PATENT', checked: false },
-          { label: '招投标', value: 'OPERATION_BIDDING', checked: false },
+          {label: '商标', value: 'OPERATION_TRADEMARK', checked: false, type: 'basicReport'},
+          {label: '专利', value: 'OPERATION_PATENT', checked: false, type: 'basicReport'},
+          {label: '招投标', value: 'OPERATION_BIDDING', checked: false, type: 'basicReport'},
         ],
         'TEAM': [
-          { label: '招聘/员工背景', value: 'TEAM_RECRUITMENT_RESUME', checked: false },
-          { label: '团队发展趋势', value: 'TEAM_ANALYSIS', checked: false },
+          {label: '招聘/员工背景', value: 'TEAM_RECRUITMENT_RESUME', checked: false, type: 'basicReport'},
+          {label: '团队发展趋势', value: 'TEAM_ANALYSIS', checked: false, type: 'basicReport'},
         ],
         'RISK_TAXATION': [],
         'RISK': [
-          { label: '判决文书', value: 'RISK_JUDGEMENT', checked: false },
-          { label: '法院公告', value: 'RISK_ANNOUNCEMENT', checked: false },
-          { label: '开庭公告', value: 'RISK_NOTICE', checked: false },
-          { label: '被执行人信息', value: 'RISK_EXECUTE', checked: false },
-          { label: '失信被执行人信息', value: 'RISK_DISHONESTY', checked: false },
-          { label: '涉诉资产', value: 'RISK_LITIGATION', checked: false },
+          {label: '判决文书', value: 'RISK_JUDGEMENT', checked: false, type: 'basicReport'},
+          {label: '法院公告', value: 'RISK_ANNOUNCEMENT', checked: false, type: 'basicReport'},
+          {label: '开庭公告', value: 'RISK_NOTICE', checked: false, type: 'basicReport'},
+          {label: '被执行人信息', value: 'RISK_EXECUTE', checked: false, type: 'basicReport'},
+          {label: '失信被执行人信息', value: 'RISK_DISHONESTY', checked: false, type: 'basicReport'},
+          {label: '涉诉资产', value: 'RISK_LITIGATION', checked: false, type: 'basicReport'},
         ],
         'BUSINESS': [
-          { label: '经营异常', value: 'RISK_ABNORMAL', checked: false },
-          { label: '抽查检查', value: 'RISK_CHECK', checked: false },
-          { label: '违法记录', value: 'RISK_ILLEGAL', checked: false },
+          {label: '经营异常', value: 'RISK_ABNORMAL', checked: false, type: 'basicReport'},
+          {label: '抽查检查', value: 'RISK_CHECK', checked: false, type: 'basicReport'},
+          {label: '违法记录', value: 'RISK_ILLEGAL', checked: false, type: 'basicReport'},
         ],
         'NETWORK': [
-          { label: '关联关系', value: 'NETWORK_RELEVANCE', checked: false },
-          { label: '风险关系', value: 'NETWORK_BLACKLIST', checked: false },
+          {label: '关联关系', value: 'NETWORK_RELEVANCE', checked: false, type: 'report'},
+          {label: '风险关系', value: 'NETWORK_BLACKLIST', checked: false, type: 'report'},
         ],
         'PLEDGE': [
           // { label: '股权冻结', value: 'PLEDGE_EQUITY_SHARE', checked: false },
@@ -593,12 +684,12 @@ class BannerStore {
         ],
         'MORTGAGE': [
           // { label: '股权相关', value: 'RISK_ANNOUNCEMENT', checked: false },
-          { label: '股权相关', value: 'PLEDGE_EQUITY_SHARE', checked: false },
+          {label: '股权相关', value: 'PLEDGE_EQUITY_SHARE', checked: false, type: 'basicReport'},
           // { label: '抵押人信息', value: 'RISK_ANNOUNCEMENT', checked: false },
           // { label: '抵押变更', value: 'RISK_JUDGEMENT', checked: false },
         ],
         'ANALYSREPORT': [
-          { label: '多维综合分析', value: 'SCORE', checked: false },
+          {label: '多维综合分析', value: 'SCORE', checked: false, type: 'loan'},
           // { label: '盈利能力分析', value: 'PROFIT', checked: false },
           // { label: '营运能力分析', value: 'OPERATION', checked: false },
           // { label: '成长能力分析', value: 'GROWING', checked: false },

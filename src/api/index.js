@@ -20,4 +20,5 @@ export * as accountProfileApi from './accountProfile';
 export * as assetTransactionApi from './assetTransaction';
 export * as linkJumpApi from './linkJump';
 export * as relPerCheckApi from './relPerCheck';
+export * as pdfApi from './pdf';
 // append here from plop
