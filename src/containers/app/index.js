@@ -40,8 +40,12 @@ export default class App extends Component {
       require('components/common/reportOper/CreateLoanRep');
       require('components/common/reportOper/CreateMonitor');
       require('components/assetsRefresh');
+<<<<<<< HEAD
       require('components/accountSetting/AccountBase/BaseInfo/info');
       require('components/accountSetting/userModal/info');
+=======
+      // require('containers/companyHome/CompanyHome');
+>>>>>>> dx-mobx-4.1.0-dev
     });
   }
   render() {
