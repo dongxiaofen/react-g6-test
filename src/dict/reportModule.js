@@ -729,16 +729,16 @@ const config = {
   },
   biddingCount: {
     bidCount: '总投标数',
-    bidMoneyAmount: '总投标金额',
+    bidMoneyAmount: '总投标金额（元）',
     winCount: '总中标数量',
-    winMoneyAmount: '总中标金额',
+    winMoneyAmount: '总中标金额（元）',
   },
   biddingTable: {
     date: '日期',
     bidCount: '投标数',
-    bidMoneyAmount: '投标金额',
+    bidMoneyAmount: '投标金额（元）',
     winCount: '中标数量',
-    winMoneyAmount: '中标金额',
+    winMoneyAmount: '中标金额（元）',
   }
 };
 
