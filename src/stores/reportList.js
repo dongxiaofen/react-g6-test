@@ -9,6 +9,7 @@ class ReportListStore {
   @observable basicList = {};
   @observable advancedList = {};
   @observable searchInput = '';
+  @observable isShowNoResultMessage = false;
 
   @action.bound changeValue(key, value) {
     pathval.setPathValue(this, key, value);
@@ -30,6 +31,7 @@ class ReportListStore {
   }
 
   @action.bound getReportList() {
+    this.isShowNoResultMessage = false;
     const activeKey = this.activeKey;
     const moduleStr = activeKey + 'List';
     const reportListPager = uiStore.uiState[activeKey + 'ReportPager'];
@@ -40,6 +42,7 @@ class ReportListStore {
       .then(action('get report page', (resp) => {
         reportListPager.totalElements = resp.data.totalElements;
         this[moduleStr] = resp.data;
+        this.isShowNoResultMessage = !!this.searchInput;
       }))
       .catch(action('get report page', (err) => {
         console.log(err, '-----getReportList');
