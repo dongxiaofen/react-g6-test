@@ -150,6 +150,15 @@ export function getLinkInfo(data) {
     if (key === '股东' && data.invRatio !== -1) {
       const invCurrency = (data.invCurrency === '人民币' || data.invCurrency === '') ? '万人民币' : data.invCurrency;
       description.push(`${relation[key][0]}(投资金额: ${data.invConum + invCurrency},投资比例: ${data.invRatio.toFixed(2)}%)`);
+    } else if (key === '共同原被告' || key === '诉讼对立方') {
+      if (typeof relation[key][0] === 'string') {
+        description.push(`${key}(${relation[key][0]})`);
+      } else {
+        const firstItem = relation[key][0];
+        const label = Object.keys(firstItem)[0];
+        const caseReason = firstItem[label].length > 0 ? `(${firstItem[label].join('、')})` : '';
+        description.push(`${label}${caseReason}`);
+      }
     } else {
       description.push(`${key}(${relation[key][0]})`);
     }
@@ -219,9 +228,12 @@ export function getArrowType(target, nodes) {
 export function findShortPath(node, shortestPahth) {
   let index = -1;
   shortestPahth.forEach((pathArr)=>{
-    index = pathArr.findIndex((item)=>{
+    const idx = pathArr.findIndex((item)=>{
       return node === item;
     });
+    if (idx > -1) {
+      index = idx;
+    }
   });
   return index > -1;
 }
