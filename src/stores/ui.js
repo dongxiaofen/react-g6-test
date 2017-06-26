@@ -591,7 +591,7 @@ class UiStore {
     );
   }
 
-  @observable uiState = test;
+  @observable uiState = initPagerParams;
 
   @action.bound
   updateUiStore(keypath, value) {
