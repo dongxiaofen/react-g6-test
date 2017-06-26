@@ -1,4 +1,4 @@
-import { observable, action, reaction, extendObservable } from 'mobx';
+import {observable, action, reaction, extendObservable} from 'mobx';
 import pathval from 'pathval';
 import companyHomeStore from './companyHome';
 import assetsStore from './report/assets';
@@ -150,7 +150,7 @@ class UiStore {
       }
     );
     reaction(
-        () => this.uiState.accountLoginRecord.index,
+      () => this.uiState.accountLoginRecord.index,
       () => {
         const uId = accountSettingStore.base.data.id;
         accountSettingStore.getLoginRecord(uId);
@@ -334,19 +334,6 @@ class UiStore {
       index: 1,
       size: 10,
       totalElements: 0,
-    },
-    monitorList: {
-      searchInput: '',
-      sortDirection: {
-        start_tm: 'DESC',
-        expire_dt: 'DESC',
-        latestTs: 'DESC',
-      },
-      params: {
-        companyName: '',
-        sort: 'start_tm,DESC',
-        monitorStatus: '',
-      }
     },
     monitorListPager: {
       index: 1,
@@ -609,10 +596,12 @@ class UiStore {
   @action.bound updateUiStore(keypath, value) {
     pathval.setPathValue(this.uiState, keypath, value);
   }
+
   @action.bound toggleExpand(module, rowIdx) {
     const value = this.uiState[module].show.get(rowIdx);
     this.uiState[module].show.set(rowIdx, !value);
   }
+
   @action.bound resetAccountPager() {
     const template = {
       index: 1,
@@ -626,6 +615,7 @@ class UiStore {
     this.uiState.accountLoginRecord = Object.assign({}, template);
     this.uiState.relPerCheck = Object.assign({}, template);
   }
+
   @action.bound resetStore() {
     extendObservable(this, {
       uiState: {

@@ -76,7 +76,7 @@
       }
     },
     "start-test": {
-      "command": "pm2 start ./bin/server.js --name=xx_local_test",
+      "command": "pm2 start ./bin/server.js -i 0 --name=xx_local_test",
       "env": {
         "NODE_PATH": "./src",
         "NODE_ENV": "production",
@@ -106,7 +106,7 @@
       }
     },
     "start-remote-prod-pre": {
-      "command": "pm2 start ./bin/server.js --name=xx_remote_prod_pre",
+      "command": "pm2 start ./bin/server.js -i 0 --name=xx_remote_prod_pre",
       "env": {
         "NODE_PATH": "./src",
         "NODE_ENV": "production",
@@ -190,6 +190,7 @@
     "moment": "2.17.1",
     "moment-range": "2.2.0",
     "morgan": "1.8.1",
+    "node-schedule": "^1.2.3",
     "node-uuid": "1.4.7",
     "object-assign": "4.1.1",
     "pathval": "^1.1.0",

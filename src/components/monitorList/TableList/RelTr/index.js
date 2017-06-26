@@ -1,19 +1,19 @@
 import React from 'react';
-import { observer, inject } from 'mobx-react';
-import { browserHistory } from 'react-router';
+import {observer, inject} from 'mobx-react';
+import {browserHistory} from 'react-router';
 import RelTime from './RelTime';
 import ActionWrap from '../ActionWrap';
 import styles from './index.less';
-function RelTr({data, mainData, index, monitorListStore, uiStore}) {
+function RelTr({data, mainData, index, monitorListStore}) {
   const viewReport = () => {
     browserHistory.push(`/companyHome?companyName=${data.companyName}`);
   };
   const handleRelName = () => {
-    const { companyName } = uiStore.uiState.monitorList.params;
+    const {companyName} = monitorListStore.searchInfo.params;
     if (companyName) {
       const regExp = new RegExp(companyName, 'g');
       const result = data.companyName.replace(regExp, match => `<span style="color: #42A5F5">${match}</span>`);
-      return <span className={styles.relName} dangerouslySetInnerHTML={{__html: result}} onClick={viewReport} />;
+      return <span className={styles.relName} dangerouslySetInnerHTML={{__html: result}} onClick={viewReport}/>;
     }
     return <span className={styles.relName} onClick={viewReport}>{data.companyName}</span>;
   };
@@ -49,16 +49,16 @@ function RelTr({data, mainData, index, monitorListStore, uiStore}) {
         {handleRelName()}
       </div>
       <div className={styles.timeWrap}>
-        <RelTime values={data.startTm} />
-        <RelTime values={data.stopTm} />
-        <RelTime values={data.latestTs} />
+        <RelTime values={data.startTm}/>
+        <RelTime values={data.stopTm}/>
+        <RelTime values={data.latestTs}/>
       </div>
       <ActionWrap
         data={data}
         mainData={mainData}
         index={index}
         monitorListStore={monitorListStore}
-        relation="relation" />
+        relation="relation"/>
     </div>
   );
 }
