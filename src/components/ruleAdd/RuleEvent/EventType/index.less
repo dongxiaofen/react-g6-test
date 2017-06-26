@@ -301,3 +301,38 @@
 .hidden {
   display: none;
 }
+
+// 关键词
+.keyWordWrap {
+  float: left;
+}
+.keyWordInput {
+  float: left;
+  margin: 0 0 0 10px;
+  width: 310px;
+  height: 25px;
+  line-height: 25px;
+  font-size:14px;
+  color:#212121;
+  border-bottom: 1px solid #90caf9;
+  background: none;
+  &::-webkit-input-placeholder {
+    color: #bdbdbd;
+  }
+
+  &:-moz-placeholder {
+    color: #bdbdbd;
+  }
+
+  &::-moz-placeholder {
+    color: #bdbdbd;
+  }
+
+  &:-ms-input-placeholder {
+    color: #bdbdbd;
+  }
+}
+
+.keyWordInput:focus {
+  color:#212121;
+}

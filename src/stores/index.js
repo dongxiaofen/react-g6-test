@@ -59,4 +59,6 @@ export assetTransactionStore from './assetTransaction';
 export linkJumpStore from './linkJump';
 export entireLoadingStore from './entireLoading';
 export loaningStore from './loaning';
+export ruleAddStore from './ruleAdd';
+export ruleListStore from './ruleList';
 // append here from plop
