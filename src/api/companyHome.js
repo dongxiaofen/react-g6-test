@@ -70,6 +70,18 @@ export const getReportModule = (urlStr, idParams, params) => {
   window.reportSourceCancel.push(source.cancel);
   return axios.get(url, { cancelToken: source.token, params});
 };
+
+export const getRiskCourt = ({ basicReportId, reportId, tabAct, config }) => {
+  let url = '';
+  if (basicReportId) {
+    url = `/api/basicReport/${basicReportId}/risk/${tabAct}/page`;
+  }
+  if (reportId) {
+    url = `/api/report/${reportId}/risk/${tabAct}/page`;
+  }
+  return axios.get(url, config);
+};
+
 export const getJudgeDetailMonitor = (monitorCompanyId, params) => {
   return axios.get(`/api/monitor/${monitorCompanyId}/risk/judgeDoc`, { params });
 };
