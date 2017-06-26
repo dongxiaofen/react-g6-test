@@ -22,8 +22,8 @@ function Assets({pdfStore, judgeIsModuleExist}) {
         </div> : ''}
         {judgeIsModuleExist('OPERATION_BIDDING') ?
         <div>
-          <PdfTitle module="经营信息" subModule="招投标" />
-          <Bidding moduleData={pathval.getPathValue(pdfStore, 'bidding')} />
+          <PdfTitle module="经营信息" subModule="招投标分析" />
+          <Bidding moduleData={pathval.getPathValue(pdfStore, 'bidding.result')} />
         </div> : ''}
       </div>
     </div>

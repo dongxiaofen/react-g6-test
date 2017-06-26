@@ -26,7 +26,7 @@ class PdfStore {
   @observable entinvItemList = [];
   @observable frData = {};
   @observable shares = {};
-  @observable pdfTypesKey = '';
+  @observable pdfTypesKey = 'OPERATION_BIDDING';
   @observable managements = [];
   @observable reportType = '';
   // summary
@@ -118,7 +118,7 @@ class PdfStore {
         this.internet = pathval.getPathValue(response.data, 'internet');
         this.trademark = pathval.getPathValue(response.data, 'trademark'); // 没有数据
         this.patent = pathval.getPathValue(response.data, 'patent');
-        this.bidding = pathval.getPathValue(response.data, 'biddingList');
+        this.bidding = pathval.getPathValue(response.data, 'bidding');
         this.network = pathval.getPathValue(response.data, 'network');
         this.blacklist = pathval.getPathValue(response.data, 'blackList.result[0].paths');
         this.team = pathval.getPathValue(response.data, 'recruitTeamResponse');

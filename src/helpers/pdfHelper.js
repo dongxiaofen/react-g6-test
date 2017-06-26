@@ -23,11 +23,10 @@ const writeDownLoadUrl = (fileName, str) => {
   writeToLog(fileName, _str);
 }
 
-const deletePdfHtml = (fileName) => {
-  const pdfFile = path.join(PDF_DIRNAME, `${fileName}.pdf`);
-  const htmlFile = path.join(PDF_DIRNAME, `${fileName}.html`);
-  deleteFile([pdfFile, htmlFile]);
-}
+// const deletePDFFile = (fileName) => {
+//   const file = path.join(PDF_DIRNAME, `${fileName}`);
+//   deleteFile(file);
+// }
 
 const deleteFile = (file, callBack) => {
   let command = ['./src/helpers/delPdf.sh'];
@@ -40,6 +39,21 @@ const deleteFile = (file, callBack) => {
   del.stdout.on('end', function () {
     console.log('stdout: pdf删除成功');
     if (callBack) { callBack(); }
+  });
+}
+
+const deleteFileOnQiniu = (fileName) => {
+  qiniu.conf.ACCESS_KEY = Access_Key;
+  qiniu.conf.SECRET_KEY = Secret_Key;
+  const client = new qiniu.rs.Client();
+  const bucket = Bucket_Name;
+  client.remove(bucket, fileName, function(err, ret) {
+    if (!err) {
+      console.log('删除文件成功');
+    } else {
+      console.log('删除文件失败');
+      console.log(err);
+    }
   });
 }
 
@@ -59,7 +73,8 @@ const uploadFile = (uptoken, key) => {
       _writeToLog(key, `{"status": "creating", "process": 5, "download": ""}`);
       getDownLoadUrl(key);
       // 上传成功，　删除当前生成的pdf和html文件
-      deletePdfHtml(key);
+      deleteFile(path.join(PDF_DIRNAME, `${key}.pdf`));
+      deleteFile(path.join(PDF_DIRNAME, `${key}.html`));
     } else {
       console.log(err, '=======uploadFile error======');
     }
@@ -88,9 +103,12 @@ export const checkPDF = (req, res) => {
   const statusFile = path.join(PDF_DIRNAME, `${companyName}${stamp}.log`);
   fs.exists(statusFile, (exists) => {
     if (exists) {
-      const restult = fs.readFileSync(statusFile, 'utf-8');
+      const restult = JSON.parse(fs.readFileSync(statusFile, 'utf-8'));
       res.status = 200;
-      res.json(JSON.parse(restult));
+      res.json(restult);
+      if (restult.status === 'sucess') {
+        deleteFile(statusFile);
+      }
     } else {
       res.status = 404;
       res.json({
