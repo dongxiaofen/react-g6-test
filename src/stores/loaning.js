@@ -40,7 +40,7 @@ class LoaningStore {
                     this.operationDataList = response.data;
                   }))
                   .catch(action((err) => {
-                    console.log('getProfitEvalList.....errr = ' + err);
+                    console.log('getOperationDataList.....errr = ' + err);
                     this.loading = false;
                   }));
   }
