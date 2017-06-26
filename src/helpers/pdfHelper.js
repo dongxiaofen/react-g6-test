@@ -23,11 +23,10 @@ const writeDownLoadUrl = (fileName, str) => {
   writeToLog(fileName, _str);
 }
 
-const deletePdfHtml = (fileName) => {
-  const pdfFile = path.join(PDF_DIRNAME, `${fileName}.pdf`);
-  const htmlFile = path.join(PDF_DIRNAME, `${fileName}.html`);
-  deleteFile([pdfFile, htmlFile]);
-}
+// const deletePDFFile = (fileName) => {
+//   const file = path.join(PDF_DIRNAME, `${fileName}`);
+//   deleteFile(file);
+// }
 
 const deleteFile = (file, callBack) => {
   let command = ['./src/helpers/delPdf.sh'];
@@ -41,6 +40,44 @@ const deleteFile = (file, callBack) => {
     console.log('stdout: pdf删除成功');
     if (callBack) { callBack(); }
   });
+}
+
+const deleteFileOnQiniu = (fileName, idx) => {
+  qiniu.conf.ACCESS_KEY = Access_Key;
+  qiniu.conf.SECRET_KEY = Secret_Key;
+  const client = new qiniu.rs.Client();
+  const bucket = Bucket_Name;
+  client.remove(bucket, fileName, function(err, ret) {
+    if (!err) {
+      console.log(`删除文件${fileName}成功======${idx}`);
+    } else {
+      console.log(`删除文件${fileName}失败======${idx}`);
+      console.log(err);
+    }
+  });
+}
+
+// 记录文件名到待删除文件中
+const recordToPdfs = (str) => {
+  fs.appendFile(path.join(PDF_DIRNAME, 'pdfs.log'), str);
+}
+
+// 删除pfds.log中的文件
+export const deletePdfsOnQiniu = () => {
+  try {
+    const strFileNames = fs.readFileSync(path.join(PDF_DIRNAME, 'pdfs.log'), 'utf-8');
+    const arrayFileNames = strFileNames.split(',');
+    if (arrayFileNames.length > 0) {
+      deleteFile(path.join(PDF_DIRNAME, `pdfs.log`));
+      arrayFileNames.map((item, idx) => {
+        if (item) {
+          deleteFileOnQiniu(item, idx);
+        }
+      });
+    }
+  } catch (e) {
+    console.log('删除七牛文件出错！');
+  }
 }
 
 const uptoken = (Bucket_Name, fileName) => {
@@ -59,7 +96,10 @@ const uploadFile = (uptoken, key) => {
       _writeToLog(key, `{"status": "creating", "process": 5, "download": ""}`);
       getDownLoadUrl(key);
       // 上传成功，　删除当前生成的pdf和html文件
-      deletePdfHtml(key);
+      deleteFile(path.join(PDF_DIRNAME, `${key}.pdf`));
+      deleteFile(path.join(PDF_DIRNAME, `${key}.html`));
+      // 记录文件名到pdfs.log中
+      recordToPdfs(`${key}.pdf,`);
     } else {
       console.log(err, '=======uploadFile error======');
     }
@@ -88,9 +128,12 @@ export const checkPDF = (req, res) => {
   const statusFile = path.join(PDF_DIRNAME, `${companyName}${stamp}.log`);
   fs.exists(statusFile, (exists) => {
     if (exists) {
-      const restult = fs.readFileSync(statusFile, 'utf-8');
+      const restult = JSON.parse(fs.readFileSync(statusFile, 'utf-8'));
       res.status = 200;
-      res.json(JSON.parse(restult));
+      res.json(restult);
+      if (restult.status === 'sucess') {
+        deleteFile(statusFile);
+      }
     } else {
       res.status = 404;
       res.json({

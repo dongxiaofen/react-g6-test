@@ -29,6 +29,8 @@ class ModalStore {
   @observable confirmDisable = false;
 
   @observable compComponent = null;
+  // 正文提示文字
+  @observable contentText='';
 
   @action.bound closeAction() {
     this.resetStore();
@@ -44,6 +46,7 @@ class ModalStore {
     this.confirmText = '确定';
     this.isNeedBtn = true;
     this.compComponent = null;
+    this.contentText = '';
   }
   @action.bound openCompModal({
     width,
@@ -63,6 +66,7 @@ class ModalStore {
     confirmDisable,
     loader,
     boxStyle,
+    contentText,
   }) {
     this.visible = true;
     this.title = title;
@@ -72,6 +76,7 @@ class ModalStore {
     if (isCustomize !== undefined) { this.isCustomize = isCustomize; }
     if (isSingleBtn !== undefined) { this.isSingleBtn = isSingleBtn; }
     if (boxStyle !== undefined) { this.boxStyle = boxStyle; }
+    this.contentText = contentText ? contentText : '';
     // action
     this.confirmAction = confirmAction;
     this.cancelAction = cancelAction;

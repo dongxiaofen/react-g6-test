@@ -51,7 +51,7 @@ function PosItemInfo({investmentStore, bannerStore}) {
       <table key={`${idx}mmTable`} className={styles.tTable}>
         <tbody>
           <tr><td rowSpan="1000" width="40" className={styles.firstTd}>{showIndex}</td><td width="400px">任职企业名称：{item.entName}</td><td>状态：{item.entStatus}</td></tr>
-          <tr><td>担任职位：{item.thisPosition}</td><td>注册资本(万元)：{regCap}</td></tr>
+          <tr><td>担任职位：{item.otherPosition}</td><td>注册资本(万元)：{regCap}</td></tr>
           <tr><td>成立日期：{item.esDate}</td><td></td></tr>
         </tbody>
       </table>
