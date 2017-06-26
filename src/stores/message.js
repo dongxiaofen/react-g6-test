@@ -36,7 +36,7 @@ class MessageStore {
   @action.bound isAssetsNewest(assetsHash) {
     axios.get('/front/refresh/assets')
       .then(action('isAssetsNewest', resp => {
-        if (assetsHash !== resp.data.assetsHash && clientStore.userInfo.email) {
+        if (assetsHash !== resp.data.assetsHash && !loginStore.isShowLogin) {
           const notRouteToHome = true;
           modalStore.openCompModal({
             title: '温馨提示',
