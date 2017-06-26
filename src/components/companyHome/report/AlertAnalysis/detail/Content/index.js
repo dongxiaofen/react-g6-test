@@ -99,7 +99,7 @@ function Content({alertAnalysisStore, monitorAlertStore, routing}) {
         case 77:
           return <Position data={detail[detailData.activeIndex]} />;
         case 84:
-          return <News data={detail[detailData.activeIndex]} dataStore={dataStore}/>;
+          return <News ruleType={typeId} data={detail[detailData.activeIndex]} dataStore={dataStore}/>;
         default:
           return null;
       }

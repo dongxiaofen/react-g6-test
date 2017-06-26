@@ -6,48 +6,7 @@ import { companyHomeApi } from 'api';
 import uiStore from '../ui';
 import messageStore from '../message';
 const CancelToken = axios.CancelToken;
-const testData = {
-  data: [
-    {
-      companyName: 'test',
-      ruleId: 77,
-      time: '2012-01-01',
-      detail: [
-        {
-          'url': 'http://jobs.zhaopin.com/340398711251776.htm',
-          'jobTitle': '总监',
-          'eventTime': '2017-06-14',
-          'source': 'zhilian'
-        },
-        {
-          'url': 'http://jobs.zhaopin.com/340398711251776.htm',
-          'jobTitle': '总监',
-          'eventTime': '2017-06-14',
-          'source': 'zhilian'
-        }
-      ],
-    },
-    {
-      companyName: 'test',
-      ruleId: 77,
-      time: '2012-01-02',
-      detail: [
-        {
-          'url': 'http://jobs.zhaopin.com/340398711251776.htm',
-          'jobTitle': '总监2',
-          'eventTime': '2017-06-14',
-          'source': 'zhilian'
-        },
-        {
-          'url': 'http://jobs.zhaopin.com/340398711251776.htm',
-          'jobTitle': '总监2',
-          'eventTime': '2017-06-14',
-          'source': 'zhilian'
-        }
-      ],
-    }
-  ],
-};
+
 class AlertAnalysisStore {
   constructor() {
     this.alertCancel = null;
@@ -133,10 +92,10 @@ class AlertAnalysisStore {
     const source = CancelToken.source();
     this.alertCancel = source.cancel;
     companyHomeApi.getAlertDetail(url, source, params)
-      .then(action('getAlertDetail_success', resp => {
+      .then(action('getAlertDetail_success', (resp) => {
         this.loadingId = -1;
         this.alertCancel = null;
-        this.detailData.detail = testData.data;
+        this.detailData.detail = resp.data;
         this.detailData.orgData = resp.data;
         this.detailData.info = info;
         this.detailData.loading = false;
@@ -167,7 +126,7 @@ class AlertAnalysisStore {
     const scId = detailData.detail[0].id;
     this.detailData.html = '';
     companyHomeApi.getAlertNewsReport(companyId, ruleId, { scId })
-    .then(action('get news', resp=> {
+    .then(action('get news', resp => {
       this.detailData.html = resp.data.html;
     }))
     .catch(action('get news error', (error)=>{
@@ -181,10 +140,10 @@ class AlertAnalysisStore {
     params.trailDate = data.trailDate;
     this.detailData.html = '';
     companyHomeApi.getAlertJudgeDocReport(companyId, params)
-    .then(action('get judgeDoc', resp=> {
+    .then(action('get judgeDoc', resp => {
       this.detailData.html = resp.data.detail;
     }))
-    .catch(action('doc error', (error)=>{
+    .catch(action('doc error', (error) => {
       console.log('get judgeDoc', error);
       this.detailData.html = '--';
     }));

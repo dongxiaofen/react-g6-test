@@ -23,8 +23,11 @@ function LeftBar({alertAnalysisStore, monitorAlertStore, routing, companyHomeSto
         dataStore.getJudgeDocDetail(companyId, data[activeIndex].content);
       }
     } else {
-      if (data[activeIndex].detail[0].type === 'judgeInfo' && data[activeIndex].detail[0].judgeInfo) {
+      if (data[activeIndex].ruleType === 1) {
         dataStore.getJudgeDocDetail(companyId, data[activeIndex].detail[0].judgeInfo);
+      }
+      if (data[activeIndex].ruleType === 11) {
+        dataStore.getNewsDetail(companyId);
       }
     }
   };
