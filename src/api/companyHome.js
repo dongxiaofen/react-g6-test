@@ -272,8 +272,6 @@ export const getReportStatus = (params) => {
 export const createBasicReport = (params) => {
   return axios.post(`/api/basicReport`, params);
 };
-
-// 后台是否已完成
 export const isCompleted = ({basicReportId, reportId}) => {
   let url;
   if (basicReportId) {
@@ -282,4 +280,7 @@ export const isCompleted = ({basicReportId, reportId}) => {
     url = `/api/report/${reportId}/completed`;
   }
   return axios.get(url);
+// 基础关联图，获取最短路径
+export const getShortestPath = (reportId, params) => {
+  return axios.get(`/api/report/${reportId}/network/shortest`, {params});
 };

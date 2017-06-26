@@ -4,12 +4,9 @@
   overflow-y: auto;
   overflow-x:hidden;
   height: 647px;
-  // margin-top: -20px;
-  margin-left: -21px;
-  margin-right: -10px;
   background-color: @mdc-white-darker;
-  padding: 0 10px 30px 5px;
-  border-left: 1px solid #eeeeee;
+  padding: 15px;
+  box-shadow: 0 0 6px rgba(0, 0, 0, 0.16);
 }
 .searchBox {
   background-color: @mdc-white-darker;
@@ -26,59 +23,39 @@
   color: @black7;
   z-index: 1;
 }
-
-.searchInput {
-  padding-left: 30px;
-  // height: 36px;
-  border: 0;
+.point {
+  width: 11px;
+  height: 11px;
+  display: inline-block;
+  border-radius: 100% 100%;
+  margin-right: 6px;
+}
+.blackPoint {
+  composes: point;
+  background-color: @black1;
+}
+.greyPoint {
+  composes: point;
+  background-color: @black16;
+}
+.text {
   font-size: 14px;
-  border-bottom: 1px solid @black7;
-  background: @mdc-white-darker;
-  &:hover {
-    border: 0;
-    outline: 0;
-    border-bottom: 1px solid @blue1;
-    & + i {
-      color: @blue1;
-    }
-  }
-  &:focus {
-    border: 0;
-    outline: 0;
-    box-shadow: none;
-    border-bottom: 1px solid @blue1;
-    & + i {
-      color: @blue1;
-    }
-  }
+  color: @mdc-grey-600;
+  line-height: 1em;
+}
+.riskText {
+  margin-right: 19px;
+}
+.note {
+  margin-top: 10px;
+}
+.hr {
+  margin: 15px 0;
+}
+.button {
+  width: 190px;
+  height: 35px;
+  margin-top: 13px;
 }
 @media (max-width: 1400px) {
-  .searchIcon {
-    position: absolute;
-    font-size: 15px;
-    top: 9px;
-    left: 5px;
-    margin-left: 0;
-    color: @black7;
-    z-index: 1;
-  }
-  .searchInput {
-    padding-left: 30px;
-    // height: 36px;
-    border: 0;
-    font-size: 12px;
-    border-bottom: 1px solid @blue3;
-    background: @mdc-white-darker;
-    &:hover {
-      border: 0;
-      outline: 0;
-      border-bottom: 1px solid @blue1;
-    }
-    &:focus {
-      border: 0;
-      outline: 0;
-      box-shadow: none;
-      border-bottom: 1px solid @blue1;
-    }
-  }
 }
