@@ -154,13 +154,14 @@ export function getLinkInfo(data) {
       if (typeof relation[key][0] === 'string') {
         description.push(`${key}(${relation[key][0]})`);
       } else {
-        const firstItem = relation[key][0];
-        const label = Object.keys(firstItem)[0];
-        const caseReason = firstItem[label].length > 0 ? `(${firstItem[label].join('、')})` : '';
-        description.push(`${label}${caseReason}`);
+        relation[key].forEach((relItem)=>{
+          const label = Object.keys(relItem)[0];
+          const caseReason = relItem[label].length > 0 ? `(${relItem[label].join('、')})` : '';
+          description.push(`${label}${caseReason}`);
+        });
       }
     } else {
-      description.push(`${key}(${relation[key][0]})`);
+      description.push(`${key}(${relation[key].join('、')})`);
     }
   });
   return description.join(',');
