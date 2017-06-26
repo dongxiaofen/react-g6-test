@@ -22,10 +22,19 @@ import * as allStores from 'stores';
 import {
   UpFileToQiniu,
   checkPDF,
-  writeToLog
+  writeToLog,
+  deletePdfsOnQiniu
 } from './helpers/pdfHelper';
+import schedule from 'node-schedule';
 useStaticRendering(true);
 fundebug.apikey = 'd3c3ad8fd8f470b0bd162e9504c98c1984050474f3f550d47b17c54983633c1e';
+
+// 设置定时删除七牛文件
+schedule.scheduleJob('0 0 0 * * *', () => {
+  console.log('启动删除文件---');
+  deletePdfsOnQiniu()
+});
+
 const agent = require('superagent-defaults')();
 const BASE_DIRNAME = process.cwd();
 const PDF_DIRNAME = path.join(BASE_DIRNAME, '/static/pdf/');
@@ -73,16 +82,17 @@ const writeDataToFile = (id, data) => {
   );
 }
 
-const writeStrToHtml = (id, data, callBack) => {
+const writeStrToHtml = (id, data, callBack, errorCallBack) => {
   fs.writeFile(
     PDF_DIRNAME + id,
     data,
     (err) => {
       if (!err) {
         console.log(" write string to html ok");
-        callBack();
+        if (callBack) { callBack();}
       } else {
         console.log("write string to html err");
+        if (errorCallBack) { errorCallBack();}
       }
     }
   );
@@ -189,10 +199,10 @@ app.use((req, res) => {
                 <RouterContext {...renderProps} />
               </Provider>
             );
-            const reportHtml = ReactDOM.renderToString(<Html pdfDown="1" assets={webpackIsomorphicTools.assets()} component={component} {...allStores} />);
             const companyName = resp.data.companyName;
-            // const username = resp.data.email;
             const timestamp = new Date().getTime();
+            const reportHtml = ReactDOM.renderToString(<Html pdfDown="1" assets={webpackIsomorphicTools.assets()} component={component} {...allStores} />);
+            writeToLog(`${companyName}${timestamp}`, `{"status": "creating", "process": 1, "download": ""}`);
             res.status(200);
             res.json({
               companyName: companyName,
@@ -200,12 +210,13 @@ app.use((req, res) => {
             });
             const htmlName = companyName + timestamp + '.html';
             const pdfName = companyName + timestamp + '.pdf';
-            writeToLog(`${companyName}${timestamp}`, `{"status": "creating", "process": 2, "download": ""}`);
             writeStrToHtml(htmlName, reportHtml, () => {
               writeToLog(`${companyName}${timestamp}`, `{"status": "creating", "process": 3, "download": ""}`);
               html2Pdf(htmlName, pdfName, () => {
                 UpFileToQiniu(`${companyName}${timestamp}`);
               });
+            }, () => {
+              writeToLog(`${companyName}${timestamp}`, `{"status": "faile", "process": 2, "download": ""}`);
             });
           })
           .catch((err) => {
@@ -216,7 +227,7 @@ app.use((req, res) => {
               returnState = getResponseData.data.errorCode;
               returnResponseData = getResponseData.data;
             } else {
-              responseData.state = 501;
+              returnState = 501;
               returnResponseData.errorCode = 501;
               returnResponseData.message = '请求pdf数据失败';
             }

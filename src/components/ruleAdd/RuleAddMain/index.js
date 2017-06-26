@@ -4,30 +4,31 @@ import {Container, Row, Col} from 'components/common/layout';
 import RuleName from '../RuleName';
 import RuleRange from '../RuleRange';
 import RuleEvent from '../RuleEvent';
+import RuleShare from '../RuleShare';
 import RuleSubmit from '../RuleSubmit';
 import styles from './index.less';
 
-@inject('ruleStore')
+@inject('ruleAddStore')
 @observer
 export default class RuleAddMain extends Component {
   static propTypes = {
-    ruleStore: PropTypes.object,
+    ruleAddStore: PropTypes.object,
   }
 
   componentDidMount() {
-    this.props.ruleStore.getIndustryList();
-    this.props.ruleStore.getTypeListCORP();
-    this.props.ruleStore.getTypeListLEGAL();
-    this.props.ruleStore.getTypeListNEWS();
-    this.props.ruleStore.getMonitorCompany();
+    this.props.ruleAddStore.getIndustryList();
+    this.props.ruleAddStore.getTypeListCORP();
+    this.props.ruleAddStore.getTypeListLEGAL();
+    this.props.ruleAddStore.getTypeListNEWS();
+    this.props.ruleAddStore.getMonitorCompany();
   }
 
   componentWillUnmount() {
-    this.props.ruleStore.resetCreateRuleData();
+    this.props.ruleAddStore.resetCreateRuleData();
   }
 
   eventToggle = (evt)=>{
-    this.props.ruleStore.eventToggle(false);
+    this.props.ruleAddStore.eventToggle(false);
     evt.stopPropagation();
   }
 
@@ -36,26 +37,31 @@ export default class RuleAddMain extends Component {
       <div
         tabIndex="1"
         onClick={this.eventToggle.bind()}
-        className={this.props.ruleStore.selectRange === 'range' ? styles.boxRange : styles.boxCompnay}>
+        className={styles.box}>
         <Container>
           <Row>
             <Col>
-              <RuleName ruleStore={this.props.ruleStore} />
+              <RuleName ruleStore={this.props.ruleAddStore} />
             </Col>
           </Row>
           <Row>
             <Col>
-              <RuleRange ruleStore={this.props.ruleStore} />
+              <RuleRange ruleStore={this.props.ruleAddStore} />
             </Col>
           </Row>
           <Row>
             <Col>
-              <RuleEvent ruleStore={this.props.ruleStore} />
+              <RuleEvent ruleStore={this.props.ruleAddStore} />
             </Col>
           </Row>
           <Row>
             <Col>
-              <RuleSubmit ruleStore={this.props.ruleStore} />
+              <RuleShare ruleStore={this.props.ruleAddStore} />
+            </Col>
+          </Row>
+          <Row>
+            <Col>
+              <RuleSubmit ruleStore={this.props.ruleAddStore} />
             </Col>
           </Row>
         </Container>

@@ -50,7 +50,7 @@ function Bidding({biddingItemList, isLoading, detailModalStore, companyHomeStore
     },
     isLoading: isLoading,
     module: '专利信息',
-    error: biddingItemList.length === 0
+    error: !biddingItemList || biddingItemList.length === 0
   };
 
   return (

@@ -22,7 +22,7 @@ export default class MonitorList extends Component {
     this.props.monitorListStore.getMainList();
   }
   componentWillUnmount() {
-    this.props.uiStore.updateUiStore('monitorList', {
+    this.props.monitorListStore.changeValue('searchInfo', {
       searchInput: '',
       sortDirection: {
         start_tm: 'DESC',
