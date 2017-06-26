@@ -1,13 +1,99 @@
-import { observable, action } from 'mobx';
+import { observable, action, computed } from 'mobx';
 import { companyHomeApi } from 'api';
 import uiStore from '../ui';
 import axios from 'axios';
+import { setPathValue } from 'pathval';
 const CancelToken = axios.CancelToken;
 
 class AssetsStore {
   @observable trademarkData = [];
   @observable patentData = [];
-  @observable biddingData = [];
+  @observable biddingData = {
+    statistic: {},
+    analysis: {
+      month: {},
+      quarter: {},
+      year: {},
+    },
+    biddingItemList: []
+  };
+
+  dealWithAnalysisDate(analysisData, active) {
+    const keys = Object.keys(analysisData);
+    const years = keys.map(key => key.substring(0, 4));
+    const common = (_years, _months) => {
+      const output = {};
+      years.forEach(year => {
+        _months.forEach(month => {
+          output[`${year}${month}`] = {
+            winMoneyAmount: 0,
+            winCount: 0,
+            bidMoneyAmount: 0,
+            bidCount: 0,
+          };
+        });
+      });
+      Object.keys(output).forEach(key => {
+        keys.forEach(_key => {
+          if (key === _key) {
+            output[key] = analysisData[key];
+          }
+        });
+      });
+      return output;
+    };
+    switch (active) {
+      case '月度':
+        const months = ['01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12'];
+        return common(years, months);
+      case '季度':
+        const quarterMonths = ['01', '04', '10'];
+        return common(years, quarterMonths);
+      default:
+        break;
+    }
+  }
+
+  modifyAnalysis(value, active) {
+    let keys = Object.keys(value);
+    const data = {
+      winMoneyAmount: keys.map(key => value[key].winMoneyAmount),
+      winCount: keys.map(key => value[key].winCount),
+      bidMoneyAmount: keys.map(key => value[key].bidMoneyAmount),
+      bidCount: keys.map(key => value[key].bidCount),
+    };
+    switch (active) {
+      case '季度':
+        keys = keys.map(key => `${key}-${Number(key) + 2}`);
+        break;
+      case '年度':
+        keys = keys.map(key => key.substring(0, 4));
+        break;
+      default:
+        break;
+    }
+    return {
+      axis: keys,
+      data: data
+    };
+  }
+
+  @computed get biddingAnalysis() {
+    const { month, quarter, year } = this.biddingData.analysis;
+    const active = this.biddingAnalysisActive;
+    switch (active) {
+      case '月度':
+        return this.modifyAnalysis(this.dealWithAnalysisDate(month, active), active);
+      case '季度':
+        return this.modifyAnalysis(this.dealWithAnalysisDate(quarter, active), active);
+      case '年度':
+        return this.modifyAnalysis(year, active);
+      default:
+        break;
+    }
+  }
+
+  @observable biddingAnalysisActive = '年度';
   @observable isMount = false ;
   // 弹框标题数据||信息来源
   @observable titleData = {};
@@ -19,6 +105,10 @@ class AssetsStore {
   @observable trLoading = true;
   @observable patentLoading = true;
   @observable biddingLoading = true;
+
+  @action.bound updateValue(path, value) {
+    setPathValue(this, path, value);
+  }
 
   @action.bound getTrademarkData(idInfo) {
     const {index, size} = uiStore.uiState.trademarkLists;
@@ -50,7 +140,9 @@ class AssetsStore {
     companyHomeApi.getReportModule('operation/bidding', params)
       .then(action( (response) => {
         this.biddingLoading = false;
-        this.biddingData = response.data;
+        this.biddingData.statistic = response.data.statistic;
+        this.biddingData.analysis = { ...response.data };
+        this.biddingData.biddingItemList = response.data.result;
       }))
       .catch( action( (err) => {
         this.biddingLoading = false;
@@ -89,13 +181,23 @@ class AssetsStore {
   @action.bound resetStore() {
     this.trademarkData = [];
     this.patentData = [];
-    this.biddingData = [];
+    this.biddingData = {
+      statistic: {},
+      analysis: {
+        month: {},
+        quarter: {},
+        year: {},
+      },
+      biddingItemList: []
+    };
+
+    this.biddingAnalysisActive = '年度';
     this.isMount = false;
-      // 弹框标题数据||信息来源
+    // 弹框标题数据||信息来源
     this.titleData = {};
-      // 弹出框详情
+    // 弹出框详情
     this.bidMarkertContent = '';
-      // 取消请求
+    // 取消请求
     this.biddingDetailCancel = null;
 
     this.trLoading = true;

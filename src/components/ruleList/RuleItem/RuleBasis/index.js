@@ -22,7 +22,7 @@ function RuleBasis({data}) {
   let num = '';
   if (data && data.rule && data.rule.alterNum) {
     num = (<span>
-      发生次数大于等于<i>{data.rule.alterNum}</i>
+      发生次数大于等于<i>{data.rule.alterNum}</i>次
     </span>);
   }
   return (

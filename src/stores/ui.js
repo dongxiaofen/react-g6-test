@@ -5,7 +5,7 @@ import assetsStore from './report/assets';
 import reportListStore from './reportList';
 import analysisListStore from './analysisList';
 import monitorListStore from './monitorList';
-import ruleStore from './rule';
+import ruleListStore from './ruleList';
 import ruleCompanyStore from './ruleCompany';
 import accountSettingStore from './accountSetting';
 import alertAnalysisStore from './report/alertAnalysis';
@@ -16,6 +16,7 @@ import nowRecordStore from './report/nowRecord';
 import taxCheckStore from './taxCheck';
 import bidMarketStore from './bidMarket';
 import assetTransactionStore from './assetTransaction';
+import riskCourtStore from './report/riskCourt';
 
 class UiStore {
   constructor() {
@@ -97,7 +98,7 @@ class UiStore {
     reaction(
       () => this.uiState.ruleListPager.index,
       () => {
-        ruleStore.getRuleList();
+        ruleListStore.getRuleTypeList();
       }
     );
     reaction(
@@ -190,6 +191,117 @@ class UiStore {
         assetTransactionStore.getAssetLocal(params);
       }
     );
+    // 判决文书
+    reaction(
+      () => this.uiState.judgeDoc.index,
+      () => {
+        const params = {
+          basicReportId: companyHomeStore.reportInfo.basicReportId,
+          reportId: companyHomeStore.reportInfo.reportId,
+          tabAct: riskCourtStore.courtTabAct,
+          config: {
+            params: {
+              index: this.uiState.judgeDoc.index,
+              size: this.uiState.judgeDoc.size,
+              finance: riskCourtStore.courtCheckGroup.judgeDoc
+            }
+          }
+        };
+        riskCourtStore.getRiskCourt(params);
+      }
+    );
+    // 法院公告
+    reaction(
+      () => this.uiState.courtAnnouncement.index,
+      () => {
+        const params = {
+          basicReportId: companyHomeStore.reportInfo.basicReportId,
+          reportId: companyHomeStore.reportInfo.reportId,
+          tabAct: riskCourtStore.courtTabAct,
+          config: {
+            params: {
+              index: this.uiState.courtAnnouncement.index,
+              size: this.uiState.courtAnnouncement.size,
+              finance: riskCourtStore.courtCheckGroup.courtAnnouncement
+            }
+          }
+        };
+        riskCourtStore.getRiskCourt(params);
+      }
+    );
+    // 开庭公告
+    reaction(
+      () => this.uiState.courtNotice.index,
+      () => {
+        const params = {
+          basicReportId: companyHomeStore.reportInfo.basicReportId,
+          reportId: companyHomeStore.reportInfo.reportId,
+          tabAct: riskCourtStore.courtTabAct,
+          config: {
+            params: {
+              index: this.uiState.courtNotice.index,
+              size: this.uiState.courtNotice.size,
+              finance: riskCourtStore.courtCheckGroup.courtNotice
+            }
+          }
+        };
+        riskCourtStore.getRiskCourt(params);
+      }
+    );
+    // 被执行人信息
+    reaction(
+      () => this.uiState.courtExecuted.index,
+      () => {
+        const params = {
+          basicReportId: companyHomeStore.reportInfo.basicReportId,
+          reportId: companyHomeStore.reportInfo.reportId,
+          tabAct: riskCourtStore.courtTabAct,
+          config: {
+            params: {
+              index: this.uiState.courtExecuted.index,
+              size: this.uiState.courtExecuted.size
+            }
+          }
+        };
+        riskCourtStore.getRiskCourt(params);
+      }
+    );
+    // 失信被执行人信息
+    reaction(
+      () => this.uiState.courtDishonesty.index,
+      () => {
+        const params = {
+          basicReportId: companyHomeStore.reportInfo.basicReportId,
+          reportId: companyHomeStore.reportInfo.reportId,
+          tabAct: riskCourtStore.courtTabAct,
+          config: {
+            params: {
+              index: this.uiState.courtDishonesty.index,
+              size: this.uiState.courtDishonesty.size
+            }
+          }
+        };
+        riskCourtStore.getRiskCourt(params);
+      }
+    );
+    // 涉诉资产
+    reaction(
+      () => this.uiState.courtLitigation.index,
+      () => {
+        const params = {
+          basicReportId: companyHomeStore.reportInfo.basicReportId,
+          reportId: companyHomeStore.reportInfo.reportId,
+          tabAct: riskCourtStore.courtTabAct,
+          config: {
+            params: {
+              index: this.uiState.courtLitigation.index,
+              size: this.uiState.courtLitigation.size
+            }
+          }
+        };
+        riskCourtStore.getRiskCourt(params);
+      }
+    );
   }
 
   @observable uiState = {
@@ -279,7 +391,7 @@ class UiStore {
     ruleListPager: {
       index: 1,
       size: 10,
-      show: observable.map({})
+      // show: observable.map({})
     },
     ruleCompanyListPager: {
       index: 1,
@@ -375,30 +487,36 @@ class UiStore {
       index: 1,
       size: 10,
       show: observable.map({}),
+      totalElements: 0
     },
     courtAnnouncement: {
       index: 1,
       size: 10,
       show: observable.map({}),
+      totalElements: 0
     },
     courtNotice: {
       index: 1,
       size: 10,
       show: observable.map({}),
+      totalElements: 0
     },
-    courtExecution: {
+    courtExecuted: {
       index: 1,
       size: 10,
+      totalElements: 0
     },
-    dishonestyList: {
-      index: 1,
-      size: 10,
-      show: observable.map({}),
-    },
-    litigationAssets: {
+    courtDishonesty: {
       index: 1,
       size: 10,
       show: observable.map({}),
+      totalElements: 0
+    },
+    courtLitigation: {
+      index: 1,
+      size: 10,
+      show: observable.map({}),
+      totalElements: 0
     },
     jyErrorData: {
       index: 1,
@@ -481,6 +599,10 @@ class UiStore {
       index: 1,
       size: 10,
       totalElements: 0
+    },
+    biddingStatistic: {
+      index: 1,
+      size: 10
     }
   };
 
@@ -598,7 +720,7 @@ class UiStore {
         ruleListPager: {
           index: 1,
           size: 10,
-          show: observable.map({})
+          // show: observable.map({})
         },
         ruleCompanyListPager: {
           index: 1,
@@ -694,30 +816,36 @@ class UiStore {
           index: 1,
           size: 10,
           show: observable.map({}),
+          totalElements: 0
         },
         courtAnnouncement: {
           index: 1,
           size: 10,
           show: observable.map({}),
+          totalElements: 0
         },
         courtNotice: {
           index: 1,
           size: 10,
           show: observable.map({}),
+          totalElements: 0
         },
-        courtExecution: {
+        courtExecuted: {
           index: 1,
           size: 10,
+          totalElements: 0
         },
-        dishonestyList: {
-          index: 1,
-          size: 10,
-          show: observable.map({}),
-        },
-        litigationAssets: {
+        courtDishonesty: {
           index: 1,
           size: 10,
           show: observable.map({}),
+          totalElements: 0
+        },
+        courtLitigation: {
+          index: 1,
+          size: 10,
+          show: observable.map({}),
+          totalElements: 0
         },
         jyErrorData: {
           index: 1,
@@ -795,6 +923,10 @@ class UiStore {
           index: 1,
           size: 10,
           totalElements: 0
+        },
+        biddingStatistic: {
+          index: 1,
+          size: 10
         }
       }
     });
