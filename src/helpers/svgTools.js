@@ -226,15 +226,27 @@ export function getCurrentNodesLinks(forceNetwork) {
 export function getArrowType(target, nodes) {
   return nodes[nodes.findIndex((node) => node.id === target.id)].cateType;
 }
-export function findShortPath(node, shortestPahth) {
-  let index = -1;
-  shortestPahth.forEach((pathArr)=>{
-    const idx = pathArr.findIndex((item)=>{
-      return node === item;
-    });
-    if (idx > -1) {
-      index = idx;
+export function turnToPath(shortestPahth) {
+  const pathList = [];
+  shortestPahth.forEach((path)=>{
+    for (let idx = 0; idx < path.length - 1; idx ++) {
+      pathList.push(`${path[idx]}-${path[idx + 1]}`);
     }
   });
-  return index > -1;
+  return pathList;
+}
+export function focusShortPath(shortestPahth, edgesData) {
+  const pathList = turnToPath(shortestPahth);
+  edgesData.forEach((link)=>{
+    const relName1 = `${link.target.name}-${link.source.name}`;
+    const relName2 = `${link.source.name}-${link.target.name}`;
+    const idx = pathList.findIndex((pathName)=>{
+      return pathName === relName1 || pathName === relName2;
+    });
+    if (idx > -1) {
+      link.isFocus = true;
+    } else {
+      link.isFocus = false;
+    }
+  });
 }

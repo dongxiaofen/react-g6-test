@@ -157,18 +157,8 @@ export default class CircleNetworkGraph extends Component {
     reactionShortPath = reaction(
       () => this.props.networkStore.shortestPath,
       () => {
-        const {shortestPath, focusNodeName} = this.props.networkStore;
-        if (nodesData !== '') {
-          nodesData.map((node)=> {
-            if (focusNodeName.indexOf(node.name) >= 0) {
-              node.isFocus = true;
-            }else if (svgTools.findShortPath(node.name, shortestPath)) {
-              node.isActive = true;
-            } else {
-              node.isActive = false;
-            }
-          });
-        }
+        const {shortestPath} = this.props.networkStore;
+        svgTools.focusShortPath(shortestPath, edgesData);
         simulation.restart();
       }
     );
@@ -312,11 +302,11 @@ export default class CircleNetworkGraph extends Component {
       .attr('y1', (data) => { return data.source.y; })
       .attr('x2', (data) => { return data.target.x; })
       .attr('y2', (data) => { return data.target.y; })
+      .attr('marker-end', (data)=>{
+        return data.isFocus ? 'url(#mainArrowAct)' : 'url(#mainArrow)';
+      })
       .attr('class', (data) => {
-        if (this.props.networkStore.shortestPath.length < 1) {
-          return (data.hide && styles.hide) || (data.isFocus && styles.focusLink) || styles.links;
-        }
-        return (data.hide && styles.hide) || ((data.source.isActive || data.source.isFocus) && (data.target.isActive || data.target.isFocus) && styles.focusLink) || styles.links;
+        return (data.hide && styles.hide) || (data.isFocus && styles.focusLink) || styles.links;
       });
 
     d3.selectAll('circle')
@@ -364,10 +354,7 @@ export default class CircleNetworkGraph extends Component {
         return 'rotate(0)';
       })
       .attr('class', (data) => {
-        if (this.props.networkStore.shortestPath.length < 1) {
-          return (data.hide && styles.hide) || (data.isFocus && styles.show) || styles.hide;
-        }
-        return (data.hide && styles.hide) || ((data.source.isActive || data.source.isFocus) && (data.target.isActive || data.target.isFocus) && styles.show) || styles.hide;
+        return (data.hide && styles.hide) || (data.isFocus && styles.show) || styles.hide;
       });
   }
   dragstarted = (data) => {
@@ -447,6 +434,16 @@ export default class CircleNetworkGraph extends Component {
               refY="6"
               orient="auto">
               <path d="M2,2 L10,6 L2,10 L6,6 L2,2" className={styles.arrow} />
+            </marker>
+            <marker id="mainArrowAct"
+              markerUnits="userSpaceOnUse"
+              markerWidth="10"
+              markerHeight="10"
+              viewBox="0 0 12 12"
+              refX="25"
+              refY="6"
+              orient="auto">
+              <path d="M2,2 L10,6 L2,10 L6,6 L2,2" className={styles.arrowAct} />
             </marker>
             <marker id="relativeArrow"
               markerUnits="userSpaceOnUse"
