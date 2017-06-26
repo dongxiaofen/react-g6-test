@@ -118,6 +118,8 @@ axios.interceptors.response.use((response) => {
       confirmAction: callback,
       contentText: '您的账号在其他设备登录，如果这不是您的操作，请及时修改您的密码',
     });
+  } else if (allStore.clientStore.envConfig === 'local' && error.response.status === 502) {
+    allStore.messageStore.openMessage({ type: 'warning', content: '后台正在部署， 请稍后使用', duration: 7000 });
   }
   return Promise.reject(error);
 });
