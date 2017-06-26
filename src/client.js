@@ -5,16 +5,16 @@ import 'babel-polyfill';
 import React from 'react';
 import ReactDOM from 'react-dom';
 // import useScroll from 'scroll-behavior/lib/useStandardScroll';
-import { Router, browserHistory } from 'react-router';
+import {Router, browserHistory} from 'react-router';
 import getRoutes from './routes';
 import fundebug from 'fundebug-javascript';
 import axios from 'axios';
 import Uuid from 'node-uuid';
-import { Provider } from 'mobx-react';
+import {Provider} from 'mobx-react';
 import combineServerData from 'helpers/combineServerData';
 import * as allStore from 'stores';
-import { useStrict, runInAction } from 'mobx';
-import { RouterStore, syncHistoryWithStore } from 'mobx-react-router';
+import {useStrict, runInAction} from 'mobx';
+import {RouterStore, syncHistoryWithStore} from 'mobx-react-router';
 // import { useStrict, spy } from 'mobx';
 // // 全局监听action
 // spy((event) => {
@@ -102,6 +102,22 @@ axios.interceptors.response.use((response) => {
     //     callback(require('components/test/Test'));
     //   });
     // });
+  } else if (error.response.status === 502) {
+    allStore.messageStore.openMessage({type: 'warning', content: '后端正在部署', duration: 5000});
+  } else if (error.response.data.errorCode === 403232) {
+    const callback = () => {
+      browserHistory.push('/');
+      runInAction('显示登录框', () => {
+        allStore.loginStore.isShowLogin = true;
+      });
+    };
+    allStore.modalStore.openCompModal({
+      isSingleBtn: true,
+      title: '系统提醒',
+      closeAction: callback,
+      confirmAction: callback,
+      contentText: '您的账号在其他设备登录，如果这不是您的操作，请及时修改您的密码',
+    });
   } else if (allStore.clientStore.envConfig === 'local' && error.response.status === 502) {
     allStore.messageStore.openMessage({ type: 'warning', content: '后台正在部署， 请稍后使用', duration: 7000 });
   }
@@ -110,7 +126,7 @@ axios.interceptors.response.use((response) => {
 allStore.routing = routingStore;
 ReactDOM.render(
   <Provider { ...allStore }>
-    <Router routes={getRoutes(allStore)} history={history} />
+    <Router routes={getRoutes(allStore)} history={history}/>
   </Provider>,
   dest
 );

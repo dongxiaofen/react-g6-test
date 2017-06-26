@@ -1,15 +1,17 @@
+@import "~sc-colors/index.less";
+
 .transitionAll(@secend) {
   -webkit-transform: translateZ(0);
-     -moz-transform: translateZ(0);
-      -ms-transform: translateZ(0);
-       -o-transform: translateZ(0);
-          transform: translateZ(0);
+  -moz-transform: translateZ(0);
+  -ms-transform: translateZ(0);
+  -o-transform: translateZ(0);
+  transform: translateZ(0);
 
   -webkit-transition: all @secend ease-in-out;
-     -moz-transition: all @secend ease-in-out;
-      -ms-transition: all @secend ease-in-out;
-       -o-transition: all @secend ease-in-out;
-          transition: all @secend ease-in-out;
+  -moz-transition: all @secend ease-in-out;
+  -ms-transition: all @secend ease-in-out;
+  -o-transition: all @secend ease-in-out;
+  transition: all @secend ease-in-out;
 }
 
 .vertical-center-modal {
@@ -47,6 +49,7 @@
 
   .transitionAll(.3s);
 }
+
 .modalVisible {
   opacity: 1;
   visibility: visible;
@@ -61,14 +64,14 @@
 
   background-color: #ffffff;
   visibility: hidden;
-  box-shadow: 0 2px 13px 3px rgba(0,0,0,0.20);
+  box-shadow: 0 2px 13px 3px rgba(0, 0, 0, 0.20);
   opacity: 0;
 
-  -webkit-transition: opactiy,visibility .3s ease-in-out;
-     -moz-transition: opactiy,visibility .3s ease-in-out;
-      -ms-transition: opactiy,visibility .3s ease-in-out;
-       -o-transition: opactiy,visibility .3s ease-in-out;
-          transition: opactiy,visibility .3s ease-in-out;
+  -webkit-transition: opactiy, visibility .3s ease-in-out;
+  -moz-transition: opactiy, visibility .3s ease-in-out;
+  -ms-transition: opactiy, visibility .3s ease-in-out;
+  -o-transition: opactiy, visibility .3s ease-in-out;
+  transition: opactiy, visibility .3s ease-in-out;
 }
 
 .visible {
@@ -102,24 +105,27 @@
 
   &:hover {
     -webkit-transform: rotateZ(180deg);
-       -moz-transform: rotateZ(180deg);
-         -o-transform: rotateZ(180deg);
-            transform: rotateZ(180deg);
+    -moz-transform: rotateZ(180deg);
+    -o-transform: rotateZ(180deg);
+    transform: rotateZ(180deg);
   }
 }
 
 .iconBox {
   text-align: center;
 }
-.baseIcon{
+
+.baseIcon {
   display: inline-block;
   width: 50px;
   height: 50px;
 }
+
 .infoIcon {
   .baseIcon;
   background-image: url('imgs/modal/info.png');
 }
+
 .successIcon {
   .baseIcon;
   background-image: url('imgs/modal/success.png');
@@ -169,4 +175,10 @@
     margin-right: 6px;
     color: #90caf9;
   }
+}
+
+.contentText {
+  margin-bottom: 20px;
+  line-height: 18px;
+  color: @mdc-grey-600;
 }

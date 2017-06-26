@@ -1,6 +1,6 @@
-import React, { Component, PropTypes } from 'react';
-import { Link } from 'react-router';
-import { observer } from 'mobx-react';
+import React, {Component, PropTypes} from 'react';
+import {Link} from 'react-router';
+import {observer} from 'mobx-react';
 import mobx from 'mobx';
 import Button from 'components/lib/button';
 import styles from './index.less';
@@ -17,6 +17,7 @@ export default class Modal extends Component {
     isSingleBtn: PropTypes.bool,
     // text
     cancelText: PropTypes.string,
+    contentText: PropTypes.string,
     confirmText: PropTypes.string,
     confirmWidth: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
     // action
@@ -69,6 +70,7 @@ export default class Modal extends Component {
       this.props.closeAction();
     }
   };
+
   render() {
     // 背景是否显示
     const boxStyle = Object.assign({width: this.props.width}, mobx.toJS(this.props.boxStyle));
@@ -149,10 +151,15 @@ export default class Modal extends Component {
           <div className={styles.closeBtn} onClick={this.closeAction}></div>
           {
             this.props.title ?
-            <div className={styles.title}>
-              {this.props.title}
-            </div>
-            : ''
+              <div className={styles.title}>
+                {this.props.title}
+              </div>
+              : ''
+          }
+          {this.props.contentText ?
+            <div className={styles.contentText}>
+              {this.props.contentText}
+            </div> : ''
           }
           <div className="clearfix">{this.props.children}</div>
           {isNeedBtn}
