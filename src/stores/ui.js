@@ -335,19 +335,6 @@ class UiStore {
       size: 10,
       totalElements: 0,
     },
-    monitorList: {
-      searchInput: '',
-      sortDirection: {
-        start_tm: 'DESC',
-        expire_dt: 'DESC',
-        latestTs: 'DESC',
-      },
-      params: {
-        companyName: '',
-        sort: 'start_tm,DESC',
-        monitorStatus: '',
-      }
-    },
     monitorListPager: {
       index: 1,
       size: 10,
