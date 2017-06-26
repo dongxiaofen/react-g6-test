@@ -194,8 +194,8 @@ class NetworkStore {
   }
   @action.bound getShortestPath(params) {
     this.shortPathLoading = true;
-    const {reportId} = companyHomeStore.reportInfo;
-    companyHomeApi.getShortestPath(reportId, params)
+    const {reportId, basicReportId} = companyHomeStore.reportInfo;
+    companyHomeApi.getShortestPath({reportId, basicReportId}, params)
     .then(action('shortest ', (resp)=>{
       console.log(resp.data);
       this.shortestPath = resp.data;

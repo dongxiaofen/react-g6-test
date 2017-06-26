@@ -9,8 +9,9 @@ function RelationTable({networkStore}) {
       case '高管':
         return item.position.join('、');
       case '股东':
+      case '对外投资':
         const invCurrency = item.invCurrency === '' ? '' : `（${item.invCurrency}）`;
-        return `投资金额${invCurrency}:${item.invConum}（${item.invRatio}%）`;
+        return `投资金额${invCurrency}：${item.invConum}（${item.invRatio}%）`;
       default:
         return '--';
     }
@@ -35,8 +36,14 @@ function RelationTable({networkStore}) {
     });
     return (
       <table>
-        <tr><th colSpan="2">{`${moduleKey}（${targetComp[moduleKey].length}）`}</th></tr>
-        {list}
+        <thead>
+          <tr>
+            <th colSpan="2">{`${moduleKey}（${targetComp[moduleKey].length}）`}</th>
+          </tr>
+        </thead>
+        <tbody>
+            {list}
+        </tbody>
       </table>
     );
   };

@@ -70,6 +70,18 @@ export const getReportModule = (urlStr, idParams, params) => {
   window.reportSourceCancel.push(source.cancel);
   return axios.get(url, { cancelToken: source.token, params});
 };
+
+export const getRiskCourt = ({ basicReportId, reportId, tabAct, config }) => {
+  let url = '';
+  if (basicReportId) {
+    url = `/api/basicReport/${basicReportId}/risk/${tabAct}/page`;
+  }
+  if (reportId) {
+    url = `/api/report/${reportId}/risk/${tabAct}/page`;
+  }
+  return axios.get(url, config);
+};
+
 export const getJudgeDetailMonitor = (monitorCompanyId, params) => {
   return axios.get(`/api/monitor/${monitorCompanyId}/risk/judgeDoc`, { params });
 };
@@ -280,7 +292,12 @@ export const isCompleted = ({basicReportId, reportId}) => {
     url = `/api/report/${reportId}/completed`;
   }
   return axios.get(url);
+};
 // 基础关联图，获取最短路径
-export const getShortestPath = (reportId, params) => {
-  return axios.get(`/api/report/${reportId}/network/shortest`, {params});
+export const getShortestPath = (idParams, params) => {
+  const {reportId, basicReportId} = idParams;
+  if (reportId !== '') {
+    return axios.get(`/api/report/${reportId}/network/shortest`, {params});
+  }
+  return axios.get(`/api/basicReport/${basicReportId}/network/shortest`, {params});
 };

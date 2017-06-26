@@ -96,14 +96,12 @@ class LeftBarStore {
         menuKey: 'network',
         children: [
           {
-            menuText: '企业关联',
+            menuText: '基础关联',
             menuKey: 'network',
-            lock: true,
           },
           {
             menuText: '风险关系',
             menuKey: 'blackNetwork',
-            lock: true,
           },
         ],
       },

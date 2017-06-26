@@ -81,11 +81,15 @@ function LegendBar({ networkStore, resumeSvg, fullScreen, exitFull, messageStore
       </div>
       <div className={`${styles.iconWrap} ${styles.opera}`}>
         <p className={styles.iconContent}>
-          <i className="fa fa-expand" aria-hidden="true" title="全屏" onClick={handleFullScreen}></i>
+          {
+            !showFullScreen ?
+            <i className="fa fa-expand" aria-hidden="true" title="全屏" onClick={handleFullScreen}></i>
+            : <i className="fa fa-compress" aria-hidden="true" title="退出全屏" onClick={handleExitFull}></i>
+          }
         </p>
         <hr className={styles.hr}/>
         <p className={styles.iconContent}>
-          <i className="fa fa-external-link" aria-hidden="true" title="恢复" onClick={resumeSvg}></i>
+          <i className="fa fa-external-link" aria-hidden="true" title="复原" onClick={resumeSvg}></i>
         </p>
       </div>
       <div className={`${styles.iconWrap} ${styles.layerWrap}`}>

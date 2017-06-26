@@ -73,7 +73,7 @@ function NodePanel({ networkStore, routing, exitFull }) {
         nodeData.cateType !== 2 ?
           <LinkJump referer="self" name={nodeData.name} label="查看企业" className={styles.link} /> : ''
       }
-      <Button btnType="primary" className={styles.button} onClick={getShortestPath}>关联路径</Button>
+      <Button btnType="primary" className={styles.button} onClick={getShortestPath} loading={networkStore.shortPathLoading}>关联路径</Button>
       {/*{
         nodeData.cateType !== 2 && monitorId && !monitorInfo ?
           <a onClick={openCreateMonitorModal} className={styles.link}>
