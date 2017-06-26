@@ -2,7 +2,8 @@ import React, {PropTypes} from 'react';
 import { observer } from 'mobx-react';
 import PdfNotFound from 'components/common/pdf/PdfNotFound';
 import PdfSimpleKey from 'components/common/pdf/PdfSimpleKey';
-
+import BiddingCount from './BiddingCount';
+import BiddingTable from './BiddingTable';
 function Bidding({moduleData}) {
   if (!moduleData || moduleData.length === 0) {
     return (
@@ -26,8 +27,12 @@ function Bidding({moduleData}) {
   };
   return (
     <div>
-      <div style={{height: '30px'}}></div>
-      <PdfSimpleKey {...data} />
+      <BiddingCount />
+      <BiddingTable />
+      <div>
+        <div style={{height: '30px'}}></div>
+        <PdfSimpleKey {...data} />
+      </div>
     </div>
   );
 }
