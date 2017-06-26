@@ -22,10 +22,19 @@ import * as allStores from 'stores';
 import {
   UpFileToQiniu,
   checkPDF,
-  writeToLog
+  writeToLog,
+  deletePdfsOnQiniu
 } from './helpers/pdfHelper';
+import schedule from 'node-schedule';
 useStaticRendering(true);
 fundebug.apikey = 'd3c3ad8fd8f470b0bd162e9504c98c1984050474f3f550d47b17c54983633c1e';
+
+// 设置定时删除七牛文件
+schedule.scheduleJob('0 0 0 * * *', () => {
+  console.log('启动删除文件---');
+  deletePdfsOnQiniu()
+});
+
 const agent = require('superagent-defaults')();
 const BASE_DIRNAME = process.cwd();
 const PDF_DIRNAME = path.join(BASE_DIRNAME, '/static/pdf/');
