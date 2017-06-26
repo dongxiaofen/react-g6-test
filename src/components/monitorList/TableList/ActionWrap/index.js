@@ -43,7 +43,7 @@ function ActionWrap({ data, mainData, index, relation, monitorListStore, payModa
     payModalStore.closeAction();
     messageStore.openMessage({
       type: 'info',
-      content: '续费成功',
+      content: '续期成功',
     });
   };
   const errorCb = (err) => {
