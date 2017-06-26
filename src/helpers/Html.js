@@ -43,7 +43,7 @@ export default class Html extends Component {
           {head.meta.toComponent()}
           {head.link.toComponent()}
           {head.script.toComponent()}
-          <title>{allStore.clientStore.envConfig === 'cfca_prod' ? '洞悉-风险管理平台' : '星象-风险管理平台test'}</title>
+          <title>{allStore.clientStore.envConfig === 'cfca_prod' ? '洞悉-风险管理平台' : '星象-风险管理平台'}</title>
           <link rel="shortcut icon" href="/favicon3.ico" />
           <meta name="viewport" content="width=device-width, initial-scale=1" />
           <meta httpEquiv="content-type" content="text/html;charset=utf-8" />
