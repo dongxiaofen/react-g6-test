@@ -6,6 +6,48 @@ import { companyHomeApi } from 'api';
 import uiStore from '../ui';
 import messageStore from '../message';
 const CancelToken = axios.CancelToken;
+const testData = {
+  data: [
+    {
+      companyName: 'test',
+      ruleId: 77,
+      time: '2012-01-01',
+      detail: [
+        {
+          'url': 'http://jobs.zhaopin.com/340398711251776.htm',
+          'jobTitle': '总监',
+          'eventTime': '2017-06-14',
+          'source': 'zhilian'
+        },
+        {
+          'url': 'http://jobs.zhaopin.com/340398711251776.htm',
+          'jobTitle': '总监',
+          'eventTime': '2017-06-14',
+          'source': 'zhilian'
+        }
+      ],
+    },
+    {
+      companyName: 'test',
+      ruleId: 77,
+      time: '2012-01-02',
+      detail: [
+        {
+          'url': 'http://jobs.zhaopin.com/340398711251776.htm',
+          'jobTitle': '总监2',
+          'eventTime': '2017-06-14',
+          'source': 'zhilian'
+        },
+        {
+          'url': 'http://jobs.zhaopin.com/340398711251776.htm',
+          'jobTitle': '总监2',
+          'eventTime': '2017-06-14',
+          'source': 'zhilian'
+        }
+      ],
+    }
+  ],
+};
 class AlertAnalysisStore {
   constructor() {
     this.alertCancel = null;
@@ -94,7 +136,7 @@ class AlertAnalysisStore {
       .then(action('getAlertDetail_success', resp => {
         this.loadingId = -1;
         this.alertCancel = null;
-        this.detailData.detail = resp.data;
+        this.detailData.detail = testData.data;
         this.detailData.orgData = resp.data;
         this.detailData.info = info;
         this.detailData.loading = false;

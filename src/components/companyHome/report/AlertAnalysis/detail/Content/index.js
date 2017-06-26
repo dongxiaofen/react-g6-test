@@ -19,6 +19,7 @@ import {
   LitigationAssets,
   News,
   ExcuteInfo,
+  Position,
 } from './module';
 function Content({alertAnalysisStore, monitorAlertStore, routing}) {
   const pathname = routing.location.pathname;
@@ -58,31 +59,33 @@ function Content({alertAnalysisStore, monitorAlertStore, routing}) {
         default:
           return null;
       }
-    }else if (info.alertType === 'SYS_RULE') {
+    } else if (info.alertType === 'SYS_RULE') {
       const ruleId = detail[detailData.activeIndex].ruleId;
       let typeId = 0;
       if (ruleId === 1 || ruleId === 2 || ruleId === 5 || ruleId === 6) {
         typeId = 1;
-      }else if (ruleId === 3 || ruleId === 4) {
+      } else if (ruleId === 3 || ruleId === 4) {
         typeId = 3;
       } else if (ruleId >= 13 && ruleId <= 31) {
         typeId = 13;
-      }else if (ruleId >= 32 && ruleId <= 50) {
+      } else if (ruleId >= 32 && ruleId <= 50) {
         typeId = 32;
+      } else if (ruleId >= 84 && ruleId <= 85) {
+        typeId = 84;
       } else {
         typeId = ruleId;
       }
       switch (typeId) {
         case 1:
-          return <JudgeDoc data={detail[detailData.activeIndex]} type={info.alertTyp} ruleId={ruleId} dataStore={dataStore}/>;
+          return <JudgeDoc data={detail[detailData.activeIndex]} type={info.alertType} ruleId={ruleId} dataStore={dataStore}/>;
         case 3:
-          return <DishonestInfo data={detail[detailData.activeIndex]} type={info.alertTyp} ruleId={ruleId}/>;
+          return <DishonestInfo data={detail[detailData.activeIndex]} type={info.alertType} ruleId={ruleId}/>;
         case 7:
           return <Rule7 data={detail[detailData.activeIndex]} />;
         case 8:
-          return <ErrorInfo data={detail[detailData.activeIndex]} type={info.alertTyp}/>;
+          return <ErrorInfo data={detail[detailData.activeIndex]} type={info.alertType}/>;
         case 9:
-          return <ScopeAlter data={detail[detailData.activeIndex]} type={info.alertTyp}/>;
+          return <ScopeAlter data={detail[detailData.activeIndex]} type={info.alertType}/>;
         case 10:
           return <Rule10 data={detail[detailData.activeIndex]} />;
         case 11:
@@ -93,6 +96,10 @@ function Content({alertAnalysisStore, monitorAlertStore, routing}) {
           return <Rule13To31 data={detail[detailData.activeIndex]} />;
         case 32:
           return <Rule32To50 data={detail[detailData.activeIndex]} />;
+        case 77:
+          return <Position data={detail[detailData.activeIndex]} />;
+        case 84:
+          return <News data={detail[detailData.activeIndex]} dataStore={dataStore}/>;
         default:
           return null;
       }
