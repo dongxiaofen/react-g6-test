@@ -49,7 +49,8 @@ export default class AnalysisList extends Component {
   }
   render() {
     const activeKey = this.props.analysisListStore.activeKey;
-    const {scoreNum, profitNum, operationNum, growingNum} = this.props.analysisListStore.listCount;
+    const { scoreNum } = this.props.analysisListStore.listCount;
+    // const {scoreNum, profitNum, operationNum, growingNum} = this.props.analysisListStore.listCount;
     return (
       <Container className={styles.wrap}>
         <Title {...this.props} />
@@ -57,13 +58,13 @@ export default class AnalysisList extends Component {
           <TabPane tab={this.numWithLoading('多维综合评价', scoreNum)} key="multi">
             <MultiList {...this.props} />
           </TabPane>
-          <TabPane tab={this.numWithLoading('盈利能力分析', profitNum)} key="profit">
+          <TabPane tab="盈利能力分析" key="profit" disabled>
             <ProfitList {...this.props} />
           </TabPane>
-          <TabPane tab={this.numWithLoading('营运能力分析', operationNum)} key="operate">
+          <TabPane tab="营运能力分析" key="operate" disabled>
             <OperateList {...this.props} />
           </TabPane>
-          <TabPane tab={this.numWithLoading('成长能力分析', growingNum)} key="develop">
+          <TabPane tab="成长能力分析" key="develop" disabled>
             <DevelopList {...this.props} />
           </TabPane>
         </Tabs>
