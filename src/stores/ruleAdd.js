@@ -244,6 +244,40 @@ class RuleAddStore {
   }
   // 三级类型选择
   @action.bound setEventTypeThree(value) {
+    // 根据筛选的三级类型映射一二级类型
+    // 筛选工商
+    const corpData = this.eventTypeDataCORP;
+    corpData.map((obj)=>{
+      obj.value.map((item)=>{
+        if (item.name === value.name) {
+          this.eventType = 'CORP';
+          this.eventTypeOne = '工商信息';
+          this.eventTypeTwo = obj.name;
+        }
+      });
+    });
+    // 筛选法务
+    const legalData = this.eventTypeDataLEGAL;
+    legalData.map((obj)=>{
+      obj.value.map((item)=>{
+        if (item.name === value.name) {
+          this.eventType = 'LEGAL';
+          this.eventTypeOne = '法务信息';
+          this.eventTypeTwo = obj.name;
+        }
+      });
+    });
+    // 筛选新闻
+    const newsData = this.eventTypeDataNEWS;
+    newsData.map((obj)=>{
+      obj.value.map((item)=>{
+        if (item.name === value.name) {
+          this.eventType = 'NEWS';
+          this.eventTypeOne = '新闻舆情';
+          this.eventTypeTwo = obj.name;
+        }
+      });
+    });
     // 写入三级类型名称
     this.eventTypeThree = value.name;
     // 写入三级类型id
