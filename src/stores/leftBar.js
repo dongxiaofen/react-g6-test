@@ -96,14 +96,12 @@ class LeftBarStore {
         menuKey: 'network',
         children: [
           {
-            menuText: '企业关联',
+            menuText: '基础关联',
             menuKey: 'network',
-            lock: true,
           },
           {
             menuText: '风险关系',
             menuKey: 'blackNetwork',
-            lock: true,
           },
         ],
       },
@@ -135,21 +133,18 @@ class LeftBarStore {
         menuText: '盈利能力分析',
         menuKey: 'profitEval',
         lock: true,
-        developing: true,
         moduleKey: 'PROFIT',
       },
       {
         menuText: '营运能力分析',
         menuKey: 'operationEval',
         lock: true,
-        developing: true,
         moduleKey: 'OPERATION',
       },
       {
         menuText: '成长能力分析',
         menuKey: 'growthAbilityEval',
         lock: true,
-        developing: true,
         moduleKey: 'GROWING',
       },
     ],

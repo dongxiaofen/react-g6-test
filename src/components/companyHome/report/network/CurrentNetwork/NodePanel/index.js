@@ -6,6 +6,7 @@ import NodeType from './NodeType';
 import InvestInfo from './InvestInfo';
 import ReportStatus from './ReportStatus';
 import LinkJump from 'components/common/LinkJump';
+import Button from 'components/lib/button';
 // import networkType from 'dict/networkType';
 
 function NodePanel({ networkStore, routing, exitFull }) {
@@ -48,6 +49,9 @@ function NodePanel({ networkStore, routing, exitFull }) {
     }
     networkStore.jumpBlackNode(nodeName, routing.location.search);
   };
+  const getShortestPath = ()=> {
+    networkStore.getShortestPath({nodeName: nodeData.name});
+  };
   return (
     <div className={styles.box}>
       <div
@@ -63,14 +67,13 @@ function NodePanel({ networkStore, routing, exitFull }) {
       </div>
       <NodeType nodeData={nodeData} {...networkStore} />
       <InvestInfo nodeData={nodeData} {...networkStore} />
-      {
-        nodeData.cateType !== 2 ? <hr className={styles.hr} /> : ''
-      }
+      <hr className={styles.hr} />
       <ReportStatus monitorInfo={monitorInfo} />
       {
         nodeData.cateType !== 2 ?
           <LinkJump referer="self" name={nodeData.name} label="查看企业" className={styles.link} /> : ''
       }
+      <Button btnType="primary" className={styles.button} onClick={getShortestPath} loading={networkStore.shortPathLoading}>关联路径</Button>
       {/*{
         nodeData.cateType !== 2 && monitorId && !monitorInfo ?
           <a onClick={openCreateMonitorModal} className={styles.link}>

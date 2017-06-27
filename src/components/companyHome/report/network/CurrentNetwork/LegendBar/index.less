@@ -1,82 +1,77 @@
 @import '~sc-colors/index.less';
 
 .box {
-  min-height: 40px;
-  line-height: 40px;
-  border: 1px solid @black12;
-  padding:0 20px 0 10px;
-  background: @black15;
+  width: 40px;
+  float: left;
+  position: relative;
+  margin-right: 15px;
 }
-.legendAction {
-  display: inline-block;
-  height: 24px;
-}
-.optBtn {
-  color: @black5;
-  height: 20px;
-  line-height: 20px;
-  padding: 0 15px;
+.iconWrap {
+  background: #fff;
+  box-shadow: 0 0 6px rgba(0, 0, 0, 0.16);
   text-align: center;
-  float: right;
-  margin: 10px 10px 0 -5px;
-  &:hover {
-    color: @black5;
-  }
+  padding: 0 5px;
 }
-
-.fullBtn {
-  composes: optBtn;
-  // border-left: 1px solid @black12;
-}
-.resumeBtn {
-  composes: optBtn;
-}
-
-.fullIcon {
-  height: 11px;
-  width: 12px;
-  margin-bottom: 3px;
-}
-.exitIcon {
-  height: 11px;
-  width: 11px;
-  margin-bottom: 3px;
-}
-.resumeIcon {
-  height: 10px;
-  width: 12px;
-  margin-bottom: 3px;
-}
-
-.levelSelect {
-  float: right;
-  margin-top: 10px;
-  & > div {
+.searchShow {
+  padding: 0;
+  width: 220px;
+  position: absolute;
+  right: 0;
+  .iconContent {
     float: left;
+    width: 40px;
+    i {
+      color: @mdc-blue-400;
+    }
   }
-
-  &:last-child {
-    margin-left: 50px;
+  .searchInput {
+    border-width: 0 0 0 1px;
+    border-radius: 0;
+    width: 176px;
+    float: left;
+    margin-top: 5px;
+    height: 30px;
+    line-height: 30px;
+    border-color: #e0e0e0;
   }
 }
-
-.legendNotice {
-  color: @black5;
-  float: right;
+.searchHide {
+  padding: 0;
+  width: 40px;
+  position: absolute;
+  right: 0;
+  transition: all 0.1s ease;
+  .searchInput {
+    width: 0;
+    display: none;
+  }
 }
-.legendCancel {
-  margin-left: 10px;
-  display: inline-block;
-  border-radius: 50%;
-  background: #bbbbbb;
-  width: 8px;
-  height: 8px;
+.iconContent {
+  padding: 10px 0;
+  i {
+    font-size: 18px;
+    color: @mdc-grey-400;
+    cursor: pointer;
+  }
 }
-.legendBlacklist {
-  margin-left: 10px;
-  display: inline-block;
-  border-radius: 50%;
-  background: #000;
-  width: 8px;
-  height: 8px;
+.opera {
+  margin-top: 55px;
+}
+.layerWrap{
+  margin-top: 15px;
+}
+.hr {
+  margin-top: 0;
+  margin-bottom: 0;
+}
+.layer {
+  padding: 10px 0;
+  font-size: 14px;
+  font-weight: bold;
+  color: @mdc-grey-400;
+  cursor: pointer;
+}
+.layerAct {
+  composes: layer;
+  color: @mdc-blue-400;
 }
