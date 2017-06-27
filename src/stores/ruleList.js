@@ -43,7 +43,17 @@ class RuleListStore {
   // 搜索列表
   @action.bound getSearchRuleList(value) {
     this.searchInputSend = value;
-    this.getRuleTypeList();
+    // 分页是否大于1
+    let pageIndex = true;
+    if (uiStore.uiState.ruleListPager.index > 1) {
+      pageIndex = false;
+    }
+    // 重置分页并自动获取列表
+    uiStore.uiState.ruleListPager.index = 1;
+    // 分页大于1时不需要重新获取列表
+    if (pageIndex) {
+      this.getRuleTypeList();
+    }
   }
 
   // 分页时获取哪种数据
