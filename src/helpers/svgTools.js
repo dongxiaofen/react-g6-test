@@ -175,12 +175,12 @@ export function getBlackLinkInfo(data) {
   });
   return description.join(',');
 }
-// 风险关联图根据expandIdx更新节点的显示
-export function updateNodeByExpandIdx(pathsArr, expandIdx, nodesData) {
+// 风险关联图根据focusIdx更新节点的显示
+export function updateNodeByFocusIdx(pathsArr, focusIdx, nodesData) {
   nodesData.map((node) => {
-    if (pathsArr[expandIdx].relatedPaths.includes(node.name)) {
+    if (pathsArr[focusIdx].relatedPaths.includes(node.name)) {
       node.hide = false;
-      if (node.name === pathsArr[expandIdx].blackListNode) {
+      if (node.name === pathsArr[focusIdx].blackListNode) {
         node.isBlack = true;
       }
     } else {
