@@ -43,6 +43,7 @@ let nodeAdded = false; // 用户是否新增了节点
 let reactionFocusNodeName;
 let reactionCheckedArrChanged;
 let reactionCurrentLevel;
+let reactionShortPath;
 
 @inject('networkStore')
 @observer
@@ -96,6 +97,7 @@ export default class CircleNetworkGraph extends Component {
           const { focusNodeName } = this.props.networkStore;
           nodesData.map((node) => {
             node.isFocus = false;
+            node.isActive = false;
           });
           if (focusNodeName === this.props.networkStore.mainCompanyName) {
             nodesData[0].isFocus = true;
@@ -152,6 +154,14 @@ export default class CircleNetworkGraph extends Component {
         }
       }
     );
+    reactionShortPath = reaction(
+      () => this.props.networkStore.shortestPath,
+      () => {
+        const {shortestPath} = this.props.networkStore;
+        svgTools.focusShortPath(shortestPath, edgesData);
+        simulation.restart();
+      }
+    );
   }
   componentWillUnmount() {
     if (simulation) {
@@ -173,6 +183,7 @@ export default class CircleNetworkGraph extends Component {
     reactionFocusNodeName();
     reactionCheckedArrChanged();
     reactionCurrentLevel();
+    reactionShortPath();
   }
   reDraw = () => {
     simulation.nodes(nodesData);
@@ -291,6 +302,9 @@ export default class CircleNetworkGraph extends Component {
       .attr('y1', (data) => { return data.source.y; })
       .attr('x2', (data) => { return data.target.x; })
       .attr('y2', (data) => { return data.target.y; })
+      .attr('marker-end', (data)=>{
+        return data.isFocus ? 'url(#mainArrowAct)' : 'url(#mainArrow)';
+      })
       .attr('class', (data) => {
         return (data.hide && styles.hide) || (data.isFocus && styles.focusLink) || styles.links;
       });
@@ -361,6 +375,8 @@ export default class CircleNetworkGraph extends Component {
   dragended = (data) => {
     if (!d3.event.active) simulation.alphaTarget(0);
     if (!isDragging) {
+      this.props.networkStore.updateValue('shortestPath', []);
+      this.props.networkStore.updateValue('focusNodeInfo', data);
       this.props.networkStore.focusNode(data.name);
       console.log(data, '单击', saveNodeXY);
     } else {
@@ -418,6 +434,16 @@ export default class CircleNetworkGraph extends Component {
               refY="6"
               orient="auto">
               <path d="M2,2 L10,6 L2,10 L6,6 L2,2" className={styles.arrow} />
+            </marker>
+            <marker id="mainArrowAct"
+              markerUnits="userSpaceOnUse"
+              markerWidth="10"
+              markerHeight="10"
+              viewBox="0 0 12 12"
+              refX="25"
+              refY="6"
+              orient="auto">
+              <path d="M2,2 L10,6 L2,10 L6,6 L2,2" className={styles.arrowAct} />
             </marker>
             <marker id="relativeArrow"
               markerUnits="userSpaceOnUse"
