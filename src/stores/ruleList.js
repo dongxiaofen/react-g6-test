@@ -152,11 +152,11 @@ class RuleListStore {
         modalStore.confirmLoading = false;
         // 关闭model
         modalStore.closeAction();
-        // 判断是否等于11条数据(处理分页问题)
-        const pages = uiStore.uiState.ruleListPager.totalElements;
+        // 判断数据条数(处理分页问题)
+        const {index, size, totalElements} = uiStore.uiState.ruleListPager;
         // 判断动作是否为关闭 判断是否应该重置到第一页
-        if (data && data.rule && data.rule.ruleStatus && data.rule.ruleStatus === 'USING' && pages === 11 && this.ruleOpen === true) {
-          uiStore.uiState.ruleListPager.index = 1;
+        if (data && data.rule && data.rule.ruleStatus && data.rule.ruleStatus === 'USING' && this.ruleOpen === true && totalElements % size === 1 && index !== 1) {
+          uiStore.uiState.ruleListPager.index = index - 1;
           uiStore.uiState.ruleListPager.size = 10;
         } else {
           // 重新获取数据
