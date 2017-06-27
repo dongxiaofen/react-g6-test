@@ -24,7 +24,7 @@ function ReportOper({ companyHomeStore, routing, bannerStore }) {
           : ''
       }
       {
-        companyHomeStore.reportInfo.dimensions.length < 4 ?
+        companyHomeStore.reportInfo.dimensions.length < 1 ?
           <Button
             btnType="primary"
             className={styles.btnLoan}
