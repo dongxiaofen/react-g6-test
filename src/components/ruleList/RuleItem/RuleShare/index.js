@@ -4,7 +4,10 @@ import styles from './index.less';
 
 function RuleShare({data, changeRuleShare, setItemData, modalStore}) {
   // 修改状态
-  const changeStatus = () => {
+  const changeStatus = (boxClick) => {
+    if (boxClick === 'disabled') {
+      return true;
+    }
     setItemData(data);
     const text = data.rule.share ? '关闭后该规则将不分享' : '开启后该规则将分享';
     // 打开model
@@ -27,13 +30,28 @@ function RuleShare({data, changeRuleShare, setItemData, modalStore}) {
     modalStore.openCompModal({ ...args });
   };
   let text = '';
-  if (data && data.rule) {
-    text = data.rule.share ? '已分享' : '未分享';
+  let textStyle = '';
+  let imgStyle = '';
+  let boxClick = '';
+  let boxStyle = '';
+  if (data && data.rule && data.rule.ruleStatus && data.rule.ruleStatus === 'STOP') {
+    text = '未分享';
+    textStyle = styles.text2;
+    imgStyle = styles.shareImgDown;
+    boxClick = 'disabled';
+    boxStyle = styles.boxDisabled;
+  } else {
+    if (data && data.rule) {
+      text = data.rule.share ? '已分享' : '未分享';
+      textStyle = data.rule.share ? styles.text : styles.text2;
+      imgStyle = data.rule.share ? styles.shareImgOpen : styles.shareImgDown;
+      boxStyle = styles.box;
+    }
   }
   return (
-    <div onClick={changeStatus.bind(this)} className={styles.box}>
-      <i className={data.rule.share ? styles.shareImgOpen : styles.shareImgDown}></i>
-      <span className={data.rule.share ? styles.text : styles.text2}>{text}</span>
+    <div onClick={changeStatus.bind(this, boxClick)} className={boxStyle}>
+      <i className={imgStyle}></i>
+      <span className={textStyle}>{text}</span>
     </div>
   );
 }

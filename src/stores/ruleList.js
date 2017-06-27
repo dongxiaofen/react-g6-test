@@ -152,8 +152,16 @@ class RuleListStore {
         modalStore.confirmLoading = false;
         // 关闭model
         modalStore.closeAction();
-        // 重新获取数据
-        this.getRuleList();
+        // 判断是否等于11条数据(处理分页问题)
+        const pages = uiStore.uiState.ruleListPager.totalElements;
+        // 判断动作是否为关闭 判断是否应该重置到第一页
+        if (data && data.rule && data.rule.ruleStatus && data.rule.ruleStatus === 'USING' && pages === 11 && this.ruleOpen === true) {
+          uiStore.uiState.ruleListPager.index = 1;
+          uiStore.uiState.ruleListPager.size = 10;
+        } else {
+          // 重新获取数据
+          this.getRuleList();
+        }
       }))
       .catch(action('ruleStatus error', (err) => {
         // 关闭loading

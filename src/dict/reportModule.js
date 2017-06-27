@@ -369,7 +369,9 @@ const config = {
   },
   // 开庭公告
   courtAnnouncement: {
+    'type': '公告类型',
     'typeName': '公告类型',
+    'docType': '公告类型',
     'publishTime': '公告时间',
     'court': '公告法院',
     'judgeTime': '开庭时间',
@@ -381,6 +383,7 @@ const config = {
     'identity': '本案身份',
     'content': '公告内容',
     'relevantDepartments': '当事方',
+    'litigant': '当事方',
   },
   courtNotice: {
     'court': '公告法院',
@@ -392,7 +395,9 @@ const config = {
     'caseReason': '案由',
     'areaName': '省份',
     'relevantDepartments': '当事方',
+    'litigant': '当事方',
     'content': '公告内容',
+    'detail': '公告内容',
   },
   judgeDoc: {
     'companyName': '事件企业',

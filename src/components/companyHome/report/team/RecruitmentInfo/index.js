@@ -232,7 +232,7 @@ export default loadingComp({
   mapDataToProps: props => {
     const teamStore = props.teamStore;
     const companyInfo = teamStore.dealWithObjectToArray(teamStore.companyInfo);
-    const isNotData = !companyInfo.every((item) => item === '暂无信息') || Object.keys(companyInfo).length === 0;
+    const isNotData = !companyInfo.every((item) => item === '暂无信息') || companyInfo.length === 0;
     const isError = isNotData
       && !teamStore.wageScale.length
       && !teamStore.recruitment.data.length;
