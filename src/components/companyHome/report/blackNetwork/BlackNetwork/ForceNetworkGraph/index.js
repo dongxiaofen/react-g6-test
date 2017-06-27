@@ -63,10 +63,10 @@ export default class ForceNetworkGraph extends Component {
     edgepathsG = group.append('g').attr('id', 'linePaths');
     edgelabelsG = group.append('g').attr('id', 'lineLabels');
 
-    // 第一次以后从关联关系跳转过来时， 更新expandIdx
+    // 第一次以后从关联关系跳转过来时， 更新focusIdx
     const pathsArr = this.props.blackNetworkStore.blackNetwork.paths;
-    const expandIdx = this.props.blackNetworkStore.expandIdx;
-    svgTools.updateNodeByExpandIdx(pathsArr, expandIdx, nodesData);
+    const focusIdx = this.props.blackNetworkStore.focusIdx;
+    svgTools.updateNodeByFocusIdx(pathsArr, focusIdx, nodesData);
     svgTools.updateLinksDisplay(nodesData, edgesData);
 
     this.reDraw();
@@ -89,10 +89,10 @@ export default class ForceNetworkGraph extends Component {
     );
     // 监听expand事件
     reactionExpanded = reaction(
-      () => this.props.blackNetworkStore.expandIdx,
+      () => this.props.blackNetworkStore.focusIdx,
       () => {
-        const newExpandIdx = this.props.blackNetworkStore.expandIdx;
-        svgTools.updateNodeByExpandIdx(pathsArr, newExpandIdx, nodesData);
+        const newFocusIdx = this.props.blackNetworkStore.focusIdx;
+        svgTools.updateNodeByFocusIdx(pathsArr, newFocusIdx, nodesData);
         svgTools.updateLinksDisplay(nodesData, edgesData);
         simulation.restart();
       }

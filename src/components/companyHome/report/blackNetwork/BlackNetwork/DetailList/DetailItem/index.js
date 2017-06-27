@@ -4,7 +4,7 @@ import styles from './index.less';
 import Popover from 'antd/lib/popover';
 import Detail from './Detail';
 
-function DetailItem({item, isExpand, idx, toggleExpand, showDetail, modalFocusIdx}) {
+function DetailItem({item, isFocus, idx, toggleFocusName, showDetail, modalFocusIdx, isExpend, toggleExpand}) {
   const getTextOverflow = (text) => {
     const showTextNum = (document.getElementById('reportContainer').offsetWidth * 5 / 24 - 150) / 14;
     return (
@@ -19,13 +19,13 @@ function DetailItem({item, isExpand, idx, toggleExpand, showDetail, modalFocusId
     <div>
       <div className={styles.item}>
         <span className={styles.level}>{item.level}层</span>
-        <span className={isExpand ? styles.itemNameFocus : styles.itemName}>{document.getElementById('reportContainer') ? getTextOverflow(item.blackListNode) : ''}</span>
-        <a className={styles.expand} onClick={toggleExpand.bind(this, idx)} title={isExpand === 0 ? '展开' : ''}>
-          <i className={isExpand ? 'fa fa-angle-up' : 'fa fa-angle-down'}></i>
+        <span className={isFocus ? styles.itemNameFocus : styles.itemName} onClick={toggleFocusName.bind(this, idx)}>{document.getElementById('reportContainer') ? getTextOverflow(item.blackListNode) : ''}</span>
+        <a className={styles.expand} title={isExpend === 0 ? '展开' : ''} onClick={toggleExpand.bind(this, idx)}>
+          <i className={isExpend ? 'fa fa-angle-up' : 'fa fa-angle-down'}></i>
         </a>
       </div>
       {
-        isExpand ?
+        isExpend ?
           item.disruptTypeList.map((obj, index) =>
             <Detail
               key={obj.type + index}
