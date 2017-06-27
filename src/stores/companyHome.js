@@ -247,7 +247,7 @@ class CompanyHomeStore {
   @action.bound initDimensions(dimensions) {
     this.loanOption.forEach((option, index)=>{
       const idx = dimensions.indexOf(option.value);
-      if (option.value === 'SCORE' && idx < 0) {
+      if (option === 'SCORE' && idx < 0) {
         this.loanOption[index].checked = true;
       } else {
         this.loanOption[index].checked = false;
