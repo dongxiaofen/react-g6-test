@@ -143,7 +143,7 @@ const config = {
     'esDate': '成立日期',
     'fundedRatio': '出资比例',
     'subConam': '认缴出资额（万元）',
-    'thisPosition': '担任职位',
+    'otherPosition': '担任职位',
     'position': '担任职位',
     'regCap': '注册资金（万元）',
     'frName': '法人代表',

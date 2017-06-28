@@ -49,7 +49,7 @@ export default class AnalysisList extends Component {
   }
   render() {
     const activeKey = this.props.analysisListStore.activeKey;
-    const {scoreNum} = this.props.analysisListStore.listCount;
+    const { scoreNum } = this.props.analysisListStore.listCount;
     // const {scoreNum, profitNum, operationNum, growingNum} = this.props.analysisListStore.listCount;
     return (
       <Container className={styles.wrap}>
