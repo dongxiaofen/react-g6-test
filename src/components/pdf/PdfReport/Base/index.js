@@ -56,7 +56,7 @@ function Base({ judgeIsModuleExist, pdfStore }) {
         judgeIsModuleExist('INV_POS_ENT')
           ?
           <div>
-            <PdfTitle module="对外投资任职" subModule="企业对外投资" />
+            <PdfTitle module="投资任职" subModule="企业投资" />
             <Enterprise moduleData = {pathval.getPathValue(pdfStore, 'entinvItemList')} />
           </div>
           :
@@ -66,7 +66,7 @@ function Base({ judgeIsModuleExist, pdfStore }) {
         judgeIsModuleExist('INV_POS_FR')
           ?
           <div>
-            <PdfTitle module="对外投资任职" subModule="法人对外投资任职" />
+            <PdfTitle module="投资任职" subModule="法人投资任职" />
             <Investment moduleData = {pathval.getPathValue(pdfStore, 'frData.frinvList')} />
             <Office moduleData = {pathval.getPathValue(pdfStore, 'frData.frPositionList')} />
           </div>
@@ -77,7 +77,7 @@ function Base({ judgeIsModuleExist, pdfStore }) {
         judgeIsModuleExist('INV_POS_MANAGEMENT')
           ?
           <div>
-            <PdfTitle module="对外投资任职" subModule="董监高对外投资任职" />
+            <PdfTitle module="投资任职" subModule="董监高投资任职" />
             <Managements moduleData = {pathval.getPathValue(pdfStore, 'managements')} />
           </div>
           :

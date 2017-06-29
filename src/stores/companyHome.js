@@ -1,4 +1,4 @@
-import { observable, action, computed} from 'mobx';
+import { observable, action, computed, reaction} from 'mobx';
 // import payModalStore from './payModal';
 import modalStore from './modal';
 import messageStore from './message';
@@ -8,6 +8,19 @@ import { companyHomeApi } from 'api';
 import pathval from 'pathval';
 import networkStore from './report/network';
 class CompanyHomeStore {
+  constructor() {
+    reaction(
+      () => this.reportInfo.reportId || this.reportInfo.basicReportId,
+      () => {
+        if (this.reportInfo.reportId !== '' || this.reportInfo.basicReportId !== '') {
+          this.isCompleted({
+            reportId: this.reportInfo.reportId === '' ? null : this.reportInfo.reportId,
+            basicReportId: this.reportInfo.basicReportId === '' ? null : this.reportInfo.basicReportId
+          });
+        }
+      }
+    );
+  }
   @observable createBasicErr = {
     value: false,
     err: {},
@@ -30,6 +43,8 @@ class CompanyHomeStore {
   @observable loanLoading = false;
   @observable monitorLoading = false;
   @observable upgradeType = 'nav';
+  // 是否已经完成
+  @observable completed = false;
   @computed get monitorTimeObj() {
     const init = [
       {text: '1个月', key: 'ONE_MONTH'},
@@ -241,7 +256,7 @@ class CompanyHomeStore {
   @action.bound initDimensions(dimensions) {
     this.loanOption.forEach((option, index)=>{
       const idx = dimensions.indexOf(option.value);
-      if (option.value === 'SCORE' && idx < 0) {
+      if (option === 'SCORE' && idx < 0) {
         this.loanOption[index].checked = true;
       } else {
         this.loanOption[index].checked = false;
@@ -278,6 +293,16 @@ class CompanyHomeStore {
     ];
     this.resetMonitorModal();
     this.loanLoading = false;
+  }
+  // 后台是否已经完成
+  @action.bound isCompleted({basicReportId, reportId}) {
+    companyHomeApi.isCompleted({basicReportId, reportId})
+      .then( action( (response) => {
+        this.completed = response;
+      }))
+      .catch( action( (error) => {
+        console.log(error.response.data);
+      }));
   }
 }
 export default new CompanyHomeStore();

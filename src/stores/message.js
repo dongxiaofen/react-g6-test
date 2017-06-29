@@ -36,8 +36,7 @@ class MessageStore {
   @action.bound isAssetsNewest(assetsHash) {
     axios.get('/front/refresh/assets')
       .then(action('isAssetsNewest', resp => {
-        console.info(resp.data.assetsHash, assetsHash, '---');
-        if (assetsHash !== resp.data.assetsHash) {
+        if (assetsHash !== resp.data.assetsHash && !loginStore.isShowLogin) {
           const notRouteToHome = true;
           modalStore.openCompModal({
             title: '温馨提示',
@@ -59,7 +58,7 @@ class MessageStore {
             },
             loader: (cb) => {
               require.ensure([], (require) => {
-                cb(require('../components/assetsRefresh'));
+                cb(require('components/assetsRefresh'));
               });
             }
           });

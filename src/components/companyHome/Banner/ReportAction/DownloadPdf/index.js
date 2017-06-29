@@ -248,7 +248,7 @@ export default class DownloadPdf extends Component {
               {/*onChange={this.downloadAll}>*/}
               {/*<span style={{fontSize: '14px'}}>全部页面</span>*/}
             {/*</Checkbox>*/}
-             <span style={{fontSize: '14px'}}>{this.state.reportTypeDict[this.getReportType()]}报告下载</span>
+             <span style={{fontSize: '14px'}}>{this.state.reportTypeDict[this.getReportType()]}下载</span>
             {
               this.state.tipInfo && isShowTipInfo
                 ? <span className={styles['tip-info']}>请选择需要下载的板块</span>
