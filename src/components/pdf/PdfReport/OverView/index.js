@@ -159,10 +159,10 @@ function OverView({ pdfStore, clientStore }) {
   };
   const staffPosition = {
     mapKey: {
-      position: '近期招聘岗位',
+      position: '近期招聘信息',
     },
     unit: '个',
-    title: '近期招聘岗位',
+    title: '近期招聘信息',
     valueData: summaryData.team ? {data: summaryData.team.recruitmentEmployee.position, type: 'number'} : undefined,
   };
   const recruitmentResumeMap = {
