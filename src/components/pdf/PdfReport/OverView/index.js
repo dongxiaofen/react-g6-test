@@ -38,17 +38,17 @@ function OverView({ pdfStore, clientStore }) {
   };
   const investPositionMap = {
     mapKey: {
-      frinvCount: '法人对外投资',
-      frPositionCount: '法人对外任职',
+      frinvCount: '法人投资',
+      frPositionCount: '法人任职',
     },
     title: '法人投资任职',
     valueData: summaryData.basic ? {data: summaryData.invPos, type: 'object'} : undefined,
   };
   const investManagement = {
     mapKey: {
-      managementFrPositionCount: '董监高对外担任法人',
-      managementInvCount: '董监高对外投资',
-      managementPositionCount: '董监高对外任职',
+      managementFrPositionCount: '董监高担任法人',
+      managementInvCount: '董监高投资',
+      managementPositionCount: '董监高任职',
     },
     title: '董监高投资任职',
     valueData: summaryData.basic ? {data: summaryData.invPos, type: 'object'} : undefined,
@@ -98,7 +98,7 @@ function OverView({ pdfStore, clientStore }) {
       checkMessage: '抽查检查信息',
       illegal: '违法记录'
     },
-    title: '工商抽查',
+    title: '行政信息',
     valueData: summaryData.riskInfo ? {data: summaryData.riskInfo.corpCheck, type: 'object'} : undefined,
   };
   const newsContent = {
