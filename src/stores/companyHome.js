@@ -212,7 +212,13 @@ class CompanyHomeStore {
   @action.bound createBasicReport(params) {
     companyHomeApi.createBasicReport({companyName: params.companyName})
     .then(action('createBasicReport', (resp)=>{
+      console.log(resp.data, '------------');
       this.reportInfo = Object.assign(this.reportInfo, resp.data);
+      // 如果是新搜索的公司在创建以后请求是否已完成
+      this.isCompleted({
+        reportId: resp.data.reportId,
+        basicReportId: resp.data.basicReportId
+      });
     }))
     .catch(action('createBasicReport err', (error)=>{
       this.createBasicErr = {
