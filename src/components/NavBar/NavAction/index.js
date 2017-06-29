@@ -123,16 +123,21 @@ export default class NavAction extends Component {
     return (
       <div className={`clearfix ${styles.wrap}`}>
         {this.searchBar()}
-        <div className={styles.menuBox}>
-          <span className={styles.downloadApp}></span>
-          <HoverBox width="140px" left="-50px">
-            <div className={`clearfix ${styles.code}`}>
-              <img src={codeImg} />
-              <div className={styles.deving}>敬请期待</div>
-              {/* <div className={styles.codeText}>下载星象应用</div> */}
+        {
+          this.props.clientStore.envConfig !== 'cfca_prod'
+          ?
+            <div className={styles.menuBox}>
+              <span className={styles.downloadApp}></span>
+              <HoverBox width="140px" left="-50px">
+                <div className={`clearfix ${styles.code}`}>
+                  <img src={codeImg} />
+                  {/*<div className={styles.deving}>敬请期待</div>*/}
+                  <div className={styles.codeText}>下载手机APP</div>
+                </div>
+              </HoverBox>
             </div>
-          </HoverBox>
-        </div>
+          : null
+        }
         <div className={styles.menuBox}
             ref="userItemBox"
             onMouseOver={this.userItemBoxMouseOver}
