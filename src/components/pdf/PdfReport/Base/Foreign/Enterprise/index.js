@@ -8,7 +8,7 @@ function Enterprise({moduleData}) {
   if (!moduleData || moduleData.length === 0) {
     return (
       <div>
-        <SecondTitle module="企业对外投资"/>
+        <SecondTitle module="企业投资"/>
         <PdfNotFound />
       </div>
     );
@@ -45,7 +45,7 @@ function Enterprise({moduleData}) {
   };
   return (
     <div>
-      <SecondTitle module="企业对外投资" />
+      <SecondTitle module="企业投资" />
       <PdfSimpleKey {...data} />
     </div>
   );
