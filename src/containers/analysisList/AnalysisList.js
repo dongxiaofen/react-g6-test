@@ -67,6 +67,15 @@ export default class AnalysisList extends Component {
           <TabPane tab="成长能力分析" key="develop" disabled>
             <DevelopList {...this.props} />
           </TabPane>
+          <TabPane tab="偿债能力分析" key="test1" disabled>
+            <DevelopList {...this.props} />
+          </TabPane>
+          <TabPane tab="资金管理分析" key="test2" disabled>
+            <DevelopList {...this.props} />
+          </TabPane>
+          <TabPane tab="现金流分析" key="test3" disabled>
+            <DevelopList {...this.props} />
+          </TabPane>
         </Tabs>
       </Container>
     );
