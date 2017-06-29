@@ -12,7 +12,7 @@ function NetWork({judgeIsModuleExist, pdfStore}) {
         judgeIsModuleExist('NETWORK_RELEVANCE')
           ?
           <div>
-            <PdfTitle module="关联网络" subModule="关联图信息" />
+            <PdfTitle module="关联网络" subModule="关联网络图信息" />
             <CurrentNetwork pdfStore={pdfStore} />
           </div>
           :
