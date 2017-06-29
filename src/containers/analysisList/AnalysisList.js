@@ -49,7 +49,7 @@ export default class AnalysisList extends Component {
   }
   render() {
     const activeKey = this.props.analysisListStore.activeKey;
-    const {scoreNum} = this.props.analysisListStore.listCount;
+    const { scoreNum } = this.props.analysisListStore.listCount;
     // const {scoreNum, profitNum, operationNum, growingNum} = this.props.analysisListStore.listCount;
     return (
       <Container className={styles.wrap}>
@@ -65,6 +65,15 @@ export default class AnalysisList extends Component {
             <OperateList {...this.props} />
           </TabPane>
           <TabPane tab="成长能力分析" key="develop" disabled>
+            <DevelopList {...this.props} />
+          </TabPane>
+          <TabPane tab="偿债能力分析" key="test1" disabled>
+            <DevelopList {...this.props} />
+          </TabPane>
+          <TabPane tab="资金管理分析" key="test2" disabled>
+            <DevelopList {...this.props} />
+          </TabPane>
+          <TabPane tab="现金流分析" key="test3" disabled>
             <DevelopList {...this.props} />
           </TabPane>
         </Tabs>

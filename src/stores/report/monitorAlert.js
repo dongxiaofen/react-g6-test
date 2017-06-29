@@ -7,6 +7,9 @@ import uiStore from '../ui';
 import messageStore from '../message';
 const CancelToken = axios.CancelToken;
 class MonitorAlertStore {
+  constructor() {
+    this.alertCancel = null;
+  }
   @observable isMount = false;
   @observable isLoading = true;
   @observable loadingId = -1;
@@ -173,6 +176,12 @@ class MonitorAlertStore {
       detail: {},
       html: '',
     };
+  }
+  @action.bound cancelAlertDetail() {
+    if (this.alertCancel) {
+      this.alertCancel();
+      this.alertCancel = null;
+    }
   }
   @action.bound resetStore() {
     this.isMount = false;

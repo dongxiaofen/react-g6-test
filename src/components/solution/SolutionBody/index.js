@@ -98,7 +98,7 @@ export default class SolutionBody extends Component {
             <div ref="sec1" className={styles.right}>
               <h4>贷前征信<span>(针对信贷业务申请阶段)</span></h4>
               <p style={{marginTop: '24px'}}>拥有超过7500万个企业和数亿企业关联人的全息影像</p>
-              <p>支持金融机构快速查询借贷企业工商、法务、新闻、人员、经营等多维度的数据分析报帮助金融机构有效识别虚假、不良、中介、过度授信等风险情况，规避风险</p>
+              <p>支持金融机构快速查询借贷企业工商、法务、新闻、人员、经营等多维度的数据分析报告帮助金融机构有效识别虚假、不良、中介、过度授信等风险情况，规避风险</p>
             </div>
           </div>
         </div>

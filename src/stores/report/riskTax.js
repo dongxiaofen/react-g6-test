@@ -18,7 +18,7 @@ class RiskTaxStore {
         this.taxData = {content: [], error: {message: '暂无信息'}};
       }));
   }
-  resetStore() {
+  @action.bound resetStore() {
     this.isMount = false;
     this.taxData = {};
   }

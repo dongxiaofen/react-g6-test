@@ -7,7 +7,7 @@ class BlackNetworkStore {
       () => this.jumpNode,
       () => {
         const tmp = this.blackNetwork.paths.findIndex((path) => path.blackListNode === this.jumpNode);
-        this.expandIdx = tmp > 0 ? tmp : this.expandIdx;
+        this.expandIdx = tmp >= 0 ? tmp : this.expandIdx;
         this.isJump = true;
       }
     );

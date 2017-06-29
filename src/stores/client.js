@@ -16,8 +16,8 @@ class ClientStore {
       .then(() => {
         if (!notRouteToHome) {
           browserHistory.push('/');
+          window.location.reload();
         }
-        window.location.reload();
       })
       .catch((err) => {
         console.log(err.response);

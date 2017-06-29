@@ -45,7 +45,7 @@ class BannerStore {
     levelOne: [
       { label: '信息概览', value: 'SUMMERY', checked: false, type: 'basicReport' },
       { label: '工商信息', value: 'CORP', checked: false, type: 'basicReport' },
-      { label: '对外投资任职', value: 'INV_POS', checked: false, type: 'basicReport' },
+      { label: '投资任职', value: 'INV_POS', checked: false, type: 'basicReport' },
       { label: '上市披露', value: 'STOCK', checked: false, type: 'basicReport' },
       { label: '新闻信息', value: 'NEWS', checked: false, type: 'basicReport' },
       { label: '经营信息', value: 'OPERATION', checked: false, type: 'basicReport' },
@@ -66,9 +66,9 @@ class BannerStore {
         { label: '企业年报', value: 'CORP_YEAR_REPORT', checked: false },
       ],
       'INV_POS': [
-        { label: '法人对外投资任职', value: 'INV_POS_FR', checked: false, type: 'basicReport' },
-        { label: '企业对外投资', value: 'INV_POS_ENT', checked: false, type: 'basicReport' },
-        { label: '董监高对外投资任职', value: 'INV_POS_MANAGEMENT', checked: false, type: 'report' },
+        { label: '法人投资任职', value: 'INV_POS_FR', checked: false, type: 'basicReport' },
+        { label: '企业投资', value: 'INV_POS_ENT', checked: false, type: 'basicReport' },
+        { label: '董监高投资任职', value: 'INV_POS_MANAGEMENT', checked: false, type: 'report' },
       ],
       'STOCK': [
         { label: '公司概况', value: 'STOCK_INFO', checked: false },
@@ -99,7 +99,7 @@ class BannerStore {
         { label: '违法记录', value: 'RISK_ILLEGAL', checked: false },
       ],
       'NETWORK': [
-        { label: '关联关系', value: 'NETWORK_RELEVANCE', checked: false },
+        { label: '关联网络图', value: 'NETWORK_RELEVANCE', checked: false },
         { label: '风险关系', value: 'NETWORK_BLACKLIST', checked: false },
       ],
       'PLEDGE': [
@@ -418,8 +418,9 @@ class BannerStore {
       });
     });
     this.isAllChecked = false;
-    modalStore.visible = false;
-    modalStore.isCustomize = false;
+    // modalStore.visible = false;
+    // modalStore.isCustomize = false;
+    modalStore.resetStore();
   }
 
   // 添加/取消收藏
@@ -528,7 +529,7 @@ class BannerStore {
       levelOne: [
         { label: '信息概览', value: 'SUMMERY', checked: false, type: 'basicReport' },
         { label: '工商信息', value: 'CORP', checked: false, type: 'basicReport' },
-        { label: '对外投资任职', value: 'INV_POS', checked: false, type: 'basicReport' },
+        { label: '投资任职', value: 'INV_POS', checked: false, type: 'basicReport' },
         { label: '上市披露', value: 'STOCK', checked: false, type: 'basicReport' },
         { label: '新闻信息', value: 'NEWS', checked: false, type: 'basicReport' },
         { label: '经营信息', value: 'OPERATION', checked: false, type: 'basicReport' },
@@ -549,9 +550,9 @@ class BannerStore {
           { label: '企业年报', value: 'CORP_YEAR_REPORT', checked: false },
         ],
         'INV_POS': [
-          { label: '法人对外投资任职', value: 'INV_POS_FR', checked: false, type: 'basicReport' },
-          { label: '企业对外投资', value: 'INV_POS_ENT', checked: false, type: 'basicReport' },
-          { label: '董监高对外投资任职', value: 'INV_POS_MANAGEMENT', checked: false, type: 'report' },
+          { label: '法人投资任职', value: 'INV_POS_FR', checked: false, type: 'basicReport' },
+          { label: '企业投资', value: 'INV_POS_ENT', checked: false, type: 'basicReport' },
+          { label: '董监高投资任职', value: 'INV_POS_MANAGEMENT', checked: false, type: 'report' },
         ],
         'STOCK': [
           { label: '公司概况', value: 'STOCK_INFO', checked: false },
@@ -582,7 +583,7 @@ class BannerStore {
           { label: '违法记录', value: 'RISK_ILLEGAL', checked: false },
         ],
         'NETWORK': [
-          { label: '关联关系', value: 'NETWORK_RELEVANCE', checked: false },
+          { label: '关联网络图', value: 'NETWORK_RELEVANCE', checked: false },
           { label: '风险关系', value: 'NETWORK_BLACKLIST', checked: false },
         ],
         'PLEDGE': [

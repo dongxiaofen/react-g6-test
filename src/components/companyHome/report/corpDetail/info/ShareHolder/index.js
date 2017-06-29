@@ -8,7 +8,7 @@ function ShareHolder({ shareHolderList, isLoading, errText }) {
     meta: {
       body: [
         { 'key': 'shareholderName', 'width': '2' },
-        { 'key': 'shareholderType', 'width': '2' },
+        // { 'key': 'shareholderType', 'width': '2' },
         { 'key': 'subConam', 'width': '1.6', modifyBlock: (item) => item.subConam ? Number(item.subConam).toFixed(2) : '--' },
         { 'key': 'relConam', 'width': '1.6', modifyBlock: (item) => item.relConam ? Number(item.relConam).toFixed(2) : '--' },
         { 'key': 'fundedRatio', 'width': '1.4' },
