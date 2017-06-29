@@ -32,7 +32,7 @@ function OverView({ pdfStore, clientStore }) {
     valueData: summaryData.basic ? {data: summaryData.basic.corpBasic, type: 'object'} : undefined
   };
   const entinvItem = {
-    title: '企业对外投资',
+    title: '企业投资',
     valueData: summaryData.basic ? {data: summaryData.invPos.entinvItemCount, type: 'number'} : undefined,
     unit: '家'
   };
@@ -41,7 +41,7 @@ function OverView({ pdfStore, clientStore }) {
       frinvCount: '法人对外投资',
       frPositionCount: '法人对外任职',
     },
-    title: '法人对外投资任职',
+    title: '法人投资任职',
     valueData: summaryData.basic ? {data: summaryData.invPos, type: 'object'} : undefined,
   };
   const investManagement = {
@@ -50,7 +50,7 @@ function OverView({ pdfStore, clientStore }) {
       managementInvCount: '董监高对外投资',
       managementPositionCount: '董监高对外任职',
     },
-    title: '董监高对外投资任职',
+    title: '董监高投资任职',
     valueData: summaryData.basic ? {data: summaryData.invPos, type: 'object'} : undefined,
   };
   const businessChange = {
@@ -211,7 +211,7 @@ function OverView({ pdfStore, clientStore }) {
       <Summary {...yearReport} />
       <Summary {...businessChange} />
 
-      <SecondTitle module="对外投资任职" />
+      <SecondTitle module="投资任职" />
       <hr className={styles.hrhr} />
       <Summary {...entinvItem} />
       <Summary {...investPositionMap} />
@@ -265,7 +265,7 @@ function OverView({ pdfStore, clientStore }) {
       {
         pdfStore.reportType === '高级报告' ?
         <div>
-          <SecondTitle module="关联图信息" />
+          <SecondTitle module="关联网络图" />
           <hr className={styles.hrhr} />
           <Summary {...riskRelationshipMap} />
         </div> : ''
