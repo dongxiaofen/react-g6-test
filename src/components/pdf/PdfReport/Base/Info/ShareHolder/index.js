@@ -29,11 +29,11 @@ function ShareHolder({ moduleData }) {
   const data = {
     dataConfig: [
       {'key': 'shareholderName', 'width': '2'},
-      {'key': 'shareholderType', 'width': '2'},
+      // {'key': 'shareholderType', 'width': '2'},
       {'key': 'subConam', 'width': '2'},
-      {'key': 'relConam', 'width': '1.2'},
-      {'key': 'fundedRatio', 'width': '1.4'},
-      {'key': 'conDate', 'width': '1.4'},
+      {'key': 'relConam', 'width': '2'},
+      {'key': 'fundedRatio', 'width': '2'},
+      {'key': 'conDate', 'width': '2'},
     ],
     items: formData(moduleData),
     dict: 'shareholder',
