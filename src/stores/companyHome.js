@@ -117,7 +117,7 @@ class CompanyHomeStore {
   }
   getMessageText(data) {
     const status = ['existProfitDetail', 'existOperationDetail', 'existGrowingDetail'];
-    const textConfig = ['盈利', '运营', '成长'];
+    const textConfig = ['盈利', '营运', '成长'];
     const text = [];
     status.forEach((item, idx)=>{
       if (data.hasOwnProperty(item) && data[item] === false) {
