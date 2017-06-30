@@ -118,9 +118,9 @@ class BannerStore {
       ],
       'ANALYSREPORT': [
         { label: '多维综合分析', value: 'SCORE', checked: false },
-        // { label: '盈利能力分析', value: 'PROFIT', checked: false },
-        // { label: '营运能力分析', value: 'OPERATION', checked: false },
-        // { label: '成长能力分析', value: 'GROWING', checked: false },
+        { label: '盈利能力分析', value: 'PROFIT', checked: false },
+        { label: '营运能力分析', value: 'OPERATION', checked: false },
+        { label: '成长能力分析', value: 'GROWING', checked: false },
       ]
     },
   };
@@ -605,9 +605,9 @@ class BannerStore {
         ],
         'ANALYSREPORT': [
           { label: '多维综合分析', value: 'SCORE', checked: false },
-          // { label: '盈利能力分析', value: 'PROFIT', checked: false },
-          // { label: '营运能力分析', value: 'OPERATION', checked: false },
-          // { label: '成长能力分析', value: 'GROWING', checked: false },
+          { label: '盈利能力分析', value: 'PROFIT', checked: false },
+          { label: '营运能力分析', value: 'OPERATION', checked: false },
+          { label: '成长能力分析', value: 'GROWING', checked: false },
         ]
       },
     };
