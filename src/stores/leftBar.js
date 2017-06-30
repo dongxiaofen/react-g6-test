@@ -123,6 +123,7 @@ class LeftBarStore {
           },
           {
             menuText: '风险传导模型',
+            lock: true,
             menuKey: 'riskConduct',
           },
           {
