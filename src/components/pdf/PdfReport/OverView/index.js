@@ -38,8 +38,8 @@ function OverView({ pdfStore, clientStore }) {
   };
   const investPositionMap = {
     mapKey: {
-      frinvCount: '法人投资企业',
-      frPositionCount: '法人任职企业',
+      frinvCount: '法人投资的企业',
+      frPositionCount: '法人任职的企业',
     },
     title: '法人投资任职',
     valueData: summaryData.basic ? {data: summaryData.invPos, type: 'object'} : undefined,
