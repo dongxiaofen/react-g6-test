@@ -116,23 +116,23 @@
       }
     },
     "start-remote-prod": {
-      "command": "pm2 start ./bin/server.js -i 0 --name=xx_remote_prod",
+      "command": "pm2 start ./bin/server.js -i 2 --name=xx_remote_prod",
       "env": {
         "NODE_PATH": "./src",
         "NODE_ENV": "production",
         "PORT": 9124,
         "target": "remote_prod",
-        "backendApi": "http://10.47.79.89:8080"
+        "backendApi": "http://10.117.80.105:8080"
       }
     },
     "start-cfca-prod": {
-      "command": "pm2 start ./bin/server.js -i 0 --name=xx_cfca_prod",
+      "command": "pm2 start ./bin/server.js --name=xx_cfca_prod",
       "env": {
         "NODE_PATH": "./src",
         "NODE_ENV": "production",
         "PORT": 9126,
         "target": "cfca_prod",
-        "backendApi": "http://10.47.79.89:8080"
+        "backendApi": "http://10.117.80.105:8080"
       }
     },
     "start-cfca-remote": {

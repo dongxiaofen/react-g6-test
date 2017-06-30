@@ -9,7 +9,7 @@ function CardContent({data, show, contentHtml, isModal, module}) {
     location.href = '/companyHome?companyName=' + companyName;
   };
   const handleCompanyName = (value) => {
-    if (data.items.relatedMonitorId) {
+    if (data.items.relatedCompanyName) {
       return <span onClick={routeToCompanyHome.bind(null, value)} className={styles.companyName}>{value}</span>;
     }
     return value;

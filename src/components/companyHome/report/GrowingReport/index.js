@@ -19,11 +19,11 @@ function GrowingReport({upDataList}) {
         item = (
           <tr key={`${idx}up`}>
             <td>{key}年</td>
-            <td>{data[key] && (data[key].ZCZZL || data[key].XSMLL === 0) ? data[key].ZCZZL : ''}%</td>
-            <td>{data[key] && (data[key].XSZZL || data[key].XSMLL === 0) ? data[key].XSZZL : ''}%</td>
-            <td>{data[key] && (data[key].JLRZZL || data[key].XSMLL === 0) ? data[key].JLRZZL : ''}%</td>
-            <td>{data[key] && (data[key].YYLRZZL || data[key].XSMLL === 0) ? data[key].YYLRZZL : ''}%</td>
-            <td>{data[key] && (data[key].ZYYWSRBDL || data[key].XSMLL === 0) ? data[key].ZYYWSRBDL : ''}%</td>
+            <td>{data[key] && (data[key].ZCZZL || data[key].ZCZZL === 0) ? data[key].ZCZZL : ''}%</td>
+            <td>{data[key] && (data[key].XSZZL || data[key].XSZZL === 0) ? data[key].XSZZL : ''}%</td>
+            <td>{data[key] && (data[key].JLRZZL || data[key].JLRZZL === 0) ? data[key].JLRZZL : ''}%</td>
+            <td>{data[key] && (data[key].YYLRZZL || data[key].YYLRZZL === 0) ? data[key].YYLRZZL : ''}%</td>
+            <td>{data[key] && (data[key].ZYYWSRBDL || data[key].ZYYWSRBDL === 0) ? data[key].ZYYWSRBDL : ''}%</td>
           </tr>
         );
       }
