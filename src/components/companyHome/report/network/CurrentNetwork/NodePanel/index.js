@@ -77,10 +77,10 @@ function NodePanel({ networkStore, routing, exitFull }) {
             关联监控
               </a> : ''
       }*/}
-      {
+      {/*{
         nodeData.blackList && nodeData.category !== 7 ?
           <a className={styles.link} onClick={goToBlackList.bind(this, nodeData.name)}>{`高风险记录（${nodeData.caseRecord.length}）`}</a> : ''
-      }
+      }*/}
     </div>
   );
 }
