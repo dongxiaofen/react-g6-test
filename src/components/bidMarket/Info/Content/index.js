@@ -46,8 +46,11 @@ function Content({ areaInfo, uiStore, detailModalStore, getBidMarketDetail }) {
                 中标金额：
                 {item.amount ? `${item.amount}${item.unit}（${item.currency}）` : '－' }
               </div>
-              <div className={styles['bulletin-text1']}>
-                中标单位：{item.winningCompany ? item.winningCompany : '－'}
+              <div className={`${styles['bulletin-text1']} ${styles.bulletinNowrap}`}>
+                中标单位：
+                <span title={item.winningCompany ? item.winningCompany : '－'}>
+                  {item.winningCompany ? item.winningCompany : '－'}
+                </span>
               </div>
               <div className={styles['bulletin-text1']}>
                 中标单位身份：{item.roleName ? item.roleName : '－'}
