@@ -36,6 +36,7 @@ function SwitchData({ from, to, params, cancels, setParams }) {
     }
     const obj = toJS(params);
     obj.province = val;
+    obj.city = '';
     setParams(obj);
   };
 
