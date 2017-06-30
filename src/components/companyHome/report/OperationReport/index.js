@@ -7,19 +7,24 @@ function OperationReport({operationDataList}) {
   const data = operationDataList.data;
   const dataDom = [];
   let idx = 0;
-  let noData = '';
   if (data) {
     Object.keys(data).map(key => {
-      noData = data[key] ? '' : (<div className={styles.noData}>暂无数据</div>);
-      dataDom.push(
+      let item = (
         <tr key={`${idx}operation`}>
           <td>{key}年</td>
-          <td>{data[key] && data[key].CWFYZB ? data[key].CWFYZB : ''}%</td>
-          <td>{data[key] && data[key].GLFYZB ? data[key].GLFYZB : ''}%</td>
-          <td>{data[key] && data[key].XSFYZB ? data[key].XSFYZB : ''}%</td>
-          {noData}
-        </tr>
-      );
+          <td colSpan={5} className={styles.noData}>暂无数据</td>
+        </tr>);
+      if (data[key]) {
+        item = (
+          <tr key={`${idx}operation`}>
+            <td>{key}年</td>
+            <td>{data[key] && (data[key].CWFYZB || data[key].CWFYZB === 0) ? data[key].CWFYZB : ''}%</td>
+            <td>{data[key] && (data[key].GLFYZB || data[key].GLFYZB === 0) ? data[key].GLFYZB : ''}%</td>
+            <td>{data[key] && (data[key].XSFYZB || data[key].XSFYZB === 0) ? data[key].XSFYZB : ''}%</td>
+          </tr>
+        );
+      }
+      dataDom.push(item);
       idx++;
     });
   }

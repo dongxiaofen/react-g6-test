@@ -9,7 +9,7 @@ function SearchItem({itemData, searchParameter}) {
   return (
     <div className={`${styles.searchItemWrap}`}>
       <Row>
-        <Col width="8">
+        <Col width="12">
           <SearchItemLeft
             itemData={itemData}
             searchParameter={searchParameter} />

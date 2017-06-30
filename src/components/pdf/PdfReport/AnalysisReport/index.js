@@ -5,17 +5,11 @@ import pathval from 'pathval';
 import PdfTitle from 'components/common/pdf/PdfTitle';
 
 function AnalysisReport({judgeIsModuleExist, pdfStore}) {
-  return (
-    <div>
-      {
-        judgeIsModuleExist('SCORE') ?
+  return (judgeIsModuleExist('SCORE') ?
           <div>
             <PdfTitle module="多维综合分析" />
             <ComprehensiveAnalysis moduleData={pathval.getPathValue(pdfStore, 'star')} />
-          </div> : ''
-      }
-    </div>
-  );
+          </div> : null);
 }
 
 AnalysisReport.propTypes = {
