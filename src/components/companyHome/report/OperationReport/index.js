@@ -18,9 +18,9 @@ function OperationReport({operationDataList}) {
         item = (
           <tr key={`${idx}operation`}>
             <td>{key}年</td>
-            <td>{data[key] && data[key].CWFYZB ? data[key].CWFYZB : ''}%</td>
-            <td>{data[key] && data[key].GLFYZB ? data[key].GLFYZB : ''}%</td>
-            <td>{data[key] && data[key].XSFYZB ? data[key].XSFYZB : ''}%</td>
+            <td>{data[key] && (data[key].CWFYZB || data[key].CWFYZB === 0) ? data[key].CWFYZB : ''}%</td>
+            <td>{data[key] && (data[key].GLFYZB || data[key].GLFYZB === 0) ? data[key].GLFYZB : ''}%</td>
+            <td>{data[key] && (data[key].XSFYZB || data[key].XSFYZB === 0) ? data[key].XSFYZB : ''}%</td>
           </tr>
         );
       }
