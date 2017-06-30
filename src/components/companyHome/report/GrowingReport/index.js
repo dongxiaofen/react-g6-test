@@ -12,7 +12,7 @@ function GrowingReport({upDataList}) {
       let item = (
         <tr key={`${idx}up`}>
           <td>{key}年</td>
-          <div className={styles.noData}>暂无数据</div>
+          <td colSpan={5} className={styles.noData}>暂无数据</td>
         </tr>
       );
       if (data[key]) {

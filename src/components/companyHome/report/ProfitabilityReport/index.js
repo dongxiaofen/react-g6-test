@@ -28,7 +28,7 @@ function ProfitabilityReport({profitDataList}) {
         item = (
           <tr key={`${idx}profit`}>
             <td>{key}年</td>
-            <div className={styles.noData}>暂无数据</div>
+            <td colSpan={6} className={styles.noData}>暂无数据</td>
           </tr>
         );
       }
