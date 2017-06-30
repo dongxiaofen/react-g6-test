@@ -153,7 +153,7 @@ function LeftBar({ leftBarStore, bannerStore, routing, companyHomeStore}) {
       </div>
       <div className={styles.wrap}>
         <div className={`${styles.title} clearfix`}>
-          <p className={styles.reportType}>贷中分析</p>
+          <p className={styles.reportType}>贷中经营分析</p>
           {
             companyHomeStore.reportInfo.dimensions.length < 4 ?
             <Button
@@ -167,7 +167,7 @@ function LeftBar({ leftBarStore, bannerStore, routing, companyHomeStore}) {
       </div>
       <div className={styles.wrap}>
         <div className={`${styles.title} clearfix`}>
-          <p className={styles.reportType}>贷后监控</p>
+          <p className={styles.reportType}>贷后风险监控</p>
           {
             companyHomeStore.reportInfo.monitorId === '' ?
             <Button
