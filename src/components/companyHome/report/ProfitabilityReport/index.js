@@ -17,12 +17,12 @@ function ProfitabilityReport({profitDataList}) {
         item = (
           <tr key={`${idx}profit`}>
             <td>{key}年</td>
-            <td>{data[key] && data[key].XSMLL ? data[key].XSMLL : ''}%</td>
-            <td>{data[key] && data[key].XSJLL ? data[key].XSJLL : ''}%</td>
-            <td>{data[key] && data[key].YYJLL ? data[key].YYJLL : ''}%</td>
-            <td>{data[key] && data[key].CBFYJLL ? data[key].CBFYJLL : ''}%</td>
-            <td>{data[key] && data[key].ZYYWLRL ? data[key].ZYYWLRL : ''}%</td>
-            <td>{data[key] && data[key].ZCJLL ? data[key].ZCJLL : ''}%</td>
+            <td>{data[key] && (data[key].XSMLL || data[key].XSMLL === 0) ? data[key].XSMLL : ''}%</td>
+            <td>{data[key] && (data[key].XSJLL || data[key].XSJLL === 0) ? data[key].XSJLL : ''}%</td>
+            <td>{data[key] && (data[key].YYJLL || data[key].YYJLL === 0) ? data[key].YYJLL : ''}%</td>
+            <td>{data[key] && (data[key].CBFYJLL || data[key].CBFYJLL === 0) ? data[key].CBFYJLL : ''}%</td>
+            <td>{data[key] && (data[key].ZYYWLRL || data[key].ZYYWLRL === 0) ? data[key].ZYYWLRL : ''}%</td>
+            <td>{data[key] && (data[key].ZCJLL || data[key].ZCJLL === 0) ? data[key].ZCJLL : ''}%</td>
           </tr>);
       } else {
         item = (
