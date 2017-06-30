@@ -7,7 +7,7 @@ function UpgradeReport({companyHomeStore}) {
     <div className={styles.box}>
       {
         upgradeType === 'nav' ?
-        <div>报告即将升级，尊享更多维度信息<span>（董监高对外投资任职、关联图谱、企业历史······）</span></div>
+        <div>报告即将升级，尊享更多维度信息<span>（董监高投资任职、关联图谱、企业历史······）</span></div>
         : '请升级至高级报告，即可查看风险关联预警详情信息'
       }
     </div>

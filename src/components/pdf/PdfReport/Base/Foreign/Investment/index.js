@@ -8,7 +8,7 @@ function Investment({ moduleData }) {
   if (!moduleData || moduleData.length === 0) {
     return (
       <div>
-        <SecondTitle module={`法人对外投资`}/>
+        <SecondTitle module={`法人投资企业`}/>
         <PdfNotFound />
       </div>
     );
@@ -42,7 +42,7 @@ function Investment({ moduleData }) {
   };
   return (
     <div>
-      <SecondTitle module={`法人（${moduleData[0].name}）对外投资`} />
+      <SecondTitle module={`法人（${moduleData[0].name}）投资企业`} />
       <PdfSimpleKey {...data} />
     </div>
   );

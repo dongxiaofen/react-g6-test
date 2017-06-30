@@ -1,13 +1,17 @@
 import React, { Component, PropTypes } from 'react';
 import { observer, inject } from 'mobx-react';
-import { runInAction } from 'mobx';
+import { runInAction, reaction } from 'mobx';
 import Banner from 'components/companyHome/Banner';
 import LeftBar from 'components/companyHome/LeftBar';
 import { Container, Row, Col } from 'components/common/layout';
 import BarLoading from 'components/common/BarLoading';
 import NoBalance from 'components/common/NoBalance';
 import styles from './index.less';
-
+let getTrademarkDataReaction = null;
+let getPatentDataReaction = null;
+let alertAnalysisReaction = null;
+let monitorAlertReaction = null;
+let nowRecordReaction = null;
 @inject(
   'routing',
   'leftBarStore',
@@ -62,6 +66,7 @@ export default class CompanyHome extends Component {
     analysisSrore: PropTypes.object,
     taxStore: PropTypes.object,
     monitorAxisStore: PropTypes.object,
+    monitorAlertStore: PropTypes.object,
     nowRecordStore: PropTypes.object,
     loaningStore: PropTypes.object,
   };
@@ -77,8 +82,49 @@ export default class CompanyHome extends Component {
   componentDidMount() {
     const companyName = this.props.routing.location.query.companyName;
     this.props.companyHomeStore.getReportStatus({ companyName });
+    const companyHomeStore = this.props.companyHomeStore;
+    const assetsStore = this.props.assetsStore;
+    // 在这注入reaction
+    getTrademarkDataReaction = reaction(
+      () => this.props.uiStore.uiState.trademarkLists.index,
+      () => {
+        const reportInfo = companyHomeStore.reportInfo;
+        assetsStore.getTrademarkData(reportInfo);
+      }
+    );
+    getPatentDataReaction = reaction(
+      () => this.props.uiStore.uiState.patentInfo.index,
+      () => {
+        const reportInfo = companyHomeStore.reportInfo;
+        assetsStore.getPatentData(reportInfo);
+      }
+    );
+    alertAnalysisReaction = reaction(
+      () => this.props.uiStore.uiState.alertAnalysis.index,
+      () => {
+        this.props.alertAnalysisStore.getReportModule(companyHomeStore.reportInfo);
+      }
+    );
+    monitorAlertReaction = reaction(
+      () => this.props.uiStore.uiState.monitorAlert.index,
+      () => {
+        this.props.monitorAlertStore.getReportModule(companyHomeStore.reportInfo);
+      }
+    );
+    nowRecordReaction = reaction(
+      () => this.props.uiStore.uiState.nowRecordPager.index,
+      () => {
+        this.props.nowRecordStore.getNowRecordList();
+      }
+    );
   }
-
+  componentWillReceiveProps(nextProps) {
+    const leftBarStore = this.props.leftBarStore;
+    const module = nextProps.routing.location.pathname.split('/')[2];
+    runInAction('初始化报告二级目录', () => {
+      leftBarStore.activeItem = module;
+    });
+  }
   componentWillUnmount() {
     // cancel pending api call
     if (window.reportSourceCancel) {
@@ -86,6 +132,18 @@ export default class CompanyHome extends Component {
         cancel();
       });
     }
+    const reactionArr = [
+      getTrademarkDataReaction,
+      getPatentDataReaction,
+      alertAnalysisReaction,
+      monitorAlertReaction,
+      nowRecordReaction
+    ];
+    reactionArr.forEach(reactionFunc => {
+      if (typeof reactionFunc === 'function') {
+        reactionFunc();
+      }
+    });
     // reset report store data
     [
       'uiStore',
