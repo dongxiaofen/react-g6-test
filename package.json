@@ -76,7 +76,7 @@
       }
     },
     "start-test": {
-      "command": "pm2 start ./bin/server.js -i 0 --name=xx_local_test",
+      "command": "pm2 start ./bin/server.js --name=xx_local_test",
       "env": {
         "NODE_PATH": "./src",
         "NODE_ENV": "production",
@@ -116,7 +116,7 @@
       }
     },
     "start-remote-prod": {
-      "command": "pm2 start ./bin/server.js --name=xx_remote_prod",
+      "command": "pm2 start ./bin/server.js -i 0 --name=xx_remote_prod",
       "env": {
         "NODE_PATH": "./src",
         "NODE_ENV": "production",
@@ -126,7 +126,7 @@
       }
     },
     "start-cfca-prod": {
-      "command": "pm2 start ./bin/server.js --name=xx_cfca_prod",
+      "command": "pm2 start ./bin/server.js -i 0 --name=xx_cfca_prod",
       "env": {
         "NODE_PATH": "./src",
         "NODE_ENV": "production",
