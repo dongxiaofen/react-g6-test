@@ -26,7 +26,7 @@ class PdfStore {
   @observable entinvItemList = [];
   @observable frData = {};
   @observable shares = {};
-  @observable pdfTypesKey = 'SCORE,PROFIT,OPERATION,GROWING';
+  @observable pdfTypesKey = 'SCORE,PROFIT,OPERATION,GROWING,SUMMERY';
   @observable managements = [];
   @observable reportType = '';
   @observable taxList = [];

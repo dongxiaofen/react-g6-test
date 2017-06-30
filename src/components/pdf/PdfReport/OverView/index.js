@@ -124,12 +124,12 @@ function OverView({ pdfStore, clientStore }) {
     valueData: summaryData.operation ? {data: summaryData.operation.operationInfo, type: 'object'} : undefined,
   };
   const riskRelationshipMap = {
-    mapKey: {
-      riskRelationship: '风险关联信息',
-      linkRelationship: '企业关联信息',
-    },
-    title: '风险关系',
-    valueData: summaryData.network ? {data: summaryData.network, type: 'object'} : undefined,
+    title: '关系网络图',
+    valueData: summaryData.network ? {data: summaryData.network.linkRelationship, type: 'number'} : undefined,
+  };
+  const riskChain = {
+    title: '风险链条',
+    valueData: summaryData.network ? {data: summaryData.network.riskRelationship, type: 'number'} : undefined,
   };
   const pledgeEquity = {
     mapKey: {
@@ -265,10 +265,18 @@ function OverView({ pdfStore, clientStore }) {
       {
         pdfStore.reportType === '高级报告' ?
         <div>
-          <SecondTitle module="关系网络图" />
+          <SecondTitle module="关联网络" />
           <hr className={styles.hrhr} />
           <Summary {...riskRelationshipMap} />
         </div> : ''
+      }
+      {
+        pdfStore.reportType === '高级报告' ?
+          <div>
+            <SecondTitle module="风险扫描" />
+            <hr className={styles.hrhr} />
+            <Summary {...riskChain} />
+          </div> : ''
       }
 
       {/* 多维分析 */}
