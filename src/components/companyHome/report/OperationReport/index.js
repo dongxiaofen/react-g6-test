@@ -14,9 +14,9 @@ function OperationReport({operationDataList}) {
       dataDom.push(
         <tr key={`${idx}operation`}>
           <td>{key}年</td>
-          <td>{data[key].CWFYZB}%</td>
-          <td>{data[key].GLFYZB}%</td>
-          <td>{data[key].XSFYZB}%</td>
+          <td>{data[key].CWFYZB ? data[key].CWFYZB : ''}%</td>
+          <td>{data[key].GLFYZB ? data[key].GLFYZB : ''}%</td>
+          <td>{data[key].XSFYZB ? data[key].XSFYZB : ''}%</td>
           {noData}
         </tr>
       );
