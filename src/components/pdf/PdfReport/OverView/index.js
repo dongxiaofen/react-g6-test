@@ -124,7 +124,7 @@ function OverView({ pdfStore, clientStore }) {
     valueData: summaryData.operation ? {data: summaryData.operation.operationInfo, type: 'object'} : undefined,
   };
   const riskRelationshipMap = {
-    title: '关联网络图',
+    title: '关系网络图',
     valueData: summaryData.network ? {data: summaryData.network.linkRelationship, type: 'number'} : undefined,
   };
   const riskChain = {
@@ -265,7 +265,7 @@ function OverView({ pdfStore, clientStore }) {
       {
         pdfStore.reportType === '高级报告' ?
         <div>
-          <SecondTitle module="关系网络" />
+          <SecondTitle module="关联网络" />
           <hr className={styles.hrhr} />
           <Summary {...riskRelationshipMap} />
         </div> : ''
