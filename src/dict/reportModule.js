@@ -53,7 +53,7 @@ const config = {
   equityPledge: {
     'imporg': '质权人姓名',
     'imporgType': '出质人类别',
-    'imporgAmount': '出质金额',
+    'imporgAmount': '出质金额（万元）',
     'imporgRecordDate': '出质备案日期',
     'imporgAthOrg': '出质审批部门',
     'imporgDate': '出质批准日期',
@@ -196,7 +196,7 @@ const config = {
   sharesImpawnListItemLists: {
     'imporg': '质权人姓名',
     'imporgType': '出质人类别',
-    'imporgAmount': '出质金额',
+    'imporgAmount': '出质金额（万元）',
     'imporgRecordDate': '出质备案日期',
     'imporgAthOrg': '出质审批部门',
     'imporgDate': '出质批准日期',
