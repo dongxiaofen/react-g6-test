@@ -3,10 +3,8 @@ import moment from 'moment';
 import { companyHomeApi } from 'api';
 class TeamStore {
   isEmptyObject(obj) {
-    for (const key in obj) {
-      if (obj.hasOwnProperty(key)) {
-        return false;
-      }
+    if (Object.keys(obj).length) {
+      return false;
     }
     return true;
   }
@@ -66,95 +64,108 @@ class TeamStore {
           const recruitmentStatistic = recruitmentData.recruitmentStatisticResponse;
 
           // 全国招聘薪资的平均数
-          let similarCompanyAvgSalary = recruitmentStatistic.similarCompanyAvgSalary;
-          if (similarCompanyAvgSalary) {
-            similarCompanyAvgSalary = similarCompanyAvgSalary.toFixed(2);
+          let similarCompanyAvgSalary = '';
+          if (recruitmentStatistic && similarCompanyAvgSalary) {
+            similarCompanyAvgSalary = recruitmentStatistic.similarCompanyAvgSalary;
+            if (similarCompanyAvgSalary) {
+              similarCompanyAvgSalary = similarCompanyAvgSalary.toFixed(2);
+            }
           }
 
           // 招聘信息的第一块
           const degreeInfo = [];
           const companyInfo = {};
-          const recruitmentInfoDegreeInfo = recruitmentStatistic.degreeInfo;
-          if (recruitmentInfoDegreeInfo && recruitmentInfoDegreeInfo.length > 0) {
-            recruitmentInfoDegreeInfo.forEach((item) => {
-              if (item.value) {
-                degreeInfo.push(
-                  `${item.name} ( ${(item.value * 100).toFixed(0)}% ) `
-                );
-              }
-            });
+          if (recruitmentStatistic) {
+            const recruitmentInfoDegreeInfo = recruitmentStatistic.degreeInfo;
+            if (recruitmentInfoDegreeInfo && recruitmentInfoDegreeInfo.length > 0) {
+              recruitmentInfoDegreeInfo.forEach((item) => {
+                if (item.value) {
+                  degreeInfo.push(
+                    `${item.name} ( ${(item.value * 100).toFixed(0)}% ) `
+                  );
+                }
+              });
+            }
+            companyInfo.scale = recruitmentStatistic.scale ? recruitmentStatistic.scale : '暂无信息';
+            companyInfo.location = recruitmentStatistic.location.length ? recruitmentStatistic.location.join('，') : '暂无信息';
+            companyInfo.salaryAvg = recruitmentStatistic.salaryAvg ? recruitmentStatistic.salaryAvg.toFixed(2) + '元' : '暂无信息';
+            companyInfo.workingYearsAvg = recruitmentStatistic.workingYearsAvg ? recruitmentStatistic.workingYearsAvg.toFixed(2) + '年' : '暂无信息';
+            companyInfo.degreeInfo = degreeInfo.length ? degreeInfo.join('，') : '暂无信息';
           }
-          companyInfo.scale = recruitmentStatistic.scale ? recruitmentStatistic.scale : '暂无信息';
-          companyInfo.location = recruitmentStatistic.location.length ? recruitmentStatistic.location.join('，') : '暂无信息';
-          companyInfo.salaryAvg = recruitmentStatistic.salaryAvg ? recruitmentStatistic.salaryAvg.toFixed(2) + '元' : '暂无信息';
-          companyInfo.workingYearsAvg = recruitmentStatistic.workingYearsAvg ? recruitmentStatistic.workingYearsAvg.toFixed(2) + '年' : '暂无信息';
-          companyInfo.degreeInfo = degreeInfo.length ? degreeInfo.join('，') : '暂无信息';
 
           // 招聘信息第二块，企业招聘薪资比例
           const wageScale = [];
-          const salaryDis = recruitmentStatistic.salaryDis;
-          if (salaryDis && !this.isEmptyObject(salaryDis)) {
-            let salaryDisCount = 0;
-            const salaryDisKey = Object.keys(salaryDis);
-            salaryDisKey.forEach((item) => {
-              wageScale.push({
-                name: item,
-                value: (salaryDis[item] * 100).toFixed(2),
-                itemStyle: {
-                  normal: {
-                    color: `rgba(67, 191, 119, ${1 - 0.2 * salaryDisCount})`
+          if (recruitmentStatistic) {
+            const salaryDis = recruitmentStatistic.salaryDis;
+            if (salaryDis && !this.isEmptyObject(salaryDis)) {
+              let salaryDisCount = 0;
+              const salaryDisKey = Object.keys(salaryDis);
+              salaryDisKey.forEach((item) => {
+                wageScale.push({
+                  name: item,
+                  value: (salaryDis[item] * 100).toFixed(2),
+                  itemStyle: {
+                    normal: {
+                      color: `rgba(67, 191, 119, ${1 - 0.2 * salaryDisCount})`
+                    }
                   }
-                }
+                });
+                salaryDisCount++;
               });
-              salaryDisCount++;
-            });
+            }
           }
 
           // 招聘信息第三块，招聘岗位分布
           const recruitmentJobAxis = [];
           const recruitmentJobData = [];
-          const categoryInfo = recruitmentStatistic.categoryInfo;
-          if (categoryInfo && categoryInfo.length > 0) {
-            recruitmentStatistic.categoryInfo.forEach((item) => {
-              recruitmentJobAxis.push(item.name);
-              recruitmentJobData.push((item.value * 100).toFixed(0));
-            });
+          if (recruitmentStatistic) {
+            const categoryInfo = recruitmentStatistic.categoryInfo;
+            if (categoryInfo && categoryInfo.length > 0) {
+              recruitmentStatistic.categoryInfo.forEach((item) => {
+                recruitmentJobAxis.push(item.name);
+                recruitmentJobData.push((item.value * 100).toFixed(0));
+              });
+            }
           }
 
           const staffInfo = recruitmentData.resumeStatisticResponse;
-          let staffSchool = staffInfo.schoolInfo;
-          let staffSpe = staffInfo.majorInfo;
           // 员工背景，毕业学校
           const staffSchoolAxis = [];
           const staffSchoolData = [];
-          if (staffSchool && !this.isEmptyObject(staffSchool)) {
-            staffSchool = this.dealWithObjectToArray(staffSchool);
-            staffSchool = staffSchool.sort((prev, next) => {
-              return prev.value - next.value;
-            });
-            staffSchool.forEach((item) => {
-              staffSchoolAxis.push(item.name);
-              staffSchoolData.push(item.value);
-            });
+          if (staffInfo) {
+            let staffSchool = staffInfo.schoolInfo;
+            if (staffSchool && !this.isEmptyObject(staffSchool)) {
+              staffSchool = this.dealWithObjectToArray(staffSchool);
+              staffSchool = staffSchool.sort((prev, next) => {
+                return prev.value - next.value;
+              });
+              staffSchool.forEach((item) => {
+                staffSchoolAxis.push(item.name);
+                staffSchoolData.push(item.value);
+              });
+            }
           }
 
           // 员工背景，所学专业
           const staffSpeAxis = [];
           const staffSpeData = [];
-          if (staffSpe && staffSpe.length > 0) {
-            let staffSpeLength = 5;
-            staffSpe = staffSpe.sort((prev, next) => {
-              return next.value - prev.value;
-            });
-            if (staffSpe.length < 5) {
-              staffSpeLength = staffSpe.length;
-              staffSpe = staffSpe.reverse();
-            } else {
-              staffSpe = staffSpe.slice(0, 5).reverse();
-            }
-            for (let idx = 0; idx < staffSpeLength; idx++) {
-              staffSpeAxis.push(staffSpe[idx].name);
-              staffSpeData.push(staffSpe[idx].value);
+          if (staffInfo) {
+            let staffSpe = staffInfo.majorInfo;
+            if (staffSpe && staffSpe.length > 0) {
+              let staffSpeLength = 5;
+              staffSpe = staffSpe.sort((prev, next) => {
+                return next.value - prev.value;
+              });
+              if (staffSpe.length < 5) {
+                staffSpeLength = staffSpe.length;
+                staffSpe = staffSpe.reverse();
+              } else {
+                staffSpe = staffSpe.slice(0, 5).reverse();
+              }
+              for (let idx = 0; idx < staffSpeLength; idx++) {
+                staffSpeAxis.push(staffSpe[idx].name);
+                staffSpeData.push(staffSpe[idx].value);
+              }
             }
           }
 
