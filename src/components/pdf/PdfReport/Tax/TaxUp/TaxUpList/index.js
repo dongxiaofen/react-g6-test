@@ -4,23 +4,25 @@ import styles from './index.less';
 
 function TaxUpList({moduleData}) {
   const dataDom = [];
-  let idx = 0;
-  let noData = '';
-  Object.keys(moduleData).map(key => {
-    noData = moduleData[key] ? '' : (<div className={styles.noData}>暂无数据</div>);
-    dataDom.push(
-      <tr key={`${idx}up`}>
-        <td>{key}年</td>
-        <td>{moduleData[key].ZCZZL}%</td>
-        <td>{moduleData[key].XSZZL}%</td>
-        <td>{moduleData[key].JLRZZL}%</td>
-        <td>{moduleData[key].YYLRZZL}%</td>
-        <td>{moduleData[key].ZYYWSRBDL}%</td>
-        {noData}
-      </tr>
-    );
-    idx ++;
-  });
+  if (moduleData) {
+    let idx = 0;
+    let noData = '';
+    Object.keys(moduleData).map(key => {
+      noData = moduleData[key] ? '' : (<div className={styles.noData}>暂无数据</div>);
+      dataDom.push(
+        <tr key={`${idx}up`}>
+          <td>{key}年</td>
+          <td>{moduleData[key].ZCZZL ? moduleData[key].ZCZZL : ''}%</td>
+          <td>{moduleData[key].XSZZL ? moduleData[key].XSZZL : ''}%</td>
+          <td>{moduleData[key].JLRZZL ? moduleData[key].JLRZZL : ''}%</td>
+          <td>{moduleData[key].YYLRZZL ? moduleData[key].YYLRZZL : ''}%</td>
+          <td>{moduleData[key].ZYYWSRBDL ? moduleData[key].ZYYWSRBDL : ''}%</td>
+          {noData}
+        </tr>
+      );
+      idx ++;
+    });
+  }
   return (
     <div className={styles.box}>
       <table className={styles.table}>
