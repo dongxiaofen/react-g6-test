@@ -77,9 +77,11 @@ class TeamStore {
           const recruitmentInfoDegreeInfo = recruitmentStatistic.degreeInfo;
           if (recruitmentInfoDegreeInfo && recruitmentInfoDegreeInfo.length > 0) {
             recruitmentInfoDegreeInfo.forEach((item) => {
-              degreeInfo.push(
-                `${item.name} ( ${(item.value * 100).toFixed(0)}% ) `
-              );
+              if (item.value) {
+                degreeInfo.push(
+                  `${item.name} ( ${(item.value * 100).toFixed(0)}% ) `
+                );
+              }
             });
           }
           companyInfo.scale = recruitmentStatistic.scale ? recruitmentStatistic.scale : '暂无信息';
@@ -132,7 +134,7 @@ class TeamStore {
             });
             staffSchool.forEach((item) => {
               staffSchoolAxis.push(item.name);
-              staffSchoolData.push(parseInt(item.value * 100, 10));
+              staffSchoolData.push(item.value);
             });
           }
 

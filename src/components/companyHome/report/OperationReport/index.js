@@ -1,6 +1,7 @@
 import React, {PropTypes} from 'react';
 import {observer} from 'mobx-react';
 import styles from './index.less';
+// import LoanDemo from 'components/common/report/LoanDemo';
 
 function OperationReport({operationDataList}) {
   const data = operationDataList.data;
@@ -24,6 +25,7 @@ function OperationReport({operationDataList}) {
   }
   return (
     <div>
+      {/*<LoanDemo type="operation"/>*/}
       <p className={styles.excelTitle}>指标列表
         <span className={styles.timestamp}>（最近分析时间：{this.props.operationDataList.lastTm}）</span>
       </p>

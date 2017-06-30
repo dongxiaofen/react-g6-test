@@ -11,7 +11,7 @@ function TaxInfo({riskTaxStore}) {
     if (isNaN(Number(value))) {
       _value = value;
     } else {
-      _value = Number(value).toFixed(0);
+      _value = Number(value).toFixed(2);
     }
     return _value;
   };

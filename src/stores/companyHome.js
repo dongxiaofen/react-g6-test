@@ -35,9 +35,12 @@ class CompanyHomeStore {
   }
   @observable loanOption = [
     { label: '多维综合评价', value: 'SCORE', checked: true},
-    { label: '盈利能力分析', value: 'PROFIT', checked: false, type: 'developing'},
-    { label: '营运能力分析', value: 'OPERATION', checked: false, type: 'developing'},
-    { label: '成长能力分析', value: 'GROWING', checked: false, type: 'developing'},
+    { label: '盈利能力分析', value: 'PROFIT', checked: true},
+    { label: '营运能力分析', value: 'OPERATION', checked: true},
+    { label: '成长能力分析', value: 'GROWING', checked: true},
+    { label: '偿债能力分析', value: '', checked: false, type: 'developing'},
+    { label: '资产管理分析', value: '', checked: false, type: 'developing'},
+    { label: '现金流分析', value: '', checked: false, type: 'developing'},
   ];
   @observable monitorTime = 1;
   @observable loanLoading = false;
@@ -256,7 +259,7 @@ class CompanyHomeStore {
   @action.bound initDimensions(dimensions) {
     this.loanOption.forEach((option, index)=>{
       const idx = dimensions.indexOf(option.value);
-      if (option === 'SCORE' && idx < 0) {
+      if (/SCORE|PROFIT|OPERATION|GROWING/.test(option.value) && idx < 0) {
         this.loanOption[index].checked = true;
       } else {
         this.loanOption[index].checked = false;
@@ -287,9 +290,12 @@ class CompanyHomeStore {
     };
     this.loanOption = [
       { label: '多维综合评价', value: 'SCORE', checked: true},
-      { label: '盈利能力分析', value: 'PROFIT', checked: false, type: 'developing'},
-      { label: '营运能力分析', value: 'OPERATION', checked: false, type: 'developing'},
-      { label: '成长能力分析', value: 'GROWING', checked: false, type: 'developing'},
+      { label: '盈利能力分析', value: 'PROFIT', checked: true},
+      { label: '营运能力分析', value: 'OPERATION', checked: true},
+      { label: '成长能力分析', value: 'GROWING', checked: true},
+      { label: '偿债能力分析', value: '', checked: false, type: 'developing'},
+      { label: '资产管理分析', value: '', checked: false, type: 'developing'},
+      { label: '现金流分析', value: '', checked: false, type: 'developing'},
     ];
     this.resetMonitorModal();
     this.loanLoading = false;

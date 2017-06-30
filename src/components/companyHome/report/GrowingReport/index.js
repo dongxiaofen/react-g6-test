@@ -1,6 +1,7 @@
 import React, { PropTypes } from 'react';
 import { observer } from 'mobx-react';
 import styles from './index.less';
+// import LoanDemo from 'components/common/report/LoanDemo';
 
 function GrowingReport({ upDataList }) {
   const data = upDataList.data;
@@ -43,6 +44,7 @@ function GrowingReport({ upDataList }) {
         {dataDom}
         </tbody>
       </table>
+      {/*<LoanDemo type="growth"/>*/}
       <div>
         <p className={styles.title}>指标解析</p>
         <div className={styles.analysisContent}>

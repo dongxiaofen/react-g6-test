@@ -364,6 +364,7 @@ class MonitorStatisticsStore {
           }
 
           // 恶心的未知 -----------------------------------------------------------------------
+          this.provinceBarUndefined = 0;
           let provinceUndefinedIndex = provinceAllData.findIndex((item) => item.area === '未知');
           if (provinceUndefinedIndex !== -1) {
             this.provinceBarUndefined = provinceAllData[provinceUndefinedIndex].companyCount;
@@ -456,6 +457,7 @@ class MonitorStatisticsStore {
             }
           }
           // 恶心的未知----------------------------------------------------------------------------
+          this.provinceMapUndefined = 0;
           let provinceRankUndefinedIndex = provinceRank.findIndex((item) => item.area === '未知');
           if (provinceRankUndefinedIndex !== -1) {
             this.provinceMapUndefined = provinceRank[provinceRankUndefinedIndex].companyCount;

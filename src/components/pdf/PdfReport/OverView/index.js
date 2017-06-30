@@ -41,7 +41,7 @@ function OverView({ pdfStore, clientStore }) {
       frinvCount: '法人投资企业',
       frPositionCount: '法人任职企业',
     },
-    title: '法人投资企业',
+    title: '法人投资任职',
     valueData: summaryData.basic ? {data: summaryData.invPos, type: 'object'} : undefined,
   };
   const investManagement = {
@@ -151,8 +151,8 @@ function OverView({ pdfStore, clientStore }) {
   };
   const staffBackground = {
     mapKey: {
-      major: '毕业学校',
-      graduation: '所学专业',
+      graduation: '毕业学校',
+      major: '所学专业',
     },
     title: '员工背景',
     valueData: summaryData.team ? {data: summaryData.team.recruitmentEmployee, type: 'object'} : undefined,
@@ -168,7 +168,7 @@ function OverView({ pdfStore, clientStore }) {
   const recruitmentResumeMap = {
     mapKey: {
       recruitmentLocation: '新增招聘地点',
-      avgSalaryTrend: '平均薪资趋势',
+      avgSalaryTrend: '招聘平均薪资趋势',
       recruitmentPost: '新增招聘岗位',
       resumeTrend: '离职意向趋势'
     },
@@ -265,7 +265,7 @@ function OverView({ pdfStore, clientStore }) {
       {
         pdfStore.reportType === '高级报告' ?
         <div>
-          <SecondTitle module="关联网络图" />
+          <SecondTitle module="关系网络图" />
           <hr className={styles.hrhr} />
           <Summary {...riskRelationshipMap} />
         </div> : ''
