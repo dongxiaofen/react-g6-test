@@ -65,15 +65,15 @@ function PosItemInfo({investmentStore, bannerStore}) {
       </div>
       <div className={styles.boxBody}>
         <div className={styles.tableWrap}>
-          <div className={styles.tableName}>对外担任法人代表（{frPositionCount}）</div>
+          <div className={styles.tableName}>担任法人的企业（{frPositionCount}）</div>
           {frPositionCount > 0 ? frPositionTabels : <ErrorText error={{message: '暂无信息'}}/>}
         </div>
         <div className={styles.tableWrap}>
-          <div className={styles.tableName}>对外投资（{managementInvCount}）</div>
+          <div className={styles.tableName}>投资企业（{managementInvCount}）</div>
           {managementInvCount > 0 ? managementInvTabels : <ErrorText error={{message: '暂无信息'}}/>}
         </div>
         <div className={styles.tableWrap}>
-          <div className={styles.tableName}>对外任职（{managementPositionCount}）</div>
+          <div className={styles.tableName}>任职企业（{managementPositionCount}）</div>
           {managementPositionCount > 0 ? managementPositionTabels : <ErrorText error={{message: '暂无信息'}}/>}
         </div>
       </div>
