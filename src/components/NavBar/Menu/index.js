@@ -17,9 +17,9 @@ function Menu({ routing }) {
         // { module: '个人投资任职', route: '/' },
         { module: '个人黑名单', route: 'relPerCheck' },
         { module: '企业年度报税', route: 'taxCheck' },
-        { module: '敬请期待', splitters: true, route: '' },
-        { module: '企业黑名单', deving: true, route: '' },
-        { module: '个人身份核验', deving: true, route: '' },
+        // { module: '敬请期待', splitters: true, route: '' },
+        { module: '企业黑名单', route: 'corpBlackList' },
+        { module: '个人身份核验', route: 'personCheck' },
       ]
     },
     // {
@@ -44,10 +44,10 @@ function Menu({ routing }) {
         { module: '盈利能力分析', route: 'analysisList?activeKey=profit' },
         { module: '营运能力分析', route: 'analysisList?activeKey=operate' },
         { module: '成长能力分析', route: 'analysisList?activeKey=develop' },
-        { module: '敬请期待', splitters: true, route: '' },
-        { module: '偿债能力分析', deving: true, route: '' },
-        { module: '资产管理分析', deving: true, route: '' },
-        { module: '现金流分析', deving: true, route: '' },
+        // { module: '敬请期待', splitters: true, route: '' },
+        { module: '偿债能力分析', route: 'analysisList?activeKey=debt' },
+        { module: '资产管理分析', route: 'analysisList?activeKey=capital' },
+        { module: '现金流分析', route: 'analysisList?activeKey=cash' },
       ]
     },
     {
