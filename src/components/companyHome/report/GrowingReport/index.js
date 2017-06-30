@@ -1,7 +1,7 @@
 import React, { PropTypes } from 'react';
 import { observer } from 'mobx-react';
 import styles from './index.less';
-import LoanDemo from 'components/common/report/LoanDemo';
+// import LoanDemo from 'components/common/report/LoanDemo';
 
 function GrowingReport({ upDataList }) {
   const data = upDataList.data;
@@ -24,7 +24,7 @@ function GrowingReport({ upDataList }) {
   }
   return (
     <div className={styles.box}>
-      {/*<p className={styles.excelTitle}>指标列表
+      <p className={styles.excelTitle}>指标列表
         <span className={styles.timestamp}>（最近分析时间：{this.props.upDataList.lastTm}）</span>
       </p>
       <table className={styles.table}>
@@ -43,8 +43,8 @@ function GrowingReport({ upDataList }) {
         <tbody>
         {dataDom}
         </tbody>
-      </table>*/}
-      <LoanDemo type="growth"/>
+      </table>
+      {/*<LoanDemo type="growth"/>*/}
       <div>
         <p className={styles.title}>指标解析</p>
         <div className={styles.analysisContent}>
