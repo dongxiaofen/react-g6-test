@@ -4,6 +4,7 @@ import CheckItem from './CheckItem';
 import Pager from 'components/common/Pager';
 import styles from './index.less';
 import NoneData from './NoneData';
+import { loadingComp } from 'components/hoc';
 
 function CheckList({listData}) {
   if (listData.length === 0) {
@@ -20,4 +21,12 @@ function CheckList({listData}) {
 CheckList.propTypes = {
   listData: PropTypes.object,
 };
-export default observer(CheckList);
+export default loadingComp(
+  {mapDataToProps: props=> ({
+    loading: props.loading,
+    imgCategory: 14,
+    category: 2,
+    errCategory: 2,
+    module: '企业年度报税',
+    error: false,
+  })})(observer(CheckList));
