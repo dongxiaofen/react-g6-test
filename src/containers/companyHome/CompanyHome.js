@@ -78,7 +78,13 @@ export default class CompanyHome extends Component {
     const companyName = this.props.routing.location.query.companyName;
     this.props.companyHomeStore.getReportStatus({ companyName });
   }
-
+  componentWillReceiveProps(nextProps) {
+    const leftBarStore = this.props.leftBarStore;
+    const module = nextProps.routing.location.pathname.split('/')[2];
+    runInAction('初始化报告二级目录', () => {
+      leftBarStore.activeItem = module;
+    });
+  }
   componentWillUnmount() {
     // cancel pending api call
     if (window.reportSourceCancel) {
