@@ -305,7 +305,7 @@ export default class CircleNetworkGraph extends Component {
         return (data.hide && styles.hide) || (data.isFocus && ' ') || (data.category === 0 && styles.mainCompany) || (data.blackList && data.category !== 7 && styles.blackListNodes) || (data.status === 0 && styles.cancelNodes) || styles[`category${svgTools.getNodeColor(this.props.networkStore.typeList.checkedArr, data.cateList)}`];
       })
       .attr('fill', (data) => {
-        return (!data.isFocus && ' ') || (data.blackList && data.category !== 7 && 'url(#bling9)') || (data.status === 0 && 'url(#bling10)') || `url(#bling${data.category})`;
+        return (!data.isFocus && ' ') || (data.blackList && data.category !== 7 && 'url(#bling9)') || (data.status === 0 && 'url(#bling10)') || `url(#bling${svgTools.getNodeColor(this.props.networkStore.typeList.checkedArr, data.cateList)})`;
       });
 
     d3.selectAll('#texts text')
