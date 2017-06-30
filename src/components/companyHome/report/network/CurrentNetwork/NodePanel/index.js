@@ -8,7 +8,7 @@ import ReportStatus from './ReportStatus';
 import LinkJump from 'components/common/LinkJump';
 // import networkType from 'dict/networkType';
 
-function NodePanel({ networkStore, routing, exitFull }) {
+function NodePanel({ networkStore }) {
   const { show, nodeData } = networkStore.nodePanel;
   if (!show || !nodeData) {
     return null;
@@ -41,13 +41,13 @@ function NodePanel({ networkStore, routing, exitFull }) {
   //   };
   //   modalStore.openCompModal({ ...args });
   // };
-  const goToBlackList = (nodeName) => {
-    if (networkStore.showFullScreen) {
-      exitFull();
-      networkStore.toggleFullScreen();
-    }
-    networkStore.jumpBlackNode(nodeName, routing.location.search);
-  };
+  // const goToBlackList = (nodeName) => {
+  //   if (networkStore.showFullScreen) {
+  //     exitFull();
+  //     networkStore.toggleFullScreen();
+  //   }
+  //   networkStore.jumpBlackNode(nodeName, routing.location.search);
+  // };
   return (
     <div className={styles.box}>
       <div
