@@ -4,6 +4,10 @@ import styles from './index.less';
 
 function TaxOperationList({moduleData}) {
   const dataDom = [];
+  // const moduleData = {
+  //   2014: null,
+  //   2015: {GSGM: 1212, CWFYZB: 2.74, GLFYZB: 8.91, XSFYZB: 16.62, ZZCYSRB: 0}
+  // };
   let idx = 0;
   Object.keys(moduleData).map(key => {
     let item = '';

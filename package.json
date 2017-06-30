@@ -122,7 +122,7 @@
         "NODE_ENV": "production",
         "PORT": 9124,
         "target": "remote_prod",
-        "backendApi": "http://10.47.79.89:8080"
+        "backendApi": "http://10.117.80.105:8080"
       }
     },
     "start-cfca-prod": {
@@ -132,7 +132,7 @@
         "NODE_ENV": "production",
         "PORT": 9126,
         "target": "cfca_prod",
-        "backendApi": "http://10.47.79.89:8080"
+        "backendApi": "http://10.117.80.105:8080"
       }
     },
     "start-cfca-remote": {
