@@ -143,19 +143,19 @@ class LeftBarStore {
       {
         menuText: '盈利能力分析',
         menuKey: 'profitEval',
-        developing: true,
+        lock: true,
         moduleKey: 'PROFIT',
       },
       {
         menuText: '营运能力分析',
         menuKey: 'operationEval',
-        developing: true,
+        lock: true,
         moduleKey: 'OPERATION',
       },
       {
         menuText: '成长能力分析',
         menuKey: 'growthAbilityEval',
-        developing: true,
+        lock: true,
         moduleKey: 'GROWING',
       },
       {
