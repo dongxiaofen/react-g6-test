@@ -265,7 +265,7 @@ function OverView({ pdfStore, clientStore }) {
       {
         pdfStore.reportType === '高级报告' ?
         <div>
-          <SecondTitle module="关联网络图" />
+          <SecondTitle module="关系网络图" />
           <hr className={styles.hrhr} />
           <Summary {...riskRelationshipMap} />
         </div> : ''
