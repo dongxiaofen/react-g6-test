@@ -9,7 +9,7 @@ function RegisterInfo({ registerInfo, isLoading, errText }) {
     if (items.regCap === '0.0' || items.regCap === '0' || items.regCap === '' || items.regCap === undefined || items.regCap < 0.005) {
       return '--';
     }
-    return Number(items.regCap).toFixed(2) + items.unit + items.regCapCur;
+    return Number(items.regCap).toFixed(2) + items.unit + '（' + items.regCapCur + '）';
   };
   // 实收资本
   // const handleRecCap = (items) => {

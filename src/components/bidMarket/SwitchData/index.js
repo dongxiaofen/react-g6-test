@@ -57,6 +57,7 @@ function SwitchData({ from, to, params, cancels, setParams }) {
         <span className={styles.title}>地区：</span>
         <div className={styles.content}>
           <Select
+            width="120px"
             defaultValue={province}
             value={province}
             onChange={selectOnChange}>
