@@ -13,7 +13,7 @@ function CashFlowAnaly({}) {
             <div className={styles.titleContent}>
               <p className={styles.definition}>
                 <span className={styles.definitionName}>现金流分析：</span>
-                对企业一定时期的现金和现金等价物的流入和流出的数量进行分析</p>
+                对企业一定时期的现金和现金等价物的流入和流出的数量进行分析，具体指标如下：</p>
             </div>
             <p className={styles.formula}>
               <span className={styles.point} />

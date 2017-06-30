@@ -13,7 +13,7 @@ function AssetManageAnaly({}) {
             <div className={styles.titleContent}>
               <p className={styles.definition}>
                 <span className={styles.definitionName}>资产管理能力：</span>
-                用于衡量企业进行资产管理的效率，反映企业运用资产的营运能力方面的财务比率</p>
+                用于衡量企业进行资产管理的效率，反映企业运用资产的营运能力方面的财务比率，具体指标如下：</p>
             </div>
             <p className={styles.formula}>
               <span className={styles.point} />
