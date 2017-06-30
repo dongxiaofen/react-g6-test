@@ -16,6 +16,8 @@ export Internet from './report/internet';
 export MonitorStatistics from './monitorStatistics';
 export RelPerCheck from './relPerCheck';
 export TaxCheck from './taxCheck';
+export CorpBlackList from './corpBlackList';
+export PersonCheck from './personCheck';
 export Team from './report/team';
 export Assets from './report/assets';
 export RuleList from './ruleList';
