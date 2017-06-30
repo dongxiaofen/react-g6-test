@@ -40,7 +40,7 @@ function Investment({investmentStore}) {
   };
   return (
     <div>
-      <ModuleTitle module={frName ? `法人（${frName}）投资企业` : '法人投资企业'} count={count} />
+      <ModuleTitle module={frName ? `法人（${frName}）投资的企业` : '法人投资的企业'} count={count} />
       <CardTable {...data} />
     </div>
   );

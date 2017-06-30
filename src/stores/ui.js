@@ -90,6 +90,12 @@ class UiStore {
         taxCheckStore.getReportModule();
       }
     );
+    // reaction(
+    //   () => this.uiState.taxInfoCheckPager.index,
+    //   () => {
+    //     taxCheckStore.getTaxCheckInfo();
+    //   }
+    // );
     reaction(
       () => this.uiState.accountConsume.index,
       () => {
@@ -255,6 +261,11 @@ class UiStore {
       show: observable.map({})
     },
     taxCheckPager: {
+      index: 1,
+      size: 10,
+      show: observable.map({})
+    },
+    taxInfoCheckPager: {
       index: 1,
       size: 10,
       show: observable.map({})
@@ -574,6 +585,11 @@ class UiStore {
           show: observable.map({})
         },
         taxCheckPager: {
+          index: 1,
+          size: 10,
+          show: observable.map({})
+        },
+        taxInfoCheckPager: {
           index: 1,
           size: 10,
           show: observable.map({})
