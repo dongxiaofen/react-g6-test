@@ -7,21 +7,27 @@ function GrowingReport({upDataList}) {
   const data = upDataList.data;
   const dataDom = [];
   let idx = 0;
-  let noData = '';
   if (data) {
     Object.keys(data).map(key => {
-      noData = data[key] ? '' : (<div className={styles.noData}>暂无数据</div>);
-      dataDom.push(
+      let item = (
         <tr key={`${idx}up`}>
           <td>{key}年</td>
-          <td>{data[key] && data[key].ZCZZL ? data[key].ZCZZL : ''}%</td>
-          <td>{data[key] && data[key].XSZZL ? data[key].XSZZL : ''}%</td>
-          <td>{data[key] && data[key].JLRZZL ? data[key].JLRZZL : ''}%</td>
-          <td>{data[key] && data[key].YYLRZZL ? data[key].YYLRZZL : ''}%</td>
-          <td>{data[key] && data[key].ZYYWSRBDL ? data[key].ZYYWSRBDL : ''}%</td>
-          {noData}
+          <div className={styles.noData}>暂无数据</div>
         </tr>
       );
+      if (data[key]) {
+        item = (
+          <tr key={`${idx}up`}>
+            <td>{key}年</td>
+            <td>{data[key] && data[key].ZCZZL ? data[key].ZCZZL : ''}%</td>
+            <td>{data[key] && data[key].XSZZL ? data[key].XSZZL : ''}%</td>
+            <td>{data[key] && data[key].JLRZZL ? data[key].JLRZZL : ''}%</td>
+            <td>{data[key] && data[key].YYLRZZL ? data[key].YYLRZZL : ''}%</td>
+            <td>{data[key] && data[key].ZYYWSRBDL ? data[key].ZYYWSRBDL : ''}%</td>
+          </tr>
+        );
+      }
+      dataDom.push(item);
       idx++;
     });
   }
