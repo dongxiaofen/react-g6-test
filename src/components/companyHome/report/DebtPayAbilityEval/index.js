@@ -13,12 +13,12 @@ function DebtPayAbilityEval({}) {
             <div className={styles.titleContent}>
               <p className={styles.definition}>
                 <span className={styles.definitionName}>企业偿债能力分析：</span>
-                是反映企业财务状况和经营能力的重要标志，包括短期和长期偿债能力分析</p>
+                是反映企业财务状况和经营能力的重要标志，包括短期和长期偿债能力分析，具体指标如下：</p>
             </div>
             <p className={styles.subTitle}>短期偿债能力：</p>
             <p className={styles.formula}>
               <span className={styles.point} />
-              <span className={styles.formulaFonts}>流动比率=(流动资产÷流动负债)×100%</span>
+              <span className={styles.formulaFonts}>流动比率=（流动资产÷流动负债）×100%</span>
             </p>
             <p className={styles.content}>衡量企业流动资产在短期债务到期以前，可以变为现金用于偿还负债的能力。一般说来，比率越高，说明企业资产的变现能力越强，短期偿债能力亦越强；反之则弱。</p>
             <p className={styles.line} />
