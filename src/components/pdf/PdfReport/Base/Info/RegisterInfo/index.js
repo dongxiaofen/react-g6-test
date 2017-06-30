@@ -15,7 +15,7 @@ function RegisterInfo({ moduleData }) {
   }
   const handleCap = (value) => {
     if (!isNaN(parseFloat(value))) {
-      return parseFloat(value).toFixed(2) + '（万人民币）';
+      return parseFloat(value).toFixed(2) + '万元（人民币）';
     }
     return '--';
   };
