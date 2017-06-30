@@ -50,7 +50,7 @@ class AssetsStore {
     companyHomeApi.getReportModule('operation/bidding', params)
       .then(action( (response) => {
         this.biddingLoading = false;
-        this.biddingData = response.data;
+        this.biddingData = response.data.result;
       }))
       .catch( action( (err) => {
         this.biddingLoading = false;

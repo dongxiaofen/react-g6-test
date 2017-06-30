@@ -69,7 +69,7 @@ class NetworkStore {
     blackNetworkStore.jumpNode = name;
     // 修改导航高亮
     leftBarStore.activeItem = 'blackNetwork';
-    browserHistory.push(`/companyHome/blackNetwork${params}`);
+    browserHistory.push(`/companyHome/riskConduct${params}`);
   }
   @action.bound selectLevel(currentLevel) {
     this.currentLevel = currentLevel;
