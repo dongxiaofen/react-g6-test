@@ -1,0 +1,48 @@
+@import "~sc-colors/index.less";
+.textBox {
+  text-align: right;
+  background: #ebeef1;
+  padding: 24px 40px 19px 0;
+  color: @mdc-grey-600;
+  background-image: url('imgs/companyHome/demoBg.png');
+  background-repeat: no-repeat;
+  font-size: 20px;
+}
+.titleBig {
+  font-size: 44px;
+  margin-right: 30px;
+}
+.day {
+  color: @mdc-blue-400;
+  font-size: 38px;
+  font-weight: bold;
+  margin: 0 10px;
+}
+.title {
+  font-size: 14px;
+  line-height: 1em;
+  font-weight: bold;
+  color: @mdc-grey-500;
+  margin: 28px 0 11px;
+}
+.demo {
+  width: 100%;
+  height: 148px;
+  background-size: 100% 100%;
+}
+.growth {
+  composes: demo;
+  background-image: url('imgs/companyHome/growth1600.png');
+}
+.profit {
+  composes: demo;
+  background-image: url('imgs/companyHome/profit1600.png');
+}
+.operation {
+  composes: demo;
+  background-image: url('imgs/companyHome/operation1600.png');
+}
+.new {
+  composes: demo;
+  background-image: url('imgs/companyHome/newModule1600.png');
+}
