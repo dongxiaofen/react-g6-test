@@ -7,6 +7,9 @@ function TaxInfo({riskTaxStore}) {
   const isLoading = taxData.content === undefined ? true : false;
   const isError = taxData.error;
   const regExecMoney = value => {
+    if (!value) {
+      return '--';
+    }
     let _value;
     if (isNaN(Number(value))) {
       _value = value;
