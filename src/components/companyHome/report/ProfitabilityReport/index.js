@@ -10,22 +10,29 @@ function ProfitabilityReport({profitDataList}) {
   const dataDom = [];
   const data = profitDataList.data;
   let idx = 0;
-  let noData = '';
   if (data) {
     Object.keys(data).map(key => {
-      noData = data[key] ? '' : (<div className={styles.noData}>暂无数据</div>);
-      dataDom.push(
-        <tr key={`${idx}profit`}>
-          <td>{key}年</td>
-          <td>{data[key] && data[key].XSMLL ? data[key].XSMLL : ''}%</td>
-          <td>{data[key] && data[key].XSJLL ? data[key].XSJLL : ''}%</td>
-          <td>{data[key] && data[key].YYJLL ? data[key].YYJLL : ''}%</td>
-          <td>{data[key] && data[key].CBFYJLL ? data[key].CBFYJLL : ''}%</td>
-          <td>{data[key] && data[key].ZYYWLRL ? data[key].ZYYWLRL : ''}%</td>
-          <td>{data[key] && data[key].ZCJLL ? data[key].ZCJLL : ''}%</td>
-          {noData}
-        </tr>
-      );
+      let item = '';
+      if (data[key]) {
+        item = (
+          <tr key={`${idx}profit`}>
+            <td>{key}年</td>
+            <td>{data[key] && data[key].XSMLL ? data[key].XSMLL : ''}%</td>
+            <td>{data[key] && data[key].XSJLL ? data[key].XSJLL : ''}%</td>
+            <td>{data[key] && data[key].YYJLL ? data[key].YYJLL : ''}%</td>
+            <td>{data[key] && data[key].CBFYJLL ? data[key].CBFYJLL : ''}%</td>
+            <td>{data[key] && data[key].ZYYWLRL ? data[key].ZYYWLRL : ''}%</td>
+            <td>{data[key] && data[key].ZCJLL ? data[key].ZCJLL : ''}%</td>
+          </tr>);
+      } else {
+        item = (
+          <tr key={`${idx}profit`}>
+            <td>{key}年</td>
+            <td colSpan={6} className={styles.noData}>暂无数据</td>
+          </tr>
+        );
+      }
+      dataDom.push(item);
       idx++;
     });
   }
