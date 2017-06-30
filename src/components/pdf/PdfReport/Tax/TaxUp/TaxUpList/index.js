@@ -4,6 +4,10 @@ import styles from './index.less';
 
 function TaxUpList({moduleData}) {
   const dataDom = [];
+  // const moduleData = {
+  //   2014: null,
+  //   2015: {XSZZL: 0, ZCZZL: 0, JLRZZL: 0, YYLRZZL: 0, ZYYWSRBDL: 0}
+  // };
   let idx = 0;
   Object.keys(moduleData).map(key => {
     let item = '';

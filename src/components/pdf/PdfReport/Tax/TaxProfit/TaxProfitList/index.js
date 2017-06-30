@@ -3,6 +3,10 @@ import {observer} from 'mobx-react';
 import styles from './index.less';
 
 function TaxProfitList({moduleData}) {
+  // const moduleData = {
+  //   2014: null,
+  //   2015: {XSJLL: 0.2, XSMLL: 16.89, YYJLL: -0.01, ZCJLL: 0, CBFYJLL: 0.18, ZYYWLRL: 15.78}
+  // };
   const dataDom = [];
   let idx = 0;
   Object.keys(moduleData).map(key => {
