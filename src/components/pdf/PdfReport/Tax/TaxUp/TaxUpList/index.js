@@ -5,7 +5,9 @@ import styles from './index.less';
 function TaxUpList({moduleData}) {
   const dataDom = [];
   let idx = 0;
+  let noData = '';
   Object.keys(moduleData).map(key => {
+    noData = moduleData[key] ? '' : (<div className={styles.noData}>暂无数据</div>);
     dataDom.push(
       <tr key={`${idx}up`}>
         <td>{key}年</td>
@@ -14,6 +16,7 @@ function TaxUpList({moduleData}) {
         <td>{moduleData[key].JLRZZL}%</td>
         <td>{moduleData[key].YYLRZZL}%</td>
         <td>{moduleData[key].ZYYWSRBDL}%</td>
+        {noData}
       </tr>
     );
     idx ++;
