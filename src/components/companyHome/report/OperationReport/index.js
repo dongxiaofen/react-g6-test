@@ -1,26 +1,36 @@
-import React, { PropTypes } from 'react';
-import { observer } from 'mobx-react';
+import React, {PropTypes} from 'react';
+import {observer} from 'mobx-react';
 import styles from './index.less';
+// import LoanDemo from 'components/common/report/LoanDemo';
 
-function OperationReport({ operationDataList }) {
+function OperationReport({operationDataList}) {
   const data = operationDataList.data;
   const dataDom = [];
   let idx = 0;
   if (data) {
     Object.keys(data).map(key => {
-      dataDom.push(
+      let item = (
         <tr key={`${idx}operation`}>
           <td>{key}年</td>
-          <td>{data[key].CWFYZB}%</td>
-          <td>{data[key].GLFYZB}%</td>
-          <td>{data[key].XSFYZB}%</td>
-        </tr>
-      );
+          <td colSpan={5} className={styles.noData}>暂无数据</td>
+        </tr>);
+      if (data[key]) {
+        item = (
+          <tr key={`${idx}operation`}>
+            <td>{key}年</td>
+            <td>{data[key] && data[key].CWFYZB ? data[key].CWFYZB : ''}%</td>
+            <td>{data[key] && data[key].GLFYZB ? data[key].GLFYZB : ''}%</td>
+            <td>{data[key] && data[key].XSFYZB ? data[key].XSFYZB : ''}%</td>
+          </tr>
+        );
+      }
+      dataDom.push(item);
       idx++;
     });
   }
   return (
     <div>
+      {/*<LoanDemo type="operation"/>*/}
       <p className={styles.excelTitle}>指标列表
         <span className={styles.timestamp}>（最近分析时间：{this.props.operationDataList.lastTm}）</span>
       </p>
@@ -28,7 +38,7 @@ function OperationReport({ operationDataList }) {
         <thead>
         <tr>
           <th className={styles.first}>
-            <div className={styles.slash} />
+            <div className={styles.slash}/>
           </th>
           <th className={styles.two}>财务费用率</th>
           <th className={styles.three}>管理费用率</th>
@@ -50,20 +60,20 @@ function OperationReport({ operationDataList }) {
             </p>
           </div>
           <p className={styles.formula}>
-            <span className={styles.point} />
+            <span className={styles.point}/>
             <span className={styles.formulaFonts}>财务费用率=（财务费用÷销售收入）×100%</span>
           </p>
           <p className={styles.content}>
             分析企业的财务负担，调整筹资渠道，改善资金结构，提高盈利水平</p>
-          <p className={styles.line} />
+          <p className={styles.line}/>
           <p className={styles.formula}>
-            <span className={styles.point} />
+            <span className={styles.point}/>
             <span className={styles.formulaFonts}>管理费用率=（管理费用÷销售收入）×100%</span>
           </p>
           <p className={styles.content}>影响企业盈利能力的重要因素，反映企业经营管理水平，管理费用率越高，企业利润被组织、管理性费用消耗得太多，必须加强管理费用控制才能提高盈利水平</p>
-          <p className={styles.line} />
+          <p className={styles.line}/>
           <p className={styles.formula}>
-            <span className={styles.point} />
+            <span className={styles.point}/>
             <span className={styles.formulaFonts}>销售费用率=（销售费用÷销售收入）×100%</span>
           </p>
           <p className={styles.content}>体现企业为取得单位收入所花费的单位销售费用，或者销售费用占据了营业收入的比例，在销售额一定的情况下，销售费用越低，企业效益越好</p>

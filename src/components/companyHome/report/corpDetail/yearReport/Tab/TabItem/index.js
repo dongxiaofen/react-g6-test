@@ -31,9 +31,9 @@ function TabItem({items, yearReportTab, setYearReport}) {
       }
     });
   }
-  console.log(items, yearReportTab, setYearReport);
+  // console.log(items, yearReportTab, setYearReport);
   return (
-    <div className={styles.box}>
+    <div className={items && items.length > 0 ? styles.box : styles.hidden}>
       {itemsArray}
     </div>
   );

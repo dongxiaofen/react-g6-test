@@ -31,7 +31,7 @@ import {
     RuleCompany,
     PersonReport,
     Pdf,
-    BlackNetwork,
+    // BlackNetwork,
     Collection,
     BidMarket,
     HighRiskCorp,
@@ -59,6 +59,12 @@ import {
     Search,
     // History,
     // Result
+    SharePosAndInv,
+    BlackList,
+    DebtPayAbilityEval,
+    AssetManageAnaly,
+    CashFlowAnaly,
+    RiskConduct,
 // first append here from plop
   } from 'containers';
 
@@ -107,7 +113,7 @@ export default () => {
         <Route path="network" component={ Network } onEnter={requireAuth} />
         <Route path="alertAnalysis" component={ AlertAnalysis } onEnter={requireAuth} />
         <Route path="timeAxis" component={ ReportTimeAxis } onEnter={requireAuth} />
-        <Route path="blackNetwork" component={ BlackNetwork } onEnter={requireAuth} />
+        {/*<Route path="blackNetwork" component={ BlackNetwork } onEnter={requireAuth} />*/}
         <Route path="forceNetwork" component={ ForceNetwork } onEnter={requireAuth} />
         <Route path="nowRecord" component={ NowRecord } onEnter={requireAuth} />
         <Route path="tax" component={ Tax } onEnter={requireAuth} />
@@ -127,6 +133,12 @@ export default () => {
         {/* 贷后*/}
         <Route path="monitorTimeAxis" component={ MonitorTimeAxis } onEnter={requireAuth} />
         <Route path="monitorAlert" component={ MonitorAlert } />
+        <Route path="sharePosAndInv" component={ SharePosAndInv } />
+        <Route path="blackList" component={ BlackList } />
+        <Route path="debtPayAbilityEval" component={ DebtPayAbilityEval } />
+        <Route path="assetManageAnaly" component={ AssetManageAnaly } />
+        <Route path="cashFlowAnaly" component={ CashFlowAnaly } />
+        <Route path="riskConduct" component={ RiskConduct } />
 {/* third append here from plop */}
       </Route>
       <Route path="relPerCheck" component={ RelPerCheck } onEnter={requireAuth} />

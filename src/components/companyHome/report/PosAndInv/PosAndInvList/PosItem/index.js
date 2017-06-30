@@ -42,9 +42,9 @@ function PosItem({modalStore, investmentStore}) {
         <div className={styles.info}><span onClick={getPosItemInfo}>详情</span></div>
       </div>
       <div className={styles.itemBody}>
-        <div className={styles.listItem}>对外担任法人代表（{frPositionListCount}家）</div>
-        <div className={styles.listItem}>对外投资（{managementInvListCount}家）</div>
-        <div className={styles.listItem}>对外任职（{managementPositionListCount}家）</div>
+        <div className={styles.listItem}>担任法人的企业（{frPositionListCount}家）</div>
+        <div className={styles.listItem}>投资企业（{managementInvListCount}家）</div>
+        <div className={styles.listItem}>任职企业（{managementPositionListCount}家）</div>
       </div>
     </div>
   );

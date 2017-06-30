@@ -28,6 +28,7 @@ function CompanyWrap({data, monitorListStore}) {
           >
           {data.companyName}
         </span>
+        {data.remainderDays <= 7 && data.remainderDays > 0 && <span className={styles.mainLabelRed}>{`${data.remainderDays}天内即将到期`}</span>}
       </div>
       <div className={styles.viewWrap}>
         {
