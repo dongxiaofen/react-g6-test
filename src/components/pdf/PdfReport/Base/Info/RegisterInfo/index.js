@@ -14,7 +14,10 @@ function RegisterInfo({ moduleData }) {
     );
   }
   const handleCap = (value) => {
-    return parseFloat(value).toFixed(2) + '万人民币';
+    if (!isNaN(parseFloat(value))) {
+      return parseFloat(value).toFixed(2) + '万人民币';
+    }
+    return '--';
   };
   const date = (value, item) => {
     return `${value}至${item.openTo.length !== 0 ? item.openTo : '--'}`;
