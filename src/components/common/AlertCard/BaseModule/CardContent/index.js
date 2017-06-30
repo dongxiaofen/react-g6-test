@@ -9,7 +9,10 @@ function CardContent({data, show, contentHtml, isModal, module}) {
     location.href = '/companyHome?companyName=' + companyName;
   };
   const handleCompanyName = (value) => {
-    return <span onClick={routeToCompanyHome.bind(null, value)} style={{cursor: 'pointer'}}>{value}</span>;
+    if (data.items.relatedMonitorId) {
+      return <span onClick={routeToCompanyHome.bind(null, value)} className={styles.companyName}>{value}</span>;
+    }
+    return value;
   };
   const content = ()=>{
     const output = [];
