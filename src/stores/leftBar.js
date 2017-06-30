@@ -97,11 +97,11 @@ class LeftBarStore {
         ],
       },
       {
-        menuText: '关联图',
+        menuText: '关联网络',
         menuKey: 'network',
         children: [
           {
-            menuText: '企业关联',
+            menuText: '关系网络图',
             menuKey: 'network',
             lock: true,
           },
@@ -147,7 +147,7 @@ class LeftBarStore {
         moduleKey: 'PROFIT',
       },
       {
-        menuText: '运营能力分析',
+        menuText: '营运能力分析',
         menuKey: 'operationEval',
         developing: true,
         moduleKey: 'OPERATION',

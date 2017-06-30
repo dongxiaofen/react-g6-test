@@ -22,7 +22,7 @@ function CashFlowAnaly({}) {
             <p className={styles.content}>以本期经营活动所产生的净现金流量来衡量偿还全部负债的能力，比率越大，偿债能力越强。</p>
             <p className={styles.formula}>
               <span className={styles.point} />
-              <span className={styles.formulaFonts}>销售现金比率=（经营活动现金流量净额÷销售收入）*100%</span>
+              <span className={styles.formulaFonts}>销售现金比率=（经营活动现金流量净额÷销售收入）×100%</span>
             </p>
             <p className={styles.content}>反映每元销售收入得到的现金流量净额，其数值越大越好，表明企业的收入质量越好，资金利用效果越好。</p>
             <p className={styles.line} />
