@@ -155,7 +155,7 @@ function LeftBar({ leftBarStore, bannerStore, routing, companyHomeStore}) {
         <div className={`${styles.title} clearfix`}>
           <p className={styles.reportType}>贷中分析</p>
           {
-            companyHomeStore.reportInfo.dimensions.length < 1 ?
+            companyHomeStore.reportInfo.dimensions.length < 4 ?
             <Button
               btnType="primary"
               className={styles.btnMonitor}
