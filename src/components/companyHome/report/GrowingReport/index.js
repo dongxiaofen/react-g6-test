@@ -10,15 +10,15 @@ function GrowingReport({upDataList}) {
   let noData = '';
   if (data) {
     Object.keys(data).map(key => {
-      noData = key ? '' : (<div className={styles.noData}>暂无数据</div>);
+      noData = data[key] ? '' : (<div className={styles.noData}>暂无数据</div>);
       dataDom.push(
         <tr key={`${idx}up`}>
           <td>{key}年</td>
-          <td>{data[key].ZCZZL ? data[key].ZCZZL : ''}%</td>
-          <td>{data[key].XSZZL ? data[key].XSZZL : ''}%</td>
-          <td>{data[key].JLRZZL ? data[key].JLRZZL : ''}%</td>
-          <td>{data[key].YYLRZZL ? data[key].YYLRZZL : ''}%</td>
-          <td>{data[key].ZYYWSRBDL ? data[key].ZYYWSRBDL : ''}%</td>
+          <td>{data[key] && data[key].ZCZZL ? data[key].ZCZZL : ''}%</td>
+          <td>{data[key] && data[key].XSZZL ? data[key].XSZZL : ''}%</td>
+          <td>{data[key] && data[key].JLRZZL ? data[key].JLRZZL : ''}%</td>
+          <td>{data[key] && data[key].YYLRZZL ? data[key].YYLRZZL : ''}%</td>
+          <td>{data[key] && data[key].ZYYWSRBDL ? data[key].ZYYWSRBDL : ''}%</td>
           {noData}
         </tr>
       );

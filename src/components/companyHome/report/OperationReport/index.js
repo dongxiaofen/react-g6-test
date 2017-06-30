@@ -10,13 +10,13 @@ function OperationReport({operationDataList}) {
   let noData = '';
   if (data) {
     Object.keys(data).map(key => {
-      noData = key ? '' : (<div className={styles.noData}>暂无数据</div>);
+      noData = data[key] ? '' : (<div className={styles.noData}>暂无数据</div>);
       dataDom.push(
         <tr key={`${idx}operation`}>
           <td>{key}年</td>
-          <td>{data[key].CWFYZB ? data[key].CWFYZB : ''}%</td>
-          <td>{data[key].GLFYZB ? data[key].GLFYZB : ''}%</td>
-          <td>{data[key].XSFYZB ? data[key].XSFYZB : ''}%</td>
+          <td>{data[key] && data[key].CWFYZB ? data[key].CWFYZB : ''}%</td>
+          <td>{data[key] && data[key].GLFYZB ? data[key].GLFYZB : ''}%</td>
+          <td>{data[key] && data[key].XSFYZB ? data[key].XSFYZB : ''}%</td>
           {noData}
         </tr>
       );

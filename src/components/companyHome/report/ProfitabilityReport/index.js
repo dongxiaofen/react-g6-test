@@ -13,16 +13,16 @@ function ProfitabilityReport({profitDataList}) {
   let noData = '';
   if (data) {
     Object.keys(data).map(key => {
-      noData = key ? '' : (<div className={styles.noData}>暂无数据</div>);
+      noData = data[key] ? '' : (<div className={styles.noData}>暂无数据</div>);
       dataDom.push(
         <tr key={`${idx}profit`}>
           <td>{key}年</td>
-          <td>{data[key].XSMLL ? data[key].XSMLL : ''}%</td>
-          <td>{data[key].XSJLL ? data[key].XSJLL : ''}%</td>
-          <td>{data[key].YYJLL ? data[key].YYJLL : ''}%</td>
-          <td>{data[key].CBFYJLL ? data[key].CBFYJLL : ''}%</td>
-          <td>{data[key].ZYYWLRL ? data[key].ZYYWLRL : ''}%</td>
-          <td>{data[key].ZCJLL ? data[key].ZCJLL : ''}%</td>
+          <td>{data[key] && data[key].XSMLL ? data[key].XSMLL : ''}%</td>
+          <td>{data[key] && data[key].XSJLL ? data[key].XSJLL : ''}%</td>
+          <td>{data[key] && data[key].YYJLL ? data[key].YYJLL : ''}%</td>
+          <td>{data[key] && data[key].CBFYJLL ? data[key].CBFYJLL : ''}%</td>
+          <td>{data[key] && data[key].ZYYWLRL ? data[key].ZYYWLRL : ''}%</td>
+          <td>{data[key] && data[key].ZCJLL ? data[key].ZCJLL : ''}%</td>
           {noData}
         </tr>
       );
