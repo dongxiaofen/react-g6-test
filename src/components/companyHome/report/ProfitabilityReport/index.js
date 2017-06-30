@@ -4,6 +4,7 @@
 import React, { PropTypes } from 'react';
 import { observer } from 'mobx-react';
 import styles from './index.less';
+import LoanDemo from 'components/common/report/LoanDemo';
 
 function ProfitabilityReport({ profitDataList }) {
   const dataDom = [];
@@ -27,7 +28,8 @@ function ProfitabilityReport({ profitDataList }) {
   }
   return (
     <div className={styles.box}>
-      <p className={styles.excelTitle}>指标列表
+      <LoanDemo type="profit"/>
+      {/*<p className={styles.excelTitle}>指标列表
         <span className={styles.timestamp}>（最近分析时间：{this.props.profitDataList.lastTm}）</span>
       </p>
       <table className={styles.table}>
@@ -47,7 +49,7 @@ function ProfitabilityReport({ profitDataList }) {
         <tbody>
         {dataDom}
         </tbody>
-      </table>
+      </table>*/}
       <div>
         <p className={styles.title}>指标解析</p>
         <div className={styles.analysisContent}>

@@ -1,38 +1,19 @@
 import { observable, action, reaction, extendObservable } from 'mobx';
 import pathval from 'pathval';
-import companyHomeStore from './companyHome';
-import assetsStore from './report/assets';
 import reportListStore from './reportList';
 import analysisListStore from './analysisList';
 import monitorListStore from './monitorList';
 import ruleStore from './rule';
 import ruleCompanyStore from './ruleCompany';
 import accountSettingStore from './accountSetting';
-import alertAnalysisStore from './report/alertAnalysis';
-import monitorAlertStore from './report/monitorAlert';
 import collectionStore from './collection';
 import relPerCheckStore from './relPerCheck';
-import nowRecordStore from './report/nowRecord';
 import taxCheckStore from './taxCheck';
 import bidMarketStore from './bidMarket';
 import assetTransactionStore from './assetTransaction';
 
 class UiStore {
   constructor() {
-    reaction(
-      () => this.uiState.trademarkLists.index,
-      () => {
-        const reportInfo = companyHomeStore.reportInfo;
-        assetsStore.getTrademarkData(reportInfo);
-      }
-    );
-    reaction(
-      () => this.uiState.patentInfo.index,
-      () => {
-        const reportInfo = companyHomeStore.reportInfo;
-        assetsStore.getPatentData(reportInfo);
-      }
-    );
     reaction(
       () => this.uiState.basicReportPager.index,
       () => {
@@ -83,18 +64,6 @@ class UiStore {
       }
     );
     reaction(
-      () => this.uiState.alertAnalysis.index,
-      () => {
-        alertAnalysisStore.getReportModule(companyHomeStore.reportInfo);
-      }
-    );
-    reaction(
-      () => this.uiState.monitorAlert.index,
-      () => {
-        monitorAlertStore.getReportModule(companyHomeStore.reportInfo);
-      }
-    );
-    reaction(
       () => this.uiState.ruleListPager.index,
       () => {
         ruleStore.getRuleList();
@@ -113,12 +82,6 @@ class UiStore {
         if (uId) {
           accountSettingStore.getAlertCorp(uId);
         }
-      }
-    );
-    reaction(
-      () => this.uiState.nowRecordPager.index,
-      () => {
-        nowRecordStore.getNowRecordList();
       }
     );
     reaction(
@@ -167,12 +130,6 @@ class UiStore {
       }
     );
     reaction(
-      () => this.uiState.relPerCheck.index,
-      () => {
-        relPerCheckStore.getReportModule(relPerCheckStore.reloadMonitorId);
-      }
-    );
-    reaction(
       () => this.uiState.bidMarketInfo.index,
       () => {
         const params = bidMarketStore.params;
@@ -188,6 +145,12 @@ class UiStore {
         params.index = this.uiState.assetLocal.index;
         params.size = this.uiState.assetLocal.size;
         assetTransactionStore.getAssetLocal(params);
+      }
+    );
+    reaction(
+      () => this.uiState.relPerCheck.index,
+      () => {
+        relPerCheckStore.getReportModule(relPerCheckStore.reloadMonitorId);
       }
     );
   }

@@ -13,12 +13,17 @@ function EmployeeDegreeInfo({moduleData}) {
       </div>
     );
   }
+  const _moduleData = moduleData.filter(item => {
+    if (item.value) {
+      return item;
+    }
+  });
   const data = {
     dataConfig: [
       {key: 'name', width: '5'},
       {key: 'value', width: '5'},
     ],
-    items: moduleData.toJS(),
+    items: _moduleData,
     dict: 'degreeInfo',
     decimal: 'true'
   };
