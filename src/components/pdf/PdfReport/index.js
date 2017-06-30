@@ -29,7 +29,7 @@ function PdfReport({pdfStore, clientStore}) {
       <Cover/>
       <Container>
         <Row>
-          <Col className={styles[getPermissionMeta(clientStore.envConfig).pdfStyle]} width="12">
+          <Col className={`${styles[getPermissionMeta(clientStore.envConfig).pdfStyle]} ${styles.paddingRL}`} width="12">
             <Header />
             {
               judgeIsModuleExist('SUMMERY') ?

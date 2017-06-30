@@ -1,4 +1,4 @@
-import { observable, action, computed} from 'mobx';
+import { observable, action, computed, reaction} from 'mobx';
 // import payModalStore from './payModal';
 import modalStore from './modal';
 import messageStore from './message';
@@ -8,6 +8,19 @@ import { companyHomeApi } from 'api';
 import pathval from 'pathval';
 import networkStore from './report/network';
 class CompanyHomeStore {
+  constructor() {
+    reaction(
+      () => this.reportInfo.reportId || this.reportInfo.basicReportId,
+      () => {
+        if (this.reportInfo.reportId !== '' || this.reportInfo.basicReportId !== '') {
+          this.isCompleted({
+            reportId: this.reportInfo.reportId === '' ? null : this.reportInfo.reportId,
+            basicReportId: this.reportInfo.basicReportId === '' ? null : this.reportInfo.basicReportId
+          });
+        }
+      }
+    );
+  }
   @observable createBasicErr = {
     value: false,
     err: {},
@@ -235,10 +248,6 @@ class CompanyHomeStore {
         if (resp.data.dimensions) {
           this.initDimensions(resp.data.dimensions);
         }
-        this.isCompleted({
-          reportId: resp.data.reportId,
-          basicReportId: resp.data.basicReportId
-        });
       } else {
         this.createBasicReport({companyName: params.companyName});
       }

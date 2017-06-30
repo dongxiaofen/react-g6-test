@@ -6,21 +6,26 @@ import { loadingComp } from 'components/hoc';
 function TaxProfitList({taxStore}) {
   const data = taxStore.profitDataList;
   const dataDom = [];
-  let idx = 0;
-  Object.keys(data).map(key => {
-    dataDom.push(
-      <tr key={`${idx}profit`}>
-        <td>{key}年</td>
-        <td>{data[key].XSMLL}%</td>
-        <td>{data[key].XSJLL}%</td>
-        <td>{data[key].YYJLL}%</td>
-        <td>{data[key].CBFYJLL}%</td>
-        <td>{data[key].ZYYWLRL}%</td>
-        <td>{data[key].ZCJLL}%</td>
-      </tr>
-    );
-    idx ++;
-  });
+  if (data) {
+    let idx = 0;
+    let noData = '';
+    Object.keys(data).map(key => {
+      noData = data[key] ? '' : (<div className={styles.noData}>暂无数据</div>);
+      dataDom.push(
+        <tr key={`${idx}profit`}>
+          <td>{key}年</td>
+          <td>{data[key].XSMLL}%</td>
+          <td>{data[key].XSJLL}%</td>
+          <td>{data[key].YYJLL}%</td>
+          <td>{data[key].CBFYJLL}%</td>
+          <td>{data[key].ZYYWLRL}%</td>
+          <td>{data[key].ZCJLL}%</td>
+          {noData}
+        </tr>
+      );
+      idx ++;
+    });
+  }
   return (
     <div className={styles.box}>
       <table className={styles.table}>

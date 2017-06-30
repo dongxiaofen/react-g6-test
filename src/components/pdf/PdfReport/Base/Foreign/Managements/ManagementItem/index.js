@@ -66,7 +66,7 @@ function ManagementItem({personData}) {
       {'key': 'entName', 'width': '6'},
       {'key': 'entStatus', 'width': '6'},
       // {'key': 'entType', 'width': '6'},
-      {'key': 'thisPosition', 'width': '6'},
+      {'key': 'otherPosition', 'width': '6'},
       // {'key': 'fundedRatio', 'width': '6'},
       {'key': 'regCap', 'width': '6'},
       {'key': 'esDate', 'width': '6'},
@@ -83,11 +83,11 @@ function ManagementItem({personData}) {
   return (
     <div className={styles.management}>
       <SecondTitle module={`${personData.name}（${personData.positions.join(',')}）`} />
-      <p>对外担任法人（{personData.frPositionList.length}）</p>
+      <p>担任法人的企业（{personData.frPositionList.length}）</p>
       <PdfSimpleKey {...externalPerson} />
-      <p>对外投资（{personData.managementInvList.length}）</p>
+      <p>投资企业（{personData.managementInvList.length}）</p>
       <PdfSimpleKey {...ForeignInvestment} />
-      <p>对外任职（{personData.managementPositionList.length}）</p>
+      <p>任职企业（{personData.managementPositionList.length}）</p>
       <PdfSimpleKey {...ExternalService} />
     </div>
   );

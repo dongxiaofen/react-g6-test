@@ -12,7 +12,7 @@ function PosAndInv({investmentStore}) {
   const error = this.props.investmentStore.manageData.error;
   return (
     <div className={styles.box}>
-      <ModuleTitle module="董监高对外投资任职" count={count} />
+      <ModuleTitle module="董监高投资任职" count={count} />
       <PosAndInvList isLoading={isLoading} error={error} module="董监高对外投资" />
     </div>
   );

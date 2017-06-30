@@ -150,7 +150,11 @@ class BidMarketStore {
     }
   }
 
-  @observable params = { province: '' };
+  @observable params = {
+    from: moment().subtract(29, 'days').format('YYYY-MM-DD'),
+    to: moment().format('YYYY-MM-DD'),
+    province: '',
+  };
   @observable areaLoading = false;
   @observable trendLoading = false;
   @observable rankLoading = false;
@@ -444,7 +448,11 @@ class BidMarketStore {
     uiStore.uiState.bidMarketInfo.index = 1;
     uiStore.uiState.bidMarketInfo.totalElements = 0;
 
-    this.params = { province: '' };
+    this.params = {
+      from: moment().subtract(29, 'days').format('YYYY-MM-DD'),
+      to: moment().format('YYYY-MM-DD'),
+      province: '',
+    };
     this.areaLoading = false;
     this.trendLoading = false;
     this.rankLoading = false;

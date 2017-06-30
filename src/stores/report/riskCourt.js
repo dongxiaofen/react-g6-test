@@ -44,9 +44,9 @@ class RiskCourtStore {
     this.isLoading = true;
     companyHomeApi.getReportModule('risk', params)
       .then(action('get risk data', (resp)=>{
+        this.court.tabAct = this.getDefaultCourtTab(resp.data.countCount);
         this.isLoading = false;
         this.court.courtData = resp.data;
-        this.court.tabAct = this.getDefaultCourtTab(resp.data.countCount);
       }))
       .catch(action('risk error', (error)=>{
         console.log('risk error', error);
