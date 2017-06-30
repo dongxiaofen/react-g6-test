@@ -42,6 +42,8 @@ import {
     Disclaimer,
     Tax,
     TaxCheck,
+    CorpBlackList,
+    PersonCheck,
     AssetTransaction,
     InLoanAnalysis,
     ComprehenEval,
@@ -143,6 +145,8 @@ export default () => {
       </Route>
       <Route path="relPerCheck" component={ RelPerCheck } onEnter={requireAuth} />
       <Route path="taxCheck" component={ TaxCheck } onEnter={requireAuth} />
+      <Route path="corpBlackList" component={ CorpBlackList } onEnter={requireAuth} />
+      <Route path="personCheck" component={ PersonCheck } onEnter={requireAuth} />
       <Route path="solution" component={ Solution } />
       <Route path="about" component={ About } />
       {/* 测试modal用 */}
