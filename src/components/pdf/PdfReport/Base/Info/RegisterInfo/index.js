@@ -1,10 +1,10 @@
 import React, {PropTypes} from 'react';
-import { observer, inject } from 'mobx-react';
+import {observer, inject} from 'mobx-react';
 import PdfNotFound from 'components/common/pdf/PdfNotFound';
 import PdfSimpleKey from 'components/common/pdf/PdfSimpleKey';
 import SecondTitle from 'components/common/pdf/SecondTitle';
 
-function RegisterInfo({ moduleData }) {
+function RegisterInfo({moduleData}) {
   if (!moduleData || moduleData.length === 0) {
     return (
       <div>
@@ -15,12 +15,15 @@ function RegisterInfo({ moduleData }) {
   }
   const handleCap = (value, items) => {
     if (!isNaN(parseFloat(value))) {
-      return parseFloat(value).toFixed(2) + `${items.unit !== '' ? items.unit : ''}${items.regCapCur !== '' ? `（${items.regCapCur}）` : ''}`;
+      return parseFloat(value).toFixed(2) + `${items.regCapCur !== '' ? `万（${items.regCapCur}）` : '万元'}`;
     }
     return '--';
   };
   const date = (value, item) => {
-    return `${value}至${item.openTo.length !== 0 ? item.openTo : '--'}`;
+    if (value.length === 0 && item.openTo.length === 0) {
+      return '--';
+    }
+    return `${value.length === 0 ? '--' : value}至${item.openTo.length !== 0 ? item.openTo : '--'}`;
   };
   const handleEnterpriseStatus = (value, items) => {
     let status = '';
@@ -73,7 +76,7 @@ function RegisterInfo({ moduleData }) {
   };
   return (
     <div>
-      <SecondTitle module="注册信息" />
+      <SecondTitle module="注册信息"/>
       <PdfSimpleKey {...data} />
     </div>
   );
