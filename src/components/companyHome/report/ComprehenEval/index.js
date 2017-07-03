@@ -42,7 +42,6 @@ ComprehenEval.propTypes = {
 export default loadingComp({
   mapDataToProps: props => ({
     loading: props.loaningStore.loading === true ? true : false,
-    category: 2,
     module: '六芒星',
     errCategory: 0,
     error: props.loaningStore.sixStarData.error
