@@ -94,39 +94,30 @@ function LeftBar({ leftBarStore, bannerStore, routing, companyHomeStore}) {
             itemRow.push(
               <div
                 key={itemObj.menuText + itemIdx}
-                className={itemCss}
+                className={`${itemCss} clearfix`}
                 onClick={changeItem.bind(this, itemObj.menuKey, accessItem, type)}
               >
-                {itemObj.menuText}
+                <span className={styles.menuText}>{itemObj.menuText}</span>
+                {itemObj.developing ? <i className={styles.devIcon}></i> : ''}
                 {accessItem ? '' : <i className={styles.lock}></i>}
               </div>
             );
           }
         });
       } else {
-        if (menuObj.developing) {
-          menuRow.push(
-            <div
-              key={menuObj.menuKey}
-              className={styles.menuDevDisCss}>
-              {menuObj.menuText}
-              <i className={styles.devIcon}></i>
-            </div>
-          );
-        } else {
-          let menuCss = accessMenu ? styles.menuCss1 : styles.menuDisCss1;
-          menuCss = leftBarStore.activeItem === menuObj.menuKey ? styles.menuCssAct1 : menuCss;
-          menuRow.push(
-            <div
-              key={menuObj.menuKey}
-              className={menuCss}
-              onClick={changeItem.bind(this, menuObj.menuKey, accessMenu, type)}
-            >
-              {menuObj.menuText}
-              {accessMenu ? '' : <i className={styles.lock}></i>}
-            </div>
-          );
-        }
+        let menuCss = accessMenu ? styles.menuCss1 : styles.menuDisCss1;
+        menuCss = leftBarStore.activeItem === menuObj.menuKey ? styles.menuCssAct1 : menuCss;
+        menuRow.push(
+          <div
+            key={menuObj.menuKey}
+            className={`${menuCss} clearfix`}
+            onClick={changeItem.bind(this, menuObj.menuKey, accessMenu, type)}
+          >
+            <span className={styles.menuText}>{menuObj.menuText}</span>
+            {menuObj.developing ? <i className={styles.devIcon}></i> : ''}
+            {accessMenu ? '' : <i className={styles.lock}></i>}
+          </div>
+        );
       }
       menuRow.push(itemRow);
     });
@@ -162,9 +153,9 @@ function LeftBar({ leftBarStore, bannerStore, routing, companyHomeStore}) {
       </div>
       <div className={styles.wrap}>
         <div className={`${styles.title} clearfix`}>
-          <p className={styles.reportType}>贷中分析</p>
+          <p className={styles.reportType}>贷中经营分析</p>
           {
-            companyHomeStore.reportInfo.dimensions.length < 1 ?
+            companyHomeStore.reportInfo.dimensions.length < 4 ?
             <Button
               btnType="primary"
               className={styles.btnMonitor}
@@ -176,7 +167,7 @@ function LeftBar({ leftBarStore, bannerStore, routing, companyHomeStore}) {
       </div>
       <div className={styles.wrap}>
         <div className={`${styles.title} clearfix`}>
-          <p className={styles.reportType}>贷后监控</p>
+          <p className={styles.reportType}>贷后风险监控</p>
           {
             companyHomeStore.reportInfo.monitorId === '' ?
             <Button

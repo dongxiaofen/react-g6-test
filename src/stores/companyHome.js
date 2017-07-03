@@ -1,4 +1,4 @@
-import { observable, action, computed} from 'mobx';
+import { observable, action, computed, reaction} from 'mobx';
 // import payModalStore from './payModal';
 import modalStore from './modal';
 import messageStore from './message';
@@ -8,6 +8,19 @@ import { companyHomeApi } from 'api';
 import pathval from 'pathval';
 import networkStore from './report/network';
 class CompanyHomeStore {
+  constructor() {
+    reaction(
+      () => this.reportInfo.reportId || this.reportInfo.basicReportId,
+      () => {
+        if (this.reportInfo.reportId !== '' || this.reportInfo.basicReportId !== '') {
+          this.isCompleted({
+            reportId: this.reportInfo.reportId === '' ? null : this.reportInfo.reportId,
+            basicReportId: this.reportInfo.basicReportId === '' ? null : this.reportInfo.basicReportId
+          });
+        }
+      }
+    );
+  }
   @observable createBasicErr = {
     value: false,
     err: {},
@@ -25,6 +38,9 @@ class CompanyHomeStore {
     { label: '盈利能力分析', value: 'PROFIT', checked: true},
     { label: '营运能力分析', value: 'OPERATION', checked: true},
     { label: '成长能力分析', value: 'GROWING', checked: true},
+    { label: '偿债能力分析', value: '', checked: false, type: 'developing'},
+    { label: '资产管理分析', value: '', checked: false, type: 'developing'},
+    { label: '现金流分析', value: '', checked: false, type: 'developing'},
   ];
   @observable monitorTime = 1;
   @observable loanLoading = false;
@@ -101,7 +117,7 @@ class CompanyHomeStore {
   }
   getMessageText(data) {
     const status = ['existProfitDetail', 'existOperationDetail', 'existGrowingDetail'];
-    const textConfig = ['盈利', '运营', '成长'];
+    const textConfig = ['盈利', '营运', '成长'];
     const text = [];
     status.forEach((item, idx)=>{
       if (data.hasOwnProperty(item) && data[item] === false) {
@@ -232,10 +248,6 @@ class CompanyHomeStore {
         if (resp.data.dimensions) {
           this.initDimensions(resp.data.dimensions);
         }
-        this.isCompleted({
-          reportId: resp.data.reportId,
-          basicReportId: resp.data.basicReportId
-        });
       } else {
         this.createBasicReport({companyName: params.companyName});
       }
@@ -247,7 +259,7 @@ class CompanyHomeStore {
   @action.bound initDimensions(dimensions) {
     this.loanOption.forEach((option, index)=>{
       const idx = dimensions.indexOf(option.value);
-      if (idx < 0) {
+      if (/SCORE|PROFIT|OPERATION|GROWING/.test(option.value) && idx < 0) {
         this.loanOption[index].checked = true;
       } else {
         this.loanOption[index].checked = false;
@@ -281,6 +293,9 @@ class CompanyHomeStore {
       { label: '盈利能力分析', value: 'PROFIT', checked: true},
       { label: '营运能力分析', value: 'OPERATION', checked: true},
       { label: '成长能力分析', value: 'GROWING', checked: true},
+      { label: '偿债能力分析', value: '', checked: false, type: 'developing'},
+      { label: '资产管理分析', value: '', checked: false, type: 'developing'},
+      { label: '现金流分析', value: '', checked: false, type: 'developing'},
     ];
     this.resetMonitorModal();
     this.loanLoading = false;

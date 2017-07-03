@@ -26,7 +26,7 @@ import uiStore from './ui';
 //   totalElements: 100,
 // };
 class AnalysisListStore {
-  @observable activeKey = 'multi'; // multi profit operate develop
+  @observable activeKey = 'multi'; // multi profit operate develop debt capital cash
   @observable listCount = {};
   @observable multiList = {};
   @observable profitList = {};
@@ -54,6 +54,8 @@ class AnalysisListStore {
   }
   @action.bound getAnalysisList() {
     const activeKey = this.activeKey;
+    const apiArr = ['multi', 'profit', 'operate', 'develop'];
+    if (!apiArr.includes(activeKey)) return false;
     const moduleStr = activeKey + 'List';
     const analysisListPager = uiStore.uiState[activeKey + 'AnalysisPager'];
     const {index, size} = analysisListPager;

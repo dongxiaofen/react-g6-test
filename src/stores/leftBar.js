@@ -41,21 +41,26 @@ class LeftBarStore {
         ],
       },
       {
-        menuText: '对外投资任职',
+        menuText: '投资任职',
         menuKey: 'investAndOffice',
         children: [
           {
-            menuText: '企业对外投资',
+            menuText: '企业投资',
             menuKey: 'entinvItem',
           },
           {
-            menuText: '法人对外投资任职',
+            menuText: '法人投资任职',
             menuKey: 'frPosAndInv',
           },
           {
-            menuText: '董监高对外投资任职',
+            menuText: '董监高投资任职',
             menuKey: 'managePosAndInv',
             lock: true,
+          },
+          {
+            menuText: '股东投资任职',
+            menuKey: 'sharePosAndInv',
+            developing: true,
           },
         ],
       },
@@ -92,31 +97,37 @@ class LeftBarStore {
         ],
       },
       {
-        menuText: '关联图',
+        menuText: '关联网络',
         menuKey: 'network',
         children: [
           {
-            menuText: '基础关联',
+            menuText: '关系网络图',
             menuKey: 'network',
-          },
-          {
-            menuText: '风险关系',
-            menuKey: 'blackNetwork',
           },
         ],
       },
       {
-        menuText: '企业历史',
+        menuText: '风险扫描',
         menuKey: 'trendAnalyse',
         children: [
           {
-            menuText: '历史时间轴',
-            menuKey: 'timeAxis',
+            menuText: '规则预警',
+            menuKey: 'alertAnalysis',
             lock: true,
           },
           {
-            menuText: '历史风险',
-            menuKey: 'alertAnalysis',
+            menuText: '黑名单扫描',
+            menuKey: 'blackList',
+            developing: true,
+          },
+          {
+            menuText: '风险传导模型',
+            lock: true,
+            menuKey: 'riskConduct',
+          },
+          {
+            menuText: '历史事件模型',
+            menuKey: 'timeAxis',
             lock: true,
           },
         ],
@@ -146,6 +157,24 @@ class LeftBarStore {
         menuKey: 'growthAbilityEval',
         lock: true,
         moduleKey: 'GROWING',
+      },
+      {
+        menuText: '偿债能力分析',
+        menuKey: 'debtPayAbilityEval',
+        developing: true,
+        moduleKey: '',
+      },
+      {
+        menuText: '资产管理分析',
+        menuKey: 'assetManageAnaly',
+        developing: true,
+        moduleKey: '',
+      },
+      {
+        menuText: '现金流分析',
+        menuKey: 'cashFlowAnaly',
+        developing: true,
+        moduleKey: '',
       },
     ],
     monitor: [

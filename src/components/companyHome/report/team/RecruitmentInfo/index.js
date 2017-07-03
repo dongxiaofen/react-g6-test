@@ -155,7 +155,11 @@ function RecruitmentInfo({ teamStore }) {
       { title: '平均工作经验：', key: 'workingYearsAvg' },
       { title: '招聘学历要求：', key: 'degreeInfo' },
     ];
+    const locationComp = (value) => {
+      return <div className={styles.itemKeyData}>{value}</div>;
+    };
     init.forEach((item, key) => {
+      const itemKeyData = teamStore.companyInfo[item.key];
       content.push(
         <div key={key} className={`clearfix ${styles['info1-box-block']}`}>
           <div className={styles['info1-box-title']}>
@@ -164,9 +168,9 @@ function RecruitmentInfo({ teamStore }) {
           {
             item.key === 'location'
             ?
-            <Popover content={teamStore.companyInfo[item.key]}>
+            <Popover content={locationComp(itemKeyData)}>
               <div className={styles['info1-box-content']}>
-                {teamStore.companyInfo[item.key]}
+                {itemKeyData}
               </div>
             </Popover>
             :

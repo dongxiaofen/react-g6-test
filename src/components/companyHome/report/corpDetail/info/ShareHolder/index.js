@@ -4,13 +4,31 @@ import { ModuleTitle, CommonTable } from 'components/common/report';
 // import styles from './index.less';
 
 function ShareHolder({ shareHolderList, isLoading, errText }) {
+  const handleSubConam = (items) => {
+    if (items.subConam) {
+      if (items.regCapCur) {
+        return Number(items.subConam).toFixed(2) + '万' + '（' + items.regCapCur + '）';
+      }
+      return Number(items.subConam).toFixed(2) + '万元';
+    }
+    return '--';
+  };
+  const handleRelConam = (items) => {
+    if (items.relConam) {
+      if (items.regCapCur) {
+        return Number(items.relConam).toFixed(2) + '万' + '（' + items.regCapCur + '）';
+      }
+      return Number(items.relConam).toFixed(2) + '万元';
+    }
+    return '--';
+  };
   const data = {
     meta: {
       body: [
         { 'key': 'shareholderName', 'width': '2' },
-        { 'key': 'shareholderType', 'width': '2' },
-        { 'key': 'subConam', 'width': '1.6', modifyBlock: (item) => item.subConam ? Number(item.subConam).toFixed(2) : '--' },
-        { 'key': 'relConam', 'width': '1.6', modifyBlock: (item) => item.relConam ? Number(item.relConam).toFixed(2) : '--' },
+        // { 'key': 'shareholderType', 'width': '2' },
+        { 'key': 'subConam', 'width': '1.6', modifyBlock: handleSubConam },
+        { 'key': 'relConam', 'width': '1.6', modifyBlock: handleRelConam },
         { 'key': 'fundedRatio', 'width': '1.4' },
         { 'key': 'conDate', 'width': '1.4' },
       ],

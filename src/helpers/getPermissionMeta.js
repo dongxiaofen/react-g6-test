@@ -58,7 +58,7 @@ export default function getPermissionMeta(env) {
       loginLogoStyle: 'loginLogoImg',
       beian: '渝公网安备 50019002500288号',
       title: '星象-风险管理平台',
-      pdfStyle: 'cfcaPdfBg',
+      pdfStyle: 'scPdfBg',
       downloadApp: appCodeImgSc,
     };
   }

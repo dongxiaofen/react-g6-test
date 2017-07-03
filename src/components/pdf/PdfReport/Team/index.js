@@ -29,7 +29,7 @@ function Team({pdfStore, judgeIsModuleExist}) {
             <PdfTitle id="employeeAnchor" module="团队信息" subModule="员工背景" />
             <EmployeeSchoolInfo moduleData={pathval.getPathValue(pdfStore, 'team.recruitAndResumeResponse.resumeStatisticResponse.schoolInfo')} />
             <EmployeeCategoryTypeInfo moduleData={pathval.getPathValue(pdfStore, 'team.recruitAndResumeResponse.resumeStatisticResponse.majorInfo')} />
-            <PdfTitle id="employeeAnchor" module="团队信息" subModule="近期招聘岗位" />
+            <PdfTitle id="employeeAnchor" module="团队信息" subModule="近期招聘信息" />
             <EmployeeList moduleData={pathval.getPathValue(pdfStore, 'team.recruitAndResumeResponse.recruitmentInfo.data')} />
           </div>
           :

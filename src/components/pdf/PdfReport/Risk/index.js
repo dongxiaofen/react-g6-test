@@ -26,11 +26,6 @@ function Risk({pdfStore, judgeIsModuleExist}) {
               <CourtCount moduleData={pathval.getPathValue(pdfStore, 'courtData.countCount')}/>
             </div> : ''
         }
-        {judgeIsModuleExist('RISK_TAXATION') ?
-          <div>
-            <PdfTitle module="风险信息" subModule="纳税公告"/>
-            <TaxCredit moduleData={pathval.getPathValue(pdfStore, 'taxList')}/>
-          </div> : ''}
         {judgeIsModuleExist('RISK_ANNOUNCEMENT') ?
           <div>
             <PdfTitle module="法务信息" subModule="法院公告"/>
@@ -60,6 +55,11 @@ function Risk({pdfStore, judgeIsModuleExist}) {
           <div>
             <PdfTitle module="法务信息" subModule="涉诉资产"/>
             <LitigationAssets moduleData={pathval.getPathValue(pdfStore, 'courtData.litigationAssets.data')}/>
+          </div> : ''}
+        {judgeIsModuleExist('RISK_TAXATION') ?
+          <div>
+            <PdfTitle module="风险信息" subModule="纳税公告"/>
+            <TaxCredit moduleData={pathval.getPathValue(pdfStore, 'taxList')}/>
           </div> : ''}
         {judgeIsModuleExist('RISK_ABNORMAL') ?
           <div>

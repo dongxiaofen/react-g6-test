@@ -36,6 +36,7 @@ function SwitchData({ from, to, params, cancels, setParams }) {
     }
     const obj = toJS(params);
     obj.province = val;
+    obj.city = '';
     setParams(obj);
   };
 
@@ -56,6 +57,7 @@ function SwitchData({ from, to, params, cancels, setParams }) {
         <span className={styles.title}>地区：</span>
         <div className={styles.content}>
           <Select
+            width="120px"
             defaultValue={province}
             value={province}
             onChange={selectOnChange}>

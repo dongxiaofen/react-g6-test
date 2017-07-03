@@ -9,7 +9,7 @@ import LinkJump from 'components/common/LinkJump';
 import Button from 'components/lib/button';
 // import networkType from 'dict/networkType';
 
-function NodePanel({ networkStore, routing, exitFull }) {
+function NodePanel({ networkStore }) {
   const { show, nodeData } = networkStore.nodePanel;
   if (!show || !nodeData) {
     return null;
@@ -42,13 +42,14 @@ function NodePanel({ networkStore, routing, exitFull }) {
   //   };
   //   modalStore.openCompModal({ ...args });
   // };
-  const goToBlackList = (nodeName) => {
-    if (networkStore.showFullScreen) {
-      exitFull();
-      networkStore.toggleFullScreen();
-    }
-    networkStore.jumpBlackNode(nodeName, routing.location.search);
-  };
+
+  // const goToBlackList = (nodeName) => {
+  //   if (networkStore.showFullScreen) {
+  //     exitFull();
+  //     networkStore.toggleFullScreen();
+  //   }
+  //   networkStore.jumpBlackNode(nodeName, routing.location.search);
+  // };
   const getShortestPath = ()=> {
     networkStore.getShortestPath({nodeName: nodeData.name});
   };
@@ -80,10 +81,10 @@ function NodePanel({ networkStore, routing, exitFull }) {
             关联监控
               </a> : ''
       }*/}
-      {
+      {/*{
         nodeData.blackList && nodeData.category !== 7 ?
           <a className={styles.link} onClick={goToBlackList.bind(this, nodeData.name)}>{`高风险记录（${nodeData.caseRecord.length}）`}</a> : ''
-      }
+      }*/}
     </div>
   );
 }

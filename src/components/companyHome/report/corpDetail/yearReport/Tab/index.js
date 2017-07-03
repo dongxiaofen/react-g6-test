@@ -10,7 +10,7 @@ function Tab({yearReportList, yearReportTab, isLoading, setYearReport}) {
     items: yearReportList,
     isLoading: isLoading,
     module: '企业年份',
-    error: yearReportList.length === 0
+    error: yearReportList && yearReportList.length === 0
   };
   return (
     <div>
