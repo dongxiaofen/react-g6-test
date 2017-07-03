@@ -83,8 +83,8 @@ const config = {
   shareholder: {
     'shareholderName': '股东姓名',
     'shareholderType': '股东类型',
-    'subConam': '认缴出资额（万元）',
-    'relConam': '实缴出资额（万元）',
+    'subConam': '认缴出资额',
+    'relConam': '实缴出资额',
     'fundedRatio': '出资比例',
     'conDate': '出资日期',
   },
