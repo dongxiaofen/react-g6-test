@@ -1,5 +1,5 @@
 import React from 'react';
-import {Route, IndexRoute, IndexRedirect, browserHistory} from 'react-router';
+import {Route, IndexRoute, IndexRedirect} from 'react-router';
 import axios from 'axios';
 import {
     App,
