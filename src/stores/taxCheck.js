@@ -24,6 +24,7 @@ class TaxCheckStore {
 
   @observable taxCheckInfo = {};
   @observable taxCheckInfoCompany = '';
+  @observable taxCheckInfoId = 0;
   @observable isMount = false;
 
   @action.bound addSelectItem() {
@@ -112,11 +113,19 @@ class TaxCheckStore {
       }));
   }
 
-  @action.bound getTaxCheckInfo(companyId, companyName) {
-    companyHomeApi.getTaxInfo(companyId)
+  @action.bound getTaxCheckInfo(_companyId, _companyName) {
+    const companyId = _companyId ? _companyId : this.taxCheckInfoId;
+    const companyName = _companyName ? _companyName : this.taxCheckInfoCompany;
+    const params = {
+      index: uiStore.uiState.taxInfoCheckPager.index,
+      size: uiStore.uiState.taxInfoCheckPager.size,
+    };
+    companyHomeApi.getTaxInfo(params, companyId)
       .then(action('taxCheckInfo', (resp) => {
         this.taxCheckInfo = resp.data;
         this.taxCheckInfoCompany = companyName || '';
+        this.taxCheckInfoId = companyId || 0;
+        uiStore.uiState.taxInfoCheckPager.totalElements = resp.data.totalElements;
       }))
       .catch(action('taxCheckInfo error', (err) => {
         console.log(err.response, '=====taxList error');

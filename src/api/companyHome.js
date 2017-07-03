@@ -229,8 +229,8 @@ export const addTaxCheck = (params) => {
   return axios.post(`api/check/tax`, params);
 };
 // 获取核查详情
-export const getTaxInfo = (companyId) => {
-  return axios.get(`/api/check/tax/${companyId}/page`);
+export const getTaxInfo = (params, companyId) => {
+  return axios.get(`/api/check/tax/${companyId}/page`, {params: params});
 };
 // 税务列表
 export const getTaxList = (id, source) => {

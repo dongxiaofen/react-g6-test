@@ -33,6 +33,18 @@ function Footer({companyHomeStore, routing, bannerStore}) {
     return monitorStatus === 'PAUSE' && bannerStore.reStoreLoading ? 'anticon anticon-spin anticon-loading' : styles.pause;
   };
   const repType = getReportType();
+  const reportLoading = () => {
+    if ((repType === 'basicReport' || repType === 'report' || repType === 'loan') && companyHomeStore.completed) {
+      return (
+        <span className={styles.item} onClick={bannerStore.openDownLoadPdf}>
+          <i className={styles.download}></i>下载PDF
+        </span>
+      );
+    } else if (repType !== 'nowRecord' && repType !== 'monitor') {
+      return <span className={styles.item}>请稍后...</span>;
+    }
+    return '';
+  };
   return (
     <div className={styles.box}>
       <span className={styles.repType}>当前浏览为 {reportTypeDict[repType]}</span>
@@ -54,13 +66,7 @@ function Footer({companyHomeStore, routing, bannerStore}) {
         </span>
         : ''
       }
-      {
-        (repType === 'basicReport' || repType === 'report' || repType === 'loan') && companyHomeStore.completed ?
-        <span className={styles.item} onClick={bannerStore.openDownLoadPdf}>
-          <i className={styles.download}></i>下载PDF
-        </span>
-        : ''
-      }
+      { reportLoading() }
       {
         repType === 'monitor' ?
         <span className={styles.item} onClick={bannerStore.renewalMonitorModal}>

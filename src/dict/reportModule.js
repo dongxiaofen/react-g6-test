@@ -53,7 +53,7 @@ const config = {
   equityPledge: {
     'imporg': '质权人姓名',
     'imporgType': '出质人类别',
-    'imporgAmount': '出质金额',
+    'imporgAmount': '出质金额（万元）',
     'imporgRecordDate': '出质备案日期',
     'imporgAthOrg': '出质审批部门',
     'imporgDate': '出质批准日期',
@@ -83,8 +83,8 @@ const config = {
   shareholder: {
     'shareholderName': '股东姓名',
     'shareholderType': '股东类型',
-    'subConam': '认缴出资额（万元）',
-    'relConam': '实缴出资额（万元）',
+    'subConam': '认缴出资额',
+    'relConam': '实缴出资额',
     'fundedRatio': '出资比例',
     'conDate': '出资日期',
   },
@@ -143,7 +143,7 @@ const config = {
     'esDate': '成立日期',
     'fundedRatio': '出资比例',
     'subConam': '认缴出资额（万元）',
-    'thisPosition': '担任职位',
+    'otherPosition': '担任职位',
     'position': '担任职位',
     'regCap': '注册资金（万元）',
     'frName': '法人代表',
@@ -196,7 +196,7 @@ const config = {
   sharesImpawnListItemLists: {
     'imporg': '质权人姓名',
     'imporgType': '出质人类别',
-    'imporgAmount': '出质金额',
+    'imporgAmount': '出质金额（万元）',
     'imporgRecordDate': '出质备案日期',
     'imporgAthOrg': '出质审批部门',
     'imporgDate': '出质批准日期',

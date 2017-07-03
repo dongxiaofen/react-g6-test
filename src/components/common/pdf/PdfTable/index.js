@@ -30,9 +30,9 @@ function PdfTable({ dataConfig, items, dict, decimal }) {
           } else {
             valueNew = value;
           }
-          trCon.push(<td key={`${hItem.key}hiemvaluetd1`} style={{width: hItem.width * 10 + '%'}}>{hItem.handle ? hItem.handle(valueNew) : valueNew}</td>);
+          trCon.push(<td key={`${hItem.key}hiemvaluetd1`} style={{width: hItem.width * 10 + '%'}}>{hItem.handle ? hItem.handle(valueNew, tbItem) : valueNew}</td>);
         } else {
-          trCon.push(<td key={`${hItem.key}hiemvaluetd2`} style={{width: hItem.width * 10 + '%'}}>{hItem.handle ? hItem.handle(value) : value}</td>);
+          trCon.push(<td key={`${hItem.key}hiemvaluetd2`} style={{width: hItem.width * 10 + '%'}}>{hItem.handle ? hItem.handle(value, tbItem) : value}</td>);
         }
       });
       tbody.push(<tr key={`${index}hiemvaluetr`}>{trCon}</tr>);
