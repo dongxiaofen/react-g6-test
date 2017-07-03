@@ -21,7 +21,7 @@ function SimpleCard({meta, dataStore}) {
         if (!dataStore.detailData.html) {
           value = <AnimateLoading />;
         } else if (dataStore.detailData.html !== '--') {
-          value = <div dangerouslySetInnerHTML={{__html: dataStore.detailData.html}} ></div>;
+          value = <div className={styles.htmlBox} dangerouslySetInnerHTML={{__html: dataStore.detailData.html}} ></div>;
         }
       } else if (config.keyType === 'date') {
         if (value) {

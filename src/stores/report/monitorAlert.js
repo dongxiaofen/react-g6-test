@@ -65,21 +65,24 @@ class MonitorAlertStore {
       .then(action('getMonitorAlertDetail_success', resp => {
         this.loadingId = -1;
         this.alertCancel = null;
-        this.detailData.detail = info.alertType === 'RULE' ? resp.data.content : resp.data;
+        this.detailData.detail = info.alertType !== 'SYS_RULE' ? resp.data.content : resp.data;
         this.detailData.orgData = resp.data;
         this.detailData.info = info;
         this.detailData.loading = false;
         this.openDetailModal(this.detailData.info.alertType);
-        if (this.detailData.info.alertType === 'RULE') {
+        if (this.detailData.info.alertType !== 'SYS_RULE') {
           const pattern = this.detailData.detail[0].pattern;
           if (pattern === 'NEWS') {
-            this.getNewsDetail(companyId);
+            this.getNewsDetail(companyId, 'rule');
           } else if (pattern === 'JUDGMENT') {
             this.getJudgeDocDetail(companyId, this.detailData.detail[this.detailData.activeIndex].content);
           }
         } else if (this.detailData.info.alertType === 'SYS_RULE') {
-          if (resp.data[0].detail[0].type === 'judgeInfo' && this.detailData.detail[0].detail[0].judgeInfo) {
+          if (this.detailData.detail[0].ruleType === 1) {
             this.getJudgeDocDetail(companyId, this.detailData.detail[0].detail[0].judgeInfo);
+          }
+          if (this.detailData.detail[0].ruleType === 11) {
+            this.getNewsDetail(companyId, 'sysRule');
           }
         }
       }))
@@ -96,13 +99,19 @@ class MonitorAlertStore {
         }
       }));
   }
-  @action.bound getNewsDetail(companyId) {
+  @action.bound getNewsDetail(companyId, ruleType) {
     const detailData = this.detailData.detail[this.detailData.activeIndex];
+    const ruleId = this.detailData.info.id;
     const params = {};
-    params.createdAt = detailData.content.createdAt;
-    params.url = detailData.content.url;
+    if (ruleType === 'sysRule') {
+      params.scId = detailData.detail.id;
+    }
+    if (ruleType === 'rule') {
+      params.createdAt = detailData.content.createdAt;
+      params.url = detailData.content.url;
+    }
     this.detailData.html = '';
-    companyHomeApi.getAlertNewsMonitor(companyId, params)
+    companyHomeApi.getAlertNewsMonitor(companyId, ruleType, ruleId, params)
     .then(action('get news', resp=> {
       this.detailData.html = resp.data.html;
     }))

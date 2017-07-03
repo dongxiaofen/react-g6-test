@@ -40,7 +40,7 @@ class MessageStore {
           const notRouteToHome = true;
           modalStore.openCompModal({
             title: '温馨提示',
-            width: 540,
+            width: 440,
             isSingleBtn: true,
             confirmText: '重新登录',
             closeAction: () => {
