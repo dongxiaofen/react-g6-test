@@ -58,11 +58,14 @@ function TableRow({data, routing, dataStore, networkStore, companyHomeStore}) {
             {`${alertTypeMap[data.alertType]}${data.count}次`}
           </span>
         </span>
-        <span
-          className={styles.viewBtn}
-          onClick={viewDetail}>
-          {loadingId === data.id ? '获取中' : '详情'}
-        </span>
+        {
+          data.alertType === 'BLACKLIST' ? '' :
+          <span
+            className={styles.viewBtn}
+            onClick={viewDetail}>
+            {loadingId === data.id ? '获取中' : '详情'}
+          </span>
+        }
       </div>
       <div>
         <span className={styles.desc}>{`${text}依据 `}：{data.description}{data.keywords ? `（${data.keywords}）` : ''}</span>

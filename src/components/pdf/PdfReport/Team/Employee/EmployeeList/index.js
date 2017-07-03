@@ -2,13 +2,12 @@ import React, {PropTypes} from 'react';
 import { observer } from 'mobx-react';
 import PdfNotFound from 'components/common/pdf/PdfNotFound';
 import PdfTable from 'components/common/pdf/PdfTable';
-import SecondTitle from 'components/common/pdf/SecondTitle';
 
 function EmployeeList({moduleData}) {
   if (!moduleData || moduleData.length === 0) {
     return (
       <div>
-        <SecondTitle module="近期招聘岗位" />
+        <div style={{marginTop: '30px'}}></div>
         <PdfNotFound />
       </div>
     );
@@ -26,7 +25,7 @@ function EmployeeList({moduleData}) {
   };
   return (
     <div>
-      <SecondTitle module="近期招聘岗位" />
+      <div style={{marginTop: '30px'}}></div>
       <PdfTable {...data} />
     </div>
   );

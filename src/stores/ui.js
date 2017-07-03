@@ -1,22 +1,19 @@
 import { observable, action, reaction, extendObservable } from 'mobx';
 import pathval from 'pathval';
-import companyHomeStore from './companyHome';
-import assetsStore from './report/assets';
 import reportListStore from './reportList';
 import analysisListStore from './analysisList';
 import monitorListStore from './monitorList';
 import ruleListStore from './ruleList';
 import ruleCompanyStore from './ruleCompany';
 import accountSettingStore from './accountSetting';
-import alertAnalysisStore from './report/alertAnalysis';
-import monitorAlertStore from './report/monitorAlert';
 import collectionStore from './collection';
 import relPerCheckStore from './relPerCheck';
-import nowRecordStore from './report/nowRecord';
 import taxCheckStore from './taxCheck';
 import bidMarketStore from './bidMarket';
 import assetTransactionStore from './assetTransaction';
 import riskCourtStore from './report/riskCourt';
+import companyHomeStore from './companyHome';
+
 const initPagerParams = {
   basicReportPager: {
     index: 1,
@@ -308,20 +305,6 @@ const initPagerParams = {
 class UiStore {
   constructor() {
     reaction(
-      () => this.uiState.trademarkLists.index,
-      () => {
-        const reportInfo = companyHomeStore.reportInfo;
-        assetsStore.getTrademarkData(reportInfo);
-      }
-    );
-    reaction(
-      () => this.uiState.patentInfo.index,
-      () => {
-        const reportInfo = companyHomeStore.reportInfo;
-        assetsStore.getPatentData(reportInfo);
-      }
-    );
-    reaction(
       () => this.uiState.basicReportPager.index,
       () => {
         document.body.scrollTop = 0;
@@ -371,18 +354,6 @@ class UiStore {
       }
     );
     reaction(
-      () => this.uiState.alertAnalysis.index,
-      () => {
-        alertAnalysisStore.getReportModule(companyHomeStore.reportInfo);
-      }
-    );
-    reaction(
-      () => this.uiState.monitorAlert.index,
-      () => {
-        monitorAlertStore.getReportModule(companyHomeStore.reportInfo);
-      }
-    );
-    reaction(
       () => this.uiState.ruleListPager.index,
       () => {
         ruleListStore.getRuleTypeList();
@@ -404,17 +375,23 @@ class UiStore {
       }
     );
     reaction(
-      () => this.uiState.nowRecordPager.index,
-      () => {
-        nowRecordStore.getNowRecordList();
-      }
-    );
-    reaction(
       () => this.uiState.taxCheckPager.index,
       () => {
         taxCheckStore.getReportModule();
       }
     );
+    reaction(
+      () => this.uiState.relPerCheck.index,
+      () => {
+        relPerCheckStore.getReportModule(relPerCheckStore.reloadMonitorId);
+      }
+    );
+    // reaction(
+    //   () => this.uiState.taxInfoCheckPager.index,
+    //   () => {
+    //     taxCheckStore.getTaxCheckInfo();
+    //   }
+    // );
     reaction(
       () => this.uiState.accountConsume.index,
       () => {
@@ -452,12 +429,6 @@ class UiStore {
           index: collection.index,
           size: collection.size
         });
-      }
-    );
-    reaction(
-      () => this.uiState.relPerCheck.index,
-      () => {
-        relPerCheckStore.getReportModule(relPerCheckStore.reloadMonitorId);
       }
     );
     reaction(
@@ -590,7 +561,6 @@ class UiStore {
       }
     );
   }
-
   @observable uiState = initPagerParams;
 
   @action.bound

@@ -8,7 +8,7 @@ function Office({moduleData}) {
   if (!moduleData || moduleData.length === 0) {
     return (
       <div>
-        <SecondTitle module="法人对外任职"/>
+        <SecondTitle module="法人任职的企业"/>
         <PdfNotFound />
       </div>
     );
@@ -41,7 +41,7 @@ function Office({moduleData}) {
   };
   return (
     <div>
-      <SecondTitle module={`法人（${moduleData[0].name}）对外任职`} />
+      <SecondTitle module={`法人（${moduleData[0].name}）任职的企业`} />
       <PdfSimpleKey {...data} />
     </div>
   );

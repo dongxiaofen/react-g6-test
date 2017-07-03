@@ -15,14 +15,12 @@ export default class HighRiskCorp extends Component {
   };
   componentDidMount() {
     const store = this.props.highRiskCorpStore;
-    store.getStatistic();
     store.getIndustry();
     store.getRecent();
     store.getIncrement();
     store.getArea();
   }
   render() {
-    // console.log(mobx.toJS(this.props.highRiskCorpStore), '---');
     return (
       <Container>
         <CountTitle />

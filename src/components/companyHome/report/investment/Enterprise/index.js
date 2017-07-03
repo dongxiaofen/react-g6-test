@@ -35,7 +35,7 @@ function Enterprise({investmentStore}) {
   };
   return (
     <div>
-      <ModuleTitle module="企业对外投资" count={count} />
+      <ModuleTitle module="企业投资" count={count} />
       <CardTable {...data} />
     </div>
   );

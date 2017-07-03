@@ -50,10 +50,10 @@ function TaxCheckModal({taxCheckStore}) {
   };
   const checkNumber = (index, evt) => {
     const inputValue = evt.target.value;
-    const pattern = /^\d+(.\d+)?$/;
+    const pattern = /^-?\d+$/;
     let msg = '';
     if (!pattern.test(inputValue)) {
-      msg = '金额只能为数字';
+      msg = '金额只能为整数';
     }
     taxCheckStore.changeValue(`selectConf[${index}].msg`, msg);
   };
