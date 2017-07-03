@@ -7,18 +7,18 @@ function ShareHolder({ shareHolderList, isLoading, errText }) {
   const handleSubConam = (items) => {
     if (items.subConam) {
       if (items.regCapCur) {
-        return Number(items.subConam).toFixed(2) + '（' + items.regCapCur + '）';
+        return Number(items.subConam).toFixed(2) + '万' + '（' + items.regCapCur + '）';
       }
-      return Number(items.subConam).toFixed(2);
+      return Number(items.subConam).toFixed(2) + '万元';
     }
     return '--';
   };
   const handleRelConam = (items) => {
     if (items.relConam) {
       if (items.regCapCur) {
-        return Number(items.relConam).toFixed(2) + '（' + items.regCapCur + '）';
+        return Number(items.relConam).toFixed(2) + '万' + '（' + items.regCapCur + '）';
       }
-      return Number(items.relConam).toFixed(2);
+      return Number(items.relConam).toFixed(2) + '万元';
     }
     return '--';
   };

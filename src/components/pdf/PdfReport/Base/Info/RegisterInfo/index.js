@@ -13,9 +13,9 @@ function RegisterInfo({ moduleData }) {
       </div>
     );
   }
-  const handleCap = (value) => {
+  const handleCap = (value, items) => {
     if (!isNaN(parseFloat(value))) {
-      return parseFloat(value).toFixed(2) + '万元（人民币）';
+      return parseFloat(value).toFixed(2) + `${items.unit !== '' ? items.unit : ''}${items.regCapCur !== '' ? `（${items.regCapCur}）` : ''}`;
     }
     return '--';
   };

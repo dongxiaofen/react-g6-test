@@ -70,24 +70,24 @@ import {
 // first append here from plop
   } from 'containers';
 
-function requireAuth(nextState) {
-  // console.log(allStore, nextState, replace, '------requireAuth');
+function requireAuth(nextState, replace) {
+  const pathname = nextState.location.pathname;
   const params = {
     pageViewEntryList: [
       {
         accessTime: Date.now(),
-        uri: nextState.location.pathname,
+        uri: pathname,
         queryString: nextState.location.search.slice(1),
       }
     ]
   };
   axios.post('/api/sc/collect/page', params);
-  // if (allStore !== 'server') {
-  //   const { reportId } = allStore.routing.location.query;
-  //   if (!reportId) {
-  //     replace('/');
-  //   }
-  // }
+  if (pathname.includes('/companyHome')) {
+    const { companyName } = nextState.location.query;
+    if (!companyName) {
+      replace('/accountProfile');
+    }
+  }
 }
 
 export default () => {
@@ -105,7 +105,7 @@ export default () => {
       <Route path="analysisList" component={ AnalysisList } onEnter={requireAuth} />
       <Route path="monitorList" component={ MonitorList } onEnter={requireAuth} />
       <Route path="inLoanAnalysis" component= { InLoanAnalysis } onEnter={ requireAuth } />
-      <Route path="companyHome" component={ CompanyHome } >
+      <Route path="companyHome" component={ CompanyHome } onEnter={ requireAuth } >
         <IndexRedirect to="corpDetail" />
         <Route path="corpDetail" component={CorpDetail} onEnter={requireAuth} />
         <Route path="internet" component={ Internet } onEnter={requireAuth} />
