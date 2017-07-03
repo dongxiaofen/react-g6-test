@@ -1,6 +1,6 @@
 import React from 'react';
-import { observer } from 'mobx-react';
-import { loadingComp } from 'components/hoc';
+import {observer} from 'mobx-react';
+import {loadingComp} from 'components/hoc';
 import Pager from 'components/common/Pager';
 import ListItem from '../ListItem';
 import NoReport from '../NoReport';
@@ -9,11 +9,12 @@ function AdvancedList({reportListStore}) {
   const data = reportListStore.advancedList.content;
   const createList = () => {
     return data.map((item, idx) => {
-      return <ListItem data={item} key={idx} />;
+      return <ListItem data={item} key={idx}/>;
     });
   };
   if (data.length === 0) {
-    return <NoReport />;
+    const noResultMessage = reportListStore.isShowNoResultMessage ? '没有找到相关企业，请更换关键字试试' : '';
+    return <NoReport noResultMessage={noResultMessage}/>;
   }
   return (
     <div>
@@ -21,7 +22,7 @@ function AdvancedList({reportListStore}) {
       <Pager
         tData={data}
         module="advancedReportPager"
-        type="large" />
+        type="large"/>
     </div>
   );
 }

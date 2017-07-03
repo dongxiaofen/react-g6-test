@@ -150,8 +150,18 @@ export function getLinkInfo(data) {
     if (key === '股东' && data.invRatio !== -1) {
       const invCurrency = (data.invCurrency === '人民币' || data.invCurrency === '') ? '万人民币' : data.invCurrency;
       description.push(`${relation[key][0]}(投资金额: ${data.invConum + invCurrency},投资比例: ${data.invRatio.toFixed(2)}%)`);
+    } else if (key === '共同原被告' || key === '诉讼对立方') {
+      if (typeof relation[key][0] === 'string') {
+        description.push(`${key}(${relation[key][0]})`);
+      } else {
+        relation[key].forEach((relItem)=>{
+          const label = Object.keys(relItem)[0];
+          const caseReason = relItem[label].length > 0 ? `(${relItem[label].join('、')})` : '';
+          description.push(`${label}${caseReason}`);
+        });
+      }
     } else {
-      description.push(`${key}(${relation[key][0]})`);
+      description.push(`${key}(${relation[key].join('、')})`);
     }
   });
   return description.join(',');
@@ -165,12 +175,12 @@ export function getBlackLinkInfo(data) {
   });
   return description.join(',');
 }
-// 风险关联图根据expandIdx更新节点的显示
-export function updateNodeByExpandIdx(pathsArr, expandIdx, nodesData) {
+// 风险关联图根据focusIdx更新节点的显示
+export function updateNodeByFocusIdx(pathsArr, focusIdx, nodesData) {
   nodesData.map((node) => {
-    if (pathsArr[expandIdx].relatedPaths.includes(node.name)) {
+    if (pathsArr[focusIdx].relatedPaths.includes(node.name)) {
       node.hide = false;
-      if (node.name === pathsArr[expandIdx].blackListNode) {
+      if (node.name === pathsArr[focusIdx].blackListNode) {
         node.isBlack = true;
       }
     } else {
@@ -183,6 +193,15 @@ export function updateNodeByExpandIdx(pathsArr, expandIdx, nodesData) {
 export function findOneLevelNodes(node, ary) {
   for (const nodeItem of ary) {
     if (nodeItem === node.id) {
+      return true;
+    }
+  }
+  return false;
+}
+// 查看是否一度关联,名字
+export function findOneLevelNodesByName(node, ary) {
+  for (const nodeItem of ary) {
+    if (nodeItem === node.name) {
       return true;
     }
   }
@@ -207,9 +226,27 @@ export function getCurrentNodesLinks(forceNetwork) {
 export function getArrowType(target, nodes) {
   return nodes[nodes.findIndex((node) => node.id === target.id)].cateType;
 }
-export function findShortPath(nodeId, shortestPahth) {
-  const index = shortestPahth[0].findIndex((path)=>{
-    return path === nodeId;
+export function turnToPath(shortestPahth) {
+  const pathList = [];
+  shortestPahth.forEach((path)=>{
+    for (let idx = 0; idx < path.length - 1; idx ++) {
+      pathList.push(`${path[idx]}-${path[idx + 1]}`);
+    }
   });
-  return index > -1;
+  return pathList;
+}
+export function focusShortPath(shortestPahth, edgesData) {
+  const pathList = turnToPath(shortestPahth);
+  edgesData.forEach((link)=>{
+    const relName1 = `${link.target.name}-${link.source.name}`;
+    const relName2 = `${link.source.name}-${link.target.name}`;
+    const idx = pathList.findIndex((pathName)=>{
+      return pathName === relName1 || pathName === relName2;
+    });
+    if (idx > -1) {
+      link.isFocus = true;
+    } else {
+      link.isFocus = false;
+    }
+  });
 }

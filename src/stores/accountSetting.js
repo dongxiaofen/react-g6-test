@@ -28,8 +28,8 @@ class AccountSettingStore {
     ANALYSIS_SCORE: '贷中分析-多维综合分析',
     ANALYSIS_OPERATION: '贷中分析-营运能力',
     ANALYSIS_GROWING: '贷中分析-成长能力',
-    PERSON_CHECK: '关联人核查',
-    TAX_CHECK: '税务核查',
+    PERSON_CHECK: '个人黑名单核查',
+    TAX_CHECK: '企业年度报税核查',
     BASIC_REPORT: '基础报告',
     BASIC_REPORT_TO_REPORT: '基础报告升级为高级报告',
     BASIC_REPORT_REFRESH: '基础报告刷新'

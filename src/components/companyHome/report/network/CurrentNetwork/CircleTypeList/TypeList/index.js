@@ -13,18 +13,20 @@ function TypeList({ typeList, toggleChecked, toggleCheckAll }) {
   // console.log(toJS(countArr), toJS(labelArr), toJS(checkedArr));
   return (
     <div>
-      <div className={styles.checkbox}>
-        <Checkbox checked={allChecked} onChange={toggleCheckAll}><span className={styles.category0}></span><span className={styles.checkboxText}>主体公司</span></Checkbox>
+      <div className={allChecked ? styles.checkbox0Act : styles.checkbox0}>
+        <Checkbox checked={allChecked} onChange={toggleCheckAll}><span className={styles.checkboxText}>主体公司</span></Checkbox>
       </div>
       {
         labelArr.map((label, idx) => {
+          const checked = countArr[idx] === 0 ? false : checkedArr[idx];
+          let checkboxCss = checked ? `${styles[`checkbox${idx + 1}Act`]}` : styles[`checkbox${idx + 1}`];
+          checkboxCss = countArr[idx] === 0 ? styles.checkboxDisable : checkboxCss;
           return (
-            <div key={label + idx} className={styles.checkbox}>
+            <div key={label + idx} className={`${styles.checkbox} ${checkboxCss}`}>
               <Checkbox
-                checked={countArr[idx] === 0 ? false : checkedArr[idx]}
+                checked={checked}
                 disabled={countArr[idx] !== 0 ? false : true}
                 onChange={onChange.bind(this, label, idx)}>
-                <span className={styles[`category${idx + 1}`]}></span>
                 <span className={countArr[idx] === 0 ? styles.checkboxTextDisable : styles.checkboxText}>{label}（{countArr[idx]}）</span>
               </Checkbox>
             </div>

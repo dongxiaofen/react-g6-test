@@ -7,7 +7,7 @@ class BlackNetworkStore {
       () => this.jumpNode,
       () => {
         const tmp = this.blackNetwork.paths.findIndex((path) => path.blackListNode === this.jumpNode);
-        this.expandIdx = tmp >= 0 ? tmp : this.expandIdx;
+        this.focusIdx = tmp >= 0 ? tmp : this.focusIdx;
         this.isJump = true;
       }
     );
@@ -24,7 +24,8 @@ class BlackNetworkStore {
   };
   @observable isJump = false;
   @observable jumpNode = '';
-  @observable expandIdx = 0;
+  @observable focusIdx = 0;
+  @observable expandIdx = -1
   @observable focusNodeName = '';
   @observable blackList = [];
   @observable modalFocusIdx = -1; // 失信记录点击idx记录
@@ -39,10 +40,13 @@ class BlackNetworkStore {
     this.focusNodeName = name;
     this.focusNodeFlag = !this.focusNodeFlag;
   }
-  @action.bound toggleExpand(idx) {
-    this.expandIdx = idx;
+  @action.bound toggleFocusName(idx) {
+    this.focusIdx = idx;
     this.modalFocusIdx = -1;
     this.isJump = false;
+  }
+  @action.bound toggleExpand(idx) {
+    this.expandIdx = idx === this.expandIdx ? -1 : idx;
   }
   @action.bound getReportModule(params) {
     this.isMount = true;
@@ -56,12 +60,12 @@ class BlackNetworkStore {
         // 判断是否从关联关系跳转过来
         if (this.jumpNode !== '') {
           const tmp = this.blackNetwork.paths.findIndex((path) => path.blackListNode === this.jumpNode);
-          this.expandIdx = tmp > 0 ? tmp : this.expandIdx;
+          this.focusIdx = tmp > 0 ? tmp : this.focusIdx;
         }
         this.blackNetwork.nodes.map((node) => {
-          if (pathsArr[this.expandIdx].relatedPaths.includes(node.name)) {
+          if (pathsArr[this.focusIdx].relatedPaths.includes(node.name)) {
             node.hide = false;
-            if (node.name === pathsArr[this.expandIdx].blackListNode) {
+            if (node.name === pathsArr[this.focusIdx].blackListNode) {
               node.isBlack = true;
             }
           } else {
@@ -69,7 +73,7 @@ class BlackNetworkStore {
           }
         });
         this.blackNetwork.links.map((link) => {
-          if (pathsArr[this.expandIdx].relatedPaths.includes(link.source) && pathsArr[this.expandIdx].relatedPaths.includes(link.target)) {
+          if (pathsArr[this.focusIdx].relatedPaths.includes(link.source) && pathsArr[this.focusIdx].relatedPaths.includes(link.target)) {
             link.hide = false;
           } else {
             link.hide = true;

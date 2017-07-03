@@ -5,8 +5,11 @@ import styles from './index.less';
 import DetailItem from './DetailItem';
 
 function DetailList({blackNetworkStore, detailModalStore}) {
-  const {blackList, expandIdx, modalFocusIdx} = blackNetworkStore;
-  const toggleExpand = (idx)=>{
+  const {blackList, focusIdx, expandIdx, modalFocusIdx} = blackNetworkStore;
+  const toggleFocusName = (idx)=>{
+    blackNetworkStore.toggleFocusName(idx);
+  };
+  const toggleExpand = (idx) => {
     blackNetworkStore.toggleExpand(idx);
   };
   const showDetail = (index, item)=>{
@@ -36,9 +39,11 @@ function DetailList({blackNetworkStore, detailModalStore}) {
             <DetailItem
               key={item.blackListNode + idx}
               item={item}
+              toggleFocusName={toggleFocusName}
               toggleExpand={toggleExpand}
               showDetail={showDetail}
-              isExpand={expandIdx === idx}
+              isFocus={focusIdx === idx}
+              isExpend={expandIdx === idx}
               modalFocusIdx={modalFocusIdx}
               idx={idx} />
           )

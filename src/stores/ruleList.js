@@ -43,7 +43,17 @@ class RuleListStore {
   // 搜索列表
   @action.bound getSearchRuleList(value) {
     this.searchInputSend = value;
-    this.getRuleTypeList();
+    // 分页是否大于1
+    let pageIndex = true;
+    if (uiStore.uiState.ruleListPager.index > 1) {
+      pageIndex = false;
+    }
+    // 重置分页并自动获取列表
+    uiStore.uiState.ruleListPager.index = 1;
+    // 分页大于1时不需要重新获取列表
+    if (pageIndex) {
+      this.getRuleTypeList();
+    }
   }
 
   // 分页时获取哪种数据
@@ -152,8 +162,16 @@ class RuleListStore {
         modalStore.confirmLoading = false;
         // 关闭model
         modalStore.closeAction();
-        // 重新获取数据
-        this.getRuleList();
+        // 判断数据条数(处理分页问题)
+        const {index, size, totalElements} = uiStore.uiState.ruleListPager;
+        // 判断动作是否为关闭 判断是否应该重置到第一页
+        if (data && data.rule && data.rule.ruleStatus && data.rule.ruleStatus === 'USING' && this.ruleOpen === true && totalElements % size === 1 && index !== 1) {
+          uiStore.uiState.ruleListPager.index = index - 1;
+          uiStore.uiState.ruleListPager.size = 10;
+        } else {
+          // 重新获取数据
+          this.getRuleList();
+        }
       }))
       .catch(action('ruleStatus error', (err) => {
         // 关闭loading

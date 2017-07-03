@@ -13,32 +13,58 @@ function RegisterInfo({ moduleData }) {
       </div>
     );
   }
-  const handleCap = (value) => {
-    return parseFloat(value).toFixed(2) + '万人民币';
+  const handleCap = (value, items) => {
+    if (!isNaN(parseFloat(value))) {
+      return parseFloat(value).toFixed(2) + `${items.unit !== '' ? items.unit : ''}${items.regCapCur !== '' ? `（${items.regCapCur}）` : ''}`;
+    }
+    return '--';
   };
   const date = (value, item) => {
     return `${value}至${item.openTo.length !== 0 ? item.openTo : '--'}`;
+  };
+  const handleEnterpriseStatus = (value, items) => {
+    let status = '';
+    let dates = '';
+    if (items.enterpriseStatus === '' || items.enterpriseStatus === undefined) {
+      status = '--';
+    } else {
+      status = items.enterpriseStatus;
+    }
+    if ((items.cancelDate === '' || items.cancelDate === undefined) && (items.revokeDate === '' || items.revokeDate === undefined)) {
+      dates = '';
+    }
+    if ((items.cancelDate === '' || items.cancelDate === undefined) && items.revokeDate) {
+      dates = '（吊销日期：' + items.revokeDate + '）';
+    }
+    if ((items.revokeDate === '' || items.revokeDate === undefined) && items.cancelDate) {
+      dates = '（注销日期：' + items.cancelDate + '）';
+    }
+    if (items.revokeDate && items.cancelDate) {
+      dates = '（' + items.cancelDate + '/' + items.revokeDate + '）';
+    }
+    // return
+    return status + dates;
   };
   const data = {
     dataConfig: [
       {'key': 'enterpriseName', 'width': '6'},
       {'key': 'regNo', 'width': '6'},
-      {'key': 'regOrg', 'width': '6'},
-      {'key': 'recCap', 'width': '6'},
-      {'key': 'openFrom', 'width': '6', 'handle': date},
-      {'key': 'industryPhyName', 'width': '6'},
-      {'key': 'frName', 'width': '6'},
-      {'key': 'enterpriseType', 'width': '6'},
-      {'key': 'regCap', 'width': '6', 'handle': handleCap},
-      {'key': 'address', 'width': '6'},
-      {'key': 'enterpriseStatus', 'width': '6'},
-      {'key': 'industryName', 'width': '6'},
       {'key': 'esDate', 'width': '6'},
-      {'key': 'ancheDate', 'width': '6'},
-      {'key': 'cancelDate', 'width': '6'},
-      {'key': 'abuItem', 'width': '6'},
-      {'key': 'cbuItem', 'width': '12'},
+      {'key': 'frName', 'width': '6'},
+      {'key': 'regCap', 'width': '6', 'handle': handleCap},
+      {'key': 'enterpriseStatus', 'width': '6', 'handle': handleEnterpriseStatus},
+      {'key': 'address', 'width': '6'},
+      {'key': 'enterpriseType', 'width': '6'},
+      {'key': 'regOrg', 'width': '6'},
+      // {'key': 'recCap', 'width': '6'},
+      {'key': 'openFrom', 'width': '6', 'handle': date},
       {'key': 'operateScope', 'width': '12'},
+      // {'key': 'industryPhyName', 'width': '6'},
+      // {'key': 'industryName', 'width': '6'},
+      // {'key': 'ancheDate', 'width': '6'},
+      // {'key': 'cancelDate', 'width': '6'},
+      // {'key': 'abuItem', 'width': '6'},
+      // {'key': 'cbuItem', 'width': '12'},
     ],
     item: moduleData[0],
     dict: 'RegisterInfo',

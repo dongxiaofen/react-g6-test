@@ -3,9 +3,11 @@ import { companyHomeApi } from 'api';
 import networkType from 'dict/networkType';
 import blackNetworkStore from './blackNetwork';
 import leftBarStore from '../leftBar';
-import modalStore from '../modal';
 import messageStore from '../message';
+import companyHomeStore from '../companyHome';
 import { browserHistory } from 'react-router';
+import pathval from 'pathval';
+import modalStore from '../modal';
 
 class NetworkStore {
   constructor() {
@@ -38,11 +40,14 @@ class NetworkStore {
   @observable mainCompanyName = '';
   @observable layout = 'circle';
   @observable focusNodeName = '';
+  @observable focusNodeInfo = {};
   @observable searchKey = '';
   @observable currentLevel = 1;
   @observable totalLevel = 1;
   @observable showFullScreen = false;
-
+  @observable showSearchInput = false;
+  @observable shortestPath = [];
+  @observable shortPathLoading = false;
   @action.bound monitorExistNode(monitorId, params) {
     modalStore.confirmLoading = true;
     companyHomeApi.monitorExistNode(monitorId, params)
@@ -69,7 +74,7 @@ class NetworkStore {
     blackNetworkStore.jumpNode = name;
     // 修改导航高亮
     leftBarStore.activeItem = 'blackNetwork';
-    browserHistory.push(`/companyHome/blackNetwork${params}`);
+    browserHistory.push(`/companyHome/riskConduct${params}`);
   }
   @action.bound selectLevel(currentLevel) {
     this.currentLevel = currentLevel;
@@ -84,6 +89,8 @@ class NetworkStore {
   @action.bound closePanel() {
     this.nodePanel.show = false;
     this.focusNodeName = '';
+    this.focusNodeInfo = {};
+    this.shortestPath = [];
   }
   @action.bound switchLayout() {
     this.layout = this.layout === 'circle' ? 'force' : 'circle';
@@ -169,6 +176,39 @@ class NetworkStore {
         };
         this.isLoading = false;
       }));
+  }
+  @action.bound showRelation() {
+    const args = {
+      width: '960px',
+      boxStyle: {
+        padding: '20px 0',
+      },
+      isNeedBtn: false,
+      loader: (cb) => {
+        require.ensure([], (require) => {
+          cb(require('components/companyHome/report/network/CurrentNetwork/RelationTable'));
+        });
+      }
+    };
+    modalStore.openCompModal({ ...args });
+  }
+  @action.bound getShortestPath(params) {
+    this.shortPathLoading = true;
+    const {reportId, basicReportId} = companyHomeStore.reportInfo;
+    companyHomeApi.getShortestPath({reportId, basicReportId}, params)
+    .then(action('shortest ', (resp)=>{
+      console.log(resp.data);
+      this.shortestPath = resp.data;
+      this.shortPathLoading = false;
+    }))
+    .catch(action('shortest error', (error)=>{
+      console.log(error, 'shortest path error');
+      messageStore.openMessage({ content: '数据获取失败', type: 'warning' });
+      this.shortPathLoading = false;
+    }));
+  }
+  @action.bound updateValue(keyPath, value) {
+    pathval.setPathValue(this, keyPath, value);
   }
   @action.bound resetStore() {
     this.error = '';
