@@ -264,7 +264,7 @@ class MonitorStatisticsStore {
   @action.bound getStatistic(params) {
     this.setLoading('statistic', true);
     const source = axios.CancelToken.source();
-    monitorStatisticsApi.getStatistic({ params: params, cancelToken: source.token})
+    monitorStatisticsApi.getStatistic({ params: params, cancelToken: source.token })
       .then(action('get statistic', (resp) => {
         this.statistic = resp.data;
         this.setLoading('statistic');
@@ -343,6 +343,7 @@ class MonitorStatisticsStore {
         const provinceBarYAxisData = [];
         let provinceAllData = resp.data;
         let provinceName = '';
+        this.provinceBarUndefined = 0;
         if (provinceAllData.length) {
           provinceAllData = provinceAllData.sort((prev, next) => {
             return prev.companyCount - next.companyCount;
@@ -409,7 +410,17 @@ class MonitorStatisticsStore {
         this.provinceBar.data = provinceBarSeriesData;
         this.provinceName = provinceName;
         this.setLoading('provinceAll');
-        this.getProvince({ params: { ...params, province: provinceName } });
+        if (provinceName) {
+          this.getProvince({ params: { ...params, province: provinceName } });
+        } else {
+          this.provinceLine.axis = [];
+          this.provinceLine.event = [];
+          this.provinceLine.company = [];
+          this.provinceMap.mapOption.data = [];
+          this.provinceMap.mapOption.mapType = '';
+          this.provinceMap.provinceRank = [];
+          this.provinceMapUndefined = 0;
+        }
       }))
       .catch((err) => {
         console.log(err);
@@ -424,7 +435,7 @@ class MonitorStatisticsStore {
   }
 
   // 获取选定区域
-  @action.bound getProvince({params}) {
+  @action.bound getProvince({ params }) {
     this.setLoading('province', true);
     const source = axios.CancelToken.source();
     monitorStatisticsApi.getProvince({ params, cancelToken: source.token })
@@ -551,7 +562,7 @@ class MonitorStatisticsStore {
   @action.bound getIndustryStatistics(params) {
     this.setLoading('industryStatistics', true);
     const source = axios.CancelToken.source();
-    monitorStatisticsApi.getIndustryStatistics({ params: params, cancelToken: source.token})
+    monitorStatisticsApi.getIndustryStatistics({ params: params, cancelToken: source.token })
       .then(action('get industry statistics', (resp) => {
         const statisticSeriesData = [];
         let industryId = '';
@@ -615,7 +626,13 @@ class MonitorStatisticsStore {
         this.industryName = industryName;
         this.industryRankLength = statisticData.length;
         this.setLoading('industryStatistics');
-        this.getIndustryTrend({ params: { ...params, industryId: industryId } });
+        if (industryId) {
+          this.getIndustryTrend({ params: { ...params, industryId: industryId } });
+        } else {
+          this.industryTrend.axis = [];
+          this.industryTrend.event = [];
+          this.industryTrend.company = [];
+        }
       }))
       .catch((err) => {
         console.log(err);
@@ -630,7 +647,7 @@ class MonitorStatisticsStore {
   }
 
   // 行业变化趋势
-  @action.bound getIndustryTrend({params}) {
+  @action.bound getIndustryTrend({ params }) {
     this.setLoading('industryTrend', true);
     const source = axios.CancelToken.source();
     monitorStatisticsApi.getIndustryTrend({ params, cancelToken: source.token })

@@ -15,14 +15,23 @@ function disabledDate(current) {
 }
 
 function SwitchData({ msStore, params }) {
-  const companyTypeOnchange = (val) => {
-    const msStoreParams = msStore.params;
+  const cancelFun = () => {
     msStore.cancel.forEach((cancel) => {
       if (cancel) {
         cancel();
       }
     });
-    msStore.getChangeData({
+  };
+
+  const changeData = (_params) => {
+    msStore.getChangeData(_params);
+    msStore.setParams(_params);
+  };
+
+  const companyTypeOnchange = (val) => {
+    const msStoreParams = msStore.params;
+    cancelFun();
+    changeData({
       begin: msStoreParams.begin,
       end: msStoreParams.end,
       type: val
@@ -31,7 +40,8 @@ function SwitchData({ msStore, params }) {
 
   const dateOnChange = (dateString, dateTime) => {
     const msStoreParams = msStore.params;
-    msStore.getChangeData({
+    cancelFun();
+    changeData({
       begin: dateTime[0],
       end: dateTime[1],
       type: msStoreParams.type
