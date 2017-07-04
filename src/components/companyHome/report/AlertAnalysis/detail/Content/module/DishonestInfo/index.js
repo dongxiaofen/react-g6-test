@@ -40,7 +40,7 @@ function DishonestInfo({data, type, ruleId}) {
     itemData.companyName = data.detail[0].companyName;
   }
   const meta = {
-    dict: 'dishonestyList',
+    dict: 'courtDishonesty',
     body: body,
     item: itemData,
   };
