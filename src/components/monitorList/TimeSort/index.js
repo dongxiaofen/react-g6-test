@@ -10,8 +10,8 @@ function TypeFilter({monitorListStore, uiStore}) {
   const sortDirection = monitorListStore.searchInfo.sortDirection;
   const properties = monitorListStore.searchInfo.params.sort.split(',')[0];
   const sortHandle = (property, newSortValue) => {
-    monitorListStore.changeValue(`monitorList.sortDirection.${property}`, newSortValue);
-    monitorListStore.changeValue(`monitorList.params.sort`, `${property},${newSortValue}`);
+    monitorListStore.changeValue(`searchInfo.sortDirection.${property}`, newSortValue);
+    monitorListStore.changeValue(`searchInfo.params.sort`, `${property},${newSortValue}`);
     uiStore.updateUiStore(`monitorListPager.index`, 1);
     monitorListStore.getMainList();
   };
