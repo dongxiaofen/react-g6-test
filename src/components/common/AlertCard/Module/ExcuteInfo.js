@@ -20,7 +20,7 @@ function ExcuteInfo({data, module}) {
       label: '立案日期',
       value: data.content.caseCreateTime
     },
-    'dict': 'courtExecution',
+    'dict': 'courtExecuted',
     'items': data,
   };
   return <BaseModule module={module} data={moduleData} />;
