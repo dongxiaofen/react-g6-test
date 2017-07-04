@@ -420,6 +420,7 @@ class MonitorStatisticsStore {
           this.provinceMap.mapOption.mapType = '';
           this.provinceMap.provinceRank = [];
           this.provinceMapUndefined = 0;
+          this.setLoading('province');
         }
       }))
       .catch((err) => {
@@ -632,6 +633,7 @@ class MonitorStatisticsStore {
           this.industryTrend.axis = [];
           this.industryTrend.event = [];
           this.industryTrend.company = [];
+          this.setLoading('industryTrend');
         }
       }))
       .catch((err) => {
