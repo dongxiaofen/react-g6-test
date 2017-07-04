@@ -104,7 +104,7 @@ class MonitorAlertStore {
     const ruleId = this.detailData.info.id;
     const params = {};
     if (ruleType === 'sysRule') {
-      params.scId = detailData.detail.id;
+      params.scId = detailData.detail[0].id;
     }
     if (ruleType === 'rule') {
       params.createdAt = detailData.content.createdAt;
@@ -114,6 +114,10 @@ class MonitorAlertStore {
     companyHomeApi.getAlertNewsMonitor(companyId, ruleType, ruleId, params)
     .then(action('get news', resp=> {
       this.detailData.html = resp.data.html;
+      if (ruleType === 'sysRule') {
+        detailData.detail[0].title = resp.data.title;
+        detailData.detail[0].alterDt = resp.data.createTs;
+      }
     }))
     .catch(action('get news error', (error)=>{
       console.log('get news', error);
