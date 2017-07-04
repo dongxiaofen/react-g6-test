@@ -214,6 +214,6 @@ export default loadingComp({
   mapDataToProps: props => ({
     loading: props.assetsStore.biddingData.biddingLoading,
     module: '招投标分析图',
-    error: !props.assetsStore.biddingData.analysis || Object.keys(props.assetsStore.biddingData.analysis.year).length === 0
+    error: props.assetsStore.isErrAnalysis
   })
 })(observer(Chart));
