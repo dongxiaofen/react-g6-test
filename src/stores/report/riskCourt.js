@@ -1,6 +1,6 @@
 import { observable, action, computed } from 'mobx';
 import axios from 'axios';
-import {companyHomeApi} from 'api';
+import { companyHomeApi } from 'api';
 import pathval from 'pathval';
 import detailModalStore from '../detailModal';
 import companyHomeStore from '../companyHome';
@@ -96,7 +96,7 @@ class RiskCourtStore {
     window.reportSourceCancel.push(source.cancel);
 
     this.courtLoadingGroup[tabAct] = true;
-    companyHomeApi.getRiskCourt({...params})
+    companyHomeApi.getRiskCourt({ ...params })
       .then(action('get risk court', (resp) => {
         this.courtData[tabAct].content = resp.data.content;
         this.courtData[tabAct].totalElements = resp.data.totalElements;
@@ -138,8 +138,8 @@ class RiskCourtStore {
     });
   }
   openDetailModal() {
-    detailModalStore.openDetailModal((cp)=>{
-      require.ensure([], (require)=>{
+    detailModalStore.openDetailModal((cp) => {
+      require.ensure([], (require) => {
         cp(
           require('components/companyHome/report/riskCourt/JudgeDoc/DetailCom/Info'),
           require('components/companyHome/report/riskCourt/JudgeDoc/DetailCom/Content')
@@ -163,13 +163,13 @@ class RiskCourtStore {
     const reportInfo = companyHomeStore.reportInfo;
     entireLoadingStore.openEntireLoading();
     companyHomeApi.getJudgeDetailReport(reportInfo, params)
-      .then(action('judeDoc detail', (resp)=>{
+      .then(action('judeDoc detail', (resp) => {
         this.court.detailModalData.content = resp.data.detail;
         this.court.detailModalData.info = info;
         this.openDetailModal();
         entireLoadingStore.closeEntireLoading();
       }))
-      .catch((error)=>{
+      .catch((error) => {
         console.log('risk error', error);
         entireLoadingStore.closeEntireLoading();
       });
