@@ -11,11 +11,13 @@ function RuleRange({data}) {
     if (data.rule.industry && data.rule.industry.name) {
       industry = data.rule.industry.name + '，';
     } else {
-      industry = '行业不限，';
+      industry = '行业不限；';
     }
     // 地区
     if (data.rule.area) {
-      area = data.rule.area + '，';
+      area = data.rule.area + '；';
+    } else {
+      area = '地区不限；';
     }
     // 规模
     if (data.rule.scale) {
@@ -51,6 +53,7 @@ function RuleRange({data}) {
           scale = '10000人以上';
           break;
         default:
+          scale = '规模不限';
           break;
       }
     }
