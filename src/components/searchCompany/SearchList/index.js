@@ -97,7 +97,23 @@ function SearchList({searchCompanyStore, modalStore, payModalStore}) {
           <Feedback getFeedBack={getFeedBack}
             modalStore={modalStore}
             searchKeyFilter={searchKeyFilter} /> */}
-          <div className={`${styles.noCompany}`}>没有找到相关公司</div>
+          <div className={`${styles.noCompany}`}>
+            <div className={`${styles.noSearchImg}`}></div>
+            <div className={`${styles.noSearchCon}`}>
+              <div className={`${styles.noSearchTitle}`}>
+                没有找到相关信息
+              </div>
+              <div className={`${styles.noSearchText}`}>
+                1. 输入准确企业全称，重新搜索
+              </div>
+              <div className={`${styles.noSearchText}`}>
+                2. 更换筛选条件，重新搜索
+              </div>
+              <div className={`${styles.noSearchText}`}>
+                3. 搜索关键词太广泛，换个关键词试试
+              </div>
+            </div>
+          </div>
         </div>
       );
     }
