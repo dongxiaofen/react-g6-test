@@ -55,7 +55,7 @@ class AssetsStore {
         const months = ['01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12'];
         return common(years, months);
       case '季度':
-        const quarterMonths = ['01', '04', '10'];
+        const quarterMonths = ['01', '04', '07', '10'];
         return common(years, quarterMonths);
       default:
         break;
@@ -155,7 +155,7 @@ class AssetsStore {
         const result = response.data.result;
         if (result && result.length) {
           this.biddingData.biddingItemList = result.map(item => {
-            item.publishedDateTime = item.publishedDateTime.slice(0, 8);
+            item.publishedDateTime = item.publishedDateTime.slice(0, 10);
             return item;
           });
         } else {
