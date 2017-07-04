@@ -22,6 +22,7 @@ export default class ReportList extends Component {
     super(props);
     this.handleSearch = this.handleSearch.bind(this);
     this.inputChange = this.inputChange.bind(this);
+    this.changeTabs = this.changeTabs.bind(this);
   }
 
   componentWillMount() {
@@ -38,14 +39,8 @@ export default class ReportList extends Component {
     const currActiveKey = this.props.reportListStore.activeKey;
     const nextActiveKey = nextProps.routing.location.query.activeKey;
     if (currActiveKey !== nextActiveKey) {
-      const {basicList, advancedList} = this.props.reportListStore;
-      const lessOneNoData = [basicList, advancedList].some(list => {
-        return list.content === undefined;
-      });
       this.props.reportListStore.changeValue('activeKey', nextActiveKey);
-      if (lessOneNoData) {
-        this.props.reportListStore.getReportList();
-      }
+      this.props.reportListStore.getReportList();
     }
   }
 
@@ -60,10 +55,11 @@ export default class ReportList extends Component {
     this.props.reportListStore.changeValue(`searchInput`, evt.target.value);
   }
 
-  changeTabs = (value) => {
+  changeTabs(value) {
     this.props.routing.push(`/reportList?activeKey=${value}`);
   }
-  numWithLoading = (key, value) => {
+
+  numWithLoading(key, value) {
     if (value || value === 0) return `${key}（${value}）`;
     return React.createElement('span', null, key);
   }
