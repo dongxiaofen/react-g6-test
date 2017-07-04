@@ -7,8 +7,10 @@ import qiniu from 'qiniu';
 
 const Access_Key = 'sDS7g5o_Ik92uZJ3_vCIP9qOk1RYzETIYF2o5VA-';
 const Secret_Key = 'V5lMQ7JiZ-goU8L7bvm9PUVX5aYY779ACotOvkP1';
-const Bucket_Name = 'intel-wise';
-const DOMAIN = 'http://oq4zadj3a.bkt.clouddn.com/';
+// const Bucket_Name = 'intel-wise';
+// const DOMAIN = 'http://oq4zadj3a.bkt.clouddn.com/';
+const Bucket_Name = 'sc-static';
+const DOMAIN = 'http://static.socialcredits.cn/';
 
 const BASE_DIRNAME = process.cwd();
 const PDF_DIRNAME = path.join(BASE_DIRNAME, '/static/pdf/');

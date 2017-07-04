@@ -25,7 +25,8 @@ function TableRow({data, routing, dataStore, networkStore, companyHomeStore}) {
     const isMonitor = routing.location.pathname === '/companyHome/monitorAlert';
     const ruleMap = {
       RULE: 'rule',
-      SYS_RULE: 'sysRule'
+      SYS_RULE: 'sysRule',
+      SHARED_RULE: 'rule',
     };
     let url;
     let type;
@@ -38,13 +39,14 @@ function TableRow({data, routing, dataStore, networkStore, companyHomeStore}) {
     }
     dataStore.changeValue('loadingId', data.id);
     // dataStore.changeValue('detailData.info', data);
-    const params = alertType === 'RULE' ? {index: 1, size: 8} : {};
+    const params = alertType !== 'SYS_RULE' ? {index: 1, size: 8} : {};
     dataStore.getAlertDetail(url, type, isMonitor ? monitorId : reportId, data, params);
   };
   const alertTypeMap = {
     'RULE': '我的预警',
     'BLACKLIST': '系统预警',
     'SYS_RULE': '系统预警',
+    'SHARED_RULE': '上级预警',
   };
   const text = dataStore.module === 'alertAnalysis' ? '推送' : '预警';
   return (
@@ -66,7 +68,7 @@ function TableRow({data, routing, dataStore, networkStore, companyHomeStore}) {
         }
       </div>
       <div>
-        <span className={styles.desc}>{`${text}依据 `}：{data.description}</span>
+        <span className={styles.desc}>{`${text}依据 `}：{data.description}{data.keywords ? `（${data.keywords}）` : ''}</span>
         <span className={styles.time}>{`${text}日期 `}：{data.ruleTime}</span>
       </div>
     </div>
