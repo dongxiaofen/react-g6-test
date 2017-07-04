@@ -320,7 +320,9 @@ const config = {
   biddingList: {
     'title': '招投标标题',
     'type': '公告类型',
+    'announceType': '公告类型',
     'publishDate': '公告日期', //PDF里面使用不要注释
+    'publishedDateTime': '公告日期',
     'participator': '投标方',
     'date': '公告日期',
     // 'url': '查看详情',

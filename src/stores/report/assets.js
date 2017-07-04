@@ -142,7 +142,15 @@ class AssetsStore {
         this.biddingLoading = false;
         this.biddingData.statistic = response.data.statistic;
         this.biddingData.analysis = { ...response.data };
-        this.biddingData.biddingItemList = response.data.result;
+        const result = response.data.result;
+        if (result && result.length) {
+          this.biddingData.biddingItemList = result.map(item => {
+            item.publishedDateTime = item.publishedDateTime.slice(0, 8);
+            return item;
+          });
+        } else {
+          this.biddingData.biddingItemList = [];
+        }
       }))
       .catch( action( (err) => {
         this.biddingLoading = false;
