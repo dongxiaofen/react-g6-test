@@ -12,6 +12,12 @@ let getPatentDataReaction = null;
 let alertAnalysisReaction = null;
 let monitorAlertReaction = null;
 let nowRecordReaction = null;
+let judgeDocReaction = null;
+let courtAnnouncementReaction = null;
+let courtNoticeReaction = null;
+let courtExecuted = null;
+let courtDishonesty = null;
+let courtLitigation = null;
 @inject(
   'routing',
   'leftBarStore',
@@ -117,6 +123,117 @@ export default class CompanyHome extends Component {
         this.props.nowRecordStore.getNowRecordList();
       }
     );
+    // 判决文书
+    judgeDocReaction = reaction(
+      () => this.props.uiStore.uiState.judgeDoc.index,
+      () => {
+        const params = {
+          basicReportId: companyHomeStore.reportInfo.basicReportId,
+          reportId: companyHomeStore.reportInfo.reportId,
+          tabAct: this.props.riskCourtStore.courtTabAct,
+          config: {
+            params: {
+              index: this.props.uiStore.uiState.judgeDoc.index,
+              size: this.props.uiStore.uiState.judgeDoc.size,
+              finance: this.props.riskCourtStore.courtCheckGroup.judgeDoc
+            }
+          }
+        };
+        this.props.riskCourtStore.getRiskCourt(params);
+      }
+    );
+    // 法院公告
+    courtAnnouncementReaction = reaction(
+      () => this.props.uiStore.uiState.courtAnnouncement.index,
+      () => {
+        const params = {
+          basicReportId: companyHomeStore.reportInfo.basicReportId,
+          reportId: companyHomeStore.reportInfo.reportId,
+          tabAct: this.props.riskCourtStore.courtTabAct,
+          config: {
+            params: {
+              index: this.props.uiStore.uiState.courtAnnouncement.index,
+              size: this.props.uiStore.uiState.courtAnnouncement.size,
+              finance: this.props.riskCourtStore.courtCheckGroup.courtAnnouncement
+            }
+          }
+        };
+        this.props.riskCourtStore.getRiskCourt(params);
+      }
+    );
+    // 开庭公告
+    courtNoticeReaction = reaction(
+      () => this.props.uiStore.uiState.courtNotice.index,
+      () => {
+        const params = {
+          basicReportId: companyHomeStore.reportInfo.basicReportId,
+          reportId: companyHomeStore.reportInfo.reportId,
+          tabAct: this.props.riskCourtStore.courtTabAct,
+          config: {
+            params: {
+              index: this.props.uiStore.uiState.courtNotice.index,
+              size: this.props.uiStore.uiState.courtNotice.size,
+              finance: this.props.riskCourtStore.courtCheckGroup.courtNotice
+            }
+          }
+        };
+        this.props.riskCourtStore.getRiskCourt(params);
+      }
+    );
+    // 被执行人信息
+    courtExecuted = reaction(
+      () => this.props.uiStore.uiState.courtExecuted.index,
+      () => {
+        const params = {
+          basicReportId: companyHomeStore.reportInfo.basicReportId,
+          reportId: companyHomeStore.reportInfo.reportId,
+          tabAct: this.props.riskCourtStore.courtTabAct,
+          config: {
+            params: {
+              index: this.props.uiStore.uiState.courtExecuted.index,
+              size: this.props.uiStore.uiState.courtExecuted.size
+            }
+          }
+        };
+        this.props.riskCourtStore.getRiskCourt(params);
+      }
+    );
+    // 失信被执行人信息
+    courtDishonesty = reaction(
+      () => this.props.uiStore.uiState.courtDishonesty.index,
+      () => {
+        const params = {
+          basicReportId: companyHomeStore.reportInfo.basicReportId,
+          reportId: companyHomeStore.reportInfo.reportId,
+          tabAct: this.props.riskCourtStore.courtTabAct,
+          config: {
+            params: {
+              index: this.props.uiStore.uiState.courtDishonesty.index,
+              size: this.props.uiStore.uiState.courtDishonesty.size
+            }
+          }
+        };
+        this.props.riskCourtStore.getRiskCourt(params);
+      }
+    );
+    // 涉诉资产
+    courtLitigation = reaction(
+      () => this.props.uiStore.uiState.courtLitigation.index,
+      () => {
+        const params = {
+          basicReportId: companyHomeStore.reportInfo.basicReportId,
+          reportId: companyHomeStore.reportInfo.reportId,
+          tabAct: this.props.riskCourtStore.courtTabAct,
+          config: {
+            params: {
+              index: this.props.uiStore.uiState.courtLitigation.index,
+              size: this.props.uiStore.uiState.courtLitigation.size
+            }
+          }
+        };
+        this.props.riskCourtStore.getRiskCourt(params);
+      }
+    );
   }
   componentWillReceiveProps(nextProps) {
     const leftBarStore = this.props.leftBarStore;
@@ -137,7 +254,13 @@ export default class CompanyHome extends Component {
       getPatentDataReaction,
       alertAnalysisReaction,
       monitorAlertReaction,
-      nowRecordReaction
+      nowRecordReaction,
+      judgeDocReaction,
+      courtAnnouncementReaction,
+      courtNoticeReaction,
+      courtExecuted,
+      courtDishonesty,
+      courtLitigation
     ];
     reactionArr.forEach(reactionFunc => {
       if (typeof reactionFunc === 'function') {
