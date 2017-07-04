@@ -44,6 +44,8 @@ class ModalStore {
     this.width = '440px';
     this.cancelText = '取消';
     this.confirmText = '确定';
+    this.cancelLoading = false;
+    this.confirmLoading = false;
     this.isNeedBtn = true;
     this.compComponent = null;
     this.contentText = '';
