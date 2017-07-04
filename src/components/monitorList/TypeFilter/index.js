@@ -11,7 +11,7 @@ function TypeFilter({monitorListStore, uiStore}) {
   ];
   const monitorStatus = monitorListStore.searchInfo.params.monitorStatus;
   const changeFilter = (status) => {
-    monitorListStore.changeValue(`monitorList.params.monitorStatus`, status);
+    monitorListStore.changeValue(`searchInfo.params.monitorStatus`, status);
     uiStore.updateUiStore(`monitorListPager.index`, 1);
     monitorListStore.getMainCount();
     monitorListStore.getMainList();

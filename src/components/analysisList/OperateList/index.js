@@ -13,7 +13,8 @@ function OperateList({analysisListStore}) {
     });
   };
   if (data.length === 0) {
-    return <NoAnalysis />;
+    const noResultMessage = analysisListStore.isShowNoResultMessage ? '没有找到相关企业，请更换关键字试试' : '';
+    return <NoAnalysis noResultMessage={noResultMessage}/>;
   }
   return (
     <div>
