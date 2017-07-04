@@ -4,8 +4,8 @@ import { observer, inject } from 'mobx-react';
 import { ModuleTitle, KvTable } from 'components/common/report';
 function Brief({ brief, isEmptyObject, isOverViewLoading, bannerStore }) {
   if (!isEmptyObject(brief)) {
-    brief.issued_shares = brief.issued_shares ? (brief.issued_shares / 10000).toFixed(2) : '';
-    brief.reg_cap = brief.reg_cap ? (brief.reg_cap / 10000).toFixed(2) : '';
+    // brief.issued_shares = brief.issued_shares ? (brief.issued_shares / 10000).toFixed(2) : '';
+    // brief.reg_cap = brief.reg_cap ? (brief.reg_cap / 10000).toFixed(2) : '';
     brief.stockCode = bannerStore.bannerInfoData.stockCode;
   }
   const data = {
