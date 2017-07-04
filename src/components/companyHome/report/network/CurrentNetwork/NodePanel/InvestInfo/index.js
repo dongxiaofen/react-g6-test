@@ -49,11 +49,11 @@ function InvestInfo({ nodeData, mainCompanyName, currentNetwork }) {
         investList = (
           <div>
             <Row className={styles.box}>
-              <Col width="4">对外投资金额:</Col>
+              <Col width="4">投资金额:</Col>
               <Col width="8">暂无</Col>
             </Row>
             <Row className={styles.box}>
-              <Col width="4">对外投资比例:</Col>
+              <Col width="4">投资比例:</Col>
               <Col width="8">暂无</Col>
             </Row>
           </div>
@@ -62,11 +62,11 @@ function InvestInfo({ nodeData, mainCompanyName, currentNetwork }) {
         investList = (
           <div>
             <Row className={styles.box}>
-              <Col width="4">对外投资金额:</Col>
+              <Col width="4">投资金额:</Col>
               <Col width="8">{linkData.invConum + invCurrency}</Col>
             </Row>
             <Row className={styles.box}>
-              <Col width="4">对外投资比例:</Col>
+              <Col width="4">投资比例:</Col>
               <Col width="8">{linkData.invRatio.toFixed(2) + '%'}</Col>
             </Row>
           </div>
