@@ -286,6 +286,7 @@ class AccountSettingStore {
       .catch(action('addNewUser_error', err => {
         this.addModal.loading = false;
         if (pathval.getPathValue(err, 'response.data.errorCode') === 403229) {
+          this.resetAddModal();
           judgeNoRemain();
         } else {
           messageStore.openMessage({

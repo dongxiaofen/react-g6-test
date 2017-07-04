@@ -18,7 +18,7 @@ function LeftBar({alertAnalysisStore, monitorAlertStore, routing, companyHomeSto
     if (moduleData.info.alertType !== 'SYS_RULE') {
       const pattern = data[activeIndex].pattern;
       if (pattern === 'NEWS') {
-        dataStore.getNewsDetail(companyId);
+        dataStore.getNewsDetail(companyId, 'rule');
       } else if (pattern === 'JUDGMENT') {
         dataStore.getJudgeDocDetail(companyId, data[activeIndex].content);
       }
@@ -27,7 +27,7 @@ function LeftBar({alertAnalysisStore, monitorAlertStore, routing, companyHomeSto
         dataStore.getJudgeDocDetail(companyId, data[activeIndex].detail[0].judgeInfo);
       }
       if (data[activeIndex].ruleType === 11) {
-        dataStore.getNewsDetail(companyId);
+        dataStore.getNewsDetail(companyId, 'sysRule');
       }
     }
   };
