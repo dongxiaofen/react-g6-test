@@ -29,7 +29,7 @@ function ShareHolder({ moduleData }) {
   const getUnit = (value, items) => {
     if (value && value !== '无') {
       if (items.regCapCur !== '') {
-        return `${value}万${items.regCapCur}`;
+        return `${value}万（${items.regCapCur}）`;
       }
       return `${value}万元`;
     }
