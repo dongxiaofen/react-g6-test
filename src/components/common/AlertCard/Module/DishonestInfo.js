@@ -30,7 +30,7 @@ function DishonestInfo({data, module}) {
       value: data.content.regDate
     },
     'handleBlock': true,
-    'dict': 'dishonestyList',
+    'dict': 'courtDishonesty',
     'items': data,
   };
   return <BaseModule module={module} data={moduleData} />;
