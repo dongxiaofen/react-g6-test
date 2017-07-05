@@ -59,8 +59,7 @@ export default class ReportList extends Component {
     this.props.routing.push(`/reportList?activeKey=${value}`);
   }
 
-  numWithLoading(key, value) {
-    if (value || value === 0) return `${key}（${value}）`;
+  numWithLoading(key) {
     return React.createElement('span', null, key);
   }
 
