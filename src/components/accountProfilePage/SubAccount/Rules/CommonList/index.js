@@ -6,7 +6,8 @@ function CommonList({data}) {
   const rulesType = {
     'RULE': '自定义预警',
     'SYS_RULE': '系统预警',
-    'BLACKLIST': '系统预警'
+    'BLACKLIST': '系统预警',
+    'SHARED_RULE': '自定义预警',
   };
   const iconShow = (index) => {
     if (index === 0) {
