@@ -10,10 +10,10 @@
   .box-shadow-block;
 
   -webikt-transition: all .3s ease-in-out;
-     -moz-transition: all .3s ease-in-out;
-      -ms-transition: all .3s ease-in-out;
-       -o-transition: all .3s ease-in-out;
-          transition: all .3s ease-in-out;
+  -moz-transition: all .3s ease-in-out;
+  -ms-transition: all .3s ease-in-out;
+  -o-transition: all .3s ease-in-out;
+  transition: all .3s ease-in-out;
 
   &:hover {
     .box-shadow-block-click;
@@ -28,22 +28,21 @@
 
 .baseInfo {
   float: left;
-  width: 40%;
 }
 
 .name {
-  font-size:16px;
+  font-size: 16px;
   line-height: 25px;
   color: @mdc-grey-900;
 
-  letter-spacing:0;
+  letter-spacing: 0;
   cursor: pointer;
 
   -webikt-transition: all .3s ease-in-out;
-     -moz-transition: all .3s ease-in-out;
-      -ms-transition: all .3s ease-in-out;
-       -o-transition: all .3s ease-in-out;
-          transition: all .3s ease-in-out;
+  -moz-transition: all .3s ease-in-out;
+  -ms-transition: all .3s ease-in-out;
+  -o-transition: all .3s ease-in-out;
+  transition: all .3s ease-in-out;
 
   &:hover {
     color: @mdc-blue-400;
@@ -71,14 +70,14 @@
   border-radius: 100px;
 }
 
-.infoDetail{
+.infoDetail {
   margin-top: 10px;
 
   font-size: 14px;
   line-height: 14px;
 }
 
-.detailItem{
+.detailItem {
   display: inline-block;
   margin-right: 40px;
 
@@ -89,24 +88,13 @@
   }
 }
 
-@media (max-width: 1680px) {
-  .detailItem {
-    &:last-child {
-      width: 295px;
-      white-space: nowrap;
-      text-overflow: ellipsis;
-      overflow: hidden;
-    }
-  }
-}
-
-.lastModifiedTs{
+.lastModifiedTs {
   float: right;
   margin-right: 20%;
 
   text-align: center;
 
-  .timeKey{
+  .timeKey {
     margin-top: 14px;
 
     line-height: 13px;
@@ -114,24 +102,22 @@
     color: @black7;
   }
 
-  .timeValue{
+  .timeValue {
     line-height: 16px;
     font-size: 16px;
     color: @mdc-blue-grey-500;
   }
 
   .dateItem {
-    float: left;
-
     margin-right: 80px;
-
+    margin-top: 6px;
     &:last-child {
       margin-right: 0;
     }
   }
 }
 
-.cancelBtn{
+.cancelBtn {
   float: right;
   width: 115px;
   margin-top: 6px;
@@ -152,4 +138,13 @@
 
 .pager {
   margin-bottom: 20px;
+}
+
+.detailItem {
+  line-height: 14px;
+  color: #90a4ae;
+  margin-right: 40px;
+  &:last-child {
+    margin-right: 0;
+  }
 }
