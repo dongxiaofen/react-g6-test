@@ -320,7 +320,9 @@ const config = {
   biddingList: {
     'title': '招投标标题',
     'type': '公告类型',
+    'announceType': '公告类型',
     'publishDate': '公告日期', //PDF里面使用不要注释
+    'publishedDateTime': '公告日期',
     'participator': '投标方',
     'date': '公告日期',
     // 'url': '查看详情',
@@ -434,6 +436,22 @@ const config = {
     'execMoney': '执行标的（元）',
   },
   courtDishonesty: {
+    'publishDate': '发布日期',
+    'companyName': '失信被执行人全称',
+    'relation': '关联关系',
+    'orgCode': '组织机构代码',
+    'frName': '法人',
+    'disruptTypeName': '失信被执行人行为具体情形',
+    'caseCode': '案号',
+    'areaName': '区域',
+    'gistId': '执行依据文号',
+    'regDate': '立案日期',
+    'gistUnit': '作出执行依据单位',
+    'duty': '生效法律文书确定的义务',
+    'performance': '被执行履行情况',
+    'courtName': '执行法院',
+  },
+  dishonestyList: {
     'publishDate': '发布日期',
     'companyName': '失信被执行人全称',
     'relation': '关联关系',
@@ -740,16 +758,16 @@ const config = {
   },
   biddingCount: {
     bidCount: '总投标数',
-    bidMoneyAmount: '总投标金额',
+    bidMoneyAmount: '总投标金额（元）',
     winCount: '总中标数量',
-    winMoneyAmount: '总中标金额',
+    winMoneyAmount: '总中标金额（元）',
   },
   biddingTable: {
     date: '日期',
     bidCount: '投标数',
-    bidMoneyAmount: '投标金额',
+    bidMoneyAmount: '投标金额（元）',
     winCount: '中标数量',
-    winMoneyAmount: '中标金额',
+    winMoneyAmount: '中标金额（元）',
   }
 };
 

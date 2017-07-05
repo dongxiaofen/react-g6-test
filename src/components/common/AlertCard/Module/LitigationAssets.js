@@ -19,7 +19,7 @@ function LitigationAssets({data, module}) {
     },
     'items': data,
     'handleBlock': true,
-    'dict': 'litigationAssets',
+    'dict': 'courtLitigation',
     typeName: `参考价（${data.content.price}万元）`
   };
   return <BaseModule data={moduleData} module={module}/>;

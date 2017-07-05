@@ -1,7 +1,6 @@
 import React from 'react';
 import {observer} from 'mobx-react';
 import {browserHistory} from 'react-router';
-import {Row, Col} from 'components/common/layout';
 import styles from './index.less';
 function ListItem({data}) {
   const viewReport = (companyName) => {
@@ -14,8 +13,8 @@ function ListItem({data}) {
     return Number(items.capital).toFixed(2) + '万';
   };
   return (
-    <Row className={styles.item}>
-      <Col width="8">
+    <div className={styles.item}>
+      <div className={styles.colLeft}>
         <div className={styles.nameWrap}>
           <span
             className={styles.name}
@@ -30,24 +29,22 @@ function ListItem({data}) {
           <span className={styles.detailItem}>{`注册资本：${data.capital ? handleRegCap(data) : '无'}`}</span>
           <span className={styles.detailItem}>{`成立日期：${data.regDt ? data.regDt : '无'}`}</span>
         </div>
-      </Col>
-      <Col width="3">
-        <div className="clearfix">
-          <div className={styles.lastModifiedTs}>
-            <div className={styles.timeValue}>{data.lastModifiedTs}</div>
-            <div className={styles.timeKey}>最近刷新日期</div>
-          </div>
-          <div className={styles.createdTs}>
-            <div className={styles.timeValue}>{data.createdTs}</div>
-            <div className={styles.timeKey}>创建报告日期</div>
-          </div>
-          <div className={styles.anTime}>
-            <div className={styles.timeValue}>{data.analysisCount}</div>
-            <div className={styles.timeKey}>刷新次数</div>
-          </div>
+      </div>
+      <div className={styles.colRight}>
+        <div className={styles.lastModifiedTs}>
+          <div className={styles.timeValue}>{data.lastModifiedTs}</div>
+          <div className={styles.timeKey}>最近刷新日期</div>
         </div>
-      </Col>
-    </Row>
+        <div className={styles.createdTs}>
+          <div className={styles.timeValue}>{data.createdTs}</div>
+          <div className={styles.timeKey}>创建报告日期</div>
+        </div>
+        <div className={styles.anTime}>
+          <div className={styles.timeValue}>{data.analysisCount}</div>
+          <div className={styles.timeKey}>刷新次数</div>
+        </div>
+      </div>
+    </div>
   );
 }
 

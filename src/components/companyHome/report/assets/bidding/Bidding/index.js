@@ -40,8 +40,8 @@ function Bidding({biddingItemList, isLoading, detailModalStore, companyHomeStore
         handleClick: handleClick
       },
       body: [
-        { 'key': 'publishDate', 'width': '12', },
-        { 'key': 'type', 'width': '12' },
+        { 'key': 'publishedDateTime', 'width': '12', },
+        { 'key': 'announceType', 'width': '12' },
         { 'key': 'participator', 'width': '12' },
       ],
       isExpand: false,
@@ -49,7 +49,7 @@ function Bidding({biddingItemList, isLoading, detailModalStore, companyHomeStore
       cData: biddingItemList
     },
     isLoading: isLoading,
-    module: '专利信息',
+    module: '招投标信息',
     error: !biddingItemList || biddingItemList.length === 0
   };
 

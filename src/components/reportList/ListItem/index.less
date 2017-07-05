@@ -81,7 +81,7 @@
 }
 .date {
   float: left;
-  margin-right: 15%;
+  margin-right: 40px;
   text-align: center;
 }
 .lastModifiedTs {
@@ -104,4 +104,21 @@
   line-height: 16px;
   font-size: 16px;
   color: @mdc-blue-grey-500;
+}
+.col {
+  display: inline-block;
+  vertical-align: middle;
+}
+.col:after {
+  display: block;
+  content: '';
+  clear: both;
+}
+.colRight {
+  .col;
+  width: 30%;
+}
+.colLeft {
+  .col;
+  width: 70%;
 }

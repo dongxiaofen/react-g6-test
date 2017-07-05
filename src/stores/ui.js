@@ -11,8 +11,6 @@ import relPerCheckStore from './relPerCheck';
 import taxCheckStore from './taxCheck';
 import bidMarketStore from './bidMarket';
 import assetTransactionStore from './assetTransaction';
-import riskCourtStore from './report/riskCourt';
-import companyHomeStore from './companyHome';
 
 const initPagerParams = {
   basicReportPager: {
@@ -452,117 +450,6 @@ class UiStore {
         params.index = this.uiState.assetLocal.index;
         params.size = this.uiState.assetLocal.size;
         assetTransactionStore.getAssetLocal(params);
-      }
-    );
-    // 判决文书
-    reaction(
-      () => this.uiState.judgeDoc.index,
-      () => {
-        const params = {
-          basicReportId: companyHomeStore.reportInfo.basicReportId,
-          reportId: companyHomeStore.reportInfo.reportId,
-          tabAct: riskCourtStore.courtTabAct,
-          config: {
-            params: {
-              index: this.uiState.judgeDoc.index,
-              size: this.uiState.judgeDoc.size,
-              finance: riskCourtStore.courtCheckGroup.judgeDoc
-            }
-          }
-        };
-        riskCourtStore.getRiskCourt(params);
-      }
-    );
-    // 法院公告
-    reaction(
-      () => this.uiState.courtAnnouncement.index,
-      () => {
-        const params = {
-          basicReportId: companyHomeStore.reportInfo.basicReportId,
-          reportId: companyHomeStore.reportInfo.reportId,
-          tabAct: riskCourtStore.courtTabAct,
-          config: {
-            params: {
-              index: this.uiState.courtAnnouncement.index,
-              size: this.uiState.courtAnnouncement.size,
-              finance: riskCourtStore.courtCheckGroup.courtAnnouncement
-            }
-          }
-        };
-        riskCourtStore.getRiskCourt(params);
-      }
-    );
-    // 开庭公告
-    reaction(
-      () => this.uiState.courtNotice.index,
-      () => {
-        const params = {
-          basicReportId: companyHomeStore.reportInfo.basicReportId,
-          reportId: companyHomeStore.reportInfo.reportId,
-          tabAct: riskCourtStore.courtTabAct,
-          config: {
-            params: {
-              index: this.uiState.courtNotice.index,
-              size: this.uiState.courtNotice.size,
-              finance: riskCourtStore.courtCheckGroup.courtNotice
-            }
-          }
-        };
-        riskCourtStore.getRiskCourt(params);
-      }
-    );
-    // 被执行人信息
-    reaction(
-      () => this.uiState.courtExecuted.index,
-      () => {
-        const params = {
-          basicReportId: companyHomeStore.reportInfo.basicReportId,
-          reportId: companyHomeStore.reportInfo.reportId,
-          tabAct: riskCourtStore.courtTabAct,
-          config: {
-            params: {
-              index: this.uiState.courtExecuted.index,
-              size: this.uiState.courtExecuted.size
-            }
-          }
-        };
-        riskCourtStore.getRiskCourt(params);
-      }
-    );
-    // 失信被执行人信息
-    reaction(
-      () => this.uiState.courtDishonesty.index,
-      () => {
-        const params = {
-          basicReportId: companyHomeStore.reportInfo.basicReportId,
-          reportId: companyHomeStore.reportInfo.reportId,
-          tabAct: riskCourtStore.courtTabAct,
-          config: {
-            params: {
-              index: this.uiState.courtDishonesty.index,
-              size: this.uiState.courtDishonesty.size
-            }
-          }
-        };
-        riskCourtStore.getRiskCourt(params);
-      }
-    );
-    // 涉诉资产
-    reaction(
-      () => this.uiState.courtLitigation.index,
-      () => {
-        const params = {
-          basicReportId: companyHomeStore.reportInfo.basicReportId,
-          reportId: companyHomeStore.reportInfo.reportId,
-          tabAct: riskCourtStore.courtTabAct,
-          config: {
-            params: {
-              index: this.uiState.courtLitigation.index,
-              size: this.uiState.courtLitigation.size
-            }
-          }
-        };
-        riskCourtStore.getRiskCourt(params);
       }
     );
   }

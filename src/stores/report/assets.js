@@ -18,6 +18,14 @@ class AssetsStore {
     biddingItemList: []
   };
 
+  @computed get isErrAnalysis() {
+    const analysis = this.biddingData.analysis;
+    if (analysis.year) {
+      return Object.keys(analysis.year).length === 0;
+    }
+    return true;
+  }
+
   dealWithAnalysisDate(analysisData, active) {
     const keys = Object.keys(analysisData);
     const years = keys.map(key => key.substring(0, 4));
@@ -47,7 +55,7 @@ class AssetsStore {
         const months = ['01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12'];
         return common(years, months);
       case '季度':
-        const quarterMonths = ['01', '04', '10'];
+        const quarterMonths = ['01', '04', '07', '10'];
         return common(years, quarterMonths);
       default:
         break;
@@ -141,8 +149,18 @@ class AssetsStore {
       .then(action( (response) => {
         this.biddingLoading = false;
         this.biddingData.statistic = response.data.statistic;
-        this.biddingData.analysis = { ...response.data };
-        this.biddingData.biddingItemList = response.data.result;
+        this.biddingData.analysis.month = response.data.month;
+        this.biddingData.analysis.quarter = response.data.quarter;
+        this.biddingData.analysis.year = response.data.year;
+        const result = response.data.result;
+        if (result && result.length) {
+          this.biddingData.biddingItemList = result.map(item => {
+            item.publishedDateTime = item.publishedDateTime.slice(0, 10);
+            return item;
+          });
+        } else {
+          this.biddingData.biddingItemList = [];
+        }
       }))
       .catch( action( (err) => {
         this.biddingLoading = false;
