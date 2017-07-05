@@ -367,7 +367,7 @@ const config = {
     'judgeDoc': '判决文书',
     'courtExecution': '被执行人信息',
     'dishonestyList': '失信被执行人信息',
-    'litigationAssets': '涉诉资产（万元）',
+    'litigationAssets': '涉诉资产',
   },
   // 开庭公告
   courtAnnouncement: {
@@ -423,7 +423,7 @@ const config = {
     'judgeDoc': '判决文书',
     'courtExecution': '被执行人信息',
     'dishonestyList': '失信被执行人信息',
-    'litigationAssets': '涉诉资产（万元）',
+    'litigationAssets': '涉诉资产',
     'blackList': '失信信息'
   },
   courtExecuted: {
@@ -474,7 +474,7 @@ const config = {
     'location': '所在地',
     'court': '委托法院',
     'status': '状态',
-    'price': '参考价',
+    'price': '参考价（万元）',
     'result': '成交结果',
     'contactPerson': '联系人',
     'contactPhone': '联系电话',
