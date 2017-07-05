@@ -70,7 +70,7 @@ export default class DetailModal extends Component {
       : `${styles.contentLayer}`;
     return (
       <div className={modalBox}>
-        <div className={styles.bgClick}></div>
+        <div className={styles.bgClick} onClick={this.props.closeAction}></div>
         <div ref="detail-modal" className={contentBox}>
           <div ref="detail-modal-title" className="clearfix">
             <div className={`clearfix ${styles.title}`}>
