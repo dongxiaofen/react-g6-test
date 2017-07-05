@@ -70,7 +70,7 @@ function Content({alertAnalysisStore, monitorAlertStore, routing}) {
         typeId = 13;
       } else if (ruleId >= 32 && ruleId <= 50) {
         typeId = 32;
-      } else if (ruleId >= 84 && ruleId <= 85) {
+      } else if (ruleId >= 84 && ruleId <= 86) {
         typeId = 84;
       } else {
         typeId = ruleId;

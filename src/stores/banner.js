@@ -63,9 +63,9 @@ class BannerStore {
     levelTwo: {
       'SUMMERY': [],
       'CORP': [
-        {label: '照面信息', value: 'CORP_BASIC', checked: false},
-        {label: '工商变更', value: 'CORP_ALTER', checked: false},
-        {label: '企业年报', value: 'CORP_YEAR_REPORT', checked: false},
+        {label: '照面信息', value: 'CORP_BASIC', checked: false, type: 'basicReport'},
+        {label: '工商变更', value: 'CORP_ALTER', checked: false, type: 'basicReport'},
+        {label: '企业年报', value: 'CORP_YEAR_REPORT', checked: false, type: 'basicReport'},
       ],
       'INV_POS': [
         {label: '法人投资任职', value: 'INV_POS_FR', checked: false, type: 'basicReport'},
@@ -73,38 +73,38 @@ class BannerStore {
         {label: '董监高投资任职', value: 'INV_POS_MANAGEMENT', checked: false, type: 'report'},
       ],
       'STOCK': [
-        {label: '公司概况', value: 'STOCK_INFO', checked: false},
-        {label: '公司公告', value: 'STOCK_ANNOUNCEMENT', checked: false},
+        {label: '公司概况', value: 'STOCK_INFO', checked: false, type: 'basicReport'},
+        {label: '公司公告', value: 'STOCK_ANNOUNCEMENT', checked: false, type: 'basicReport'},
       ],
       'NEWS': [],
       'OPERATION': [
-        {label: '商标', value: 'OPERATION_TRADEMARK', checked: false},
-        {label: '专利', value: 'OPERATION_PATENT', checked: false},
-        {label: '招投标', value: 'OPERATION_BIDDING', checked: false},
+        {label: '商标', value: 'OPERATION_TRADEMARK', checked: false, type: 'basicReport'},
+        {label: '专利', value: 'OPERATION_PATENT', checked: false, type: 'basicReport'},
+        {label: '招投标', value: 'OPERATION_BIDDING', checked: false, type: 'basicReport'},
       ],
       'TEAM': [
-        {label: '招聘/员工背景', value: 'TEAM_RECRUITMENT_RESUME', checked: false},
-        {label: '团队发展趋势', value: 'TEAM_ANALYSIS', checked: false},
+        {label: '招聘/员工背景', value: 'TEAM_RECRUITMENT_RESUME', checked: false, type: 'basicReport'},
+        {label: '团队发展趋势', value: 'TEAM_ANALYSIS', checked: false, type: 'basicReport'},
       ],
       'RISK_TAXATION': [],
       'RISK': [
-        {label: '判决文书', value: 'RISK_JUDGEMENT', checked: false},
-        {label: '法院公告', value: 'RISK_ANNOUNCEMENT', checked: false},
-        {label: '开庭公告', value: 'RISK_NOTICE', checked: false},
-        {label: '被执行人信息', value: 'RISK_EXECUTE', checked: false},
-        {label: '失信被执行人信息', value: 'RISK_DISHONESTY', checked: false},
-        {label: '涉诉资产', value: 'RISK_LITIGATION', checked: false},
+        {label: '判决文书', value: 'RISK_JUDGEMENT', checked: false, type: 'basicReport'},
+        {label: '法院公告', value: 'RISK_ANNOUNCEMENT', checked: false, type: 'basicReport'},
+        {label: '开庭公告', value: 'RISK_NOTICE', checked: false, type: 'basicReport'},
+        {label: '被执行人信息', value: 'RISK_EXECUTE', checked: false, type: 'basicReport'},
+        {label: '失信被执行人信息', value: 'RISK_DISHONESTY', checked: false, type: 'basicReport'},
+        {label: '涉诉资产', value: 'RISK_LITIGATION', checked: false, type: 'basicReport'},
       ],
       'BUSINESS': [
-        {label: '经营异常', value: 'RISK_ABNORMAL', checked: false},
-        {label: '抽查检查', value: 'RISK_CHECK', checked: false},
-        {label: '违法记录', value: 'RISK_ILLEGAL', checked: false},
+        {label: '经营异常', value: 'RISK_ABNORMAL', checked: false, type: 'basicReport'},
+        {label: '抽查检查', value: 'RISK_CHECK', checked: false, type: 'basicReport'},
+        {label: '违法记录', value: 'RISK_ILLEGAL', checked: false, type: 'basicReport'},
       ],
       'NETWORK': [
-        {label: '关系网络图', value: 'NETWORK_RELEVANCE', checked: false},
+        {label: '关系网络图', value: 'NETWORK_RELEVANCE', checked: false, type: 'basicReport'},
       ],
       'R_MODLE': [
-        {label: '风险链条', value: 'NETWORK_BLACKLIST', checked: false},
+        {label: '风险链条', value: 'NETWORK_BLACKLIST', checked: false, type: 'basicReport'},
       ],
       'PLEDGE': [
         // { label: '股权冻结', value: 'PLEDGE_EQUITY_SHARE', checked: false },
@@ -118,10 +118,10 @@ class BannerStore {
         // { label: '抵押变更', value: 'RISK_JUDGEMENT', checked: false },
       ],
       'ANALYSREPORT': [
-        {label: '多维综合分析', value: 'SCORE', checked: false},
-        {label: '盈利能力分析', value: 'PROFIT', checked: false},
-        {label: '营运能力分析', value: 'OPERATION', checked: false},
-        {label: '成长能力分析', value: 'GROWING', checked: false},
+        {label: '多维综合分析', value: 'SCORE', checked: false, type: 'loan'},
+        {label: '盈利能力分析', value: 'PROFIT', checked: false, type: 'loan'},
+        {label: '营运能力分析', value: 'OPERATION', checked: false, type: 'loan'},
+        {label: '成长能力分析', value: 'GROWING', checked: false, type: 'loan'},
       ]
     },
   };
@@ -665,9 +665,9 @@ class BannerStore {
       levelTwo: {
         'SUMMERY': [],
         'CORP': [
-          {label: '照面信息', value: 'CORP_BASIC', checked: false},
-          {label: '工商变更', value: 'CORP_ALTER', checked: false},
-          {label: '企业年报', value: 'CORP_YEAR_REPORT', checked: false},
+          {label: '照面信息', value: 'CORP_BASIC', checked: false, type: 'basicReport'},
+          {label: '工商变更', value: 'CORP_ALTER', checked: false, type: 'basicReport'},
+          {label: '企业年报', value: 'CORP_YEAR_REPORT', checked: false, type: 'basicReport'},
         ],
         'INV_POS': [
           {label: '法人投资任职', value: 'INV_POS_FR', checked: false, type: 'basicReport'},
@@ -675,38 +675,38 @@ class BannerStore {
           {label: '董监高投资任职', value: 'INV_POS_MANAGEMENT', checked: false, type: 'report'},
         ],
         'STOCK': [
-          {label: '公司概况', value: 'STOCK_INFO', checked: false},
-          {label: '公司公告', value: 'STOCK_ANNOUNCEMENT', checked: false},
+          {label: '公司概况', value: 'STOCK_INFO', checked: false, type: 'basicReport'},
+          {label: '公司公告', value: 'STOCK_ANNOUNCEMENT', checked: false, type: 'basicReport'},
         ],
         'NEWS': [],
         'OPERATION': [
-          {label: '商标', value: 'OPERATION_TRADEMARK', checked: false},
-          {label: '专利', value: 'OPERATION_PATENT', checked: false},
-          {label: '招投标', value: 'OPERATION_BIDDING', checked: false},
+          {label: '商标', value: 'OPERATION_TRADEMARK', checked: false, type: 'basicReport'},
+          {label: '专利', value: 'OPERATION_PATENT', checked: false, type: 'basicReport'},
+          {label: '招投标', value: 'OPERATION_BIDDING', checked: false, type: 'basicReport'},
         ],
         'TEAM': [
-          {label: '招聘/员工背景', value: 'TEAM_RECRUITMENT_RESUME', checked: false},
-          {label: '团队发展趋势', value: 'TEAM_ANALYSIS', checked: false},
+          {label: '招聘/员工背景', value: 'TEAM_RECRUITMENT_RESUME', checked: false, type: 'basicReport'},
+          {label: '团队发展趋势', value: 'TEAM_ANALYSIS', checked: false, type: 'basicReport'},
         ],
         'RISK_TAXATION': [],
         'RISK': [
-          {label: '判决文书', value: 'RISK_JUDGEMENT', checked: false},
-          {label: '法院公告', value: 'RISK_ANNOUNCEMENT', checked: false},
-          {label: '开庭公告', value: 'RISK_NOTICE', checked: false},
-          {label: '被执行人信息', value: 'RISK_EXECUTE', checked: false},
-          {label: '失信被执行人信息', value: 'RISK_DISHONESTY', checked: false},
-          {label: '涉诉资产', value: 'RISK_LITIGATION', checked: false},
+          {label: '判决文书', value: 'RISK_JUDGEMENT', checked: false, type: 'basicReport'},
+          {label: '法院公告', value: 'RISK_ANNOUNCEMENT', checked: false, type: 'basicReport'},
+          {label: '开庭公告', value: 'RISK_NOTICE', checked: false, type: 'basicReport'},
+          {label: '被执行人信息', value: 'RISK_EXECUTE', checked: false, type: 'basicReport'},
+          {label: '失信被执行人信息', value: 'RISK_DISHONESTY', checked: false, type: 'basicReport'},
+          {label: '涉诉资产', value: 'RISK_LITIGATION', checked: false, type: 'basicReport'},
         ],
         'BUSINESS': [
-          {label: '经营异常', value: 'RISK_ABNORMAL', checked: false},
-          {label: '抽查检查', value: 'RISK_CHECK', checked: false},
-          {label: '违法记录', value: 'RISK_ILLEGAL', checked: false},
+          {label: '经营异常', value: 'RISK_ABNORMAL', checked: false, type: 'basicReport'},
+          {label: '抽查检查', value: 'RISK_CHECK', checked: false, type: 'basicReport'},
+          {label: '违法记录', value: 'RISK_ILLEGAL', checked: false, type: 'basicReport'},
         ],
         'NETWORK': [
-          {label: '关系网络图', value: 'NETWORK_RELEVANCE', checked: false},
+          {label: '关系网络图', value: 'NETWORK_RELEVANCE', checked: false, type: 'basicReport'},
         ],
         'R_MODLE': [
-          {label: '风险链条', value: 'NETWORK_BLACKLIST', checked: false},
+          {label: '风险链条', value: 'NETWORK_BLACKLIST', checked: false, type: 'basicReport'},
         ],
         'PLEDGE': [
           // { label: '股权冻结', value: 'PLEDGE_EQUITY_SHARE', checked: false },
@@ -720,10 +720,10 @@ class BannerStore {
           // { label: '抵押变更', value: 'RISK_JUDGEMENT', checked: false },
         ],
         'ANALYSREPORT': [
-          {label: '多维综合分析', value: 'SCORE', checked: false},
-          {label: '盈利能力分析', value: 'PROFIT', checked: false},
-          {label: '营运能力分析', value: 'OPERATION', checked: false},
-          {label: '成长能力分析', value: 'GROWING', checked: false},
+          {label: '多维综合分析', value: 'SCORE', checked: false, type: 'loan'},
+          {label: '盈利能力分析', value: 'PROFIT', checked: false, type: 'loan'},
+          {label: '营运能力分析', value: 'OPERATION', checked: false, type: 'loan'},
+          {label: '成长能力分析', value: 'GROWING', checked: false, type: 'loan'},
         ]
       },
     };

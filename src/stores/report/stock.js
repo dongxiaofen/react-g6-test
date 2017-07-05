@@ -32,7 +32,14 @@ class StockStore {
   @action.bound getCompany(params) {
     companyHomeApi.getReportModule('stock/company', params)
       .then(action('get stock company', (resp) => {
-        this.brief = resp.data.brief;
+        if (Object.keys(resp.data.brief).length) {
+          const brief = resp.data.brief;
+          brief.issued_shares = brief.issued_shares ? (brief.issued_shares / 10000).toFixed(2) : '';
+          brief.reg_cap = brief.reg_cap ? (brief.reg_cap / 10000).toFixed(2) : '';
+          this.brief = brief;
+        } else {
+          this.brief = {};
+        }
         this.shareHolder = resp.data.shareHolder;
         this.circulateShareHolder = resp.data.circulateShareHolder;
         this.management = resp.data.management;
