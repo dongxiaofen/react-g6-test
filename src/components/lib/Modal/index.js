@@ -137,7 +137,7 @@ export default class Modal extends Component {
     // 是否是自定义弹框
     if (this.props.isCustomize) {
       return (
-        <div className={modalBoxClassName}>
+        <div className={modalBoxClassName} onClick={this.closeAction}>
           <div className={`${contentBoxClassName}`} style={boxStyle}>
             <div className={styles.closeBtn} onClick={this.closeAction}></div>
             <div className="clearfix">{this.props.children}</div>
@@ -146,7 +146,7 @@ export default class Modal extends Component {
       );
     }
     return (
-      <div className={modalBoxClassName}>
+      <div className={modalBoxClassName} onClick={this.closeAction}>
         <div className={contentBoxClassName} style={boxStyle}>
           <div className={styles.closeBtn} onClick={this.closeAction}></div>
           {
