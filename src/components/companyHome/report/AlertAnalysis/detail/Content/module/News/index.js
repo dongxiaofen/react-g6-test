@@ -2,10 +2,12 @@ import React, {PropTypes} from 'react';
 import { observer } from 'mobx-react';
 import SimpleCard from 'components/common/report/alertAnalysis/SimpleCard';
 function News({data, dataStore, ruleType}) {
-  let itemData = data.detail[0];
+  let itemData = null;
   if (ruleType !== 84) {
     data.content.alterDt = data.alterDt;
     itemData = data.content;
+  } else {
+    itemData = data.detail[0];
   }
   const meta = {
     dict: 'news',
