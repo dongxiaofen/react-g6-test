@@ -103,6 +103,11 @@ const initPagerParams = {
     size: 10,
     show: observable.map({})
   },
+  taxInfoCheckPager: {
+    index: 1,
+    size: 10,
+    show: observable.map({})
+  },
   shareholder: {
     index: 1,
     size: 10
