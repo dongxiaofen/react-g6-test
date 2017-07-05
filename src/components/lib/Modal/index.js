@@ -70,7 +70,6 @@ export default class Modal extends Component {
       this.props.closeAction();
     }
   };
-
   render() {
     // 背景是否显示
     const boxStyle = Object.assign({width: this.props.width}, mobx.toJS(this.props.boxStyle));
