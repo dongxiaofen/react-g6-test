@@ -12,12 +12,17 @@ function RelationTable({networkStore}) {
       case '对外投资':
         const invCurrency = item.invCurrency === '' ? '' : `（${item.invCurrency}）`;
         return `投资金额${invCurrency}：${item.invConum}（${item.invRatio}%）`;
+      case '共同原告':
+      case '共同被告':
+      case '诉讼对立方':
+        return item.caseReason.toString() || '--';
       default:
         return '--';
     }
   };
   const createTabel = (moduleKey)=>{
     targetComp['股东'] = targetComp['企业股东'].concat(targetComp['个人股东']);
+    console.log(moduleKey, targetComp[moduleKey], '=====');
     if (targetComp[moduleKey].length < 1) {
       return null;
     }
@@ -57,6 +62,9 @@ function RelationTable({networkStore}) {
         {createTabel('股东')}
         {createTabel('对外投资')}
         {createTabel('历史关联')}
+        {createTabel('共同原告')}
+        {createTabel('共同被告')}
+        {createTabel('诉讼对立方')}
       </div>
     </div>
   );
