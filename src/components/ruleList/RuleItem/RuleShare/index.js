@@ -9,12 +9,13 @@ function RuleShare({data, changeRuleShare, setItemData, modalStore}) {
       return true;
     }
     setItemData(data);
-    const text = data.rule.share ? '关闭后该规则将不分享' : '开启后该规则将分享';
+    const text = data.rule.share ? '关闭后该规则不会被分享给下级账号' : '开启后该规则会被分享给下级账号';
     // 打开model
     const args = {
       title: text,
       isSingleBtn: false,
       isNeedBtn: true,
+      width: '470px',
       confirmLoading: false,
       // pointText: '创建报告即视为同意',
       confirmText: '确定',
