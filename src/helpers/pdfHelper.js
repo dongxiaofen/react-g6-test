@@ -95,7 +95,7 @@ const uploadFile = (uptoken, key) => {
     if(!err) {
       // console.log(ret.hash, ret.key, ret.persistentId, '=======uploadFile result======');
       // 上传成功，获取下载连接
-      _writeToLog(key, `{"status": "creating", "process": 5, "download": ""}`);
+      _writeToLog(key, `creating,5,`);
       getDownLoadUrl(key);
       // 上传成功，　删除当前生成的pdf和html文件
       deleteFile(path.join(PDF_DIRNAME, `${key}.pdf`));
@@ -109,7 +109,7 @@ const uploadFile = (uptoken, key) => {
 }
 
 export const UpFileToQiniu = (fileName) => {
-  _writeToLog(fileName, `{"status": "creating", "process": 4, "downDload": ""}`);
+  _writeToLog(fileName, `creating,4,`);
   qiniu.conf.ACCESS_KEY = Access_Key;
   qiniu.conf.SECRET_KEY = Secret_Key;
   const token = uptoken(Bucket_Name, `${fileName}.pdf`);
@@ -122,18 +122,24 @@ const getDownLoadUrl = (fileName) => {
   const url = `${DOMAIN}${fileName}.pdf`;
   const policy = new qiniu.rs.GetPolicy();
   const downloadUrl = policy.makeRequest(url);
-  _writeToLog(fileName, `{"status": "sucess", "process": 6, "download": "${downloadUrl}"}`);
+  _writeToLog(fileName, `sucess,6,${downloadUrl}`);
 }
 
 export const checkPDF = (req, res) => {
   const {companyName, stamp, username} = req.query;
   const statusFile = path.join(PDF_DIRNAME, `${username}${stamp}.log`);
+  const result = fs.readFileSync(statusFile, 'utf-8');
   fs.exists(statusFile, (exists) => {
     if (exists) {
-      const restult = JSON.parse(fs.readFileSync(statusFile, 'utf-8'));
+      const result = fs.readFileSync(statusFile, 'utf-8');
+      const resultObj = {};
+      const resultArray = result.split(',');
+      resultObj.status = resultArray[0];
+      resultObj.process = resultArray[1];
+      resultObj.download = resultArray[2];
       res.status = 200;
-      res.json(restult);
-      if (restult.status === 'sucess') {
+      res.json(resultObj);
+      if (resultObj.status === 'sucess') {
         deleteFile(statusFile);
       }
     } else {
