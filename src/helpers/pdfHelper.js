@@ -87,33 +87,33 @@ const uptoken = (Bucket_Name, fileName) => {
   return putPolicy.token();
 };
 
-const uploadFile = (uptoken, key) => {
-  const fileName = `${key}.pdf`;
-  const localFile = path.join(PDF_DIRNAME, fileName);
+const uploadFile = (uptoken, key, companyName) => {
+  const fileName = `${companyName}.pdf`;
+  const localFile = path.join(PDF_DIRNAME, `${key}.pdf`);
   const extra = new qiniu.io.PutExtra();
   qiniu.io.putFile(uptoken, fileName, localFile, extra, function(err, ret) {
     if(!err) {
       // console.log(ret.hash, ret.key, ret.persistentId, '=======uploadFile result======');
       // 上传成功，获取下载连接
-      _writeToLog(key, `{"status": "creating", "process": 5, "download": ""}`);
-      getDownLoadUrl(key);
+      _writeToLog(companyName, `{"status": "creating", "process": 5, "download": ""}`);
+      getDownLoadUrl(companyName);
       // 上传成功，　删除当前生成的pdf和html文件
       deleteFile(path.join(PDF_DIRNAME, `${key}.pdf`));
       deleteFile(path.join(PDF_DIRNAME, `${key}.html`));
       // 记录文件名到pdfs.log中
-      recordToPdfs(`${key}.pdf,`);
+      recordToPdfs(`${companyName}.pdf,`);
     } else {
       console.log(err, '=======uploadFile error======');
     }
   });
 }
 
-export const UpFileToQiniu = (fileName) => {
-  _writeToLog(fileName, `{"status": "creating", "process": 4, "downDload": ""}`);
+export const UpFileToQiniu = (fileName, companyName, timestamp) => {
+  _writeToLog(companyName, `{"status": "creating", "process": 4, "downDload": ""}`);
   qiniu.conf.ACCESS_KEY = Access_Key;
   qiniu.conf.SECRET_KEY = Secret_Key;
-  const token = uptoken(Bucket_Name, `${fileName}.pdf`);
-  uploadFile(token, fileName);
+  const token = uptoken(Bucket_Name, `${companyName}.pdf`);
+  uploadFile(token, fileName, companyName);
 }
 
 const getDownLoadUrl = (fileName) => {
