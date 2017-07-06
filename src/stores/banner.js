@@ -536,7 +536,7 @@ class BannerStore {
     // modalStore.visible = false;
     // modalStore.isCustomize = false;
     // 关闭PDF报告下载选择模块弹窗
-    // modalStore.resetStore();
+    modalStore.resetStore();
   }
 
   // 添加/取消收藏
