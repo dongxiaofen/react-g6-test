@@ -14,11 +14,11 @@ function BidMarketReportTittle({assetsStore}) {
       </div>
       <div className={styles['report-block-item']}>
         <span className={styles['report-block-key']}>公告日期：</span>
-        <span className={styles['report-block-value']}>{titleData.publishDate ? titleData.publishDate : '无'}</span>
+        <span className={styles['report-block-value']}>{titleData.publishedDateTime ? titleData.publishedDateTime : '无'}</span>
       </div>
       <div className={styles['report-block-item']}>
         <span className={styles['report-block-key']}>公告类型：</span>
-        <span className={styles['report-block-value']}>{titleData.type ? titleData.type : '无'}</span>
+        <span className={styles['report-block-value']}>{titleData.announceType ? titleData.announceType : '无'}</span>
       </div>
       <div className={`${styles['report-block-item']} ${styles['report-block-bid']}`}>
         <span className={styles['report-block-key']}>投标方：</span>
