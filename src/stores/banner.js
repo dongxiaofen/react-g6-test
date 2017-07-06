@@ -55,7 +55,7 @@ class BannerStore {
       {label: '法务信息', value: 'RISK', checked: false, type: 'basicReport'},
       {label: '行政信息', value: 'BUSINESS', checked: false, type: 'basicReport'},
       // { label: '股权相关', value: 'PLEDGE', checked: false, type: 'basicReport' },
-      {label: '关联网络', value: 'NETWORK', checked: false, type: 'report'},
+      {label: '关联网络', value: 'NETWORK', checked: false, type: 'basicReport'},
       {label: '风险传导模型', value: 'R_MODLE', checked: false, type: 'report'},
       {label: '抵质押信息', value: 'MORTGAGE', checked: false, type: 'basicReport'},
       {label: '分析报告', value: 'ANALYSREPORT', checked: false, type: 'loan'},
@@ -104,7 +104,7 @@ class BannerStore {
         {label: '关系网络图', value: 'NETWORK_RELEVANCE', checked: false, type: 'basicReport'},
       ],
       'R_MODLE': [
-        {label: '风险链条', value: 'NETWORK_BLACKLIST', checked: false, type: 'basicReport'},
+        {label: '风险链条', value: 'NETWORK_BLACKLIST', checked: false, type: 'report'},
       ],
       'PLEDGE': [
         // { label: '股权冻结', value: 'PLEDGE_EQUITY_SHARE', checked: false },
@@ -659,7 +659,7 @@ class BannerStore {
         {label: '法务信息', value: 'RISK', checked: false, type: 'basicReport'},
         {label: '行政信息', value: 'BUSINESS', checked: false, type: 'basicReport'},
         // { label: '股权相关', value: 'PLEDGE', checked: false, type: 'basicReport' },
-        {label: '关联网络', value: 'NETWORK', checked: false, type: 'report'},
+        {label: '关联网络', value: 'NETWORK', checked: false, type: 'basicReport'},
         {label: '风险传导模型', value: 'R_MODLE', checked: false, type: 'report'},
         {label: '抵质押信息', value: 'MORTGAGE', checked: false, type: 'basicReport'},
         {label: '分析报告', value: 'ANALYSREPORT', checked: false, type: 'loan'},
@@ -708,7 +708,7 @@ class BannerStore {
           {label: '关系网络图', value: 'NETWORK_RELEVANCE', checked: false, type: 'basicReport'},
         ],
         'R_MODLE': [
-          {label: '风险链条', value: 'NETWORK_BLACKLIST', checked: false, type: 'basicReport'},
+          {label: '风险链条', value: 'NETWORK_BLACKLIST', checked: false, type: 'report'},
         ],
         'PLEDGE': [
           // { label: '股权冻结', value: 'PLEDGE_EQUITY_SHARE', checked: false },
