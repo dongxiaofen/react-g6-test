@@ -118,6 +118,9 @@ app.get('/front/refresh/assets', function(req, res) {
   const assetsPath = path.resolve(__dirname, '../static/dist');
   const reg = /^(?:main-)(.*)(?:\.js)$/;
   fs.readdir(assetsPath, function(err, file) {
+    if (!file) {
+      return res.status(404).send({message: 'file not fount'});
+    }
     const mainFile = file.filter(name => reg.test(name))[0];
     if (mainFile) {
       const assetsHash = mainFile.match(reg)[1];
