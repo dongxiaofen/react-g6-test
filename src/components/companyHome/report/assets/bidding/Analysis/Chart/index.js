@@ -154,25 +154,25 @@ function Chart({ assetsStore }) {
         name: '投标金额',
         type: 'bar',
         barMaxWidth: barWidth,
-        data: biddingAnalysis.data.winMoneyAmount
+        data: biddingAnalysis.data.bidMoneyAmount
       },
       {
         name: '中标金额',
         type: 'bar',
         barMaxWidth: barWidth,
-        data: biddingAnalysis.data.bidMoneyAmount
+        data: biddingAnalysis.data.winMoneyAmount
       },
       {
         name: '投标次数',
         type: 'line',
         yAxisIndex: 1,
-        data: biddingAnalysis.data.winCount
+        data: biddingAnalysis.data.bidCount
       },
       {
         name: '中标次数',
         type: 'line',
         yAxisIndex: 1,
-        data: biddingAnalysis.data.bidCount
+        data: biddingAnalysis.data.winCount
       }
     ]
   };
