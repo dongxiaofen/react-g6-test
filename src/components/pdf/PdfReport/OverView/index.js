@@ -263,7 +263,7 @@ function OverView({ pdfStore, clientStore }) {
       <hr className={styles.hrhr} />
       <Summary {...pledgeEquity} />
       {
-        pdfStore.reportType === '高级报告' ?
+        pdfStore.reportType === '高级报告' || pdfStore.reportType === '基础报告' ?
         <div>
           <SecondTitle module="关联网络" />
           <hr className={styles.hrhr} />
