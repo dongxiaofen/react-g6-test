@@ -1,6 +1,7 @@
 import React, {PropTypes} from 'react';
 import { observer, inject } from 'mobx-react';
 import PdfTable from 'components/common/pdf/PdfTable';
+import SecondTitle from 'components/common/pdf/SecondTitle';
 
 function BiddingTable({pdfStore}) {
   const moduleData = pdfStore.bidding.month;
@@ -27,7 +28,7 @@ function BiddingTable({pdfStore}) {
     };
     return (
       <div>
-        <div style={{height: '30px'}}></div>
+        <SecondTitle module="招投标分析图"/>
         <PdfTable {...data} />
       </div>
     );
