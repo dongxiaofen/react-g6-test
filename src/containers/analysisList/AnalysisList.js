@@ -49,10 +49,8 @@ export default class AnalysisList extends Component {
   changeTabs = (value) => {
     this.props.routing.push(`/analysisList?activeKey=${value}`);
   };
-  numWithLoading = (key, value) => {
-    if (value || value === 0) return `${key}（${value}）`;
-    const loading = React.createElement('i', {className: 'fa fa-spin fa-spinner'});
-    return React.createElement('span', null, key, '（', loading, '）');
+  numWithLoading = (key) => {
+    return React.createElement('span', null, key);
   };
 
   inputChange(evt) {
@@ -68,7 +66,6 @@ export default class AnalysisList extends Component {
 
   render() {
     const activeKey = this.props.analysisListStore.activeKey;
-    const {scoreNum, profitNum, operationNum, growingNum} = this.props.analysisListStore.listCount;
     return (
       <Container className={styles.wrap}>
         <Title {...this.props} />
@@ -77,16 +74,16 @@ export default class AnalysisList extends Component {
           handleSearch={this.handleSearch}
           inputValue={this.props.analysisListStore.searchInput}/>
         <Tabs activeKey={activeKey} onChange={this.changeTabs}>
-          <TabPane tab={this.numWithLoading('多维综合评价', scoreNum)} key="multi">
+          <TabPane tab={this.numWithLoading('多维综合评价')} key="multi">
             <MultiList {...this.props} />
           </TabPane>
-          <TabPane tab={this.numWithLoading('盈利能力分析', profitNum)} key="profit">
+          <TabPane tab={this.numWithLoading('盈利能力分析')} key="profit">
             <ProfitList {...this.props} />
           </TabPane>
-          <TabPane tab={this.numWithLoading('营运能力分析', operationNum)} key="operate">
+          <TabPane tab={this.numWithLoading('营运能力分析')} key="operate">
             <OperateList {...this.props} />
           </TabPane>
-          <TabPane tab={this.numWithLoading('成长能力分析', growingNum)} key="develop">
+          <TabPane tab={this.numWithLoading('成长能力分析')} key="develop">
             <DevelopList {...this.props} />
           </TabPane>
           <TabPane tab="偿债能力分析" key="debt">

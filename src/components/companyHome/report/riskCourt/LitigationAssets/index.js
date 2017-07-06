@@ -3,12 +3,15 @@ import { observer } from 'mobx-react';
 import {CardTable } from 'components/common/report';
 
 function LitigationAssets({litigationAssets, regTime, loading}) {
+  const priceHandle = (value) => {
+    return value ? value + '万元' : '--';
+  };
   const data = {
     meta: {
       body: [
         {'key': 'title', 'width': '12'},
         {'key': 'releaseTime', 'width': '6', 'modifyText': regTime},
-        {'key': 'price', 'width': '6'},
+        {'key': 'price', 'width': '6', 'modifyText': priceHandle},
         {'key': 'category', 'width': '6', hide: true},
         {'key': 'status', 'width': '6', hide: true},
         {'key': 'court', 'width': '12', hide: true},
