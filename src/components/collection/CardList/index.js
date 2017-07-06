@@ -1,16 +1,21 @@
-import React, { PropTypes } from 'react';
-import { observer } from 'mobx-react';
+import React, {PropTypes} from 'react';
+import {observer} from 'mobx-react';
 
 import styles from './index.less';
 import Pager from 'components/common/Pager';
 import LinkJump from 'components/common/LinkJump';
-import { loadingComp } from 'components/hoc';
+import {loadingComp} from 'components/hoc';
 
-function CardList({ collectionStore, uiStore }) {
+function CardList({collectionStore, uiStore}) {
   const cancelCollection = (companyName) => {
     collectionStore.cancelCollection(companyName);
   };
-
+  const handleRegCap = (items) => {
+    if (items.capital === '0.0' || items.capital === '0' || items.capital === '' || items.capital === undefined || items.capital < 0.005) {
+      return '--';
+    }
+    return Number(items.capital).toFixed(2) + '万';
+  };
   const collectionList = () => {
     return collectionStore.resultContent.map((item, key) => {
       return (
@@ -20,12 +25,10 @@ function CardList({ collectionStore, uiStore }) {
               <LinkJump name={item.companyName} label="公司名称" className={styles.name}>{item.companyName}</LinkJump>
             </div>
             <div className={styles.infoDetail}>
-              <span className={styles.detailItem}>{`法人：${item.frName ? item.frName : '无'}`}</span>
-              <span
-                className={styles.detailItem}
-                title={item.address ? item.address : '无'}>
-                {`地址：${item.address ? item.address : '无'}`}
-              </span>
+              <span className={styles.detailItem}>{`企业状态：${item.companyStatus ? item.companyStatus : '无'}`}</span>
+              <span className={styles.detailItem}>{`法人代表：${item.frName ? item.frName : '无'}`}</span>
+              <span className={styles.detailItem}>{`注册资本：${item.capital ? handleRegCap(item) : '无'}`}</span>
+              <span className={styles.detailItem}>{`成立日期：${item.regDt ? item.regDt : '无'}`}</span>
             </div>
           </div>
           <div className={styles.cancelBtn}
@@ -52,7 +55,7 @@ function CardList({ collectionStore, uiStore }) {
           tData={collectionStore.resultContent}
           module="collection"
           uiStore={uiStore}
-          type="large" />
+          type="large"/>
       </div>
     </div>
   );

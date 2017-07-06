@@ -46,6 +46,11 @@ export default class NavAction extends Component {
       searchCompanyStore.searchChange(evt);
       searchCompanyStore.getCompanyList();
       browserHistory.push(`/searchCompany`);
+      // 还原搜索框
+      this.setState({
+        isShowShearchInput: false,
+        inputValue: '',
+      });
     }
   };
 
