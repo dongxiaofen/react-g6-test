@@ -101,7 +101,7 @@ const html2Pdf = (htmlName, pdfName, callBack) => {
   const convert = cp.spawn("sh", ['./src/helpers/convert.sh', PDF_DIRNAME + htmlName, PDF_DIRNAME + pdfName]);
   convert.stdout.on('end', function () {
     console.log('stdout: pdf转换成功');
-    // callBack();
+    callBack();
   });
 }
 app.use(compression());
