@@ -40,14 +40,14 @@ function ChangeTrendTable({ mutual }) {
           <li>企业变化量</li>
         </ul>
         <ul className={styles.tableItem}>
-          <li>{moment(beforeData.date).format('YYYY年MM月DD日')}</li>
+          <li>{moment(beforeData.date).format('YYYY-MM-DD')}</li>
           <li>{beforeData.eventCount}</li>
           {isAddSub(beforeData.eventChange)}
           <li>{beforeData.companyCount}</li>
           {isAddSub(beforeData.companyChange)}
         </ul>
         <ul className={styles.tableItem}>
-          <li>{moment(nowData.date).format('YYYY年MM月DD日')}</li>
+          <li>{moment(nowData.date).format('YYYY-MM-DD')}</li>
           <li>{nowData.eventCount}</li>
           {isAddSub(nowData.eventChange)}
           <li>{nowData.companyCount}</li>
