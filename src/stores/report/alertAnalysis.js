@@ -128,6 +128,8 @@ class AlertAnalysisStore {
     companyHomeApi.getAlertNewsReport(companyId, ruleId, { scId })
     .then(action('get news', resp => {
       this.detailData.html = resp.data.html;
+      detailData.detail[0].title = resp.data.title;
+      detailData.detail[0].alterDt = resp.data.createTs;
     }))
     .catch(action('get news error', (error)=>{
       console.log('get news', error);
