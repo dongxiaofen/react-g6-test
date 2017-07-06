@@ -26,14 +26,23 @@ function ShareHolder({ moduleData }) {
     });
     return newArr;
   };
+  const getUnit = (value, items) => {
+    if (value && value !== '无') {
+      if (items.regCapCur !== '') {
+        return `${value}万（${items.regCapCur}）`;
+      }
+      return `${value}万元`;
+    }
+    return value;
+  };
   const data = {
     dataConfig: [
       {'key': 'shareholderName', 'width': '2'},
-      {'key': 'shareholderType', 'width': '2'},
-      {'key': 'subConam', 'width': '2'},
-      {'key': 'relConam', 'width': '1.2'},
-      {'key': 'fundedRatio', 'width': '1.4'},
-      {'key': 'conDate', 'width': '1.4'},
+      // {'key': 'shareholderType', 'width': '2'},
+      {'key': 'subConam', 'width': '2', 'handle': getUnit},
+      {'key': 'relConam', 'width': '2', 'handle': getUnit},
+      {'key': 'fundedRatio', 'width': '2'},
+      {'key': 'conDate', 'width': '2'},
     ],
     items: formData(moduleData),
     dict: 'shareholder',

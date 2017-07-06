@@ -3,13 +3,13 @@ import { observer } from 'mobx-react';
 import Input from 'components/lib/input';
 import styles from './index.less';
 function SearchBar({monitorListStore, uiStore}) {
-  const searchInput = uiStore.uiState.monitorList.searchInput;
+  const searchInput = monitorListStore.searchInfo.searchInput;
   const inputChange = (evt) => {
-    uiStore.updateUiStore(`monitorList.searchInput`, evt.target.value);
+    monitorListStore.changeValue(`searchInfo.searchInput`, evt.target.value);
   };
   const handleSearch = (evt) => {
     if (evt.keyCode === 13) {
-      uiStore.updateUiStore(`monitorList.params.companyName`, evt.target.value);
+      monitorListStore.changeValue(`searchInfo.params.companyName`, evt.target.value);
       uiStore.updateUiStore(`monitorListPager.index`, 1);
       monitorListStore.getMainCount();
       monitorListStore.getMainList();

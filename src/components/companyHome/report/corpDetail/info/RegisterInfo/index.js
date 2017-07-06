@@ -9,33 +9,36 @@ function RegisterInfo({ registerInfo, isLoading, errText }) {
     if (items.regCap === '0.0' || items.regCap === '0' || items.regCap === '' || items.regCap === undefined || items.regCap < 0.005) {
       return '--';
     }
-    return Number(items.regCap).toFixed(2) + items.unit + items.regCapCur;
+    if (items.regCapCur === '' || items.regCapCur === undefined || items.regCapCur === '-') {
+      return Number(items.regCap).toFixed(2) + '万元';
+    }
+    return Number(items.regCap).toFixed(2) + '万' + '（' + items.regCapCur + '）';
   };
   // 实收资本
-  const handleRecCap = (items) => {
-    if (items.recCap === '0.0' || items.recCap === '0' || items.recCap === '' || items.recCap === undefined || items.recCap < 0.005) {
-      return '--';
-    }
-    return Number(items.recCap).toFixed(2) + items.unit + items.regCapCur;
-  };
+  // const handleRecCap = (items) => {
+  //   if (items.recCap === '0.0' || items.recCap === '0' || items.recCap === '' || items.recCap === undefined || items.recCap < 0.005) {
+  //     return '--';
+  //   }
+  //   return Number(items.recCap).toFixed(2) + items.unit + items.regCapCur;
+  // };
   // 行业门类
-  const handleIndustryPhyName = (items) => {
-    if (items.industryPhyName === '' || items.industryPhyName === undefined) {
-      return '--';
-    } else if (items.industryPhyCode === '' || items.industryPhyCode === undefined) {
-      return items.industryPhyName;
-    }
-    return items.industryPhyName + '（' + items.industryPhyCode + '）';
-  };
+  // const handleIndustryPhyName = (items) => {
+  //   if (items.industryPhyName === '' || items.industryPhyName === undefined) {
+  //     return '--';
+  //   } else if (items.industryPhyCode === '' || items.industryPhyCode === undefined) {
+  //     return items.industryPhyName;
+  //   }
+  //   return items.industryPhyName + '（' + items.industryPhyCode + '）';
+  // };
   // 国民经济行业
-  const handleIndustryName = (items) => {
-    if (items.industryName === '' || items.industryName === undefined) {
-      return '--';
-    } else if (items.industryCode === '' || items.industryCode === undefined) {
-      return items.industryName;
-    }
-    return items.industryName + '（' + items.industryCode + '）';
-  };
+  // const handleIndustryName = (items) => {
+  //   if (items.industryName === '' || items.industryName === undefined) {
+  //     return '--';
+  //   } else if (items.industryCode === '' || items.industryCode === undefined) {
+  //     return items.industryName;
+  //   }
+  //   return items.industryName + '（' + items.industryCode + '）';
+  // };
   // 经营期
   const handleOpenFrom = (items) => {
     if ((items.openFrom === '' || items.openFrom === undefined) && (items.openTo === '' || items.openTo === undefined)) {
@@ -50,17 +53,41 @@ function RegisterInfo({ registerInfo, isLoading, errText }) {
     return items.openFrom + '至' + items.openTo;
   };
   // 注销/吊销日期
-  const handleCancelDate = (items) => {
+  // const handleCancelDate = (items) => {
+  //   if ((items.cancelDate === '' || items.cancelDate === undefined) && (items.revokeDate === '' || items.revokeDate === undefined)) {
+  //     return '--';
+  //   }
+  //   if (items.cancelDate === '' || items.cancelDate === undefined) {
+  //     return items.revokeDate;
+  //   }
+  //   if (items.revokeDate === '' || items.revokeDate === undefined) {
+  //     return items.cancelDate;
+  //   }
+  //   return items.cancelDate + '/' + items.revokeDate;
+  // };
+  // 经营状态
+  const handleEnterpriseStatus = (items) => {
+    let status = '';
+    let dates = '';
+    if (items.enterpriseStatus === '' || items.enterpriseStatus === undefined) {
+      status = '--';
+    } else {
+      status = items.enterpriseStatus;
+    }
     if ((items.cancelDate === '' || items.cancelDate === undefined) && (items.revokeDate === '' || items.revokeDate === undefined)) {
-      return '--';
+      dates = '';
     }
-    if (items.cancelDate === '' || items.cancelDate === undefined) {
-      return items.revokeDate;
+    if ((items.cancelDate === '' || items.cancelDate === undefined) && items.revokeDate) {
+      dates = '（吊销日期：' + items.revokeDate + '）';
     }
-    if (items.revokeDate === '' || items.revokeDate === undefined) {
-      return items.cancelDate;
+    if ((items.revokeDate === '' || items.revokeDate === undefined) && items.cancelDate) {
+      dates = '（注销日期：' + items.cancelDate + '）';
     }
-    return items.cancelDate + '/' + items.revokeDate;
+    if (items.revokeDate && items.cancelDate) {
+      dates = '（注销日期：' + items.cancelDate + '/吊销日期：' + items.revokeDate + '）';
+    }
+    // return
+    return status + dates;
   };
   const data = {
     meta: {
@@ -77,31 +104,31 @@ function RegisterInfo({ registerInfo, isLoading, errText }) {
         ],
         [
           { 'key': 'regCap', 'type': 'half', 'modifyBlock': handleRegCap },
-          { 'key': 'recCap', 'type': 'half', 'modifyBlock': handleRecCap },
+          { 'key': 'enterpriseStatus', 'type': 'half', 'modifyBlock': handleEnterpriseStatus},
+          // { 'key': 'recCap', 'type': 'half', 'modifyBlock': handleRecCap },
         ],
+        // [
+        //   // { 'key': 'industryPhyName', 'type': 'half', 'modifyBlock': handleIndustryPhyName},
+        // ],
         [
-          { 'key': 'enterpriseStatus', 'type': 'half' },
-          { 'key': 'industryPhyName', 'type': 'half', 'modifyBlock': handleIndustryPhyName},
-        ],
-        [
-          { 'key': 'industryName', 'type': 'half', 'modifyBlock': handleIndustryName},
+          // { 'key': 'industryName', 'type': 'half', 'modifyBlock': handleIndustryName},
           { 'key': 'address', 'type': 'half' },
-        ],
-        [
           { 'key': 'enterpriseType', 'type': 'half' },
+        ],
+        [
           { 'key': 'regOrg', 'type': 'half' },
-        ],
-        [
           { 'key': 'openFrom', 'type': 'half', 'modifyBlock': handleOpenFrom},
-          { 'key': 'ancheDate', 'type': 'half' },
         ],
-        [
-          { 'key': 'cancelDate', 'type': 'half', 'modifyBlock': handleCancelDate},
-          { 'key': 'abuItem', 'type': 'half' },
-        ],
-        [
-          { 'key': 'cbuItem', 'type': 'full' },
-        ],
+        // [
+        //   // { 'key': 'ancheDate', 'type': 'half' },
+        // ],
+        // [
+        //   { 'key': 'cancelDate', 'type': 'half', 'modifyBlock': handleCancelDate},
+        //   { 'key': 'abuItem', 'type': 'half' },
+        // ],
+        // [
+        //   { 'key': 'cbuItem', 'type': 'full' },
+        // ],
         [
           { 'key': 'operateScope', 'type': 'full' },
         ],

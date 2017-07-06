@@ -159,6 +159,12 @@ export default class EventType extends Component {
             </div>
           </div>
         </div>
+        <div className={this.props.ruleStore.keyWordStatus ? styles.keyWordWrap : styles.hidden}>
+          <input
+            className={styles.keyWordInput}
+            placeholder="请输入关键词（多个关键词用空格分开）"
+            onChange={this.props.ruleStore.keyWordChange} value={this.props.ruleStore.keyWordArray} />
+        </div>
       </div>
     );
   }

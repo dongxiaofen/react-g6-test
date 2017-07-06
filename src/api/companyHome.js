@@ -70,6 +70,18 @@ export const getReportModule = (urlStr, idParams, params) => {
   window.reportSourceCancel.push(source.cancel);
   return axios.get(url, { cancelToken: source.token, params});
 };
+
+export const getRiskCourt = ({ basicReportId, reportId, tabAct, config }) => {
+  let url = '';
+  if (basicReportId) {
+    url = `/api/basicReport/${basicReportId}/risk/${tabAct}/page`;
+  }
+  if (reportId) {
+    url = `/api/report/${reportId}/risk/${tabAct}/page`;
+  }
+  return axios.get(url, config);
+};
+
 export const getJudgeDetailMonitor = (monitorCompanyId, params) => {
   return axios.get(`/api/monitor/${monitorCompanyId}/risk/judgeDoc`, { params });
 };
@@ -164,14 +176,14 @@ export const getAlertAnalysisList = (monitorId, analysisReportId, params, source
 export const getAlertDetail = (url, source, params) => {
   return axios.get(url, { cancelToken: source.token, params });
 };
-export const getAlertNewsMonitor = (companyId, params) => {
-  return axios.get(`/api/monitor/${companyId}/internet/detail`, { params });
+export const getAlertNewsMonitor = (companyId, ruleType, ruleId, params) => {
+  return axios.get(`/api/monitor/${companyId}/alert/${ruleType}/${ruleId}/news/detail`, { params });
 };
 export const getAlertJudgeDocMonitor = (companyId, params) => {
   return axios.get(`/api/monitor/${companyId}/risk/judgeDoc`, { params });
 };
-export const getAlertNewsReport = (companyId, params) => {
-  return axios.get(`/api/report/${companyId}/internet/detail`, { params });
+export const getAlertNewsReport = (companyId, ruleId, params) => {
+  return axios.get(`/api/report/${companyId}/alert/sysRule/${ruleId}/news/detail`, { params });
 };
 export const getAlertJudgeDocReport = (companyId, params) => {
   return axios.get(`/api/report/${companyId}/risk/judgeDoc`, { params });
@@ -217,8 +229,8 @@ export const addTaxCheck = (params) => {
   return axios.post(`api/check/tax`, params);
 };
 // 获取核查详情
-export const getTaxInfo = (companyId) => {
-  return axios.get(`/api/check/tax/${companyId}/page`);
+export const getTaxInfo = (params, companyId) => {
+  return axios.get(`/api/check/tax/${companyId}/page`, {params: params});
 };
 // 税务列表
 export const getTaxList = (id, source) => {
@@ -272,8 +284,6 @@ export const getReportStatus = (params) => {
 export const createBasicReport = (params) => {
   return axios.post(`/api/basicReport`, params);
 };
-
-// 后台是否已完成
 export const isCompleted = ({basicReportId, reportId}) => {
   let url;
   if (basicReportId) {
@@ -282,4 +292,12 @@ export const isCompleted = ({basicReportId, reportId}) => {
     url = `/api/report/${reportId}/completed`;
   }
   return axios.get(url);
+};
+// 基础关联图，获取最短路径
+export const getShortestPath = (idParams, params) => {
+  const {reportId, basicReportId} = idParams;
+  if (reportId !== '') {
+    return axios.get(`/api/report/${reportId}/network/shortest`, {params});
+  }
+  return axios.get(`/api/basicReport/${basicReportId}/network/shortest`, {params});
 };

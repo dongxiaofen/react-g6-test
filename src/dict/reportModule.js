@@ -53,7 +53,7 @@ const config = {
   equityPledge: {
     'imporg': '质权人姓名',
     'imporgType': '出质人类别',
-    'imporgAmount': '出质金额',
+    'imporgAmount': '出质金额（万元）',
     'imporgRecordDate': '出质备案日期',
     'imporgAthOrg': '出质审批部门',
     'imporgDate': '出质批准日期',
@@ -83,8 +83,8 @@ const config = {
   shareholder: {
     'shareholderName': '股东姓名',
     'shareholderType': '股东类型',
-    'subConam': '认缴出资额（万元）',
-    'relConam': '实缴出资额（万元）',
+    'subConam': '认缴出资额',
+    'relConam': '实缴出资额',
     'fundedRatio': '出资比例',
     'conDate': '出资日期',
   },
@@ -143,7 +143,7 @@ const config = {
     'esDate': '成立日期',
     'fundedRatio': '出资比例',
     'subConam': '认缴出资额（万元）',
-    'thisPosition': '担任职位',
+    'otherPosition': '担任职位',
     'position': '担任职位',
     'regCap': '注册资金（万元）',
     'frName': '法人代表',
@@ -196,7 +196,7 @@ const config = {
   sharesImpawnListItemLists: {
     'imporg': '质权人姓名',
     'imporgType': '出质人类别',
-    'imporgAmount': '出质金额',
+    'imporgAmount': '出质金额（万元）',
     'imporgRecordDate': '出质备案日期',
     'imporgAthOrg': '出质审批部门',
     'imporgDate': '出质批准日期',
@@ -320,7 +320,9 @@ const config = {
   biddingList: {
     'title': '招投标标题',
     'type': '公告类型',
+    'announceType': '公告类型',
     'publishDate': '公告日期', //PDF里面使用不要注释
+    'publishedDateTime': '公告日期',
     'participator': '投标方',
     'date': '公告日期',
     // 'url': '查看详情',
@@ -369,7 +371,9 @@ const config = {
   },
   // 开庭公告
   courtAnnouncement: {
+    'type': '公告类型',
     'typeName': '公告类型',
+    'docType': '公告类型',
     'publishTime': '公告时间',
     'court': '公告法院',
     'judgeTime': '开庭时间',
@@ -381,6 +385,7 @@ const config = {
     'identity': '本案身份',
     'content': '公告内容',
     'relevantDepartments': '当事方',
+    'litigant': '当事方',
   },
   courtNotice: {
     'court': '公告法院',
@@ -392,7 +397,9 @@ const config = {
     'caseReason': '案由',
     'areaName': '省份',
     'relevantDepartments': '当事方',
+    'litigant': '当事方',
     'content': '公告内容',
+    'detail': '公告内容',
   },
   judgeDoc: {
     'companyName': '事件企业',
@@ -419,7 +426,7 @@ const config = {
     'litigationAssets': '涉诉资产',
     'blackList': '失信信息'
   },
-  courtExecution: {
+  courtExecuted: {
     'caseCreateTime': '立案时间',
     'pname': '被执行人姓名/名称',
     'orgCode': '被执行人组织机构代码',
@@ -427,6 +434,22 @@ const config = {
     'execCourtName': '执行法院',
     'caseState': '案件状态',
     'execMoney': '执行标的（元）',
+  },
+  courtDishonesty: {
+    'publishDate': '发布日期',
+    'companyName': '失信被执行人全称',
+    'relation': '关联关系',
+    'orgCode': '组织机构代码',
+    'frName': '法人',
+    'disruptTypeName': '失信被执行人行为具体情形',
+    'caseCode': '案号',
+    'areaName': '区域',
+    'gistId': '执行依据文号',
+    'regDate': '立案日期',
+    'gistUnit': '作出执行依据单位',
+    'duty': '生效法律文书确定的义务',
+    'performance': '被执行履行情况',
+    'courtName': '执行法院',
   },
   dishonestyList: {
     'publishDate': '发布日期',
@@ -444,14 +467,14 @@ const config = {
     'performance': '被执行履行情况',
     'courtName': '执行法院',
   },
-  litigationAssets: {
+  courtLitigation: {
     'releaseTime': '发布日期',
     'title': '项目名称',
     'category': '资产类别',
     'location': '所在地',
     'court': '委托法院',
     'status': '状态',
-    'price': '参考价',
+    'price': '参考价（万元）',
     'result': '成交结果',
     'contactPerson': '联系人',
     'contactPhone': '联系电话',
@@ -726,6 +749,25 @@ const config = {
   },
   rule12to31: {
     policy: '政策依据',
+  },
+  biddingStatistic: {
+    winMoneyAmount: '总中标金额（元）',
+    winCount: '总中标次数',
+    bidMoneyAmount: '总投标金额（元）',
+    bidCount: '总投标次数',
+  },
+  biddingCount: {
+    bidCount: '总投标数',
+    bidMoneyAmount: '总投标金额（元）',
+    winCount: '总中标数量',
+    winMoneyAmount: '总中标金额（元）',
+  },
+  biddingTable: {
+    date: '日期',
+    bidCount: '投标数',
+    bidMoneyAmount: '投标金额（元）',
+    winCount: '中标数量',
+    winMoneyAmount: '中标金额（元）',
   }
 };
 

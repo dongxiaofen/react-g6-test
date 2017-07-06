@@ -4,7 +4,7 @@ import styles from './index.less';
 import JudgeBox from './JudgeBox';
 import { loadingComp } from 'components/hoc';
 
-function JudgeDoc({courtData, regTime, routing, riskCourtStore}) {
+function JudgeDoc({courtData, regTime, riskCourtStore}) {
   const getDetail = (data) => {
     const docId = data.docId;
     const trailDate = data.trailDate;
@@ -41,22 +41,25 @@ function JudgeDoc({courtData, regTime, routing, riskCourtStore}) {
       {'key': 'court', 'width': '6'},
       {'key': 'litigant', 'width': '12', 'handle': modifyLitiganti}
     ],
-    'items': courtData ? courtData.data : [],
+    'items': courtData.content,
     'dict': 'judgeDoc',
     'module': 'judgeDoc',
   };
-  console.log(routing);
   return (
     <JudgeBox data={moduleData} />
   );
 }
 
 JudgeDoc.propTypes = {
-  foo: PropTypes.string,
+  courtData: PropTypes.object,
+  regTime: PropTypes.func,
+  routing: PropTypes.object,
+  riskCourtStore: PropTypes.object,
 };
 export default loadingComp({
   mapDataToProps: props => ({
-    error: !props.courtData || props.courtData.data.length < 1,
+    loading: props.loading,
+    error: !props.courtData.content || props.courtData.content.length === 0,
     module: '判决文书'
   })
-})(inject('routing', 'riskCourtStore')(observer(JudgeDoc)));
+})(inject('riskCourtStore')(observer(JudgeDoc)));

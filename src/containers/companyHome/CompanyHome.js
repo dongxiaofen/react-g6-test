@@ -1,13 +1,23 @@
 import React, { Component, PropTypes } from 'react';
 import { observer, inject } from 'mobx-react';
-import { runInAction } from 'mobx';
+import { runInAction, reaction } from 'mobx';
 import Banner from 'components/companyHome/Banner';
 import LeftBar from 'components/companyHome/LeftBar';
 import { Container, Row, Col } from 'components/common/layout';
 import BarLoading from 'components/common/BarLoading';
 import NoBalance from 'components/common/NoBalance';
 import styles from './index.less';
-
+let getTrademarkDataReaction = null;
+let getPatentDataReaction = null;
+let alertAnalysisReaction = null;
+let monitorAlertReaction = null;
+let nowRecordReaction = null;
+let judgeDocReaction = null;
+let courtAnnouncementReaction = null;
+let courtNoticeReaction = null;
+let courtExecuted = null;
+let courtDishonesty = null;
+let courtLitigation = null;
 @inject(
   'routing',
   'leftBarStore',
@@ -62,6 +72,7 @@ export default class CompanyHome extends Component {
     analysisSrore: PropTypes.object,
     taxStore: PropTypes.object,
     monitorAxisStore: PropTypes.object,
+    monitorAlertStore: PropTypes.object,
     nowRecordStore: PropTypes.object,
     loaningStore: PropTypes.object,
   };
@@ -77,8 +88,160 @@ export default class CompanyHome extends Component {
   componentDidMount() {
     const companyName = this.props.routing.location.query.companyName;
     this.props.companyHomeStore.getReportStatus({ companyName });
+    const companyHomeStore = this.props.companyHomeStore;
+    const assetsStore = this.props.assetsStore;
+    // 在这注入reaction
+    getTrademarkDataReaction = reaction(
+      () => this.props.uiStore.uiState.trademarkLists.index,
+      () => {
+        const reportInfo = companyHomeStore.reportInfo;
+        assetsStore.getTrademarkData(reportInfo);
+      }
+    );
+    getPatentDataReaction = reaction(
+      () => this.props.uiStore.uiState.patentInfo.index,
+      () => {
+        const reportInfo = companyHomeStore.reportInfo;
+        assetsStore.getPatentData(reportInfo);
+      }
+    );
+    alertAnalysisReaction = reaction(
+      () => this.props.uiStore.uiState.alertAnalysis.index,
+      () => {
+        this.props.alertAnalysisStore.getReportModule(companyHomeStore.reportInfo);
+      }
+    );
+    monitorAlertReaction = reaction(
+      () => this.props.uiStore.uiState.monitorAlert.index,
+      () => {
+        this.props.monitorAlertStore.getReportModule(companyHomeStore.reportInfo);
+      }
+    );
+    nowRecordReaction = reaction(
+      () => this.props.uiStore.uiState.nowRecordPager.index,
+      () => {
+        this.props.nowRecordStore.getNowRecordList();
+      }
+    );
+    // 判决文书
+    judgeDocReaction = reaction(
+      () => this.props.uiStore.uiState.judgeDoc.index,
+      () => {
+        const params = {
+          basicReportId: companyHomeStore.reportInfo.basicReportId,
+          reportId: companyHomeStore.reportInfo.reportId,
+          tabAct: this.props.riskCourtStore.courtTabAct,
+          config: {
+            params: {
+              index: this.props.uiStore.uiState.judgeDoc.index,
+              size: this.props.uiStore.uiState.judgeDoc.size,
+              finance: this.props.riskCourtStore.courtCheckGroup.judgeDoc
+            }
+          }
+        };
+        this.props.riskCourtStore.getRiskCourt(params);
+      }
+    );
+    // 法院公告
+    courtAnnouncementReaction = reaction(
+      () => this.props.uiStore.uiState.courtAnnouncement.index,
+      () => {
+        const params = {
+          basicReportId: companyHomeStore.reportInfo.basicReportId,
+          reportId: companyHomeStore.reportInfo.reportId,
+          tabAct: this.props.riskCourtStore.courtTabAct,
+          config: {
+            params: {
+              index: this.props.uiStore.uiState.courtAnnouncement.index,
+              size: this.props.uiStore.uiState.courtAnnouncement.size,
+              finance: this.props.riskCourtStore.courtCheckGroup.courtAnnouncement
+            }
+          }
+        };
+        this.props.riskCourtStore.getRiskCourt(params);
+      }
+    );
+    // 开庭公告
+    courtNoticeReaction = reaction(
+      () => this.props.uiStore.uiState.courtNotice.index,
+      () => {
+        const params = {
+          basicReportId: companyHomeStore.reportInfo.basicReportId,
+          reportId: companyHomeStore.reportInfo.reportId,
+          tabAct: this.props.riskCourtStore.courtTabAct,
+          config: {
+            params: {
+              index: this.props.uiStore.uiState.courtNotice.index,
+              size: this.props.uiStore.uiState.courtNotice.size,
+              finance: this.props.riskCourtStore.courtCheckGroup.courtNotice
+            }
+          }
+        };
+        this.props.riskCourtStore.getRiskCourt(params);
+      }
+    );
+    // 被执行人信息
+    courtExecuted = reaction(
+      () => this.props.uiStore.uiState.courtExecuted.index,
+      () => {
+        const params = {
+          basicReportId: companyHomeStore.reportInfo.basicReportId,
+          reportId: companyHomeStore.reportInfo.reportId,
+          tabAct: this.props.riskCourtStore.courtTabAct,
+          config: {
+            params: {
+              index: this.props.uiStore.uiState.courtExecuted.index,
+              size: this.props.uiStore.uiState.courtExecuted.size
+            }
+          }
+        };
+        this.props.riskCourtStore.getRiskCourt(params);
+      }
+    );
+    // 失信被执行人信息
+    courtDishonesty = reaction(
+      () => this.props.uiStore.uiState.courtDishonesty.index,
+      () => {
+        const params = {
+          basicReportId: companyHomeStore.reportInfo.basicReportId,
+          reportId: companyHomeStore.reportInfo.reportId,
+          tabAct: this.props.riskCourtStore.courtTabAct,
+          config: {
+            params: {
+              index: this.props.uiStore.uiState.courtDishonesty.index,
+              size: this.props.uiStore.uiState.courtDishonesty.size
+            }
+          }
+        };
+        this.props.riskCourtStore.getRiskCourt(params);
+      }
+    );
+    // 涉诉资产
+    courtLitigation = reaction(
+      () => this.props.uiStore.uiState.courtLitigation.index,
+      () => {
+        const params = {
+          basicReportId: companyHomeStore.reportInfo.basicReportId,
+          reportId: companyHomeStore.reportInfo.reportId,
+          tabAct: this.props.riskCourtStore.courtTabAct,
+          config: {
+            params: {
+              index: this.props.uiStore.uiState.courtLitigation.index,
+              size: this.props.uiStore.uiState.courtLitigation.size
+            }
+          }
+        };
+        this.props.riskCourtStore.getRiskCourt(params);
+      }
+    );
   }
-
+  componentWillReceiveProps(nextProps) {
+    const leftBarStore = this.props.leftBarStore;
+    const module = nextProps.routing.location.pathname.split('/')[2];
+    runInAction('初始化报告二级目录', () => {
+      leftBarStore.activeItem = module;
+    });
+  }
   componentWillUnmount() {
     // cancel pending api call
     if (window.reportSourceCancel) {
@@ -86,6 +249,24 @@ export default class CompanyHome extends Component {
         cancel();
       });
     }
+    const reactionArr = [
+      getTrademarkDataReaction,
+      getPatentDataReaction,
+      alertAnalysisReaction,
+      monitorAlertReaction,
+      nowRecordReaction,
+      judgeDocReaction,
+      courtAnnouncementReaction,
+      courtNoticeReaction,
+      courtExecuted,
+      courtDishonesty,
+      courtLitigation
+    ];
+    reactionArr.forEach(reactionFunc => {
+      if (typeof reactionFunc === 'function') {
+        reactionFunc();
+      }
+    });
     // reset report store data
     [
       'uiStore',

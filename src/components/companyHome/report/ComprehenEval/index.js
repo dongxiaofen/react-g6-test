@@ -29,7 +29,7 @@ function ComprehenEval({ loaningStore }) {
       <p className={styles.title}>多维综合评价
         <span className={styles.timestamp}>（最近分析时间：{sixStarData.lastTm}）</span>
       </p>
-      <div className={styles.box}>
+      <div className={`${styles.box} clearfix`}>
         {mainView}
       </div>
     </div>
@@ -42,7 +42,6 @@ ComprehenEval.propTypes = {
 export default loadingComp({
   mapDataToProps: props => ({
     loading: props.loaningStore.loading === true ? true : false,
-    category: 2,
     module: '六芒星',
     errCategory: 0,
     error: props.loaningStore.sixStarData.error

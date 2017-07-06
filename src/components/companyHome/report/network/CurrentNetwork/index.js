@@ -7,22 +7,28 @@ import CircleNetworkGraph from './CircleNetworkGraph';
 import LegendBar from './LegendBar';
 import NodePanel from './NodePanel';
 import CircleTypeList from './CircleTypeList';
+import styles from './index.less';
 
 function CurrentNetwork({}) {
-  const svgWidth = document.getElementById('reportContainer').offsetWidth * 3 / 5 - 15;
-  const svgHeight = window.screen.height - 280;
   const { resumeSvg, fullScreen, exitFull } = CircleNetworkGraph;
+  console.log(document.body.clientWidth);
+  const svgCol = document.body.clientWidth < 1611 ? 8 : 9;
+  const legendCol = 12 - svgCol;
+  const svgWidth = (document.getElementById('tabContentWrap').offsetWidth - 70) * svgCol / 12;
+  const svgHeight = window.screen.height - 280;
   return (
-    <Row>
-      <Col width="9">
-        <LegendBar {...{ resumeSvg, fullScreen, exitFull }} />
-        <NodePanel exitFull={exitFull} />
-        <CircleNetworkGraph {...{ svgWidth, svgHeight }} />
-      </Col>
-      <Col width="3">
-        <CircleTypeList />
-      </Col>
-    </Row>
+    <div className={styles.box}>
+      <Row>
+        <Col width={`${svgCol}`}>
+          <NodePanel exitFull={exitFull} />
+          <CircleNetworkGraph {...{ svgWidth, svgHeight }} />
+        </Col>
+        <Col width={`${legendCol}`}>
+          <LegendBar {...{ resumeSvg, fullScreen, exitFull }} />
+          <CircleTypeList />
+        </Col>
+      </Row>
+    </div>
   );
 }
 

@@ -9,17 +9,17 @@ import pathval from 'pathval';
 function OverView({ pdfStore, clientStore }) {
   const summaryData = pdfStore.summary ? pdfStore.summary : '';
   const isStock = pathval.getPathValue(pdfStore, 'banner.stockCode');
-  const objectPase = (data, type) => {
-    let newArr = [];
-    Object.keys(data).map( (key) => {
-      if (type === 'operation') {
-        newArr = [...newArr, `${key}（${data[key] - 2}）`];
-      } else {
-        newArr = [...newArr, `${key}（${data[key]}）`];
-      }
-    });
-    return newArr.join('，');
-  };
+  // const objectPase = (data, type) => {
+  //   let newArr = [];
+  //   Object.keys(data).map( (key) => {
+  //     if (type === 'operation') {
+  //       newArr = [...newArr, `${key}（${data[key] - 2}）`];
+  //     } else {
+  //       newArr = [...newArr, `${key}（${data[key]}）`];
+  //     }
+  //   });
+  //   return newArr.join('，');
+  // };
 
   const corpBasicMap = {
     mapKey: {
@@ -32,25 +32,25 @@ function OverView({ pdfStore, clientStore }) {
     valueData: summaryData.basic ? {data: summaryData.basic.corpBasic, type: 'object'} : undefined
   };
   const entinvItem = {
-    title: '企业对外投资',
+    title: '企业投资',
     valueData: summaryData.basic ? {data: summaryData.invPos.entinvItemCount, type: 'number'} : undefined,
     unit: '家'
   };
   const investPositionMap = {
     mapKey: {
-      frinvCount: '法人对外投资',
-      frPositionCount: '法人对外任职',
+      frinvCount: '法人投资的企业',
+      frPositionCount: '法人任职的企业',
     },
-    title: '法人对外投资任职',
+    title: '法人投资任职',
     valueData: summaryData.basic ? {data: summaryData.invPos, type: 'object'} : undefined,
   };
   const investManagement = {
     mapKey: {
-      managementFrPositionCount: '董监高对外担任法人',
-      managementInvCount: '董监高对外投资',
-      managementPositionCount: '董监高对外任职',
+      managementFrPositionCount: '董监高担任法人',
+      managementInvCount: '董监高投资',
+      managementPositionCount: '董监高任职',
     },
-    title: '董监高对外投资任职',
+    title: '董监高投资任职',
     valueData: summaryData.basic ? {data: summaryData.invPos, type: 'object'} : undefined,
   };
   const businessChange = {
@@ -98,7 +98,7 @@ function OverView({ pdfStore, clientStore }) {
       checkMessage: '抽查检查信息',
       illegal: '违法记录'
     },
-    title: '工商抽查',
+    title: '行政信息',
     valueData: summaryData.riskInfo ? {data: summaryData.riskInfo.corpCheck, type: 'object'} : undefined,
   };
   const newsContent = {
@@ -124,12 +124,12 @@ function OverView({ pdfStore, clientStore }) {
     valueData: summaryData.operation ? {data: summaryData.operation.operationInfo, type: 'object'} : undefined,
   };
   const riskRelationshipMap = {
-    mapKey: {
-      riskRelationship: '风险关联信息',
-      linkRelationship: '企业关联信息',
-    },
-    title: '风险关系',
-    valueData: summaryData.network ? {data: summaryData.network, type: 'object'} : undefined,
+    title: '关系网络图',
+    valueData: summaryData.network ? {data: summaryData.network.linkRelationship, type: 'number'} : undefined,
+  };
+  const riskChain = {
+    title: '风险链条',
+    valueData: summaryData.network ? {data: summaryData.network.riskRelationship, type: 'number'} : undefined,
   };
   const pledgeEquity = {
     mapKey: {
@@ -151,24 +151,24 @@ function OverView({ pdfStore, clientStore }) {
   };
   const staffBackground = {
     mapKey: {
-      major: '毕业学校',
-      graduation: '所学专业',
+      graduation: '毕业学校',
+      major: '所学专业',
     },
     title: '员工背景',
     valueData: summaryData.team ? {data: summaryData.team.recruitmentEmployee, type: 'object'} : undefined,
   };
   const staffPosition = {
     mapKey: {
-      position: '近期招聘岗位',
+      position: '近期招聘信息',
     },
     unit: '个',
-    title: '近期招聘岗位',
+    title: '近期招聘信息',
     valueData: summaryData.team ? {data: summaryData.team.recruitmentEmployee.position, type: 'number'} : undefined,
   };
   const recruitmentResumeMap = {
     mapKey: {
       recruitmentLocation: '新增招聘地点',
-      avgSalaryTrend: '平均薪资趋势',
+      avgSalaryTrend: '招聘平均薪资趋势',
       recruitmentPost: '新增招聘岗位',
       resumeTrend: '离职意向趋势'
     },
@@ -190,18 +190,18 @@ function OverView({ pdfStore, clientStore }) {
     title: '多维综合分析',
     valueData: summaryData.scoreStatistic ? {data: summaryData.scoreStatistic, type: 'object'} : undefined
   };
-  const profitabilityAnalysis = {
-    title: '盈利能力分析',
-    valueData: {type: 'none', data: (summaryData.profitStatistic && Object.keys(summaryData.profitStatistic).length > 0 ? objectPase(summaryData.profitStatistic) : '暂无信息')},
-  };
-  const operationalAnalysis = {
-    title: '营运能力分析',
-    valueData: {type: 'none', data: (summaryData.operationStatistic && Object.keys(summaryData.operationStatistic).length > 0 ? objectPase(summaryData.operationStatistic, 'operation') : '暂无信息')},
-  };
-  const growthAnalysis = {
-    title: '成长能力分析',
-    valueData: {type: 'none', data: (summaryData.growingStatistic && Object.keys(summaryData.growingStatistic).length > 0 ? objectPase(summaryData.growingStatistic) : '暂无信息')},
-  };
+  // const profitabilityAnalysis = {
+  //   title: '盈利能力分析',
+  //   valueData: {type: 'none', data: (summaryData.profitStatistic && Object.keys(summaryData.profitStatistic).length > 0 ? objectPase(summaryData.profitStatistic) : '暂无信息')},
+  // };
+  // const operationalAnalysis = {
+  //   title: '营运能力分析',
+  //   valueData: {type: 'none', data: (summaryData.operationStatistic && Object.keys(summaryData.operationStatistic).length > 0 ? objectPase(summaryData.operationStatistic, 'operation') : '暂无信息')},
+  // };
+  // const growthAnalysis = {
+  //   title: '成长能力分析',
+  //   valueData: {type: 'none', data: (summaryData.growingStatistic && Object.keys(summaryData.growingStatistic).length > 0 ? objectPase(summaryData.growingStatistic) : '暂无信息')},
+  // };
   return (
     <div>
       <PdfTitle module="信息概览" subModule="" />
@@ -210,15 +210,6 @@ function OverView({ pdfStore, clientStore }) {
       <Summary {...corpBasicMap} />
       <Summary {...yearReport} />
       <Summary {...businessChange} />
-
-      <SecondTitle module="对外投资任职" />
-      <hr className={styles.hrhr} />
-      <Summary {...entinvItem} />
-      <Summary {...investPositionMap} />
-      {
-        pdfStore.reportType === '高级报告' ?
-        <Summary {...investManagement} /> : ''
-      }
       {
         isStock ?
             <div key="thisIsSecondTitleObject">
@@ -253,6 +244,15 @@ function OverView({ pdfStore, clientStore }) {
       <Summary {...staffPosition} />
       <Summary {...recruitmentResumeMap} />
 
+      <SecondTitle module="投资任职" />
+      <hr className={styles.hrhr} />
+      <Summary {...entinvItem} />
+      <Summary {...investPositionMap} />
+      {
+        pdfStore.reportType === '高级报告' ?
+          <Summary {...investManagement} /> : ''
+      }
+
       <SecondTitle module="风险信息" />
       <hr className={styles.hrhr} />
       <Summary {...taxInfoMap} />
@@ -263,12 +263,20 @@ function OverView({ pdfStore, clientStore }) {
       <hr className={styles.hrhr} />
       <Summary {...pledgeEquity} />
       {
-        pdfStore.reportType === '高级报告' ?
+        pdfStore.reportType === '高级报告' || pdfStore.reportType === '基础报告' ?
         <div>
-          <SecondTitle module="关联图信息" />
+          <SecondTitle module="关联网络" />
           <hr className={styles.hrhr} />
           <Summary {...riskRelationshipMap} />
         </div> : ''
+      }
+      {
+        pdfStore.reportType === '高级报告' ?
+          <div>
+            <SecondTitle module="风险扫描" />
+            <hr className={styles.hrhr} />
+            <Summary {...riskChain} />
+          </div> : ''
       }
 
       {/* 多维分析 */}
@@ -280,30 +288,30 @@ function OverView({ pdfStore, clientStore }) {
           <Summary {...comprehensiveAnalysis} />
         </div> : ''
       }
-      {
-        pdfStore.pdfTypesKey.includes('PROFIT') ?
-        <div>
-          <SecondTitle module="盈利能力分析" />
-          <hr className={styles.hrhr} />
-          <Summary {...profitabilityAnalysis} />
-        </div> : ''
-      }
-      {
-        pdfStore.pdfTypesKey.includes('OPERATION') ?
-          <div>
-            <SecondTitle module="营运能力分析" />
-            <hr className={styles.hrhr} />
-            <Summary {...operationalAnalysis}/>
-          </div> : ''
-      }
-      {
-        pdfStore.pdfTypesKey.includes('GROWING') ?
-          <div>
-            <SecondTitle module="成长能力分析" />
-            <hr className={styles.hrhr} />
-            <Summary {...growthAnalysis}/>
-          </div> : ''
-      }
+      {/* { */}
+        {/* pdfStore.pdfTypesKey.includes('PROFIT') ? */}
+        {/*<div>*/}
+          {/* <SecondTitle module="盈利能力分析" /> */}
+          {/*<hr className={styles.hrhr} />*/}
+          {/*<Summary {...profitabilityAnalysis} />*/}
+        {/*</div> : ''*/}
+      {/*}*/}
+      {/*{*/}
+        {/*pdfStore.pdfTypesKey.includes('OPERATION') ?*/}
+          {/*<div>*/}
+            {/*<SecondTitle module="营运能力分析" />*/}
+            {/*<hr className={styles.hrhr} />*/}
+            {/*<Summary {...operationalAnalysis}/>*/}
+          {/*</div> : ''*/}
+      {/*}*/}
+      {/*{*/}
+        {/*pdfStore.pdfTypesKey.includes('GROWING') ?*/}
+          {/*<div>*/}
+            {/*<SecondTitle module="成长能力分析" />*/}
+            {/*<hr className={styles.hrhr} />*/}
+            {/*<Summary {...growthAnalysis}/>*/}
+          {/*</div> : ''*/}
+      {/*}*/}
     </div>
   );
 }

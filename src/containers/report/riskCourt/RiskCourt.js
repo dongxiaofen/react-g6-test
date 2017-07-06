@@ -1,74 +1,136 @@
-import React, { Component, PropTypes} from 'react';
-import { observer, inject} from 'mobx-react';
-import {batchReport} from 'components/hoc';
+import React, { Component, PropTypes } from 'react';
+import { observer, inject } from 'mobx-react';
+import { batchReport } from 'components/hoc';
 import Tabs from 'antd/lib/tabs';
 const TabPane = Tabs.TabPane;
-import loadingComp from 'components/hoc/LoadingComp';
+import Checkbox from 'antd/lib/checkbox';
+
+// import loadingComp from 'components/hoc/LoadingComp';
 import JudgeDoc from 'components/companyHome/report/riskCourt/JudgeDoc';
 import CourtAnnouncement from 'components/companyHome/report/riskCourt/CourtAnnouncement';
 import CourtNotice from 'components/companyHome/report/riskCourt/CourtNotice';
 import CourtExecution from 'components/companyHome/report/riskCourt/CourtExecution';
 import DishonestyList from 'components/companyHome/report/riskCourt/DishonestyList';
 import LitigationAssets from 'components/companyHome/report/riskCourt/LitigationAssets';
-@inject('routing', 'riskCourtStore')
+@inject('routing', 'riskCourtStore', 'uiStore', 'companyHomeStore')
 @batchReport('riskCourtStore')
-@loadingComp({
-  mapDataToProps: props => ({
-    loading: props.riskCourtStore.isLoading,
-    error: !props.riskCourtStore.court.hasCourtData,
-    module: '法院公告'
-  })
-})
+// @loadingComp({
+//   mapDataToProps: props => ({
+//     loading: !props.riskCourtStore.courtIsBack,
+//     error: props.riskCourtStore.courtIsErr,
+//     module: '法院公告'
+//   })
+// })
 @observer
 export default class RiskCourt extends Component {
   static propTypes = {
+    uiStore: PropTypes.object,
+    companyHomeStore: PropTypes.object,
     riskCourtStore: PropTypes.object
   };
-  regTime = (value)=>{
+  regTime = (value) => {
     return value ? value.slice(0, 10) : '--';
   };
+
+  riskCancel(act) {
+    const cancel = this.props.riskCourtStore.cancel;
+    if (cancel[act]) {
+      cancel[act]();
+    }
+  }
+
+  filterFinanceData = () => {
+    const riskStore = this.props.riskCourtStore;
+    const companyHomeStore = this.props.companyHomeStore;
+    const uiStore = this.props.uiStore;
+    const uiState = uiStore.uiState;
+    const courtTabAct = riskStore.courtTabAct;
+    const courtCheckGroup = riskStore.courtCheckGroup;
+    const uiStateTabAct = uiState[courtTabAct];
+    riskStore.updateValue(`courtCheckGroup.${courtTabAct}`, !courtCheckGroup[courtTabAct]);
+    const params = {
+      basicReportId: companyHomeStore.reportInfo.basicReportId,
+      reportId: companyHomeStore.reportInfo.reportId,
+      tabAct: riskStore.courtTabAct,
+      config: {
+        params: {
+          index: uiStateTabAct.index,
+          size: uiStateTabAct.size,
+          finance: courtCheckGroup[courtTabAct]
+        }
+      }
+    };
+    this.riskCancel(courtTabAct);
+    if (uiStateTabAct.index === 1) {
+      riskStore.getRiskCourt(params);
+    } else {
+      uiStore.updateUiStore(`${courtTabAct}.index`, 1);
+    }
+  }
+
+  hasTotal(val) {
+    if (val) {
+      return val;
+    }
+    return 0;
+  }
+
+  tabOnChange = (val) => {
+    this.props.riskCourtStore.updateValue('courtTabAct', val);
+  }
+
   render() {
     const riskCourtStore = this.props.riskCourtStore;
-    const court = riskCourtStore.court;
-    const courtData = riskCourtStore.court.courtData;
-    const countCount = courtData.countCount;
+    const courtData = riskCourtStore.courtData;
+    const courtLoadingGroup = riskCourtStore.courtLoadingGroup;
+    const courtCheckGroup = riskCourtStore.courtCheckGroup;
+    const checkBoxStyle = { marginBottom: 20 };
     return (
-      <Tabs defaultActiveKey={court.tabAct}>
+      <Tabs defaultActiveKey={riskCourtStore.courtTabAct} onChange={this.tabOnChange}>
         <TabPane
-          tab={`判决文书（${countCount['判决文书']}）`}
-          key="判决文书"
-          disabled={countCount['判决文书'] > 0 ? false : true}>
-          <JudgeDoc courtData={courtData.judgeDoc} regTime={this.regTime} riskStore={riskCourtStore}/>
+          tab={`判决文书（${this.hasTotal(courtData.judgeDoc.totalElements)}）`}
+          key="judgeDoc">
+          <div style={checkBoxStyle}>
+            <Checkbox onChange={this.filterFinanceData} checked={courtCheckGroup.judgeDoc}>
+              只显示与银行金融机构相关法务信息
+            </Checkbox>
+          </div>
+          <JudgeDoc courtData={courtData.judgeDoc} regTime={this.regTime} loading={courtLoadingGroup.judgeDoc} riskStore={riskCourtStore} />
         </TabPane>
         <TabPane
-          tab={`法院公告（${countCount['法院公告']}）`}
-          key="法院公告"
-          disabled={countCount['法院公告'] > 0 ? false : true}>
-          <CourtAnnouncement courtAnnouncement={courtData.courtAnnouncement} regTime={this.regTime}/>
+          tab={`法院公告（${this.hasTotal(courtData.courtAnnouncement.totalElements)}）`}
+          key="courtAnnouncement">
+          <div style={checkBoxStyle}>
+            <Checkbox onChange={this.filterFinanceData} checked={courtCheckGroup.courtAnnouncement}>
+              只显示与银行金融机构相关法务信息
+            </Checkbox>
+          </div>
+          <CourtAnnouncement courtAnnouncement={courtData.courtAnnouncement} regTime={this.regTime} loading={courtLoadingGroup.courtAnnouncement} />
         </TabPane>
         <TabPane
-          tab={`开庭公告（${countCount['开庭公告']}）`}
-          key="开庭公告"
-          disabled={countCount['开庭公告'] > 0 ? false : true}>
-          <CourtNotice courtNotice={courtData.courtNotice} regTime={this.regTime} />
+          tab={`开庭公告（${this.hasTotal(courtData.courtNotice.totalElements)}）`}
+          key="courtNotice">
+          <div style={checkBoxStyle}>
+            <Checkbox onChange={this.filterFinanceData} checked={courtCheckGroup.courtNotice}>
+              只显示与银行金融机构相关法务信息
+            </Checkbox>
+          </div>
+          <CourtNotice courtNotice={courtData.courtNotice} regTime={this.regTime} loading={courtLoadingGroup.courtNotice} />
         </TabPane>
         <TabPane
-          tab={`被执行人（${countCount['被执行人信息']}）`}
-          key="被执行人"
-          disabled={countCount['被执行人信息'] > 0 ? false : true}>
-          <CourtExecution courtExecution={courtData.courtExecution} regTime={this.regTime} />
+          tab={`被执行人（${this.hasTotal(courtData.courtExecuted.totalElements)}）`}
+          key="courtExecuted">
+          <CourtExecution courtExecution={courtData.courtExecuted} regTime={this.regTime} loading={courtLoadingGroup.courtExecuted} />
         </TabPane>
         <TabPane
-          tab={`失信被执行人（${countCount['失信被执行人信息']}）`}
-          key="失信被执行人"
-          disabled={countCount['失信被执行人信息'] > 0 ? false : true}>
-          <DishonestyList dishonestyList={courtData.dishonestyList} regTime={this.regTime} />
+          tab={`失信被执行人（${this.hasTotal(courtData.courtDishonesty.totalElements)}）`}
+          key="courtDishonesty">
+          <DishonestyList dishonestyList={courtData.courtDishonesty} regTime={this.regTime} loading={courtLoadingGroup.courtDishonesty} />
         </TabPane>
         <TabPane
-          tab={`涉诉资产（${countCount['涉诉资产']}）`}
-          key="涉诉资产"
-          disabled={countCount['涉诉资产'] > 0 ? false : true}>
-          <LitigationAssets litigationAssets={courtData.litigationAssets} regTime={this.regTime} />
+          tab={`涉诉资产（${this.hasTotal(courtData.courtLitigation.totalElements)}）`}
+          key="courtLitigation">
+          <LitigationAssets litigationAssets={courtData.courtLitigation} regTime={this.regTime} loading={courtLoadingGroup.courtLitigation} />
         </TabPane>
       </Tabs>
     );

@@ -26,9 +26,10 @@ class PdfStore {
   @observable entinvItemList = [];
   @observable frData = {};
   @observable shares = {};
-  @observable pdfTypesKey = '';
+  @observable pdfTypesKey = 'SCORE,PROFIT,OPERATION,GROWING,SUMMERY';
   @observable managements = [];
   @observable reportType = '';
+  @observable taxList = [];
   // summary
   @observable summary = {};
   @observable companyName = '';
@@ -118,7 +119,7 @@ class PdfStore {
         this.internet = pathval.getPathValue(response.data, 'internet');
         this.trademark = pathval.getPathValue(response.data, 'trademark'); // 没有数据
         this.patent = pathval.getPathValue(response.data, 'patent');
-        this.bidding = pathval.getPathValue(response.data, 'biddingList');
+        this.bidding = pathval.getPathValue(response.data, 'bidding');
         this.network = pathval.getPathValue(response.data, 'network');
         this.blacklist = pathval.getPathValue(response.data, 'blackList.result[0].paths');
         this.team = pathval.getPathValue(response.data, 'recruitTeamResponse');
@@ -127,6 +128,7 @@ class PdfStore {
         this.frData = pathval.getPathValue(response.data, 'fr');
         this.shares = pathval.getPathValue(response.data, 'shares');
         this.managements = pathval.getPathValue(response.data, 'managements');
+        this.taxList = pathval.getPathValue(response.data, 'taxList');
         // 分析能力
         this.star = pathval.getPathValue(response.data, 'star');
         this.growing = pathval.getPathValue(response.data, 'growing');
@@ -159,6 +161,7 @@ class PdfStore {
     this.frData = pathval.getPathValue(data, 'fr');
     this.shares = pathval.getPathValue(data, 'shares');
     this.managements = pathval.getPathValue(data, 'managements');
+    this.taxList = pathval.getPathValue(data, 'taxList');
     // 分析能力
     this.star = pathval.getPathValue(data, 'star');
     this.growing = pathval.getPathValue(data, 'growing');

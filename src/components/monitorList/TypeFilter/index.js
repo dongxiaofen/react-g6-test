@@ -9,9 +9,9 @@ function TypeFilter({monitorListStore, uiStore}) {
     {name: '暂停监控', status: 'PAUSE'},
     {name: '监控到期', status: 'EXPIRED'},
   ];
-  const monitorStatus = uiStore.uiState.monitorList.params.monitorStatus;
+  const monitorStatus = monitorListStore.searchInfo.params.monitorStatus;
   const changeFilter = (status) => {
-    uiStore.updateUiStore(`monitorList.params.monitorStatus`, status);
+    monitorListStore.changeValue(`searchInfo.params.monitorStatus`, status);
     uiStore.updateUiStore(`monitorListPager.index`, 1);
     monitorListStore.getMainCount();
     monitorListStore.getMainList();

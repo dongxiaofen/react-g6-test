@@ -16,9 +16,7 @@ export default class Network extends Component {
   render() {
     const {isLoading, error} = this.props.networkStore;
     return (
-      <div>
-        <CurrentNetwork {...{isLoading, error}} />
-      </div>
+      <CurrentNetwork {...{isLoading, error}} />
     );
   }
 }

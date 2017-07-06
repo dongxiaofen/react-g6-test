@@ -1,16 +1,13 @@
 import React, {PropTypes} from 'react';
 import { observer } from 'mobx-react';
-import Popover from 'antd/lib/popover';
 import styles from './index.less';
 
-function RuleCompany({data}) {
+function RuleCompany({data, showCompanyId}) {
   const text = [];
-  let number = '';
   if (data && data.rule && data.rule.companyNames && data.rule.companyNames.length > 0) {
-    number = data.rule.companyNames.length;
     data.rule.companyNames.map((obj, idx)=> {
       text.push(
-        <div className={styles.single} key={`${idx}names`}>{obj}</div>
+        <span className={styles.single} key={`${idx}names`}>{obj}；</span>
       );
     });
   }
@@ -19,19 +16,17 @@ function RuleCompany({data}) {
       {text}
     </div>
   );
+  // 判断是否需要展开
+  const show = showCompanyId.indexOf(data.rule.id) > -1 ? true : false;
   return (
-    <div className={styles.box}>
-      <Popover placement="right" content={textAll}>
-        <div className={styles.riskLabel}>
-          <span>应用企业: {number}家</span>
-          <i></i>
-        </div>
-      </Popover>
+    <div className={show ? styles.box : styles.none}>
+      <div className={styles.companyList}>{textAll}</div>
     </div>
   );
 }
 
 RuleCompany.propTypes = {
   data: PropTypes.object,
+  showCompanyId: PropTypes.object,
 };
 export default observer(RuleCompany);

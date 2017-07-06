@@ -5,6 +5,9 @@ export const getTreeList = () => {
 export const getUserInfo = (uId) => {
   return axios.get(`/api/user/sub/${uId}`);
 };
+export const deleteAccount = (uId) => {
+  return axios.delete(`api/user/sub/${uId}`);
+};
 export const getReportAndMonitor = (uId) => {
   return axios.get(`/api/user/sub/${uId}/statistic/reportAndMonitor/xx`);
 };

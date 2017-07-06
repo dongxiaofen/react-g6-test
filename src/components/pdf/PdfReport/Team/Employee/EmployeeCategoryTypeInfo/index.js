@@ -5,7 +5,7 @@ import PdfTable from 'components/common/pdf/PdfTable';
 import SecondTitle from 'components/common/pdf/SecondTitle';
 
 function EmployeeCategoryTypeInfo({moduleData}) {
-  if (!moduleData || Object.keys(moduleData).length === 0) {
+  if (!moduleData || moduleData.length === 0) {
     return (
       <div>
         <SecondTitle module="所学专业" />

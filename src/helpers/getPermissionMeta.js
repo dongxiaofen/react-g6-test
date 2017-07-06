@@ -45,7 +45,7 @@ export default function getPermissionMeta(env) {
       loginLogoStyle: 'cfcaLoginLogoImg',
       beian: '京ICP证120015号 京公网安备110102005601',
       title: '洞悉-风险管理平台',
-      pdfStyle: 'scPdfBg',
+      pdfStyle: 'cfcaPdfBg',
       downloadApp: appCodeImgSc,
     };
   }else {

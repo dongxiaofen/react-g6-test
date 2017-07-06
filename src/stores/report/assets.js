@@ -1,13 +1,50 @@
-import { observable, action } from 'mobx';
+import { observable, action, runInAction, computed, reaction } from 'mobx';
 import { companyHomeApi } from 'api';
 import uiStore from '../ui';
 import axios from 'axios';
+import { setPathValue } from 'pathval';
 const CancelToken = axios.CancelToken;
 
 class AssetsStore {
+  constructor() {
+    reaction(
+      () => this.biddingAnalysisActive,
+      () => {
+        this.biddingAnalysisLoading = true;
+        setTimeout(() => {
+          runInAction(() => {
+            this.biddingAnalysisLoading = false;
+          });
+        }, 1000);
+        this.modifyBiddingAnalysis();
+      }
+    );
+  }
+
   @observable trademarkData = [];
   @observable patentData = [];
-  @observable biddingData = [];
+  @observable biddingData = {
+    statistic: {},
+    analysis: {
+      month: {},
+      quarter: {},
+      year: {},
+    },
+    biddingItemList: []
+  };
+
+  @observable biddingAnalysisLoading = true;
+
+  @computed get isErrAnalysis() {
+    const analysis = this.biddingData.analysis;
+    if (analysis.year) {
+      return Object.keys(analysis.year).length === 0;
+    }
+    return true;
+  }
+
+  @observable biddingAnalysisActive = '年度';
+  @observable biddingAnalysis = { axis: [], data: [] };
   @observable isMount = false ;
   // 弹框标题数据||信息来源
   @observable titleData = {};
@@ -19,6 +56,89 @@ class AssetsStore {
   @observable trLoading = true;
   @observable patentLoading = true;
   @observable biddingLoading = true;
+
+  @action.bound updateValue(path, value) {
+    setPathValue(this, path, value);
+  }
+
+  dealWithAnalysisDate(analysisData, active) {
+    const keys = Object.keys(analysisData);
+    const years = keys.map(key => key.substring(0, 4));
+    const common = (_years, _months) => {
+      const output = {};
+      years.forEach(year => {
+        _months.forEach(month => {
+          output[`${year}${month}`] = {
+            winMoneyAmount: 0,
+            winCount: 0,
+            bidMoneyAmount: 0,
+            bidCount: 0,
+          };
+        });
+      });
+      Object.keys(output).forEach(key => {
+        keys.forEach(_key => {
+          if (key === _key) {
+            output[key] = analysisData[key];
+          }
+        });
+      });
+      return output;
+    };
+    switch (active) {
+      case '月度':
+        const months = ['01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12'];
+        return common(years, months);
+      case '季度':
+        const quarterMonths = ['01', '04', '07', '10'];
+        return common(years, quarterMonths);
+      default:
+        break;
+    }
+  }
+
+  modifyAnalysis(value, active) {
+    let keys = Object.keys(value);
+    const data = {
+      winMoneyAmount: keys.map(key => value[key].winMoneyAmount),
+      winCount: keys.map(key => value[key].winCount),
+      bidMoneyAmount: keys.map(key => value[key].bidMoneyAmount),
+      bidCount: keys.map(key => value[key].bidCount),
+    };
+    switch (active) {
+      case '季度':
+        keys = keys.map(key => `${key}-${Number(key) + 2}`);
+        break;
+      case '年度':
+        keys = keys.map(key => key.substring(0, 4));
+        break;
+      default:
+        break;
+    }
+    return {
+      axis: keys,
+      data: data
+    };
+  }
+
+  // 处理招投标分析
+  @action.bound modifyBiddingAnalysis() {
+    const { month, quarter, year } = this.biddingData.analysis;
+    const active = this.biddingAnalysisActive;
+    switch (active) {
+      case '月度':
+        this.biddingAnalysis = this.modifyAnalysis(this.dealWithAnalysisDate(month, active), active);
+        break;
+      case '季度':
+        this.biddingAnalysis = this.modifyAnalysis(this.dealWithAnalysisDate(quarter, active), active);
+        break;
+      case '年度':
+        this.biddingAnalysis = this.modifyAnalysis(year, active);
+        break;
+      default:
+        break;
+    }
+  }
 
   @action.bound getTrademarkData(idInfo) {
     const {index, size} = uiStore.uiState.trademarkLists;
@@ -50,10 +170,25 @@ class AssetsStore {
     companyHomeApi.getReportModule('operation/bidding', params)
       .then(action( (response) => {
         this.biddingLoading = false;
-        this.biddingData = response.data;
+        this.biddingAnalysisLoading = false;
+
+        this.biddingData.statistic = response.data.statistic;
+        this.biddingData.analysis.month = response.data.month;
+        this.biddingData.analysis.quarter = response.data.quarter;
+        this.biddingData.analysis.year = response.data.year;
+        const result = response.data.result;
+        if (result && result.length) {
+          this.biddingData.biddingItemList = result.map(item => {
+            item.publishedDateTime = item.publishedDateTime.slice(0, 10);
+            return item;
+          });
+        } else {
+          this.biddingData.biddingItemList = [];
+        }
       }))
       .catch( action( (err) => {
         this.biddingLoading = false;
+        this.biddingAnalysisLoading = false;
         console.log(err.response.data);
       }));
   }
@@ -89,13 +224,23 @@ class AssetsStore {
   @action.bound resetStore() {
     this.trademarkData = [];
     this.patentData = [];
-    this.biddingData = [];
+    this.biddingData = {
+      statistic: {},
+      analysis: {
+        month: {},
+        quarter: {},
+        year: {},
+      },
+      biddingItemList: []
+    };
+
+    this.biddingAnalysisActive = '年度';
     this.isMount = false;
-      // 弹框标题数据||信息来源
+    // 弹框标题数据||信息来源
     this.titleData = {};
-      // 弹出框详情
+    // 弹出框详情
     this.bidMarkertContent = '';
-      // 取消请求
+    // 取消请求
     this.biddingDetailCancel = null;
 
     this.trLoading = true;

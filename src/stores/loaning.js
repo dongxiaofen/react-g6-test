@@ -1,10 +1,16 @@
 import { observable, action } from 'mobx';
 import { companyHomeApi } from 'api';
 import companyHomeStore from './companyHome';
+import pathval from 'pathval';
 
 class LoaningStore {
   @observable isLoading = true;
   @observable isMount = false;
+  @observable duration = {
+    day: '',
+    hours: '',
+    minutes: '',
+  }
   // 盈利能力指标数据
   @observable profitDataList = {};
   // 营运能力指标数据
@@ -40,7 +46,7 @@ class LoaningStore {
                     this.operationDataList = response.data;
                   }))
                   .catch(action((err) => {
-                    console.log('getProfitEvalList.....errr = ' + err);
+                    console.log('getOperationDataList.....errr = ' + err);
                     this.loading = false;
                   }));
   }
@@ -77,7 +83,9 @@ class LoaningStore {
                     this.sixStarData = { error: 'error' };
                   }));
   }
-
+  @action.bound updateValue(keyPath, value) {
+    pathval.setPathValue(this, keyPath, value);
+  }
   @action.bound resetStore() {
     this.isLoading = true;
     this.isMount = false;

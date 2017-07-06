@@ -13,7 +13,7 @@ function DishonestInfo({data, type, ruleId}) {
   };
   const body = ruleId === 4 ?
     [
-      {'key': 'companyName', 'width': '6', 'modifyBlock': regTime},
+      {'key': 'companyName', 'width': '6'},
       {'key': 'relation', 'width': '6', 'modifyBlock': regTime},
       {'key': 'publishDate', 'width': '6', 'modifyBlock': regTime},
       {'key': 'performance', 'width': '6'},
@@ -40,7 +40,7 @@ function DishonestInfo({data, type, ruleId}) {
     itemData.companyName = data.detail[0].companyName;
   }
   const meta = {
-    dict: 'dishonestyList',
+    dict: 'courtDishonesty',
     body: body,
     item: itemData,
   };

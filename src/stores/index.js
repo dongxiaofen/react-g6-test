@@ -32,7 +32,6 @@ export networkStore from './report/network';
 export blackNetworkStore from './report/blackNetwork';
 export reportAxisStore from './report/reportAxis';
 export alertAnalysisStore from './report/alertAnalysis';
-// export analysisSrore from './report/analysis';
 export taxStore from './report/tax';
 export monitorAxisStore from './report/monitorAxis';
 // export alertMonitorStore from './report/alertMonitor';
@@ -59,4 +58,6 @@ export assetTransactionStore from './assetTransaction';
 export linkJumpStore from './linkJump';
 export entireLoadingStore from './entireLoading';
 export loaningStore from './loaning';
+export ruleAddStore from './ruleAdd';
+export ruleListStore from './ruleList';
 // append here from plop

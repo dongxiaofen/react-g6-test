@@ -1,38 +1,312 @@
 import { observable, action, reaction, extendObservable } from 'mobx';
 import pathval from 'pathval';
-import companyHomeStore from './companyHome';
-import assetsStore from './report/assets';
 import reportListStore from './reportList';
 import analysisListStore from './analysisList';
 import monitorListStore from './monitorList';
-import ruleStore from './rule';
+import ruleListStore from './ruleList';
 import ruleCompanyStore from './ruleCompany';
 import accountSettingStore from './accountSetting';
-import alertAnalysisStore from './report/alertAnalysis';
-import monitorAlertStore from './report/monitorAlert';
 import collectionStore from './collection';
 import relPerCheckStore from './relPerCheck';
-import nowRecordStore from './report/nowRecord';
 import taxCheckStore from './taxCheck';
 import bidMarketStore from './bidMarket';
 import assetTransactionStore from './assetTransaction';
 
+const initPagerParams = {
+  basicReportPager: {
+    index: 1,
+    size: 10,
+    totalElements: 0
+  },
+  advancedReportPager: {
+    index: 1,
+    size: 10,
+    totalElements: 0
+  },
+  multiAnalysisPager: {
+    index: 1,
+    size: 10,
+    totalElements: 0
+  },
+  profitAnalysisPager: {
+    index: 1,
+    size: 10,
+    totalElements: 0
+  },
+  operateAnalysisPager: {
+    index: 1,
+    size: 10,
+    totalElements: 0
+  },
+  developAnalysisPager: {
+    index: 1,
+    size: 10,
+    totalElements: 0
+  },
+  monitorListPager: {
+    index: 1,
+    size: 10,
+    totalElements: 0
+  },
+  accountAlertCorp: {
+    index: 1,
+    size: 10,
+    totalElements: 0
+  },
+  accountConsume: {
+    index: 1,
+    size: 10,
+    totalElements: 0
+  },
+  accountRecharge: {
+    index: 1,
+    size: 10,
+    totalElements: 0
+  },
+  accountSummary: {
+    index: 1,
+    size: 10,
+    totalElements: 0
+  },
+  accountLoginRecord: {
+    index: 1,
+    size: 10,
+    totalElements: 0
+  },
+  alertAnalysis: {
+    index: 1,
+    size: 10,
+    totalElements: 0
+  },
+  monitorAlert: {
+    index: 1,
+    size: 10,
+    totalElements: 0
+  },
+  ruleListPager: {
+    index: 1,
+    size: 10
+    // show: observable.map({})
+  },
+  ruleCompanyListPager: {
+    index: 1,
+    size: 10,
+    show: observable.map({})
+  },
+  nowRecordPager: {
+    index: 1,
+    size: 10,
+    show: observable.map({})
+  },
+  taxCheckPager: {
+    index: 1,
+    size: 10,
+    show: observable.map({})
+  },
+  taxInfoCheckPager: {
+    index: 1,
+    size: 10,
+    show: observable.map({})
+  },
+  shareholder: {
+    index: 1,
+    size: 10
+  },
+  personList: {
+    index: 1,
+    size: 10
+  },
+  filiationList: {
+    index: 1,
+    size: 10
+    // show: observable.map({})
+  },
+  entinvItemLists: {
+    index: 1,
+    size: 10,
+    show: observable.map({})
+  },
+  frinvList: {
+    index: 1,
+    size: 10,
+    show: observable.map({})
+  },
+  frPositionList: {
+    index: 1,
+    size: 10,
+    show: observable.map({})
+  },
+  sharesFrostListItemLists: {
+    index: 1,
+    size: 10,
+    show: observable.map({})
+  },
+  sharesTransferListItemLists: {
+    index: 1,
+    size: 10,
+    show: observable.map({})
+  },
+  sharesImpawnListItemLists: {
+    index: 1,
+    size: 10,
+    show: observable.map({})
+  },
+  alterList: {
+    index: 1,
+    size: 10,
+    show: observable.map({})
+  },
+  yearInvestor: {
+    index: 1,
+    size: 10
+  },
+  yearWebsite: {
+    index: 1,
+    size: 10
+  },
+  yearEquityChange: {
+    index: 1,
+    size: 10
+  },
+  yearChangeRecords: {
+    index: 1,
+    size: 10
+  },
+  trademarkLists: {
+    index: 1,
+    size: 10,
+    totalElements: 0 // 服务端分页
+  },
+  patentInfo: {
+    index: 1,
+    size: 10,
+    totalElements: 0, // 服务端分页
+    show: observable.map({})
+  },
+  judgeDoc: {
+    index: 1,
+    size: 10,
+    show: observable.map({}),
+    totalElements: 0
+  },
+  courtAnnouncement: {
+    index: 1,
+    size: 10,
+    show: observable.map({}),
+    totalElements: 0
+  },
+  courtNotice: {
+    index: 1,
+    size: 10,
+    show: observable.map({}),
+    totalElements: 0
+  },
+  courtExecuted: {
+    index: 1,
+    size: 10,
+    totalElements: 0
+  },
+  courtDishonesty: {
+    index: 1,
+    size: 10,
+    show: observable.map({}),
+    totalElements: 0
+  },
+  courtLitigation: {
+    index: 1,
+    size: 10,
+    show: observable.map({}),
+    totalElements: 0
+  },
+  jyErrorData: {
+    index: 1,
+    size: 10,
+    show: observable.map({})
+  },
+  checkMessage: {
+    index: 1,
+    size: 10,
+    show: observable.map({})
+  },
+  illegalRecord: {
+    index: 1,
+    size: 10,
+    show: observable.map({})
+  },
+  taxPublicInfo: {
+    index: 1,
+    size: 10,
+    show: observable.map({})
+  },
+  news: {
+    index: 1,
+    size: 10,
+    type: 'ALL'
+  },
+  biddingList: {
+    index: 1,
+    size: 10
+  },
+  recentRecruitment: {
+    index: 1,
+    size: 10
+  },
+  relPerCheck: {
+    index: 1,
+    size: 10,
+    totalElements: 0 // 服务端分页
+  },
+  stockShareHolder: {
+    index: 1,
+    size: 10
+  },
+  stockCirculateShareHolder: {
+    index: 1,
+    size: 10
+  },
+  stockManagement: {
+    index: 1,
+    size: 20
+  },
+  stockAnnouncement: {
+    index: 1,
+    size: 10
+  },
+  personBlacklist: {
+    index: 1,
+    size: 10
+  },
+  executed: {
+    index: 1,
+    size: 10
+  },
+  dishonesty: {
+    index: 1,
+    size: 5
+  },
+  collection: {
+    companyName: '',
+    index: 1,
+    size: 10,
+    totalElements: 0 // 服务端分页
+  },
+  bidMarketInfo: {
+    index: 1,
+    size: 9,
+    totalElements: 0
+  },
+  assetLocal: {
+    index: 1,
+    size: 10,
+    totalElements: 0
+  },
+  biddingStatistic: {
+    index: 1,
+    size: 10
+  }
+};
 class UiStore {
   constructor() {
-    reaction(
-      () => this.uiState.trademarkLists.index,
-      () => {
-        const reportInfo = companyHomeStore.reportInfo;
-        assetsStore.getTrademarkData(reportInfo);
-      }
-    );
-    reaction(
-      () => this.uiState.patentInfo.index,
-      () => {
-        const reportInfo = companyHomeStore.reportInfo;
-        assetsStore.getPatentData(reportInfo);
-      }
-    );
     reaction(
       () => this.uiState.basicReportPager.index,
       () => {
@@ -83,21 +357,9 @@ class UiStore {
       }
     );
     reaction(
-      () => this.uiState.alertAnalysis.index,
-      () => {
-        alertAnalysisStore.getReportModule(companyHomeStore.reportInfo);
-      }
-    );
-    reaction(
-      () => this.uiState.monitorAlert.index,
-      () => {
-        monitorAlertStore.getReportModule(companyHomeStore.reportInfo);
-      }
-    );
-    reaction(
       () => this.uiState.ruleListPager.index,
       () => {
-        ruleStore.getRuleList();
+        ruleListStore.getRuleTypeList();
       }
     );
     reaction(
@@ -116,17 +378,23 @@ class UiStore {
       }
     );
     reaction(
-      () => this.uiState.nowRecordPager.index,
-      () => {
-        nowRecordStore.getNowRecordList();
-      }
-    );
-    reaction(
       () => this.uiState.taxCheckPager.index,
       () => {
         taxCheckStore.getReportModule();
       }
     );
+    reaction(
+      () => this.uiState.relPerCheck.index,
+      () => {
+        relPerCheckStore.getReportModule(relPerCheckStore.reloadMonitorId);
+      }
+    );
+    // reaction(
+    //   () => this.uiState.taxInfoCheckPager.index,
+    //   () => {
+    //     taxCheckStore.getTaxCheckInfo();
+    //   }
+    // );
     reaction(
       () => this.uiState.accountConsume.index,
       () => {
@@ -149,7 +417,7 @@ class UiStore {
       }
     );
     reaction(
-        () => this.uiState.accountLoginRecord.index,
+      () => this.uiState.accountLoginRecord.index,
       () => {
         const uId = accountSettingStore.base.data.id;
         accountSettingStore.getLoginRecord(uId);
@@ -164,12 +432,6 @@ class UiStore {
           index: collection.index,
           size: collection.size
         });
-      }
-    );
-    reaction(
-      () => this.uiState.relPerCheck.index,
-      () => {
-        relPerCheckStore.getReportModule(relPerCheckStore.reloadMonitorId);
       }
     );
     reaction(
@@ -191,311 +453,25 @@ class UiStore {
       }
     );
   }
+  @observable uiState = initPagerParams;
 
-  @observable uiState = {
-    basicReportPager: {
-      index: 1,
-      size: 10,
-      totalElements: 0,
-    },
-    advancedReportPager: {
-      index: 1,
-      size: 10,
-      totalElements: 0,
-    },
-    multiAnalysisPager: {
-      index: 1,
-      size: 10,
-      totalElements: 0,
-    },
-    profitAnalysisPager: {
-      index: 1,
-      size: 10,
-      totalElements: 0,
-    },
-    operateAnalysisPager: {
-      index: 1,
-      size: 10,
-      totalElements: 0,
-    },
-    developAnalysisPager: {
-      index: 1,
-      size: 10,
-      totalElements: 0,
-    },
-    monitorList: {
-      searchInput: '',
-      sortDirection: {
-        start_tm: 'DESC',
-        expire_dt: 'DESC',
-        latestTs: 'DESC',
-      },
-      params: {
-        companyName: '',
-        sort: 'start_tm,DESC',
-        monitorStatus: '',
-      }
-    },
-    monitorListPager: {
-      index: 1,
-      size: 10,
-      totalElements: 0,
-    },
-    accountAlertCorp: {
-      index: 1,
-      size: 10,
-      totalElements: 0,
-    },
-    accountConsume: {
-      index: 1,
-      size: 10,
-      totalElements: 0,
-    },
-    accountRecharge: {
-      index: 1,
-      size: 10,
-      totalElements: 0,
-    },
-    accountSummary: {
-      index: 1,
-      size: 10,
-      totalElements: 0,
-    },
-    accountLoginRecord: {
-      index: 1,
-      size: 10,
-      totalElements: 0,
-    },
-    alertAnalysis: {
-      index: 1,
-      size: 10,
-      totalElements: 0,
-    },
-    monitorAlert: {
-      index: 1,
-      size: 10,
-      totalElements: 0,
-    },
-    ruleListPager: {
-      index: 1,
-      size: 10,
-      show: observable.map({})
-    },
-    ruleCompanyListPager: {
-      index: 1,
-      size: 10,
-      show: observable.map({})
-    },
-    nowRecordPager: {
-      index: 1,
-      size: 10,
-      show: observable.map({})
-    },
-    taxCheckPager: {
-      index: 1,
-      size: 10,
-      show: observable.map({})
-    },
-    shareholder: {
-      index: 1,
-      size: 10
-    },
-    personList: {
-      index: 1,
-      size: 10
-    },
-    filiationList: {
-      index: 1,
-      size: 10,
-      // show: observable.map({})
-    },
-    entinvItemLists: {
-      index: 1,
-      size: 10,
-      show: observable.map({})
-    },
-    frinvList: {
-      index: 1,
-      size: 10,
-      show: observable.map({})
-    },
-    frPositionList: {
-      index: 1,
-      size: 10,
-      show: observable.map({})
-    },
-    sharesFrostListItemLists: {
-      index: 1,
-      size: 10,
-      show: observable.map({})
-    },
-    sharesTransferListItemLists: {
-      index: 1,
-      size: 10,
-      show: observable.map({})
-    },
-    sharesImpawnListItemLists: {
-      index: 1,
-      size: 10,
-      show: observable.map({})
-    },
-    alterList: {
-      index: 1,
-      size: 10,
-      show: observable.map({})
-    },
-    yearInvestor: {
-      index: 1,
-      size: 10,
-    },
-    yearWebsite: {
-      index: 1,
-      size: 10,
-    },
-    yearEquityChange: {
-      index: 1,
-      size: 10,
-    },
-    yearChangeRecords: {
-      index: 1,
-      size: 10,
-    },
-    trademarkLists: {
-      index: 1,
-      size: 10,
-      totalElements: 0, // 服务端分页
-    },
-    patentInfo: {
-      index: 1,
-      size: 10,
-      totalElements: 0, // 服务端分页
-      show: observable.map({}),
-    },
-    judgeDoc: {
-      index: 1,
-      size: 10,
-      show: observable.map({}),
-    },
-    courtAnnouncement: {
-      index: 1,
-      size: 10,
-      show: observable.map({}),
-    },
-    courtNotice: {
-      index: 1,
-      size: 10,
-      show: observable.map({}),
-    },
-    courtExecution: {
-      index: 1,
-      size: 10,
-    },
-    dishonestyList: {
-      index: 1,
-      size: 10,
-      show: observable.map({}),
-    },
-    litigationAssets: {
-      index: 1,
-      size: 10,
-      show: observable.map({}),
-    },
-    jyErrorData: {
-      index: 1,
-      size: 10,
-      show: observable.map({}),
-    },
-    checkMessage: {
-      index: 1,
-      size: 10,
-      show: observable.map({}),
-    },
-    illegalRecord: {
-      index: 1,
-      size: 10,
-      show: observable.map({}),
-    },
-    taxPublicInfo: {
-      index: 1,
-      size: 10,
-      show: observable.map({}),
-    },
-    news: {
-      index: 1,
-      size: 10,
-      type: 'ALL',
-    },
-    biddingList: {
-      index: 1,
-      size: 10,
-    },
-    recentRecruitment: {
-      index: 1,
-      size: 10
-    },
-    relPerCheck: {
-      index: 1,
-      size: 10,
-      totalElements: 0, // 服务端分页
-    },
-    stockShareHolder: {
-      index: 1,
-      size: 10
-    },
-    stockCirculateShareHolder: {
-      index: 1,
-      size: 10
-    },
-    stockManagement: {
-      index: 1,
-      size: 20
-    },
-    stockAnnouncement: {
-      index: 1,
-      size: 10
-    },
-    personBlacklist: {
-      index: 1,
-      size: 10
-    },
-    executed: {
-      index: 1,
-      size: 10
-    },
-    dishonesty: {
-      index: 1,
-      size: 5
-    },
-    collection: {
-      companyName: '',
-      index: 1,
-      size: 10,
-      totalElements: 0, // 服务端分页
-    },
-    bidMarketInfo: {
-      index: 1,
-      size: 9,
-      totalElements: 0
-    },
-    assetLocal: {
-      index: 1,
-      size: 10,
-      totalElements: 0
-    }
-  };
-
-  @action.bound updateUiStore(keypath, value) {
+  @action.bound
+  updateUiStore(keypath, value) {
     pathval.setPathValue(this.uiState, keypath, value);
   }
-  @action.bound toggleExpand(module, rowIdx) {
+
+  @action.bound
+  toggleExpand(module, rowIdx) {
     const value = this.uiState[module].show.get(rowIdx);
     this.uiState[module].show.set(rowIdx, !value);
   }
-  @action.bound resetAccountPager() {
+
+  @action.bound
+  resetAccountPager() {
     const template = {
       index: 1,
       size: 10,
-      totalElements: 0,
+      totalElements: 0
     };
     this.uiState.accountAlertCorp = Object.assign({}, template);
     this.uiState.accountConsume = Object.assign({}, template);
@@ -504,299 +480,11 @@ class UiStore {
     this.uiState.accountLoginRecord = Object.assign({}, template);
     this.uiState.relPerCheck = Object.assign({}, template);
   }
-  @action.bound resetStore() {
+
+  @action.bound
+  resetStore() {
     extendObservable(this, {
-      uiState: {
-        basicReportPager: {
-          index: 1,
-          size: 10,
-          totalElements: 0,
-        },
-        advancedReportPager: {
-          index: 1,
-          size: 10,
-          totalElements: 0,
-        },
-        multiAnalysisPager: {
-          index: 1,
-          size: 10,
-          totalElements: 0,
-        },
-        profitAnalysisPager: {
-          index: 1,
-          size: 10,
-          totalElements: 0,
-        },
-        operateAnalysisPager: {
-          index: 1,
-          size: 10,
-          totalElements: 0,
-        },
-        developAnalysisPager: {
-          index: 1,
-          size: 10,
-          totalElements: 0,
-        },
-        monitorList: {
-          searchInput: '',
-          sortDirection: {
-            start_tm: 'DESC',
-            expire_dt: 'DESC',
-            latestTs: 'DESC',
-          },
-          params: {
-            companyName: '',
-            sort: 'start_tm,DESC',
-            monitorStatus: '',
-          }
-        },
-        monitorListPager: {
-          index: 1,
-          size: 10,
-          totalElements: 0,
-        },
-        accountAlertCorp: {
-          index: 1,
-          size: 10,
-          totalElements: 0,
-        },
-        accountConsume: {
-          index: 1,
-          size: 10,
-          totalElements: 0,
-        },
-        accountRecharge: {
-          index: 1,
-          size: 10,
-          totalElements: 0,
-        },
-        accountSummary: {
-          index: 1,
-          size: 10,
-          totalElements: 0,
-        },
-        relPerCheck: {
-          index: 1,
-          size: 10,
-          totalElements: 0,
-        },
-        accountLoginRecord: {
-          index: 1,
-          size: 10,
-          totalElements: 0,
-        },
-        alertAnalysis: {
-          index: 1,
-          size: 10,
-          totalElements: 0,
-        },
-        monitorAlert: {
-          index: 1,
-          size: 10,
-          totalElements: 0,
-        },
-        ruleListPager: {
-          index: 1,
-          size: 10,
-          show: observable.map({})
-        },
-        ruleCompanyListPager: {
-          index: 1,
-          size: 10,
-          show: observable.map({})
-        },
-        nowRecordPager: {
-          index: 1,
-          size: 10,
-          show: observable.map({})
-        },
-        taxCheckPager: {
-          index: 1,
-          size: 10,
-          show: observable.map({})
-        },
-        shareholder: {
-          index: 1,
-          size: 10
-        },
-        personList: {
-          index: 1,
-          size: 10
-        },
-        filiationList: {
-          index: 1,
-          size: 10,
-          // show: observable.map({})
-        },
-        entinvItemLists: {
-          index: 1,
-          size: 10,
-          show: observable.map({})
-        },
-        frinvList: {
-          index: 1,
-          size: 10,
-          show: observable.map({})
-        },
-        frPositionList: {
-          index: 1,
-          size: 10,
-          show: observable.map({})
-        },
-        sharesFrostListItemLists: {
-          index: 1,
-          size: 10,
-          show: observable.map({})
-        },
-        sharesTransferListItemLists: {
-          index: 1,
-          size: 10,
-          show: observable.map({})
-        },
-        sharesImpawnListItemLists: {
-          index: 1,
-          size: 10,
-          show: observable.map({})
-        },
-        alterList: {
-          index: 1,
-          size: 10,
-          show: observable.map({})
-        },
-        yearInvestor: {
-          index: 1,
-          size: 10,
-        },
-        yearWebsite: {
-          index: 1,
-          size: 10,
-        },
-        yearEquityChange: {
-          index: 1,
-          size: 10,
-        },
-        yearChangeRecords: {
-          index: 1,
-          size: 10,
-        },
-        trademarkLists: {
-          index: 1,
-          size: 10,
-          totalElements: 0, // 服务端分页
-        },
-        patentInfo: {
-          index: 1,
-          size: 10,
-          totalElements: 0, // 服务端分页
-          show: observable.map({}),
-        },
-        judgeDoc: {
-          index: 1,
-          size: 10,
-          show: observable.map({}),
-        },
-        courtAnnouncement: {
-          index: 1,
-          size: 10,
-          show: observable.map({}),
-        },
-        courtNotice: {
-          index: 1,
-          size: 10,
-          show: observable.map({}),
-        },
-        courtExecution: {
-          index: 1,
-          size: 10,
-        },
-        dishonestyList: {
-          index: 1,
-          size: 10,
-          show: observable.map({}),
-        },
-        litigationAssets: {
-          index: 1,
-          size: 10,
-          show: observable.map({}),
-        },
-        jyErrorData: {
-          index: 1,
-          size: 10,
-          show: observable.map({}),
-        },
-        checkMessage: {
-          index: 1,
-          size: 10,
-          show: observable.map({}),
-        },
-        illegalRecord: {
-          index: 1,
-          size: 10,
-          show: observable.map({}),
-        },
-        taxPublicInfo: {
-          index: 1,
-          size: 10,
-          show: observable.map({}),
-        },
-        news: {
-          index: 1,
-          size: 10,
-          type: 'ALL',
-        },
-        biddingList: {
-          index: 1,
-          size: 10,
-        },
-        recentRecruitment: {
-          index: 1,
-          size: 10
-        },
-        stockShareHolder: {
-          index: 1,
-          size: 10
-        },
-        stockCirculateShareHolder: {
-          index: 1,
-          size: 10
-        },
-        stockManagement: {
-          index: 1,
-          size: 20
-        },
-        stockAnnouncement: {
-          index: 1,
-          size: 10
-        },
-        personBlacklist: {
-          index: 1,
-          size: 10
-        },
-        executed: {
-          index: 1,
-          size: 10
-        },
-        dishonesty: {
-          index: 1,
-          size: 5
-        },
-        collection: {
-          companyName: '',
-          index: 1,
-          size: 10,
-          totalElements: 0, // 服务端分页
-        },
-        bidMarketInfo: {
-          index: 1,
-          size: 9,
-          totalElements: 0
-        },
-        assetLocal: {
-          index: 1,
-          size: 10,
-          totalElements: 0
-        }
-      }
+      uiState: initPagerParams
     });
   }
 }

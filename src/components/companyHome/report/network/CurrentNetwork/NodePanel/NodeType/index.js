@@ -20,11 +20,7 @@ function NodeType({ nodeData, mainCompanyName, currentNetwork }) {
       });
     } else {
       Object.keys(linkData.name).map((key) => {
-        if (key === linkData.name[key].join(',')) {
-          typeArr.push(`${key}`);
-        } else {
-          typeArr.push(`${key}(${linkData.name[key].join(',')})`);
-        }
+        typeArr.push(`${key}`);
       });
     }
     return typeArr.join('/');

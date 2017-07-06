@@ -19,8 +19,22 @@ import { Provider, useStaticRendering } from 'mobx-react';
 import getRoutes from './routes';
 import { RouterStore } from 'mobx-react-router';
 import * as allStores from 'stores';
+import {
+  UpFileToQiniu,
+  checkPDF,
+  writeToLog,
+  deletePdfsOnQiniu
+} from './helpers/pdfHelper';
+import schedule from 'node-schedule';
 useStaticRendering(true);
 fundebug.apikey = 'd3c3ad8fd8f470b0bd162e9504c98c1984050474f3f550d47b17c54983633c1e';
+
+// 设置定时删除七牛文件
+schedule.scheduleJob('0 0 0 * * *', () => {
+  console.log('启动删除文件---');
+  deletePdfsOnQiniu()
+});
+
 const agent = require('superagent-defaults')();
 const BASE_DIRNAME = process.cwd();
 const PDF_DIRNAME = path.join(BASE_DIRNAME, '/static/pdf/');
@@ -56,7 +70,7 @@ const getStringifyData = (data) => {
 }
 const writeDataToFile = (id, data) => {
   fs.writeFile(
-    path.join(__dirname, id + '.js'),
+    path.join(__dirname, id + '.json'),
     getStringifyData(data),
     (err) => {
       if (!err) {
@@ -68,16 +82,17 @@ const writeDataToFile = (id, data) => {
   );
 }
 
-const writeStrToHtml = (id, data, callBack) => {
+const writeStrToHtml = (id, data, callBack, errorCallBack) => {
   fs.writeFile(
     PDF_DIRNAME + id,
     data,
     (err) => {
       if (!err) {
         console.log(" write string to html ok");
-        callBack();
+        if (callBack) { callBack();}
       } else {
         console.log("write string to html err");
+        if (errorCallBack) { errorCallBack();}
       }
     }
   );
@@ -103,6 +118,9 @@ app.get('/front/refresh/assets', function(req, res) {
   const assetsPath = path.resolve(__dirname, '../static/dist');
   const reg = /^(?:main-)(.*)(?:\.js)$/;
   fs.readdir(assetsPath, function(err, file) {
+    if (!file) {
+      return res.status(404).send({message: 'file not fount'});
+    }
     const mainFile = file.filter(name => reg.test(name))[0];
     if (mainFile) {
       const assetsHash = mainFile.match(reg)[1];
@@ -127,6 +145,13 @@ app.use((req, res) => {
   axios.defaults.headers.common['Content-Type'] = 'application/json';
   axios.defaults.headers.common['scm-source'] = config.target === 'dianxin_prod' ? 'TEL_WEB' : 'SC_WEB';
   axios.defaults.headers.common['scm-token'] = req.cookies['scm-token'] || {};
+
+  // 检查pdf路径
+  const reqPathName = url.parse(req.url).pathname;
+  if (reqPathName === '/pdfCheck') {
+    checkPDF(req, res);
+    return false;
+  }
   match({ routes: getRoutes('server'), location: req.originalUrl }, (error, redirectLocation, renderProps) => {
     if (redirectLocation) {
       res.redirect(redirectLocation.pathname + redirectLocation.search);
@@ -135,7 +160,7 @@ app.use((req, res) => {
       res.status(500);
       // hydrateOnClient();
     } else if (renderProps) {
-      const reqPathName = url.parse(req.url).pathname;
+      // const reqPathName = url.parse(req.url).pathname;
       console.log('路由被match', url.parse(req.url));
       if (reqPathName === '/pdfDown') {
         const routingStore = new RouterStore();
@@ -168,7 +193,7 @@ app.use((req, res) => {
         console.log(urlPanth, 'urlPanth-----------', params);
         axios.get(config.backendApi + urlPanth, { params })
           .then((resp) => {
-            // writeDataToFile('resp', resp.data);
+            writeDataToFile('pdf', resp.data);
             allStores.pdfStore.setTypes(params.types, reportType);
             allStores.clientStore.envConfig = config.target;
             allStores.pdfStore.getPdfDownData(resp.data);

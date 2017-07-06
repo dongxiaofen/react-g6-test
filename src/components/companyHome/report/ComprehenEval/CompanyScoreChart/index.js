@@ -23,7 +23,7 @@ function CompanyScoreChart({ sixStarData }) {
         },
       },
       indicator: [
-        { name: '行业状况', max: 100 },
+        { name: '行业相关', max: 100 },
         { name: '经营状况', max: 100 },
         { name: '团队相关', max: 100 },
         { name: '社会影响力', max: 100 },

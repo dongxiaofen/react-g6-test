@@ -2,7 +2,7 @@ import React, {PropTypes} from 'react';
 import { observer } from 'mobx-react';
 import {CardTable } from 'components/common/report';
 
-function CourtExecution({courtExecution, regTime}) {
+function CourtExecution({courtExecution, regTime, loading}) {
   const modifyCaseState = ()=> {
     return '--';
   };
@@ -17,11 +17,12 @@ function CourtExecution({courtExecution, regTime}) {
         {'key': 'caseState', 'width': '6', modifyText: modifyCaseState},
       ],
       isExpand: false,
-      dict: 'courtExecution',
-      cData: courtExecution.data
+      dict: 'courtExecuted',
+      cData: courtExecution.content
     },
+    isLoading: loading,
     module: '被执行人信息',
-    error: courtExecution.data.length === 0
+    error: !courtExecution.content || courtExecution.content.length === 0
   };
   return (
     <CardTable {...data} />
@@ -29,6 +30,7 @@ function CourtExecution({courtExecution, regTime}) {
 }
 
 CourtExecution.propTypes = {
+  loading: PropTypes.bool,
   courtExecution: PropTypes.object,
   regTime: PropTypes.func
 };

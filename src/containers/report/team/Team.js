@@ -8,7 +8,7 @@ import { ModuleTitle } from 'components/common/report';
 
 import RecruitmentInfo from 'components/companyHome/report/team/RecruitmentInfo';
 import StaffInfo from 'components/companyHome/report/team/StaffInfo';
-import RecentOffers from 'components/companyHome/report/team/RecentOffers';
+// import RecentOffers from 'components/companyHome/report/team/RecentOffers';
 
 import TrendAnalysis from 'components/companyHome/report/team/TrendAnalysis';
 import SiteAndJob from 'components/companyHome/report/team/SiteAndJob';
@@ -38,12 +38,12 @@ export default class Team extends Component {
               majorInfo={teamStore.majorInfo}
               isLoading={teamStore.isLoading} />
           </div>
-          <div>
+          {/*<div>
             <ModuleTitle module="近期招聘信息" />
             <RecentOffers
               recentRecruitment={teamStore.recentRecruitment}
               isLoading={teamStore.isLoading} />
-          </div>
+          </div>*/}
         </TabPane>
         <TabPane tab="团队发展趋势" key="团队发展趋势">
           <div>

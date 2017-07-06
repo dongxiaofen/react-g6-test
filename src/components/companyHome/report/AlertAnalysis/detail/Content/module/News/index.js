@@ -1,8 +1,14 @@
 import React, {PropTypes} from 'react';
 import { observer } from 'mobx-react';
 import SimpleCard from 'components/common/report/alertAnalysis/SimpleCard';
-function News({data, dataStore}) {
-  data.content.alterDt = data.alterDt;
+function News({data, dataStore, ruleType}) {
+  let itemData = null;
+  if (ruleType !== 84) {
+    data.content.alterDt = data.alterDt;
+    itemData = data.content;
+  } else {
+    itemData = data.detail[0];
+  }
   const meta = {
     dict: 'news',
     body: [
@@ -10,7 +16,7 @@ function News({data, dataStore}) {
       {'key': 'alterDt', 'width': '12'},
       {'key': 'detail', 'width': '12', keyType: 'detail'}
     ],
-    item: data.content,
+    item: itemData,
   };
   return (
     <SimpleCard meta={meta} dataStore={dataStore}/>

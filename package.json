@@ -106,23 +106,23 @@
       }
     },
     "start-remote-prod-pre": {
-      "command": "pm2 start ./bin/server.js --name=xx_remote_prod_pre",
-      "env": {
-        "NODE_PATH": "./src",
-        "NODE_ENV": "production",
-        "PORT": 9124,
-        "target": "cfca_prod",
-        "backendApi": "http://120.27.194.231:9080"
-      }
-    },
-    "start-remote-prod": {
-      "command": "pm2 start ./bin/server.js --name=xx_remote_prod",
+      "command": "pm2 start ./bin/server.js -i 0 --name=xx_remote_prod_pre",
       "env": {
         "NODE_PATH": "./src",
         "NODE_ENV": "production",
         "PORT": 9124,
         "target": "remote_prod",
-        "backendApi": "http://10.47.79.89:8080"
+        "backendApi": "http://120.27.194.231:9080"
+      }
+    },
+    "start-remote-prod": {
+      "command": "pm2 start ./bin/server.js -i 2 --name=xx_remote_prod",
+      "env": {
+        "NODE_PATH": "./src",
+        "NODE_ENV": "production",
+        "PORT": 9124,
+        "target": "remote_prod",
+        "backendApi": "http://10.117.80.105:8080"
       }
     },
     "start-cfca-prod": {
@@ -132,7 +132,7 @@
         "NODE_ENV": "production",
         "PORT": 9126,
         "target": "cfca_prod",
-        "backendApi": "http://10.47.79.89:8080"
+        "backendApi": "http://10.117.80.105:8080"
       }
     },
     "start-cfca-remote": {
@@ -190,11 +190,13 @@
     "moment": "2.17.1",
     "moment-range": "2.2.0",
     "morgan": "1.8.1",
+    "node-schedule": "^1.2.3",
     "node-uuid": "1.4.7",
     "object-assign": "4.1.1",
     "pathval": "^1.1.0",
     "plop": "1.7.4",
     "pretty-error": "1.2.0",
+    "qiniu": "^6.1.13",
     "react": "15.4.2",
     "react-css-modules": "3.7.6",
     "react-dom": "15.4.2",

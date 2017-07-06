@@ -31,7 +31,7 @@ import {
     RuleCompany,
     PersonReport,
     Pdf,
-    BlackNetwork,
+    // BlackNetwork,
     Collection,
     BidMarket,
     HighRiskCorp,
@@ -42,6 +42,8 @@ import {
     Disclaimer,
     Tax,
     TaxCheck,
+    CorpBlackList,
+    PersonCheck,
     AssetTransaction,
     InLoanAnalysis,
     ComprehenEval,
@@ -59,27 +61,33 @@ import {
     Search,
     // History,
     // Result
+    SharePosAndInv,
+    BlackList,
+    DebtPayAbilityEval,
+    AssetManageAnaly,
+    CashFlowAnaly,
+    RiskConduct,
 // first append here from plop
   } from 'containers';
 
-function requireAuth(nextState) {
-  // console.log(allStore, nextState, replace, '------requireAuth');
+function requireAuth(nextState, replace) {
+  const pathname = nextState.location.pathname;
   const params = {
     pageViewEntryList: [
       {
         accessTime: Date.now(),
-        uri: nextState.location.pathname,
+        uri: pathname,
         queryString: nextState.location.search.slice(1),
       }
     ]
   };
   axios.post('/api/sc/collect/page', params);
-  // if (allStore !== 'server') {
-  //   const { reportId } = allStore.routing.location.query;
-  //   if (!reportId) {
-  //     replace('/');
-  //   }
-  // }
+  if (pathname.includes('/companyHome')) {
+    const { companyName } = nextState.location.query;
+    if (!companyName) {
+      replace('/accountProfile');
+    }
+  }
 }
 
 export default () => {
@@ -97,7 +105,7 @@ export default () => {
       <Route path="analysisList" component={ AnalysisList } onEnter={requireAuth} />
       <Route path="monitorList" component={ MonitorList } onEnter={requireAuth} />
       <Route path="inLoanAnalysis" component= { InLoanAnalysis } onEnter={ requireAuth } />
-      <Route path="companyHome" component={ CompanyHome } >
+      <Route path="companyHome" component={ CompanyHome } onEnter={ requireAuth } >
         <IndexRedirect to="corpDetail" />
         <Route path="corpDetail" component={CorpDetail} onEnter={requireAuth} />
         <Route path="internet" component={ Internet } onEnter={requireAuth} />
@@ -107,7 +115,7 @@ export default () => {
         <Route path="network" component={ Network } onEnter={requireAuth} />
         <Route path="alertAnalysis" component={ AlertAnalysis } onEnter={requireAuth} />
         <Route path="timeAxis" component={ ReportTimeAxis } onEnter={requireAuth} />
-        <Route path="blackNetwork" component={ BlackNetwork } onEnter={requireAuth} />
+        {/*<Route path="blackNetwork" component={ BlackNetwork } onEnter={requireAuth} />*/}
         <Route path="forceNetwork" component={ ForceNetwork } onEnter={requireAuth} />
         <Route path="nowRecord" component={ NowRecord } onEnter={requireAuth} />
         <Route path="tax" component={ Tax } onEnter={requireAuth} />
@@ -127,10 +135,18 @@ export default () => {
         {/* 贷后*/}
         <Route path="monitorTimeAxis" component={ MonitorTimeAxis } onEnter={requireAuth} />
         <Route path="monitorAlert" component={ MonitorAlert } />
+        <Route path="sharePosAndInv" component={ SharePosAndInv } />
+        <Route path="blackList" component={ BlackList } />
+        <Route path="debtPayAbilityEval" component={ DebtPayAbilityEval } />
+        <Route path="assetManageAnaly" component={ AssetManageAnaly } />
+        <Route path="cashFlowAnaly" component={ CashFlowAnaly } />
+        <Route path="riskConduct" component={ RiskConduct } />
 {/* third append here from plop */}
       </Route>
       <Route path="relPerCheck" component={ RelPerCheck } onEnter={requireAuth} />
       <Route path="taxCheck" component={ TaxCheck } onEnter={requireAuth} />
+      <Route path="corpBlackList" component={ CorpBlackList } onEnter={requireAuth} />
+      <Route path="personCheck" component={ PersonCheck } onEnter={requireAuth} />
       <Route path="solution" component={ Solution } />
       <Route path="about" component={ About } />
       {/* 测试modal用 */}

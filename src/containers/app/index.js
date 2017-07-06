@@ -27,8 +27,9 @@ export default class App extends Component {
   };
   componentDidMount() {
     this.reloadCom();
+    const pathname = this.props.location.pathname;
     const exg = /.*main-(.*)(?:.js)$/;
-    if (this.props.clientStore.envConfig !== 'local') {
+    if (this.props.clientStore.envConfig !== 'local' && pathname !== '/' && pathname !== '/solution' && pathname !== '/about') {
       setInterval(() => {
         const assetsHash = document.querySelector('#mainJs').getAttribute('src').match(exg)[1];
         this.props.messageStore.isAssetsNewest(assetsHash);
@@ -40,6 +41,8 @@ export default class App extends Component {
       require('components/common/reportOper/CreateLoanRep');
       require('components/common/reportOper/CreateMonitor');
       require('components/assetsRefresh');
+      require('components/accountSetting/AccountBase/BaseInfo/info');
+      require('components/accountSetting/userModal/info');
     });
   }
   render() {

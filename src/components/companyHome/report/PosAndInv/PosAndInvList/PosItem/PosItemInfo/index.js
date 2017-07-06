@@ -51,7 +51,7 @@ function PosItemInfo({investmentStore, bannerStore}) {
       <table key={`${idx}mmTable`} className={styles.tTable}>
         <tbody>
           <tr><td rowSpan="1000" width="40" className={styles.firstTd}>{showIndex}</td><td width="400px">任职企业名称：{item.entName}</td><td>状态：{item.entStatus}</td></tr>
-          <tr><td>担任职位：{item.thisPosition}</td><td>注册资本(万元)：{regCap}</td></tr>
+          <tr><td>担任职位：{item.otherPosition}</td><td>注册资本(万元)：{regCap}</td></tr>
           <tr><td>成立日期：{item.esDate}</td><td></td></tr>
         </tbody>
       </table>
@@ -65,15 +65,15 @@ function PosItemInfo({investmentStore, bannerStore}) {
       </div>
       <div className={styles.boxBody}>
         <div className={styles.tableWrap}>
-          <div className={styles.tableName}>对外担任法人代表（{frPositionCount}）</div>
+          <div className={styles.tableName}>担任法人的企业（{frPositionCount}）</div>
           {frPositionCount > 0 ? frPositionTabels : <ErrorText error={{message: '暂无信息'}}/>}
         </div>
         <div className={styles.tableWrap}>
-          <div className={styles.tableName}>对外投资（{managementInvCount}）</div>
+          <div className={styles.tableName}>投资企业（{managementInvCount}）</div>
           {managementInvCount > 0 ? managementInvTabels : <ErrorText error={{message: '暂无信息'}}/>}
         </div>
         <div className={styles.tableWrap}>
-          <div className={styles.tableName}>对外任职（{managementPositionCount}）</div>
+          <div className={styles.tableName}>任职企业（{managementPositionCount}）</div>
           {managementPositionCount > 0 ? managementPositionTabels : <ErrorText error={{message: '暂无信息'}}/>}
         </div>
       </div>

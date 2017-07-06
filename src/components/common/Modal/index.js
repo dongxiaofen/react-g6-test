@@ -1,5 +1,5 @@
-import React, { PropTypes } from 'react';
-import { observer, inject } from 'mobx-react';
+import React, {PropTypes} from 'react';
+import {observer, inject} from 'mobx-react';
 import Modal from 'components/lib/Modal';
 
 function _Modal({modalStore}) {
@@ -20,7 +20,8 @@ function _Modal({modalStore}) {
     confirmAction,
     cancelAction,
     confirmDisable,
-    boxStyle
+    boxStyle,
+    contentText,
   } = modalStore;
   return (
     <Modal
@@ -40,7 +41,8 @@ function _Modal({modalStore}) {
       confirmAction={confirmAction}
       cancelAction={cancelAction}
       closeAction={closeAction}
-      boxStyle={boxStyle}>
+      boxStyle={boxStyle}
+      contentText={contentText}>
       {modalStore.compComponent ? <modalStore.compComponent /> : null}
     </Modal>
   );
