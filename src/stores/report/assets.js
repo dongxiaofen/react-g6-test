@@ -127,13 +127,13 @@ class AssetsStore {
     const active = this.biddingAnalysisActive;
     switch (active) {
       case '月度':
-        this.biddingAnalysis = this.modifyAnalysis(this.dealWithAnalysisDate(month, active), active);
+        this.biddingAnalysis = month ? this.modifyAnalysis(this.dealWithAnalysisDate(month, active), active) : { axis: [], data: [] };
         break;
       case '季度':
-        this.biddingAnalysis = this.modifyAnalysis(this.dealWithAnalysisDate(quarter, active), active);
+        this.biddingAnalysis = quarter ? this.modifyAnalysis(this.dealWithAnalysisDate(quarter, active), active) : { axis: [], data: [] };
         break;
       case '年度':
-        this.biddingAnalysis = this.modifyAnalysis(year, active);
+        this.biddingAnalysis = year ? this.modifyAnalysis(year, active) : { axis: [], data: [] };
         break;
       default:
         break;
