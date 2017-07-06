@@ -35,7 +35,7 @@ function EnterpriseIncrement({highRiskCorpStore}) {
       left: '10px',
       right: '60px',
       bottom: '0px',
-      top: '30px',
+      top: '40px',
       containLabel: true,
     },
     xAxis: {
