@@ -208,12 +208,13 @@ app.use((req, res) => {
               companyName: companyName,
               stamp: timestamp
             });
-            const htmlName = companyName + timestamp + '.html';
-            const pdfName = companyName + timestamp + '.pdf';
+            const username = resp.data.email;
+            const htmlName = username + timestamp + '.html';
+            const pdfName = username + timestamp + '.pdf';
             writeStrToHtml(htmlName, reportHtml, () => {
               writeToLog(`${companyName}${timestamp}`, `{"status": "creating", "process": 3, "download": ""}`);
               html2Pdf(htmlName, pdfName, () => {
-                UpFileToQiniu(`${companyName}${timestamp}`);
+                UpFileToQiniu(`${username}${timestamp}`, `${companyName}${timestamp}`);
               });
             }, () => {
               writeToLog(`${companyName}${timestamp}`, `{"status": "faile", "process": 2, "download": ""}`);

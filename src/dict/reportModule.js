@@ -474,7 +474,7 @@ const config = {
     'location': '所在地',
     'court': '委托法院',
     'status': '状态',
-    'price': '参考价',
+    'price': '参考价（万元）',
     'result': '成交结果',
     'contactPerson': '联系人',
     'contactPhone': '联系电话',
