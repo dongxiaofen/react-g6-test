@@ -152,7 +152,7 @@ class PdfStore {
     this.internet = pathval.getPathValue(data, 'internet');
     this.trademark = pathval.getPathValue(data, 'trademark'); // 没有数据
     this.patent = pathval.getPathValue(data, 'patent');
-    this.bidding = pathval.getPathValue(data, 'biddingList');
+    this.bidding = pathval.getPathValue(data, 'bidding');
     this.network = pathval.getPathValue(data, 'network');
     this.blacklist = pathval.getPathValue(data, 'blackList.result[0].paths');
     this.team = pathval.getPathValue(data, 'recruitTeamResponse');
