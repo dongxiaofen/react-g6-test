@@ -157,14 +157,14 @@ function OverView({pdfStore, clientStore}) {
     title: '员工背景',
     valueData: summaryData.team ? {data: summaryData.team.recruitmentEmployee, type: 'object'} : undefined,
   };
-  const staffPosition = {
-    mapKey: {
-      position: '近期招聘信息',
-    },
-    unit: '个',
-    title: '近期招聘信息',
-    valueData: summaryData.team ? {data: summaryData.team.recruitmentEmployee.position, type: 'number'} : undefined,
-  };
+  // const staffPosition = {
+  //   mapKey: {
+  //     position: '近期招聘信息',
+  //   },
+  //   unit: '个',
+  //   title: '近期招聘信息',
+  //   valueData: summaryData.team ? {data: summaryData.team.recruitmentEmployee.position, type: 'number'} : undefined,
+  // };
   const recruitmentResumeMap = {
     mapKey: {
       recruitmentLocation: '新增招聘地点',
@@ -241,7 +241,7 @@ function OverView({pdfStore, clientStore}) {
       <hr className={styles.hrhr}/>
       <Summary {...recruitmentEmployee} />
       <Summary {...staffBackground} />
-      <Summary {...staffPosition} />
+      {/*<Summary {...staffPosition} />*/}
       <Summary {...recruitmentResumeMap} />
 
       <SecondTitle module="投资任职"/>
