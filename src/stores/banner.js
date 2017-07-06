@@ -171,6 +171,7 @@ class BannerStore {
       .catch(action('createPDF err', (error)=>{
         console.log(error);
         this.downPDFLoading = false;
+        this.clearPdfConfigChecked();
         modalStore.resetStore();
         messageStore.openMessage({ type: 'error', content: '下载PDF失败，请稍后再试' });
       }));
@@ -192,6 +193,7 @@ class BannerStore {
             } else if (resp.data.status === 'sucess') {
               this.downPDFLoading = false;
               modalStore.resetStore();
+              this.clearPdfConfigChecked();
               const companyName = this.pdfCheckStatue.companyName;
               window.location = `${resp.data.download}&attname=${companyName}.pdf`;
             }

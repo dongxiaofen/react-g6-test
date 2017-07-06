@@ -214,7 +214,6 @@ export default class DownloadPdf extends Component {
       this.setState({tipInfo: false});
       queryStr = queryStr + queryArray.join(',');
       bannerStore.createPDF(this.getReportType(), queryStr);
-      this.props.bannerStore.clearPdfConfigChecked();
       this.props.bannerStore.setPdfDownloadKeys(queryArray, this.getReportType());
     } else {
       this.setState({tipInfo: true});
