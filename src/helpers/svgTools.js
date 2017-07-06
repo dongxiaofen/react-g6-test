@@ -171,7 +171,7 @@ export function getBlackLinkInfo(data) {
   const description = [];
   const relation = data.relation;
   Object.keys(relation).map((key) => {
-    if (key === '法务关联' || key === '诉讼对立方') {
+    if (key === '法务关联' || key === '诉讼对立方' || key === '共同原被告') {
       if (typeof relation[key][0] === 'string') {
         description.push(`${key}(${relation[key][0]})`);
       } else {
