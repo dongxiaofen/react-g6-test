@@ -28,7 +28,7 @@ function SimpleCard({meta, dataStore}) {
           value = value.slice(0, 10);
         }
       }
-      value = value || '--';
+      value = value && value.toString().trim() || '--';
       if (config.blockShow) {
         output.push(
           <Col key={config.key} width={config.width} className={styles.col}>
