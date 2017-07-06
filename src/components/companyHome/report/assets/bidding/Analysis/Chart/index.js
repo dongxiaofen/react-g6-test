@@ -1,12 +1,13 @@
 import React, {PropTypes} from 'react';
 import { observer } from 'mobx-react';
+import { toJS } from 'mobx';
 import { loadingComp } from 'components/hoc';
 import styles from './index.less';
 import { Row, Col } from 'components/common/layout';
 import BaseChart from 'components/common/Charts/BaseChart';
 
 function Chart({ assetsStore }) {
-  const biddingAnalysis = assetsStore.biddingAnalysis;
+  const biddingAnalysis = toJS(assetsStore.biddingAnalysis);
   const colors = ['#bbe3a6', '#90caf9', '#66bb6a', '#42A5F5'];
   const yAxisColor = '#eeeeee';
   const textStyle = {
@@ -212,7 +213,7 @@ Chart.propTypes = {
 };
 export default loadingComp({
   mapDataToProps: props => ({
-    loading: props.assetsStore.biddingData.biddingLoading,
+    loading: props.assetsStore.biddingAnalysisLoading,
     module: '招投标分析图',
     error: props.assetsStore.isErrAnalysis
   })

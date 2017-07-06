@@ -1,4 +1,4 @@
-import { observable, action, computed } from 'mobx';
+import { observable, action, runInAction, computed, reaction } from 'mobx';
 import { companyHomeApi } from 'api';
 import uiStore from '../ui';
 import axios from 'axios';
@@ -6,6 +6,21 @@ import { setPathValue } from 'pathval';
 const CancelToken = axios.CancelToken;
 
 class AssetsStore {
+  constructor() {
+    reaction(
+      () => this.biddingAnalysisActive,
+      () => {
+        this.biddingAnalysisLoading = true;
+        setTimeout(() => {
+          runInAction(() => {
+            this.biddingAnalysisLoading = false;
+          });
+        }, 1000);
+        this.modifyBiddingAnalysis();
+      }
+    );
+  }
+
   @observable trademarkData = [];
   @observable patentData = [];
   @observable biddingData = {
@@ -18,12 +33,32 @@ class AssetsStore {
     biddingItemList: []
   };
 
+  @observable biddingAnalysisLoading = true;
+
   @computed get isErrAnalysis() {
     const analysis = this.biddingData.analysis;
     if (analysis.year) {
       return Object.keys(analysis.year).length === 0;
     }
     return true;
+  }
+
+  @observable biddingAnalysisActive = '年度';
+  @observable biddingAnalysis = { axis: [], data: [] };
+  @observable isMount = false ;
+  // 弹框标题数据||信息来源
+  @observable titleData = {};
+  // 弹出框详情
+  @observable bidMarkertContent = '';
+  // 取消请求
+  @observable biddingDetailCancel = null;
+
+  @observable trLoading = true;
+  @observable patentLoading = true;
+  @observable biddingLoading = true;
+
+  @action.bound updateValue(path, value) {
+    setPathValue(this, path, value);
   }
 
   dealWithAnalysisDate(analysisData, active) {
@@ -86,36 +121,23 @@ class AssetsStore {
     };
   }
 
-  @computed get biddingAnalysis() {
+  // 处理招投标分析
+  @action.bound modifyBiddingAnalysis() {
     const { month, quarter, year } = this.biddingData.analysis;
     const active = this.biddingAnalysisActive;
     switch (active) {
       case '月度':
-        return this.modifyAnalysis(this.dealWithAnalysisDate(month, active), active);
+        this.biddingAnalysis = this.modifyAnalysis(this.dealWithAnalysisDate(month, active), active);
+        break;
       case '季度':
-        return this.modifyAnalysis(this.dealWithAnalysisDate(quarter, active), active);
+        this.biddingAnalysis = this.modifyAnalysis(this.dealWithAnalysisDate(quarter, active), active);
+        break;
       case '年度':
-        return this.modifyAnalysis(year, active);
+        this.biddingAnalysis = this.modifyAnalysis(year, active);
+        break;
       default:
         break;
     }
-  }
-
-  @observable biddingAnalysisActive = '年度';
-  @observable isMount = false ;
-  // 弹框标题数据||信息来源
-  @observable titleData = {};
-  // 弹出框详情
-  @observable bidMarkertContent = '';
-  // 取消请求
-  @observable biddingDetailCancel = null;
-
-  @observable trLoading = true;
-  @observable patentLoading = true;
-  @observable biddingLoading = true;
-
-  @action.bound updateValue(path, value) {
-    setPathValue(this, path, value);
   }
 
   @action.bound getTrademarkData(idInfo) {
@@ -148,6 +170,8 @@ class AssetsStore {
     companyHomeApi.getReportModule('operation/bidding', params)
       .then(action( (response) => {
         this.biddingLoading = false;
+        this.biddingAnalysisLoading = false;
+
         this.biddingData.statistic = response.data.statistic;
         this.biddingData.analysis.month = response.data.month;
         this.biddingData.analysis.quarter = response.data.quarter;
@@ -164,6 +188,7 @@ class AssetsStore {
       }))
       .catch( action( (err) => {
         this.biddingLoading = false;
+        this.biddingAnalysisLoading = false;
         console.log(err.response.data);
       }));
   }
