@@ -6,11 +6,6 @@ import styles from './index.less';
 
 
 class Analysis extends Component {
-  componentDidMount() {
-    this.props.assetsStore.modifyBiddingAnalysis();
-  }
-
-
   menuActive = (text) => {
     if (text === this.props.assetsStore.biddingAnalysisActive) {
       return styles.menuTitleActive;
