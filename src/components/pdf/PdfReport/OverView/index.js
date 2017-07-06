@@ -210,15 +210,6 @@ function OverView({ pdfStore, clientStore }) {
       <Summary {...corpBasicMap} />
       <Summary {...yearReport} />
       <Summary {...businessChange} />
-
-      <SecondTitle module="投资任职" />
-      <hr className={styles.hrhr} />
-      <Summary {...entinvItem} />
-      <Summary {...investPositionMap} />
-      {
-        pdfStore.reportType === '高级报告' ?
-        <Summary {...investManagement} /> : ''
-      }
       {
         isStock ?
             <div key="thisIsSecondTitleObject">
@@ -252,6 +243,15 @@ function OverView({ pdfStore, clientStore }) {
       <Summary {...staffBackground} />
       <Summary {...staffPosition} />
       <Summary {...recruitmentResumeMap} />
+
+      <SecondTitle module="投资任职" />
+      <hr className={styles.hrhr} />
+      <Summary {...entinvItem} />
+      <Summary {...investPositionMap} />
+      {
+        pdfStore.reportType === '高级报告' ?
+          <Summary {...investManagement} /> : ''
+      }
 
       <SecondTitle module="风险信息" />
       <hr className={styles.hrhr} />
