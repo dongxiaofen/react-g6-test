@@ -6,7 +6,7 @@ import EmployeeDegreeInfo from './Employee/EmployeeDegreeInfo';
 import EmployeeSalaryDis from './Employee/EmployeeSalaryDis';
 import EmployeeSchoolInfo from './Employee/EmployeeSchoolInfo';
 import EmployeeCategoryTypeInfo from './Employee/EmployeeCategoryTypeInfo';
-import EmployeeList from './Employee/EmployeeList';
+// import EmployeeList from './Employee/EmployeeList';
 import RecruitAddress from './TeamMonitor/RecruitAddress';
 import RecruitPosition from './TeamMonitor/RecruitPosition';
 import AvgSalary from './TeamMonitor/AvgSalary';
@@ -29,8 +29,8 @@ function Team({pdfStore, judgeIsModuleExist}) {
             <PdfTitle id="employeeAnchor" module="团队信息" subModule="员工背景" />
             <EmployeeSchoolInfo moduleData={pathval.getPathValue(pdfStore, 'team.recruitAndResumeResponse.resumeStatisticResponse.schoolInfo')} />
             <EmployeeCategoryTypeInfo moduleData={pathval.getPathValue(pdfStore, 'team.recruitAndResumeResponse.resumeStatisticResponse.majorInfo')} />
-            <PdfTitle id="employeeAnchor" module="团队信息" subModule="近期招聘信息" />
-            <EmployeeList moduleData={pathval.getPathValue(pdfStore, 'team.recruitAndResumeResponse.recruitmentInfo.data')} />
+            {/*<PdfTitle id="employeeAnchor" module="团队信息" subModule="近期招聘信息" />*/}
+            {/*<EmployeeList moduleData={pathval.getPathValue(pdfStore, 'team.recruitAndResumeResponse.recruitmentInfo.data')} />*/}
           </div>
           :
           ''

@@ -84,7 +84,7 @@ function RegisterInfo({ registerInfo, isLoading, errText }) {
       dates = '（注销日期：' + items.cancelDate + '）';
     }
     if (items.revokeDate && items.cancelDate) {
-      dates = '（' + items.cancelDate + '/' + items.revokeDate + '）';
+      dates = '（注销日期：' + items.cancelDate + '/吊销日期：' + items.revokeDate + '）';
     }
     // return
     return status + dates;
