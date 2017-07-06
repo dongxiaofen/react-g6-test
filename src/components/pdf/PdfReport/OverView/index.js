@@ -1,12 +1,12 @@
 import React, {PropTypes} from 'react';
-import { observer, inject } from 'mobx-react';
+import {observer, inject} from 'mobx-react';
 import PdfTitle from 'components/common/pdf/PdfTitle';
 import SecondTitle from 'components/common/pdf/SecondTitle';
 import styles from './index.less';
 import Summary from './Summary';
 import pathval from 'pathval';
 
-function OverView({ pdfStore, clientStore }) {
+function OverView({pdfStore, clientStore}) {
   const summaryData = pdfStore.summary ? pdfStore.summary : '';
   const isStock = pathval.getPathValue(pdfStore, 'banner.stockCode');
   // const objectPase = (data, type) => {
@@ -173,7 +173,7 @@ function OverView({ pdfStore, clientStore }) {
       resumeTrend: '离职意向趋势'
     },
     title: '团队发展趋势',
-    valueData: summaryData.team ? { data: summaryData.team.recruitmentResume, type: 'object' } : undefined,
+    valueData: summaryData.team ? {data: summaryData.team.recruitmentResume, type: 'object'} : undefined,
   };
   // 多维分析
   const comprehensiveAnalysis = {
@@ -204,48 +204,48 @@ function OverView({ pdfStore, clientStore }) {
   // };
   return (
     <div>
-      <PdfTitle module="信息概览" subModule="" />
-      <SecondTitle module="工商信息" />
-      <hr className={styles.hrhr} />
+      <PdfTitle module="信息概览" subModule=""/>
+      <SecondTitle module="工商信息"/>
+      <hr className={styles.hrhr}/>
       <Summary {...corpBasicMap} />
       <Summary {...yearReport} />
       <Summary {...businessChange} />
       {
         isStock ?
-            <div key="thisIsSecondTitleObject">
-              <SecondTitle module="上市披露" />
-              <hr className={styles.hrhr} />
-              <Summary {...companySummary}/>
-              <Summary {...companyAnnouncement} />
-            </div>
+          <div key="thisIsSecondTitleObject">
+            <SecondTitle module="上市披露"/>
+            <hr className={styles.hrhr}/>
+            <Summary {...companySummary}/>
+            <Summary {...companyAnnouncement} />
+          </div>
           : ''
       }
-      <SecondTitle module="新闻信息" />
-      <hr className={styles.hrhr} />
+      <SecondTitle module="新闻信息"/>
+      <hr className={styles.hrhr}/>
       <Summary {...newsContent} />
       {
         clientStore.envConfig.indexOf('dianxin') !== -1 ?
           <div>
-            <SecondTitle module="经营信息" />
-            <hr className={styles.hrhr} />
+            <SecondTitle module="经营信息"/>
+            <hr className={styles.hrhr}/>
             <Summary {...telMap} />
           </div>
           :
           ''
       }
-      <SecondTitle module="经营信息" />
-      <hr className={styles.hrhr} />
+      <SecondTitle module="经营信息"/>
+      <hr className={styles.hrhr}/>
       <Summary {...operationInfoMap} />
 
-      <SecondTitle module="团队信息" />
-      <hr className={styles.hrhr} />
+      <SecondTitle module="团队信息"/>
+      <hr className={styles.hrhr}/>
       <Summary {...recruitmentEmployee} />
       <Summary {...staffBackground} />
       <Summary {...staffPosition} />
       <Summary {...recruitmentResumeMap} />
 
-      <SecondTitle module="投资任职" />
-      <hr className={styles.hrhr} />
+      <SecondTitle module="投资任职"/>
+      <hr className={styles.hrhr}/>
       <Summary {...entinvItem} />
       <Summary {...investPositionMap} />
       {
@@ -253,28 +253,25 @@ function OverView({ pdfStore, clientStore }) {
           <Summary {...investManagement} /> : ''
       }
 
-      <SecondTitle module="风险信息" />
-      <hr className={styles.hrhr} />
+      <SecondTitle module="风险信息"/>
+      <hr className={styles.hrhr}/>
       <Summary {...taxInfoMap} />
       <Summary {...courtMap} />
       <Summary {...corpNoticeMap} />
 
-      <SecondTitle module="抵质押信息" />
-      <hr className={styles.hrhr} />
+      <SecondTitle module="抵质押信息"/>
+      <hr className={styles.hrhr}/>
       <Summary {...pledgeEquity} />
-      {
-        pdfStore.reportType === '高级报告' || pdfStore.reportType === '基础报告' ?
-        <div>
-          <SecondTitle module="关联网络" />
-          <hr className={styles.hrhr} />
-          <Summary {...riskRelationshipMap} />
-        </div> : ''
-      }
+
+      <SecondTitle module="关联网络"/>
+      <hr className={styles.hrhr}/>
+      <Summary {...riskRelationshipMap} />
+
       {
         pdfStore.reportType === '高级报告' ?
           <div>
-            <SecondTitle module="风险扫描" />
-            <hr className={styles.hrhr} />
+            <SecondTitle module="风险扫描"/>
+            <hr className={styles.hrhr}/>
             <Summary {...riskChain} />
           </div> : ''
       }
@@ -282,35 +279,35 @@ function OverView({ pdfStore, clientStore }) {
       {/* 多维分析 */}
       {
         pdfStore.pdfTypesKey.includes('SCORE') ?
-        <div>
-          <SecondTitle module="多维综合分析" />
-          <hr className={styles.hrhr} />
-          <Summary {...comprehensiveAnalysis} />
-        </div> : ''
+          <div>
+            <SecondTitle module="多维综合分析"/>
+            <hr className={styles.hrhr}/>
+            <Summary {...comprehensiveAnalysis} />
+          </div> : ''
       }
       {/* { */}
-        {/* pdfStore.pdfTypesKey.includes('PROFIT') ? */}
-        {/*<div>*/}
-          {/* <SecondTitle module="盈利能力分析" /> */}
-          {/*<hr className={styles.hrhr} />*/}
-          {/*<Summary {...profitabilityAnalysis} />*/}
-        {/*</div> : ''*/}
+      {/* pdfStore.pdfTypesKey.includes('PROFIT') ? */}
+      {/*<div>*/}
+      {/* <SecondTitle module="盈利能力分析" /> */}
+      {/*<hr className={styles.hrhr} />*/}
+      {/*<Summary {...profitabilityAnalysis} />*/}
+      {/*</div> : ''*/}
       {/*}*/}
       {/*{*/}
-        {/*pdfStore.pdfTypesKey.includes('OPERATION') ?*/}
-          {/*<div>*/}
-            {/*<SecondTitle module="营运能力分析" />*/}
-            {/*<hr className={styles.hrhr} />*/}
-            {/*<Summary {...operationalAnalysis}/>*/}
-          {/*</div> : ''*/}
+      {/*pdfStore.pdfTypesKey.includes('OPERATION') ?*/}
+      {/*<div>*/}
+      {/*<SecondTitle module="营运能力分析" />*/}
+      {/*<hr className={styles.hrhr} />*/}
+      {/*<Summary {...operationalAnalysis}/>*/}
+      {/*</div> : ''*/}
       {/*}*/}
       {/*{*/}
-        {/*pdfStore.pdfTypesKey.includes('GROWING') ?*/}
-          {/*<div>*/}
-            {/*<SecondTitle module="成长能力分析" />*/}
-            {/*<hr className={styles.hrhr} />*/}
-            {/*<Summary {...growthAnalysis}/>*/}
-          {/*</div> : ''*/}
+      {/*pdfStore.pdfTypesKey.includes('GROWING') ?*/}
+      {/*<div>*/}
+      {/*<SecondTitle module="成长能力分析" />*/}
+      {/*<hr className={styles.hrhr} />*/}
+      {/*<Summary {...growthAnalysis}/>*/}
+      {/*</div> : ''*/}
       {/*}*/}
     </div>
   );

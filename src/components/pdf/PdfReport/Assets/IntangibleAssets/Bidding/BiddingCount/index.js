@@ -1,6 +1,7 @@
 import React, {PropTypes} from 'react';
 import { observer, inject } from 'mobx-react';
 import PdfTable from 'components/common/pdf/PdfTable';
+import SecondTitle from 'components/common/pdf/SecondTitle';
 
 function BiddingCount({pdfStore}) {
   const moduleData = pdfStore.bidding.statistic;
@@ -25,7 +26,7 @@ function BiddingCount({pdfStore}) {
     };
     return (
       <div>
-        <div style={{height: '30px'}}></div>
+        <SecondTitle module="招投标统计表"/>
         <PdfTable {...data} />
       </div>
     );
