@@ -118,6 +118,9 @@ app.get('/front/refresh/assets', function(req, res) {
   const assetsPath = path.resolve(__dirname, '../static/dist');
   const reg = /^(?:main-)(.*)(?:\.js)$/;
   fs.readdir(assetsPath, function(err, file) {
+    if (!file) {
+      return res.status(404).send({message: 'file not fount'});
+    }
     const mainFile = file.filter(name => reg.test(name))[0];
     if (mainFile) {
       const assetsHash = mainFile.match(reg)[1];
@@ -199,25 +202,26 @@ app.use((req, res) => {
                 <RouterContext {...renderProps} />
               </Provider>
             );
+            const username = resp.data.email;
             const companyName = resp.data.companyName;
             const timestamp = new Date().getTime();
             const reportHtml = ReactDOM.renderToString(<Html pdfDown="1" assets={webpackIsomorphicTools.assets()} component={component} {...allStores} />);
-            writeToLog(`${companyName}${timestamp}`, `{"status": "creating", "process": 1, "download": ""}`);
+            writeToLog(`${username}${timestamp}`, `{"status": "creating", "process": 1, "download": ""}`);
             res.status(200);
             res.json({
+              username: username,
               companyName: companyName,
               stamp: timestamp
             });
-            const username = resp.data.email;
             const htmlName = username + timestamp + '.html';
             const pdfName = username + timestamp + '.pdf';
             writeStrToHtml(htmlName, reportHtml, () => {
-              writeToLog(`${companyName}${timestamp}`, `{"status": "creating", "process": 3, "download": ""}`);
+              writeToLog(`${username}${timestamp}`, `{"status": "creating", "process": 3, "download": ""}`);
               html2Pdf(htmlName, pdfName, () => {
-                UpFileToQiniu(`${username}${timestamp}`, `${companyName}${timestamp}`);
+                UpFileToQiniu(`${username}${timestamp}`);
               });
             }, () => {
-              writeToLog(`${companyName}${timestamp}`, `{"status": "faile", "process": 2, "download": ""}`);
+              writeToLog(`${username}${timestamp}`, `{"status": "faile", "process": 2, "download": ""}`);
             });
           })
           .catch((err) => {
