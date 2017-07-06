@@ -206,7 +206,7 @@ app.use((req, res) => {
             const companyName = resp.data.companyName;
             const timestamp = new Date().getTime();
             const reportHtml = ReactDOM.renderToString(<Html pdfDown="1" assets={webpackIsomorphicTools.assets()} component={component} {...allStores} />);
-            writeToLog(`${username}${timestamp}`, `{"status": "creating", "process": 1, "download": ""}`);
+            writeToLog(`${username}${timestamp}`, `creating,1,`);
             res.status(200);
             res.json({
               username: username,
@@ -216,12 +216,12 @@ app.use((req, res) => {
             const htmlName = username + timestamp + '.html';
             const pdfName = username + timestamp + '.pdf';
             writeStrToHtml(htmlName, reportHtml, () => {
-              writeToLog(`${username}${timestamp}`, `{"status": "creating", "process": 3, "download": ""}`);
+              writeToLog(`${username}${timestamp}`, `creating,3,`);
               html2Pdf(htmlName, pdfName, () => {
                 UpFileToQiniu(`${username}${timestamp}`);
               });
             }, () => {
-              writeToLog(`${username}${timestamp}`, `{"status": "faile", "process": 2, "download": ""}`);
+              writeToLog(`${username}${timestamp}`, `faile,2,`);
             });
           })
           .catch((err) => {
