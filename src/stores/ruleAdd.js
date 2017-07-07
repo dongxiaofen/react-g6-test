@@ -392,10 +392,15 @@ class RuleAddStore {
     // 关键词
     let keywordsArray = [];
     if (this.keyWordArray && this.keyWordArray.length > 0) {
-      if (this.keyWordArray.indexOf(' ') > -1) {
-        keywordsArray = this.keyWordArray.split(' ');
+      // 替换多个空格
+      let keyWordArrayNew = this.keyWordArray.replace(/[\s ]{2,}/g, ' ');
+      // 替换首尾空格
+      keyWordArrayNew = keyWordArrayNew.replace(/(^\s*)|(\s*$)/g, '');
+      // 判断赋值关键值参数
+      if (keyWordArrayNew.indexOf(' ') > -1) {
+        keywordsArray = keyWordArrayNew.split(' ');
       } else {
-        keywordsArray = this.keyWordArray.split('　');
+        keywordsArray.push(keyWordArrayNew);
       }
     }
     // 发生次数
@@ -529,6 +534,9 @@ class RuleAddStore {
     this.keyWordStatus = false;
     // 关键词
     this.keyWordArray = '';
+
+    // 分享
+    this.ruleShare = true;
 
     // 添加规则或修改规则时是否已经submit
     this.submitType = false;
