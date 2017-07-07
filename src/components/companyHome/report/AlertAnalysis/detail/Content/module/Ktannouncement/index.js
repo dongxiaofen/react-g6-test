@@ -3,7 +3,7 @@ import { observer } from 'mobx-react';
 import SimpleCard from 'components/common/report/alertAnalysis/SimpleCard';
 function Ktannouncement({data}) {
   const arrayToString = (arr)=>{
-    let str;
+    let str = '';
     if (arr) {
       arr.forEach(item => {
         str += item.litigantName;
