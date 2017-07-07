@@ -69,12 +69,12 @@ function TaxCheckMain({ modalStore, messageStore, taxCheckStore, clientStore }) 
     <Container>
       <Row>
         <Col>
+          {
+            clientStore.taxPause ? <div className={styles.pause_tpis}>添加企业核查正在维护中……</div> : null
+          }
           <div className="clearfix">
             <h1 className={styles.title}>
-              <span>企业年度报税</span>
-              {
-                clientStore.taxPause ? <span className={styles.pause_tpis}>添加企业核查正在维护中……</span> : null
-              }
+              企业年度报税
             </h1>
             <Button btnType={clientStore.taxPause ? 'default' : 'primary'} className={clientStore.taxPause ? styles.maintenance : styles.noDataButton} onClick={handleAddTaxCheckClick}>添加企业核查</Button>
           </div>
