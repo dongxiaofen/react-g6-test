@@ -100,10 +100,10 @@ class AssetsStore {
   modifyAnalysis(value, active) {
     let keys = Object.keys(value);
     const data = {
-      winMoneyAmount: keys.map(key => value[key].winMoneyAmount),
-      winCount: keys.map(key => value[key].winCount),
       bidMoneyAmount: keys.map(key => value[key].bidMoneyAmount),
+      winMoneyAmount: keys.map(key => value[key].winMoneyAmount),
       bidCount: keys.map(key => value[key].bidCount),
+      winCount: keys.map(key => value[key].winCount),
     };
     switch (active) {
       case '季度':
