@@ -225,6 +225,7 @@ app.use((req, res) => {
           });
       } else if (reqPathName === '/') { // 访问首页
         allStores.clientStore.envConfig = config.target;
+        allStores.clientStore.taxPause = true; // 暂停税务核查服务
         // allStores.clientStore.envConfig = 'cfca_prod';
         /*服务端注入RouterStore*/
         const routingStore = new RouterStore();
@@ -254,6 +255,7 @@ app.use((req, res) => {
             allStores.clientStore.userInfo = resp.data;
             allStores.clientStore.envConfig = config.target;
             allStores.loginStore.isShowLogin = false;
+            allStores.clientStore.taxPause = true; // 暂停税务核查服务
             /*获取报告leftBar高亮*/
             if (reqPathName.indexOf('companyHome') >= 0) {
               let reportActiveItem = '';

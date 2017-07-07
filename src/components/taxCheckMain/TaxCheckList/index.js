@@ -9,7 +9,7 @@ import Button from 'components/lib/button';
 import { loadingComp } from 'components/hoc';
 import NoData from './NoData';
 
-function TaxCheckList({taxCheckStore, modalStore}) {
+function TaxCheckList({taxCheckStore, modalStore, clientStore}) {
   const getTaxCheckInfo = (companyId, companyName) => {
     taxCheckStore.getTaxCheckInfo(companyId, companyName);
     modalStore.openCompModal({
@@ -39,9 +39,11 @@ function TaxCheckList({taxCheckStore, modalStore}) {
     });
   };
   const handleClick = (companyName) => {
-    this.props.showAddTaxCheck();
-    this.props.taxCheckStore.changeValue('companyName', companyName);
-    this.props.taxCheckStore.changeValue('isLockCompanyName', true);
+    if (!clientStore.taxPause) {
+      this.props.showAddTaxCheck();
+      this.props.taxCheckStore.changeValue('companyName', companyName);
+      this.props.taxCheckStore.changeValue('isLockCompanyName', true);
+    }
   };
 
   const taxListData = this.props.taxCheckStore.taxListData;
@@ -51,7 +53,7 @@ function TaxCheckList({taxCheckStore, modalStore}) {
       listDom.push(
         <div className={styles.wrap} key={`taxListData${idx}`}>
           <div className={styles.top}>
-            <Button className={styles.noDataButton} onClick={handleClick.bind(this, item.companyName)}>继续核查</Button>
+            <Button className={clientStore.taxPause ? styles.maintenance : styles.noDataButton} onClick={handleClick.bind(this, item.companyName)}>继续核查</Button>
           </div>
           <div className={styles.companyName}><a onClick={getTaxCheckInfo.bind(this, item.companyId, item.companyName)}>{item.companyName}</a></div>
           <div className={styles.checkTime}>最后核查日期：{item.checkTime}</div>
@@ -84,4 +86,4 @@ export default loadingComp(
     module: '企业年度报税',
     error: false,
   })}
-)(inject('taxCheckStore', 'modalStore')(observer(TaxCheckList)));
+)(inject('taxCheckStore', 'modalStore', 'clientStore')(observer(TaxCheckList)));

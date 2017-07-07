@@ -127,7 +127,12 @@ function Chart({ assetsStore }) {
         },
         axisLabel: {
           textStyle: textStyle,
-          formatter: value => value / 10000 + '万元'
+          formatter: value => {
+            if (value.toString().length >= 5) {
+              return value / 10000 + '万元';
+            }
+            return value + '元';
+          }
         },
         splitLine: splitLine
       },

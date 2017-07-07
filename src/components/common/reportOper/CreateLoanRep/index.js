@@ -10,7 +10,7 @@ import loanSlider4 from 'imgs/companyHome/loanSlider4.png';
 import Button from 'components/lib/button';
 import { Link } from 'react-router';
 
-function CreateLoanRep({companyHomeStore, routing, messageStore}) {
+function CreateLoanRep({companyHomeStore, routing, messageStore, clientStore}) {
   const judegeStatus = (key)=>{
     const reportInfo = companyHomeStore.reportInfo;
     if (reportInfo.dimensions.includes(key)) {
@@ -40,11 +40,20 @@ function CreateLoanRep({companyHomeStore, routing, messageStore}) {
           </p>
         );
       } else {
-        output.push(
-          <div className={styles.checkBox} key={`option${idx}`}>
-            <Checkbox checked={optItem.checked} onChange={choiceOption.bind(null, idx)}>{optItem.label}</Checkbox>
-          </div>
-        );
+        if (clientStore.taxPause) {
+          output.push(
+            <p className={styles.operaText} key={`option${idx}`}>
+              {optItem.label}
+              <i className={styles.icon_pause}></i>
+            </p>
+          );
+        } else {
+          output.push(
+            <div className={styles.checkBox} key={`option${idx}`}>
+              <Checkbox checked={optItem.checked} onChange={choiceOption.bind(null, idx)}>{optItem.label}</Checkbox>
+            </div>
+          );
+        }
       }
     });
     return output;
@@ -86,4 +95,4 @@ function CreateLoanRep({companyHomeStore, routing, messageStore}) {
 CreateLoanRep.propTypes = {
   foo: PropTypes.string,
 };
-export default inject('companyHomeStore', 'routing', 'messageStore')(observer(CreateLoanRep));
+export default inject('companyHomeStore', 'routing', 'messageStore', 'clientStore')(observer(CreateLoanRep));
