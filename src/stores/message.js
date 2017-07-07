@@ -27,11 +27,13 @@ class MessageStore {
   }
 
   @action.bound openMessage({ type, content, duration, callBack }) {
-    this.type = type ? type : 'info';
-    if (duration) { this.duration = duration; }
-    if (callBack) { this.callBack = callBack; }
-    this.visible = true;
-    this.content = content;
+    if (content !== 'token不存在') {
+      this.type = type ? type : 'info';
+      if (duration) { this.duration = duration; }
+      if (callBack) { this.callBack = callBack; }
+      this.visible = true;
+      this.content = content;
+    }
   }
   @action.bound isAssetsNewest(assetsHash) {
     axios.get('/front/refresh/assets')
