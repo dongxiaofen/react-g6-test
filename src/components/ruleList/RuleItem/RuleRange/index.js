@@ -9,7 +9,7 @@ function RuleRange({data}) {
   if (data && data.rule) {
     // 行业
     if (data.rule.industry && data.rule.industry.name) {
-      industry = data.rule.industry.name + '，';
+      industry = data.rule.industry.name + '；';
     } else {
       industry = '行业不限；';
     }
