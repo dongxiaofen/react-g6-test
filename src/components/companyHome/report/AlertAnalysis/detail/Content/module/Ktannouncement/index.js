@@ -3,11 +3,13 @@ import { observer } from 'mobx-react';
 import SimpleCard from 'components/common/report/alertAnalysis/SimpleCard';
 function Ktannouncement({data}) {
   const arrayToString = (arr)=>{
-    let arr_ = arr;
-    if (arr_) {
-      arr_ = arr.join(',');
+    let str;
+    if (arr) {
+      arr.forEach(item => {
+        str += item.litigantName;
+      });
     }
-    return arr_;
+    return str;
   };
   const meta = {
     dict: 'courtNotice',
@@ -15,7 +17,7 @@ function Ktannouncement({data}) {
       {'key': 'court', 'width': '6'},
       {'key': 'identity', 'width': '6'},
       {'key': 'judgeTime', 'width': '6'},
-      {'key': 'relevantDepartments', 'width': '12', 'modifyBlock': arrayToString},
+      {'key': 'litigant', 'width': '12', 'modifyBlock': arrayToString},
       {'key': 'content', 'width': '12'}
     ],
     item: data.content,
