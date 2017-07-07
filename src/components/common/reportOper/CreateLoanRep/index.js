@@ -40,7 +40,7 @@ function CreateLoanRep({companyHomeStore, routing, messageStore, clientStore}) {
           </p>
         );
       } else {
-        if (clientStore.taxPause) {
+        if (clientStore.taxPause && optItem.label !== '多维综合评价') {
           output.push(
             <p className={styles.operaText} key={`option${idx}`}>
               {optItem.label}
