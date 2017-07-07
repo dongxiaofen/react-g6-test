@@ -126,7 +126,8 @@ function Chart({ assetsStore }) {
           }
         },
         axisLabel: {
-          textStyle: textStyle
+          textStyle: textStyle,
+          formatter: value => value / 10000 + '万元'
         },
         splitLine: splitLine
       },
@@ -154,25 +155,25 @@ function Chart({ assetsStore }) {
         name: '投标金额',
         type: 'bar',
         barMaxWidth: barWidth,
-        data: biddingAnalysis.data.winMoneyAmount
+        data: biddingAnalysis.data.bidMoneyAmount
       },
       {
         name: '中标金额',
         type: 'bar',
         barMaxWidth: barWidth,
-        data: biddingAnalysis.data.bidMoneyAmount
+        data: biddingAnalysis.data.winMoneyAmount
       },
       {
         name: '投标次数',
         type: 'line',
         yAxisIndex: 1,
-        data: biddingAnalysis.data.winCount
+        data: biddingAnalysis.data.bidCount
       },
       {
         name: '中标次数',
         type: 'line',
         yAxisIndex: 1,
-        data: biddingAnalysis.data.bidCount
+        data: biddingAnalysis.data.winCount
       }
     ]
   };
@@ -187,11 +188,11 @@ function Chart({ assetsStore }) {
           <div className={styles.marked}>
             <div className={`clearfix`}>
               <div className={styles.blockGreen}></div>
-              <div className={styles.text}>投标金额（元）</div>
+              <div className={styles.text}>投标金额</div>
             </div>
             <div className={`clearfix`}>
               <div className={styles.blockBlue}></div>
-              <div className={styles.text}>中标金额（元）</div>
+              <div className={styles.text}>中标金额</div>
             </div>
             <div className={`clearfix`}>
               <div className={styles.roundGreen}></div>

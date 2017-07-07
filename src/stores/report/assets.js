@@ -100,10 +100,10 @@ class AssetsStore {
   modifyAnalysis(value, active) {
     let keys = Object.keys(value);
     const data = {
-      winMoneyAmount: keys.map(key => value[key].winMoneyAmount),
-      winCount: keys.map(key => value[key].winCount),
       bidMoneyAmount: keys.map(key => value[key].bidMoneyAmount),
+      winMoneyAmount: keys.map(key => value[key].winMoneyAmount),
       bidCount: keys.map(key => value[key].bidCount),
+      winCount: keys.map(key => value[key].winCount),
     };
     switch (active) {
       case '季度':
@@ -169,13 +169,11 @@ class AssetsStore {
   @action.bound getBiddingData(params) {
     companyHomeApi.getReportModule('operation/bidding', params)
       .then(action( (response) => {
-        this.biddingLoading = false;
-        this.biddingAnalysisLoading = false;
-
         this.biddingData.statistic = response.data.statistic;
         this.biddingData.analysis.month = response.data.month;
         this.biddingData.analysis.quarter = response.data.quarter;
         this.biddingData.analysis.year = response.data.year;
+        this.modifyBiddingAnalysis();
         const result = response.data.result;
         if (result && result.length) {
           this.biddingData.biddingItemList = result.map(item => {
@@ -185,11 +183,13 @@ class AssetsStore {
         } else {
           this.biddingData.biddingItemList = [];
         }
-      }))
-      .catch( action( (err) => {
         this.biddingLoading = false;
         this.biddingAnalysisLoading = false;
+      }))
+      .catch( action( (err) => {
         console.log(err.response.data);
+        this.biddingLoading = false;
+        this.biddingAnalysisLoading = false;
       }));
   }
 

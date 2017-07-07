@@ -5,10 +5,12 @@ import { clientApi } from 'api';
 class ClientStore {
   @observable userInfo = {};
   @observable envConfig = 'local';
+  @observable taxPause = false;
 
   @action.bound combineServerData(data) {
     this.userInfo = data.userInfo;
     this.envConfig = data.envConfig;
+    this.taxPause = data.taxPause;
   }
 
   @action.bound loginOut(notRouteToHome) {
