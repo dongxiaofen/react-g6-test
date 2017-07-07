@@ -87,33 +87,33 @@ const uptoken = (Bucket_Name, fileName) => {
   return putPolicy.token();
 };
 
-const uploadFile = (uptoken, key, companyName) => {
-  const fileName = `${companyName}.pdf`;
+const uploadFile = (uptoken, key) => {
+  const fileName = `${key}.pdf`;
   const localFile = path.join(PDF_DIRNAME, `${key}.pdf`);
   const extra = new qiniu.io.PutExtra();
   qiniu.io.putFile(uptoken, fileName, localFile, extra, function(err, ret) {
     if(!err) {
       // console.log(ret.hash, ret.key, ret.persistentId, '=======uploadFile result======');
       // 上传成功，获取下载连接
-      _writeToLog(companyName, `{"status": "creating", "process": 5, "download": ""}`);
-      getDownLoadUrl(companyName);
+      _writeToLog(key, `creating,5,`);
+      getDownLoadUrl(key);
       // 上传成功，　删除当前生成的pdf和html文件
       deleteFile(path.join(PDF_DIRNAME, `${key}.pdf`));
       deleteFile(path.join(PDF_DIRNAME, `${key}.html`));
       // 记录文件名到pdfs.log中
-      recordToPdfs(`${companyName}.pdf,`);
+      recordToPdfs(`${key}.pdf,`);
     } else {
       console.log(err, '=======uploadFile error======');
     }
   });
 }
 
-export const UpFileToQiniu = (fileName, companyName, timestamp) => {
-  _writeToLog(companyName, `{"status": "creating", "process": 4, "downDload": ""}`);
+export const UpFileToQiniu = (fileName) => {
+  _writeToLog(fileName, `creating,4,`);
   qiniu.conf.ACCESS_KEY = Access_Key;
   qiniu.conf.SECRET_KEY = Secret_Key;
-  const token = uptoken(Bucket_Name, `${companyName}.pdf`);
-  uploadFile(token, fileName, companyName);
+  const token = uptoken(Bucket_Name, `${fileName}.pdf`);
+  uploadFile(token, fileName);
 }
 
 const getDownLoadUrl = (fileName) => {
@@ -122,18 +122,24 @@ const getDownLoadUrl = (fileName) => {
   const url = `${DOMAIN}${fileName}.pdf`;
   const policy = new qiniu.rs.GetPolicy();
   const downloadUrl = policy.makeRequest(url);
-  _writeToLog(fileName, `{"status": "sucess", "process": 6, "download": "${downloadUrl}"}`);
+  _writeToLog(fileName, `sucess,6,${downloadUrl}`);
 }
 
 export const checkPDF = (req, res) => {
-  const {companyName, stamp} = req.query;
-  const statusFile = path.join(PDF_DIRNAME, `${companyName}${stamp}.log`);
+  const {companyName, stamp, username} = req.query;
+  const statusFile = path.join(PDF_DIRNAME, `${username}${stamp}.log`);
+  const result = fs.readFileSync(statusFile, 'utf-8');
   fs.exists(statusFile, (exists) => {
     if (exists) {
-      const restult = JSON.parse(fs.readFileSync(statusFile, 'utf-8'));
+      const result = fs.readFileSync(statusFile, 'utf-8');
+      const resultObj = {};
+      const resultArray = result.split(',');
+      resultObj.status = resultArray[0];
+      resultObj.process = resultArray[1];
+      resultObj.download = resultArray[2];
       res.status = 200;
-      res.json(restult);
-      if (restult.status === 'sucess') {
+      res.json(resultObj);
+      if (resultObj.status === 'sucess') {
         deleteFile(statusFile);
       }
     } else {

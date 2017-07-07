@@ -118,6 +118,9 @@ app.get('/front/refresh/assets', function(req, res) {
   const assetsPath = path.resolve(__dirname, '../static/dist');
   const reg = /^(?:main-)(.*)(?:\.js)$/;
   fs.readdir(assetsPath, function(err, file) {
+    if (!file) {
+      return res.status(404).send({message: 'file not fount'});
+    }
     const mainFile = file.filter(name => reg.test(name))[0];
     if (mainFile) {
       const assetsHash = mainFile.match(reg)[1];
@@ -199,41 +202,25 @@ app.use((req, res) => {
                 <RouterContext {...renderProps} />
               </Provider>
             );
-            const companyName = resp.data.companyName;
-            const timestamp = new Date().getTime();
             const reportHtml = ReactDOM.renderToString(<Html pdfDown="1" assets={webpackIsomorphicTools.assets()} component={component} {...allStores} />);
-            writeToLog(`${companyName}${timestamp}`, `{"status": "creating", "process": 1, "download": ""}`);
-            res.status(200);
-            res.json({
-              companyName: companyName,
-              stamp: timestamp
-            });
+            const companyName = resp.data.companyName;
             const username = resp.data.email;
+            const timestamp = new Date().getTime();
             const htmlName = username + timestamp + '.html';
             const pdfName = username + timestamp + '.pdf';
             writeStrToHtml(htmlName, reportHtml, () => {
-              writeToLog(`${companyName}${timestamp}`, `{"status": "creating", "process": 3, "download": ""}`);
               html2Pdf(htmlName, pdfName, () => {
-                UpFileToQiniu(`${username}${timestamp}`, `${companyName}${timestamp}`);
+                res.download(PDF_DIRNAME + pdfName, companyName + '.pdf', (err) => {
+                  // 删除pdf
+                  const del = cp.spawn("sh", ['./src/helpers/delPdf.sh', PDF_DIRNAME + htmlName, PDF_DIRNAME + pdfName]);
+                  del.stdout.on('end', function () {
+                    console.log('stdout: pdf删除成功');
+                  });
+                });
               });
-            }, () => {
-              writeToLog(`${companyName}${timestamp}`, `{"status": "faile", "process": 2, "download": ""}`);
             });
           })
           .catch((err) => {
-            const getResponseData = err.response;
-            let returnResponseData = {};
-            let returnState = 501;
-            if (getResponseData.data) {
-              returnState = getResponseData.data.errorCode;
-              returnResponseData = getResponseData.data;
-            } else {
-              returnState = 501;
-              returnResponseData.errorCode = 501;
-              returnResponseData.message = '请求pdf数据失败';
-            }
-            res.status(returnState);
-            res.json(returnResponseData);
             console.log('pdfDown err', err.response.status);
           });
       } else if (reqPathName === '/') { // 访问首页

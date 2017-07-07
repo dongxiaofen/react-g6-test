@@ -10,10 +10,13 @@ class InvestmentStore {
   @observable frinvList = {};
   @observable manageData = {};
   @observable manageDataInfoIndex = -1;
+  @observable loading = false;
   @action.bound getReportModule(params) {
     this.isMount = true;
+    this.loading = true;
     companyHomeApi.getReportModule('investment', params)
       .then(action('get investment', resp => {
+        this.loading = false;
         const noData = {error: {message: '暂无信息'}, content: []};
         const entNoData = !resp.data.ent || !resp.data.ent.entinvItemList || resp.data.ent.entinvItemList.length === 0;
         const frPositionNoData = !resp.data.fr || !resp.data.fr.frPositionList || resp.data.fr.frPositionList.length === 0;
@@ -25,6 +28,7 @@ class InvestmentStore {
         this.manageData = manageDataNoData ? noData : resp.data.managements;
       }))
       .catch(action('get investment', err => {
+        this.loading = false;
         const errorData = {error: err.response.data, content: []};
         this.entData = errorData;
         this.frPositionList = errorData;
