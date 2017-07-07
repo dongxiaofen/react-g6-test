@@ -6,7 +6,7 @@ import { Container, Row, Col } from 'components/common/layout';
 import Button from 'components/lib/button';
 import { runInAction } from 'mobx';
 
-function TaxCheckMain({ modalStore, messageStore, taxCheckStore }) {
+function TaxCheckMain({ modalStore, messageStore, taxCheckStore, clientStore }) {
   const showAddTaxCheck = () => {
     this.props.modalStore.openCompModal({
       title: '企业税务核查',
@@ -59,17 +59,24 @@ function TaxCheckMain({ modalStore, messageStore, taxCheckStore }) {
     });
   };
   const handleAddTaxCheckClick = () => {
-    showAddTaxCheck();
-    this.props.taxCheckStore.changeValue('companyName', '');
-    this.props.taxCheckStore.changeValue('isLockCompanyName', false);
+    if (!clientStore.taxPause) {
+      showAddTaxCheck();
+      this.props.taxCheckStore.changeValue('companyName', '');
+      this.props.taxCheckStore.changeValue('isLockCompanyName', false);
+    }
   };
   return (
     <Container>
       <Row>
         <Col>
           <div className="clearfix">
-            <h1 className={styles.title}>企业年度报税</h1>
-            <Button btnType="primary" className={styles.noDataButton} onClick={handleAddTaxCheckClick}>添加企业核查</Button>
+            <h1 className={styles.title}>
+              <span>企业年度报税</span>
+              {
+                clientStore.taxPause ? <span className={styles.pause_tpis}>添加企业核查正在维护中。。。</span> : null
+              }
+            </h1>
+            <Button btnType={clientStore.taxPause ? 'default' : 'primary'} className={clientStore.taxPause ? styles.maintenance : styles.noDataButton} onClick={handleAddTaxCheckClick}>添加企业核查</Button>
           </div>
           <div className={styles.listArea}>
             <TaxCheckList showAddTaxCheck={showAddTaxCheck} loading={taxCheckStore.loading} listData={taxCheckStore.taxListData} />
@@ -83,4 +90,4 @@ function TaxCheckMain({ modalStore, messageStore, taxCheckStore }) {
 TaxCheckMain.propTypes = {
   foo: PropTypes.string,
 };
-export default inject('modalStore', 'messageStore', 'taxCheckStore')(observer(TaxCheckMain));
+export default inject('modalStore', 'messageStore', 'taxCheckStore', 'clientStore')(observer(TaxCheckMain));

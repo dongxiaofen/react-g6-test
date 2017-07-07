@@ -5,7 +5,7 @@ import { clientApi } from 'api';
 class ClientStore {
   @observable userInfo = {};
   @observable envConfig = 'local';
-  @observable taxPause = false;
+  @observable taxPause = true;
 
   @action.bound combineServerData(data) {
     this.userInfo = data.userInfo;

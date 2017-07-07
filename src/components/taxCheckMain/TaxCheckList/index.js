@@ -39,7 +39,7 @@ function TaxCheckList({taxCheckStore, modalStore, clientStore}) {
     });
   };
   const handleClick = (companyName) => {
-    if (!clientStore.maintenance) {
+    if (!clientStore.taxPause) {
       this.props.showAddTaxCheck();
       this.props.taxCheckStore.changeValue('companyName', companyName);
       this.props.taxCheckStore.changeValue('isLockCompanyName', true);
@@ -53,7 +53,7 @@ function TaxCheckList({taxCheckStore, modalStore, clientStore}) {
       listDom.push(
         <div className={styles.wrap} key={`taxListData${idx}`}>
           <div className={styles.top}>
-            <Button className={clientStore.maintenance ? styles.maintenance : styles.noDataButton} onClick={handleClick.bind(this, item.companyName)}>继续核查</Button>
+            <Button className={clientStore.taxPause ? styles.maintenance : styles.noDataButton} onClick={handleClick.bind(this, item.companyName)}>继续核查</Button>
           </div>
           <div className={styles.companyName}><a onClick={getTaxCheckInfo.bind(this, item.companyId, item.companyName)}>{item.companyName}</a></div>
           <div className={styles.checkTime}>最后核查日期：{item.checkTime}</div>
