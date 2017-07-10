@@ -48,7 +48,7 @@ function AssetManageAnaly({}) {
               <span className={styles.point} />
               <span className={styles.formulaFonts}>总资产周转率</span>
             </p>
-            <p className={styles.content}>反应综合评价企业全部资产的经营质量和利用效率的重要指标。周转率越大，说明总资产周转越快，反映出销售能力越强。企业可以通过薄利多销的办法，加速资产的周转，带来利润绝对额的增加。</p>
+            <p className={styles.content}>反映综合评价企业全部资产的经营质量和利用效率的重要指标。周转率越大，说明总资产周转越快，反映出销售能力越强。企业可以通过薄利多销的办法，加速资产的周转，带来利润绝对额的增加。</p>
             <p className={styles.line} />
             <p className={styles.formula}>
               <span className={styles.point} />
