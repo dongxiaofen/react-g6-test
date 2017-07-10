@@ -7,7 +7,6 @@ import bannerStore from './banner';
 import { companyHomeApi, moduleInfoApi } from 'api';
 import pathval from 'pathval';
 import networkStore from './report/network';
-import clientStore from './client';
 class CompanyHomeStore {
   constructor() {
     reaction(
@@ -272,7 +271,7 @@ class CompanyHomeStore {
       const idx = dimensions.indexOf(option.value);
       if (option.value === 'SCORE' && idx < 0) {
         this.loanOption[index].checked = true;
-      } else if (!clientStore.taxPause && /PROFIT|OPERATION|GROWING/.test(option.value) && idx < 0) {
+      } else if (/PROFIT|OPERATION|GROWING/.test(option.value) && idx < 0) {
         this.loanOption[index].checked = true;
       } else {
         this.loanOption[index].checked = false;
@@ -293,7 +292,6 @@ class CompanyHomeStore {
       value: false,
       err: {},
     };
-    this.analysisMoudle = [];
     this.reportInfo = {
       analysisReportId: '',
       basicReportId: '',
