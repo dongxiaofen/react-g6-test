@@ -6,10 +6,10 @@ import { Container, Row, Col } from 'components/common/layout';
 import Button from 'components/lib/button';
 import { runInAction } from 'mobx';
 
-function TaxCheckMain({ modalStore, messageStore, taxCheckStore, clientStore }) {
+function TaxCheckMain({ modalStore, messageStore, taxCheckStore }) {
   const showAddTaxCheck = () => {
     this.props.modalStore.openCompModal({
-      title: '企业税务核查',
+      title: '企业经营核查',
       width: '695px',
       isSingleBtn: true,
       confirmText: '确定',
@@ -59,7 +59,7 @@ function TaxCheckMain({ modalStore, messageStore, taxCheckStore, clientStore }) 
     });
   };
   const handleAddTaxCheckClick = () => {
-    if (!clientStore.taxPause) {
+    if (taxCheckStore.taxCheckAvailable) {
       showAddTaxCheck();
       this.props.taxCheckStore.changeValue('companyName', '');
       this.props.taxCheckStore.changeValue('isLockCompanyName', false);
@@ -70,13 +70,13 @@ function TaxCheckMain({ modalStore, messageStore, taxCheckStore, clientStore }) 
       <Row>
         <Col>
           {
-            clientStore.taxPause ? <div className={styles.pause_tpis}>添加企业核查正在维护中……</div> : null
+            !taxCheckStore.taxCheckAvailable ? <div className={styles.pause_tpis}>添加企业核查正在维护中……</div> : null
           }
           <div className="clearfix">
             <h1 className={styles.title}>
-              企业年度报税
+              企业经营核查
             </h1>
-            <Button btnType={clientStore.taxPause ? 'default' : 'primary'} className={clientStore.taxPause ? styles.maintenance : styles.noDataButton} onClick={handleAddTaxCheckClick}>添加企业核查</Button>
+            <Button btnType={!taxCheckStore.taxCheckAvailable ? 'default' : 'primary'} className={!taxCheckStore.taxCheckAvailable ? styles.maintenance : styles.noDataButton} onClick={handleAddTaxCheckClick}>添加企业核查</Button>
           </div>
           <div className={styles.listArea}>
             <TaxCheckList showAddTaxCheck={showAddTaxCheck} loading={taxCheckStore.loading} listData={taxCheckStore.taxListData} />
@@ -90,4 +90,4 @@ function TaxCheckMain({ modalStore, messageStore, taxCheckStore, clientStore }) 
 TaxCheckMain.propTypes = {
   foo: PropTypes.string,
 };
-export default inject('modalStore', 'messageStore', 'taxCheckStore', 'clientStore')(observer(TaxCheckMain));
+export default inject('modalStore', 'messageStore', 'taxCheckStore')(observer(TaxCheckMain));

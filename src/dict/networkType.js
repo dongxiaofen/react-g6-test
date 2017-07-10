@@ -7,6 +7,6 @@ const config = [
   {id: 5, label: '历史关联', key: ['历史关联'], color: '#d1c0a5', subType: 'USER_HISTORY_RELEVANCE_RELATED'},
   {id: 6, label: '共同原被告', key: ['共同被告', '共同原告'], color: '#ce62d6', subType: 'USER_SAME_PLAINTIFF_DEFENDANT_RELATED'},
   {id: 7, label: '诉讼对立方', key: ['诉讼对立方'], color: '#bfe3f4', subType: 'USER_LITIGATION_OPPOSITE_RELATED'},
-  {id: 8, label: '供求关系', key: ['客户', '供应商'], color: '#c5dd8f'},
+  // {id: 8, label: '供求关系', key: ['客户', '供应商'], color: '#c5dd8f'},
 ];
 export default config;

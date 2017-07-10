@@ -15,6 +15,7 @@ export default class Banner extends Component {
     const {monitorId} = this.props.companyHomeStore.reportInfo;
     this.props.bannerStore.getBannerInfo({companyName});
     this.props.bannerStore.getReportInfo();
+    // this.props.companyHomeStore.getMoudleInfo();
     if (monitorId !== '') {
       this.props.bannerStore.getMonitorRepInfo();
     }

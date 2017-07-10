@@ -9,7 +9,7 @@ import Button from 'components/lib/button';
 import { loadingComp } from 'components/hoc';
 import NoData from './NoData';
 
-function TaxCheckList({taxCheckStore, modalStore, clientStore}) {
+function TaxCheckList({taxCheckStore, modalStore}) {
   const getTaxCheckInfo = (companyId, companyName) => {
     taxCheckStore.getTaxCheckInfo(companyId, companyName);
     modalStore.openCompModal({
@@ -39,7 +39,7 @@ function TaxCheckList({taxCheckStore, modalStore, clientStore}) {
     });
   };
   const handleClick = (companyName) => {
-    if (!clientStore.taxPause) {
+    if (taxCheckStore.taxCheckAvailable) {
       this.props.showAddTaxCheck();
       this.props.taxCheckStore.changeValue('companyName', companyName);
       this.props.taxCheckStore.changeValue('isLockCompanyName', true);
@@ -53,7 +53,7 @@ function TaxCheckList({taxCheckStore, modalStore, clientStore}) {
       listDom.push(
         <div className={styles.wrap} key={`taxListData${idx}`}>
           <div className={styles.top}>
-            <Button className={clientStore.taxPause ? styles.maintenance : styles.noDataButton} onClick={handleClick.bind(this, item.companyName)}>继续核查</Button>
+            <Button className={!taxCheckStore.taxCheckAvailable ? styles.maintenance : styles.noDataButton} onClick={handleClick.bind(this, item.companyName)}>继续核查</Button>
           </div>
           <div className={styles.companyName}><a onClick={getTaxCheckInfo.bind(this, item.companyId, item.companyName)}>{item.companyName}</a></div>
           <div className={styles.checkTime}>最后核查日期：{item.checkTime}</div>
@@ -61,7 +61,7 @@ function TaxCheckList({taxCheckStore, modalStore, clientStore}) {
       );
     });
   } else {
-    listDom.push(<ErrorText error={{message: '尚未进行企业年度报税核查，请添加'}} key="ErrorText"/>);
+    listDom.push(<ErrorText error={{message: '尚未进行企业年度核查，请添加'}} key="ErrorText"/>);
   }
   return (
     <div className={styles.box}>
@@ -86,4 +86,4 @@ export default loadingComp(
     module: '企业年度报税',
     error: false,
   })}
-)(inject('taxCheckStore', 'modalStore', 'clientStore')(observer(TaxCheckList)));
+)(inject('taxCheckStore', 'modalStore')(observer(TaxCheckList)));
