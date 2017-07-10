@@ -244,12 +244,11 @@ class CompanyHomeStore {
     companyHomeApi.getReportStatus(params)
     .then(action('getReportStatus', (resp)=>{
       this.reportInfo = Object.assign(this.reportInfo, resp.data);
-      if (resp.data.basicReportId || resp.data.reportId) {
-        const dimensions = resp.data.dimensions || [];
-        this.initDimensions(dimensions);
-      } else {
+      if (!resp.data.basicReportId && !resp.data.reportId) {
         this.createBasicReport({companyName: params.companyName});
       }
+      const dimensions = resp.data.dimensions || [];
+      this.initDimensions(dimensions);
     }))
     .catch(action('getReportStatus err', (error)=>{
       console.log(error);
