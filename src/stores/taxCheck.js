@@ -123,7 +123,6 @@ class TaxCheckStore {
             this.taxCheckAvailable = item.available;
             return;
           }
-          this.taxCheckAvailable = true;
         });
       }))
       .catch(action((err) => {
