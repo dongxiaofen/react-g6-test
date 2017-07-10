@@ -21,4 +21,5 @@ export * as assetTransactionApi from './assetTransaction';
 export * as linkJumpApi from './linkJump';
 export * as relPerCheckApi from './relPerCheck';
 export * as pdfApi from './pdf';
+export * as moduleInfoApi from './moduleInfo';
 // append here from plop

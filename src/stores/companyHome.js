@@ -4,7 +4,7 @@ import modalStore from './modal';
 import messageStore from './message';
 // import { browserHistory } from 'react-router';
 import bannerStore from './banner';
-import { companyHomeApi } from 'api';
+import { companyHomeApi, moduleInfoApi } from 'api';
 import pathval from 'pathval';
 import networkStore from './report/network';
 import clientStore from './client';
@@ -47,6 +47,7 @@ class CompanyHomeStore {
   @observable loanLoading = false;
   @observable monitorLoading = false;
   @observable upgradeType = 'nav';
+  @observable analysisMoudle = [];
   // 是否已经完成
   @observable completed = false;
   @computed get monitorTimeObj() {
@@ -257,6 +258,15 @@ class CompanyHomeStore {
       console.log(error);
     }));
   }
+  @action.bound getMoudleInfo() {
+    moduleInfoApi.getMouduleInfo()
+      .then(action((response) => {
+        this.analysisMoudle = response.data;
+      }))
+      .catch(action((err) => {
+        console.log(err);
+      }));
+  }
   @action.bound initDimensions(dimensions) {
     this.loanOption.forEach((option, index)=>{
       const idx = dimensions.indexOf(option.value);
@@ -283,6 +293,7 @@ class CompanyHomeStore {
       value: false,
       err: {},
     };
+    this.analysisMoudle = [];
     this.reportInfo = {
       analysisReportId: '',
       basicReportId: '',
