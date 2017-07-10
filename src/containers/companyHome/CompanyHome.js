@@ -87,7 +87,7 @@ export default class CompanyHome extends Component {
 
   componentDidMount() {
     const companyName = this.props.routing.location.query.companyName;
-    this.props.companyHomeStore.getReportStatus({ companyName });
+    this.props.companyHomeStore.getMoudleInfo({ companyName });
     const companyHomeStore = this.props.companyHomeStore;
     const assetsStore = this.props.assetsStore;
     // 在这注入reaction
