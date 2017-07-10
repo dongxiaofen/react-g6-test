@@ -1,6 +1,6 @@
 import { observable, action } from 'mobx';
 import pathval from 'pathval';
-import {companyHomeApi} from 'api';
+import {companyHomeApi, moduleInfoApi} from 'api';
 import axios from 'axios';
 const CancelToken = axios.CancelToken;
 import uiStore from './ui';
@@ -26,6 +26,7 @@ class TaxCheckStore {
   @observable taxCheckInfoCompany = '';
   @observable taxCheckInfoId = 0;
   @observable isMount = false;
+  @observable taxCheckAvailable = true;
 
   @action.bound addSelectItem() {
     this.selectConf.push({
@@ -97,6 +98,8 @@ class TaxCheckStore {
       index: uiStore.uiState.taxCheckPager.index,
       size: uiStore.uiState.taxCheckPager.size,
     };
+    // 获取模块信息
+    this.getModuleInfo();
     // 获取列表数据
     companyHomeApi.getTaxCheckList(params, source)
       .then(action('taxList list', (resp) => {
@@ -112,6 +115,22 @@ class TaxCheckStore {
         console.log(err.response, '=====taxList error');
       }));
   }
+  @action.bound getModuleInfo = () => {
+    moduleInfoApi.getMouduleInfo()
+      .then(action((response) => {
+        response.data.forEach( (item) => {
+          if (item.module === 'TAX_CHECK') {
+            this.taxCheckAvailable = item.available;
+            return;
+          }
+          this.taxCheckAvailable = true;
+        });
+      }))
+      .catch(action((err) => {
+        console.log(err.response);
+      }));
+  }
+
 
   @action.bound getTaxCheckInfo(_companyId, _companyName) {
     const companyId = _companyId ? _companyId : this.taxCheckInfoId;
@@ -139,6 +158,7 @@ class TaxCheckStore {
     this.taxState = false;
     this.monitorId = '';
     this.isMount = false;
+    this.taxCheckAvailable = true;
   }
 }
 export default new TaxCheckStore();
