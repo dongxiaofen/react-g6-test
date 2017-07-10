@@ -7,6 +7,7 @@ import bannerStore from './banner';
 import { companyHomeApi } from 'api';
 import pathval from 'pathval';
 import networkStore from './report/network';
+import clientStore from './client';
 class CompanyHomeStore {
   constructor() {
     reaction(
@@ -259,7 +260,9 @@ class CompanyHomeStore {
   @action.bound initDimensions(dimensions) {
     this.loanOption.forEach((option, index)=>{
       const idx = dimensions.indexOf(option.value);
-      if (/SCORE|PROFIT|OPERATION|GROWING/.test(option.value) && idx < 0) {
+      if (option.value === 'SCORE' && idx < 0) {
+        this.loanOption[index].checked = true;
+      } else if (!clientStore.taxPause && /PROFIT|OPERATION|GROWING/.test(option.value) && idx < 0) {
         this.loanOption[index].checked = true;
       } else {
         this.loanOption[index].checked = false;
