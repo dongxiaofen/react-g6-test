@@ -39,7 +39,7 @@ export default function getPermissionMeta(env) {
     obj = {
       logo: logoImgSc,
       favicon: '/favicon3.ico',
-      scmSource: 'SC_WEB',
+      scmSource: 'ZJ_WEB',
       logoStyle: 'cfca_logo',
       loginLogo: cfcaLoginLogo,
       loginLogoStyle: 'cfcaLoginLogoImg',
