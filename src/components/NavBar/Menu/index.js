@@ -15,11 +15,11 @@ function Menu({ routing }) {
       parent: { module: '核查'},
       children: [
         // { module: '个人投资任职', route: '/' },
-        { module: '个人黑名单', route: 'relPerCheck' },
+        { module: '高风险核查', route: 'relPerCheck' },
         { module: '企业经营核查', route: 'taxCheck' },
         // { module: '敬请期待', splitters: true, route: '' },
         { module: '企业黑名单', route: 'corpBlackList' },
-        { module: '个人身份核验', route: 'personCheck' },
+        { module: '信息匹配', route: 'personCheck' },
       ]
     },
     // {
