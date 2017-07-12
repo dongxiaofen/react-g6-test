@@ -290,7 +290,9 @@ class RuleAddStore {
   }
   // 事件类型填写关键词
   @action.bound keyWordChange(val) {
-    this.keyWordArray = val.target.value;
+    const pattern = new RegExp("[`~!@#$^&*()=|{}':;',\\[\\].<>/?~！@#￥……&*（）——|{}【】‘；：”“'。，、？]");
+    this.keyWordArray = val.target.value.replace(pattern, '');
+    console.log(this.keyWordArray, '=======aa', val.target.value);
   }
 
   // 获取行业列表
