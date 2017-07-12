@@ -98,7 +98,7 @@ axios.interceptors.response.use((response) => {
       location.href = '/';
     }
     // allStore.modalStore.openAsyncModal((callback) => {
-    //   require.ensure([], (require) => {
+    //   require.ensure([], (require) => {`
     //     callback(require('components/test/Test'));
     //   });
     // });
