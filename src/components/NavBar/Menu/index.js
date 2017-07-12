@@ -18,7 +18,7 @@ function Menu({ routing }) {
         { module: '高风险核查', route: 'relPerCheck' },
         { module: '企业经营核查', route: 'taxCheck' },
         // { module: '敬请期待', splitters: true, route: '' },
-        { module: '企业黑名单', route: 'corpBlackList' },
+        // { module: '企业黑名单', route: 'corpBlackList' },
         { module: '信息匹配', route: 'personCheck' },
       ]
     },
