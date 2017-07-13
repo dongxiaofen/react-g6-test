@@ -369,7 +369,6 @@ const config = {
     'dishonestyList': '失信被执行人信息',
     'litigationAssets': '涉诉资产',
   },
-  // 开庭公告
   courtAnnouncement: {
     'type': '公告类型',
     'typeName': '公告类型',
@@ -387,6 +386,7 @@ const config = {
     'relevantDepartments': '当事方',
     'litigant': '当事方',
   },
+  // 开庭公告
   courtNotice: {
     'court': '公告法院',
     'publishDate': '公告时间',
