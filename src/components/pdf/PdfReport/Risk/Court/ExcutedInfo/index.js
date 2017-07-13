@@ -28,7 +28,7 @@ function ExcutedInfo({moduleData}) {
       {'key': 'execMoney', 'width': '6'}
     ],
     item: moduleData,
-    dict: 'courtExecution',
+    dict: 'courtExecuted',
     hasConfig: true,
     type: 'array',
   };
