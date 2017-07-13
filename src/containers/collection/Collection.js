@@ -23,6 +23,9 @@ export default class Collection extends Component {
       size: collection.size
     });
   }
+  componentWillUnmount() {
+    this.props.collectionStore.setSearchValue('');
+  }
 
   render() {
     const collectionStore = this.props.collectionStore;
