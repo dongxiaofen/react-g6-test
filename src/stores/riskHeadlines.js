@@ -164,7 +164,7 @@ class RiskHeadlinesStore {
   }
   @action.bound getCompanyInfo(monitorId, params) {
     this.resetCompanyInfo();
-    this.resetCompanyEvents();
+    this.resetModuleData('events');
 
     this.cancelRiskApi('info');
     const CancelToken = axios.CancelToken;
