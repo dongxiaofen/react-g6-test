@@ -103,21 +103,14 @@ class SearchCompanyStore {
   // 筛选数据
   @action.bound formatJudgeData(respData) {
     let resultData;
-    const baseData = [
-      {key: 'industryType', value: []},
-      {key: 'scale', value: []},
-      {key: 'province', value: []},
-      {key: 'companyStatus', value: []},
-      {key: 'stockMarket', value: []},
-    ];
     if (respData.page.totalElements > 20) {
       if ('aggregations' in respData) {
         resultData = respData.aggregations;
       } else {
-        resultData = baseData;
+        resultData = [];
       }
     } else {
-      resultData = baseData;
+      resultData = [];
     }
     return resultData;
   }
