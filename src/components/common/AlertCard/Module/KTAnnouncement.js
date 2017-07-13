@@ -3,22 +3,24 @@ import BaseModule from '../BaseModule';
 import {observer} from 'mobx-react';
 function KTAnnouncement({data, module}) {
   const arrayToString = (arr)=>{
-    let arr_ = arr;
-    if (arr_) {
-      arr_ = arr.join(',');
+    const output = [];
+    if (arr) {
+      arr.forEach((item)=>{
+        output.push(item.litigantName);
+      });
     }
-    return arr_;
+    return output.join('；');
   };
   const moduleData = {
     'hideConfig': [
-      {'key': 'content', 'width': '12'}
+      {'key': 'detail', 'width': '12'}
     ],
     'viewConfig': [
       {'key': 'court', 'width': '6'},
       {'key': 'identity', 'width': '6'},
       // {'key': 'areaName', 'width': '6'},
-      {'key': 'relevantDepartments', 'width': '12', 'handle': arrayToString},
-      {'key': 'content', 'width': '12'}
+      {'key': 'litigant', 'width': '12', 'handle': arrayToString},
+      {'key': 'detail', 'width': '12'}
     ],
     date: {
       label: '开庭日期',

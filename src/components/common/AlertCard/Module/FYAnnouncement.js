@@ -3,24 +3,23 @@ import BaseModule from '../BaseModule';
 import {observer} from 'mobx-react';
 function FYAnnouncement({data, module}) {
   const arrayToString = (arr)=>{
-    let arr_ = arr;
-    if (arr_) {
-      arr_ = arr.join(',');
+    const output = [];
+    if (arr) {
+      arr.forEach((item)=>{
+        output.push(item.litigantName);
+      });
     }
-    return arr_;
-  };
-  const modifyTypeName = (obj) => {
-    return obj.content.typeName || obj.content.type || '--';
+    return output.join('；');
   };
   const moduleData = {
     'hideConfig': [
       {'key': 'content', 'width': '12'}
     ],
     'viewConfig': [
-      {'key': 'typeName', 'width': '6', handleBlock: modifyTypeName},
+      {'key': 'docType', 'width': '6'},
       {'key': 'identity', 'width': '6'},
       {'key': 'court', 'width': '6'},
-      {'key': 'relevantDepartments', 'width': '12', 'handle': arrayToString},
+      {'key': 'litigant', 'width': '12', 'handle': arrayToString},
       {'key': 'content', 'width': '12'}
     ],
     date: {

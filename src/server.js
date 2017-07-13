@@ -19,6 +19,7 @@ import { Provider, useStaticRendering } from 'mobx-react';
 import getRoutes from './routes';
 import { RouterStore } from 'mobx-react-router';
 import * as allStores from 'stores';
+import getPermissionMeta from 'helpers/getPermissionMeta';
 import {
   UpFileToQiniu,
   checkPDF,
@@ -143,7 +144,7 @@ app.use((req, res) => {
     .set('scm-source', config.target === 'dianxin_prod' ? 'TEL_WEB' : 'SC_WEB')
     .set('scm-token', req.cookies['scm-token'] || {})
   axios.defaults.headers.common['Content-Type'] = 'application/json';
-  axios.defaults.headers.common['scm-source'] = config.target === 'dianxin_prod' ? 'TEL_WEB' : 'SC_WEB';
+  axios.defaults.headers.common['scm-source'] = getPermissionMeta(config.target).scmSource;
   axios.defaults.headers.common['scm-token'] = req.cookies['scm-token'] || {};
 
   // 检查pdf路径
@@ -212,10 +213,10 @@ app.use((req, res) => {
               html2Pdf(htmlName, pdfName, () => {
                 res.download(PDF_DIRNAME + pdfName, companyName + '.pdf', (err) => {
                   // 删除pdf
-                  const del = cp.spawn("sh", ['./src/helpers/delPdf.sh', PDF_DIRNAME + htmlName, PDF_DIRNAME + pdfName]);
-                  del.stdout.on('end', function () {
-                    console.log('stdout: pdf删除成功');
-                  });
+                  // const del = cp.spawn("sh", ['./src/helpers/delPdf.sh', PDF_DIRNAME + htmlName, PDF_DIRNAME + pdfName]);
+                  // del.stdout.on('end', function () {
+                  //   console.log('stdout: pdf删除成功');
+                  // });
                 });
               });
             });

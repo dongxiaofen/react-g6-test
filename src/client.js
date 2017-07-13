@@ -15,6 +15,7 @@ import combineServerData from 'helpers/combineServerData';
 import * as allStore from 'stores';
 import {useStrict, runInAction} from 'mobx';
 import {RouterStore, syncHistoryWithStore} from 'mobx-react-router';
+import getPermissionMeta from 'helpers/getPermissionMeta';
 // import { useStrict, spy } from 'mobx';
 // // 全局监听action
 // spy((event) => {
@@ -67,7 +68,7 @@ useStrict(true);
 axios.interceptors.request.use((axiosConfig) => {
   // Do something before request is sent
   axiosConfig.headers['sc-id'] = `web-${Uuid.v4()}`;
-  axiosConfig.headers['scm-source'] = 'SC_WEB';
+  axiosConfig.headers['scm-source'] = getPermissionMeta(allStore.clientStore.envConfig).scmSource;
   axiosConfig.headers['Cache-Control'] = 'no-cache';
   if (!axiosConfig.params) {
     axiosConfig.params = {
@@ -98,7 +99,7 @@ axios.interceptors.response.use((response) => {
       location.href = '/';
     }
     // allStore.modalStore.openAsyncModal((callback) => {
-    //   require.ensure([], (require) => {
+    //   require.ensure([], (require) => {`
     //     callback(require('components/test/Test'));
     //   });
     // });
