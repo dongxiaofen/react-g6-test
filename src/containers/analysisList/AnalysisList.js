@@ -45,6 +45,9 @@ export default class AnalysisList extends Component {
       this.props.analysisListStore.getAnalysisList();
     }
   }
+  componentWillUnmount() {
+    this.props.analysisListStore.changeValue(`searchInput`, '');
+  }
 
   changeTabs = (value) => {
     this.props.routing.push(`/analysisList?activeKey=${value}`);
