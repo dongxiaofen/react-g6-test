@@ -4,6 +4,7 @@ import PdfNotFound from 'components/common/pdf/PdfNotFound';
 import PdfSimpleKey from 'components/common/pdf/PdfSimpleKey';
 
 function ExcutedInfo({moduleData}) {
+  console.log(123123213123123, moduleData.toJS());
   if (!moduleData || moduleData.length === 0) {
     return (
       <div>
@@ -28,7 +29,7 @@ function ExcutedInfo({moduleData}) {
       {'key': 'execMoney', 'width': '6'}
     ],
     item: moduleData,
-    dict: 'courtExecution',
+    dict: 'courtExecuted',
     hasConfig: true,
     type: 'array',
   };
