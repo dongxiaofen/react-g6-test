@@ -3,13 +3,13 @@ import { observer } from 'mobx-react';
 import SimpleCard from 'components/common/report/alertAnalysis/SimpleCard';
 function Fyannouncement({data}) {
   const arrayToString = (arr)=>{
-    let str = '';
+    const output = [];
     if (arr) {
-      arr.forEach(item => {
-        str += item.litigantName;
+      arr.forEach((item)=>{
+        output.push(item.litigantName);
       });
     }
-    return str;
+    return output.join('；');
   };
   const meta = {
     dict: 'courtAnnouncement',
