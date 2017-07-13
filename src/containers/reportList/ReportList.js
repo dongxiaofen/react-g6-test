@@ -44,6 +44,10 @@ export default class ReportList extends Component {
     }
   }
 
+  componentWillUnmount() {
+    this.props.reportListStore.changeValue(`searchInput`, '');
+  }
+
   handleSearch(evt) {
     if (evt.keyCode === 13) {
       this.props.uiStore.updateUiStore(`${this.props.reportListStore.activeKey}ReportPager.index`, 1);
