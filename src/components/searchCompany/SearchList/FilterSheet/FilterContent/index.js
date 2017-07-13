@@ -75,7 +75,7 @@ export default class FilterContent extends Component {
     const filterArrayStatus = this.props.filterArrayStatus;
     // 循环每一个大类
     data.map((obj, index)=>{
-      if (obj && obj.value && obj.value.length > 0) {
+      if (obj && obj.value) {
         // 每一个小项
         const itemSingle = [];
         // 判断是否全选
