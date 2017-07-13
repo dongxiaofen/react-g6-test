@@ -18,7 +18,7 @@ function Ktannouncement({data}) {
       {'key': 'identity', 'width': '6'},
       {'key': 'judgeTime', 'width': '6'},
       {'key': 'litigant', 'width': '12', 'modifyBlock': arrayToString},
-      {'key': 'content', 'width': '12'}
+      {'key': 'detail', 'width': '12'}
     ],
     item: data.content,
   };
