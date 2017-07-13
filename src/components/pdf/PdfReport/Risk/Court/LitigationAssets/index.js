@@ -23,7 +23,7 @@ function LitigationAssets({moduleData}) {
       {'key': 'projectNotice', 'width': '12'},
     ],
     item: moduleData,
-    dict: 'litigationAssets',
+    dict: 'courtLitigation',
     hasConfig: true,
     type: 'array',
   };
