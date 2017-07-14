@@ -2,9 +2,9 @@ import React, {PropTypes} from 'react';
 import { observer, inject} from 'mobx-react';
 import styles from './index.less';
 
-function Info({alertAnalysisStore, monitorAlertStore, routing}) {
+function Info({reportAxisStore, monitorAlertStore, routing}) {
   const pathname = routing.location.pathname;
-  const dataStore = pathname === '/companyHome/monitorAlert' ? monitorAlertStore : alertAnalysisStore;
+  const dataStore = pathname === '/companyHome/monitorAlert' ? monitorAlertStore : reportAxisStore;
   const info = dataStore.detailData.info;
   let relation = '';
   let hasRelation = false;
@@ -30,4 +30,4 @@ function Info({alertAnalysisStore, monitorAlertStore, routing}) {
 Info.propTypes = {
   foo: PropTypes.string,
 };
-export default inject('alertAnalysisStore', 'monitorAlertStore', 'routing')(observer(Info));
+export default inject('reportAxisStore', 'monitorAlertStore', 'routing')(observer(Info));

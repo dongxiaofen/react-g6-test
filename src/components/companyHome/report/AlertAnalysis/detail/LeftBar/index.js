@@ -1,10 +1,10 @@
 import React, {PropTypes} from 'react';
 import { observer, inject } from 'mobx-react';
 import styles from './index.less';
-function LeftBar({alertAnalysisStore, monitorAlertStore, routing, companyHomeStore}) {
+function LeftBar({reportAxisStore, monitorAlertStore, routing, companyHomeStore}) {
   const pathname = routing.location.pathname;
   const isMonitor = pathname === '/companyHome/monitorAlert';
-  const dataStore = isMonitor ? monitorAlertStore : alertAnalysisStore;
+  const dataStore = isMonitor ? monitorAlertStore : reportAxisStore;
   const moduleData = dataStore.detailData;
   const data = moduleData.detail;
   const activeIndex = moduleData.activeIndex;
@@ -108,4 +108,4 @@ function LeftBar({alertAnalysisStore, monitorAlertStore, routing, companyHomeSto
 LeftBar.propTypes = {
   foo: PropTypes.string,
 };
-export default inject('alertAnalysisStore', 'monitorAlertStore', 'routing', 'companyHomeStore')(observer(LeftBar));
+export default inject('reportAxisStore', 'monitorAlertStore', 'routing', 'companyHomeStore')(observer(LeftBar));
