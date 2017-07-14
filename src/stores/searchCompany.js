@@ -100,6 +100,20 @@ class SearchCompanyStore {
   @action.bound setDown() {
     this.down = true;
   }
+  // 筛选数据
+  @action.bound formatJudgeData(respData) {
+    let resultData;
+    if (respData.page.totalElements > 20) {
+      if ('aggregations' in respData) {
+        resultData = respData.aggregations;
+      } else {
+        resultData = [];
+      }
+    } else {
+      resultData = [];
+    }
+    return resultData;
+  }
   // 获取搜索公司列表
   @action.bound getCompanyList() {
     // 是否已搜索
@@ -131,7 +145,7 @@ class SearchCompanyStore {
           // 状态
           // this.filterSheet.filterSheetStatus = true;
           // 放入初始数据
-          this.filterSheet.data = resp.data.aggregations;
+          this.filterSheet.data = this.formatJudgeData(resp.data);
           resp.data.aggregations.map((obj)=>{
             if (obj.value.length > 0) {
               // 放入初始数据状态
