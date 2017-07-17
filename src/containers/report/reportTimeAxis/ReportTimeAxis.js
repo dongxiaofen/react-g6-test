@@ -2,6 +2,8 @@ import React, { Component, PropTypes } from 'react';
 import { observer, inject } from 'mobx-react';
 import TimeAxisComp from 'components/companyHome/report/timeAxis';
 import AlertAnalysisBody from 'components/companyHome/report/AlertAnalysis';
+import RiskFeaturesExplain from 'components/companyHome/report/riskFeatures/RiskFeaturesExplain';
+import RiskFeaturesScan from 'components/companyHome/report/riskFeatures/RiskFeaturesScan';
 import Tabs from 'antd/lib/tabs';
 const TabPane = Tabs.TabPane;
 import { batchReport } from 'components/hoc';
@@ -27,10 +29,10 @@ export default class ReportTimeAxis extends Component {
           <TimeAxisComp {...this.props} title="历史时间轴" timeAxisStore={store} />
         </TabPane>
         <TabPane tab="风险特征扫描" key="风险特征扫描">
-          <div>aaaa</div>
+          <RiskFeaturesScan />
         </TabPane>
         <TabPane tab="风险特征说明" key="风险特征说明">
-          <div>bbbb</div>
+          <RiskFeaturesExplain />
         </TabPane>
       </Tabs>
     );

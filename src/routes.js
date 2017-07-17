@@ -25,7 +25,7 @@ import {
     Stock,
     Network,
     RelPerCheck,
-    AlertAnalysis,
+    // AlertAnalysis,
     ReportTimeAxis,
     MonitorTimeAxis,
     RuleCompany,
@@ -113,7 +113,7 @@ export default () => {
         <Route path="assets" component={ Assets } onEnter={requireAuth} />
         <Route path="stock" component={ Stock } onEnter={requireAuth} />
         <Route path="network" component={ Network } onEnter={requireAuth} />
-        <Route path="alertAnalysis" component={ AlertAnalysis } onEnter={requireAuth} />
+        {/* <Route path="alertAnalysis" component={ AlertAnalysis } onEnter={requireAuth} /> */}
         <Route path="timeAxis" component={ ReportTimeAxis } onEnter={requireAuth} />
         {/*<Route path="blackNetwork" component={ BlackNetwork } onEnter={requireAuth} />*/}
         <Route path="forceNetwork" component={ ForceNetwork } onEnter={requireAuth} />
