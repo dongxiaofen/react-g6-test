@@ -97,10 +97,10 @@ function Trends({accountSettingStore}) {
     legend: {
       data: ['贷前报告', '贷中分析', '贷后监控'],
       top: 40,
-      left: 40
+      left: 20
     },
     grid: {
-      top: '60',
+      top: '85',
       right: '40',
       bottom: '40',
       left: '20',
@@ -201,12 +201,18 @@ function Trends({accountSettingStore}) {
       },
     ]
   });
+  const chartClick = (params) => {
+    console.log(params);
+    console.log(params.name, 'name');
+  };
   return (
     <div className={styles.wrapper}>
       <Chart
         chartId="newBusiness"
         height="500"
-        option={createOption()} />
+        option={createOption()}
+        handleEvent={chartClick}
+        eventType="click" />
     </div>
   );
 }

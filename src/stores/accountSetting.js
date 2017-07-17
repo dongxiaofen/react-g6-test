@@ -375,9 +375,9 @@ class AccountSettingStore {
         const reportDate = resp.data.reportStatistic.map(item => item.date);
         const analysisReportDate = resp.data.analysisReportStatistic.map(item => item.date);
         const monitorDate = resp.data.monitorStatistic.map(item => item.date);
-        allDate = Array.form(new Set(reportDate.concat(analysisReportDate).concat(monitorDate))).sort((pre, next) => (next - pre));
-        console.log(allDate, 'allDate');
+        const allDate = Array.from(new Set(reportDate.concat(analysisReportDate).concat(monitorDate))).sort((pre, next) => (next - pre));
         this.getDailyDetail(uId, allDate[0]);
+        this.tabs.business.activeDate = allDate[0];
       }))
       .catch(action('getReportAndMonitor_error', err => {
         this.tabs.business.reportAndMonitor = {error: err.response.data, data: {}};
@@ -388,11 +388,11 @@ class AccountSettingStore {
     accountSettingApi.getDailyDetail(uId, {date: date})
       .then(action('getDailyDetail_success', ({data}) => {
         const noData = data.length === 0;
-        this.tabs.business.dailyDetail = noData ? {error: {message: '暂无数据'}, content: []} : {content: data}
+        this.tabs.business.dailyDetail = noData ? {error: {message: '暂无数据'}, content: []} : {content: data};
       }))
       .catch(action('getDailyDetail_error', err => {
-        this.tabs.business.dailyDetail = {error: err.response.data, content: []}
-      }))
+        this.tabs.business.dailyDetail = {error: err.response.data, content: []};
+      }));
   }
   @action.bound getProvince(uId) {
     this.tabs.business.province = {};
