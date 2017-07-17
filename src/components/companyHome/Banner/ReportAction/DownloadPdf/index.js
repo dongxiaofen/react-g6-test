@@ -2,14 +2,16 @@ import React, {Component, PropTypes} from 'react';
 import {observer, inject} from 'mobx-react';
 import Checkbox from 'antd/lib/checkbox';
 import styles from './index.less';
+import { runInAction } from 'mobx';
 
-@inject('routing', 'bannerStore', 'companyHomeStore')
+@inject('routing', 'bannerStore', 'companyHomeStore', 'messageStore')
 @observer
 export default class DownloadPdf extends Component {
   static propTypes = {
     bannerStore: PropTypes.object,
     routing: PropTypes.object,
     companyHomeStore: PropTypes.object,
+    messageStore: PropTypes.object,
   };
 
   constructor(props) {
@@ -95,7 +97,7 @@ export default class DownloadPdf extends Component {
         <div className={`clearfix ${styles['download-item']}`} key={key}>
           <div className={styles['download-item-title']}>
             <Checkbox
-              style={{fontSize: '14px'}}
+              style={{fontSize: '14px', color: '#424242'}}
               className={styles.checkbox_style}
               key={key}
               checked={item.checked}
@@ -144,7 +146,7 @@ export default class DownloadPdf extends Component {
         <div className={`clearfix ${styles['download-col-4']}`} key={_idx}>
           <div className={styles['download-item-title2']}>
             <Checkbox
-              style={{color: '#4c4c4c'}}
+              style={{fontSize: '13px', color: '#757575'}}
               className={styles.checkbox_style}
               checked={_item.checked}
               onChange={this.menuLevelTwoOnChange.bind(this, _key, _idx, _levelOneKey)}>
@@ -183,6 +185,13 @@ export default class DownloadPdf extends Component {
   }
 
   downloadPdf = () => {
+    // 验证邮箱是否格式正确
+    if (!/^([a-zA-Z0-9_-])+@([a-zA-Z0-9_-])+(.[a-zA-Z0-9_-])+/.test(this.props.companyHomeStore.emailAddress)) {
+      this.props.messageStore.openMessage({
+        type: 'warning',
+        content: '邮箱格式错误'});
+      return;
+    }
     const findIndexLevelOneChecked = (key) => {
       const levelOne = this.props.bannerStore.pdfDownloadConfig.levelOne;
       const index = levelOne.findIndex((item) => item.value === key);
@@ -231,31 +240,42 @@ export default class DownloadPdf extends Component {
     console.log(queryArray, '------queryArray', this.getReportType());
   };
 
+  inputEmail = (event) => {
+    console.log(event.target.value);
+    runInAction('修改邮箱', () => {
+      this.props.companyHomeStore.emailAddress = event.target.value;
+    });
+  }
   render() {
     const isShowTipInfo = this.state.tipInfoFn();
     return (
       <div className={styles.downloadModal}>
         <div className={styles.downloadTitleBox}>
-          <i className={`${styles.pdf_icon} fa fa-file-text-o`} aria-hidden="true"></i>
-          <span>{`${this.props.routing.location.query.companyName} ${this.state.reportTypeDict[this.getReportType()]}`}</span>
+          <span className={styles.company_name}>{this.props.routing.location.query.companyName} </span>-
+          <span> {this.state.reportTypeDict[this.getReportType()]}</span>
         </div>
         <div className={styles.pdfDownModaBtnBox}>
+          <div className={styles.emil_tip}>接收报告邮箱<span className={styles.tips}>（已为您获取默认邮箱，其他邮箱接收请修改）</span></div>
+          <div className={`${styles.email_box} clearfix`}>
+            <label className={`${styles.input_box} pull-left`}>
+              <input onChange={this.inputEmail} type="email" placeholder="请输入接收PDF的邮箱" />
+            </label>
+            <div className={`${styles.send_button} pull-left`} onClick={this.downloadPdf}>发送PDF报告</div>
+          </div>
           <div className={styles.selectAll}>
+            <span className={styles.down_tip}>下载内容</span>
             <Checkbox
               style={{fontSize: '14px'}}
               className={styles.checkbox_style}
               checked={this.downloadAllChecked()}
               onChange={this.downloadAll}>
-              <span style={{fontSize: '14px'}}>全部页面</span>
+              <span style={{fontSize: '14px', color: '#9e9e9e'}}>全选</span>
             </Checkbox>
             {
               this.state.tipInfo && isShowTipInfo
                 ? <span className={styles['tip-info']}>请选择需要下载的板块</span>
                 : null
             }
-          </div>
-          <div onClick={this.downloadPdf} className={styles.pdfDownModaBtn}>
-            <i className="fa fa-download"></i>下载
           </div>
         </div>
         <div className={styles['download-content-box']}>

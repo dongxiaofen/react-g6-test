@@ -14,10 +14,10 @@ import axios from 'axios';
 import url from 'url';
 import fundebug from 'fundebug-nodejs';
 import logger from 'morgan';
-import { match, RouterContext } from 'react-router';
-import { Provider, useStaticRendering } from 'mobx-react';
+import {match, RouterContext} from 'react-router';
+import {Provider, useStaticRendering} from 'mobx-react';
 import getRoutes from './routes';
-import { RouterStore } from 'mobx-react-router';
+import {RouterStore} from 'mobx-react-router';
 import * as allStores from 'stores';
 import getPermissionMeta from 'helpers/getPermissionMeta';
 import {
@@ -33,7 +33,7 @@ fundebug.apikey = 'd3c3ad8fd8f470b0bd162e9504c98c1984050474f3f550d47b17c54983633
 // 设置定时删除七牛文件
 schedule.scheduleJob('0 0 0 * * *', () => {
   console.log('启动删除文件---');
-  deletePdfsOnQiniu()
+  deletePdfsOnQiniu();
 });
 
 const agent = require('superagent-defaults')();
@@ -68,20 +68,20 @@ const getStringifyData = (data) => {
   });
   cache = null;
   return output;
-}
+};
 const writeDataToFile = (id, data) => {
   fs.writeFile(
     path.join(__dirname, id + '.json'),
     getStringifyData(data),
     (err) => {
       if (!err) {
-        console.log(" write data to file ok");
+        console.log(' write data to file ok');
       } else {
-        console.log("err");
+        console.log('err');
       }
     }
   );
-}
+};
 
 const writeStrToHtml = (id, data, callBack, errorCallBack) => {
   fs.writeFile(
@@ -89,36 +89,40 @@ const writeStrToHtml = (id, data, callBack, errorCallBack) => {
     data,
     (err) => {
       if (!err) {
-        console.log(" write string to html ok");
-        if (callBack) { callBack();}
+        console.log(' write string to html ok');
+        if (callBack) {
+          callBack();
+        }
       } else {
-        console.log("write string to html err");
-        if (errorCallBack) { errorCallBack();}
+        console.log('write string to html err');
+        if (errorCallBack) {
+          errorCallBack();
+        }
       }
     }
   );
-}
+};
 const html2Pdf = (htmlName, pdfName, callBack) => {
-  const convert = cp.spawn("sh", ['./src/helpers/convert.sh', PDF_DIRNAME + htmlName, PDF_DIRNAME + pdfName]);
+  const convert = cp.spawn('sh', ['./src/helpers/convert.sh', PDF_DIRNAME + htmlName, PDF_DIRNAME + pdfName]);
   convert.stdout.on('end', function () {
     console.log('stdout: pdf转换成功');
     callBack();
   });
-}
+};
 app.use(compression());
 app.use(favicon(path.join(__dirname, '..', 'static', 'favicon.ico')));
 app.use(Express.static(path.join(__dirname, '..', 'static')));
 app.use(cookieParser());
 // parse application/x-www-form-urlencoded
-app.use(bodyParser.urlencoded({ extended: false }))
+app.use(bodyParser.urlencoded({extended: false}));
 // parse application/json
-app.use(bodyParser.json())
+app.use(bodyParser.json());
 app.use(logger('dev'));
 
-app.get('/front/refresh/assets', function(req, res) {
+app.get('/front/refresh/assets', function (req, res) {
   const assetsPath = path.resolve(__dirname, '../static/dist');
   const reg = /^(?:main-)(.*)(?:\.js)$/;
-  fs.readdir(assetsPath, function(err, file) {
+  fs.readdir(assetsPath, function (err, file) {
     if (!file) {
       return res.status(404).send({message: 'file not fount'});
     }
@@ -142,7 +146,7 @@ app.use((req, res) => {
   }
   agent.set('Content-Type', 'application/json')
     .set('scm-source', config.target === 'dianxin_prod' ? 'TEL_WEB' : 'SC_WEB')
-    .set('scm-token', req.cookies['scm-token'] || {})
+    .set('scm-token', req.cookies['scm-token'] || {});
   axios.defaults.headers.common['Content-Type'] = 'application/json';
   axios.defaults.headers.common['scm-source'] = getPermissionMeta(config.target).scmSource;
   axios.defaults.headers.common['scm-token'] = req.cookies['scm-token'] || {};
@@ -153,7 +157,7 @@ app.use((req, res) => {
     checkPDF(req, res);
     return false;
   }
-  match({ routes: getRoutes('server'), location: req.originalUrl }, (error, redirectLocation, renderProps) => {
+  match({routes: getRoutes('server'), location: req.originalUrl}, (error, redirectLocation, renderProps) => {
     if (redirectLocation) {
       res.redirect(redirectLocation.pathname + redirectLocation.search);
     } else if (error) {
@@ -169,29 +173,75 @@ app.use((req, res) => {
         let urlPanth = '';
         let params = '';
         let reportType = '';
-        if (req.query.reportId){
+        // let requestNumber = '';
+        // let responseData = {};
+        if (req.query.reportId) {
           urlPanth = '/api/pdf/report';
           params = {
             reportId: req.query.reportId,
-            types: req.query.type
           };
           reportType = '高级报告';
         } else if (req.query.basicReportId) {
           urlPanth = '/api/pdf/basicReport';
           params = {
             basicReportId: req.query.basicReportId,
-            types: req.query.type
           };
           reportType = '基础报告';
         } else if (req.query.analysisReportId) {
           urlPanth = '/api/pdf/analysis';
           params = {
             analysisReportId: req.query.analysisReportId,
-            types: req.query.type
           };
           reportType = '分析报告';
         }
-        console.log(urlPanth, 'urlPanth-----------', params);
+        // req.query.type.split(',').forEach((type) => {
+        //   params.types = type;
+        //   axios.get(config.backendApi + urlPanth, {params})
+        //     .then((resp) => {
+        //       ++requestNumber;
+        //       if (responseData === {}) {
+        //         responseData = Object.assign(responseData, resp.data);
+        //       }else{
+        //         Object.keys(responseData).forEach((key) => {
+        //           if (responseData[key] === {}) {
+        //             responseData = Object.assign(responseData, resp.data);
+        //           }
+        //         });
+        //       }
+        //       if (requestNumber === req.query.type.split(',').length) {
+        //         writeDataToFile('pdf', responseData);
+        //         allStores.pdfStore.setTypes(params.types, reportType);
+        //         allStores.clientStore.envConfig = config.target;
+        //         allStores.pdfStore.getPdfDownData(responseData);
+        //         const component = (
+        //           <Provider { ...allStores } key="provided">
+        //             <RouterContext {...renderProps} />
+        //           </Provider>
+        //         );
+        //         const reportHtml = ReactDOM.renderToString(<Html pdfDown="1" assets={webpackIsomorphicTools.assets()}
+        //                                                          component={component} {...allStores} />);
+        //         const companyName = resp.data.companyName;
+        //         const username = resp.data.email;
+        //         const timestamp = new Date().getTime();
+        //         const htmlName = username + timestamp + '.html';
+        //         const pdfName = username + timestamp + '.pdf';
+        //         writeStrToHtml(htmlName, reportHtml, () => {
+        //           html2Pdf(htmlName, pdfName, () => {
+        //             res.download(PDF_DIRNAME + pdfName, companyName + '.pdf', (err) => {
+        //               // 删除pdf
+        //               const del = cp.spawn('sh', ['./src/helpers/delPdf.sh', PDF_DIRNAME + htmlName, PDF_DIRNAME + pdfName]);
+        //               del.stdout.on('end', function () {
+        //                 console.log('stdout: pdf删除成功');
+        //               });
+        //             });
+        //           });
+        //         });
+        //       }
+        //     }).catch((error) => {
+        //     console.log(error.response.data);
+        //   });
+        //   console.log(urlPanth, 'urlPanth-----------', params);
+        // });
         axios.get(config.backendApi + urlPanth, { params })
           .then((resp) => {
             writeDataToFile('pdf', resp.data);
@@ -213,10 +263,10 @@ app.use((req, res) => {
               html2Pdf(htmlName, pdfName, () => {
                 res.download(PDF_DIRNAME + pdfName, companyName + '.pdf', (err) => {
                   // 删除pdf
-                  // const del = cp.spawn("sh", ['./src/helpers/delPdf.sh', PDF_DIRNAME + htmlName, PDF_DIRNAME + pdfName]);
-                  // del.stdout.on('end', function () {
-                  //   console.log('stdout: pdf删除成功');
-                  // });
+                  const del = cp.spawn("sh", ['./src/helpers/delPdf.sh', PDF_DIRNAME + htmlName, PDF_DIRNAME + pdfName]);
+                  del.stdout.on('end', function () {
+                    console.log('stdout: pdf删除成功');
+                  });
                 });
               });
             });
