@@ -1,10 +1,11 @@
 import React from 'react';
-import { observer } from 'mobx-react';
+import { inject, observer } from 'mobx-react';
 import styles from './index.less';
 import scanCircle from 'imgs/scanCircle.png';
 
-function BeforeScan({ funcObj, reportId }) {
+function BeforeScan({ blackListScanStore, funcObj, reportId }) {
   const startScan = () => {
+    blackListScanStore.setValue('scanStatus.status', 'PROCESSING');
     funcObj.getStatus(reportId);
     funcObj.scanMain(reportId);
     funcObj.scanRelated(reportId);
@@ -27,4 +28,4 @@ function BeforeScan({ funcObj, reportId }) {
   );
 }
 
-export default observer(BeforeScan);
+export default inject('blackListScanStore')(observer(BeforeScan));

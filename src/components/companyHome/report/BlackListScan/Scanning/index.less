@@ -1,0 +1,109 @@
+.wrap {
+  margin: -10px -20px 20px;
+}
+.headerBox {
+  position: relative;
+  padding: 24px 51px 23px 51px;
+  background: rgba(227,242,253,0.20);
+  border-bottom: 1px solid #e3f2fd;
+}
+@keyframes circle {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+.scanWrap {
+  img {
+    position: absolute;
+    left: -30px;
+    top: -30px;
+    width: 172px;
+    height: 172px;
+    animation: circle 1.3s linear infinite;
+  }
+}
+.scanWrap:after {
+  display: block;
+  content: '';
+  clear: both;
+}
+.imgBox {
+  float: left;
+  position: relative;
+  width: 112px;
+  height: 112px;
+  background-image: url(imgs/scanBg1.png);
+  background-position: center;
+  background-size: 100% 100%;
+}
+.infoBox {
+  float: left;
+  margin-top: 21px;
+  margin-left: 30px;
+  h1 {
+    margin: 0;
+    padding: 0;
+    line-height: 37px;
+    font-weight: normal;
+    margin-bottom: 13px;
+    font-size: 28px;
+    color: #616161;
+  }
+  p {
+    line-height: 21px;
+    font-size: 16px;
+    color: #757575;
+  }
+}
+.processWrap {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+}
+.moduleBox {
+  padding: 11px 20px;
+}
+.moduleBox:after {
+  content: '';
+  display: block;
+  clear: both;
+}
+.moduleItem {
+  position: relative;
+  float: left;
+  width: 180px;
+  height: 180px;
+  border: 1px solid #e3f2fd;
+  margin: 34px 18px 0 17px;
+}
+.moduleImg {
+  font-size: 16px;
+  width: 100%;
+  height: 148px;
+  color: #616161;
+  text-align: center;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-image: url(imgs/scanBg.png);
+  background-size: 50px 50px;
+  p {
+    position: absolute;
+    bottom: 50px;
+    width: 100%;
+  }
+}
+.scanStatus {
+  position: absolute;
+  bottom: 0;
+  opacity:0.5;
+  width: 100%;
+  height: 32px;
+  line-height: 32px;
+  background: #e3f2fd;
+  padding-left: 58px;
+  color: #3297e9;
+}

@@ -1,10 +1,12 @@
 import { observable, action } from 'mobx';
 import { blackListScanApi } from 'api';
+import pathval from 'pathval';
 import axios from 'axios';
 const CancelToken = axios.CancelToken;
 
 class BlackListScanStore {
   @observable isMounted = false;
+  @observable process = 0;
   apiCancel = {
     statusApi: null,
     mainApi: null,
@@ -21,6 +23,12 @@ class BlackListScanStore {
     canScan: false,
     status: undefined,
   };
+  @action.bound setValue(path, value) {
+    pathval.setPathValue(this, path, value);
+  }
+  @action.bound processIncrease() {
+    this.process = this.process + 1;
+  }
   @action.bound getStatus(reportId) {
     this.isMounted = true;
     const source = CancelToken.source();
@@ -30,7 +38,7 @@ class BlackListScanStore {
         this.scanStatus = resp.data;
         this.scanStatus = {
           canScan: true,
-          status: 'FIRST_TIME',
+          status: 'PROCESSING', // PROCESSING FIRST_TIME FINISH
         };
       }))
       .catch(action('getStatus', err => {

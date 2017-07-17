@@ -14,6 +14,7 @@ function BlackListScanComp({ blackListScanStore, reportId }) {
     scanRelated,
     scanNetwork,
   };
+  console.log(status, '---status');
   if (status === undefined) {
     return <AnimateLoading />;
   }
@@ -21,7 +22,7 @@ function BlackListScanComp({ blackListScanStore, reportId }) {
     return <BeforeScan funcObj={funcObj} reportId={reportId} />;
   }
   if (status === 'PROCESSING') {
-    return <Scanning />;
+    return <Scanning blackListScanStore={blackListScanStore} />;
   }
   return <AfterScan />;
 }
