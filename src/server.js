@@ -196,87 +196,70 @@ app.use((req, res) => {
           reportType = '分析报告';
         }
         // 下载PDF
-        pdfDownload(config.backendApi, urlPanth, params, req.query.type);
-        // req.query.type.split(',').forEach((type) => {
-        //   params.types = type;
-        //   axios.get(config.backendApi + urlPanth, {params})
-        //     .then((resp) => {
-        //       ++requestNumber;
-        //       if (responseData === {}) {
-        //         responseData = Object.assign(responseData, resp.data);
-        //       }else{
-        //         Object.keys(responseData).forEach((key) => {
-        //           if (responseData[key] === {}) {
-        //             responseData = Object.assign(responseData, resp.data);
-        //           }
-        //         });
-        //       }
-        //       if (requestNumber === req.query.type.split(',').length) {
-        //         writeDataToFile('pdf', responseData);
-        //         allStores.pdfStore.setTypes(params.types, reportType);
-        //         allStores.clientStore.envConfig = config.target;
-        //         allStores.pdfStore.getPdfDownData(responseData);
-        //         const component = (
-        //           <Provider { ...allStores } key="provided">
-        //             <RouterContext {...renderProps} />
-        //           </Provider>
-        //         );
-        //         const reportHtml = ReactDOM.renderToString(<Html pdfDown="1" assets={webpackIsomorphicTools.assets()}
-        //                                                          component={component} {...allStores} />);
-        //         const companyName = resp.data.companyName;
-        //         const username = resp.data.email;
-        //         const timestamp = new Date().getTime();
-        //         const htmlName = username + timestamp + '.html';
-        //         const pdfName = username + timestamp + '.pdf';
-        //         writeStrToHtml(htmlName, reportHtml, () => {
-        //           html2Pdf(htmlName, pdfName, () => {
-        //             res.download(PDF_DIRNAME + pdfName, companyName + '.pdf', (err) => {
-        //               // 删除pdf
-        //               const del = cp.spawn('sh', ['./src/helpers/delPdf.sh', PDF_DIRNAME + htmlName, PDF_DIRNAME + pdfName]);
-        //               del.stdout.on('end', function () {
-        //                 console.log('stdout: pdf删除成功');
-        //               });
-        //             });
-        //           });
-        //         });
-        //       }
-        //     }).catch((error) => {
-        //     console.log(error.response.data);
-        //   });
-        //   console.log(urlPanth, 'urlPanth-----------', params);
-        // });
-        axios.get(config.backendApi + urlPanth, { params })
-          .then((resp) => {
-            writeDataToFile('pdf', resp.data);
-            allStores.pdfStore.setTypes(params.types, reportType);
-            allStores.clientStore.envConfig = config.target;
-            allStores.pdfStore.getPdfDownData(resp.data);
-            const component = (
-              <Provider { ...allStores } key="provided">
-                <RouterContext {...renderProps} />
-              </Provider>
-            );
-            const reportHtml = ReactDOM.renderToString(<Html pdfDown="1" assets={webpackIsomorphicTools.assets()} component={component} {...allStores} />);
-            const companyName = resp.data.companyName;
-            const username = resp.data.email;
-            const timestamp = new Date().getTime();
-            const htmlName = username + timestamp + '.html';
-            const pdfName = username + timestamp + '.pdf';
-            writeStrToHtml(htmlName, reportHtml, () => {
-              html2Pdf(htmlName, pdfName, () => {
-                res.download(PDF_DIRNAME + pdfName, companyName + '.pdf', (err) => {
-                  // 删除pdf
-                  const del = cp.spawn("sh", ['./src/helpers/delPdf.sh', PDF_DIRNAME + htmlName, PDF_DIRNAME + pdfName]);
-                  del.stdout.on('end', function () {
-                    console.log('stdout: pdf删除成功');
-                  });
+        pdfDownload(config.backendApi, urlPanth, params, req.query.type).then((responseData) => {
+          console.log('请求完成-----');
+          writeDataToFile('pdf', responseData);
+          allStores.pdfStore.setTypes(params.types, reportType);
+          allStores.clientStore.envConfig = config.target;
+          allStores.pdfStore.getPdfDownData(responseData);
+          const component = (
+            <Provider { ...allStores } key="provided">
+              <RouterContext {...renderProps} />
+            </Provider>
+          );
+          const reportHtml = ReactDOM.renderToString(<Html pdfDown="1" assets={webpackIsomorphicTools.assets()}
+                                                           component={component} {...allStores} />);
+          const companyName = responseData.companyName;
+          const username = responseData.email;
+          const timestamp = new Date().getTime();
+          const htmlName = username + timestamp + '.html';
+          const pdfName = username + timestamp + '.pdf';
+          writeStrToHtml(htmlName, reportHtml, () => {
+            html2Pdf(htmlName, pdfName, () => {
+              res.download(PDF_DIRNAME + pdfName, companyName + '.pdf', (err) => {
+                // 删除pdf
+                const del = cp.spawn('sh', ['./src/helpers/delPdf.sh', PDF_DIRNAME + htmlName, PDF_DIRNAME + pdfName]);
+                del.stdout.on('end', function () {
+                  console.log('stdout: pdf删除成功');
                 });
               });
             });
-          })
-          .catch((err) => {
-            console.log('pdfDown err', err.response.status);
           });
+        }).catch((err) => {
+          console.log(err)
+        });
+        // axios.get(config.backendApi + urlPanth, { params })
+        //   .then((resp) => {
+        //     writeDataToFile('pdf', resp.data);
+        //     allStores.pdfStore.setTypes(params.types, reportType);
+        //     allStores.clientStore.envConfig = config.target;
+        //     allStores.pdfStore.getPdfDownData(resp.data);
+        //     const component = (
+        //       <Provider { ...allStores } key="provided">
+        //         <RouterContext {...renderProps} />
+        //       </Provider>
+        //     );
+        //     const reportHtml = ReactDOM.renderToString(<Html pdfDown="1" assets={webpackIsomorphicTools.assets()} component={component} {...allStores} />);
+        //     const companyName = resp.data.companyName;
+        //     const username = resp.data.email;
+        //     const timestamp = new Date().getTime();
+        //     const htmlName = username + timestamp + '.html';
+        //     const pdfName = username + timestamp + '.pdf';
+        //     writeStrToHtml(htmlName, reportHtml, () => {
+        //       html2Pdf(htmlName, pdfName, () => {
+        //         res.download(PDF_DIRNAME + pdfName, companyName + '.pdf', (err) => {
+        //           // 删除pdf
+        //           const del = cp.spawn("sh", ['./src/helpers/delPdf.sh', PDF_DIRNAME + htmlName, PDF_DIRNAME + pdfName]);
+        //           del.stdout.on('end', function () {
+        //             console.log('stdout: pdf删除成功');
+        //           });
+        //         });
+        //       });
+        //     });
+        //   })
+        //   .catch((err) => {
+        //     console.log('pdfDown err', err.response.status);
+        //   });
       } else if (reqPathName === '/') { // 访问首页
         allStores.clientStore.envConfig = config.target;
         allStores.clientStore.taxPause = true; // 暂停税务核查服务

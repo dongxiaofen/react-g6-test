@@ -71,6 +71,7 @@ class BannerStore {
         {label: '法人投资任职', value: 'INV_POS_FR', checked: false, type: 'basicReport'},
         {label: '企业投资', value: 'INV_POS_ENT', checked: false, type: 'basicReport'},
         {label: '董监高投资任职', value: 'INV_POS_MANAGEMENT', checked: false, type: 'report'},
+        {label: '股东投资任职', value: 'INV_POS_SHAREHOLDERS', checked: false, type: 'report'},
       ],
       'STOCK': [
         {label: '公司概况', value: 'STOCK_INFO', checked: false, type: 'basicReport'},
@@ -675,6 +676,7 @@ class BannerStore {
           {label: '法人投资任职', value: 'INV_POS_FR', checked: false, type: 'basicReport'},
           {label: '企业投资', value: 'INV_POS_ENT', checked: false, type: 'basicReport'},
           {label: '董监高投资任职', value: 'INV_POS_MANAGEMENT', checked: false, type: 'report'},
+          {label: '股东投资任职', value: 'INV_POS_SHAREHOLDERS', checked: false, type: 'report'},
         ],
         'STOCK': [
           {label: '公司概况', value: 'STOCK_INFO', checked: false, type: 'basicReport'},

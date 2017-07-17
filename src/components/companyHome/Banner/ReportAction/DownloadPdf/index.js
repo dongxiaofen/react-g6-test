@@ -4,7 +4,7 @@ import Checkbox from 'antd/lib/checkbox';
 import styles from './index.less';
 import { runInAction } from 'mobx';
 
-@inject('routing', 'bannerStore', 'companyHomeStore', 'messageStore')
+@inject('routing', 'bannerStore', 'companyHomeStore', 'messageStore', 'clientStore')
 @observer
 export default class DownloadPdf extends Component {
   static propTypes = {
@@ -12,6 +12,7 @@ export default class DownloadPdf extends Component {
     routing: PropTypes.object,
     companyHomeStore: PropTypes.object,
     messageStore: PropTypes.object,
+    clientStore: PropTypes.object,
   };
 
   constructor(props) {
@@ -33,6 +34,11 @@ export default class DownloadPdf extends Component {
         return levelOneHasTrue && levelTwoHasTrue;
       }
     };
+  }
+  componentWillMount() {
+    runInAction('设置用户邮箱', () => {
+      this.props.companyHomeStore.emailAddress = this.props.clientStore.userInfo.email;
+    });
   }
 
   getReportType = () => {
@@ -186,7 +192,7 @@ export default class DownloadPdf extends Component {
 
   downloadPdf = () => {
     // 验证邮箱是否格式正确
-    if (!/^([a-zA-Z0-9_-])+@([a-zA-Z0-9_-])+(.[a-zA-Z0-9_-])+/.test(this.props.companyHomeStore.emailAddress)) {
+    if (!/^([a-zA-Z0-9]+[_|\_|\.]?)*[a-zA-Z0-9]+@([a-zA-Z0-9]+[_|\_|\.]?)*[a-zA-Z0-9]+\.[a-zA-Z]{2,3}$/.test(this.props.companyHomeStore.emailAddress)) {
       this.props.messageStore.openMessage({
         type: 'warning',
         content: '邮箱格式错误'});
@@ -258,7 +264,7 @@ export default class DownloadPdf extends Component {
           <div className={styles.emil_tip}>接收报告邮箱<span className={styles.tips}>（已为您获取默认邮箱，其他邮箱接收请修改）</span></div>
           <div className={`${styles.email_box} clearfix`}>
             <label className={`${styles.input_box} pull-left`}>
-              <input onChange={this.inputEmail} type="email" placeholder="请输入接收PDF的邮箱" />
+              <input onChange={this.inputEmail} type="email" value={this.props.companyHomeStore.emailAddress} placeholder="请输入接收PDF的邮箱" />
             </label>
             <div className={`${styles.send_button} pull-left`} onClick={this.downloadPdf}>发送PDF报告</div>
           </div>
