@@ -22,4 +22,5 @@ export * as linkJumpApi from './linkJump';
 export * as relPerCheckApi from './relPerCheck';
 export * as pdfApi from './pdf';
 export * as moduleInfoApi from './moduleInfo';
+export * as blackListScanApi from './blackListScan';
 // append here from plop
