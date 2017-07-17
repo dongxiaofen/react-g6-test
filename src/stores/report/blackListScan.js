@@ -4,6 +4,7 @@ import axios from 'axios';
 const CancelToken = axios.CancelToken;
 
 class BlackListScanStore {
+  @observable isMounted = false;
   apiCancel = {
     statusApi: null,
     mainApi: null,
@@ -21,6 +22,7 @@ class BlackListScanStore {
     status: undefined,
   };
   @action.bound getStatus(reportId) {
+    this.isMounted = true;
     const source = CancelToken.source();
     this.apiCancel.statusApi = source.cancel;
     blackListScanApi.getStatus(reportId, source)
@@ -77,6 +79,7 @@ class BlackListScanStore {
     });
   }
   @action.bound resetStore() {
+    this.isMounted = false;
     this.data = {
       main: {},
       relation: {},

@@ -10,12 +10,15 @@ export default class BlackListScan extends Component {
     blackListScanStore: PropTypes.object,
   };
   componentDidMount() {
-    const { reportId } = this.props.companyHomeStore.reportInfo;
-    const moduleStore = this.props.blackListScanStore;
-    moduleStore.getStatus(reportId);
-    moduleStore.scanMain(reportId);
-    moduleStore.scanRelated(reportId);
-    moduleStore.scanNetwork(reportId);
+    const { isMounted } = this.props.blackListScanStore;
+    if (!isMounted) {
+      const { reportId } = this.props.companyHomeStore.reportInfo;
+      const moduleStore = this.props.blackListScanStore;
+      moduleStore.getStatus(reportId);
+      moduleStore.scanMain(reportId);
+      moduleStore.scanRelated(reportId);
+      moduleStore.scanNetwork(reportId);
+    }
   }
   render() {
     const { reportId } = this.props.companyHomeStore.reportInfo;
