@@ -31,7 +31,7 @@ function Enterprise({investmentStore}) {
   return (
     <div>
       <ModuleTitle module="企业投资" count={count} />
-      <SimpleTable meta={data.meta} module="enterprise" itemData={evtData.content}/>
+      <SimpleTable meta={data.meta} module="enterprise"/>
     </div>
   );
 }
