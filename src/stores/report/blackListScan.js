@@ -13,6 +13,7 @@ class BlackListScanStore {
     relatedApi: null,
     networkApi: null,
   };
+  apiInterval = null;
   @observable data = {
     main: {},
     related: {},
@@ -40,6 +41,15 @@ class BlackListScanStore {
           canScan: true,
           status: 'PROCESSING', // PROCESSING FIRST_TIME FINISH
         };
+        if (resp.data.status === 'PROCESSING') {
+          this.apiInterval = setTimeout(() => {
+            this.getStatus(reportId);
+          }, 30 * 1000);
+        } else if (resp.data.status === 'FINISH') {
+          this.scanMain(reportId);
+          this.scanRelated(reportId);
+          this.scanNetwork(reportId);
+        }
       }))
       .catch(action('getStatus', err => {
         this.scanStatus = err;
@@ -51,9 +61,11 @@ class BlackListScanStore {
     blackListScanApi.scanMain(reportId, source)
       .then(action('scanMain', resp => {
         this.main = resp.data;
+        this.apiCancel.mainApi = null;
       }))
       .catch(action('scanMain', err => {
         this.main = err;
+        this.apiCancel.mainApi = null;
       }));
   }
   @action.bound scanRelated(reportId) {
@@ -62,9 +74,11 @@ class BlackListScanStore {
     blackListScanApi.scanRelated(reportId, source)
       .then(action('scanRelated', resp => {
         this.related = resp.data;
+        this.apiCancel.relatedApi = null;
       }))
       .catch(action('scanRelated', err => {
         this.related = err;
+        this.apiCancel.relatedApi = null;
       }));
   }
   @action.bound scanNetwork(reportId) {
@@ -73,9 +87,11 @@ class BlackListScanStore {
     blackListScanApi.scanNetwork(reportId, source)
       .then(action('scanNetwork', resp => {
         this.network = resp.data;
+        this.apiCancel.networkApi = null;
       }))
       .catch(action('scanNetwork', err => {
         this.network = err;
+        this.apiCancel.networkApi = null;
       }));
   }
   @action.bound cancelAllApi() {
