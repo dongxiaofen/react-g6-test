@@ -1,7 +1,7 @@
 import React from 'react';
 import { inject, observer } from 'mobx-react';
 import styles from './index.less';
-import scanCircle from 'imgs/scanCircle.png';
+import scanCircle from 'imgs/blackScan/scanCircle.png';
 
 function BeforeScan({ blackListScanStore, funcObj, reportId }) {
   const startScan = () => {

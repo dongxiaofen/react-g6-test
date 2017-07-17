@@ -1,16 +1,17 @@
 import React from 'react';
 import { observer } from 'mobx-react';
 import styles from './index.less';
-import scanCircle1 from 'imgs/scanCircle1.png';
+import scanCircle1 from 'imgs/blackScan/scanCircle1.png';
 import Processer from '../Processer';
 
 function Scanning({ blackListScanStore }) {
   const createModule = () => {
     const scanModuleArr = ['行政处罚', '经营异常', '被金融机构起诉', '股权冻结', '失信记录', '税务黑名单', '银联黑名单', '支付黑名单', '老赖清单', '运营商黑名单', '企业主黑名单'];
-    return scanModuleArr.map(key => {
+    return scanModuleArr.map((key, idx) => {
       return (
         <div key={key} className={styles.moduleItem}>
-          <div className={styles.moduleImg}>
+          <div className={styles.moduleImg + idx}>
+            <div className={styles.shadow}></div>
             <p>{key}</p>
           </div>
           <p className={styles.scanStatus}>正在扫描...</p>
