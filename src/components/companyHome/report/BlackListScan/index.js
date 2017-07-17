@@ -5,14 +5,20 @@ import BeforeScan from './BeforeScan';
 import Scanning from './Scanning';
 import AfterScan from './AfterScan';
 
-function BlackListScanComp({ blackListScanStore }) {
+function BlackListScanComp({ blackListScanStore, reportId }) {
   const status = blackListScanStore.scanStatus.status;
-  console.log(status, '---status');
+  const { getStatus, scanMain, scanRelated, scanNetwork } = blackListScanStore;
+  const funcObj = {
+    getStatus,
+    scanMain,
+    scanRelated,
+    scanNetwork,
+  };
   if (status === undefined) {
     return <AnimateLoading />;
   }
   if (status === 'FIRST_TIME') {
-    return <BeforeScan />;
+    return <BeforeScan funcObj={funcObj} reportId={reportId} />;
   }
   if (status === 'PROCESSING') {
     return <Scanning />;
