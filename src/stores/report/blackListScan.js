@@ -1,7 +1,15 @@
 import { observable, action } from 'mobx';
 import { blackListScanApi } from 'api';
+import axios from 'axios';
+const CancelToken = axios.CancelToken;
 
 class BlackListScanStore {
+  apiCancel = {
+    statusApi: null,
+    mainApi: null,
+    relatedApi: null,
+    networkApi: null,
+  };
   @observable data = {
     main: {},
     related: {},
@@ -13,10 +21,11 @@ class BlackListScanStore {
     status: undefined,
   };
   @action.bound getStatus(reportId) {
-    blackListScanApi.getStatus(reportId)
+    const source = CancelToken.source();
+    this.apiCancel.statusApi = source.cancel;
+    blackListScanApi.getStatus(reportId, source)
       .then(action('getStatus', (resp) => {
-        // this.scanStatus = resp.data;
-        console.log(resp);
+        this.scanStatus = resp.data;
         this.scanStatus = {
           canScan: true,
           status: 'FIRST_TIME',
@@ -27,7 +36,9 @@ class BlackListScanStore {
       }));
   }
   @action.bound scanMain(reportId) {
-    blackListScanApi.scanMain(reportId)
+    const source = CancelToken.source();
+    this.apiCancel.mainApi = source.cancel;
+    blackListScanApi.scanMain(reportId, source)
       .then(action('scanMain', resp => {
         this.main = resp.data;
       }))
@@ -36,7 +47,9 @@ class BlackListScanStore {
       }));
   }
   @action.bound scanRelated(reportId) {
-    blackListScanApi.scanRelated(reportId)
+    const source = CancelToken.source();
+    this.apiCancel.relatedApi = source.cancel;
+    blackListScanApi.scanRelated(reportId, source)
       .then(action('scanRelated', resp => {
         this.related = resp.data;
       }))
@@ -45,13 +58,23 @@ class BlackListScanStore {
       }));
   }
   @action.bound scanNetwork(reportId) {
-    blackListScanApi.scanNetwork(reportId)
+    const source = CancelToken.source();
+    this.apiCancel.networkApi = source.cancel;
+    blackListScanApi.scanNetwork(reportId, source)
       .then(action('scanNetwork', resp => {
         this.network = resp.data;
       }))
       .catch(action('scanNetwork', err => {
         this.network = err;
       }));
+  }
+  @action.bound cancelAllApi() {
+    Object.keys(this.apiCancel).forEach(cancelKey => {
+      if (this.apiCancel[cancelKey]) {
+        this.apiCancel[cancelKey]();
+        this.apiCancel[cancelKey] = null;
+      }
+    });
   }
   @action.bound resetStore() {
     this.data = {
@@ -60,7 +83,11 @@ class BlackListScanStore {
       network: {},
       ready: false,
     };
-    this.scanStatus = {};
+    this.scanStatus = {
+      canScan: false,
+      status: undefined,
+    };
+    this.cancelAllApi();
   }
 }
 
