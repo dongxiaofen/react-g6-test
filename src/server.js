@@ -20,6 +20,7 @@ import getRoutes from './routes';
 import {RouterStore} from 'mobx-react-router';
 import * as allStores from 'stores';
 import getPermissionMeta from 'helpers/getPermissionMeta';
+import { pdfDownload } from './api/pdf';
 import {
   UpFileToQiniu,
   checkPDF,
@@ -194,6 +195,8 @@ app.use((req, res) => {
           };
           reportType = '分析报告';
         }
+        // 下载PDF
+        pdfDownload(config.backendApi, urlPanth, params, req.query.type);
         // req.query.type.split(',').forEach((type) => {
         //   params.types = type;
         //   axios.get(config.backendApi + urlPanth, {params})

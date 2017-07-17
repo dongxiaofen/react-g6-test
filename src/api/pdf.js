@@ -11,65 +11,60 @@ export const checkPDF = (params) => {
 };
 
 // pdf下载API
-// export const pdfDownload = (backendApi, urlPanth, params) => {
-//   let count = 0;
-//   const responseData = {
-//     summary: '',
-//     report: '',
-//     company: '',
-//     announcement: '',
-//     courtData: '',
-//     internet: '',
-//     trademark: '',
-//     patent: '',
-//     bidding: '',
-//     network: '',
-//     blacklist: '',
-//     team: '',
-//     corpCheckData: '',
-//     entinvItemList: '',
-//     frData: '',
-//     shares: '',
-//     managements: '',
-//     taxList: '',
-//     star: '',
-//     growing: '',
-//     operation: '',
-//     profit: ''
-//   };
-//   const response = [
-//     {'type': 'SUMMERY', 'fn': (param) => {
-//       axios.get(backendApi + urlPanth, {param})
-//         .then(({data}) => {
-//           responseData.banner = data.banner;
-//           responseData.companyName = data.companyName;
-//           responseData.summary = data.summary;
-//           ++count;
-//         })
-//         .catch((err) => {
-//           console.log(err.response.data);
-//         })
-//     }},
-//     {'type': 'CORP_BASIC', 'fn': (backendApi, urlPanth, param) => {
-//       axios.get(backendApi + urlPanth, {param})
-//         .then(({data}) => {
-//           responseData.banner = data.banner;
-//           responseData.companyName = data.companyName;
-//           responseData.report = data.corpDetail;
-//           ++count;
-//         })
-//         .catch((err) => {
-//           console.log(err.response.data);
-//         })
-//     }}
-//   ];
-//
-//   return new Promise(function(resolve, reject) {
-//     if (params){
-//       resolve(value);
-//     } else {
-//       reject(error);
-//     }
-//   });
-//
-// }
+export const pdfDownload = (backendApi, urlPanth, params, types) => {
+  // let count = 0;
+  // const responseData = {
+  //   summary: '',
+  //   report: '',
+  //   company: '',
+  //   announcement: '',
+  //   courtData: '',
+  //   internet: '',
+  //   trademark: '',
+  //   patent: '',
+  //   bidding: '',
+  //   network: '',
+  //   blacklist: '',
+  //   team: '',
+  //   corpCheckData: '',
+  //   entinvItemList: '',
+  //   frData: '',
+  //   shares: '',
+  //   managements: '',
+  //   taxList: '',
+  //   star: '',
+  //   growing: '',
+  //   operation: '',
+  //   profit: ''
+  // };
+  const getData = (url, paramsString) => {
+    console.log(url, paramsString, '---------');
+    // return new Promise((resolve, reject) => {
+    //   axios.get(url, {paramsString})
+    //     .then((res) => {
+    //       resolve(res.data);
+    //     }).catch((err) => {
+    //       reject(err.response.data);
+    //     });
+    // });
+  };
+
+  (async () => {
+    for (const type of types.split(',')) {
+      params.type = type;
+      saveData(type, await getData(backendApi + urlPanth, params));
+    }
+  })();
+
+  const saveData = (type, data) => {
+    switch (type){
+      case 'CORP_BASIC':
+        console.log(type);
+        break;
+      case 'CORP_ALTER':
+        console.log(type);
+        break;
+    }
+    console.log(type, data, '-----------------------------------------===///////////////////');
+  };
+};
