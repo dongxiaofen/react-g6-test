@@ -4,9 +4,10 @@ import AnimateLoading from 'components/hoc/LoadingComp/AnimateLoading';
 import BeforeScan from './BeforeScan';
 import Scanning from './Scanning';
 import AfterScan from './AfterScan';
+import ErrorPage from './ErrorPage';
 
 function BlackListScanComp({ blackListScanStore, reportId }) {
-  const status = blackListScanStore.scanStatus.status;
+  const { status, errorCode } = blackListScanStore.scanStatus;
   const { getStatus, scanMain, scanRelated, scanNetwork } = blackListScanStore;
   const funcObj = {
     getStatus,
@@ -15,6 +16,9 @@ function BlackListScanComp({ blackListScanStore, reportId }) {
     scanNetwork,
   };
   console.log(status, '---status');
+  if (errorCode) {
+    return <ErrorPage funcObj={funcObj} reportId={reportId} />;
+  }
   if (status === undefined) {
     return <AnimateLoading />;
   }

@@ -40,6 +40,7 @@ class BlackListScanStore {
         this.scanStatus = {
           canScan: true,
           status: 'PROCESSING', // PROCESSING FIRST_TIME FINISH
+          errorCode: 404001,
         };
         if (resp.data.status === 'PROCESSING') {
           this.apiInterval = setTimeout(() => {
@@ -115,6 +116,7 @@ class BlackListScanStore {
       status: undefined,
     };
     this.cancelAllApi();
+    clearInterval(this.apiInterval);
   }
 }
 
