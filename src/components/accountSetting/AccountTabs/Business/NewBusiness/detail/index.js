@@ -13,13 +13,5 @@ function Detail(props) {
     </div>
   );
 }
-// export default loadingComp({
-//   mapDataToProps: props => ({
-//     loading: props.accountSettingStore.tabs.business.dailyDetail.content === undefined ? true : false,
-//     error: props.accountSettingStore.tabs.business.dailyDetail.error,
-//     height: 500,
-//     errCategory: 1,
-//     category: 0,
-//   }),
-// })(observer(Detail));
+
 export default observer(Detail);
