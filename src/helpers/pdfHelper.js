@@ -78,22 +78,25 @@ const uptoken = (Bucket_Name, fileName) => {
 };
 
 const uploadFile = (upToken, key) => {
-  const fileName = `${key}.pdf`;
-  const localFile = path.join(PDF_DIRNAME, `${key}.pdf`);
+  console.log('uploadFile');
+  console.log('key.........' + key);
+  const fileName = key;
+  const localFile = path.join(key);
   const extra = new qiniu.io.PutExtra();
-  qiniu.io.putFile(upToken, fileName, localFile, extra, function (err, ret) {
-    if (!err) {
-      // console.log(ret.hash, ret.key, ret.persistentId, '=======uploadFile result======');
-      // 上传成功，获取下载连接
+  console.log('localFile............' + localFile);
+  qiniu.io.putFile(upToken, fileName, localFile, extra, (err, ret) => {
+    console.log('ret.........' + ret);
+    if (ret) {
+      console.log('上传成功');
       _writeToLog(key, `creating,5,`);
       const downLoadUrl = getDownLoadUrl(key);
-      sendMail(downLoadUrl)
+      console.log('downLoadUrl........' + downLoadUrl);
+      sendMail(downLoadUrl);
       // 上传成功，删除当前生成的pdf和html文件
-      deleteFile(path.join(PDF_DIRNAME, `${key}.pdf`));
-      deleteFile(path.join(PDF_DIRNAME, `${key}.html`));
+      // deleteFile(path.join(PDF_DIRNAME, key));
+      // deleteFile(path.join(PDF_DIRNAME, `${key}.html`));
       // 记录文件名到pdfs.log中
-      recordToPdfs(`${key}.pdf,`);
-      return downLoadUrl;
+      recordToPdfs(key);
     } else {
       console.log(err, '=======uploadFile error======');
     }
@@ -101,6 +104,7 @@ const uploadFile = (upToken, key) => {
 };
 
 export const sendMail = (url, email) => {
+  console.log('sendMail');
   const transportor = nodemailer.createTransport({
     service: 'qq',
     auth: {
@@ -131,7 +135,7 @@ export const sendMail = (url, email) => {
     '<span style="width: 33%;display: inline-block">星象网址： star.socialcredits.cn</span>' +
     '<span style="width: 33%;display: inline-block;text-align: center">企业网址： www.socialcredits.cn</span>' +
     '<span style="width: 33%;display: inline-block;text-align: right">企业邮箱： info@socialcredits.cn</span>' +
-    '</div>'
+    '</div></div>'
   };
   transportor.sendMail(mailOption, (err) => {
     if (err) {
@@ -146,22 +150,20 @@ export const UpFileToQiniu = (fileName) => {
   _writeToLog(fileName, `creating,4,`);
   qiniu.conf.ACCESS_KEY = Access_Key;
   qiniu.conf.SECRET_KEY = Secret_Key;
-  const token = uptoken(Bucket_Name, `${fileName}.pdf`);
+  const token = uptoken(Bucket_Name, fileName);
   uploadFile(token, fileName);
 }
 
 const getDownLoadUrl = (fileName) => {
   qiniu.conf.ACCESS_KEY = Access_Key;
   qiniu.conf.SECRET_KEY = Secret_Key;
-  const pdfUrl = `${DOMAIN}${fileName}.pdf`;
   const policy = new qiniu.rs.GetPolicy();
-  return policy.makeRequest(pdfUrl);
+  return policy.makeRequest(fileName);
 }
 
 export const checkPDF = (req, res) => {
   const {companyName, stamp, username} = req.query;
   const statusFile = path.join(PDF_DIRNAME, `${username}${stamp}.log`);
-  const result = fs.readFileSync(statusFile, 'utf-8');
   fs.exists(statusFile, (exists) => {
     if (exists) {
       const result = fs.readFileSync(statusFile, 'utf-8');

@@ -211,13 +211,13 @@ app.use((req, res) => {
             const pdfName = username + timestamp + '.pdf';
             writeStrToHtml(htmlName, reportHtml, () => {
               html2Pdf(htmlName, pdfName, () => {
-                res.download(PDF_DIRNAME + pdfName, companyName + '.pdf', (err) => {
-                  // 删除pdf
-                  const del = cp.spawn("sh", ['./src/helpers/delPdf.sh', PDF_DIRNAME + htmlName, PDF_DIRNAME + pdfName]);
-                  del.stdout.on('end', function () {
-                    console.log('stdout: pdf删除成功');
-                  });
-                });
+                UpFileToQiniu('/home/huyao/dev/universal-xx-mobx/static/pdf/NaN.html');
+                // res.download(PDF_DIRNAME + pdfName, companyName + '.pdf', (err) => {
+                //   // 删除pdf
+                //   const del = cp.spawn("sh", ['./src/helpers/delPdf.sh', PDF_DIRNAME + htmlName, PDF_DIRNAME + pdfName]);
+                //   del.stdout.on('end', function () {
+                //     console.log('stdout: pdf删除成功');
+                //   });
               });
             });
           })
