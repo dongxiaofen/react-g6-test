@@ -307,8 +307,8 @@ export const getEventAnalysis = (reportId, source) => {
   return axios.get(`/api/report/${reportId}/scan/eventAnalysis`, { cancelToken: source.token });
 };
 // 历史事件模型-风险特征-具体某事件组
-export const getEventAnalysisList = (reportId, source) => {
-  return axios.get(`/api/report/${reportId}/scan/eventAnalysis/list`, { cancelToken: source.token });
+export const getEventAnalysisList = (reportId, recordIds, source) => {
+  return axios.get(`/api/report/${reportId}/scan/eventAnalysis/list`, {params: {recordIds: recordIds}, cancelToken: source.token });
 };
 // 历史事件模型-风险特征扫描-进度状态
 export const getEventAnalysisStatus = (reportId, source) => {

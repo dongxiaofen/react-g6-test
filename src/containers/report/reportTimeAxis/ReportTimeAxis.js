@@ -2,7 +2,7 @@ import React, { Component, PropTypes } from 'react';
 import { observer, inject } from 'mobx-react';
 import TimeAxisComp from 'components/companyHome/report/timeAxis';
 import AlertAnalysisBody from 'components/companyHome/report/AlertAnalysis';
-import RiskFeaturesExplain from 'components/companyHome/report/riskFeatures/RiskFeaturesExplain';
+// import RiskFeaturesExplain from 'components/companyHome/report/riskFeatures/RiskFeaturesExplain';
 import RiskFeaturesScan from 'components/companyHome/report/riskFeatures/RiskFeaturesScan';
 import Tabs from 'antd/lib/tabs';
 const TabPane = Tabs.TabPane;
@@ -31,9 +31,9 @@ export default class ReportTimeAxis extends Component {
         <TabPane tab="风险特征扫描" key="风险特征扫描">
           <RiskFeaturesScan />
         </TabPane>
-        <TabPane tab="风险特征说明" key="风险特征说明">
+        {/* <TabPane tab="风险特征说明" key="风险特征说明">
           <RiskFeaturesExplain />
-        </TabPane>
+        </TabPane> */}
       </Tabs>
     );
   }

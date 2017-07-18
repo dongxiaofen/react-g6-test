@@ -7,7 +7,7 @@ import Result from './Result';
 function RiskFeaturesResult({riskFeaturesStore}) {
   return (
     <div className={styles.box}>
-      {riskFeaturesStore.status === 'PROCESSING' ? <Loading /> : <Result data={riskFeaturesStore} />}
+      {riskFeaturesStore.riskLoading ? <Loading /> : <Result data={riskFeaturesStore} />}
     </div>
   );
 }
