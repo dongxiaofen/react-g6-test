@@ -7,7 +7,7 @@ import styles from './index.less';
 
 function TaxCheckModal({taxCheckStore}) {
   const selectConf = taxCheckStore.selectConf;
-  const yearConf = ['2015', '2014'];
+  const yearConf = ['2016', '2015', '2014'];
   const taxIndexConf = [
     {label: 'A类营业收入', value: 'R001'},
     {label: 'A类主营业务收入', value: 'R002'},
