@@ -62,7 +62,7 @@ import {
     // History,
     // Result
     SharePosAndInv,
-    BlackList,
+    BlackListScan,
     DebtPayAbilityEval,
     AssetManageAnaly,
     CashFlowAnaly,
@@ -136,7 +136,7 @@ export default () => {
         <Route path="monitorTimeAxis" component={ MonitorTimeAxis } onEnter={requireAuth} />
         <Route path="monitorAlert" component={ MonitorAlert } />
         <Route path="sharePosAndInv" component={ SharePosAndInv } />
-        <Route path="blackList" component={ BlackList } />
+        <Route path="blackListScan" component={ BlackListScan } />
         <Route path="debtPayAbilityEval" component={ DebtPayAbilityEval } />
         <Route path="assetManageAnaly" component={ AssetManageAnaly } />
         <Route path="cashFlowAnaly" component={ CashFlowAnaly } />

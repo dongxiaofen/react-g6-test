@@ -38,6 +38,7 @@ export monitorAxisStore from './report/monitorAxis';
 export MortageStore from './report/mortage';
 export monitorAlertStore from './report/monitorAlert';
 export nowRecordStore from './report/nowRecord';
+export blackListScanStore from './report/blackListScan';
 export pdfStore from './pdf';
 // 报告相关store-end
 export addRelationStore from './addRelation';
