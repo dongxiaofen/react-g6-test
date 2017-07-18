@@ -21,7 +21,7 @@ import { RouterStore } from 'mobx-react-router';
 import * as allStores from 'stores';
 import getPermissionMeta from 'helpers/getPermissionMeta';
 import {
-  UpFileToQiniu,
+  upFileToQiniu,
   checkPDF,
   writeToLog,
   deletePdfsOnQiniu
@@ -211,7 +211,7 @@ app.use((req, res) => {
             const pdfName = username + timestamp + '.pdf';
             writeStrToHtml(htmlName, reportHtml, () => {
               html2Pdf(htmlName, pdfName, () => {
-                UpFileToQiniu('/home/huyao/dev/universal-xx-mobx/static/pdf/NaN.html');
+                upFileToQiniu('/home/huyao/huyao/index.html');
                 // res.download(PDF_DIRNAME + pdfName, companyName + '.pdf', (err) => {
                 //   // 删除pdf
                 //   const del = cp.spawn("sh", ['./src/helpers/delPdf.sh', PDF_DIRNAME + htmlName, PDF_DIRNAME + pdfName]);
