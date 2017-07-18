@@ -202,8 +202,13 @@ function Trends({accountSettingStore}) {
     ]
   });
   const chartClick = (params) => {
-    console.log(params);
-    console.log(params.name, 'name');
+    const date = params.name;
+    const activeDate = accountSettingStore.tabs.business.activeDate;
+    const uId = accountSettingStore.tree.activeId;
+    if (date === activeDate) {
+      return false;
+    }
+    accountSettingStore.getDailyDetail(uId, date);
   };
   return (
     <div className={styles.wrapper}>

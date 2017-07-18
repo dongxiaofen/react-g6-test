@@ -377,7 +377,6 @@ class AccountSettingStore {
         const monitorDate = resp.data.monitorStatistic.map(item => item.date);
         const allDate = Array.from(new Set(reportDate.concat(analysisReportDate).concat(monitorDate))).sort((pre, next) => (next - pre));
         this.getDailyDetail(uId, allDate[0]);
-        this.tabs.business.activeDate = allDate[0];
       }))
       .catch(action('getReportAndMonitor_error', err => {
         this.tabs.business.reportAndMonitor = {error: err.response.data, data: {}};
@@ -385,6 +384,7 @@ class AccountSettingStore {
   }
   @action.bound getDailyDetail(uId, date) {
     this.tabs.business.dailyDetail = {};
+    this.tabs.business.activeDate = date;
     accountSettingApi.getDailyDetail(uId, {date: date})
       .then(action('getDailyDetail_success', ({data}) => {
         const noData = data.length === 0;
