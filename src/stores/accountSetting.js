@@ -375,8 +375,8 @@ class AccountSettingStore {
         const reportDate = resp.data.reportStatistic.map(item => item.date);
         const analysisReportDate = resp.data.analysisReportStatistic.map(item => item.date);
         const monitorDate = resp.data.monitorStatistic.map(item => item.date);
-        const allDate = Array.from(new Set(reportDate.concat(analysisReportDate).concat(monitorDate))).sort((pre, next) => (next - pre));
-        this.getDailyDetail(uId, allDate[0]);
+        const allDate = Array.from(new Set(reportDate.concat(analysisReportDate).concat(monitorDate))).sort();
+        this.getDailyDetail(uId, allDate[allDate.length - 1]);
       }))
       .catch(action('getReportAndMonitor_error', err => {
         this.tabs.business.reportAndMonitor = {error: err.response.data, data: {}};
