@@ -11,7 +11,7 @@ function SearchBar({handleChange, handleSearch, inputValue}) {
       onChange={handleChange}
       onKeyUp={handleSearch}
       value={inputValue}
-      placeholder="输入主体/关联企业名"
+      placeholder="输入企业名"
     />
   </div>
   );
