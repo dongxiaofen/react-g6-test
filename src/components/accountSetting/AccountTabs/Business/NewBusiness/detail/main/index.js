@@ -1,7 +1,7 @@
 import React from 'react';
 import { observer, inject } from 'mobx-react';
 import styles from './index.less';
-function DetailMain({accountSettingStore, searchCompanyStore, routing}) {
+function DetailMain({accountSettingStore, routing}) {
   const detailData = accountSettingStore.tabs.business.dailyDetail.content;
   const getReportType = (reportType) => {
     const reportMatch = {
@@ -39,10 +39,7 @@ function DetailMain({accountSettingStore, searchCompanyStore, routing}) {
   };
 
   const handleSearch = (companyName) => {
-    searchCompanyStore.searchTabClick('COMPANY_NAME');
-    searchCompanyStore.searchChange({target: {value: companyName}});
-    searchCompanyStore.getCompanyList();
-    routing.push(`/searchCompany`);
+    routing.push(`/companyHome/corpDetail?companyName=${companyName}`);
   };
 
   const createTags = (data) => {
@@ -77,4 +74,4 @@ function DetailMain({accountSettingStore, searchCompanyStore, routing}) {
   );
 }
 
-export default inject('searchCompanyStore', 'routing')(observer(DetailMain));
+export default inject('routing')(observer(DetailMain));
