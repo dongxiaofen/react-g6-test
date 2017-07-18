@@ -83,7 +83,9 @@ export const pdfDownload = (backendApi, urlPanth, paramString, types) => {
         break;
       case 'INV_POS_MANAGEMENT':
         responseData.managements = data.managements;
-        console.log(type);
+        break;
+      case 'INV_POS_SHAREHOLDER':
+        responseData.shareHolders = pathval.getPathValue(data, 'shareHolders');
         break;
       case 'STOCK_INFO':
         responseData.stockInfo = data.stock.info;

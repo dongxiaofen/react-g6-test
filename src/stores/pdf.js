@@ -32,6 +32,7 @@ class PdfStore {
   @observable managements = [];
   @observable reportType = '';
   @observable taxList = [];
+  @observable shareHolders = [];
   // summary
   @observable summary = {};
   @observable companyName = '';
@@ -82,6 +83,7 @@ class PdfStore {
       ],
       report: [
         'BANNER_INFO',
+        'INV_POS_SHAREHOLDER',
         'SUMMERY',
         'CORP_BASIC',
         'CORP_ALTER',
@@ -173,6 +175,7 @@ class PdfStore {
     this.shares = pathval.getPathValue(data, 'shares');
     this.managements = pathval.getPathValue(data, 'managements');
     this.taxList = pathval.getPathValue(data, 'taxList');
+    this.shareHolders = pathval.getPathValue(data, 'shareHolders');
     // 分析能力
     this.star = pathval.getPathValue(data, 'star');
     this.growing = pathval.getPathValue(data, 'growing');

@@ -12,6 +12,7 @@ import AlterAnalysis from '../Base/Alter/AlterAnalysis';
 import AlterList from '../Base/Alter/AlterList';
 import YearReportList from '../Base/YearReport/YearReportList';
 import Managements from '../Base/Foreign/Managements';
+import ShareholderInvestment from '../Base/Foreign/ShareholderInvestment';
 import pathval from 'pathval';
 
 
@@ -79,6 +80,16 @@ function Base({ judgeIsModuleExist, pdfStore }) {
           <div>
             <PdfTitle module="投资任职" subModule="董监高投资任职" />
             <Managements moduleData = {pathval.getPathValue(pdfStore, 'managements')} />
+          </div>
+          :
+          ''
+      }
+      {
+        judgeIsModuleExist('INV_POS_SHAREHOLDER')
+          ?
+          <div>
+            <PdfTitle module="投资任职" subModule="股东投资任职" />
+            <ShareholderInvestment moduleData = {pathval.getPathValue(pdfStore, 'shareHolders')} />
           </div>
           :
           ''
