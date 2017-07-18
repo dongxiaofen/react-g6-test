@@ -376,7 +376,11 @@ class AccountSettingStore {
         const analysisReportDate = resp.data.analysisReportStatistic.map(item => item.date);
         const monitorDate = resp.data.monitorStatistic.map(item => item.date);
         const allDate = Array.from(new Set(reportDate.concat(analysisReportDate).concat(monitorDate))).sort();
-        this.getDailyDetail(uId, allDate[allDate.length - 1]);
+        if (allDate.length > 0) {
+          this.getDailyDetail(uId, allDate[allDate.length - 1]);
+        } else {
+          this.tabs.business.dailyDetail = {error: {message: '暂无数据'}, content: []};
+        }
       }))
       .catch(action('getReportAndMonitor_error', err => {
         this.tabs.business.reportAndMonitor = {error: err.response.data, data: {}};
