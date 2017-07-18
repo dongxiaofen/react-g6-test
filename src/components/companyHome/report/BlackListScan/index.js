@@ -7,7 +7,7 @@ import AfterScan from './AfterScan';
 import ErrorPage from './ErrorPage';
 
 function BlackListScanComp({ blackListScanStore, reportId }) {
-  const { status, errorCode } = blackListScanStore.scanStatus;
+  const { status, error } = blackListScanStore.scanStatus;
   const { getStatus, scanMain, scanRelated, scanNetwork } = blackListScanStore;
   const funcObj = {
     getStatus,
@@ -15,8 +15,7 @@ function BlackListScanComp({ blackListScanStore, reportId }) {
     scanRelated,
     scanNetwork,
   };
-  console.log(status, '---status');
-  if (errorCode) {
+  if (error) {
     return <ErrorPage funcObj={funcObj} reportId={reportId} />;
   }
   if (status === undefined) {

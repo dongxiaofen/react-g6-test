@@ -39,13 +39,12 @@ class BlackListScanStore {
         this.scanStatus = resp.data;
         this.scanStatus = {
           canScan: true,
-          status: 'PROCESSING', // PROCESSING FIRST_TIME FINISH
-          errorCode: 404001,
+          status: 'FIRST_TIME', // PROCESSING FIRST_TIME FINISH
         };
         if (resp.data.status === 'PROCESSING') {
           this.apiInterval = setTimeout(() => {
             this.getStatus(reportId);
-          }, 30 * 1000);
+          }, 10 * 1000);
         } else if (resp.data.status === 'FINISH') {
           this.scanMain(reportId);
           this.scanRelated(reportId);
@@ -53,7 +52,8 @@ class BlackListScanStore {
         }
       }))
       .catch(action('getStatus', err => {
-        this.scanStatus = err;
+        console.log(err);
+        this.scanStatus = {status: 'FIRST_TIME'};
       }));
   }
   @action.bound scanMain(reportId) {
