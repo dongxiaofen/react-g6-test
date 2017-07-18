@@ -38,20 +38,22 @@ function OverView({pdfStore, clientStore}) {
   };
   const investPositionMap = {
     mapKey: {
-      frinvCount: '法人投资的企业',
-      frPositionCount: '法人任职的企业',
+      entinvItemCount: '法人担任法人公司',
+      frPositionCount: '法人任职公司',
+      frinvCount: '法人投资公司',
     },
     title: '法人投资任职',
     valueData: summaryData.basic ? {data: summaryData.invPos, type: 'object'} : undefined,
   };
   const investManagement = {
-    mapKey: {
-      managementFrPositionCount: '董监高担任法人',
-      managementInvCount: '董监高投资',
-      managementPositionCount: '董监高任职',
-    },
     title: '董监高投资任职',
-    valueData: summaryData.basic ? {data: summaryData.invPos, type: 'object'} : undefined,
+    valueData: summaryData.basic ? {data: summaryData.invPos.managementPeopleCount, type: 'number'} : undefined,
+    unit: '人'
+  };
+  const shareholdersInv = {
+    title: '股东投资任职',
+    valueData: summaryData.basic ? {data: summaryData.shareHolderInvPosStatistic.shareHolder, type: 'number'} : undefined,
+    unit: '人'
   };
   const businessChange = {
     title: '工商变更',
@@ -92,14 +94,17 @@ function OverView({pdfStore, clientStore}) {
     title: '纳税公告',
     valueData: summaryData.riskInfo ? {data: summaryData.riskInfo.taxNotice, type: 'number'} : undefined,
   };
-  const corpNoticeMap = {
-    mapKey: {
-      abnormalOperation: '经营异常信息',
-      checkMessage: '抽查检查信息',
-      illegal: '违法记录'
-    },
-    title: '行政信息',
-    valueData: summaryData.riskInfo ? {data: summaryData.riskInfo.corpCheck, type: 'object'} : undefined,
+  const operatingAnomalies = {
+    title: '经营异常',
+    valueData: summaryData.news ? {data: summaryData.riskInfo.corpCheck.abnormalOperation, type: 'number'} : undefined,
+  };
+  const spotChecks = {
+    title: '抽查检查',
+    valueData: summaryData.news ? {data: summaryData.riskInfo.corpCheck.checkMessage, type: 'number'} : undefined,
+  };
+  const illegalRecord = {
+    title: '违法记录',
+    valueData: summaryData.news ? {data: summaryData.riskInfo.corpCheck.illegal, type: 'number'} : undefined,
   };
   const newsContent = {
     title: '新闻内容',
@@ -116,16 +121,21 @@ function OverView({pdfStore, clientStore}) {
   };
   const operationInfoMap = {
     mapKey: {
-      bidding: '招投标信息',
       trademark: '商标',
       patent: '专利'
     },
-    title: '无形资产/招投标',
+    title: '无形资产',
     valueData: summaryData.operation ? {data: summaryData.operation.operationInfo, type: 'object'} : undefined,
   };
+  const bidding = {
+    title: '招投标',
+    valueData: summaryData.operation ? {data: summaryData.operation.operationInfo.bidding, type: 'number'} : undefined,
+    unit: '条'
+  };
   const riskRelationshipMap = {
-    title: '关系网络图',
+    title: '关联关系',
     valueData: summaryData.network ? {data: summaryData.network.linkRelationship, type: 'number'} : undefined,
+    unit: '条'
   };
   const riskChain = {
     title: '风险链条',
@@ -236,6 +246,7 @@ function OverView({pdfStore, clientStore}) {
       <SecondTitle module="经营信息"/>
       <hr className={styles.hrhr}/>
       <Summary {...operationInfoMap} />
+      <Summary {...bidding} />
 
       <SecondTitle module="团队信息"/>
       <hr className={styles.hrhr}/>
@@ -252,18 +263,23 @@ function OverView({pdfStore, clientStore}) {
         pdfStore.reportType === '高级报告' ?
           <Summary {...investManagement} /> : ''
       }
-
+      {
+        pdfStore.reportType === '高级报告' ?
+          <Summary {...shareholdersInv} /> : ''
+      }
       <SecondTitle module="风险信息"/>
       <hr className={styles.hrhr}/>
       <Summary {...taxInfoMap} />
       <Summary {...courtMap} />
-      <Summary {...corpNoticeMap} />
+      <Summary {...operatingAnomalies} />
+      <Summary {...illegalRecord} />
+      <Summary {...spotChecks} />
 
       <SecondTitle module="抵质押信息"/>
       <hr className={styles.hrhr}/>
       <Summary {...pledgeEquity} />
 
-      <SecondTitle module="关联网络"/>
+      <SecondTitle module="关联图信息"/>
       <hr className={styles.hrhr}/>
       <Summary {...riskRelationshipMap} />
 
