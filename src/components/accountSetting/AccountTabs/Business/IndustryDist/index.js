@@ -15,6 +15,11 @@ function IndustryDist({accountSettingStore}) {
       monitorCount: item.monitorCount,
     };
   });
+
+  let end = 100; // 滚动轴结束位置
+  if (seriesData.length > 30) { // 滚动显示３０条
+    end = (30 / seriesData.length) * 100;
+  }
   const industryDistOption = {
     dataZoom: [
       {
@@ -28,6 +33,8 @@ function IndustryDist({accountSettingStore}) {
         handleStyle: {
           color: '#ddd'
         },
+        start: 0,
+        end: end
       },
       {
         type: 'inside',
@@ -39,27 +46,9 @@ function IndustryDist({accountSettingStore}) {
       formatter: (ticket) => {
         const str = `
         <div style="box-shadow: 0 0 7px #ddd; padding: 15px 20px; background-color: #fff">
-          <p style="text-align: center; padding-bottom: 10px;">
-            <a style="color:#999999;">
-              ${ticket.name} ${ticket.value}
-            </a>
-          </p>
-          <p style="text-align: left; padding-bottom: 6px;">
+          <p style="text-align: center;">
             <a style="color:#3483e9;">
-              <span style="padding-right: 15px">高级报告</span>
-              <span>${ticket.data.reportCount || 0}</span>
-            </a>
-          </p>
-          <p style="text-align: left; padding-bottom: 6px;">
-            <a style="color:#3483e9;">
-              <span style="padding-right: 15px">深度报告</span>
-              <span>${ticket.data.analysisReportCount || 0}</span>
-            </a>
-          </p>
-          <p style="text-align: left;">
-            <a style="color:#3483e9;">
-              <span style="padding-right: 15px">监控报告</span>
-              <span>${ticket.data.monitorCount || 0}</span>
+              ${ticket.name} 共${ticket.value}家企业
             </a>
           </p>
         </div>`;
