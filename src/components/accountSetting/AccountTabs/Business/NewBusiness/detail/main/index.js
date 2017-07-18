@@ -17,8 +17,8 @@ function DetailMain({accountSettingStore}) {
   const createTags = (data) => {
     const tags = [];
     Object.keys(data).map(item => {
-      if (item !== 'companyName') {
-        tags.push(<span key={data[item]}>{getReportType(item)}</span>);
+      if (item !== 'companyName' && getReportType(item)) {
+        tags.push(<span key={data[item]} className={styles['tags-item']}>{getReportType(item)}</span>);
       }
     });
     return tags;

@@ -11,10 +11,22 @@
   border-bottom: 1px solid @black12;
 }
 .company-name {
+  margin-bottom: 10px;
   a {
+    cursor: pointer;
     color: @mdc-grey-500;
+    &:hover {
+      color: @mdc-blue-400;
+      text-decoration: underline;
+    }
   }
 }
 .tags {
   color: @mdc-grey-400;
+  .tags-item {
+    display: inline-block;
+    background-color: @black12;
+    padding: 0 6px;
+    line-height: 20px;
+  }
 }
