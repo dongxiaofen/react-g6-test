@@ -1,6 +1,7 @@
 import React, { PropTypes } from 'react';
 import { observer } from 'mobx-react';
-import { ModuleTitle, CardTable } from 'components/common/report';
+import { ModuleTitle } from 'components/common/report';
+import SimpleTable from 'components/common/report/SimpleTable';
 // import styles from './index.less';
 
 function Enterprise({investmentStore}) {
@@ -13,30 +14,24 @@ function Enterprise({investmentStore}) {
   };
   const data = {
     meta: {
-      title: {
-        main: 'entName',
-        sub: ['entStatus', 'entType'],
-      },
       body: [
-        { 'key': 'name', 'width': '4' },
-        { 'key': 'subConam', 'width': '4', 'modifyText': modifyTextNumber},
-        { 'key': 'fundedRatio', 'width': '4' },
-        { 'key': 'regCap', 'width': '4', 'hide': true, 'modifyText': modifyTextNumber},
-        { 'key': 'regNo', 'width': '4', 'hide': true },
-        { 'key': 'regOrg', 'width': '4', 'hide': true },
-        { 'key': 'esDate', 'width': '4', 'hide': true },
+        [{ 'key': 'entName', colSpan: '1' }, { 'key': 'entStatus', colSpan: '1' }],
+        [{ 'key': 'subConam', 'width': '4', 'modifyBlock': modifyTextNumber}, { 'key': 'fundedRatio', 'width': '4' }],
+        [{ 'key': 'regCap', 'width': '4', 'hide': true, 'modifyBlock': modifyTextNumber}, { 'key': 'esDate', 'width': '4'}]
       ],
       dict: 'entinvItemLists',
-      cData: evtData.content
+      items: evtData.content || [],
+      maxCols: 2,
+      hasNumber: true,
+      isLoading: isLoading,
+      module: '企业对外投资',
+      error: isError
     },
-    isLoading: isLoading,
-    module: '企业对外投资',
-    error: isError
   };
   return (
     <div>
       <ModuleTitle module="企业投资" count={count} />
-      <CardTable {...data} />
+      <SimpleTable meta={data.meta} module="enterprise"/>
     </div>
   );
 }
