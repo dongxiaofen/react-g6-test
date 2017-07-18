@@ -23,6 +23,7 @@ function GrowingReport({upDataList}) {
             <td>{data[key] && (data[key].JLRZZL || data[key].JLRZZL === 0) ? data[key].JLRZZL : ''}%</td>
             <td>{data[key] && (data[key].YYLRZZL || data[key].YYLRZZL === 0) ? data[key].YYLRZZL : ''}%</td>
             <td>{data[key] && (data[key].ZYYWSRBDL || data[key].ZYYWSRBDL === 0) ? data[key].ZYYWSRBDL : ''}%</td>
+            <td>{data[key] && (data[key].ZCZZL || data[key].ZCZZL === 0) ? data[key].ZCZZL : ''}%</td>
           </tr>
         );
       }
@@ -45,6 +46,7 @@ function GrowingReport({upDataList}) {
           <th className={styles.four}>净利润增长率</th>
           <th className={styles.five}>营业利润增长率</th>
           <th className={styles.five}>主营业务收入变动率</th>
+          <th className={styles.five}>总资产增长率</th>
         </tr>
         </thead>
         <tbody>
@@ -83,6 +85,12 @@ function GrowingReport({upDataList}) {
             <span className={styles.formulaFonts}>主营业务收入变动率</span>
           </p>
           <p className={styles.content}>反映企业经营稳定性与增长情况（注：对于年度数据，基期指上期；对于月度（季度）数据基期指上一年相同月度（季度）)</p>
+          <p className={styles.line}/>
+          <p className={styles.formula}>
+            <span className={styles.point}/>
+            <span className={styles.formulaFonts}>总资产增长率</span>
+          </p>
+          <p className={styles.content}>反映企业本期资产规模的增长情况，比率越高，表明企业一定时期内资产经营规模扩张的速度越快</p>
         </div>
       </div>
     </div>
