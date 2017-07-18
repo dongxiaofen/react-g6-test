@@ -1,5 +1,6 @@
 import React from 'react';
 import { observer, inject } from 'mobx-react';
+import { loadingComp } from 'components/hoc';
 import styles from './index.less';
 function DetailMain({accountSettingStore, routing}) {
   const detailData = accountSettingStore.tabs.business.dailyDetail.content;
@@ -74,4 +75,13 @@ function DetailMain({accountSettingStore, routing}) {
   );
 }
 
-export default inject('routing')(observer(DetailMain));
+// export default inject('routing')(observer(DetailMain));
+export default loadingComp({
+  mapDataToProps: props => ({
+    loading: props.accountSettingStore.tabs.business.dailyDetail.content === undefined ? true : false,
+    error: props.accountSettingStore.tabs.business.dailyDetail.error,
+    height: 400,
+    errCategory: 1,
+    category: 0,
+  }),
+})(inject('routing')(observer(DetailMain)));

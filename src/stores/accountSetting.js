@@ -378,6 +378,8 @@ class AccountSettingStore {
         const allDate = Array.from(new Set(reportDate.concat(analysisReportDate).concat(monitorDate))).sort();
         if (allDate.length > 0) {
           this.getDailyDetail(uId, allDate[allDate.length - 1]);
+        } else {
+          this.tabs.business.dailyDetail = {error: {message: '暂无数据'}, content: []};
         }
       }))
       .catch(action('getReportAndMonitor_error', err => {
