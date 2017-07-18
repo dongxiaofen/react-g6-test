@@ -199,7 +199,7 @@ app.use((req, res) => {
         pdfDownload(config.backendApi, urlPanth, params, req.query.type).then((responseData) => {
           console.log('请求完成-----');
           writeDataToFile('pdf', responseData);
-          allStores.pdfStore.setTypes(params.types, reportType);
+          allStores.pdfStore.setTypes(req.query.type, reportType);
           allStores.clientStore.envConfig = config.target;
           allStores.pdfStore.getPdfDownData(responseData);
           const component = (

@@ -6,7 +6,9 @@ import pathval from 'pathval';
 class PdfStore {
   // pdf数据
   @observable banner = {};
-  @observable report = {};
+  @observable crorpBasicData = {};
+  @observable crorpAlterData = {};
+  @observable crorpYearReportData = [];
   @observable network = {};
   @observable company = {};
   @observable announcement = {};
@@ -42,6 +44,7 @@ class PdfStore {
   @action.bound getOverviewData(id, type, idType) {
     const types = {
       basicReport: [
+        'BANNER_INFO',
         'SUMMERY',
         'CORP_BASIC',
         'CORP_ALTER',
@@ -71,12 +74,14 @@ class PdfStore {
         'NETWORK_BLACKLIST',
       ],
       analysis: [
+        'BANNER_INFO',
         'SCORE',
         'PROFIT',
         'OPERATION',
         'GROWING',
       ],
       report: [
+        'BANNER_INFO',
         'SUMMERY',
         'CORP_BASIC',
         'CORP_ALTER',
@@ -144,24 +149,27 @@ class PdfStore {
   }
 
   @action.bound getPdfDownData(data) {
-    console.log('data', data);
+    console.log('data-------------------------+++++++++++', data);
     this.banner = pathval.getPathValue(data, 'banner');
     this.companyName = pathval.getPathValue(data, 'companyName');
     this.summary = pathval.getPathValue(data, 'summary');
-    this.report = pathval.getPathValue(data, 'corpDetail');
-    this.company = pathval.getPathValue(data, 'stock.info');
-    this.announcement = pathval.getPathValue(data, 'stock.announcement');
-    this.courtData = pathval.getPathValue(data, 'court');
-    this.internet = pathval.getPathValue(data, 'internet');
+    this.crorpBasicData = pathval.getPathValue(data, 'crorpBasicData');
+    this.crorpAlterData = pathval.getPathValue(data, 'crorpAlterData');
+    this.crorpYearReportData = pathval.getPathValue(data, 'crorpYearReportData');
+    this.crorpFiliationData = pathval.getPathValue(data, 'crorpFiliationData');
+    this.company = pathval.getPathValue(data, 'stockInfo');
+    this.announcement = pathval.getPathValue(data, 'announcement');
+    this.courtData = pathval.getPathValue(data, 'courtData');
+    this.internet = pathval.getPathValue(data, 'news');
     this.trademark = pathval.getPathValue(data, 'trademark'); // 没有数据
     this.patent = pathval.getPathValue(data, 'patent');
     this.bidding = pathval.getPathValue(data, 'bidding');
     this.network = pathval.getPathValue(data, 'network');
-    this.blacklist = pathval.getPathValue(data, 'blackList.result[0].paths');
-    this.team = pathval.getPathValue(data, 'recruitTeamResponse');
-    this.corpCheckData = pathval.getPathValue(data, 'corpCheck');
-    this.entinvItemList = pathval.getPathValue(data, 'ent.entinvItemList');
-    this.frData = pathval.getPathValue(data, 'fr');
+    this.blacklist = pathval.getPathValue(data, 'blackList');
+    this.team = pathval.getPathValue(data, 'team');
+    this.corpCheckData = pathval.getPathValue(data, 'corpCheckData');
+    this.entinvItemList = pathval.getPathValue(data, 'entinvItemList');
+    this.frData = pathval.getPathValue(data, 'frData');
     this.shares = pathval.getPathValue(data, 'shares');
     this.managements = pathval.getPathValue(data, 'managements');
     this.taxList = pathval.getPathValue(data, 'taxList');
