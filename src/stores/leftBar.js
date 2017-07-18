@@ -60,7 +60,7 @@ class LeftBarStore {
           {
             menuText: '股东投资任职',
             menuKey: 'sharePosAndInv',
-            developing: true,
+            lock: true,
           },
         ],
       },
