@@ -87,6 +87,7 @@ const uploadFile = (upToken, key) => {
       // 上传成功，获取下载连接
       _writeToLog(key, `creating,5,`);
       const downLoadUrl = getDownLoadUrl(key);
+      sendMail(downLoadUrl)
       // 上传成功，删除当前生成的pdf和html文件
       deleteFile(path.join(PDF_DIRNAME, `${key}.pdf`));
       deleteFile(path.join(PDF_DIRNAME, `${key}.html`));
@@ -99,7 +100,7 @@ const uploadFile = (upToken, key) => {
   });
 };
 
-const sendMail = (url, email) => {
+export const sendMail = (url, email) => {
   const transportor = nodemailer.createTransport({
     service: 'qq',
     auth: {
@@ -117,9 +118,10 @@ const sendMail = (url, email) => {
     '<div style="background-color: #e0e0e0;height: 1px;margin-top: 30px"></div>' +
     '<div style="font-family:MicrosoftYaHei-Bold;font-size:20px;color:#616161;margin-top: 50px">尊敬的用户，您好！</div>' +
     '<div style="font-size: 16px;margin-top: 30px">您选择下载的<span style="color:#42a5f5 ">重庆誉存大数据有限公司</span>的<span style="color:#42a5f5 ">贷前基础报告</span>已生成，请点击下方按钮下载报告</div>' +
-    '<div style="width: 100%;margin-left: 303px;margin-top: 60px">' +
-    '<div onclick="window.open(url)" style="text-align: center;background-color:#42a5f5;width:230px;padding-top: 17px; padding-bottom:17px;border-radius: 10px;font-size: 20px;color: white">' +
-    '<span>下载报告</span></div>' +
+    '<div style="width: 100%;text-align: center;margin-top: 60px">' +
+    '<a style="display:inline-block;text-align: center;background-color:#42a5f5;width:230px;padding-top: 17px; padding-bottom:17px;border-radius: 10px;font-size: 20px;color: white">' +
+    '<span>下载报告</span></a>' +
+    '</div>' +
     '<div style="text-align: center;margin-top: 15px">下载即视为同意《<a style="color: #42a5f5">免责声明</a>》</div>' +
     '<div style="font-size: 14px;margin-top: 100px">声明：</br>' +
     '本报告的使用仅限于对目标公司的初步评估。未经星象书面授权，任何机构或个人不得以任何形式复制、转发或公开传播本报告的全部或部分内容，不得将报告内容作为诉讼、仲裁、传媒所引用之证明或依据，不得用于营利或用于未经允许的其它用途。</div>' +
@@ -128,7 +130,8 @@ const sendMail = (url, email) => {
     '<div style="width: 100%;color: #9e9e9e;font-size: 14px;margin-top: 30px">' +
     '<span style="width: 33%;display: inline-block">星象网址： star.socialcredits.cn</span>' +
     '<span style="width: 33%;display: inline-block;text-align: center">企业网址： www.socialcredits.cn</span>' +
-    '<span style="width: 33%;display: inline-block;text-align: right">企业邮箱： info@socialcredits.cn</span></div>'
+    '<span style="width: 33%;display: inline-block;text-align: right">企业邮箱： info@socialcredits.cn</span>' +
+    '</div>'
   };
   transportor.sendMail(mailOption, (err) => {
     if (err) {
