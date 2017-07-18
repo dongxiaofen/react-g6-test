@@ -22,6 +22,7 @@ function ProfitabilityReport({profitDataList}) {
             <td>{data[key] && (data[key].YYJLL || data[key].YYJLL === 0) ? data[key].YYJLL : ''}%</td>
             <td>{data[key] && (data[key].CBFYJLL || data[key].CBFYJLL === 0) ? data[key].CBFYJLL : ''}%</td>
             <td>{data[key] && (data[key].ZYYWLRL || data[key].ZYYWLRL === 0) ? data[key].ZYYWLRL : ''}%</td>
+            <td>{data[key] && (data[key].ZCJLL || data[key].ZCJLL === 0) ? data[key].ZCJLL : ''}%</td>
           </tr>);
       } else {
         item = (
@@ -52,6 +53,7 @@ function ProfitabilityReport({profitDataList}) {
           <th className={styles.four}>营业净利率</th>
           <th className={styles.five}>成本费用净利率</th>
           <th className={styles.five}>主营业务利润率</th>
+          <th className={styles.five}>资产净利率</th>
         </tr>
         </thead>
         <tbody>
@@ -95,6 +97,12 @@ function ProfitabilityReport({profitDataList}) {
             <span className={styles.formulaFonts}>主营业务利润率</span>
           </p>
           <p className={styles.content}>反映主营业务（其他业务所占比例一般较小）收益在企业整理收益中的比重，比率越高，公司主营业务越突出，生产经营相对稳定</p>
+          <p className={styles.line}/>
+          <p className={styles.formula}>
+            <span className={styles.point}/>
+            <span className={styles.formulaFonts}>资产净利率</span>
+          </p>
+          <p className={styles.content}>影响所有者权益利润率的最重要指标，比率越高，表明企业投入产出的水平越好，企业的资产运营越有效</p>
         </div>
       </div>
     </div>
