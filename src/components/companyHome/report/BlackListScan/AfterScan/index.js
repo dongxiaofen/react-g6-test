@@ -4,11 +4,11 @@ import Header from './Header';
 import VerTab from './VerTab';
 import styles from './index.less';
 
-function AfterScan() {
+function AfterScan({ blackListScanStore }) {
   return (
     <div className={styles.wrap}>
       <Header />
-      <VerTab />
+      <VerTab blackListScanStore={blackListScanStore} />
     </div>
   );
 }

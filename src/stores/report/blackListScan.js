@@ -14,6 +14,20 @@ class BlackListScanStore {
     networkApi: null,
   };
   apiInterval = null;
+  @observable extend = {
+    main: {
+      ext: true,
+      subExt: true,
+    },
+    related: {
+      ext: true,
+      subExt: true,
+    },
+    network: {
+      ext: true,
+      subExt: true,
+    },
+  };
   @observable data = {
     main: {},
     related: {},

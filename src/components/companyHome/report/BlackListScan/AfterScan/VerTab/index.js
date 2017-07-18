@@ -2,12 +2,12 @@ import React from 'react';
 import { observer } from 'mobx-react';
 import styles from './index.less';
 
-function VerTab() {
+function VerTab({ blackListScanStore }) {
   const handleMain = [];
   const conf = [
-    {module: '主体公司', data: {}, handleInfo: handleMain},
-    {module: '关联关系', data: {}, handleInfo: handleMain},
-    {module: '网络关系', data: {}, handleInfo: handleMain},
+    {name: '主体公司', key: 'main', data: {}, handleInfo: handleMain, extend: false},
+    {name: '关联关系', key: 'related', data: {}, handleInfo: handleMain, extend: false},
+    {name: '网络关系', key: 'network', data: {}, handleInfo: handleMain, extend: false},
   ];
   const scanModuleArr = [
     '行政处罚',
@@ -40,7 +40,7 @@ function VerTab() {
       {type: '行政处罚', eventDate: '2012-01-01'},
     ].map((item, idx) => {
       return (
-        <div className={styles.abnormalItem}>
+        <div key={idx} className={styles.abnormalItem}>
           <p className={styles.abnormalType + ' ' + styles.typeImg + idx}>
             <span>{item.type}</span>
             -该项共命中
@@ -52,24 +52,35 @@ function VerTab() {
       );
     });
   };
+  const extend = blackListScanStore.extend;
+  const extendMain = (item) => {
+    const ext = extend[item.key].ext;
+    blackListScanStore.setValue(`extend.${item.key}.ext`, !ext);
+  };
+  const extendSub = (item) => {
+    const subExt = extend[item.key].subExt;
+    blackListScanStore.setValue(`extend.${item.key}.subExt`, !subExt);
+  };
   return (
     <div>
       {conf.map(item => {
+        const ext = extend[item.key].ext;
+        const subExt = extend[item.key].subExt;
         return (
-          <div className={styles.item}>
+          <div key={item.key} className={styles.item}>
             <div className={styles.mainLine}>
-              {item.module}
-              <span className={styles.arrowUp}></span>
+              {item.name}
+              <span onClick={extendMain.bind(null, item)} className={ext ? styles.arrowUp : styles.arrowDown}></span>
             </div>
-            <div className={styles.mainCon}>
+            <div className={ext ? styles.mainConShow : styles.mainConHide}>
               <div className={styles.abnormalBox}>
                 {createAbnormalList()}
               </div>
               <div className={styles.subLine}>
                 以下<span>9</span>项没有问题
-                <span className={styles.arrowUp}></span>
+                <span onClick={extendSub.bind(null, item)} className={styles.arrowUp}></span>
               </div>
-              <div className={styles.moduleBox}>
+              <div className={subExt ? styles.moduleBoxShow : styles.moduleBoxHide}>
                 {createModule()}
               </div>
             </div>
