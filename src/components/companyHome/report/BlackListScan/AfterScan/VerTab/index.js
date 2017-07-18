@@ -77,7 +77,7 @@ function VerTab({ blackListScanStore }) {
                 {createAbnormalList()}
               </div>
               <div className={styles.subLine}>
-                以下<span>9</span>项没有问题
+                以下<span className={styles.normalCount}>9</span>项没有问题
                 <span onClick={extendSub.bind(null, item)} className={styles.arrowUp}></span>
               </div>
               <div className={subExt ? styles.moduleBoxShow : styles.moduleBoxHide}>

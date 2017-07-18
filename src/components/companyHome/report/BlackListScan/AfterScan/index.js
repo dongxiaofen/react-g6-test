@@ -7,7 +7,7 @@ import styles from './index.less';
 function AfterScan({ blackListScanStore }) {
   return (
     <div className={styles.wrap}>
-      <Header />
+      <Header blackListScanStore={blackListScanStore} />
       <VerTab blackListScanStore={blackListScanStore} />
     </div>
   );

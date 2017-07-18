@@ -32,7 +32,7 @@ class BlackListScanStore {
     main: {},
     related: {},
     network: {},
-    ready: false,
+    ready: [false, false, false], // 分别代表三个模块是否扫描完成
   };
   @observable scanStatus = {
     canScan: false,
@@ -76,10 +76,16 @@ class BlackListScanStore {
     blackListScanApi.scanMain(reportId, source)
       .then(action('scanMain', resp => {
         this.main = resp.data;
+        if (this.scanStatus.status === 'FINISH') {
+          this.data.ready[0] = true;
+        }
         this.apiCancel.mainApi = null;
       }))
       .catch(action('scanMain', err => {
         this.main = err;
+        if (this.scanStatus.status === 'FINISH') {
+          this.data.ready[0] = true;
+        }
         this.apiCancel.mainApi = null;
       }));
   }
@@ -89,10 +95,16 @@ class BlackListScanStore {
     blackListScanApi.scanRelated(reportId, source)
       .then(action('scanRelated', resp => {
         this.related = resp.data;
+        if (this.scanStatus.status === 'FINISH') {
+          this.data.ready[0] = true;
+        }
         this.apiCancel.relatedApi = null;
       }))
       .catch(action('scanRelated', err => {
         this.related = err;
+        if (this.scanStatus.status === 'FINISH') {
+          this.data.ready[0] = true;
+        }
         this.apiCancel.relatedApi = null;
       }));
   }
@@ -102,10 +114,16 @@ class BlackListScanStore {
     blackListScanApi.scanNetwork(reportId, source)
       .then(action('scanNetwork', resp => {
         this.network = resp.data;
+        if (this.scanStatus.status === 'FINISH') {
+          this.data.ready[0] = true;
+        }
         this.apiCancel.networkApi = null;
       }))
       .catch(action('scanNetwork', err => {
         this.network = err;
+        if (this.scanStatus.status === 'FINISH') {
+          this.data.ready[0] = true;
+        }
         this.apiCancel.networkApi = null;
       }));
   }

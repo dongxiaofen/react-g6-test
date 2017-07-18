@@ -5,11 +5,11 @@ import styles from './index.less';
 import scanError from 'imgs/blackScan/scanError.png';
 import scanSucc from 'imgs/blackScan/scanSucc.png';
 
-function Header() {
+function Header({ blackListScanStore }) {
   const succStr = '扫描完成，未命中风险名单';
   const errorStr = '扫描完成，该企业命中风险名单';
   const info = '500万高风险信息数据库中（工商系统 · 司法黑名单 · 银联黑名单 · 支付黑名单 · 税务黑名单等）识别企业关联网络中的风险';
-  const canScan = true;
+  const canScan = blackListScanStore.scanStatus.canScan;
   const scanFalse = true;
   const wrapCss = scanFalse ? `${styles.wrap} ${styles.error}` : styles.wrap;
   return (

@@ -8,7 +8,8 @@ import ErrorPage from './ErrorPage';
 
 function BlackListScanComp({ blackListScanStore, reportId }) {
   const { status, error } = blackListScanStore.scanStatus;
-  const { getStatus, scanMain, scanRelated, scanNetwork } = blackListScanStore;
+  const { getStatus, scanMain, scanRelated, scanNetwork, data } = blackListScanStore;
+  const notReady = data.ready.some(finish => finish === false);
   const funcObj = {
     getStatus,
     scanMain,
@@ -24,7 +25,7 @@ function BlackListScanComp({ blackListScanStore, reportId }) {
   if (status === 'FIRST_TIME') {
     return <BeforeScan funcObj={funcObj} reportId={reportId} />;
   }
-  if (status === 'PROCESSING') {
+  if (status === 'PROCESSING' || !notReady) {
     return <Scanning blackListScanStore={blackListScanStore} />;
   }
   return <AfterScan blackListScanStore={blackListScanStore} />;
