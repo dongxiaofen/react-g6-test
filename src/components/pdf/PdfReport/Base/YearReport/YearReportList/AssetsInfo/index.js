@@ -1,12 +1,12 @@
 import React, {PropTypes} from 'react';
-import { observer } from 'mobx-react';
+import {observer} from 'mobx-react';
 import PdfSimpleKey from 'components/common/pdf/PdfSimpleKey';
 import PdfNotFound from 'components/common/pdf/PdfNotFound';
 import SecondTitle from 'components/common/pdf/SecondTitle';
 
 
 function AssetsInfo({moduleData}) {
-  if (moduleData === undefined || moduleData.length === 0) {
+  if (!moduleData || Object.keys(moduleData).length === 0) {
     return (
       <div>
         <SecondTitle module="企业资产状况信息(单位：万元)"/>
@@ -14,6 +14,12 @@ function AssetsInfo({moduleData}) {
       </div>
     );
   }
+  const parseData = () => {
+    Object.keys(moduleData).forEach((key) => {
+      moduleData[key] = parseFloat(moduleData[key]).toFixed(2);
+    });
+    return moduleData;
+  };
   const data = {
     dataConfig: [
       {'key': 'generalAssets', 'width': '6'},
@@ -25,14 +31,14 @@ function AssetsInfo({moduleData}) {
       {'key': 'taxPayment', 'width': '6'},
       {'key': 'liability', 'width': '6'},
     ],
-    item: moduleData,
+    item: parseData(),
     dict: 'yearAssetsInfo',
     type: 'object',
     hasConfig: true,
   };
   return (
     <div>
-      <SecondTitle module="企业资产状况信息(单位：万元)" />
+      <SecondTitle module="企业资产状况信息(单位：万元)"/>
       <PdfSimpleKey {...data} />
     </div>
   );
