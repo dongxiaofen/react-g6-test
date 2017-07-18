@@ -39,7 +39,7 @@ class BlackListScanStore {
         this.scanStatus = resp.data;
         this.scanStatus = {
           canScan: true,
-          status: 'FIRST_TIME', // PROCESSING FIRST_TIME FINISH
+          status: 'FINISH', // PROCESSING FIRST_TIME FINISH
         };
         if (resp.data.status === 'PROCESSING') {
           this.apiInterval = setTimeout(() => {
@@ -53,7 +53,7 @@ class BlackListScanStore {
       }))
       .catch(action('getStatus', err => {
         console.log(err);
-        this.scanStatus = {status: 'FIRST_TIME'};
+        this.scanStatus = {error: err};
       }));
   }
   @action.bound scanMain(reportId) {
