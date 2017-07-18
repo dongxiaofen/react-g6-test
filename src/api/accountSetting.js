@@ -9,16 +9,19 @@ export const deleteAccount = (uId) => {
   return axios.delete(`api/user/sub/${uId}`);
 };
 export const getReportAndMonitor = (uId) => {
-  return axios.get(`/api/user/sub/${uId}/statistic/reportAndMonitor/xx`);
+  return axios.get(`/api/user/sub/${uId}/statistic/reportAndMonitor`);
+};
+export const getDailyDetail = (uId, params) => {
+  return axios.get(`/api/user/sub/${uId}/statistic/reportAndMonitor/daily`, {params});
 };
 export const getProvince = (uId) => {
-  return axios.get(`/api/user/sub/${uId}/statistic/province/xx`);
+  return axios.get(`/api/user/sub/${uId}/statistic/province`);
 };
 export const getIndustry = (uId) => {
-  return axios.get(`/api/user/sub/${uId}/statistic/industry/xx`);
+  return axios.get(`/api/user/sub/${uId}/statistic/industry`);
 };
 export const getScale = (uId) => {
-  return axios.get(`/api/user/sub/${uId}/statistic/scale/xx`);
+  return axios.get(`/api/user/sub/${uId}/statistic/scale`);
 };
 export const getAlertCorp = (uId, params) => {
   return axios.get(`/api/user/sub/${uId}/alert`, {params});

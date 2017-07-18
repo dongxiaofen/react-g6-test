@@ -55,9 +55,9 @@ export EquityRela from './report/equityRela';
 export MonitorAlert from './report/monitorAlert';
 export Search from './search';
 export SharePosAndInv from './report/sharePosAndInv';
-export BlackList from './report/blackList';
 export DebtPayAbilityEval from './report/debtPayAbilityEval';
 export AssetManageAnaly from './report/assetManageAnaly';
 export CashFlowAnaly from './report/cashFlowAnaly';
 export RiskConduct from './report/riskConduct';
+export BlackListScan from './report/blackListScan';
 // append here from plop
