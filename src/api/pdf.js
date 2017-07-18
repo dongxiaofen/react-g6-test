@@ -182,9 +182,16 @@ export const pdfDownload = (backendApi, urlPanth, paramString, types) => {
 
   return new Promise((resolve) => {
     (async () => {
-      for (const type of ['BANNER_INFO', ...types.split(',')]) {
-        paramString.types = type;
-        saveData(type, await getData(backendApi + urlPanth, paramString));
+      if (paramString.analysisReportId) {
+        for (const type of types.split(',')) {
+          paramString.types = type;
+          saveData(type, await getData(backendApi + urlPanth, paramString));
+        }
+      } else {
+        for (const type of ['BANNER_INFO', ...types.split(',')]) {
+          paramString.types = type;
+          saveData(type, await getData(backendApi + urlPanth, paramString));
+        }
       }
       resolve(responseData);
     })();
