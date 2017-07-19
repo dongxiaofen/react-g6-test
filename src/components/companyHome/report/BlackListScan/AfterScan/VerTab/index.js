@@ -16,6 +16,14 @@ function VerTab({ blackListScanStore }) {
     '运营商黑名单',
     '企业主黑名单'
   ];
+  const relationDict = {
+    COMPANY_FR: '法人',
+    COMPANY_SHAREHOLDER: '股东',
+    COMPANY_OUT_INVEST: '企业对外投资',
+    FR_OUT_INVEST: '法人对外投资',
+    EXECUTIVE_OUT_INVEST: '高管对外投资',
+    SHAREHOLDER_OUT_INVEST: '股东对外投资',
+  };
   const scanLen = scanModuleArr.length;
   const data = blackListScanStore.data;
   const handleMain = (item) => {
@@ -62,14 +70,22 @@ function VerTab({ blackListScanStore }) {
       {type: '行政处罚', eventDate: '2012-01-01'},
       {type: '行政处罚', eventDate: '2012-01-01'},
     ];
-    if (itemKey === 'main') {
-      list = itemData.blacklistCompInfo;
+    if (itemKey === 'main' || itemKey === 'related') {
+      list = itemData.blacklistCompInfo || []; // 加上[]防止数据异常
     }
     return list.map((item, idx) => {
       return (
         <div key={idx} className={styles.abnormalItem}>
           <p className={styles.abnormalType + ' ' + styles.typeImg + scanModuleArr.indexOf(item.blacklistType)}>
             <span>{item.blacklistType}</span>
+            {itemKey === 'related'
+              ?
+              <span className={styles.relationType}>
+                {` - ${item.name}（${relationDict[item.relationType]}${/INVEST$/.test(item.relationType) ? `，投资金额${item.relationTypeDetail.investAmount}万` : ''}）`}
+              </span>
+              :
+              null
+            }
           </p>
           <p className={styles.eventDate}>
             <span className={styles.hitCount}>{`共命中 ${item.count} 次`}</span>

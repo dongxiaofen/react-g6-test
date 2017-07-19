@@ -108,7 +108,7 @@ class BlackListScanStore {
       .then(action('scanRelated', resp => {
         this.data.related = resp.data;
         if (this.scanStatus.status === 'FINISH') {
-          this.data.ready[0] = true;
+          this.data.ready[1] = true;
         } else {
           this.data.statusReady[1] = true;
           this.statusReady();
@@ -118,7 +118,7 @@ class BlackListScanStore {
       .catch(action('scanRelated', err => {
         this.data.related = err;
         if (this.scanStatus.status === 'FINISH') {
-          this.data.ready[0] = true;
+          this.data.ready[1] = true;
         } else {
           this.data.statusReady[1] = true;
           this.statusReady();
@@ -133,7 +133,7 @@ class BlackListScanStore {
       .then(action('scanNetwork', resp => {
         this.data.network = resp.data;
         if (this.scanStatus.status === 'FINISH') {
-          this.data.ready[0] = true;
+          this.data.ready[2] = true;
         } else {
           this.data.statusReady[2] = true;
           this.statusReady();
@@ -143,7 +143,7 @@ class BlackListScanStore {
       .catch(action('scanNetwork', err => {
         this.data.network = err;
         if (this.scanStatus.status === 'FINISH') {
-          this.data.ready[0] = true;
+          this.data.ready[2] = true;
         } else {
           this.data.statusReady[2] = true;
           this.statusReady();

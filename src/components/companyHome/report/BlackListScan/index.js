@@ -1,4 +1,5 @@
 import React from 'react';
+import mobx from 'mobx';
 import { inject, observer } from 'mobx-react';
 import AnimateLoading from 'components/hoc/LoadingComp/AnimateLoading';
 import BeforeScan from './BeforeScan';
@@ -7,6 +8,7 @@ import AfterScan from './AfterScan';
 import ErrorPage from './ErrorPage';
 
 function BlackListScanComp({ blackListScanStore, reportId }) {
+  console.log(mobx.toJS(blackListScanStore), '-----');
   const { status, error } = blackListScanStore.scanStatus;
   const { getStatus, scanMain, scanRelated, scanNetwork, data } = blackListScanStore;
   const notReady = data.ready.some(finish => finish === false);
@@ -25,7 +27,7 @@ function BlackListScanComp({ blackListScanStore, reportId }) {
   if (status === 'FIRST_TIME') {
     return <BeforeScan funcObj={funcObj} reportId={reportId} />;
   }
-  if (status === 'PROCESSING' || !notReady) {
+  if (status === 'PROCESSING' || notReady) {
     return <Scanning blackListScanStore={blackListScanStore} />;
   }
   return <AfterScan blackListScanStore={blackListScanStore} reportId={reportId} />;
