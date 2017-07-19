@@ -46,7 +46,8 @@ class PdfStore {
   }
 
   @action.bound sendEmail(params) {
-    pdfApi.sendEmail(Object.assign({params, email: companyHomeStore.emailAddress})).then((res) => {
+    params.email = companyHomeStore.emailAddress;
+    pdfApi.sendEmail(params).then((res) => {
       messageStore.openMessage({
         content: res.data.message
       });
