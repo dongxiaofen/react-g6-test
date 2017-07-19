@@ -105,8 +105,33 @@ const uploadFile = (uptoken, key) => {
   });
 };
 
-export const sendMail = (downloadUrl, email) => {
+export const sendMail = (downloadUrl, email, client) => {
   console.log('sendMail');
+  let name;
+  let imgName;
+  let companyName;
+  let phone;
+  let pruduct;
+  let companyUrl;
+  let companyMail;
+  if (client === 'cfca_prod') {
+    name = '洞悉';
+    imgName = 'logo_dx.png';
+    companyName = '中金支付有限公司';
+    phone = '400-860-9888';
+    pruduct = 'http://daas.cpcn.com.cn/';
+    companyUrl = 'http://www.china-clearing.com/';
+    companyMail = 'servicedesk@cfca.com.cn';
+  } else {
+    name = '星象';
+    imgName = 'logo_sc.png';
+    companyName = '重庆誉存大数据有限公司';
+    phone = '400-139-1819';
+    pruduct = 'star.socialcredits.cn';
+    companyUrl = 'www.socialcredits.cn';
+    companyMail = 'info@socialcredits.cn';
+  }
+
   const transportor = nodemailer.createTransport({
     host: 'smtp.mxhichina.com',
     auth: {
@@ -118,29 +143,29 @@ export const sendMail = (downloadUrl, email) => {
     from: 'no-reply@socialcredits.cn',
     to: email || 'yao.hu@socialcredits.cn',
     html: '<div style="margin:0 auto;padding: 30px;width: 838px;border:1px solid #e0e0e0;height: 870px;color: #757575">' +
-    '<div><img src=/><span>星象</span></div>' +
+    '<div><img src="cid:01"/></div>' +
     '<div style="background-color: #e0e0e0;height: 1px;margin-top: 30px"></div>' +
     '<div style="font-family:MicrosoftYaHei-Bold;font-size:20px;color:#616161;margin-top: 50px">尊敬的用户，您好！</div>' +
-    '<div style="font-size: 16px;margin-top: 30px">您选择下载的<span style="color:#42a5f5 ">重庆誉存大数据有限公司</span>的<span style="color:#42a5f5 ">贷前基础报告</span>已生成，请点击下方按钮下载报告</div>' +
+    `<div style="font-size: 16px;margin-top: 30px">您选择下载的<span style="color:#42a5f5 ">${companyName}</span>的<span style="color:#42a5f5 ">贷前基础报告</span>已生成，请点击下方按钮下载报告</div>` +
     '<div style="width: 100%;text-align: center;margin-top: 60px">' +
     `<a href=${downloadUrl} style="display:inline-block;text-align: center;background-color:#42a5f5;width:230px;padding-top: 17px; padding-bottom:17px;border-radius: 10px;font-size: 20px;color: white">` +
     '<span>下载报告</span></a>' +
     '</div>' +
-    '<div style="text-align: center;margin-top: 15px">下载即视为同意《<a style="color: #42a5f5">免责声明</a>》</div>' +
+    `<div style="text-align: center;margin-top: 15px">下载即视为同意《<a href="${pruduct}disclaimer" style="color: #42a5f5">免责声明</a>》</div>` +
     '<div style="font-size: 14px;margin-top: 100px">声明：</br>' +
     '本报告的使用仅限于对目标公司的初步评估。未经星象书面授权，任何机构或个人不得以任何形式复制、转发或公开传播本报告的全部或部分内容，不得将报告内容作为诉讼、仲裁、传媒所引用之证明或依据，不得用于营利或用于未经允许的其它用途。</div>' +
-    '<div style="text-align: center;color: #bdbdbd;font-size: 14px;margin-top: 50px">此邮件为 星象 · 风险管理平台 的系统邮件，无需回复。</div>' +
-    '<div style="text-align: center;color: #ff9800;font-size: 36px;margin-top: 50px">联系我们：400-139-1819</div>' +
+    `<div style="text-align: center;color: #bdbdbd;font-size: 14px;margin-top: 50px">此邮件为 ${name} · 风险管理平台 的系统邮件，无需回复。</div>` +
+    `<div style="text-align: center;color: #ff9800;font-size: 36px;margin-top: 50px">联系我们：${phone}</div>` +
     '<div style="width: 100%;color: #9e9e9e;font-size: 14px;margin-top: 30px">' +
-    '<span style="width: 33%;display: inline-block">星象网址： star.socialcredits.cn</span>' +
-    '<span style="width: 33%;display: inline-block;text-align: center">企业网址： www.socialcredits.cn</span>' +
-    '<span style="width: 33%;display: inline-block;text-align: right">企业邮箱： info@socialcredits.cn</span>' +
+    `<span style="width: 33%;display: inline-block">${name}网址： ${pruduct}</span>` +
+    `<span style="width: 33%;display: inline-block;text-align: center">企业网址： ${companyUrl}</span>` +
+    `<span style="width: 33%;display: inline-block;text-align: right">企业邮箱： ${companyMail}</span>` +
     '</div></div>',
-    // attachments: [{
-    //   filename: '01.png',
-    //   path: './img/r-book1.png',
-    //   cid: '00000001'
-    // }]
+    attachments: [{
+      filename: imgName,
+      path: `./src/imgs/pdfDown/${imgName}`,
+      cid: '01'
+    }]
   };
   transportor.sendMail(mailOption, (err) => {
     if (err) {

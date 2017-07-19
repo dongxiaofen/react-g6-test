@@ -218,7 +218,7 @@ app.use((req, res) => {
             writeStrToHtml(htmlName, reportHtml, () => {
               html2Pdf(htmlName, pdfName, () => {
                 const downloadUrl = upFileToQiniu('/home/huyao/huyao/index.html');
-                sendMail(downloadUrl, '494024259@qq.com');
+                sendMail(downloadUrl, '494024259@qq.com', 'cfca_prod');
                 // res.download(PDF_DIRNAME + pdfName, companyName + '.pdf', (err) => {
                 //   // 删除pdf
                 //   const del = cp.spawn("sh", ['./src/helpers/delPdf.sh', PDF_DIRNAME + htmlName, PDF_DIRNAME + pdfName]);
