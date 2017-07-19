@@ -11,6 +11,11 @@ export const checkPDF = (params) => {
   return axios.get('/pdfCheck', {params});
 };
 
+// PDF发送到邮箱
+export const sendEmail = (params) => {
+  return axios.get('/sendEmail', {params});
+};
+
 // pdf下载API
 export const pdfDownload = (backendApi, urlPanth, paramString, types) => {
   // let count = 0;

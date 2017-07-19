@@ -1,6 +1,8 @@
 import {observable, action} from 'mobx';
 import axios from 'axios';
 import pathval from 'pathval';
+import { pdfApi } from '../api/index';
+import messageStore from './message';
 
 
 class PdfStore {
@@ -40,6 +42,16 @@ class PdfStore {
   @action.bound setTypes(types, reportType) {
     this.pdfTypesKey = types;
     this.reportType = reportType;
+  }
+
+  @action.bound sendEmail(params) {
+    pdfApi.sendEmail(params).then((res) => {
+      messageStore.openMessage({
+        content: res.data.message
+      });
+    }).catch((err) => {
+      console.log(err.response.data);
+    });
   }
 
   @action.bound getOverviewData(id, type, idType) {

@@ -28,6 +28,8 @@ import {
   deletePdfsOnQiniu
 } from './helpers/pdfHelper';
 import schedule from 'node-schedule';
+import PdfBody from 'components/pdf/PdfReport';
+
 useStaticRendering(true);
 fundebug.apikey = 'd3c3ad8fd8f470b0bd162e9504c98c1984050474f3f550d47b17c54983633c1e';
 
@@ -134,6 +136,76 @@ app.get('/front/refresh/assets', function (req, res) {
     } else {
       return res.status(404).send({message: 'file not fount'});
     }
+  });
+});
+
+app.get('/sendEmail', function (req, res) {
+  res.status = 200;
+  res.json({
+      message: '提交成功，稍后请注意查收邮件'
+  });
+  // 将PDF发送到邮箱
+  const { types } = req.query;
+
+  const routingStore = new RouterStore();
+  allStores.routing = routingStore;
+  let urlPanth = '';
+  let params = '';
+  let reportType = '';
+  // let requestNumber = '';
+  // let responseData = {};
+  if (req.query.reportId) {
+    urlPanth = '/api/pdf/report';
+    params = {
+      reportId: req.query.reportId,
+    };
+    reportType = '高级报告';
+  } else if (req.query.basicReportId) {
+    urlPanth = '/api/pdf/basicReport';
+    params = {
+      basicReportId: req.query.basicReportId,
+    };
+    reportType = '基础报告';
+  } else if (req.query.analysisReportId) {
+    urlPanth = '/api/pdf/analysis';
+    params = {
+      analysisReportId: req.query.analysisReportId,
+    };
+    reportType = '分析报告';
+  }
+  // 请求PDF下载方法
+  pdfDownload(config.backendApi, urlPanth, params, types).then((responseData) => {
+    console.log('请求完成-----');
+    writeDataToFile('pdf', responseData);
+    allStores.pdfStore.setTypes(types, reportType);
+    allStores.clientStore.envConfig = config.target;
+    allStores.pdfStore.getPdfDownData(responseData);
+    const component = (
+      <Provider { ...allStores } key="provided">
+        <PdfBody />
+      </Provider>
+    );
+    const reportHtml = ReactDOM.renderToString(<Html pdfDown="1" assets={webpackIsomorphicTools.assets()}
+                                                     component={component} {...allStores} />);
+    const companyName = responseData.companyName;
+    const username = responseData.email;
+    const timestamp = new Date().getTime();
+    const htmlName = username + timestamp + '.html';
+    const pdfName = username + timestamp + '.pdf';
+    writeStrToHtml(htmlName, reportHtml, () => {
+      html2Pdf(htmlName, pdfName, () => {
+
+        // res.download(PDF_DIRNAME + pdfName, companyName + '.pdf', (err) => {
+        //   // 删除pdf
+        //   const del = cp.spawn('sh', ['./src/helpers/delPdf.sh', PDF_DIRNAME + htmlName, PDF_DIRNAME + pdfName]);
+        //   del.stdout.on('end', function () {
+        //     console.log('stdout: pdf删除成功');
+        //   });
+        // });
+      });
+    });
+  }).catch((err) => {
+    console.log(err)
   });
 });
 

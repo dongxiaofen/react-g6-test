@@ -4,7 +4,7 @@ import Checkbox from 'antd/lib/checkbox';
 import styles from './index.less';
 import { runInAction } from 'mobx';
 
-@inject('routing', 'bannerStore', 'companyHomeStore', 'messageStore', 'clientStore')
+@inject('routing', 'bannerStore', 'companyHomeStore', 'messageStore', 'clientStore', 'pdfStore')
 @observer
 export default class DownloadPdf extends Component {
   static propTypes = {
@@ -13,6 +13,7 @@ export default class DownloadPdf extends Component {
     companyHomeStore: PropTypes.object,
     messageStore: PropTypes.object,
     clientStore: PropTypes.object,
+    pdfStore: PropTypes.object,
   };
 
   constructor(props) {
@@ -203,7 +204,6 @@ export default class DownloadPdf extends Component {
       const index = levelOne.findIndex((item) => item.value === key);
       return levelOne[index].checked;
     };
-    let queryStr = '&type=';
     let queryArray = [];
     const bannerStore = this.props.bannerStore;
     const levelTwo = bannerStore.pdfDownloadConfig.levelTwo;
@@ -228,15 +228,23 @@ export default class DownloadPdf extends Component {
     queryArray = Array.from(new Set(queryArray));
     if (queryArray.length > 0) {
       this.setState({tipInfo: false});
-      queryStr = queryStr + queryArray.join(',');
       if (this.getReportType() === 'report') {
-        window.open(`/pdfDown?reportId=${this.props.companyHomeStore.reportInfo.reportId}${queryStr}`);
+        this.props.pdfStore.sendEmail({
+          reportId: this.props.companyHomeStore.reportInfo.reportId,
+          types: queryArray.join(',')
+        });
       }
       if (this.getReportType() === 'basicReport') {
-        window.open(`/pdfDown?basicReportId=${this.props.companyHomeStore.reportInfo.basicReportId}${queryStr}`);
+        this.props.pdfStore.sendEmail({
+          basicReportId: this.props.companyHomeStore.reportInfo.basicReportId,
+          types: queryArray.join(',')
+        });
       }
       if (this.getReportType() === 'loan') {
-        window.open(`/pdfDown?analysisReportId=${this.props.companyHomeStore.reportInfo.analysisReportId}${queryStr}`);
+        this.props.pdfStore.sendEmail({
+          analysisReportId: this.props.companyHomeStore.reportInfo.analysisReportId,
+          types: queryArray.join(',')
+        });
       }
       this.props.bannerStore.clearPdfConfigChecked();
       this.props.bannerStore.setPdfDownloadKeys(queryArray, this.getReportType());
