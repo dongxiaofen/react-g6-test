@@ -24,6 +24,7 @@ class BlackListScanStore {
     canScan: false,
     status: undefined,
   };
+  @observable nodeIntroVis = false;
   @action.bound setValue(path, value) {
     pathval.setPathValue(this, path, value);
   }

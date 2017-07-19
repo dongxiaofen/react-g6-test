@@ -13,6 +13,13 @@ function EmployeeSchoolInfo({moduleData}) {
       </div>
     );
   }
+  const total = () => {
+    let sum = 0;
+    Object.keys(moduleData).forEach((key) => {
+      sum += moduleData[key];
+    });
+    return sum;
+  };
   return (
     <div className={styles.wrap}>
       <SecondTitle module="毕业学校" />
@@ -20,29 +27,29 @@ function EmployeeSchoolInfo({moduleData}) {
         <thead>
         <tr>
           <th>学校</th>
-          <th>人数</th>
+          <th>百分比</th>
         </tr>
         </thead>
         <tbody>
         <tr>
-          <td>985/211本科院校</td>
-          <td>{moduleData['985/211本科院校']}</td>
+          <td>985/211本科院校{total()}</td>
+          <td>{`${parseFloat(moduleData['985/211本科院校'] / total()).toFixed(2)}`}</td>
         </tr>
         <tr>
           <td>专科院校</td>
-          <td>{moduleData['专科院校']}</td>
+          <td>{`${parseFloat(moduleData['专科院校'] / total()).toFixed(2)}`}</td>
         </tr>
         <tr>
           <td>其他院校</td>
-          <td>{moduleData['其他院校']}</td>
+          <td>{`${parseFloat(moduleData['其他院校'] / total()).toFixed(2)}`}</td>
         </tr>
         <tr>
           <td>普通本科院校</td>
-          <td>{moduleData['普通本科院校']}</td>
+          <td>{`${parseFloat(moduleData['普通本科院校'] / total()).toFixed(2)}`}</td>
         </tr>
         <tr>
           <td>民办本科院校</td>
-          <td>{moduleData['民办本科院校']}</td>
+          <td>{`${parseFloat(moduleData['民办本科院校'] / total()).toFixed(2)}`}</td>
         </tr>
         </tbody>
       </table>
