@@ -1,9 +1,16 @@
-import { observable, action } from 'mobx';
+import { observable, action, computed } from 'mobx';
 import { companyHomeApi } from 'api';
 import axios from 'axios';
 const CancelToken = axios.CancelToken;
+import uiStore from '../ui';
+import messageStore from '../message';
+import detailModalStore from '../detailModal';
+import pathval from 'pathval';
 
 class ReportAxisStore {
+  constructor() {
+    this.alertCancel = null;
+  }
   @observable isMount = false;
   getDetailCancel = null;
   companyId = '';
@@ -23,6 +30,10 @@ class ReportAxisStore {
     team: '团队信息',
   };
   @action.bound getReportModule(params) {
+    this.getReportAxis(params);
+    this.getAlterAnalisis(params);
+  }
+  @action.bound getReportAxis(params) {
     this.isMount = true;
     this.companyId = params.reportId;
     companyHomeApi.getReportModule('timeline', params)
@@ -87,6 +98,155 @@ class ReportAxisStore {
       relation: '',
     };
     this.eventData = {};
+
+    this.resetDetailData();
+    this.listData = {};
+    this.loadingId = -1;
+    this.isMount = false;
+  }
+
+  // 风险信息相关
+  @observable detailData = {
+    activeIndex: 0,
+    page: 1,
+    tabTop: computed(function tabTop() {
+      return 0 - (this.page - 1) * 8 * 60;
+    }),
+    info: {},
+    detail: {},
+    html: '',
+    orgData: {},
+    loading: false,
+  }
+  @observable listData = [];
+  @observable module = 'alertAnalysis';
+
+  @action.bound changeValue(key, value) {
+    pathval.setPathValue(this, key, value);
+  }
+  @action.bound getAlterAnalisis(idParams) {
+    this.isMount = true;
+    this.listData = {};
+    const {index, size} = uiStore.uiState.alertAnalysis;
+    companyHomeApi.getReportModule('alert/page', idParams, {index, size})
+    .then(action('getAlert_success', resp => {
+      let data = null;
+      if (resp.data.content && resp.data.content.length > 0) {
+        uiStore.updateUiStore('alertAnalysis.totalElements', resp.data.totalElements);
+        data = resp.data;
+      } else {
+        data = {error: {message: '暂无信息'}, content: []};
+      }
+      this.listData = data;
+      this.isLoading = false;
+    }))
+    .catch(action('getAlert_error', err => {
+      this.isLoading = false;
+      this.listData = err.response && {error: err.response.data, content: []} || {error: {message: '暂无信息'}, content: []};
+    }));
+  }
+  @action.bound getAlertDetail(url, companyType, companyId, info, params) {
+    if (this.alertCancel) {
+      this.alertCancel();
+      this.alertCancel = null;
+    }
+    this.detailData.loading = true;
+    this.detailData.activeIndex = 0;
+    this.detailData.page = 1;
+    const source = CancelToken.source();
+    this.alertCancel = source.cancel;
+    companyHomeApi.getAlertDetail(url, source, params)
+      .then(action('getAlertDetail_success', (resp) => {
+        this.loadingId = -1;
+        this.alertCancel = null;
+        this.detailData.detail = resp.data;
+        this.detailData.orgData = resp.data;
+        this.detailData.info = info;
+        this.detailData.loading = false;
+        this.openDetailModal(this.detailData.info.alertType);
+        if (this.detailData.detail[0].ruleType === 1) {
+          this.getJudgeDocDetail(companyId, this.detailData.detail[0].detail[0].judgeInfo);
+        }
+        if (this.detailData.detail[0].ruleType === 11) {
+          this.getNewsDetail(companyId);
+        }
+      }))
+      .catch(action('getAlertDetail_error', err => {
+        if (!axios.isCancel(err)) {
+          console.log(err, '===');
+          this.loadingId = -1;
+          this.detailData.loading = false;
+          this.alertCancel = null;
+          messageStore.openMessage({
+            type: 'error',
+            content: pathval.getPathValue(err, 'response.data.message') || '获取数据失败'
+          });
+        }
+      }));
+  }
+  @action.bound openDetailModal() {
+    const companyName = this.detailData.info.companyName;
+    detailModalStore.openDetailModal((cp)=>{
+      require.ensure([], (require)=>{
+        cp(
+          require('components/companyHome/report/AlertAnalysis/detail/Info'),
+          require('components/companyHome/report/AlertAnalysis/detail/Content'),
+          null,
+          require('components/companyHome/report/AlertAnalysis/detail/LeftBar')
+        );
+      });
+    }, `推送详情（${companyName}）`);
+  }
+  @action.bound getJudgeDocDetail(companyId, data) {
+    const params = {};
+    params.docId = data.docId;
+    params.trailDate = data.trailDate;
+    this.detailData.html = '';
+    companyHomeApi.getAlertJudgeDocReport(companyId, params)
+    .then(action('get judgeDoc', resp => {
+      this.detailData.html = resp.data.detail;
+    }))
+    .catch(action('doc error', (error) => {
+      console.log('get judgeDoc', error);
+      this.detailData.html = '--';
+    }));
+  }
+  @action.bound getNewsDetail(companyId) {
+    const detailData = this.detailData.detail[this.detailData.activeIndex];
+    const ruleId = detailData.ruleId;
+    const scId = detailData.detail[0].id;
+    this.detailData.html = '';
+    companyHomeApi.getAlertNewsReport(companyId, ruleId, { scId })
+    .then(action('get news', resp => {
+      this.detailData.html = resp.data.html;
+      detailData.detail[0].title = resp.data.title;
+      detailData.detail[0].alterDt = resp.data.createTs;
+    }))
+    .catch(action('get news error', (error)=>{
+      console.log('get news', error);
+      this.detailData.html = '--';
+    }));
+  }
+  @action.bound cancelAlertDetail() {
+    if (this.alertCancel) {
+      this.alertCancel();
+      this.alertCancel = null;
+    }
+  }
+  @action.bound resetHtml() {
+    this.detailData.html = '';
+  }
+  @action.bound resetDetailData() {
+    this.detailData = {
+      activeIndex: 0,
+      page: 1,
+      tabTop: computed(function testName() {
+        return 0 - (this.page - 1) * 8 * 60;
+      }),
+      info: {},
+      detail: {},
+      html: '',
+    };
   }
 }
 export default new ReportAxisStore();

@@ -7,7 +7,7 @@ import styles from './index.less';
 function TableList({dataStore}) {
   const data = dataStore.listData.content;
   const createTable = () => {
-    return data.map( (item, index) => {
+    return data.map((item, index) => {
       return (
         <TableRow
           key={`keys${index}`}

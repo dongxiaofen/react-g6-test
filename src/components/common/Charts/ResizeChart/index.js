@@ -15,6 +15,8 @@ export default class ResizeChart extends Component {
     chartId: PropTypes.string,
     height: PropTypes.string,
     width: PropTypes.string,
+    handleEvent: PropTypes.func,
+    eventType: PropTypes.string,
   }
   componentDidMount() {
     const chartId = this.props.chartId;
@@ -24,6 +26,11 @@ export default class ResizeChart extends Component {
     if (resizeArr.includes(chartId)) {
       chartFunc[chartId] = myChart.resize;
       window.addEventListener('resize', chartFunc[chartId], false);
+    }
+    if (this.props.handleEvent) {
+      myChart.on(this.props.eventType, (params) => {
+        this.props.handleEvent(params);
+      });
     }
   }
   componentWillUnmount() {

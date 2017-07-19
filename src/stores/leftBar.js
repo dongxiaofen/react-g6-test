@@ -60,7 +60,7 @@ class LeftBarStore {
           {
             menuText: '股东投资任职',
             menuKey: 'sharePosAndInv',
-            developing: true,
+            lock: true,
           },
         ],
       },
@@ -110,15 +110,15 @@ class LeftBarStore {
         menuText: '风险扫描',
         menuKey: 'trendAnalyse',
         children: [
-          {
-            menuText: '规则预警',
-            menuKey: 'alertAnalysis',
-            lock: true,
-          },
+          // {
+          //   menuText: '规则预警',
+          //   menuKey: 'alertAnalysis',
+          //   lock: true,
+          // },
           {
             menuText: '黑名单扫描',
-            menuKey: 'blackList',
-            developing: true,
+            menuKey: 'blackListScan',
+            lock: true,
           },
           {
             menuText: '风险传导模型',
