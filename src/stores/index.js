@@ -61,4 +61,5 @@ export entireLoadingStore from './entireLoading';
 export loaningStore from './loaning';
 export ruleAddStore from './ruleAdd';
 export ruleListStore from './ruleList';
+export riskFeaturesStore from './report/riskFeatures';
 // append here from plop

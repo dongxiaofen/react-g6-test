@@ -25,6 +25,7 @@ class CompanyHomeStore {
     value: false,
     err: {},
   }
+  @observable emailAddress = '';
   @observable reportInfo = {
     analysisReportId: '',
     basicReportId: '',

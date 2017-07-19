@@ -1,5 +1,6 @@
 import React from 'react';
 import { observer } from 'mobx-react';
+import NodeIntro from '../NodeIntro';
 import styles from './index.less';
 
 function VerTab({ blackListScanStore }) {
@@ -104,6 +105,13 @@ function VerTab({ blackListScanStore }) {
     const subExt = extend[item.key].subExt;
     blackListScanStore.setValue(`extend.${item.key}.subExt`, !subExt);
   };
+  const showNodeIntro = () => {
+    blackListScanStore.setValue('nodeIntroVis', true);
+  };
+  const hideNodeIntro = () => {
+    blackListScanStore.setValue('nodeIntroVis', false);
+  };
+  const { nodeIntroVis } = blackListScanStore;
   return (
     <div>
       {conf.map(item => {
@@ -117,6 +125,10 @@ function VerTab({ blackListScanStore }) {
               {item.name}
               {item.handleInfo(itemData)}
               <span onClick={extendMain.bind(null, item)} className={ext ? styles.arrowUp : styles.arrowDown}></span>
+              {item.key === 'network' ? <div className={styles.nodeInfo}>
+                <span onMouseEnter={showNodeIntro} onMouseLeave={hideNodeIntro}>节点说明</span>
+                <NodeIntro visible={nodeIntroVis}/>
+              </div> : null}
             </div>
             <div className={ext ? styles.mainConShow : styles.mainConHide}>
               {itemData.blacklistNum !== 0 ? <div className={styles.abnormalBox}>

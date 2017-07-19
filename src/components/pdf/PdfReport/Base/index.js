@@ -12,6 +12,7 @@ import AlterAnalysis from '../Base/Alter/AlterAnalysis';
 import AlterList from '../Base/Alter/AlterList';
 import YearReportList from '../Base/YearReport/YearReportList';
 import Managements from '../Base/Foreign/Managements';
+import ShareholderInvestment from '../Base/Foreign/ShareholderInvestment';
 import pathval from 'pathval';
 
 
@@ -23,10 +24,10 @@ function Base({ judgeIsModuleExist, pdfStore }) {
           ?
           <div>
             <PdfTitle module="工商信息" subModule="照面信息" />
-            <RegisterInfo moduleData={pathval.getPathValue(pdfStore, 'report.corpDetail.basicList')} />
-            <ShareHolder moduleData = {pathval.getPathValue(pdfStore, 'report.corpDetail.shareHolderList')} />
-            <PersonListData moduleData={pathval.getPathValue(pdfStore, 'report.corpDetail.personList')} />
-            <FiliationList moduleData = {pathval.getPathValue(pdfStore, 'report.corpDetail.filiationList')} />
+            <RegisterInfo moduleData={pathval.getPathValue(pdfStore, 'crorpBasicData.basicList')} />
+            <ShareHolder moduleData = {pathval.getPathValue(pdfStore, 'crorpBasicData.shareHolderList')} />
+            <PersonListData moduleData={pathval.getPathValue(pdfStore, 'crorpBasicData.personList')} />
+            <FiliationList moduleData = {pathval.getPathValue(pdfStore, 'crorpBasicData.filiationList')} />
           </div>
           :
           ''
@@ -36,8 +37,8 @@ function Base({ judgeIsModuleExist, pdfStore }) {
           ?
           <div>
             <PdfTitle module="工商信息" subModule="工商变更" />
-            <AlterAnalysis moduleData = {pathval.getPathValue(pdfStore, 'report.tendency.result[0].data')} />
-            <AlterList moduleData = {pathval.getPathValue(pdfStore, 'report.tendency.result[0].alterList')} />
+            <AlterAnalysis moduleData = {pathval.getPathValue(pdfStore, 'crorpAlterData.result[0].data')} />
+            <AlterList moduleData = {pathval.getPathValue(pdfStore, 'crorpAlterData.result[0].alterList')} />
           </div>
           :
           ''
@@ -47,7 +48,7 @@ function Base({ judgeIsModuleExist, pdfStore }) {
           ?
           <div>
             <PdfTitle module="工商信息" subModule="企业年报" />
-            <YearReportList moduleData = {pathval.getPathValue(pdfStore, 'report.corpDetail.yearReportList')} />
+            <YearReportList moduleData = {pathval.getPathValue(pdfStore, 'crorpYearReportData')} />
           </div>
           :
           ''
@@ -79,6 +80,16 @@ function Base({ judgeIsModuleExist, pdfStore }) {
           <div>
             <PdfTitle module="投资任职" subModule="董监高投资任职" />
             <Managements moduleData = {pathval.getPathValue(pdfStore, 'managements')} />
+          </div>
+          :
+          ''
+      }
+      {
+        judgeIsModuleExist('INV_POS_SHAREHOLDER')
+          ?
+          <div>
+            <PdfTitle module="投资任职" subModule="股东投资任职" />
+            <ShareholderInvestment moduleData = {pathval.getPathValue(pdfStore, 'shareHolders')} />
           </div>
           :
           ''
