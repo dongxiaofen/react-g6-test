@@ -21,9 +21,9 @@ import {
   ExcuteInfo,
   Position,
 } from './module';
-function Content({alertAnalysisStore, monitorAlertStore, routing}) {
+function Content({reportAxisStore, monitorAlertStore, routing}) {
   const pathname = routing.location.pathname;
-  const dataStore = pathname === '/companyHome/monitorAlert' ? monitorAlertStore : alertAnalysisStore;
+  const dataStore = pathname === '/companyHome/monitorAlert' ? monitorAlertStore : reportAxisStore;
   const createModule = () => {
     const detailData = dataStore.detailData;
     const info = detailData.info;
@@ -115,4 +115,4 @@ function Content({alertAnalysisStore, monitorAlertStore, routing}) {
 Content.propTypes = {
   foo: PropTypes.string,
 };
-export default inject('alertAnalysisStore', 'monitorAlertStore', 'routing')(observer(Content));
+export default inject('reportAxisStore', 'monitorAlertStore', 'routing')(observer(Content));
