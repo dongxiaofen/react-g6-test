@@ -9,7 +9,7 @@ import ErrorPage from './ErrorPage';
 
 function BlackListScanComp({ blackListScanStore, reportId }) {
   console.log(mobx.toJS(blackListScanStore), '-----');
-  const { status, error } = blackListScanStore.scanStatus;
+  const { status } = blackListScanStore.scanStatus;
   const { getStatus, scanMain, scanRelated, scanNetwork, data } = blackListScanStore;
   const notReady = data.ready.some(finish => finish === false);
   const funcObj = {
@@ -18,7 +18,10 @@ function BlackListScanComp({ blackListScanStore, reportId }) {
     scanRelated,
     scanNetwork,
   };
-  if (error) {
+  const dataError = ['main', 'related', 'network'].some(key => {
+    return 'code' in data[key];
+  });
+  if (dataError) {
     return <ErrorPage funcObj={funcObj} reportId={reportId} />;
   }
   if (status === undefined) {
