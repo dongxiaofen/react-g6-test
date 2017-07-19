@@ -2,9 +2,9 @@ import React, {PropTypes} from 'react';
 import { observer } from 'mobx-react';
 import styles from './index.less';
 
-function RiskFeaturesStart({companyHomeStore, riskFeaturesStore}) {
+function RiskFeaturesStart({riskFeaturesStore}) {
   const clickBtn = () => {
-    riskFeaturesStore.getScanStatusClick(companyHomeStore.reportInfo.reportId);
+    riskFeaturesStore.getScanStatusClick();
   };
   return (
     <div className={`${styles.box} clearfix`}>
@@ -25,7 +25,6 @@ function RiskFeaturesStart({companyHomeStore, riskFeaturesStore}) {
 }
 
 RiskFeaturesStart.propTypes = {
-  companyHomeStore: PropTypes.object,
   riskFeaturesStore: PropTypes.object,
 };
 export default observer(RiskFeaturesStart);

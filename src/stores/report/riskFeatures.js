@@ -8,7 +8,7 @@ class RiskFeaturesStore {
   // 结果loading
   @observable riskLoading = true;
   // 列表loading
-  @observable riskListLoading = false;
+  @observable riskListLoading = [];
   // 是否可扫描
   @observable canScan = false;
   // 分析状态
@@ -21,19 +21,18 @@ class RiskFeaturesStore {
   @observable apiIsResult = false;
 
   // 点击开始扫描按钮时先发送请求数据接口,再发送请求状态接口
-  @action.bound getScanStatusClick(reportId) {
+  @action.bound getScanStatusClick() {
     const source = CancelToken.source();
     this.riskLoading = true;
     // 发送数据接口
-    companyHomeApi.getEventAnalysis(reportId, source)
+    companyHomeApi.getEventAnalysis(this.reportId, source)
       .then(action('eventAnalysis', resp => {
         this.result = resp.data;
-        this.getScanStatus(reportId);
+        this.getScanStatus(this.reportId);
       }))
       .catch(action('eventAnalysis', err => {
-        console.log(err.response.data, '=====eventAnalysis click');
         if (err.response.data.errorCode === 404203 || err.response.data.errorCode === '404203') {
-          this.getScanStatus(reportId);
+          this.getScanStatus(this.reportId);
         }
         // 接口失败
         this.apiIsResult = true;
@@ -48,7 +47,7 @@ class RiskFeaturesStore {
     const source = CancelToken.source();
     this.reportId = reportId;
     this.riskLoading = true;
-    companyHomeApi.getEventAnalysisStatus(reportId, source)
+    companyHomeApi.getEventAnalysisStatus(this.reportId, source)
       .then(action('eventAnalysisStatus', resp => {
         // 是否可扫描
         this.canScan = resp.data.canScan;
@@ -60,14 +59,13 @@ class RiskFeaturesStore {
         }
         if (this.status === 'PROCESSING') {
           setTimeout(() => {
-            this.getScanStatus(reportId);
-          }, 10000);
+            this.getScanStatus(this.reportId);
+          }, 30000);
         }
         if (resp.data.status === 'FINISH') {
           // 请求风险结果
-          this.getScanResult(reportId);
+          this.getScanResult();
         }
-        console.log(resp, '====resp');
       }))
       .catch(action('eventAnalysisStatus', err => {
         // 接口失败
@@ -76,16 +74,15 @@ class RiskFeaturesStore {
       }));
   }
   // 请求风险结果
-  @action.bound getScanResult(reportId) {
+  @action.bound getScanResult() {
     const source = CancelToken.source();
-    companyHomeApi.getEventAnalysis(reportId, source)
+    companyHomeApi.getEventAnalysis(this.reportId, source)
       .then(action('eventAnalysis', resp => {
         // 分析状态
         if (this.status === 'FINISH') {
           this.riskLoading = false;
         }
         this.result = resp.data;
-        console.log(resp, '====resp result');
       }))
       .catch(action('eventAnalysis', err => {
         console.log(err);
@@ -96,23 +93,28 @@ class RiskFeaturesStore {
   // 请求风险数据详情列表
   @action.bound getScanList(recordIds, index) {
     // 判断是否已经有数据,有数据改变显示状态,无数据则请求数据
+    // console.log(index, '=====index');
+    let flag = true;
     if (this.listData.length > 0) {
-      console.log(this.listData, '=====111');
-      this.listData.map((obj)=>{
+      this.listData.map((obj, idx)=>{
         if (obj.index === index) {
-          this.listData[index].status = !this.listData[index].status;
-          console.log(this.listData, '=====222');
-        } else {
-          this.getScanListDetail(recordIds, index);
+          this.listData[idx].status = !this.listData[idx].status;
+          flag = false;
+          // console.log('1111====');
         }
       });
-    } else {
+    }
+    // console.log(flag, '====flag');
+    if (flag) {
+      // console.log('2222====');
       this.getScanListDetail(recordIds, index);
     }
+    // console.log(this.listData, '===data');
   }
   // 请求风险数据详情列表
   @action.bound getScanListDetail(recordIds, index) {
     const source = CancelToken.source();
+    this.riskListLoading.push(index);
     companyHomeApi.getEventAnalysisList(this.reportId, recordIds, source)
       .then(action('eventAnalysisList', resp => {
         this.listData.push(
@@ -122,7 +124,10 @@ class RiskFeaturesStore {
             data: resp.data
           }
         );
-        console.log(resp, '====resp');
+        if (this.riskListLoading.length > 0) {
+          this.riskListLoading.splice(this.riskListLoading.indexOf(index), 1);
+        }
+        // console.log(this.riskListLoading, '====this.riskListLoading');
       }))
       .catch(action('eventAnalysisList', err => {
         console.log(err);
