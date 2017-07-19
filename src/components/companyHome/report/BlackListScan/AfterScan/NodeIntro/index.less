@@ -1,0 +1,34 @@
+@import "~sc-colors/index.less";
+.box {
+  width: 615px;
+  padding: 15px 15px 10px;
+  font-size: 13px;
+  line-height: 1em;
+  color: @mdc-grey-500;
+  box-shadow:0 0 6px rgba(55,71,79,0.15);
+  position: absolute;
+  background-color: @white1;
+}
+.show {
+  visibility: visible;
+}
+.hide {
+  visibility: hidden;
+}
+.title {
+  line-height: 17px;
+  color: @mdc-grey-800;
+  margin: 15px 0 7px;
+}
+.title:first-child {
+  margin-top: 0;
+}
+.box {
+  p {
+    line-height: 1.5;
+    margin-bottom: 5px;
+    span {
+      color: @mdc-blue-300;
+    }
+  }
+}
