@@ -30,7 +30,7 @@ function Header({ blackListScanStore, reportId }) {
         </Tooltip>
       </div>
       <div className={styles.actionBox}>
-        <p>扫描时间：2012-12-12</p>
+        <p>{`扫描时间：${blackListScanStore.data.main.date || '获取失败'}`}</p>
         <button className={canScan ? '' : styles.disable} onClick={reScan.bind(null, canScan)}>重新扫描</button>
       </div>
     </div>

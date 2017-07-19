@@ -57,20 +57,24 @@ function VerTab({ blackListScanStore }) {
       }
     });
   };
-  const createAbnormalList = () => {
-    return [
+  const createAbnormalList = (itemData, itemKey) => {
+    let list = [
       {type: '行政处罚', eventDate: '2012-01-01'},
       {type: '行政处罚', eventDate: '2012-01-01'},
-    ].map((item, idx) => {
+    ];
+    if (itemKey === 'main') {
+      list = itemData.blacklistCompInfo;
+    }
+    return list.map((item, idx) => {
       return (
         <div key={idx} className={styles.abnormalItem}>
-          <p className={styles.abnormalType + ' ' + styles.typeImg + idx}>
-            <span>{item.type}</span>
-            -该项共命中
-            <span>58</span>
-            次
+          <p className={styles.abnormalType + ' ' + styles.typeImg + scanModuleArr.indexOf(item.blacklistType)}>
+            <span>{item.blacklistType}</span>
           </p>
-          <p className={styles.eventDate}>{`最后命中时间：${item.eventDate}`}</p>
+          <p className={styles.eventDate}>
+            <span className={styles.hitCount}>{`共命中 ${item.count} 次`}</span>
+            <span>{`最后命中时间：${item.eventDate}`}</span>
+          </p>
         </div>
       );
     });
@@ -100,11 +104,11 @@ function VerTab({ blackListScanStore }) {
             </div>
             <div className={ext ? styles.mainConShow : styles.mainConHide}>
               {itemData.blacklistNum !== 0 ? <div className={styles.abnormalBox}>
-                {createAbnormalList(itemData)}
+                {createAbnormalList(itemData, item.key)}
               </div> : null}
               {itemData.blacklistNum !== 0 ? <div className={styles.subLine}>
                 以下<span className={styles.normalCount}>{scanLen - riskLen}</span>项没有问题
-                <span onClick={extendSub.bind(null, item)} className={styles.arrowUp}></span>
+                <span onClick={extendSub.bind(null, item)} className={subExt ? styles.arrowUp : styles.arrowDown}></span>
               </div> : null}
               <div className={subExt ? styles.moduleBoxShow : styles.moduleBoxHide}>
                 {createModule(itemData)}
