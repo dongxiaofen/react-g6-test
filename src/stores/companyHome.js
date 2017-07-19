@@ -241,26 +241,25 @@ class CompanyHomeStore {
   }
 
   @action.bound getReportStatus(params) {
-    this.isLoading = true;
     companyHomeApi.getReportStatus(params)
     .then(action('getReportStatus', (resp)=>{
       this.reportInfo = Object.assign(this.reportInfo, resp.data);
-      if (resp.data.basicReportId || resp.data.reportId) {
-        if (resp.data.dimensions) {
-          this.initDimensions(resp.data.dimensions);
-        }
-      } else {
+      if (!resp.data.basicReportId && !resp.data.reportId) {
         this.createBasicReport({companyName: params.companyName});
       }
+      const dimensions = resp.data.dimensions || [];
+      this.initDimensions(dimensions);
     }))
     .catch(action('getReportStatus err', (error)=>{
       console.log(error);
     }));
   }
-  @action.bound getMoudleInfo() {
+  @action.bound getMoudleInfo(params) {
+    this.isLoading = true;
     moduleInfoApi.getMouduleInfo()
       .then(action((response) => {
         this.analysisMoudle = response.data;
+        this.getReportStatus(params);
       }))
       .catch(action((err) => {
         console.log(err);
@@ -271,12 +270,18 @@ class CompanyHomeStore {
       const idx = dimensions.indexOf(option.value);
       if (option.value === 'SCORE' && idx < 0) {
         this.loanOption[index].checked = true;
-      } else if (/PROFIT|OPERATION|GROWING/.test(option.value) && idx < 0) {
+      } else if (/PROFIT|OPERATION|GROWING/.test(option.value) && this.judegeModule(option.value) && idx < 0) {
         this.loanOption[index].checked = true;
       } else {
         this.loanOption[index].checked = false;
       }
     });
+  }
+  judegeModule = (value)=>{
+    const module = this.analysisMoudle.find((moduleInfo)=> {
+      return moduleInfo.module === value;
+    });
+    return module.available;
   }
   @action.bound updateValue(keyPath, value) {
     pathval.setPathValue(this, keyPath, value);

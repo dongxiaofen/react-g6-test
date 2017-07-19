@@ -39,8 +39,8 @@ function RelPerInfo({relPerCheckStore}) {
     <Row>
       <Col>
         <div className="clearfix">
-          <h1 className={styles.title}>个人黑名单</h1>
-          <Button btnType="primary" className={styles.noDataButton} onClick={handleClick}>添加个人核查</Button>
+          <h1 className={styles.title}>高风险核查</h1>
+          <Button btnType="primary" className={styles.noDataButton} onClick={handleClick}>添加核查</Button>
           <CheckModal {...checkModalConfig} />
         </div>
         <div className={styles.listArea}>

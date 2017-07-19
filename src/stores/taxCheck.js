@@ -12,7 +12,7 @@ class TaxCheckStore {
   @observable companyName = '';
 
   @observable selectConf = [
-    {year: '2015', taxIndex: 'R001', input: '', msg: ''},
+    {year: '2016', taxIndex: 'R001', input: '', msg: ''},
   ];
   // 核查列表数据 假数据
   @observable taxListData = [];
@@ -30,7 +30,7 @@ class TaxCheckStore {
 
   @action.bound addSelectItem() {
     this.selectConf.push({
-      year: '2015',
+      year: '2016',
       taxIndex: 'R001',
       input: '',
       msg: '',
@@ -47,7 +47,7 @@ class TaxCheckStore {
   }
   @action.bound resetSelectModal() {
     this.selectConf = [
-      {year: '2015', taxIndex: 'R001', input: '', msg: ''},
+      {year: '2016', taxIndex: 'R001', input: '', msg: ''},
     ];
   }
   @action.bound postSelectInfo() {
@@ -123,7 +123,6 @@ class TaxCheckStore {
             this.taxCheckAvailable = item.available;
             return;
           }
-          this.taxCheckAvailable = true;
         });
       }))
       .catch(action((err) => {

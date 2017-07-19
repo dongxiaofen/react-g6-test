@@ -3,18 +3,18 @@ import { observer } from 'mobx-react';
 import SimpleCard from 'components/common/report/alertAnalysis/SimpleCard';
 function Fyannouncement({data}) {
   const arrayToString = (arr)=>{
-    let str = '';
+    const output = [];
     if (arr) {
-      arr.forEach(item => {
-        str += item.litigantName;
+      arr.forEach((item)=>{
+        output.push(item.litigantName);
       });
     }
-    return str;
+    return output.join('；');
   };
   const meta = {
     dict: 'courtAnnouncement',
     body: [
-      {'key': 'type', 'width': '6'},
+      {'key': 'docType', 'width': '6'},
       {'key': 'identity', 'width': '6'},
       {'key': 'court', 'width': '6'},
       {'key': 'litigant', 'width': '12', 'modifyBlock': arrayToString},

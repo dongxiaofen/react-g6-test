@@ -139,7 +139,7 @@ function CheckModal({visible, width, closeAction, btnLoading, relPerCheckStore, 
              confirmLoading={btnLoading}
              isNeedBtn
              pointText={pointText}
-             title="个人黑名单核查"
+             title="高风险核查"
              confirmText= "确定">
       <div className={styles.contentWrap}>
         <div className={styles.content}>
