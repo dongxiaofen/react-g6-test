@@ -4,6 +4,9 @@ import styles from './index.less';
 import List from '../List';
 
 function Result({data}) {
+  const clickBtn = () => {
+    data.getScanStatusClick();
+  };
   const result = data.result && data.result.targetNum && data.result.targetNum > 0 ? false : true;
   return (
     <div className={styles.box}>
@@ -22,7 +25,7 @@ function Result({data}) {
           <div className={styles.time}>
             扫描时间：{data.result && data.result.date ? data.result.date : '暂无'}
           </div>
-          <div className={`${styles.button} ${result ? styles.buttonY : styles.buttonN} ${data.result && data.result.canScan ? '' : styles.buttonNone}`}>
+          <div onClick={clickBtn} className={`${styles.button} ${result ? styles.buttonY : styles.buttonN} ${data.result && data.result.canScan ? '' : styles.buttonNone}`}>
             重新扫描
           </div>
         </div>
