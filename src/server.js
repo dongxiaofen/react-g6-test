@@ -14,16 +14,17 @@ import axios from 'axios';
 import url from 'url';
 import fundebug from 'fundebug-nodejs';
 import logger from 'morgan';
-import { match, RouterContext } from 'react-router';
-import { Provider, useStaticRendering } from 'mobx-react';
+import {match, RouterContext} from 'react-router';
+import {Provider, useStaticRendering} from 'mobx-react';
 import getRoutes from './routes';
-import { RouterStore } from 'mobx-react-router';
+import {RouterStore} from 'mobx-react-router';
 import * as allStores from 'stores';
 import getPermissionMeta from 'helpers/getPermissionMeta';
 import {
   UpFileToQiniu,
   checkPDF,
   writeToLog,
+  sendMail,
   deletePdfsOnQiniu
 } from './helpers/pdfHelper';
 import schedule from 'node-schedule';
@@ -90,10 +91,14 @@ const writeStrToHtml = (id, data, callBack, errorCallBack) => {
     (err) => {
       if (!err) {
         console.log(" write string to html ok");
-        if (callBack) { callBack();}
+        if (callBack) {
+          callBack();
+        }
       } else {
         console.log("write string to html err");
-        if (errorCallBack) { errorCallBack();}
+        if (errorCallBack) {
+          errorCallBack();
+        }
       }
     }
   );
@@ -110,15 +115,15 @@ app.use(favicon(path.join(__dirname, '..', 'static', 'favicon.ico')));
 app.use(Express.static(path.join(__dirname, '..', 'static')));
 app.use(cookieParser());
 // parse application/x-www-form-urlencoded
-app.use(bodyParser.urlencoded({ extended: false }))
+app.use(bodyParser.urlencoded({extended: false}))
 // parse application/json
 app.use(bodyParser.json())
 app.use(logger('dev'));
 
-app.get('/front/refresh/assets', function(req, res) {
+app.get('/front/refresh/assets', function (req, res) {
   const assetsPath = path.resolve(__dirname, '../static/dist');
   const reg = /^(?:main-)(.*)(?:\.js)$/;
-  fs.readdir(assetsPath, function(err, file) {
+  fs.readdir(assetsPath, function (err, file) {
     if (!file) {
       return res.status(404).send({message: 'file not fount'});
     }
@@ -153,7 +158,7 @@ app.use((req, res) => {
     checkPDF(req, res);
     return false;
   }
-  match({ routes: getRoutes('server'), location: req.originalUrl }, (error, redirectLocation, renderProps) => {
+  match({routes: getRoutes('server'), location: req.originalUrl}, (error, redirectLocation, renderProps) => {
     if (redirectLocation) {
       res.redirect(redirectLocation.pathname + redirectLocation.search);
     } else if (error) {
@@ -169,7 +174,7 @@ app.use((req, res) => {
         let urlPanth = '';
         let params = '';
         let reportType = '';
-        if (req.query.reportId){
+        if (req.query.reportId) {
           urlPanth = '/api/pdf/report';
           params = {
             reportId: req.query.reportId,
@@ -192,7 +197,7 @@ app.use((req, res) => {
           reportType = '分析报告';
         }
         console.log(urlPanth, 'urlPanth-----------', params);
-        axios.get(config.backendApi + urlPanth, { params })
+        axios.get(config.backendApi + urlPanth, {params})
           .then((resp) => {
             writeDataToFile('pdf', resp.data);
             allStores.pdfStore.setTypes(params.types, reportType);
@@ -203,7 +208,8 @@ app.use((req, res) => {
                 <RouterContext {...renderProps} />
               </Provider>
             );
-            const reportHtml = ReactDOM.renderToString(<Html pdfDown="1" assets={webpackIsomorphicTools.assets()} component={component} {...allStores} />);
+            const reportHtml = ReactDOM.renderToString(<Html pdfDown="1" assets={webpackIsomorphicTools.assets()}
+                                                             component={component} {...allStores} />);
             const companyName = resp.data.companyName;
             const username = resp.data.email;
             const timestamp = new Date().getTime();
@@ -211,6 +217,8 @@ app.use((req, res) => {
             const pdfName = username + timestamp + '.pdf';
             writeStrToHtml(htmlName, reportHtml, () => {
               html2Pdf(htmlName, pdfName, () => {
+                const downloadUrl = UpFileToQiniu(pdfName);
+                sendMail(downloadUrl, '494024259@qq.com');
                 res.download(PDF_DIRNAME + pdfName, companyName + '.pdf', (err) => {
                   // 删除pdf
                   const del = cp.spawn("sh", ['./src/helpers/delPdf.sh', PDF_DIRNAME + htmlName, PDF_DIRNAME + pdfName]);
@@ -237,7 +245,7 @@ app.use((req, res) => {
           </Provider>
         );
         res.status(200);
-        global.navigator = { userAgent: req.headers['user-agent'] };
+        global.navigator = {userAgent: req.headers['user-agent']};
         res.send('<!doctype html>\n' +
           '<!-- Polyfills -->\n' +
           '<!--[if lt IE 10]>\n' +
@@ -247,7 +255,9 @@ app.use((req, res) => {
           '<!--[if lte IE 11]>\n' +
           '<script src="https://as.alipayobjects.com/g/component/??es6-shim/0.35.1/es6-sham.min.js,es6-shim/0.35.1/es6-shim.min.js"></script>\n' +
           '<![endif]-->\n' +
-          ReactDOM.renderToString(<Html reqPathName={reqPathName} isDev={__DEVELOPMENT__} assets={webpackIsomorphicTools.assets()} component={component} {...allStores} />));
+          ReactDOM.renderToString(<Html reqPathName={reqPathName} isDev={__DEVELOPMENT__}
+                                        assets={webpackIsomorphicTools.assets()}
+                                        component={component} {...allStores} />));
       } else {
         // writeDataToFile('renderProps', renderProps.components);
         axios.get(config.backendApi + '/api/user/info')
@@ -278,7 +288,7 @@ app.use((req, res) => {
               </Provider>
             );
             res.status(200);
-            global.navigator = { userAgent: req.headers['user-agent'] };
+            global.navigator = {userAgent: req.headers['user-agent']};
             res.send('<!doctype html>\n' +
               '<!-- Polyfills -->\n' +
               '<!--[if lt IE 10]>\n' +
@@ -288,7 +298,9 @@ app.use((req, res) => {
               '<!--[if lte IE 11]>\n' +
               '<script src="https://as.alipayobjects.com/g/component/??es6-shim/0.35.1/es6-sham.min.js,es6-shim/0.35.1/es6-shim.min.js"></script>\n' +
               '<![endif]-->\n' +
-              ReactDOM.renderToString(<Html reqPathName={reqPathName} isDev={__DEVELOPMENT__} assets={webpackIsomorphicTools.assets()} component={component} {...allStores} />));
+              ReactDOM.renderToString(<Html reqPathName={reqPathName} isDev={__DEVELOPMENT__}
+                                            assets={webpackIsomorphicTools.assets()}
+                                            component={component} {...allStores} />));
           })
           .catch((err) => {
             console.log('userInfo err', err.response.data);
@@ -309,7 +321,7 @@ app.use((req, res) => {
               </Provider>
             );
             res.status(200);
-            global.navigator = { userAgent: req.headers['user-agent'] };
+            global.navigator = {userAgent: req.headers['user-agent']};
             res.send('<!doctype html>\n' +
               '<!-- Polyfills -->\n' +
               '<!--[if lt IE 10]>\n' +
@@ -319,7 +331,9 @@ app.use((req, res) => {
               '<!--[if lte IE 11]>\n' +
               '<script src="https://as.alipayobjects.com/g/component/??es6-shim/0.35.1/es6-sham.min.js,es6-shim/0.35.1/es6-shim.min.js"></script>\n' +
               '<![endif]-->\n' +
-              ReactDOM.renderToString(<Html reqPathName={reqPathName} isDev={__DEVELOPMENT__} assets={webpackIsomorphicTools.assets()} component={component} {...allStores} />));
+              ReactDOM.renderToString(<Html reqPathName={reqPathName} isDev={__DEVELOPMENT__}
+                                            assets={webpackIsomorphicTools.assets()}
+                                            component={component} {...allStores} />));
           });
       }
     } else {
