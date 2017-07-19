@@ -16,7 +16,7 @@ function Header({ blackListScanStore, reportId }) {
   };
   const canScan = blackListScanStore.scanStatus.canScan;
   const hasRisk = ['main', 'related', 'network'].some(key => {
-    return blackListScanStore.data[key].blacklistNum === 0;
+    return blackListScanStore.data[key].blacklistNum !== 0;
   });
   const wrapCss = hasRisk ? `${styles.wrap} ${styles.error}` : styles.wrap;
   return (
