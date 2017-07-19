@@ -81,7 +81,7 @@ class BlackListScanStore {
     this.apiCancel.mainApi = source.cancel;
     blackListScanApi.scanMain(reportId, source)
       .then(action('scanMain', resp => {
-        this.main = resp.data;
+        this.data.main = resp.data;
         if (this.scanStatus.status === 'FINISH') {
           this.data.ready[0] = true;
         } else {
@@ -91,7 +91,7 @@ class BlackListScanStore {
         this.apiCancel.mainApi = null;
       }))
       .catch(action('scanMain', err => {
-        this.main = err;
+        this.data.main = err;
         if (this.scanStatus.status === 'FINISH') {
           this.data.ready[0] = true;
         } else {
@@ -106,7 +106,7 @@ class BlackListScanStore {
     this.apiCancel.relatedApi = source.cancel;
     blackListScanApi.scanRelated(reportId, source)
       .then(action('scanRelated', resp => {
-        this.related = resp.data;
+        this.data.related = resp.data;
         if (this.scanStatus.status === 'FINISH') {
           this.data.ready[0] = true;
         } else {
@@ -116,7 +116,7 @@ class BlackListScanStore {
         this.apiCancel.relatedApi = null;
       }))
       .catch(action('scanRelated', err => {
-        this.related = err;
+        this.data.related = err;
         if (this.scanStatus.status === 'FINISH') {
           this.data.ready[0] = true;
         } else {
@@ -131,7 +131,7 @@ class BlackListScanStore {
     this.apiCancel.networkApi = source.cancel;
     blackListScanApi.scanNetwork(reportId, source)
       .then(action('scanNetwork', resp => {
-        this.network = resp.data;
+        this.data.network = resp.data;
         if (this.scanStatus.status === 'FINISH') {
           this.data.ready[0] = true;
         } else {
@@ -141,7 +141,7 @@ class BlackListScanStore {
         this.apiCancel.networkApi = null;
       }))
       .catch(action('scanNetwork', err => {
-        this.network = err;
+        this.data.network = err;
         if (this.scanStatus.status === 'FINISH') {
           this.data.ready[0] = true;
         } else {

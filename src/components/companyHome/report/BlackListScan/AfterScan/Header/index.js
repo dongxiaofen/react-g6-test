@@ -9,7 +9,8 @@ function Header({ blackListScanStore, reportId }) {
   const succStr = '扫描完成，未命中风险名单';
   const errorStr = '扫描完成，该企业命中风险名单';
   const info = '500万高风险信息数据库中（工商系统 · 司法黑名单 · 银联黑名单 · 支付黑名单 · 税务黑名单等）识别企业关联网络中的风险';
-  const reScan = () => {
+  const reScan = (canScan) => {
+    if (!canScan) return false;
     blackListScanStore.resetStore();
     blackListScanStore.setValue('scanStatus.status', 'PROCESSING');
     blackListScanStore.getStatus(reportId);
@@ -30,7 +31,7 @@ function Header({ blackListScanStore, reportId }) {
       </div>
       <div className={styles.actionBox}>
         <p>扫描时间：2012-12-12</p>
-        <button className={canScan ? '' : styles.disable} onClick={reScan}>重新扫描</button>
+        <button className={canScan ? '' : styles.disable} onClick={reScan.bind(null, canScan)}>重新扫描</button>
       </div>
     </div>
   );

@@ -3,12 +3,6 @@ import { observer } from 'mobx-react';
 import styles from './index.less';
 
 function VerTab({ blackListScanStore }) {
-  const handleMain = [];
-  const conf = [
-    {name: '主体公司', key: 'main', data: {}, handleInfo: handleMain, extend: false},
-    {name: '关联关系', key: 'related', data: {}, handleInfo: handleMain, extend: false},
-    {name: '网络关系', key: 'network', data: {}, handleInfo: handleMain, extend: false},
-  ];
   const scanModuleArr = [
     '行政处罚',
     '经营异常',
@@ -22,16 +16,45 @@ function VerTab({ blackListScanStore }) {
     '运营商黑名单',
     '企业主黑名单'
   ];
-  const createModule = () => {
+  const scanLen = scanModuleArr.length;
+  const data = blackListScanStore.data;
+  const handleMain = (item) => {
+    if (item.blacklistNum === 0) {
+      return <span> - 以下 <span className={styles.scanItemNum}>{scanLen}</span> 项没有问题</span>;
+    }
+    return '';
+  };
+  const handleRelated = (item) => {
+    const scanNumStr = <span className={styles.scanNum}>{`已扫描 ${item.numOfnodes} 个重要关系（公司/个人）`}</span>;
+    if (item.blacklistNum === 0) {
+      return <span><span> - 以下 <span className={styles.scanItemNum}>{scanLen}</span> 项没有问题</span>{scanNumStr}</span>;
+    }
+    return scanNumStr;
+  };
+  const handleNetwork = (item) => {
+    const scanNumStr = <span className={styles.scanNum}>{`已扫描 ${item.numOfnodes} 个关键网络节点（公司/个人）`}</span>;
+    if (item.blacklistNum === 0) {
+      return <span><span> - 以下 <span className={styles.scanItemNum}>{scanLen}</span> 项没有问题</span>{scanNumStr}</span>;
+    }
+    return scanNumStr;
+  };
+  const conf = [
+    {name: '主体公司', key: 'main', handleInfo: handleMain},
+    {name: '关联关系', key: 'related', handleInfo: handleRelated},
+    {name: '网络关系', key: 'network', handleInfo: handleNetwork},
+  ];
+  const createModule = (itemData) => {
     return scanModuleArr.map((key, idx) => {
-      return (
-        <div key={key} className={styles.moduleItem}>
-          <div className={styles.moduleImg + idx}>
-            <p>{key}</p>
+      if (itemData.matchedBlacklistTypes && itemData.matchedBlacklistTypes.indexOf(key) === -1) {
+        return (
+          <div key={key} className={styles.moduleItem}>
+            <div className={styles.moduleImg + idx}>
+              <p>{key}</p>
+            </div>
+            <p className={styles.scanStatus}>安全</p>
           </div>
-          <p className={styles.scanStatus}>安全</p>
-        </div>
-      );
+        );
+      }
     });
   };
   const createAbnormalList = () => {
@@ -66,22 +89,25 @@ function VerTab({ blackListScanStore }) {
       {conf.map(item => {
         const ext = extend[item.key].ext;
         const subExt = extend[item.key].subExt;
+        const itemData = data[item.key];
+        const riskLen = itemData.matchedBlacklistTypes && itemData.matchedBlacklistTypes.length || 0;
         return (
           <div key={item.key} className={styles.item}>
             <div className={styles.mainLine}>
               {item.name}
+              {item.handleInfo(itemData)}
               <span onClick={extendMain.bind(null, item)} className={ext ? styles.arrowUp : styles.arrowDown}></span>
             </div>
             <div className={ext ? styles.mainConShow : styles.mainConHide}>
-              <div className={styles.abnormalBox}>
-                {createAbnormalList()}
-              </div>
-              <div className={styles.subLine}>
-                以下<span className={styles.normalCount}>9</span>项没有问题
+              {itemData.blacklistNum !== 0 ? <div className={styles.abnormalBox}>
+                {createAbnormalList(itemData)}
+              </div> : null}
+              {itemData.blacklistNum !== 0 ? <div className={styles.subLine}>
+                以下<span className={styles.normalCount}>{scanLen - riskLen}</span>项没有问题
                 <span onClick={extendSub.bind(null, item)} className={styles.arrowUp}></span>
-              </div>
+              </div> : null}
               <div className={subExt ? styles.moduleBoxShow : styles.moduleBoxHide}>
-                {createModule()}
+                {createModule(itemData)}
               </div>
             </div>
           </div>
