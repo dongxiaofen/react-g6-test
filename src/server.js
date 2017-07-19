@@ -140,6 +140,7 @@ app.get('/front/refresh/assets', function (req, res) {
 });
 
 app.get('/sendEmail', function (req, res) {
+  console.log(req.query.email);
   res.status = 200;
   res.json({
       message: '提交成功，稍后请注意查收邮件'
