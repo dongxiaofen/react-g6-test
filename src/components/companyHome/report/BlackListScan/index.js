@@ -28,7 +28,7 @@ function BlackListScanComp({ blackListScanStore, reportId }) {
   if (status === 'PROCESSING' || !notReady) {
     return <Scanning blackListScanStore={blackListScanStore} />;
   }
-  return <AfterScan blackListScanStore={blackListScanStore} />;
+  return <AfterScan blackListScanStore={blackListScanStore} reportId={reportId} />;
 }
 
 export default inject('blackListScanStore')(observer(BlackListScanComp));

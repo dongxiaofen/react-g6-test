@@ -51,10 +51,7 @@ class BlackListScanStore {
     blackListScanApi.getStatus(reportId, source)
       .then(action('getStatus', (resp) => {
         this.scanStatus = resp.data;
-        this.scanStatus = {
-          canScan: true,
-          status: 'FINISH', // PROCESSING FIRST_TIME FINISH
-        };
+        this.scanStatus.status = 'FINISH'; // PROCESSING FIRST_TIME FINISH
         if (resp.data.status === 'PROCESSING') {
           this.apiInterval = setTimeout(() => {
             this.getStatus(reportId);
@@ -137,11 +134,26 @@ class BlackListScanStore {
   }
   @action.bound resetStore() {
     this.isMounted = false;
+    this.process = 0;
+    this.extend = {
+      main: {
+        ext: true,
+        subExt: true,
+      },
+      related: {
+        ext: true,
+        subExt: true,
+      },
+      network: {
+        ext: true,
+        subExt: true,
+      },
+    };
     this.data = {
       main: {},
-      relation: {},
+      related: {},
       network: {},
-      ready: false,
+      ready: [false, false, false],
     };
     this.scanStatus = {
       canScan: false,
