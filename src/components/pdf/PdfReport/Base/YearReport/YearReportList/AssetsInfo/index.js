@@ -16,7 +16,9 @@ function AssetsInfo({moduleData}) {
   }
   const parseData = () => {
     Object.keys(moduleData).forEach((key) => {
-      moduleData[key] = parseFloat(moduleData[key]).toFixed(2);
+      if (!isNaN(moduleData[key])) {
+        moduleData[key] = parseFloat(moduleData[key]).toFixed(2);
+      }
     });
     return moduleData;
   };
