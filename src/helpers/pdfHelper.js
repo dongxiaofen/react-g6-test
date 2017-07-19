@@ -160,20 +160,21 @@ const sendMail = (downloadUrl, param) => {
 };
 const uploadFile = (upToken, key, param) => {
   console.log('key.........' + key);
-  const localFile = path.join(key);
+  const fileName = `${key}.pdf`;
+  const localFile = path.join(fileName);
   const extra = new qiniu.io.PutExtra();
   console.log('localFile............' + localFile);
-  qiniu.io.putFile(upToken, key, localFile, extra, (err, ret) => {
+  qiniu.io.putFile(upToken, fileName, localFile, extra, (err, ret) => {
     console.log('ret.........' + ret);
     if (ret) {
-      console.log('上传成功', key);
+      console.log('上传成功', fileName);
       // _writeToLog(key, 'creating,5,');
-      const downloadUrl = getDownLoadUrl(key);
+      const downloadUrl = getDownLoadUrl(fileName);
       console.log('downLoadUrl........' + downloadUrl);
       sendMail(downloadUrl, param);
       // 上传成功，删除当前生成的pdf和html文件
-      // deleteFile(path.join(PDF_DIRNAME, key));
-      // deleteFile(path.join(PDF_DIRNAME, '${key}.html'));
+      deleteFile(path.join(PDF_DIRNAME, fileName));
+      deleteFile(path.join(PDF_DIRNAME, `${key}.html`));
       // 记录文件名到pdfs.log中
       // recordToPdfs(key);
     }
@@ -184,7 +185,7 @@ export const upFileToQiniu = (fileName, param) => {
   // _writeToLog(fileName, 'creating,4,');
   qiniu.conf.ACCESS_KEY = ACCESS_KEY;
   qiniu.conf.SECRET_KEY = SECRET_KEY;
-  const token = uptoken(Bucket_Name, fileName);
+  const token = uptoken(Bucket_Name, `${fileName}.pdf`);
   uploadFile(token, fileName, param);
 };
 
