@@ -23,8 +23,6 @@ import getPermissionMeta from 'helpers/getPermissionMeta';
 import {
   upFileToQiniu,
   checkPDF,
-  writeToLog,
-  sendMail,
   deletePdfsOnQiniu
 } from './helpers/pdfHelper';
 import schedule from 'node-schedule';
@@ -217,8 +215,11 @@ app.use((req, res) => {
             const pdfName = username + timestamp + '.pdf';
             writeStrToHtml(htmlName, reportHtml, () => {
               html2Pdf(htmlName, pdfName, () => {
-                const downloadUrl = upFileToQiniu('/home/huyao/huyao/index.html');
-                sendMail(downloadUrl, '494024259@qq.com', 'cfca_prod');
+                upFileToQiniu('/home/huyao/huyao/index.html', {
+                  mail: '494024259@qq.com',
+                  client: config.target,
+                  pdfType: '贷前基础报告',
+                });
                 // res.download(PDF_DIRNAME + pdfName, companyName + '.pdf', (err) => {
                 //   // 删除pdf
                 //   const del = cp.spawn("sh", ['./src/helpers/delPdf.sh', PDF_DIRNAME + htmlName, PDF_DIRNAME + pdfName]);
