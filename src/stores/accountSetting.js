@@ -187,9 +187,11 @@ class AccountSettingStore {
   };
   // tab栏数据
   @observable tabs = {
-    activeKey: '消费记录',
+    activeKey: '业务统计',
     business: {
       reportAndMonitor: {},
+      dailyDetail: {},
+      activeDate: '',
       province: {},
       industry: {},
       scale: {},
@@ -318,10 +320,12 @@ class AccountSettingStore {
             this.tree.activeId = uId;
             this.getUserInfo(uId);
             this.getAlertCorp(uId);
-            // this.getReportAndMonitor(uId);
-            // this.getProvince(uId);
-            // this.getIndustry(uId);
-            // this.getScale(uId);
+            // 业务统计--start
+            this.getReportAndMonitor(uId);
+            this.getProvince(uId);
+            this.getIndustry(uId);
+            this.getScale(uId);
+            // 业务统计--end
             this.getConsume(uId);
             if (!pId) {
               this.getRecharge(uId);
@@ -336,10 +340,12 @@ class AccountSettingStore {
       .catch(action('getTreeList_error', err => {
         this.tree.data = {error: err.response.data, content: []};
         this.base = {error: err.response.data, data: {}};
-        // this.tabs.business.reportAndMonitor = {error: err.response.data, data: []};
-        // this.tabs.business.province = {error: err.response.data, content: []};
-        // this.tabs.business.industry = {error: err.response.data, content: []};
-        // this.tabs.business.scale = {error: err.response.data, data: {}};
+        // 业务统计--start
+        this.tabs.business.reportAndMonitor = {error: err.response.data, data: []};
+        this.tabs.business.province = {error: err.response.data, content: []};
+        this.tabs.business.industry = {error: err.response.data, content: []};
+        this.tabs.business.scale = {error: err.response.data, data: {}};
+        // 业务统计--end
         this.tabs.alertCorp = {error: err.response.data, content: []};
         this.tabs.consume = {error: err.response.data, page: []};
         this.tabs.recharge = {error: err.response.data, content: []};
@@ -365,9 +371,31 @@ class AccountSettingStore {
           return resp.data[key].length === 0;
         });
         this.tabs.business.reportAndMonitor = noData ? {error: {message: '暂无数据'}, data: []} : {data: resp.data};
+
+        const reportDate = resp.data.reportStatistic.map(item => item.date);
+        const analysisReportDate = resp.data.analysisReportStatistic.map(item => item.date);
+        const monitorDate = resp.data.monitorStatistic.map(item => item.date);
+        const allDate = Array.from(new Set(reportDate.concat(analysisReportDate).concat(monitorDate))).sort();
+        if (allDate.length > 0) {
+          this.getDailyDetail(uId, allDate[allDate.length - 1]);
+        } else {
+          this.tabs.business.dailyDetail = {error: {message: '暂无数据'}, content: []};
+        }
       }))
       .catch(action('getReportAndMonitor_error', err => {
         this.tabs.business.reportAndMonitor = {error: err.response.data, data: {}};
+      }));
+  }
+  @action.bound getDailyDetail(uId, date) {
+    this.tabs.business.dailyDetail = {};
+    this.tabs.business.activeDate = date;
+    accountSettingApi.getDailyDetail(uId, {date: date})
+      .then(action('getDailyDetail_success', ({data}) => {
+        const noData = data.length === 0;
+        this.tabs.business.dailyDetail = noData ? {error: {message: '暂无数据'}, content: []} : {content: data};
+      }))
+      .catch(action('getDailyDetail_error', err => {
+        this.tabs.business.dailyDetail = {error: err.response.data, content: []};
       }));
   }
   @action.bound getProvince(uId) {
@@ -426,7 +454,6 @@ class AccountSettingStore {
     delete params.totalElements;
     accountSettingApi.getConsume(uId, params)
       .then(action('getConsume_success', resp => {
-        console.log(resp.data);
         const noData = resp.data.content === undefined || resp.data.content.length === 0;
         this.tabs.consume = noData ? {error: {message: '暂无消费记录'}, content: []} : resp.data;
         uiStore.updateUiStore('accountConsume.totalElements', pathval.getPathValue(resp, 'data.totalElements') || 0);
@@ -610,9 +637,10 @@ class AccountSettingStore {
   }
   @action.bound resetTabs() {
     this.tabs = {
-      activeKey: '消费记录',
+      activeKey: '业务统计',
       business: {
         reportAndMonitor: {},
+        dailyDetail: {},
         province: {},
         industry: {},
         scale: {},

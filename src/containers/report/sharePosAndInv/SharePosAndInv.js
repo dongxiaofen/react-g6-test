@@ -1,16 +1,18 @@
-import React, { Component } from 'react';
-import { observer } from 'mobx-react';
-import styles from './index.less';
+import React, { Component, PropTypes} from 'react';
+import { observer, inject} from 'mobx-react';
+import { batchReport } from 'components/hoc';
+import ShareHolder from 'components/companyHome/report/investment/ShareHolder';
+
+@inject('routing', 'investmentStore')
+@batchReport('investmentStore')
 @observer
 export default class SharePosAndInv extends Component {
+  static propTypes = {
+    investmentStore: PropTypes.object,
+  }
   render() {
     return (
-      <div>
-        <div className={styles.title}>股东投资任职</div>
-        <div className={styles.content}>
-          该功能，暂时尚未开放
-        </div>
-      </div>
+      <ShareHolder investmentStore = {this.props.investmentStore} />
     );
   }
 }
