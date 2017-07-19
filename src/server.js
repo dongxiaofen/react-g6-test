@@ -21,7 +21,7 @@ import {RouterStore} from 'mobx-react-router';
 import * as allStores from 'stores';
 import getPermissionMeta from 'helpers/getPermissionMeta';
 import {
-  UpFileToQiniu,
+  upFileToQiniu,
   checkPDF,
   writeToLog,
   sendMail,
@@ -34,7 +34,7 @@ fundebug.apikey = 'd3c3ad8fd8f470b0bd162e9504c98c1984050474f3f550d47b17c54983633
 // 设置定时删除七牛文件
 schedule.scheduleJob('0 0 0 * * *', () => {
   console.log('启动删除文件---');
-  deletePdfsOnQiniu()
+  deletePdfsOnQiniu();
 });
 
 const agent = require('superagent-defaults')();
@@ -217,15 +217,14 @@ app.use((req, res) => {
             const pdfName = username + timestamp + '.pdf';
             writeStrToHtml(htmlName, reportHtml, () => {
               html2Pdf(htmlName, pdfName, () => {
-                const downloadUrl = UpFileToQiniu(pdfName);
+                const downloadUrl = upFileToQiniu('/home/huyao/huyao/index.html');
                 sendMail(downloadUrl, '494024259@qq.com');
-                res.download(PDF_DIRNAME + pdfName, companyName + '.pdf', (err) => {
-                  // 删除pdf
-                  const del = cp.spawn("sh", ['./src/helpers/delPdf.sh', PDF_DIRNAME + htmlName, PDF_DIRNAME + pdfName]);
-                  del.stdout.on('end', function () {
-                    console.log('stdout: pdf删除成功');
-                  });
-                });
+                // res.download(PDF_DIRNAME + pdfName, companyName + '.pdf', (err) => {
+                //   // 删除pdf
+                //   const del = cp.spawn("sh", ['./src/helpers/delPdf.sh', PDF_DIRNAME + htmlName, PDF_DIRNAME + pdfName]);
+                //   del.stdout.on('end', function () {
+                //     console.log('stdout: pdf删除成功');
+                //   });
               });
             });
           })

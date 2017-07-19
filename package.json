@@ -168,6 +168,7 @@
     "cookie-parser": "1.4.3",
     "crypto-js": "3.1.4",
     "d3": "4.8.0",
+    "nodemailer": "^1.2.1",
     "echarts": "3.3.2",
     "express": "4.13.3",
     "express-session": "1.12.1",
@@ -216,6 +217,7 @@
   },
   "devDependencies": {
     "autoprefixer-loader": "3.1.0",
+    "nodemailer": "^1.2.1",
     "babel-eslint": "5.0.0",
     "babel-plugin-react-transform": "2.0.0",
     "babel-plugin-typecheck": "3.6.0",
