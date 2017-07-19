@@ -3,6 +3,7 @@ import axios from 'axios';
 import pathval from 'pathval';
 import { pdfApi } from '../api/index';
 import messageStore from './message';
+import companyHomeStore from './companyHome';
 
 
 class PdfStore {
@@ -45,7 +46,7 @@ class PdfStore {
   }
 
   @action.bound sendEmail(params) {
-    pdfApi.sendEmail(params).then((res) => {
+    pdfApi.sendEmail(Object.assign({params, email: companyHomeStore.emailAddress})).then((res) => {
       messageStore.openMessage({
         content: res.data.message
       });
