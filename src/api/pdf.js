@@ -48,13 +48,14 @@ export const pdfDownload = (backendApi, urlPanth, paramString, types) => {
     companyName: '',
     email: '',
   };
-  const getData = (url, params) => {
+  const getData = (url, params, callBack) => {
     console.log(url, params, '---------');
     return new Promise((resolve) => {
       axios.get(url, {params})
         .then((res) => {
           resolve(res.data);
         }).catch((err) => {
+          callBack(err.response.data);
           console.log(err.response.data);
         });
     });
@@ -185,17 +186,20 @@ export const pdfDownload = (backendApi, urlPanth, paramString, types) => {
   };
 
 
-  return new Promise((resolve) => {
+  return new Promise((resolve, reject) => {
     (async () => {
+      const callBack = (err) => {
+        reject(err);
+      };
       if (paramString.analysisReportId) {
         for (const type of types.split(',')) {
           paramString.types = type;
-          saveData(type, await getData(backendApi + urlPanth, paramString));
+          saveData(type, await getData(backendApi + urlPanth, paramString, callBack));
         }
       } else {
         for (const type of ['BANNER_INFO', ...types.split(',')]) {
           paramString.types = type;
-          saveData(type, await getData(backendApi + urlPanth, paramString));
+          saveData(type, await getData(backendApi + urlPanth, paramString, callBack));
         }
       }
       resolve(responseData);
