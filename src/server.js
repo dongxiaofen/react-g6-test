@@ -108,6 +108,9 @@ const writeStrToHtml = (id, data, callBack, errorCallBack) => {
 };
 const html2Pdf = (htmlName, pdfName, callBack) => {
   const convert = cp.spawn('sh', ['./src/helpers/convert.sh', PDF_DIRNAME + htmlName, PDF_DIRNAME + pdfName]);
+  convert.stdout.on('error', function () {
+    console.log('stdout: pdf转换失败');
+  });
   convert.stdout.on('end', function () {
     console.log('stdout: pdf转换成功');
     callBack();
