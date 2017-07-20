@@ -16,15 +16,14 @@ function List({data}) {
   }
   if (dataList.length > 0) {
     dataList.map((obj, idx)=>{
-      // console.log(data.listData, data.listData[idx], data.listData.length, idx, '====aaa');
       const detailListDom = [];
       // 判断箭头样式开启或关闭
       let arrow = '';
       // 判断样式是否显示列表
       let listStyle = '';
       // 结果内容详情list
-      if (data.listData && data.listData.length > 0) {
-        data.listData.map((value)=>{
+      if (data.listDataRisk && data.listDataRisk.length > 0) {
+        data.listDataRisk.map((value)=>{
           // 判断此条详细数据与此条结果数据是否对应
           if (value.index === idx) {
             arrow = value.status ? styles.arrawTr : '';

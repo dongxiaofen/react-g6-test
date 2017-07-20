@@ -8,6 +8,14 @@
   float: left;
   margin: 0 0 0 100px;
 }
+@keyframes circle {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
 .img {
   float: left;
   width: 336px;
@@ -15,6 +23,14 @@
   background-image: url('imgs/companyHome/risk/IC1.png');
   background-repeat: no-repeat;
   background-size: 100% 100%;
+  img {
+    float: left;
+    margin: 51px;
+    display: block;
+    width: 234px;
+    height: 234px;
+    animation: circle 1.3s ease;
+  }
 }
 .right {
   float: left;

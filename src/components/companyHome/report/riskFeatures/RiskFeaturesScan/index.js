@@ -4,21 +4,24 @@ import RiskFeaturesStart from './RiskFeaturesStart';
 import RiskFeaturesResult from './RiskFeaturesResult';
 import styles from './index.less';
 
-@inject('companyHomeStore', 'riskFeaturesStore')
+@inject('reportAxisStore')
 @observer
 export default class RiskFeaturesScan extends Component {
   static propTypes = {
-    companyHomeStore: PropTypes.object,
-    riskFeaturesStore: PropTypes.object,
+    // companyHomeStore: PropTypes.object,
+    reportAxisStore: PropTypes.object,
   }
-  componentDidMount() {
-    const reportId = this.props.companyHomeStore.reportInfo.reportId;
-    this.props.riskFeaturesStore.getScanStatus(reportId);
+  // componentDidMount() {
+  //   const reportId = this.props.companyHomeStore.reportInfo.reportId;
+  //   this.props.reportAxisStore.getScanStatus(reportId);
+  // }
+  componentWillUnmount() {
+    this.props.reportAxisStore.resetStoreRisk();
   }
   render() {
     return (
       <div className={styles.box}>
-        {this.props.riskFeaturesStore.status === 'FIRST_TIME' ? <RiskFeaturesStart {...this.props} /> : <RiskFeaturesResult {...this.props} />}
+        {this.props.reportAxisStore.status === 'FIRST_TIME' ? <RiskFeaturesStart {...this.props} /> : <RiskFeaturesResult {...this.props} />}
       </div>
     );
   }
