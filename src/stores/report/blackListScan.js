@@ -55,7 +55,6 @@ class BlackListScanStore {
     blackListScanApi.getStatus(reportId, source)
       .then(action('getStatus', (resp) => {
         this.scanStatus = resp.data;
-        // this.scanStatus.status = 'FINISH'; // PROCESSING FIRST_TIME FINISH
         if (resp.data.status === 'PROCESSING') {
           this.apiInterval = setTimeout(() => {
             this.getStatus(reportId);
@@ -85,6 +84,7 @@ class BlackListScanStore {
         this.data.main = resp.data;
         if (this.scanStatus.status === 'FINISH') {
           this.data.ready[0] = true;
+          this.extend.main.subExt = resp.data.blacklistNum === 0 ? true : false;
         } else {
           this.data.statusReady[0] = true;
           this.statusReady();
@@ -110,6 +110,7 @@ class BlackListScanStore {
         this.data.related = resp.data;
         if (this.scanStatus.status === 'FINISH') {
           this.data.ready[1] = true;
+          this.extend.related.subExt = resp.data.blacklistNum === 0 ? true : false;
         } else {
           this.data.statusReady[1] = true;
           this.statusReady();
@@ -135,6 +136,7 @@ class BlackListScanStore {
         this.data.network = resp.data;
         if (this.scanStatus.status === 'FINISH') {
           this.data.ready[2] = true;
+          this.extend.network.subExt = resp.data.blacklistNum === 0 ? true : false;
         } else {
           this.data.statusReady[2] = true;
           this.statusReady();

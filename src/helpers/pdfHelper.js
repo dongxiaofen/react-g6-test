@@ -160,7 +160,9 @@ const uploadFile = (upToken, key, param) => {
   const localFile = path.join(fileName);
   const extra = new qiniu.io.PutExtra();
   qiniu.io.putFile(upToken, fileName, localFile, extra, (err, ret) => {
-    if (ret) {
+    if (err) {
+      console.log('上传失败', fileName);
+    } else {
       console.log('上传成功', fileName);
       // _writeToLog(key, 'creating,5,');
       const downloadUrl = getDownLoadUrl(fileName) + '&attname='+ param.companyName + '-' + param.pdfType +'.html';

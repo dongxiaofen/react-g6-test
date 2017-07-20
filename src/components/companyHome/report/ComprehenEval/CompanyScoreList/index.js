@@ -8,6 +8,28 @@ function CompanyScoreList({ sixStarData }) {
   let allInfo = '';
   const data = sixStarData.data;
   if (data && data.result && data.result.allInfo) {
+    let scaleText = '';
+    if (data.result.allInfo.comparison <= 10) {
+      scaleText = (
+        <span className={styles.scaleText}>
+          在同行业同地区企业中
+          <span>相对落后</span>
+        </span>
+      );
+    } else if (data.result.allInfo.comparison >= 90) {
+      scaleText = (
+        <span className={styles.scaleText}>
+          在同行业同地区企业中
+          <span>相对领先</span>
+        </span>
+      );
+    } else {
+      scaleText = (
+        <span className={styles.scaleText}>
+          超过同行业同地区<span>{data.result.allInfo.comparison ? data.result.allInfo.comparison : 0}%</span>企业
+        </span>
+      );
+    }
     allInfo = (
       <div className={styles.title}>
         该企业综合评分
@@ -16,12 +38,13 @@ function CompanyScoreList({ sixStarData }) {
         </span>
         分
         <span className={styles.data}>
-          超过同行业同地区
+          {scaleText}
+          {/* 超过同行业同地区
           <span
           className={styles.blueFonts}>
           {data.result.allInfo.comparison ? data.result.allInfo.comparison : 0}%
           </span>
-          企业
+          企业 */}
         </span>
       </div>
     );

@@ -2,79 +2,90 @@ import React, { PropTypes } from 'react';
 import { observer, inject } from 'mobx-react';
 import ErrorText from 'components/common/ErrorText';
 import styles from './index.less';
+import SimpleTable from 'components/common/report/SimpleTable';
 
 function PosItemInfo({investmentStore, bannerStore}) {
   const companyName = bannerStore.bannerInfoData.name;
   const activeIndex = investmentStore.manageDataInfoIndex;
   const thisPosIttem = investmentStore.manageData[activeIndex];
   const name = thisPosIttem.name;
-  const postion = thisPosIttem.positions.join('、');
+  const postion = thisPosIttem.positions.length < 1 ? '' : `（${thisPosIttem.positions.join('、')}）`;
+  const modifyTextNumber = (value)=> {
+    if (isNaN(value)) {
+      return '--';
+    }
+    return Number(value).toFixed(2) === '0.00' ? '--' : Number(value).toFixed(2);
+  };
+  const modifyRato = (value) => {
+    return value && value !== '0.00%' ? value : '--';
+  };
   // 对外担任法人
-  const frPositionTabels = [];
   const frPositionCount = thisPosIttem.frPositionList.length;
-  thisPosIttem.frPositionList.map((item, idx) => {
-    const showIndex = idx + 1;
-    const regCap = isNaN(item.regCap) ? '--' : Number(item.regCap).toFixed(2);
-    frPositionTabels.push(
-      <table key={`${idx}frTable`} className={styles.tTable}>
-        <tbody>
-          <tr><td rowSpan="1000" width="40" className={styles.firstTd}>{showIndex}</td><td width="400px">企业名称：{item.entName}</td><td>状态：{item.entStatus}</td></tr>
-          <tr><td>注册资本(万元)：{regCap}</td><td>成立日期：{item.esDate}</td></tr>
-        </tbody>
-      </table>
-    );
-  });
+  const frPosdata = {
+    meta: {
+      body: [
+        [{ 'key': 'entName', 'colSpan': '1' }, { 'key': 'entStatus', 'colSpan': '1'}],
+        [{'key': 'regCap', 'colSpan': '1', 'hide': true, 'modifyBlock': modifyTextNumber }, { 'key': 'esDate', 'colSpan': '2'}],
+      ],
+      dict: 'frPositionList',
+      items: thisPosIttem.frPositionList,
+      maxCols: 2,
+      hasNumber: true,
+      error: frPositionCount < 1
+    },
+  };
   // 对外投资
   const managementInvTabels = [];
   const managementInvCount = thisPosIttem.managementInvList.length;
-  thisPosIttem.managementInvList.map((item, idx) => {
-    const showIndex = idx + 1;
-    const regCap = isNaN(item.regCap) ? '--' : Number(item.regCap).toFixed(2);
-    const subConam = isNaN(item.subConam) ? '--' : Number(item.subConam).toFixed(2);
-    managementInvTabels.push(
-      <table key={`${idx}mmTable`} className={styles.tTable}>
-        <tbody>
-          <tr><td rowSpan="1000" width="40" className={styles.firstTd}>{showIndex}</td><td width="400px">投资企业名称：{item.entName}</td><td>状态：{item.entStatus}</td></tr>
-          <tr><td>认缴出资额(万元)：{subConam}</td><td>出资比例：{item.fundedRatio}</td></tr>
-          <tr><td>注册资本(万元)：{regCap}</td><td>成立日期：{item.esDate}</td></tr>
-        </tbody>
-      </table>
-    );
-  });
+  const invData = {
+    meta: {
+      body: [
+        [{ 'key': 'entName', 'colSpan': '1'}, {'key': 'entStatus', 'colSpan': '1'}],
+        [{ 'key': 'subConam', 'width': '4', 'modifyBlock': modifyTextNumber}, {'key': 'fundedRatio', 'width': '4', 'modifyBlock': modifyRato}],
+        [{ 'key': 'regCap', 'width': '4', 'modifyBlock': modifyTextNumber}, {'key': 'esDate', 'width': '4' }]
+      ],
+      dict: 'frinvList',
+      items: thisPosIttem.managementInvList,
+      maxCols: 2,
+      hasNumber: true,
+      error: managementInvCount < 1
+    },
+  };
   // 对外任职
-  const managementPositionTabels = [];
   const managementPositionCount = thisPosIttem.managementPositionList.length;
-  thisPosIttem.managementPositionList.map((item, idx) => {
-    const showIndex = idx + 1;
-    const regCap = isNaN(item.regCap) ? '--' : Number(item.regCap).toFixed(2);
-    managementPositionTabels.push(
-      <table key={`${idx}mmTable`} className={styles.tTable}>
-        <tbody>
-          <tr><td rowSpan="1000" width="40" className={styles.firstTd}>{showIndex}</td><td width="400px">任职企业名称：{item.entName}</td><td>状态：{item.entStatus}</td></tr>
-          <tr><td>担任职位：{item.otherPosition}</td><td>注册资本(万元)：{regCap}</td></tr>
-          <tr><td>成立日期：{item.esDate}</td><td></td></tr>
-        </tbody>
-      </table>
-    );
-  });
+  const posData = {
+    meta: {
+      body: [
+        [{ 'key': 'entName', 'colSpan': '1' }, { 'key': 'entStatus', 'colSpan': '1'}],
+        [{ 'key': 'otherPosition', 'colSpan': '1' }, {'key': 'regCap', 'colSpan': '1', 'hide': true, 'modifyBlock': modifyTextNumber }],
+        [{ 'key': 'esDate', 'colSpan': '2'}],
+      ],
+      dict: 'frPositionList',
+      items: thisPosIttem.managementPositionList,
+      maxCols: 2,
+      hasNumber: true,
+      error: managementPositionCount < 1
+    },
+  };
   return (
     <div className={styles.box}>
       <div className={styles.boxTop}>
-        <div className={styles.name}>{name}（{postion}）</div>
+        <div className={styles.name}>{name}{postion}</div>
         <span className={styles.text}>主体公司名称：{companyName}</span>
       </div>
       <div className={styles.boxBody}>
         <div className={styles.tableWrap}>
           <div className={styles.tableName}>担任法人的企业（{frPositionCount}）</div>
-          {frPositionCount > 0 ? frPositionTabels : <ErrorText error={{message: '暂无信息'}}/>}
+          <SimpleTable meta={frPosdata.meta} module="maFr"/>
         </div>
         <div className={styles.tableWrap}>
           <div className={styles.tableName}>投资企业（{managementInvCount}）</div>
+          <SimpleTable meta={invData.meta} module="maIve"/>
           {managementInvCount > 0 ? managementInvTabels : <ErrorText error={{message: '暂无信息'}}/>}
         </div>
         <div className={styles.tableWrap}>
           <div className={styles.tableName}>任职企业（{managementPositionCount}）</div>
-          {managementPositionCount > 0 ? managementPositionTabels : <ErrorText error={{message: '暂无信息'}}/>}
+          <SimpleTable meta={posData.meta} module="maPosition"/>
         </div>
       </div>
     </div>

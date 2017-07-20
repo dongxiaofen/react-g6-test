@@ -88,7 +88,7 @@ export default class RiskCourt extends Component {
     return (
       <Tabs defaultActiveKey={riskCourtStore.courtTabAct} onChange={this.tabOnChange}>
         <TabPane
-          tab={`判决文书（${this.hasTotal(courtData.judgeDoc.totalElements)}）`}
+          tab={`判决文书（${this.props.riskCourtStore.judgeDocCount !== '' ? this.props.riskCourtStore.judgeDocCount : 0}）`}
           key="judgeDoc">
           <div style={checkBoxStyle}>
             <Checkbox onChange={this.filterFinanceData} checked={courtCheckGroup.judgeDoc}>

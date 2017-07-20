@@ -21,6 +21,7 @@ function List({data}) {
       let arrow = '';
       // 判断样式是否显示列表
       let listStyle = '';
+      let listWrapStyle = '';
       // 结果内容详情list
       if (data.listDataRisk && data.listDataRisk.length > 0) {
         data.listDataRisk.map((value)=>{
@@ -28,6 +29,7 @@ function List({data}) {
           if (value.index === idx) {
             arrow = value.status ? styles.arrawTr : '';
             listStyle = value.status ? '' : styles.none;
+            listWrapStyle = value.status ? '' : styles.noneWrap;
             // 显示详细数据dom 并判断显示状态
             if (value.data && value.data.length > 0) {
               value.data.map((val, num)=>{
@@ -78,7 +80,7 @@ function List({data}) {
               </div> : <i onClick={clickBtn.bind(this, obj.keyCompEventId, idx)} className={`${styles.arraw} ${arrow}`}></i>}
             </div>
           </div>
-          <div className={`${styles.listWrap}`}>
+          <div className={`${styles.listWrap} ${listWrapStyle}`}>
             {detailListDom}
           </div>
         </div>

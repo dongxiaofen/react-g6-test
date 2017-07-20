@@ -191,7 +191,7 @@ app.get('/sendEmail', function (req, res) {
 
   pdfDownload(config.backendApi, urlPanth, params, types).then((responseData) => {
     console.log('请求完成-----');
-    writeDataToFile('pdf', responseData);
+    // writeDataToFile('pdf', responseData);
     allStores.pdfStore.setTypes(types, reportType);
     allStores.clientStore.envConfig = config.target;
     allStores.pdfStore.getPdfDownData(responseData);
@@ -214,7 +214,6 @@ app.get('/sendEmail', function (req, res) {
           companyName,
           mail: req.query.email,
           client: config.target,
-
         });
       // });
     }).catch((err) => {

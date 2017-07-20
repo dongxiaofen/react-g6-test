@@ -116,7 +116,7 @@ class LeftBarStore {
           //   lock: true,
           // },
           {
-            menuText: '黑名单扫描',
+            menuText: '风险名单扫描',
             menuKey: 'blackListScan',
             lock: true,
           },

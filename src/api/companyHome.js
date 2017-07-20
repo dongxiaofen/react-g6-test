@@ -82,6 +82,17 @@ export const getRiskCourt = ({ basicReportId, reportId, tabAct, config }) => {
   return axios.get(url, config);
 };
 
+export const getJudgeDocCount = ({ basicReportId, reportId, finance}) => {
+  let url = '';
+  if (basicReportId) {
+    url = `/api/basicReport/${basicReportId}/risk/judgeDoc/statistic?finance=${finance}`;
+  }
+  if (reportId) {
+    url = `/api/report/${reportId}/risk/judgeDoc/statistic?finance=${finance}`;
+  }
+  return axios.get(url);
+};
+
 export const getJudgeDetailMonitor = (monitorCompanyId, params) => {
   return axios.get(`/api/monitor/${monitorCompanyId}/risk/judgeDoc`, { params });
 };
