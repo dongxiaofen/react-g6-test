@@ -5,7 +5,7 @@ import { loadingComp } from 'components/hoc';
 import Popover from 'antd/lib/popover';
 
 
-function TableBody({dateType, data, hasFlag, routing, searchCompanyStore, owner }) {
+function TableBody({dateType, data, hasFlag, routing, owner }) {
   const sliceString = (str) => {
     if (str.length > 16) {
       return (`${str.slice(0, 15)}...`);
@@ -18,10 +18,7 @@ function TableBody({dateType, data, hasFlag, routing, searchCompanyStore, owner 
     }else if (owner && owner === 'own') {
       routing.push(`/companyHome/monitorAlert?companyName=${companyName}`);
     }else {
-      searchCompanyStore.searchTabClick('COMPANY_NAME');
-      searchCompanyStore.searchChange({target: {value: companyName}});
-      searchCompanyStore.getCompanyList();
-      routing.push(`/searchCompany`);
+      routing.push(`/companyHome/corpDetail?companyName=${companyName}`);
     }
   };
   const spliceCompanyName = (name) => {
