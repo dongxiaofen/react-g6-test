@@ -124,7 +124,7 @@ const sendMail = (downloadUrl, param) => {
   });
   const mailOption = {
     from: 'no-reply@socialcredits.cn',
-    to: 'yao.hu@socialcredits.cn',
+    to: param.mail,
     html: '<div style="margin:0 auto;padding: 30px;width: 900px;border:1px solid #e0e0e0;height: 870px;color: #757575">' +
     '<div><img src="' + imgName + '"/></div>' +
     '<div style="background-color: #e0e0e0;height: 1px;margin-top: 30px"></div>' +
@@ -162,9 +162,10 @@ const uploadFile = (upToken, key, param) => {
   console.log('key.........' + key);
   const fileName = `${key}.pdf`;
   const localFile = path.join(fileName);
+  console.log('localFile.........' + localFile);
   const extra = new qiniu.io.PutExtra();
   qiniu.io.putFile(upToken, fileName, localFile, extra, (err, ret) => {
-    console.log('ret.........' + ret);
+    console.log('err.........' + err);
     if (ret) {
       console.log('上传成功', fileName);
       // _writeToLog(key, 'creating,5,');
@@ -172,8 +173,8 @@ const uploadFile = (upToken, key, param) => {
       console.log('downLoadUrl........' + downloadUrl);
       sendMail(downloadUrl, param);
       // 上传成功，删除当前生成的pdf和html文件
-      deleteFile(fileName);
-      deleteFile(`${key}.html`);
+      // deleteFile(fileName);
+      // deleteFile(`${key}.html`);
       // 记录文件名到pdfs.log中
       // recordToPdfs(key);
     }

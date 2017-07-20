@@ -210,7 +210,7 @@ app.get('/sendEmail', function (req, res) {
         });
       });
     }).catch((err) => {
-      console.log(err);
+      console.log('pdfDownload......err....' + err);
     });
   });
 });
