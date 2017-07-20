@@ -37,8 +37,9 @@ export default class DownloadPdf extends Component {
     };
   }
   componentWillMount() {
+    console.log(this.props.clientStore.userInfo);
     runInAction('设置用户邮箱', () => {
-      this.props.companyHomeStore.emailAddress = this.props.clientStore.userInfo.email;
+      this.props.companyHomeStore.emailAddress = this.props.clientStore.userInfo.contactEmail;
     });
   }
 

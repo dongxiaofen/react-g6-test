@@ -102,7 +102,7 @@ const sendMail = (downloadUrl, param) => {
     phone = '400-860-9888';
     product = 'http://daas.cpcn.com.cn';
     statementUrl = 'daas.cpcn.com.cn/disclaimer';
-    companyUrl = 'http://www.china-clearing.com';
+    companyUrl = 'https://www.china-clearing.com';
     companyMail = 'servicedesk@cfca.com.cn';
   } else {
     name = '星象';
@@ -110,8 +110,8 @@ const sendMail = (downloadUrl, param) => {
     companyName = '重庆誉存大数据有限公司';
     phone = '400-139-1819';
     statementUrl = 'star.socialcredits.cn/disclaimer';
-    product = 'http://star.socialcredits.cn';
-    companyUrl = 'www.socialcredits.cn';
+    product = 'https://star.socialcredits.cn';
+    companyUrl = 'https://www.socialcredits.cn';
     companyMail = 'info@socialcredits.cn';
   }
 

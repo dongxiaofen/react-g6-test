@@ -36,7 +36,7 @@ function Investment({investmentStore}) {
   return (
     <div>
       <ModuleTitle module={frName ? `（${frName}）投资的企业` : '法人投资的企业'} count={count} />
-      <SimpleTable {...data} />
+      <SimpleTable {...data} module="frInvest"/>
     </div>
   );
 }

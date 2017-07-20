@@ -6,7 +6,6 @@ import scanCircle from 'imgs/blackScan/scanCircle.png';
 function BeforeScan({ blackListScanStore, funcObj, reportId }) {
   const startScan = () => {
     blackListScanStore.setValue('scanStatus.status', 'PROCESSING');
-    funcObj.getStatus(reportId);
     funcObj.scanMain(reportId);
     funcObj.scanRelated(reportId);
     funcObj.scanNetwork(reportId);
