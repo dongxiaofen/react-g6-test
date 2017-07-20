@@ -7,6 +7,7 @@ import favicon from 'serve-favicon';
 import compression from 'compression';
 import path from 'path';
 import Html from './helpers/Html';
+import HtmlPdf from './helpers/HtmlPdf';
 import PrettyError from 'pretty-error';
 import http from 'http';
 import fs from 'fs';
@@ -184,7 +185,7 @@ app.get('/sendEmail', function (req, res) {
       analysisReportId: req.query.analysisReportId,
     };
     reportType = '分析报告';
-    pdfType = '贷中分析报告';
+    pdfType = '贷中分析';
   }
   // 请求PDF下载方法
 
@@ -199,22 +200,23 @@ app.get('/sendEmail', function (req, res) {
         <PdfBody />
       </Provider>
     );
-    const reportHtml = ReactDOM.renderToString(<Html pdfDown="1" assets={webpackIsomorphicTools.assets()}
+    const reportHtml = ReactDOM.renderToStaticMarkup(<HtmlPdf assets={webpackIsomorphicTools.assets()}
                                                      component={component} {...allStores} />);
     const companyName = responseData.companyName;
     const username = responseData.email;
     const timestamp = new Date().getTime();
     const htmlName = username + timestamp + '.html';
-    const pdfName = username + timestamp + '.pdf';
+    // const pdfName = username + timestamp + '.pdf';
     writeStrToHtml(htmlName, reportHtml, () => {
-      html2Pdf(htmlName, pdfName, () => {
+      // html2Pdf(htmlName, pdfName, () => {
         upFileToQiniu(PDF_DIRNAME + username + timestamp, {
           pdfType,
+          companyName,
           mail: req.query.email,
           client: config.target,
 
         });
-      });
+      // });
     }).catch((err) => {
       console.log('pdfDownload......err....' + err);
     });
@@ -288,7 +290,7 @@ app.use((req, res) => {
               <RouterContext {...renderProps} />
             </Provider>
           );
-          const reportHtml = ReactDOM.renderToString(<Html pdfDown="1" assets={webpackIsomorphicTools.assets()}
+          const reportHtml = ReactDOM.renderToString(<Html assets={webpackIsomorphicTools.assets()}
                                                            component={component} {...allStores} />);
           const companyName = responseData.companyName;
           const username = responseData.email;
@@ -326,7 +328,7 @@ app.use((req, res) => {
         //         <RouterContext {...renderProps} />
         //       </Provider>
         //     );
-        //     const reportHtml = ReactDOM.renderToString(<Html pdfDown="1" assets={webpackIsomorphicTools.assets()} component={component} {...allStores} />);
+        //     const reportHtml = ReactDOM.renderToString(<Html assets={webpackIsomorphicTools.assets()} component={component} {...allStores} />);
         //     const companyName = resp.data.companyName;
         //     const username = resp.data.email;
         //     const timestamp = new Date().getTime();

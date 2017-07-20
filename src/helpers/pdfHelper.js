@@ -125,11 +125,12 @@ const sendMail = (downloadUrl, param) => {
   const mailOption = {
     from: 'no-reply@socialcredits.cn',
     to: param.mail,
+    subject: `${param.companyName}-${param.pdfType}`,
     html: '<div style="margin:0 auto;padding: 30px;width: 900px;border:1px solid #e0e0e0;height: 870px;color: #757575;background-color: #fafafa">' +
     '<div><img src="' + imgName + '"/></div>' +
     '<div style="background-color: #e0e0e0;height: 1px;margin-top: 30px"></div>' +
     '<div style="font-family:MicrosoftYaHei-Bold;font-size:20px;color:#616161;margin-top: 50px">尊敬的用户，您好！</div>' +
-    '<div style="font-size: 16px;margin-top: 30px">您选择下载的<span style="color:#42a5f5 ">' + companyName + '</span>的<span style="color:#42a5f5 ">' + param.pdfType + '</span>已生成，请点击下方按钮下载报告</div>' +
+    '<div style="font-size: 16px;margin-top: 30px">您选择下载的<span style="color:#42a5f5 ">' + param.companyName + '</span>的<span style="color:#42a5f5 ">' + param.pdfType + '</span>已生成，请点击下方按钮下载报告</div>' +
     '<div style="width: 100%;text-align: center;margin-top: 60px">' +
     '<a href="http://' + downloadUrl + '" style="display:inline-block;text-align: center;background-color:#42a5f5;width:230px;padding-top: 17px; padding-bottom:17px;border-radius: 10px;font-size: 20px;color: white" >' +
     '<span>下载报告</span></a>' +
@@ -145,6 +146,7 @@ const sendMail = (downloadUrl, param) => {
     '<span style="width: 33%;display: inline-block;text-align: right">企业邮箱： ' + companyMail + ' </span>' +
     '</div></div>'
   };
+  console.log(mailOption.subject, 'subject');
   transportor.sendMail(mailOption, (err) => {
     if (err) {
       console.log('Message send failed');
@@ -154,14 +156,14 @@ const sendMail = (downloadUrl, param) => {
   });
 };
 const uploadFile = (upToken, key, param) => {
-  const fileName = `${key}.pdf`;
+  const fileName = `${key}.html`;
   const localFile = path.join(fileName);
   const extra = new qiniu.io.PutExtra();
   qiniu.io.putFile(upToken, fileName, localFile, extra, (err, ret) => {
     if (ret) {
       console.log('上传成功', fileName);
       // _writeToLog(key, 'creating,5,');
-      const downloadUrl = getDownLoadUrl(fileName);
+      const downloadUrl = getDownLoadUrl(fileName) + '&attname='+ param.companyName + '-' + param.pdfType +'.html';
       sendMail(downloadUrl, param);
       // 上传成功，删除当前生成的pdf和html文件
       // deleteFile(fileName);
@@ -176,7 +178,7 @@ export const upFileToQiniu = (fileName, param) => {
   // _writeToLog(fileName, 'creating,4,');
   qiniu.conf.ACCESS_KEY = ACCESS_KEY;
   qiniu.conf.SECRET_KEY = SECRET_KEY;
-  const token = uptoken(Bucket_Name, `${fileName}.pdf`);
+  const token = uptoken(Bucket_Name, `${fileName}.html`);
   uploadFile(token, fileName, param);
 };
 
