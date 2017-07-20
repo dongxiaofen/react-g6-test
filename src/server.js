@@ -204,9 +204,9 @@ app.get('/sendEmail', function (req, res) {
       html2Pdf(htmlName, pdfName, () => {
         upFileToQiniu(PDF_DIRNAME + username + timestamp, {
           pdfType,
+          companyName,
           mail: req.query.email,
           client: config.target,
-
         });
       });
     }).catch((err) => {
