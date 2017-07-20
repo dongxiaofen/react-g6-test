@@ -23,6 +23,7 @@ class RiskCourtStore {
     },
   };
 
+  @observable judgeDocCount = 0;
   @observable courtTabAct = 'judgeDoc';
   @observable courtTab = [
     { key: 'judgeDoc', label: '判决文书' },
@@ -129,6 +130,16 @@ class RiskCourtStore {
     return tabAct;
   }
 
+  // 获取判决文书总条数
+  @action.bound getJudgeDocCount(params) {
+    companyHomeApi.getJudgeDocCount({...params})
+      .then(action((response) => {
+        this.judgeDocCount = response.data;
+      })).catch(action((err) => {
+        console.log(err.response.data);
+      }));
+  }
+
   @action.bound getReportModule(params) {
     this.isMount = true;
     this.courtTab.forEach((item) => {
@@ -136,6 +147,7 @@ class RiskCourtStore {
       params.config = { params: { index: 1, size: 10 } };
       this.getRiskCourt(params);
     });
+    this.getJudgeDocCount(params);
   }
   openDetailModal() {
     detailModalStore.openDetailModal((cp) => {
