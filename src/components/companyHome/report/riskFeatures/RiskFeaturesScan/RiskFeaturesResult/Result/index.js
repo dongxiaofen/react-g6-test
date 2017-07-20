@@ -14,7 +14,7 @@ function Result({data}) {
         <div className={`${styles.left} ${result ? styles.leftY : styles.leftN}`}></div>
         <div className={styles.center}>
           <div className={styles.title}>
-            扫描完成，该企业命中风险特征
+            {result ? '扫描完成，未发现风险特征' : '扫描完成，该企业命中风险特征'}
           </div>
           <div className={`${styles.content} clearfix`}>
             <div className={styles.content1}>扫描项目：事件行为<span>{data.result && data.result.basicInfo && data.result.basicInfo.keyCompEventNum ? data.result.basicInfo.keyCompEventNum : 0}</span>条</div>
