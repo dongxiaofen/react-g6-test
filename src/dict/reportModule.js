@@ -101,7 +101,7 @@ const config = {
     'belong_org': '登记机关',
   },
   entinvItemLists: {
-    'entName': '投资企业名称',
+    'entName': '企业名称',
     'entStatus': '状态',
     'entType': '类型',
     'esDate': '成立日期',
@@ -125,7 +125,7 @@ const config = {
     'regOrg': '登记机关',
   },
   frinvList: {
-    'entName': '投资企业名称',
+    'entName': '企业名称',
     'entStatus': '状态',
     'entType': '类型',
     'esDate': '成立日期',
@@ -151,7 +151,7 @@ const config = {
     'regOrg': '登记机关',
   },
   frPositionList: {
-    'entName': '任职企业名称',
+    'entName': '企业名称',
     'entStatus': '状态',
     'entType': '类型',
     'esDate': '成立日期',
