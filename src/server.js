@@ -139,6 +139,7 @@ app.get('/front/refresh/assets', function (req, res) {
 });
 
 app.get('/sendEmail', function (req, res) {
+  console.log('req.query.reportId-----' + req.query.reportId);
   console.log(req.query.email);
   res.status = 200;
   res.json({
@@ -178,6 +179,7 @@ app.get('/sendEmail', function (req, res) {
     pdfType = '贷中分析报告';
   }
   // 请求PDF下载方法
+
   pdfDownload(config.backendApi, urlPanth, params, types).then((responseData) => {
     console.log('请求完成-----');
     writeDataToFile('pdf', responseData);

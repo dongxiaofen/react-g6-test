@@ -163,7 +163,6 @@ const uploadFile = (upToken, key, param) => {
   const fileName = `${key}.pdf`;
   const localFile = path.join(fileName);
   const extra = new qiniu.io.PutExtra();
-  console.log('localFile............' + localFile);
   qiniu.io.putFile(upToken, fileName, localFile, extra, (err, ret) => {
     console.log('ret.........' + ret);
     if (ret) {
@@ -173,8 +172,8 @@ const uploadFile = (upToken, key, param) => {
       console.log('downLoadUrl........' + downloadUrl);
       sendMail(downloadUrl, param);
       // 上传成功，删除当前生成的pdf和html文件
-      deleteFile(path.join(PDF_DIRNAME, fileName));
-      deleteFile(path.join(PDF_DIRNAME, `${key}.html`));
+      deleteFile(fileName);
+      deleteFile(`${key}.html`);
       // 记录文件名到pdfs.log中
       // recordToPdfs(key);
     }
