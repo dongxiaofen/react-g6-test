@@ -331,6 +331,15 @@ class ReportAxisStore {
           this.riskLoading = false;
         }
         this.result = resp.data;
+        // 默认展开数据
+        if (this.result && this.result.detail && this.result.detail.length > 0) {
+          this.result.detail.map((obj, idx)=>{
+            this.getScanList(obj && obj.keyCompEventId ? obj.keyCompEventId.join(',') : '', idx);
+            // if (idx === 0) {
+            //   this.getScanList(obj.keyCompEventId.join(','), idx);
+            // }
+          });
+        }
       }))
       .catch(action('eventAnalysis', err => {
         console.log(err);
@@ -387,7 +396,7 @@ class ReportAxisStore {
     // 结果loading
     // this.riskLoading = false;
     // 列表loading
-    this.riskListLoading = [];
+    // this.riskListLoading = [];
     // 是否可扫描
     // this.canScan = false;
     // 分析状态
@@ -395,7 +404,7 @@ class ReportAxisStore {
     // 结果
     // this.result = '';
     // 风险数据列表
-    this.listDataRisk = [];
+    // this.listDataRisk = [];
     // 是否接口失败
     // this.apiIsResult = false;
   }
