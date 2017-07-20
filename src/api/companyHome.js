@@ -82,13 +82,13 @@ export const getRiskCourt = ({ basicReportId, reportId, tabAct, config }) => {
   return axios.get(url, config);
 };
 
-export const getJudgeDocCount = ({ basicReportId, reportId}) => {
+export const getJudgeDocCount = ({ basicReportId, reportId, finance}) => {
   let url = '';
   if (basicReportId) {
-    url = `/api/report/${basicReportId}/risk/judgeDoc/statistic`;
+    url = `/api/basicReport/${basicReportId}/risk/judgeDoc/statistic?finance=${finance}`;
   }
   if (reportId) {
-    url = `/api/report/${reportId}/risk/judgeDoc/statistic`;
+    url = `/api/report/${reportId}/risk/judgeDoc/statistic?finance=${finance}`;
   }
   return axios.get(url);
 };
