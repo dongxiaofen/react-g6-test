@@ -19,7 +19,7 @@ function CompanyScoreList({ sixStarData }) {
           超过同行业同地区
           <span
           className={styles.blueFonts}>
-          {data.result.allInfo.comparation ? data.result.allInfo.comparation : 0}%
+          {data.result.allInfo.comparison ? data.result.allInfo.comparison : 0}%
           </span>
           企业
         </span>
@@ -30,14 +30,14 @@ function CompanyScoreList({ sixStarData }) {
   let operation = '';
   if (data && data.result && data.result.operation) {
     let scaleText = '';
-    if (data.result.operation.comparation <= 10) {
+    if (data.result.operation.comparison <= 10) {
       scaleText = (
         <span className={styles.scaleText}>
           在同行业同地区企业中
           <span>相对落后</span>
         </span>
       );
-    } else if (data.result.operation.comparation >= 90) {
+    } else if (data.result.operation.comparison >= 90) {
       scaleText = (
         <span className={styles.scaleText}>
           在同行业同地区企业中
@@ -47,7 +47,7 @@ function CompanyScoreList({ sixStarData }) {
     } else {
       scaleText = (
         <span className={styles.scaleText}>
-          超过同行业同地区<span>{data.result.operation.comparation ? data.result.operation.comparation : 0}%</span>企业
+          超过同行业同地区<span>{data.result.operation.comparison ? data.result.operation.comparison : 0}%</span>企业
         </span>
       );
     }
@@ -84,14 +84,14 @@ function CompanyScoreList({ sixStarData }) {
   let industry = '';
   if (data && data.result && data.result.industry) {
     let scaleText = '';
-    if (data.result.industry.comparation <= 10) {
+    if (data.result.industry.comparison <= 10) {
       scaleText = (
         <span className={styles.scaleText}>
           在同行业同地区企业中
           <span>相对落后</span>
         </span>
       );
-    } else if (data.result.industry.comparation >= 90) {
+    } else if (data.result.industry.comparison >= 90) {
       scaleText = (
         <span className={styles.scaleText}>
           在同行业同地区企业中
@@ -101,7 +101,7 @@ function CompanyScoreList({ sixStarData }) {
     } else {
       scaleText = (
         <span className={styles.scaleText}>
-          超过同行业同地区<span>{data.result.industry.comparation ? data.result.industry.comparation : 0}%</span>企业
+          超过同行业同地区<span>{data.result.industry.comparison ? data.result.industry.comparison : 0}%</span>企业
         </span>
       );
     }
@@ -138,14 +138,14 @@ function CompanyScoreList({ sixStarData }) {
   let creativity = '';
   if (data && data.result && data.result.creativity) {
     let scaleText = '';
-    if (data.result.creativity.comparation <= 10) {
+    if (data.result.creativity.comparison <= 10) {
       scaleText = (
         <span className={styles.scaleText}>
           在同行业同地区企业中
           <span>相对落后</span>
         </span>
       );
-    } else if (data.result.creativity.comparation >= 90) {
+    } else if (data.result.creativity.comparison >= 90) {
       scaleText = (
         <span className={styles.scaleText}>
           在同行业同地区企业中
@@ -155,7 +155,7 @@ function CompanyScoreList({ sixStarData }) {
     } else {
       scaleText = (
         <span className={styles.scaleText}>
-          超过同行业同地区<span>{data.result.creativity.comparation ? data.result.creativity.comparation : 0}%</span>企业
+          超过同行业同地区<span>{data.result.creativity.comparison ? data.result.creativity.comparison : 0}%</span>企业
         </span>
       );
     }
@@ -192,14 +192,14 @@ function CompanyScoreList({ sixStarData }) {
   let law = '';
   if (data && data.result && data.result.law) {
     let scaleText = '';
-    if (data.result.law.comparation <= 10) {
+    if (data.result.law.comparison <= 10) {
       scaleText = (
         <span className={styles.scaleText}>
           在同行业同地区企业中
           <span>相对落后</span>
         </span>
       );
-    } else if (data.result.law.comparation >= 90) {
+    } else if (data.result.law.comparison >= 90) {
       scaleText = (
         <span className={styles.scaleText}>
           在同行业同地区企业中
@@ -209,7 +209,7 @@ function CompanyScoreList({ sixStarData }) {
     } else {
       scaleText = (
         <span className={styles.scaleText}>
-          超过同行业同地区<span>{data.result.law.comparation ? data.result.law.comparation : 0}%</span>企业
+          超过同行业同地区<span>{data.result.law.comparison ? data.result.law.comparison : 0}%</span>企业
         </span>
       );
     }
@@ -247,14 +247,14 @@ function CompanyScoreList({ sixStarData }) {
   let team = '';
   if (data && data.result && data.result.team) {
     let scaleText = '';
-    if (data.result.team.comparation <= 10) {
+    if (data.result.team.comparison <= 10) {
       scaleText = (
         <span className={styles.scaleText}>
           在同行业同地区企业中
           <span>相对落后</span>
         </span>
       );
-    } else if (data.result.team.comparation >= 90) {
+    } else if (data.result.team.comparison >= 90) {
       scaleText = (
         <span className={styles.scaleText}>
           在同行业同地区企业中
@@ -264,7 +264,7 @@ function CompanyScoreList({ sixStarData }) {
     } else {
       scaleText = (
         <span className={styles.scaleText}>
-          超过同行业同地区<span>{data.result.team.comparation ? data.result.team.comparation : 0}%</span>企业
+          超过同行业同地区<span>{data.result.team.comparison ? data.result.team.comparison : 0}%</span>企业
         </span>
       );
     }
@@ -301,14 +301,14 @@ function CompanyScoreList({ sixStarData }) {
   let influence = '';
   if (data && data.result && data.result.influence) {
     let scaleText = '';
-    if (data.result.influence.comparation <= 10) {
+    if (data.result.influence.comparison <= 10) {
       scaleText = (
         <span className={styles.scaleText}>
           在同行业同地区企业中
           <span>相对落后</span>
         </span>
       );
-    } else if (data.result.influence.comparation >= 90) {
+    } else if (data.result.influence.comparison >= 90) {
       scaleText = (
         <span className={styles.scaleText}>
           在同行业同地区企业中
@@ -318,7 +318,7 @@ function CompanyScoreList({ sixStarData }) {
     } else {
       scaleText = (
         <span className={styles.scaleText}>
-          超过同行业同地区<span>{data.result.influence.comparation ? data.result.influence.comparation : 0}%</span>企业
+          超过同行业同地区<span>{data.result.influence.comparison ? data.result.influence.comparison : 0}%</span>企业
         </span>
       );
     }

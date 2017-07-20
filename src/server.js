@@ -20,11 +20,10 @@ import getRoutes from './routes';
 import {RouterStore} from 'mobx-react-router';
 import * as allStores from 'stores';
 import getPermissionMeta from 'helpers/getPermissionMeta';
-import { pdfDownload } from './api/pdf';
+import {pdfDownload} from './api/pdf';
 import {
-  UpFileToQiniu,
+  upFileToQiniu,
   checkPDF,
-  writeToLog,
   deletePdfsOnQiniu
 } from './helpers/pdfHelper';
 import schedule from 'node-schedule';
@@ -140,21 +139,23 @@ app.get('/front/refresh/assets', function (req, res) {
 });
 
 app.get('/sendEmail', function (req, res) {
+  console.log('req.query.reportId-----' + req.query.reportId);
   console.log(req.query.email);
   console.log(req.query.reportId);
   console.log(req.query.basicReportId);
   res.status = 200;
   res.json({
-      message: '提交成功，稍后请注意查收邮件'
+    message: '提交成功，稍后请注意查收邮件'
   });
   // 将PDF发送到邮箱
-  const { types } = req.query;
+  const {types} = req.query;
 
   const routingStore = new RouterStore();
   allStores.routing = routingStore;
   let urlPanth = '';
   let params = '';
   let reportType = '';
+  let pdfType = '';
   // let requestNumber = '';
   // let responseData = {};
   if (req.query.reportId) {
@@ -163,20 +164,24 @@ app.get('/sendEmail', function (req, res) {
       reportId: req.query.reportId,
     };
     reportType = '高级报告';
+    pdfType = '贷前高级报告';
   } else if (req.query.basicReportId) {
     urlPanth = '/api/pdf/basicReport';
     params = {
       basicReportId: req.query.basicReportId,
     };
     reportType = '基础报告';
+    pdfType = '贷前基础报告';
   } else if (req.query.analysisReportId) {
     urlPanth = '/api/pdf/analysis';
     params = {
       analysisReportId: req.query.analysisReportId,
     };
     reportType = '分析报告';
+    pdfType = '贷中分析';
   }
   // 请求PDF下载方法
+
   pdfDownload(config.backendApi, urlPanth, params, types).then((responseData) => {
     console.log('请求完成-----');
     writeDataToFile('pdf', responseData);
@@ -197,21 +202,18 @@ app.get('/sendEmail', function (req, res) {
     const pdfName = username + timestamp + '.pdf';
     writeStrToHtml(htmlName, reportHtml, () => {
       html2Pdf(htmlName, pdfName, () => {
-
-        // res.download(PDF_DIRNAME + pdfName, companyName + '.pdf', (err) => {
-        //   // 删除pdf
-        //   const del = cp.spawn('sh', ['./src/helpers/delPdf.sh', PDF_DIRNAME + htmlName, PDF_DIRNAME + pdfName]);
-        //   del.stdout.on('end', function () {
-        //     console.log('stdout: pdf删除成功');
-        //   });
-        // });
+        upFileToQiniu(PDF_DIRNAME + username + timestamp, {
+          pdfType,
+          companyName,
+          mail: req.query.email,
+          client: config.target,
+        });
       });
+    }).catch((err) => {
+      console.log('pdfDownload......err....' + err);
     });
-  }).catch((err) => {
-    console.log(err)
   });
 });
-
 app.use((req, res) => {
   console.log('node 被访问');
   // writeDataToFile('cookie', req.cookies);
@@ -249,8 +251,6 @@ app.use((req, res) => {
         let urlPanth = '';
         let params = '';
         let reportType = '';
-        // let requestNumber = '';
-        // let responseData = {};
         if (req.query.reportId) {
           urlPanth = '/api/pdf/report';
           params = {
@@ -270,6 +270,7 @@ app.use((req, res) => {
           };
           reportType = '分析报告';
         }
+
         // 下载PDF
         pdfDownload(config.backendApi, urlPanth, params, req.query.type).then((responseData) => {
           console.log('请求完成-----');
@@ -297,6 +298,12 @@ app.use((req, res) => {
                 del.stdout.on('end', function () {
                   console.log('stdout: pdf删除成功');
                 });
+                // res.download(PDF_DIRNAME + pdfName, companyName + '.pdf', (err) => {
+                //   // 删除pdf
+                //   const del = cp.spawn("sh", ['./src/helpers/delPdf.sh', PDF_DIRNAME + htmlName, PDF_DIRNAME + pdfName]);
+                //   del.stdout.on('end', function () {
+                //     console.log('stdout: pdf删除成功');
+                //   });
               });
             });
           });
@@ -351,7 +358,7 @@ app.use((req, res) => {
           </Provider>
         );
         res.status(200);
-        global.navigator = { userAgent: req.headers['user-agent'] };
+        global.navigator = {userAgent: req.headers['user-agent']};
         res.send('<!doctype html>\n' +
           '<!-- Polyfills -->\n' +
           '<!--[if lt IE 10]>\n' +
@@ -361,7 +368,9 @@ app.use((req, res) => {
           '<!--[if lte IE 11]>\n' +
           '<script src="https://as.alipayobjects.com/g/component/??es6-shim/0.35.1/es6-sham.min.js,es6-shim/0.35.1/es6-shim.min.js"></script>\n' +
           '<![endif]-->\n' +
-          ReactDOM.renderToString(<Html reqPathName={reqPathName} isDev={__DEVELOPMENT__} assets={webpackIsomorphicTools.assets()} component={component} {...allStores} />));
+          ReactDOM.renderToString(<Html reqPathName={reqPathName} isDev={__DEVELOPMENT__}
+                                        assets={webpackIsomorphicTools.assets()}
+                                        component={component} {...allStores} />));
       } else {
         // writeDataToFile('renderProps', renderProps.components);
         axios.get(config.backendApi + '/api/user/info')
@@ -391,7 +400,7 @@ app.use((req, res) => {
               </Provider>
             );
             res.status(200);
-            global.navigator = { userAgent: req.headers['user-agent'] };
+            global.navigator = {userAgent: req.headers['user-agent']};
             res.send('<!doctype html>\n' +
               '<!-- Polyfills -->\n' +
               '<!--[if lt IE 10]>\n' +
@@ -401,7 +410,9 @@ app.use((req, res) => {
               '<!--[if lte IE 11]>\n' +
               '<script src="https://as.alipayobjects.com/g/component/??es6-shim/0.35.1/es6-sham.min.js,es6-shim/0.35.1/es6-shim.min.js"></script>\n' +
               '<![endif]-->\n' +
-              ReactDOM.renderToString(<Html reqPathName={reqPathName} isDev={__DEVELOPMENT__} assets={webpackIsomorphicTools.assets()} component={component} {...allStores} />));
+              ReactDOM.renderToString(<Html reqPathName={reqPathName} isDev={__DEVELOPMENT__}
+                                            assets={webpackIsomorphicTools.assets()}
+                                            component={component} {...allStores} />));
           })
           .catch((err) => {
             console.log('userInfo err', err.response.data);
@@ -422,7 +433,7 @@ app.use((req, res) => {
               </Provider>
             );
             res.status(200);
-            global.navigator = { userAgent: req.headers['user-agent'] };
+            global.navigator = {userAgent: req.headers['user-agent']};
             res.send('<!doctype html>\n' +
               '<!-- Polyfills -->\n' +
               '<!--[if lt IE 10]>\n' +
@@ -432,7 +443,9 @@ app.use((req, res) => {
               '<!--[if lte IE 11]>\n' +
               '<script src="https://as.alipayobjects.com/g/component/??es6-shim/0.35.1/es6-sham.min.js,es6-shim/0.35.1/es6-shim.min.js"></script>\n' +
               '<![endif]-->\n' +
-              ReactDOM.renderToString(<Html reqPathName={reqPathName} isDev={__DEVELOPMENT__} assets={webpackIsomorphicTools.assets()} component={component} {...allStores} />));
+              ReactDOM.renderToString(<Html reqPathName={reqPathName} isDev={__DEVELOPMENT__}
+                                            assets={webpackIsomorphicTools.assets()}
+                                            component={component} {...allStores} />));
           });
       }
     } else {
