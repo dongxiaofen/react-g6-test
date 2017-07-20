@@ -7,6 +7,7 @@ import favicon from 'serve-favicon';
 import compression from 'compression';
 import path from 'path';
 import Html from './helpers/Html';
+import HtmlPdf from './helpers/HtmlPdf';
 import PrettyError from 'pretty-error';
 import http from 'http';
 import fs from 'fs';
@@ -37,8 +38,10 @@ schedule.scheduleJob('0 0 0 * * *', () => {
   console.log('启动删除文件---');
   deletePdfsOnQiniu();
 });
+axios.defaults.headers.common['Content-Type'] = 'application/json';
+axios.defaults.headers.common['scm-source'] = getPermissionMeta(config.target).scmSource;
 
-const agent = require('superagent-defaults')();
+// const agent = require('superagent-defaults')();
 const BASE_DIRNAME = process.cwd();
 const PDF_DIRNAME = path.join(BASE_DIRNAME, '/static/pdf/');
 const bodyParser = require('body-parser');
@@ -106,6 +109,9 @@ const writeStrToHtml = (id, data, callBack, errorCallBack) => {
 };
 const html2Pdf = (htmlName, pdfName, callBack) => {
   const convert = cp.spawn('sh', ['./src/helpers/convert.sh', PDF_DIRNAME + htmlName, PDF_DIRNAME + pdfName]);
+  convert.stdout.on('error', function () {
+    console.log('stdout: pdf转换失败');
+  });
   convert.stdout.on('end', function () {
     console.log('stdout: pdf转换成功');
     callBack();
@@ -139,6 +145,7 @@ app.get('/front/refresh/assets', function (req, res) {
 });
 
 app.get('/sendEmail', function (req, res) {
+  axios.defaults.headers.common['scm-token'] = req.cookies['scm-token'] || {};
   console.log('req.query.reportId-----' + req.query.reportId);
   console.log(req.query.email);
   console.log(req.query.reportId);
@@ -184,7 +191,7 @@ app.get('/sendEmail', function (req, res) {
 
   pdfDownload(config.backendApi, urlPanth, params, types).then((responseData) => {
     console.log('请求完成-----');
-    writeDataToFile('pdf', responseData);
+    // writeDataToFile('pdf', responseData);
     allStores.pdfStore.setTypes(types, reportType);
     allStores.clientStore.envConfig = config.target;
     allStores.pdfStore.getPdfDownData(responseData);
@@ -193,28 +200,29 @@ app.get('/sendEmail', function (req, res) {
         <PdfBody />
       </Provider>
     );
-    const reportHtml = ReactDOM.renderToString(<Html pdfDown="1" assets={webpackIsomorphicTools.assets()}
+    const reportHtml = ReactDOM.renderToStaticMarkup(<HtmlPdf assets={webpackIsomorphicTools.assets()}
                                                      component={component} {...allStores} />);
     const companyName = responseData.companyName;
     const username = responseData.email;
     const timestamp = new Date().getTime();
     const htmlName = username + timestamp + '.html';
-    const pdfName = username + timestamp + '.pdf';
+    // const pdfName = username + timestamp + '.pdf';
     writeStrToHtml(htmlName, reportHtml, () => {
-      html2Pdf(htmlName, pdfName, () => {
+      // html2Pdf(htmlName, pdfName, () => {
         upFileToQiniu(PDF_DIRNAME + username + timestamp, {
           pdfType,
           companyName,
           mail: req.query.email,
           client: config.target,
         });
-      });
+      // });
     }).catch((err) => {
       console.log('pdfDownload......err....' + err);
     });
   });
 });
 app.use((req, res) => {
+  axios.defaults.headers.common['scm-token'] = req.cookies['scm-token'] || {};
   console.log('node 被访问');
   // writeDataToFile('cookie', req.cookies);
   if (__DEVELOPMENT__) {
@@ -222,12 +230,10 @@ app.use((req, res) => {
     // hot module replacement is enabled in the development env
     webpackIsomorphicTools.refresh();
   }
-  agent.set('Content-Type', 'application/json')
-    .set('scm-source', config.target === 'dianxin_prod' ? 'TEL_WEB' : 'SC_WEB')
-    .set('scm-token', req.cookies['scm-token'] || {});
-  axios.defaults.headers.common['Content-Type'] = 'application/json';
-  axios.defaults.headers.common['scm-source'] = getPermissionMeta(config.target).scmSource;
-  axios.defaults.headers.common['scm-token'] = req.cookies['scm-token'] || {};
+  // agent.set('Content-Type', 'application/json')
+  //   .set('scm-source', config.target === 'dianxin_prod' ? 'TEL_WEB' : 'SC_WEB')
+  //   .set('scm-token', req.cookies['scm-token'] || {});
+  
 
   // 检查pdf路径
   const reqPathName = url.parse(req.url).pathname;
@@ -283,7 +289,7 @@ app.use((req, res) => {
               <RouterContext {...renderProps} />
             </Provider>
           );
-          const reportHtml = ReactDOM.renderToString(<Html pdfDown="1" assets={webpackIsomorphicTools.assets()}
+          const reportHtml = ReactDOM.renderToString(<Html assets={webpackIsomorphicTools.assets()}
                                                            component={component} {...allStores} />);
           const companyName = responseData.companyName;
           const username = responseData.email;
@@ -321,7 +327,7 @@ app.use((req, res) => {
         //         <RouterContext {...renderProps} />
         //       </Provider>
         //     );
-        //     const reportHtml = ReactDOM.renderToString(<Html pdfDown="1" assets={webpackIsomorphicTools.assets()} component={component} {...allStores} />);
+        //     const reportHtml = ReactDOM.renderToString(<Html assets={webpackIsomorphicTools.assets()} component={component} {...allStores} />);
         //     const companyName = resp.data.companyName;
         //     const username = resp.data.email;
         //     const timestamp = new Date().getTime();
