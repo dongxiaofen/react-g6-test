@@ -27,7 +27,6 @@ function Office({investmentStore}) {
       maxCols: 2,
       hasNumber: true,
       isLoading: isLoading,
-      module: '法人对外任职',
       error: isError
     },
   };
