@@ -17,6 +17,18 @@ function VerTab({ blackListScanStore }) {
     '运营商黑名单',
     '企业主黑名单'
   ];
+  const nodeDict = {
+    closenessCentralityBlack: '网络中心点',
+    degreesCentralityBlack: '网络明星点',
+    eigenvectorCentralityBlack: '网络控制点',
+    betweennessCentralityBlack: '桥梁节点',
+  };
+  const coefficientDict = {
+    closenessCentralityBlack: '中心系数',
+    degreesCentralityBlack: '明星系数',
+    eigenvectorCentralityBlack: '控制系数',
+    betweennessCentralityBlack: '桥梁系数',
+  };
   const relationDict = {
     COMPANY_FR: '法人',
     COMPANY_SHAREHOLDER: '股东',
@@ -67,26 +79,39 @@ function VerTab({ blackListScanStore }) {
     });
   };
   const createAbnormalList = (itemData, itemKey) => {
-    let list = [
-      {type: '行政处罚', eventDate: '2012-01-01'},
-      {type: '行政处罚', eventDate: '2012-01-01'},
-    ];
+    let list = [];
     if (itemKey === 'main' || itemKey === 'related') {
       list = itemData.blacklistCompInfo || []; // 加上[]防止数据异常
+    }
+    // 将网络图扫描结果数据结构格式化为同主体和关联扫描结果类似的数据结构
+    if (itemKey === 'network') {
+      ['closenessCentralityBlack', 'degreesCentralityBlack', 'eigenvectorCentralityBlack', 'betweennessCentralityBlack'].map((nodeName) => {
+        itemData[nodeName].nodesDetail.filter((item) => {
+          return item.blacklistCompInfo.length > 0;
+        }).forEach(item => {
+          item.blacklistCompInfo.forEach(blackItem => {
+            const newItem = Object.assign({
+              nodeType: nodeDict[nodeName],
+              name: item.name,
+              coefficient: coefficientDict[nodeName],
+              value: item.value,
+            }, blackItem);
+            list.push(newItem);
+          });
+        });
+      });
     }
     return list.map((item, idx) => {
       return (
         <div key={idx} className={styles.abnormalItem}>
           <p className={styles.abnormalType + ' ' + styles.typeImg + scanModuleArr.indexOf(item.blacklistType)}>
             <span>{item.blacklistType}</span>
-            {itemKey === 'related'
-              ?
-              <span className={styles.relationType}>
-                {` - ${item.name}（${relationDict[item.relationType]}${/INVEST$/.test(item.relationType) ? `，投资金额${item.relationTypeDetail.investAmount}万` : ''}）`}
-              </span>
-              :
-              null
-            }
+            {itemKey === 'related' && <span className={styles.relationType}>
+              {` - ${item.name}（${relationDict[item.relationType]}${/INVEST$/.test(item.relationType) ? `，投资金额${item.relationTypeDetail.investAmount}万` : ''}）`}
+            </span>}
+            {itemKey === 'network' && <span className={styles.relationType}>
+              {` - ${item.nodeType} - ${item.name}，${item.coefficient} ${item.value}`}
+            </span>}
           </p>
           <p className={styles.eventDate}>
             <span className={styles.hitCount}>{`共命中 ${item.count} 次`}</span>
