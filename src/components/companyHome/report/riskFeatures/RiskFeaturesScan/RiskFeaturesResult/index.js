@@ -4,15 +4,16 @@ import styles from './index.less';
 import Loading from './Loading';
 import Result from './Result';
 
-function RiskFeaturesResult({riskFeaturesStore}) {
+function RiskFeaturesResult({reportAxisStore}) {
   return (
     <div className={styles.box}>
-      {riskFeaturesStore.riskLoading ? <Loading /> : <Result data={riskFeaturesStore} />}
+      {reportAxisStore.riskLoading ? <Loading /> : <Result data={reportAxisStore} />}
+      {/* {reportAxisStore.riskLoading ? <Loading /> : <Loading />} */}
     </div>
   );
 }
 
 RiskFeaturesResult.propTypes = {
-  riskFeaturesStore: PropTypes.object,
+  reportAxisStore: PropTypes.object,
 };
 export default observer(RiskFeaturesResult);
