@@ -13,7 +13,13 @@ function ShareHolderInfo({investmentStore, bannerStore}) {
   const isInvError = shareHolderInvList.length < 1;
   const isPosError = shareHolderPositionList.length < 1;
   const modifyTextNumber = (value)=> {
-    return Number(value).toFixed(2);
+    if (value) {
+      return Number(value).toFixed(2) === '0.00' ? '--' : Number(value).toFixed(2);
+    }
+    return '--';
+  };
+  const modifyRato = (value) => {
+    return value && value !== '0.00%' ? value : '--';
   };
   const frPosdata = {
     meta: {
@@ -25,7 +31,6 @@ function ShareHolderInfo({investmentStore, bannerStore}) {
       items: shareHolderPositionFrList,
       maxCols: 2,
       hasNumber: true,
-      module: '法人对外任职',
       error: isFrPosError
     },
   };
@@ -33,14 +38,13 @@ function ShareHolderInfo({investmentStore, bannerStore}) {
     meta: {
       body: [
         [{ 'key': 'entName', 'colSpan': '1'}, {'key': 'entStatus', 'colSpan': '1'}],
-        [{ 'key': 'subConam', 'width': '4', 'modifyBlock': modifyTextNumber}, {'key': 'fundedRatio', 'width': '4' }],
+        [{ 'key': 'subConam', 'width': '4', 'modifyBlock': modifyTextNumber}, {'key': 'fundedRatio', 'width': '4', 'modifyBlock': modifyRato}],
         [{ 'key': 'regCap', 'width': '4', 'modifyBlock': modifyTextNumber}, {'key': 'esDate', 'width': '4' }]
       ],
       dict: 'frinvList',
       items: shareHolderInvList,
       maxCols: 2,
       hasNumber: true,
-      module: '法人对外投资',
       error: isInvError
     },
   };
@@ -55,7 +59,6 @@ function ShareHolderInfo({investmentStore, bannerStore}) {
       items: shareHolderPositionList,
       maxCols: 2,
       hasNumber: true,
-      module: '法人对外任职',
       error: isPosError
     },
   };

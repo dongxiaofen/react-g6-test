@@ -161,6 +161,7 @@ const config = {
     'frName': '法人代表',
     'regNo': '注册号',
     'regOrg': '登记机关',
+    otherPosition: '担任职位'
   },
   frPositionListPdf: {
     'entName': '名称',
