@@ -29,7 +29,7 @@ function List({data}) {
           if (value.index === idx) {
             arrow = value.status ? styles.arrawTr : '';
             listStyle = value.status ? '' : styles.none;
-            listWrapStyle = value.status ? '' : styles.noneWrap;
+            listWrapStyle = value.status ? styles.borderWrap : styles.noneWrap;
             // 显示详细数据dom 并判断显示状态
             if (value.data && value.data.length > 0) {
               value.data.map((val, num)=>{
