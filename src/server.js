@@ -37,8 +37,10 @@ schedule.scheduleJob('0 0 0 * * *', () => {
   console.log('启动删除文件---');
   deletePdfsOnQiniu();
 });
+axios.defaults.headers.common['Content-Type'] = 'application/json';
+axios.defaults.headers.common['scm-source'] = getPermissionMeta(config.target).scmSource;
 
-const agent = require('superagent-defaults')();
+// const agent = require('superagent-defaults')();
 const BASE_DIRNAME = process.cwd();
 const PDF_DIRNAME = path.join(BASE_DIRNAME, '/static/pdf/');
 const bodyParser = require('body-parser');
@@ -139,6 +141,7 @@ app.get('/front/refresh/assets', function (req, res) {
 });
 
 app.get('/sendEmail', function (req, res) {
+  axios.defaults.headers.common['scm-token'] = req.cookies['scm-token'] || {};
   console.log('req.query.reportId-----' + req.query.reportId);
   console.log(req.query.email);
   console.log(req.query.reportId);
@@ -215,6 +218,7 @@ app.get('/sendEmail', function (req, res) {
   });
 });
 app.use((req, res) => {
+  axios.defaults.headers.common['scm-token'] = req.cookies['scm-token'] || {};
   console.log('node 被访问');
   // writeDataToFile('cookie', req.cookies);
   if (__DEVELOPMENT__) {
@@ -222,12 +226,10 @@ app.use((req, res) => {
     // hot module replacement is enabled in the development env
     webpackIsomorphicTools.refresh();
   }
-  agent.set('Content-Type', 'application/json')
-    .set('scm-source', config.target === 'dianxin_prod' ? 'TEL_WEB' : 'SC_WEB')
-    .set('scm-token', req.cookies['scm-token'] || {});
-  axios.defaults.headers.common['Content-Type'] = 'application/json';
-  axios.defaults.headers.common['scm-source'] = getPermissionMeta(config.target).scmSource;
-  axios.defaults.headers.common['scm-token'] = req.cookies['scm-token'] || {};
+  // agent.set('Content-Type', 'application/json')
+  //   .set('scm-source', config.target === 'dianxin_prod' ? 'TEL_WEB' : 'SC_WEB')
+  //   .set('scm-token', req.cookies['scm-token'] || {});
+  
 
   // 检查pdf路径
   const reqPathName = url.parse(req.url).pathname;
