@@ -36,6 +36,7 @@ function DishonestInfo({data, type, ruleId}) {
     ];
   const itemData = type === 'RULE' ? data.content : data.detail[0].dishonesty;
   if (ruleId === 4) {
+    console.log(data, '---');
     itemData.relation = data.detail[0].relation.join('，');
     itemData.companyName = data.detail[0].companyName;
   }

@@ -115,7 +115,7 @@ function VerTab({ blackListScanStore }) {
           </p>
           <p className={styles.eventDate}>
             <span className={styles.hitCount}>{`共命中 ${item.count} 次`}</span>
-            <span>{`最后命中时间：${item.eventDate}`}</span>
+            <span>{`最近命中时间：${item.eventDate}`}</span>
           </p>
         </div>
       );
