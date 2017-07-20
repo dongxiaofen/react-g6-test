@@ -36,7 +36,7 @@ function JudgeCard({itemData, rowIdx, data, showParams, uiStore, module, type = 
   return (
     <div className={`${rowCss} clearfix`}>
       <div className={styles.label}>
-        <span title={itemData.label}>{label}</span>
+        <span title={itemData.label}>{label || '案件'}</span>
       </div>
       <div className={`${styles.rowContent} clearfix`}>
         {createItem()}

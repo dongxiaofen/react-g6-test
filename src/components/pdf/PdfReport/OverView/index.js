@@ -38,9 +38,9 @@ function OverView({pdfStore, clientStore}) {
   };
   const investPositionMap = {
     mapKey: {
-      entinvItemCount: '法人担任法人公司',
-      frPositionCount: '法人任职公司',
-      frinvCount: '法人投资公司',
+      frOtherPositionCount: '法人担任法人的企业',
+      frPositionCount: '法人任职的企业',
+      frinvCount: '法人投资的企业',
     },
     title: '法人投资任职',
     valueData: summaryData.basic ? {data: summaryData.invPos, type: 'object'} : undefined,

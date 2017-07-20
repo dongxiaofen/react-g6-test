@@ -9,7 +9,10 @@ function FrOffice({investmentStore}) {
   const isLoading = frData.content === undefined ? true : false;
   const isError = frData.error;
   const modifyTextNumber = (value) => {
-    return Number(value).toFixed(2);
+    if (value) {
+      return Number(value).toFixed(2) === '0.00' ? '--' : Number(value).toFixed(2);
+    }
+    return '--';
   };
   let frName = '';
   if (count > 0) {
