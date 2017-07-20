@@ -68,17 +68,19 @@ function ShareHolderInfo({investmentStore, bannerStore}) {
         <div className={styles.name}>{name} {invesStr}</div>
         <span className={styles.text}>主体公司名称：{companyName}</span>
       </div>
-      <div className={styles.tableWrap}>
-        <div className={styles.tableName}>对外担任法人代表（{shareHolderPositionFrList.length}）</div>
-        <SimpleTable meta={frPosdata.meta} module="shPositionList"/>
-      </div>
-      <div className={styles.tableWrap}>
-        <div className={styles.tableName}>对外投资（{shareHolderInvList.length}）</div>
-        <SimpleTable meta={invData.meta} module="shinvList"/>
-      </div>
-      <div className={styles.tableWrap}>
-        <div className={styles.tableName}>对外任职（{shareHolderPositionList.length}）</div>
-        <SimpleTable meta={posData.meta} module="shPosList"/>
+      <div className={styles.content}>
+        <div className={styles.tableWrap}>
+          <div className={styles.tableName}>对外担任法人代表（{shareHolderPositionFrList.length}）</div>
+          <SimpleTable meta={frPosdata.meta} module="shPositionList"/>
+        </div>
+        <div className={styles.tableWrap}>
+          <div className={styles.tableName}>对外投资（{shareHolderInvList.length}）</div>
+          <SimpleTable meta={invData.meta} module="shinvList"/>
+        </div>
+        <div className={styles.tableWrap}>
+          <div className={styles.tableName}>对外任职（{shareHolderPositionList.length}）</div>
+          <SimpleTable meta={posData.meta} module="shPosList"/>
+        </div>
       </div>
     </div>
   );
