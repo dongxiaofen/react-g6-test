@@ -55,7 +55,10 @@ export const pdfDownload = (backendApi, urlPanth, paramString, types) => {
         .then((res) => {
           resolve(res.data);
         }).catch((err) => {
-          callBack(err.response.data);
+          callBack({
+            message: '接口获取数据错误',
+            data: err.response.data
+          });
           console.log(err.response.data);
         });
     });
