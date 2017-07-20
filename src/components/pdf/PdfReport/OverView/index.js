@@ -284,7 +284,7 @@ function OverView({pdfStore, clientStore}) {
       <Summary {...riskRelationshipMap} />
 
       {
-        pdfStore.reportType === '高级报告' ?
+        pdfStore.reportType === '高级报告（该模块已取消）' ?
           <div>
             <SecondTitle module="风险扫描"/>
             <hr className={styles.hrhr}/>

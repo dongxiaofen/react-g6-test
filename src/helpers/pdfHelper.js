@@ -125,7 +125,7 @@ const sendMail = (downloadUrl, param) => {
   const mailOption = {
     from: 'no-reply@socialcredits.cn',
     to: param.mail,
-    subject: `${companyName}-${param.pdfType}`,
+    subject: `${param.companyName}-${param.pdfType}`,
     html: '<div style="margin:0 auto;padding: 30px;width: 900px;border:1px solid #e0e0e0;height: 870px;color: #757575;background-color: #fafafa">' +
     '<div><img src="' + imgName + '"/></div>' +
     '<div style="background-color: #e0e0e0;height: 1px;margin-top: 30px"></div>' +
@@ -160,7 +160,9 @@ const uploadFile = (upToken, key, param) => {
   const localFile = path.join(fileName);
   const extra = new qiniu.io.PutExtra();
   qiniu.io.putFile(upToken, fileName, localFile, extra, (err, ret) => {
-    if (ret) {
+    if (err) {
+      console.log('上传失败', fileName);
+    } else {
       console.log('上传成功', fileName);
       // _writeToLog(key, 'creating,5,');
       const downloadUrl = getDownLoadUrl(fileName);

@@ -1,6 +1,5 @@
 import React from 'react';
 import { observer } from 'mobx-react';
-import Tooltip from 'antd/lib/tooltip';
 import styles from './index.less';
 import scanCircle1 from 'imgs/blackScan/scanCircle1.png';
 import Processer from '../Processer';
@@ -47,9 +46,7 @@ function Scanning({ blackListScanStore }) {
           </div>
           <div className={styles.infoBox}>
             <h1>企业扫描中，请稍后...</h1>
-            <Tooltip title={info} placement="rightTop">
-              <p>{info}</p>
-            </Tooltip>
+            <p>{info}</p>
           </div>
         </div>
         <div className={styles.processWrap}>

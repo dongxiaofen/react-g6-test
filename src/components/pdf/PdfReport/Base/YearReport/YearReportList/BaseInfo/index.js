@@ -15,7 +15,6 @@ function BaseInfo({moduleData}) {
   }
   const data = {
     dataConfig: [
-      {'key': 'regNo', 'width': '12'},
       {'key': 'regNo', 'width': '6'},
       {'key': 'enterpriseStatus', 'width': '6'},
       {'key': 'employeeCount', 'width': '6'},
