@@ -383,21 +383,21 @@ class ReportAxisStore {
   }
   // reset
   @action.bound resetStoreRisk() {
-    this.reportId = '';
+    // this.reportId = '';
     // 结果loading
-    this.riskLoading = true;
+    // this.riskLoading = false;
     // 列表loading
     this.riskListLoading = [];
     // 是否可扫描
-    this.canScan = false;
+    // this.canScan = false;
     // 分析状态
     // this.status = 'FIRST_TIME';
     // 结果
-    this.result = '';
+    // this.result = '';
     // 风险数据列表
     this.listDataRisk = [];
     // 是否接口失败
-    this.apiIsResult = false;
+    // this.apiIsResult = false;
   }
 }
 export default new ReportAxisStore();
