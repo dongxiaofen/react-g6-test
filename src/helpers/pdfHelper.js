@@ -164,8 +164,8 @@ const uploadFile = (upToken, key, param) => {
       const downloadUrl = getDownLoadUrl(fileName);
       sendMail(downloadUrl, param);
       // 上传成功，删除当前生成的pdf和html文件
-      deleteFile(fileName);
-      deleteFile(`${key}.html`);
+      // deleteFile(fileName);
+      // deleteFile(`${key}.html`);
       // 记录文件名到pdfs.log中
       // recordToPdfs(key);
     }
