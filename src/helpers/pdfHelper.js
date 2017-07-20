@@ -125,6 +125,7 @@ const sendMail = (downloadUrl, param) => {
   const mailOption = {
     from: 'no-reply@socialcredits.cn',
     to: param.mail,
+    subject: `${companyName}-${param.pdfType}`,
     html: '<div style="margin:0 auto;padding: 30px;width: 900px;border:1px solid #e0e0e0;height: 870px;color: #757575;background-color: #fafafa">' +
     '<div><img src="' + imgName + '"/></div>' +
     '<div style="background-color: #e0e0e0;height: 1px;margin-top: 30px"></div>' +
@@ -145,6 +146,7 @@ const sendMail = (downloadUrl, param) => {
     '<span style="width: 33%;display: inline-block;text-align: right">企业邮箱： ' + companyMail + ' </span>' +
     '</div></div>'
   };
+  console.log(mailOption.subject);
   transportor.sendMail(mailOption, (err) => {
     if (err) {
       console.log('Message send failed');
