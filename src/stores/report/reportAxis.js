@@ -391,7 +391,7 @@ class ReportAxisStore {
     // 是否可扫描
     this.canScan = false;
     // 分析状态
-    this.status = 'FIRST_TIME';
+    // this.status = 'FIRST_TIME';
     // 结果
     this.result = '';
     // 风险数据列表
