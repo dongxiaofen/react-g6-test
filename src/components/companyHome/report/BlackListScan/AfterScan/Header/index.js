@@ -8,7 +8,6 @@ import scanSucc from 'imgs/blackScan/scanSucc.png';
 function Header({ blackListScanStore, reportId }) {
   const succStr = '扫描完成，未命中风险名单';
   const errorStr = '扫描完成，该企业命中风险名单';
-  const info = '500万高风险信息数据库中（工商系统 · 司法黑名单 · 银联黑名单 · 支付黑名单 · 税务黑名单等）识别企业关联网络中的风险';
   const reScan = (canScan) => {
     if (!canScan) return false;
     blackListScanStore.resetStore();
@@ -25,13 +24,13 @@ function Header({ blackListScanStore, reportId }) {
       <img src={hasRisk ? scanError : scanSucc} alt="扫描..." />
       <div className={styles.infoBox}>
         <h1>{hasRisk ? errorStr : succStr}</h1>
-        <Tooltip title={info} placement="rightBottom">
-          <p>{info}</p>
-        </Tooltip>
+        <p>已完成主体公司、关联关系、网络关系的扫描...</p>
       </div>
       <div className={styles.actionBox}>
         <p>{`扫描时间：${blackListScanStore.data.main.date || '获取失败'}`}</p>
-        <button className={canScan ? '' : styles.disable} onClick={reScan.bind(null, canScan)}>重新扫描</button>
+        <Tooltip title="刷新报告成功后可重新扫描" placement="rightBottom">
+          <button className={canScan ? '' : styles.disable} onClick={reScan.bind(null, canScan)}>重新扫描</button>
+        </Tooltip>
       </div>
     </div>
   );
