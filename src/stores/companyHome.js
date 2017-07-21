@@ -187,15 +187,13 @@ class CompanyHomeStore {
     };
     modalStore.confirmLoading = true;
     companyHomeApi.upgradeReport(basicReportId)
-    .then(action('upgradeReport', (resp) => {
+    .then(action('upgradeReport', () => {
       modalStore.closeAction();
       messageStore.openMessage({ ...text });
       if (this.upgradeType !== 'nav') { // 预警详情升级报告后自动跳转
         networkStore.jumpBlackNode(companyName, search);
       }
-      this.reportInfo.reportId = resp.data.reportId;
-      modalStore.confirmLoading = false;
-      this.upgradeType = 'nav';
+      window.location.reload();
     }))
     .catch(action('upgradeReport error', (err) => {
       console.log(err.response, '=====upgradeReport error');
