@@ -1,6 +1,9 @@
 .box {
+  float: right;
+  width: 50%;
   height: 100%;
   padding-right: 10px;
+  position: relative;
 }
 
 @media screen and (max-width: 1280px) {
@@ -11,6 +14,7 @@
 
 .conWrap {
   float: left;
+  height: auto;
   padding-right: 10px;
 }
 
@@ -22,14 +26,16 @@
   color: #616161;
 }
 
-.blueFonts{
+.blueFonts {
   padding: 0 5px;
   color: #42a5f5;
 }
+
 .content {
   float: left;
   margin-top: 20px;
   width: 100%;
+  height: auto;
 }
 
 .single {
@@ -131,13 +137,15 @@
   margin-left: 10px;
   letter-spacing: 0;
   text-align: left;
+  color: #616161;
 }
 
 .data span {
   padding: 0 3px;
-
 }
-
+.scaleText span {
+  color: #42a5f5;
+}
 .text {
   float: left;
   width: 100%;
@@ -160,4 +168,30 @@
 .score span {
   font-size: 14px;
   padding: 0 3px;
+}
+
+.explain {
+  position: absolute;
+  right: 13px;
+  top: 0px;
+  font-size: 14px;
+  text-decoration: underline;
+  color: #BDBDBD;
+  cursor: help;
+  &:hover {
+    color: #BDBDBD;
+  }
+}
+.explainTitle {
+  padding: 15px 0 5px 0;
+  font-size: 13px;
+  color: #424242;
+}
+.explainTitle:first-child {
+  padding-top: 0;
+}
+.explainContent {
+  font-size: 13px;
+  width: 615px;
+  color: #9E9E9E;
 }
