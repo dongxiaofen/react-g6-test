@@ -21,7 +21,7 @@ function PdfSimpleKey({dataConfig, item, type, dict, hasConfig}) {
             row.push(
               <KeyValue
                 {...parentProps}
-                key= {`arrValue${number}`}
+                key= {`arrValue${number}_${index}`}
                 theKey={hasConfig ? config[dict][configItem.key] : configItem.key}
                 theValue={configItem.handle ? configItem.handle(dataItem[configItem.key], dataItem) : dataItem[configItem.key]}
                 keyClass="key"
@@ -31,7 +31,7 @@ function PdfSimpleKey({dataConfig, item, type, dict, hasConfig}) {
             );
           }
         });
-        output.push(<div key={`${index}single`} className={styles.single}>{row}</div>);
+        output.push(<div key={`${index}single_${index}`} className={styles.single}>{row}</div>);
       });
     } else if (type === 'website') {
       item.forEach((websiteItem) => {

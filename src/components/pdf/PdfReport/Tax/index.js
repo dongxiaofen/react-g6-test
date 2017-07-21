@@ -17,7 +17,7 @@ function Tax({pdfStore, judgeIsModuleExist}) {
             </div> : ''
           }
           {
-            pathval.getPathValue(pdfStore, 'operation.biddingList') && judgeIsModuleExist('OPERATION') ?
+            judgeIsModuleExist('OPERATION') ?
               <div>
                 <PdfTitle module="营运能力分析" />
                 <TaxOperation moduleData={pathval.getPathValue(pdfStore, 'operation')} />

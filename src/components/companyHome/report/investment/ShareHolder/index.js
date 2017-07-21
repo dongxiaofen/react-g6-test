@@ -10,7 +10,7 @@ function ShareHolder({investmentStore}) {
   return (
     <div>
       <ModuleTitle module="股东投资任职" count={count}/>
-      <ShareHolderList isLoading={isLoading} error={error} shareholders={shData} />
+      <ShareHolderList isLoading={isLoading} error={error} shareholders={shData} module="对外投资任职"/>
     </div>
   );
 }

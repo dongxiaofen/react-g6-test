@@ -12,14 +12,14 @@ function Business(props) {
       <ChartBox componentName="newBusiness">
         <NewBusiness {...props} />
       </ChartBox>
-      <ChartBox componentName="provinceRank">
-        <ProvinceRank {...props} />
+      <ChartBox componentName="scaleDist">
+        <ScaleDist {...props} />
       </ChartBox>
       <ChartBox componentName="industryDist">
         <IndustryDist {...props} />
       </ChartBox>
-      <ChartBox componentName="scaleDist">
-        <ScaleDist {...props} />
+      <ChartBox componentName="provinceRank">
+        <ProvinceRank {...props} />
       </ChartBox>
     </div>
   );
