@@ -20,7 +20,7 @@ function RiskFeaturesStart({reportAxisStore}) {
             扫描企业风险特征，提前预警高危企业
           </div>
           <div className={styles.content}>遍历主体企业及其关联关系所发生的历史事件行为，抓取风险名单企业独有的风险特征，为您提前预警！</div>
-          <div className={reportAxisStore.canScan ? styles.button : styles.buttonNone} onClick={clickBtn}>
+          <div className={styles.button} onClick={clickBtn}>
             开始扫描
           </div>
         </div>
