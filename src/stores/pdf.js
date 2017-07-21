@@ -47,6 +47,7 @@ class PdfStore {
 
   @action.bound sendEmail(params) {
     params.email = companyHomeStore.emailAddress;
+    params.companyName = companyHomeStore.reportInfo.companyName;
     pdfApi.sendEmail(params).then((res) => {
       messageStore.openMessage({
         content: res.data.message
