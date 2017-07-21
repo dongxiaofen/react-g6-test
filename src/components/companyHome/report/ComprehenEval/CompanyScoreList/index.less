@@ -3,6 +3,7 @@
   width: 50%;
   height: 100%;
   padding-right: 10px;
+  position: relative;
 }
 
 @media screen and (max-width: 1280px) {
@@ -170,16 +171,27 @@
 }
 
 .explain {
-  float: right;
+  position: absolute;
+  right: 13px;
+  top: 0px;
   font-size: 14px;
   text-decoration: underline;
   color: #BDBDBD;
-  cursor: pointer;
+  cursor: help;
   &:hover {
     color: #BDBDBD;
   }
 }
+.explainTitle {
+  padding: 15px 0 5px 0;
+  font-size: 13px;
+  color: #424242;
+}
+.explainTitle:first-child {
+  padding-top: 0;
+}
 .explainContent {
   font-size: 13px;
-  width: 400px;
+  width: 615px;
+  color: #9E9E9E;
 }
