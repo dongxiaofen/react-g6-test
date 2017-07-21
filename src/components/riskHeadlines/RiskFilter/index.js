@@ -40,7 +40,7 @@ function RiskFilter({riskHeadlinesStore}) {
     filterCig.forEach((item, idx)=>{
       const disabled = dimGroupType.length <= 1 && item.checked ? true : false;
       output.push(
-        <div key={item.enumKey} className={styles.checkBox} key={`checkBox${idx}`} title={disabled ? '维度类型至少保留一个' : ''}>
+        <div className={styles.checkBox} key={`checkBox${idx}`} title={disabled ? '维度类型至少保留一个' : ''}>
           <Checkbox
             defaultChecked={item.checked}
             checked={item.checked}

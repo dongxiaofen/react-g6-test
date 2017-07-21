@@ -24,7 +24,7 @@ function Header({ blackListScanStore, reportId }) {
       <img src={hasRisk ? scanError : scanSucc} alt="扫描..." />
       <div className={styles.infoBox}>
         <h1>{hasRisk ? errorStr : succStr}</h1>
-        <p>已完成主体公司、关联关系、网络关系的扫描...</p>
+        <p>已完成主体公司、关联关系、网络关系的扫描</p>
       </div>
       <div className={styles.actionBox}>
         <p>{`扫描时间：${blackListScanStore.data.main.date || '获取失败'}`}</p>
