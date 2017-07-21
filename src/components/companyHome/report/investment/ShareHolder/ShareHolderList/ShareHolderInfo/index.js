@@ -31,7 +31,8 @@ function ShareHolderInfo({investmentStore, bannerStore}) {
       items: shareHolderPositionFrList,
       maxCols: 2,
       hasNumber: true,
-      error: isFrPosError
+      error: isFrPosError,
+      module: '对外投资任职',
     },
   };
   const invData = {
@@ -45,7 +46,8 @@ function ShareHolderInfo({investmentStore, bannerStore}) {
       items: shareHolderInvList,
       maxCols: 2,
       hasNumber: true,
-      error: isInvError
+      error: isInvError,
+      module: '对外投资任职',
     },
   };
   const posData = {
@@ -59,7 +61,8 @@ function ShareHolderInfo({investmentStore, bannerStore}) {
       items: shareHolderPositionList,
       maxCols: 2,
       hasNumber: true,
-      error: isPosError
+      error: isPosError,
+      module: '对外投资任职',
     },
   };
   return (
