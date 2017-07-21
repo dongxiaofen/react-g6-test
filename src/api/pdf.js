@@ -131,27 +131,27 @@ export const pdfDownload = (backendApi, urlPanth, paramString, types) => {
       case 'RISK_ANNOUNCEMENT':
         responseData.courtData.countCount = pathval.getPathValue(data, 'court.countCount');
         responseData.courtData.total = pathval.getPathValue(data, 'court.total');
-        responseData.courtAnnouncement = pathval.getPathValue(data, 'courtAnnouncement');
+        responseData.courtData.courtAnnouncementDetails = pathval.getPathValue(data, 'court.courtAnnouncementDetails');
         break;
       case 'RISK_NOTICE':
         responseData.courtData.countCount = pathval.getPathValue(data, 'court.countCount');
         responseData.courtData.total = pathval.getPathValue(data, 'court.total');
-        responseData.courtNotice = pathval.getPathValue(data, 'courtNotice');
+        responseData.courtData.courtNotice = pathval.getPathValue(data, 'court.courtNotice');
         break;
       case 'RISK_EXECUTE':
         responseData.courtData.countCount = pathval.getPathValue(data, 'court.countCount');
         responseData.courtData.total = pathval.getPathValue(data, 'court.total');
-        responseData.courtExecution = pathval.getPathValue(data, 'courtExecution');
+        responseData.courtData.courtExecution = pathval.getPathValue(data, 'court.courtExecution');
         break;
       case 'RISK_DISHONESTY':
         responseData.courtData.countCount = pathval.getPathValue(data, 'court.countCount');
         responseData.courtData.total = pathval.getPathValue(data, 'court.total');
-        responseData.dishonestyList = pathval.getPathValue(data, 'dishonestyList');
+        responseData.courtData.dishonestyList = pathval.getPathValue(data, 'court.dishonestyList');
         break;
       case 'RISK_LITIGATION':
         responseData.courtData.countCount = pathval.getPathValue(data, 'court.countCount');
         responseData.courtData.total = pathval.getPathValue(data, 'court.total');
-        responseData.litigationAssets = pathval.getPathValue(data, 'litigationAssets');
+        responseData.courtData.litigationAssets = pathval.getPathValue(data, 'court.litigationAssets');
         break;
       case 'RISK_ABNORMAL':
         responseData.corpCheckData.abnormalOperation = pathval.getPathValue(data, 'corpCheck.abnormalOperation');

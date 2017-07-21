@@ -20,9 +20,10 @@ import getPermissionMeta from 'helpers/getPermissionMeta';
 function PdfReport({pdfStore, clientStore}) {
   const judgeIsModuleExist = (module) => {
     const pdfModule = pdfStore.pdfTypesKey;
-    return (pdfModule && pdfModule.includes(module));
+    return pdfModule.split(',').some((value) => value === module);
+    // return (pdfModule && pdfModule.includes(module));
     // console.log(pdfStore, module);
-    // return true;
+    // return status;
   };
   return (
     <div>
