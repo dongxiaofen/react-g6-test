@@ -110,13 +110,13 @@ class LeftBarStore {
         menuText: '风险扫描',
         menuKey: 'trendAnalyse',
         children: [
+          // {
+          //   menuText: '规则预警',
+          //   menuKey: 'alertAnalysis',
+          //   lock: true,
+          // },
           {
-            menuText: '规则预警',
-            menuKey: 'alertAnalysis',
-            lock: true,
-          },
-          {
-            menuText: '黑名单扫描',
+            menuText: '风险名单扫描',
             menuKey: 'blackListScan',
             lock: true,
           },

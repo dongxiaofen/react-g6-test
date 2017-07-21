@@ -10,13 +10,19 @@ function Enterprise({investmentStore}) {
   const isLoading = evtData.content === undefined ? true : false;
   const isError = evtData.error;
   const modifyTextNumber = (value) => {
-    return Number(value).toFixed(2);
+    if (value) {
+      return Number(value).toFixed(2) === '0.00' ? '--' : Number(value).toFixed(2);
+    }
+    return '--';
+  };
+  const modifyRato = (value) => {
+    return value && value !== '0.00%' ? value : '--';
   };
   const data = {
     meta: {
       body: [
         [{ 'key': 'entName', colSpan: '1' }, { 'key': 'entStatus', colSpan: '1' }],
-        [{ 'key': 'subConam', 'width': '4', 'modifyBlock': modifyTextNumber}, { 'key': 'fundedRatio', 'width': '4' }],
+        [{ 'key': 'subConam', 'width': '4', 'modifyBlock': modifyTextNumber}, { 'key': 'fundedRatio', 'width': '4', modifyBlock: modifyRato}],
         [{ 'key': 'regCap', 'width': '4', 'hide': true, 'modifyBlock': modifyTextNumber}, { 'key': 'esDate', 'width': '4'}]
       ],
       dict: 'entinvItemLists',

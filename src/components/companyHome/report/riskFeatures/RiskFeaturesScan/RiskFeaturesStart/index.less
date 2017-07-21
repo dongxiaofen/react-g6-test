@@ -1,0 +1,97 @@
+.box {
+  margin: 99px 0 0 0;
+  width: 100%;
+  min-height: 650px;
+  height: auto;
+}
+.wrap {
+  margin: 0 auto;
+  width: 1106px;
+  height: 336px;
+}
+.left {
+  float: left;
+}
+@keyframes circle {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+.img {
+  float: left;
+  width: 336px;
+  height: 336px;
+  background-image: url('imgs/companyHome/risk/IC1.png');
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+  img {
+    float: left;
+    margin: 51px;
+    display: block;
+    width: 234px;
+    height: 234px;
+    animation: circle 1.3s ease;
+  }
+}
+.right {
+  float: left;
+  margin: 47px 0 0 20px;
+  width: 750px;
+}
+.titile {
+  float: left;
+  font-weight: 500;
+  width: 100%;
+  font-size:40px;
+  color:#424242;
+  letter-spacing:0;
+  text-align:left;
+  font-family: PingFangSC-Light;
+}
+.content {
+  float: left;
+  width: 100%;
+  margin: 20px 0 0 0;
+  font-size:16px;
+  color:#616161;
+  letter-spacing:0;
+  text-align:left;
+}
+.button {
+  float: left;
+  margin: 50px 0 0 0;
+  width: 100%;
+  background:#64b5f6;
+  border-radius:100px;
+  width:250px;
+  height:65px;
+  line-height: 65px;
+  font-size:22px;
+  color:#ffffff;
+  text-align: center;
+  cursor: pointer;
+}
+.buttonNone {
+  float: left;
+  margin: 50px 0 0 0;
+  width: 100%;
+  border-radius:100px;
+  width:250px;
+  height:65px;
+  line-height: 65px;
+  font-size:22px;
+  color:#9E9E9E;
+  text-align: center;
+  cursor: not-allowed;
+  pointer-events: none;
+  border: 1px solid #BDBDBD;
+}
+
+@media (max-width: 1610px) {
+  .wrap {
+    transform: scale(0.8) translate(-140px);
+  }
+}
