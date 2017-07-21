@@ -56,7 +56,7 @@ class BannerStore {
       {label: '行政信息', value: 'BUSINESS', checked: false, type: 'basicReport'},
       // { label: '股权相关', value: 'PLEDGE', checked: false, type: 'basicReport' },
       {label: '关联网络', value: 'NETWORK', checked: false, type: 'basicReport'},
-      {label: '风险传导模型', value: 'R_MODLE', checked: false, type: 'report'},
+      // {label: '风险传导模型', value: 'R_MODLE', checked: false, type: 'report'},
       {label: '抵质押信息', value: 'MORTGAGE', checked: false, type: 'basicReport'},
       {label: '分析报告', value: 'ANALYSREPORT', checked: false, type: 'loan'},
     ],
@@ -71,6 +71,7 @@ class BannerStore {
         {label: '法人投资任职', value: 'INV_POS_FR', checked: false, type: 'basicReport'},
         {label: '企业投资', value: 'INV_POS_ENT', checked: false, type: 'basicReport'},
         {label: '董监高投资任职', value: 'INV_POS_MANAGEMENT', checked: false, type: 'report'},
+        {label: '股东投资任职', value: 'INV_POS_SHAREHOLDER', checked: false, type: 'report'},
       ],
       'STOCK': [
         {label: '公司概况', value: 'STOCK_INFO', checked: false, type: 'basicReport'},
@@ -103,9 +104,9 @@ class BannerStore {
       'NETWORK': [
         {label: '关系网络图', value: 'NETWORK_RELEVANCE', checked: false, type: 'basicReport'},
       ],
-      'R_MODLE': [
-        {label: '风险链条', value: 'NETWORK_BLACKLIST', checked: false, type: 'report'},
-      ],
+      // 'R_MODLE': [
+      //   {label: '风险链条', value: 'NETWORK_BLACKLIST', checked: false, type: 'report'},
+      // ],
       'PLEDGE': [
         // { label: '股权冻结', value: 'PLEDGE_EQUITY_SHARE', checked: false },
         // { label: '股权质押', value: 'RISK_ANNOUNCEMENT', checked: false },
@@ -660,7 +661,7 @@ class BannerStore {
         {label: '行政信息', value: 'BUSINESS', checked: false, type: 'basicReport'},
         // { label: '股权相关', value: 'PLEDGE', checked: false, type: 'basicReport' },
         {label: '关联网络', value: 'NETWORK', checked: false, type: 'basicReport'},
-        {label: '风险传导模型', value: 'R_MODLE', checked: false, type: 'report'},
+        // {label: '风险传导模型', value: 'R_MODLE', checked: false, type: 'report'},
         {label: '抵质押信息', value: 'MORTGAGE', checked: false, type: 'basicReport'},
         {label: '分析报告', value: 'ANALYSREPORT', checked: false, type: 'loan'},
       ],
@@ -675,6 +676,7 @@ class BannerStore {
           {label: '法人投资任职', value: 'INV_POS_FR', checked: false, type: 'basicReport'},
           {label: '企业投资', value: 'INV_POS_ENT', checked: false, type: 'basicReport'},
           {label: '董监高投资任职', value: 'INV_POS_MANAGEMENT', checked: false, type: 'report'},
+          {label: '股东投资任职', value: 'INV_POS_SHAREHOLDER', checked: false, type: 'report'},
         ],
         'STOCK': [
           {label: '公司概况', value: 'STOCK_INFO', checked: false, type: 'basicReport'},
@@ -707,9 +709,9 @@ class BannerStore {
         'NETWORK': [
           {label: '关系网络图', value: 'NETWORK_RELEVANCE', checked: false, type: 'basicReport'},
         ],
-        'R_MODLE': [
-          {label: '风险链条', value: 'NETWORK_BLACKLIST', checked: false, type: 'report'},
-        ],
+        // 'R_MODLE': [
+        //   {label: '风险链条', value: 'NETWORK_BLACKLIST', checked: false, type: 'report'},
+        // ],
         'PLEDGE': [
           // { label: '股权冻结', value: 'PLEDGE_EQUITY_SHARE', checked: false },
           // { label: '股权质押', value: 'RISK_ANNOUNCEMENT', checked: false },

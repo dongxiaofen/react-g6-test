@@ -9,6 +9,9 @@ function DetailTable({itemData, body, dict, rowIdx, hasNumber, maxCols, linkJump
   };
   const getValue = (config, value) => {
     let actValue = value;
+    if (!value) {
+      return '--';
+    }
     if (config.modifyType === 'date') {
       actValue = value.slice(0, 10);
     }
@@ -21,12 +24,9 @@ function DetailTable({itemData, body, dict, rowIdx, hasNumber, maxCols, linkJump
     if (config.modifyBlock) {
       actValue = config.modifyBlock(value, itemData);
     }
-    // console.log(value instanceof Array, 'value-------------');
     if (!(value instanceof Array) && (JSON.stringify(value).indexOf('div') >= 0)) {
-      console.log(value, 'value');
       actValue = <span dangerouslySetInnerHTML={{ __html: value }}></span>;
     }
-    // console.log(actValue, 'actValue---');
     return actValue;
   };
   const caculateRowsSpan = () => {

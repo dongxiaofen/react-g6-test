@@ -25,7 +25,9 @@ class CompanyHomeStore {
     value: false,
     err: {},
   }
+  @observable emailAddress = '';
   @observable reportInfo = {
+    companyName: '',
     analysisReportId: '',
     basicReportId: '',
     reportId: '',
@@ -298,6 +300,7 @@ class CompanyHomeStore {
       err: {},
     };
     this.reportInfo = {
+      companyName: '',
       analysisReportId: '',
       basicReportId: '',
       reportId: '',

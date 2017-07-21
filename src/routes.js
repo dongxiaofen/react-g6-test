@@ -25,7 +25,7 @@ import {
     Stock,
     Network,
     RelPerCheck,
-    AlertAnalysis,
+    // AlertAnalysis,
     ReportTimeAxis,
     MonitorTimeAxis,
     RuleCompany,
@@ -62,7 +62,7 @@ import {
     // History,
     // Result
     SharePosAndInv,
-    BlackList,
+    BlackListScan,
     DebtPayAbilityEval,
     AssetManageAnaly,
     CashFlowAnaly,
@@ -113,7 +113,7 @@ export default () => {
         <Route path="assets" component={ Assets } onEnter={requireAuth} />
         <Route path="stock" component={ Stock } onEnter={requireAuth} />
         <Route path="network" component={ Network } onEnter={requireAuth} />
-        <Route path="alertAnalysis" component={ AlertAnalysis } onEnter={requireAuth} />
+        {/* <Route path="alertAnalysis" component={ AlertAnalysis } onEnter={requireAuth} /> */}
         <Route path="timeAxis" component={ ReportTimeAxis } onEnter={requireAuth} />
         {/*<Route path="blackNetwork" component={ BlackNetwork } onEnter={requireAuth} />*/}
         <Route path="forceNetwork" component={ ForceNetwork } onEnter={requireAuth} />
@@ -136,7 +136,7 @@ export default () => {
         <Route path="monitorTimeAxis" component={ MonitorTimeAxis } onEnter={requireAuth} />
         <Route path="monitorAlert" component={ MonitorAlert } />
         <Route path="sharePosAndInv" component={ SharePosAndInv } />
-        <Route path="blackList" component={ BlackList } />
+        <Route path="blackListScan" component={ BlackListScan } />
         <Route path="debtPayAbilityEval" component={ DebtPayAbilityEval } />
         <Route path="assetManageAnaly" component={ AssetManageAnaly } />
         <Route path="cashFlowAnaly" component={ CashFlowAnaly } />

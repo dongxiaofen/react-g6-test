@@ -8,6 +8,21 @@ import BaseChart from 'components/common/Charts/BaseChart';
 import { loadingComp } from 'components/hoc';
 
 function RecruitmentInfo({ finishSchool, majorInfo }) {
+  const modifySchoolData = ()=>{
+    const data = finishSchool.data.slice(0);
+    let sum = 0;
+    data.forEach((item)=>{
+      sum += item;
+    });
+    let result = [];
+    if (sum !== 0) {
+      result = data.map((dataItem)=>{
+        const percent = Number((dataItem / sum * 100).toFixed(2));
+        return percent;
+      });
+    }
+    return result;
+  };
   const finishSchoolOption = {
     tooltip: {
       backgroundColor: '#ffffff',
@@ -17,7 +32,7 @@ function RecruitmentInfo({ finishSchool, majorInfo }) {
           <div style="box-shadow: 0 0 7px #ddd; padding: 15px 20px; background-color: #fff">
             <p style="text-align: center;">
               <a style="color:#9BCB65;">
-                ${ticket.name}：${ticket.value}人
+                ${ticket.name}：${ticket.value}%
               </a>
             </p>
           </div>`;
@@ -82,7 +97,7 @@ function RecruitmentInfo({ finishSchool, majorInfo }) {
             opacity: 1,
           }
         },
-        data: toJS(finishSchool.data)
+        data: modifySchoolData(toJS(finishSchool.data))
       }
     ]
   };

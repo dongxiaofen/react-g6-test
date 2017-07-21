@@ -16,7 +16,6 @@ export default class Html extends Component {
   static propTypes = {
     assets: PropTypes.object,
     component: PropTypes.node,
-    pdfDown: PropTypes.string,
     isDev: PropTypes.bool,
     reqPathName: PropTypes.string,
   };
@@ -29,7 +28,7 @@ export default class Html extends Component {
     return output;
   }
   isFirstLoad() {
-    return this.props.pdfDown === '1' || this.props.reqPathName === '/';
+    return this.props.reqPathName === '/';
   }
   render() {
     const {assets, component, ...allStore} = this.props;
@@ -55,14 +54,6 @@ export default class Html extends Component {
             rel="stylesheet" type="text/css" charSet="UTF-8"/>
           <link href="../vendors/css/preload.css"
             rel="stylesheet" type="text/css" charSet="UTF-8"/>
-          {this.props.pdfDown === '1' ?
-            <link href="../vendors/css/pdf.css"
-                  rel="stylesheet" type="text/css" charSet="UTF-8"/> :
-            Object.keys(assets.styles).map((style, key) =>
-              <link href={assets.styles[style]} key={key}
-                    rel="stylesheet" type="text/css" charSet="UTF-8"/>
-            )
-          }
           {
             Object.keys(assets.styles).map((style, key) =>
             <link href={assets.styles[style]} key={key}
@@ -79,17 +70,9 @@ export default class Html extends Component {
         </head>
         <body>
           <div id="content" style={{height: '100%'}} dangerouslySetInnerHTML={{__html: content}}/>
-          {this.props.pdfDown === '1' ? '' :
-            <script dangerouslySetInnerHTML={{__html: `window.__data=${JSON.stringify(stores)};`}} charSet="UTF-8"/>
-          }
-          {this.props.pdfDown === '1' ? '' :
-            <script src={assets.javascript['common.js']} charSet="UTF-8"/>
-          }
-
-          {this.props.pdfDown === '1' ? '' :
-            <script id="mainJs" src={assets.javascript.main} charSet="UTF-8"/>
-          }
-
+          <script dangerouslySetInnerHTML={{__html: `window.__data=${JSON.stringify(stores)};`}} charSet="UTF-8"/>
+          <script src={assets.javascript['common.js']} charSet="UTF-8"/>
+          <script id="mainJs" src={assets.javascript.main} charSet="UTF-8"/>
           {this.isFirstLoad() ? '' :
             <script src="../vendors/js/echarts_v3_3_2.min.js"></script>
           }
@@ -101,12 +84,3 @@ export default class Html extends Component {
     );
   }
 }
-// {this.props.pdfDown === '1' ? '' :
-//             <script src={`//cdn.bootcss.com/react/15.4.2/react.${this.props.isDev ? '' : 'min.'}js`}></script>
-//           }
-//           {this.props.pdfDown === '1' ? '' :
-//             <script src={`//cdn.bootcss.com/react/15.4.2/react-dom.${this.props.isDev ? '' : 'min.'}js`}></script>
-//           }
-//           {this.props.pdfDown === '1' ? '' :
-//             <script src={`//cdn.bootcss.com/react-router/3.0.2/ReactRouter.${this.props.isDev ? '' : 'min.'}js`}></script>
-//           }
