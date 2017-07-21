@@ -5,6 +5,13 @@ import Chart from 'components/common/Charts/ResizeChart';
 import styles from './index.less';
 function ProvinceRank({accountSettingStore}) {
   const data = accountSettingStore.tabs.business.province.content;
+  const unkownData = data.filter(item => (item.area === '未知' || item.area === '其他'));
+  console.log(unkownData, 'unkownData');
+  let unkownNumber = 0;
+  unkownData.map((item) => {
+    unkownNumber += parseInt(item.total, 10);
+  });
+
   const sortData = data.filter(item => (item.area !== '未知' && item.area !== '其他')).sort((prev, next) => prev.total - next.total);
   const area = sortData.map(item => item.area);
   const seriesData = sortData.map(item => {
@@ -113,6 +120,10 @@ function ProvinceRank({accountSettingStore}) {
         chartId="provinceRank"
         height="500"
         option={provinceRankOption} />
+      {unkownNumber > 0 ?
+        <div className={styles.note}>
+          其中{unkownNumber}家企业地区未知，暂未统计
+        </div> : null}
     </div>
   );
 }
