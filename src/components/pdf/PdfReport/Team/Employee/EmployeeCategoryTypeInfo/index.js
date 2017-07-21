@@ -25,10 +25,17 @@ function EmployeeCategoryTypeInfo({moduleData}) {
     }
   }
 
+  const parseData = (itemData) => {
+    if (!isNaN(parseFloat(itemData))) {
+      return parseFloat(itemData / 100).toFixed(2);
+    }
+    return itemData;
+  };
+
   const data = {
     dataConfig: [
       {key: 'name', width: '5'},
-      {key: 'value', width: '5'},
+      {key: 'value', width: '5', handle: parseData},
     ],
     items: dataList.reverse(),
     dict: 'categoryTypeInfo',

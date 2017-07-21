@@ -209,12 +209,12 @@ app.get('/sendEmail', function (req, res) {
     // const pdfName = username + timestamp + '.pdf';
     writeStrToHtml(htmlName, reportHtml, () => {
       // html2Pdf(htmlName, pdfName, () => {
-        upFileToQiniu(PDF_DIRNAME + username + timestamp, {
-          pdfType,
-          companyName,
-          mail: req.query.email,
-          client: config.target,
-        });
+      //   upFileToQiniu(PDF_DIRNAME + username + timestamp, {
+      //     pdfType,
+      //     companyName,
+      //     mail: req.query.email,
+      //     client: config.target,
+      //   });
       // });
     }).catch((err) => {
       console.log('pdfDownload......err....' + err);

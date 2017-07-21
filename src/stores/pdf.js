@@ -1,9 +1,10 @@
 import {observable, action} from 'mobx';
-import axios from 'axios';
+// import axios from 'axios';
 import pathval from 'pathval';
 import { pdfApi } from '../api/index';
 import messageStore from './message';
 import companyHomeStore from './companyHome';
+import {pdfDownload} from '../api/pdf';
 
 
 class PdfStore {
@@ -31,7 +32,7 @@ class PdfStore {
   @observable entinvItemList = [];
   @observable frData = {};
   @observable shares = {};
-  @observable pdfTypesKey = 'SCORE,PROFIT,OPERATION,GROWING,SUMMERY';
+  @observable pdfTypesKey = '';
   @observable managements = [];
   @observable reportType = '';
   @observable taxList = [];
@@ -57,7 +58,7 @@ class PdfStore {
     });
   }
 
-  @action.bound getOverviewData(id, type, idType) {
+  @action.bound getOverviewData() {
     const types = {
       basicReport: [
         'BANNER_INFO',
@@ -128,41 +129,15 @@ class PdfStore {
         'NETWORK_BLACKLIST',
       ]
     };
-    types[type].forEach((typev) => {
-      axios.get(`/api/pdf/${type}?${idType}=${id}&types=${typev}`);
+    // types[type].forEach((typev) => {
+    //   axios.get(`/api/pdf/${type}?${idType}=${id}&types=${typev}`);
+    // });
+    pdfDownload('', '/api/pdf/report', {reportId: 1594}, types.report.join(',')).then(action((responseData) => {
+      this.getPdfDownData(responseData);
+      this.pdfTypesKey = types.report.join(',');
+    })).catch((err) => {
+      console.log(err);
     });
-    // 获取pdf
-    // axios.get(`/api/pdf/${type}?${idType}=${id}&types=${types[type].join(',')}`)
-    //   .then(action((response) => {
-    //     this.banner = pathval.getPathValue(response.data, 'banner');
-    //     this.companyName = pathval.getPathValue(response.data, 'companyName');
-    //     this.summary = pathval.getPathValue(response.data, 'summary');
-    //     this.report = pathval.getPathValue(response.data, 'corpDetail');
-    //     this.company = pathval.getPathValue(response.data, 'stock.info');
-    //     this.announcement = pathval.getPathValue(response.data, 'stock.announcement');
-    //     this.courtData = pathval.getPathValue(response.data, 'court');
-    //     this.internet = pathval.getPathValue(response.data, 'internet');
-    //     this.trademark = pathval.getPathValue(response.data, 'trademark'); // 没有数据
-    //     this.patent = pathval.getPathValue(response.data, 'patent');
-    //     this.bidding = pathval.getPathValue(response.data, 'bidding');
-    //     this.network = pathval.getPathValue(response.data, 'network');
-    //     this.blacklist = pathval.getPathValue(response.data, 'blackList.result[0].paths');
-    //     this.team = pathval.getPathValue(response.data, 'recruitTeamResponse');
-    //     this.corpCheckData = pathval.getPathValue(response.data, 'corpCheck');
-    //     this.entinvItemList = pathval.getPathValue(response.data, 'ent.entinvItemList');
-    //     this.frData = pathval.getPathValue(response.data, 'fr');
-    //     this.shares = pathval.getPathValue(response.data, 'shares');
-    //     this.managements = pathval.getPathValue(response.data, 'managements');
-    //     this.taxList = pathval.getPathValue(response.data, 'taxList');
-    //     // 分析能力
-    //     this.star = pathval.getPathValue(response.data, 'star');
-    //     this.growing = pathval.getPathValue(response.data, 'growing');
-    //     this.operation = pathval.getPathValue(response.data, 'operation');
-    //     this.profit = pathval.getPathValue(response.data, 'profit');
-    //   }))
-    //   .catch((error) => {
-    //     console.log(error.response);
-    //   });
   }
 
   @action.bound getPdfDownData(data) {
