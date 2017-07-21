@@ -58,7 +58,6 @@ function JudgeDoc({data, store, module, cardType}) {
     'typeName': this.props.data.dimName
   };
   return (<BaseModule
-          type="judgeDoc"
           module={module}
           data={moduleData}
           viewDetCallback={viewDetail}
