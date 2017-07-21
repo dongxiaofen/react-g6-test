@@ -84,6 +84,7 @@ class BlackListScanStore {
         this.data.main = resp.data;
         if (this.scanStatus.status === 'FINISH') {
           this.data.ready[0] = true;
+          this.extend.main.ext = resp.data.blacklistNum !== 0 ? true : false;
           this.extend.main.subExt = resp.data.blacklistNum === 0 ? true : false;
         } else {
           this.data.statusReady[0] = true;
@@ -110,6 +111,7 @@ class BlackListScanStore {
         this.data.related = resp.data;
         if (this.scanStatus.status === 'FINISH') {
           this.data.ready[1] = true;
+          this.extend.related.ext = resp.data.blacklistNum !== 0 ? true : false;
           this.extend.related.subExt = resp.data.blacklistNum === 0 ? true : false;
         } else {
           this.data.statusReady[1] = true;
@@ -136,6 +138,7 @@ class BlackListScanStore {
         this.data.network = resp.data;
         if (this.scanStatus.status === 'FINISH') {
           this.data.ready[2] = true;
+          this.extend.network.ext = resp.data.blacklistNum !== 0 ? true : false;
           this.extend.network.subExt = resp.data.blacklistNum === 0 ? true : false;
         } else {
           this.data.statusReady[2] = true;
