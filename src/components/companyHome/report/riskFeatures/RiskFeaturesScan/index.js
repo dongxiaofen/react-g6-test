@@ -11,13 +11,13 @@ export default class RiskFeaturesScan extends Component {
     companyHomeStore: PropTypes.object,
     reportAxisStore: PropTypes.object,
   }
-  componentDidMount() {
+  componentWillMount() {
     const reportId = this.props.companyHomeStore.reportInfo.reportId;
     this.props.reportAxisStore.getScanStatus(reportId);
   }
-  // componentWillUnmount() {
-  //   this.props.reportAxisStore.resetStoreRisk();
-  // }
+  componentWillUnmount() {
+    this.props.reportAxisStore.resetStoreRisk();
+  }
   render() {
     return (
       <div className={styles.box}>

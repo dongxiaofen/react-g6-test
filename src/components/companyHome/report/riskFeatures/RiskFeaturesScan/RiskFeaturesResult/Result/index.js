@@ -5,9 +5,9 @@ import List from '../List';
 import Tooltip from 'antd/lib/tooltip';
 
 function Result({data}) {
-  const clickBtn = () => {
-    data.getScanStatusClick();
-  };
+  // const clickBtn = () => {
+  //   data.getScanStatusClick();
+  // };
   const result = data.result && data.result.targetNum && data.result.targetNum > 0 ? false : true;
   return (
     <div className={styles.box}>
@@ -27,11 +27,14 @@ function Result({data}) {
             扫描时间：{data.result && data.result.date ? data.result.date : '暂无'}
           </div>
           <Tooltip title="成功刷新报告后可重新扫描" placement="rightBottom">
-            {data.result && data.result.canScan ? <div onClick={clickBtn} className={`${styles.button} ${result ? styles.buttonY : styles.buttonN}`}>
+            {/* {data.result && data.result.canScan ? <div onClick={clickBtn} className={`${styles.button} ${result ? styles.buttonY : styles.buttonN}`}>
               重新扫描
             </div> : <div className={`${styles.button} ${styles.buttonNone}`}>
               重新扫描
-            </div>}
+            </div>} */}
+            <div className={`${styles.button} ${styles.buttonNone}`}>
+              重新扫描
+            </div>
           </Tooltip>
         </div>
       </div>
