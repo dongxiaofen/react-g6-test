@@ -31,7 +31,8 @@ function PosItemInfo({investmentStore, bannerStore}) {
       items: thisPosIttem.frPositionList,
       maxCols: 2,
       hasNumber: true,
-      error: frPositionCount < 1
+      error: frPositionCount < 1,
+      module: '对外投资任职'
     },
   };
   // 对外投资
@@ -48,7 +49,8 @@ function PosItemInfo({investmentStore, bannerStore}) {
       items: thisPosIttem.managementInvList,
       maxCols: 2,
       hasNumber: true,
-      error: managementInvCount < 1
+      error: managementInvCount < 1,
+      module: '对外投资任职'
     },
   };
   // 对外任职
@@ -64,7 +66,8 @@ function PosItemInfo({investmentStore, bannerStore}) {
       items: thisPosIttem.managementPositionList,
       maxCols: 2,
       hasNumber: true,
-      error: managementPositionCount < 1
+      error: managementPositionCount < 1,
+      module: '对外投资任职'
     },
   };
   return (
