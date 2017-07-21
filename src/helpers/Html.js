@@ -19,67 +19,71 @@ export default class Html extends Component {
     isDev: PropTypes.bool,
     reqPathName: PropTypes.string,
   };
+
   prepareStore(allStore) {
     const keyArr = Object.keys(allStore);
     const output = {};
-    keyArr.map((key)=>{
+    keyArr.map((key) => {
       output[key] = toJS(allStore[key]);
     });
     return output;
   }
+
   isFirstLoad() {
     return this.props.reqPathName === '/';
   }
+
   render() {
     const {assets, component, ...allStore} = this.props;
     const stores = this.prepareStore(allStore);
     const content = component ? ReactDOM.renderToString(component) : '';
     const head = Helmet.rewind();
+    const isDx = allStore.clientStore.envConfig !== 'cfca_prod';
     return (
       <html lang="en-us">
-        <head>
-          {head.base.toComponent()}
-          {head.meta.toComponent()}
-          {head.link.toComponent()}
-          {head.script.toComponent()}
-          <title>{allStore.clientStore.envConfig === 'cfca_prod' ? '洞悉-风险管理平台' : '星象-风险管理平台'}</title>
-          <link rel="shortcut icon" href="/favicon3.ico" />
-          <meta name="viewport" content="width=device-width, initial-scale=1" />
-          <meta httpEquiv="content-type" content="text/html;charset=utf-8" />
-          {/* styles (will be present only in production with webpack extract text plugin) */}
+      <head>
+        {head.base.toComponent()}
+        {head.meta.toComponent()}
+        {head.link.toComponent()}
+        {head.script.toComponent()}
+        <title>{isDx ? '洞悉-风险管理平台' : '星象-风险管理平台'}</title>
+        {isDx ? '' : <link rel="shortcut icon" href="/favicon3.ico"/>}
+        <meta name="viewport" content="width=device-width, initial-scale=1"/>
+        <meta httpEquiv="content-type" content="text/html;charset=utf-8"/>
+        {/* styles (will be present only in production with webpack extract text plugin) */}
 
-          <link href="../vendors/css/font-awesome.css"
-            rel="stylesheet" type="text/css" charSet="UTF-8"/>
-          <link href="../vendors/css/antd.css"
-            rel="stylesheet" type="text/css" charSet="UTF-8"/>
-          <link href="../vendors/css/preload.css"
-            rel="stylesheet" type="text/css" charSet="UTF-8"/>
-          {
-            Object.keys(assets.styles).map((style, key) =>
+        <link href="../vendors/css/font-awesome.css"
+              rel="stylesheet" type="text/css" charSet="UTF-8"/>
+        <link href="../vendors/css/antd.css"
+              rel="stylesheet" type="text/css" charSet="UTF-8"/>
+        <link href="../vendors/css/preload.css"
+              rel="stylesheet" type="text/css" charSet="UTF-8"/>
+        {
+          Object.keys(assets.styles).map((style, key) =>
             <link href={assets.styles[style]} key={key}
                   rel="stylesheet" type="text/css" charSet="UTF-8"/>
-            )
-          }
-          {/* <link href="/vendors/css/antd.css" media="screen, projection"
-                rel="stylesheet" type="text/css" charSet="UTF-8"/> */}
-          {/* (will be present only in development mode) */}
-          {/* outputs a <style/> tag with all bootstrap styles + App.scss + it could be CurrentPage.scss. */}
-          {/* can smoothen the initial style flash (flicker) on page load in development mode. */}
-          {/* ideally one could also include here the style for the current page (Home.scss, About.scss, etc) */}
+          )
+        }
+        {/* <link href="/vendors/css/antd.css" media="screen, projection"
+         rel="stylesheet" type="text/css" charSet="UTF-8"/> */}
+        {/* (will be present only in development mode) */}
+        {/* outputs a <style/> tag with all bootstrap styles + App.scss + it could be CurrentPage.scss. */}
+        {/* can smoothen the initial style flash (flicker) on page load in development mode. */}
+        {/* ideally one could also include here the style for the current page (Home.scss, About.scss, etc) */}
 
-        </head>
-        <body>
-          <div id="content" style={{height: '100%'}} dangerouslySetInnerHTML={{__html: content}}/>
-          <script dangerouslySetInnerHTML={{__html: `window.__data=${JSON.stringify(stores)};`}} charSet="UTF-8"/>
-          <script src={assets.javascript['common.js']} charSet="UTF-8"/>
-          <script id="mainJs" src={assets.javascript.main} charSet="UTF-8"/>
-          {this.isFirstLoad() ? '' :
-            <script src="../vendors/js/echarts_v3_3_2.min.js"></script>
-          }
-          {this.isFirstLoad() ? '' :
-            <script src="../vendors/js/map/china.min.js"></script>
-          }
-        </body>
+      </head>
+      <body>
+      <div id="content" style={{height: '100%'}} dangerouslySetInnerHTML={{__html: content}}/>
+      <script dangerouslySetInnerHTML={{__html: `window.__data=${JSON.stringify(stores)};`}} charSet="UTF-8"/>
+      <script src={assets.javascript['common.js']} charSet="UTF-8"/>
+      <script id="mainJs" src={assets.javascript.main} charSet="UTF-8"/>
+      {this.isFirstLoad() ? '' :
+        <script src="../vendors/js/echarts_v3_3_2.min.js"></script>
+      }
+      {this.isFirstLoad() ? '' :
+        <script src="../vendors/js/map/china.min.js"></script>
+      }
+      </body>
       </html>
     );
   }

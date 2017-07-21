@@ -1,25 +1,25 @@
 import React, {PropTypes} from 'react';
-import { observer } from 'mobx-react';
-import { browserHistory } from 'react-router';
+import {observer} from 'mobx-react';
+import {browserHistory} from 'react-router';
 import styles from './index.less';
 
 import imgLoanBefore from 'imgs/navbar/loanBefore.png';
 import imgLoaning from 'imgs/navbar/loaning.png';
 import imgLoanAfter from 'imgs/navbar/loanAfter.png';
 
-function Menu({ routing }) {
+function Menu({routing, clientStore}) {
   const config = [
-    { parent: { module: '首页', route: 'accountProfile' } },
-    { parent: { module: '搜索', route: 'search' } },
+    {parent: {module: '首页', route: 'accountProfile'}},
+    {parent: {module: '搜索', route: 'search'}},
     {
-      parent: { module: '核查'},
+      parent: {module: '核查'},
       children: [
         // { module: '个人投资任职', route: '/' },
-        { module: '高风险核查', route: 'relPerCheck' },
-        { module: '企业经营核查', route: 'taxCheck' },
+        {module: '高风险核查', route: 'relPerCheck'},
+        {module: '企业经营核查', route: 'taxCheck'},
         // { module: '敬请期待', splitters: true, route: '' },
         // { module: '企业黑名单', route: 'corpBlackList' },
-        { module: '信息匹配', route: 'personCheck' },
+        {module: '信息匹配', route: 'personCheck'},
       ]
     },
     // {
@@ -31,33 +31,33 @@ function Menu({ routing }) {
     // },
     // { parent: { module: '头条', route: 'riskHeadlines' } },
     {
-      parent: { module: '报告', tagImg: imgLoanBefore},
+      parent: {module: '报告', tagImg: imgLoanBefore},
       children: [
-        { module: '基础报告', route: 'reportList?activeKey=basic' },
-        { module: '高级报告', route: 'reportList?activeKey=advanced' },
+        {module: '基础报告', route: 'reportList?activeKey=basic'},
+        {module: '高级报告', route: 'reportList?activeKey=advanced'},
       ]
     },
     {
-      parent: { module: '分析', tagImg: imgLoaning},
+      parent: {module: '分析', tagImg: imgLoaning},
       children: [
-        { module: '多维综合评价', route: 'analysisList?activeKey=multi' },
-        { module: '盈利能力分析', route: 'analysisList?activeKey=profit' },
-        { module: '营运能力分析', route: 'analysisList?activeKey=operate' },
-        { module: '成长能力分析', route: 'analysisList?activeKey=develop' },
+        {module: '多维综合评价', route: 'analysisList?activeKey=multi'},
+        {module: '盈利能力分析', route: 'analysisList?activeKey=profit'},
+        {module: '营运能力分析', route: 'analysisList?activeKey=operate'},
+        {module: '成长能力分析', route: 'analysisList?activeKey=develop'},
         // { module: '敬请期待', splitters: true, route: '' },
-        { module: '偿债能力分析', route: 'analysisList?activeKey=debt' },
-        { module: '资产管理分析', route: 'analysisList?activeKey=capital' },
-        { module: '现金流分析', route: 'analysisList?activeKey=cash' },
+        {module: '偿债能力分析', route: 'analysisList?activeKey=debt'},
+        {module: '资产管理分析', route: 'analysisList?activeKey=capital'},
+        {module: '现金流分析', route: 'analysisList?activeKey=cash'},
       ]
     },
     {
-      parent: { module: '监控', tagImg: imgLoanAfter},
+      parent: {module: '监控', tagImg: imgLoanAfter},
       children: [
-        { module: '每日头条', route: 'riskHeadlines' },
-        { module: '头条统计', route: 'monitorStatistics' },
-        { module: '监控列表', route: 'monitorList' },
-        { module: '预警企业', route: 'ruleCompany' },
-        { module: '预警设置', route: 'ruleList' },
+        {module: '每日头条', route: 'riskHeadlines'},
+        {module: '头条统计', route: 'monitorStatistics'},
+        {module: '监控列表', route: 'monitorList'},
+        {module: '预警企业', route: 'ruleCompany'},
+        {module: '预警设置', route: 'ruleList'},
       ]
     },
     // {
@@ -75,11 +75,11 @@ function Menu({ routing }) {
     //   ]
     // },
     {
-      parent: { module: '市场' },
+      parent: {module: '市场'},
       children: [
-        { module: '招投标', route: 'bidMarket' },
-        { module: '资产处置', route: 'assetTransaction' },
-        { module: '高风险企业', route: 'highRiskCorp' },
+        {module: '招投标', route: 'bidMarket'},
+        {module: '资产处置', route: 'assetTransaction'},
+        {module: '高风险企业', route: 'highRiskCorp'},
       ],
     },
     // {
@@ -142,13 +142,13 @@ function Menu({ routing }) {
           if (childItem.splitters) {
             childrenArray.push(
               <div key={`child${childIdx}`} className={styles.splitters}>
-              <span>{childItem.module}</span>
+                <span>{childItem.module}</span>
               </div>
             );
           } else if (childItem.deving) {
             childrenArray.push(
               <div key={`child${childIdx}`} className={styles.deving}>
-              {childItem.module}
+                {childItem.module}
               </div>
             );
           } else {
@@ -156,7 +156,7 @@ function Menu({ routing }) {
             const itemCss = childrenIsActive ? styles.childItemActive : styles.childItem;
             childrenArray.push(
               <div key={`child${childIdx}`} className={itemCss} onClick={routeToPage.bind(this, childItem.route)}>
-              {childItem.module}
+                {childItem.module}
               </div>
             );
           }
@@ -198,11 +198,16 @@ function Menu({ routing }) {
     });
     return output;
   };
+  const createLogView = () => {
+    return clientStore.envConfig === 'cfca_prod' ? '' :
+      (<div className={styles.logo}>
+        <div className={styles.logoImg}>
+        </div>
+      </div>);
+  };
   return (
     <div>
-      <div className={styles.logo}>
-        <div className={styles.logoImg}></div>
-      </div>
+      {createLogView()}
       <div className={`clearfix ${styles['navbar-menu']}`}>
         {createItem()}
       </div>
@@ -212,5 +217,6 @@ function Menu({ routing }) {
 
 Menu.propTypes = {
   routing: PropTypes.object,
+  clientStore: PropTypes.object,
 };
 export default observer(Menu);
