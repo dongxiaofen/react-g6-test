@@ -19,7 +19,7 @@ export default class Html extends Component {
   };
   render() {
     const {assets, component, ...allStore} = this.props;
-    const content = component ? ReactDOM.renderToString(component) : '';
+    const content = component ? ReactDOM.renderToStaticMarkup(component) : '';
     const head = Helmet.rewind();
     return (
       <html lang="en-us">

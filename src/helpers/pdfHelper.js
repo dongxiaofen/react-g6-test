@@ -180,6 +180,7 @@ const uploadFile = (upToken, key, param) => {
   const fileName = `${key}.html`;
   const localFile = path.join(fileName);
   const extra = new qiniu.io.PutExtra();
+  console.log('开始上传');
   qiniu.io.putFile(upToken, fileName, localFile, extra, (err, ret) => {
     if (err) {
       console.log('上传失败', fileName);

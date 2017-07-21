@@ -209,15 +209,13 @@ app.get('/sendEmail', function (req, res) {
     // const pdfName = username + timestamp + '.pdf';
     writeStrToHtml(htmlName, reportHtml, () => {
       // html2Pdf(htmlName, pdfName, () => {
-        upFileToQiniu(PDF_DIRNAME + username + timestamp, {
-          pdfType,
-          companyName,
-          mail: req.query.email,
-          client: config.target,
-        });
+        // upFileToQiniu(PDF_DIRNAME + username + timestamp, {
+        //   pdfType,
+        //   companyName,
+        //   mail: req.query.email,
+        //   client: config.target,
+        // });
       // });
-    }).catch((err) => {
-      console.log('pdfDownload......err....' + err);
     });
   });
 });
@@ -314,7 +312,7 @@ app.use((req, res) => {
             });
           });
         }).catch((err) => {
-          console.log(err)
+          console.log(err, 'pdfDownload err');
         });
         // axios.get(config.backendApi + urlPanth, { params })
         //   .then((resp) => {

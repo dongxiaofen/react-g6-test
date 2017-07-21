@@ -166,7 +166,7 @@ class PdfStore {
   }
 
   @action.bound getPdfDownData(data) {
-    console.log('data-------------------------+++++++++++', data);
+    // console.log('data-------------------------+++++++++++', data);
     this.banner = pathval.getPathValue(data, 'banner');
     this.companyName = pathval.getPathValue(data, 'companyName');
     this.summary = pathval.getPathValue(data, 'summary');
