@@ -1,5 +1,5 @@
-import { observable, action } from 'mobx';
-import { accountProfileApi } from 'api';
+import {observable, action} from 'mobx';
+import {accountProfileApi} from 'api';
 
 class AccountProfileStore {
   @observable ownWarningStatisticsData = {};
@@ -51,6 +51,7 @@ class AccountProfileStore {
 
   // 下属行业分布
   @observable subIndustryDist = {};
+
   @action.bound getAcconutPageInfo() {
     this.getOwnWarningStatistics();
     this.getSubWarningStatistics();
@@ -64,13 +65,14 @@ class AccountProfileStore {
     this.getSubNewestRule();
     this.getFrequentRule();
   }
+
   @action.bound getFrequentRule() {
     accountProfileApi.frequentRule()
-      .then(action( (response) => {
+      .then(action((response) => {
         this.subFrequentRuleData = response;
         this.subFrequentRuleIsloading = false;
       }))
-      .catch(action( (err) => {
+      .catch(action((err) => {
         this.subFrequentRuleIsloading = false;
         this.subFrequentRuleData = err.response.data;
       }));
@@ -78,11 +80,11 @@ class AccountProfileStore {
 
   @action.bound getSubNewestRule() {
     accountProfileApi.subNewestRule()
-      .then(action( (response) => {
+      .then(action((response) => {
         this.subNewestRuleData = response;
         this.subNewestRuleIsLoading = false;
       }))
-      .catch(action( (err) => {
+      .catch(action((err) => {
         this.subNewestRuleIsLoading = false;
         this.subNewestRuleData = err.response.data;
       }));
@@ -90,11 +92,11 @@ class AccountProfileStore {
 
   @action.bound getSubAccount10() {
     accountProfileApi.subWorningAccount10()
-      .then(action( (response) => {
+      .then(action((response) => {
         this.subAccount10Data = response;
         this.newAccount10IsLoading = false;
       }))
-      .catch(action( (err) => {
+      .catch(action((err) => {
         this.newAccount10IsLoading = false;
         this.subAccount10Data = err.response.data;
       }));
@@ -102,31 +104,31 @@ class AccountProfileStore {
 
   @action.bound getOwnWarningStatistics() {
     accountProfileApi.ownWarningStatistics()
-      .then(action( (response) => {
+      .then(action((response) => {
         this.ownWarningStatisticsData = response.data;
       }))
-      .catch(action( (err) => {
+      .catch(action((err) => {
         console.log(err);
       }));
   }
 
   @action.bound getSubWarningStatistics() {
     accountProfileApi.subWarningStatistics()
-      .then(action( (response) => {
+      .then(action((response) => {
         this.subWarningStatisticsData = response.data;
       }))
-      .catch(action( (err) => {
+      .catch(action((err) => {
         console.log(err);
       }));
   }
 
   @action.bound getOwnNewest() {
     accountProfileApi.ownNewest()
-      .then(action( (response) => {
+      .then(action((response) => {
         this.ownWarningCompnay = response;
         this.ownWarningCompnayIsLoading = false;
       }))
-      .catch(action( (err) => {
+      .catch(action((err) => {
         this.ownWarningCompnayIsLoading = false;
         this.ownWarningCompnay = err.response.data;
       }));
@@ -134,11 +136,11 @@ class AccountProfileStore {
 
   @action.bound getSubNewest() {
     accountProfileApi.subNewest()
-      .then(action( (response) => {
+      .then(action((response) => {
         this.subWarningCompnay = response;
         this.subWarningCompnayIsLoading = false;
       }))
-      .catch(action( (err) => {
+      .catch(action((err) => {
         this.subWarningCompnayIsLoading = false;
         this.subWarningCompnay = err.response.data;
       }));
@@ -146,11 +148,11 @@ class AccountProfileStore {
 
   @action.bound getOwnHightRisk() {
     accountProfileApi.ownHightRisk()
-      .then(action( (response) => {
+      .then(action((response) => {
         this.ownHighRisk = response;
         this.ownRiskCompnayIsLoading = false;
       }))
-      .catch(action( (err) => {
+      .catch(action((err) => {
         this.ownRiskCompnayIsLoading = false;
         this.ownHighRisk = err.response.data;
       }));
@@ -158,11 +160,11 @@ class AccountProfileStore {
 
   @action.bound getSubHightRisk() {
     accountProfileApi.subHightRisk()
-      .then(action( (response) => {
+      .then(action((response) => {
         this.subHighRisk = response;
         this.subRiskCompnayIsLoading = false;
       }))
-      .catch(action( (err) => {
+      .catch(action((err) => {
         this.subRiskCompnayIsLoading = false;
         this.subHighRisk = err.response.data;
       }));
@@ -170,11 +172,11 @@ class AccountProfileStore {
 
   @action.bound getOwnLowestScore() {
     accountProfileApi.ownLowestScore()
-      .then(action( (response) => {
+      .then(action((response) => {
         this.ownLowestScore = response;
         this.ownLowScoreCompnayIsLoading = false;
       }))
-      .catch(action( (err) => {
+      .catch(action((err) => {
         this.ownLowScoreCompnayIsLoading = false;
         this.ownLowestScore = err.response.data;
       }));
@@ -182,14 +184,49 @@ class AccountProfileStore {
 
   @action.bound getSubLowestScore() {
     accountProfileApi.subLowestScore()
-      .then(action( (response) => {
+      .then(action((response) => {
         this.subLowestScore = response;
         this.subLowScoreCompnayIsLoading = false;
       }))
-      .catch(action( (err) => {
+      .catch(action((err) => {
         this.subLowScoreCompnayIsLoading = false;
         this.subLowestScore = err.response.data;
       }));
+  }
+
+  @action.bound resetStore() {
+    this.ownWarningStatisticsData = {};
+
+    this.subWarningStatisticsData = {};
+
+
+    this.ownWarningCompnay = {};
+    this.subWarningCompnay = {};
+
+    this.ownHighRisk = {};
+    this.subHighRisk = {};
+
+    this.ownLowestScore = {};
+    this.subLowestScore = {};
+
+    this.subAccount10Data = {};
+    this.subNewestRuleData = {};
+    this.subFrequentRuleData = {};
+
+    // 加载状态
+    this.ownWarningCompnayIsLoading = true;
+    this.ownRiskCompnayIsLoading = true;
+    this.ownLowScoreCompnayIsLoading = true;
+
+    this.subWarningCompnayIsLoading = true;
+    this.subRiskCompnayIsLoading = true;
+    this.subLowScoreCompnayIsLoading = true;
+
+    this.newAccount10IsLoading = true;
+
+    // 规则loading
+    this.subFrequentRuleIsloading = true;
+    this.subNewestRuleIsLoading = true;
   }
 
 }

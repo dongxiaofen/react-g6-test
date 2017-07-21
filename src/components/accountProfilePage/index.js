@@ -16,6 +16,9 @@ export default class AccountProfileBody extends Component {
   componentWillMount() {
     this.props.accountProfileStore.getAcconutPageInfo();
   }
+  componentWillUnmount() {
+    this.props.accountProfileStore.resetStore();
+  }
   render() {
     return (
       <Container>
