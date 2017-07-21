@@ -38,7 +38,7 @@ export default class Html extends Component {
     const stores = this.prepareStore(allStore);
     const content = component ? ReactDOM.renderToString(component) : '';
     const head = Helmet.rewind();
-    const isDx = allStore.clientStore.envConfig !== 'cfca_prod';
+    const isDx = allStore.clientStore.envConfig === 'cfca_prod';
     return (
       <html lang="en-us">
       <head>
