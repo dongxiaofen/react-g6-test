@@ -6,7 +6,6 @@ import styles from './index.less';
 function ProvinceRank({accountSettingStore}) {
   const data = accountSettingStore.tabs.business.province.content;
   const unkownData = data.filter(item => (item.area === '未知' || item.area === '其他'));
-  console.log(unkownData, 'unkownData');
   let unkownNumber = 0;
   unkownData.map((item) => {
     unkownNumber += parseInt(item.total, 10);
