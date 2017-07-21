@@ -118,7 +118,7 @@ const html2Pdf = (htmlName, pdfName, callBack) => {
   });
 };
 app.use(compression());
-app.use(favicon(path.join(__dirname, '..', 'static', 'favicon.ico')));
+app.use(favicon(path.join(__dirname, '..', 'static', 'favicon1.ico')));
 app.use(Express.static(path.join(__dirname, '..', 'static')));
 app.use(cookieParser());
 // parse application/x-www-form-urlencoded
@@ -202,8 +202,8 @@ app.get('/sendEmail', function (req, res) {
     );
     const reportHtml = ReactDOM.renderToStaticMarkup(<HtmlPdf assets={webpackIsomorphicTools.assets()}
                                                      component={component} {...allStores} />);
-    const companyName = responseData.companyName;
-    const username = responseData.email;
+    const companyName = req.query.companyName;
+    const username = req.query.email;
     const timestamp = new Date().getTime();
     const htmlName = username + timestamp + '.html';
     // const pdfName = username + timestamp + '.pdf';
@@ -233,7 +233,7 @@ app.use((req, res) => {
   // agent.set('Content-Type', 'application/json')
   //   .set('scm-source', config.target === 'dianxin_prod' ? 'TEL_WEB' : 'SC_WEB')
   //   .set('scm-token', req.cookies['scm-token'] || {});
-  
+
 
   // 检查pdf路径
   const reqPathName = url.parse(req.url).pathname;

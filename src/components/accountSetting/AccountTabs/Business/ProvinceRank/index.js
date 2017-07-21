@@ -5,7 +5,7 @@ import Chart from 'components/common/Charts/ResizeChart';
 import styles from './index.less';
 function ProvinceRank({accountSettingStore}) {
   const data = accountSettingStore.tabs.business.province.content;
-  const sortData = data.sort((prev, next) => prev.total - next.total);
+  const sortData = data.filter(item => (item.area !== '未知' && item.area !== '其他')).sort((prev, next) => prev.total - next.total);
   const area = sortData.map(item => item.area);
   const seriesData = sortData.map(item => {
     return {

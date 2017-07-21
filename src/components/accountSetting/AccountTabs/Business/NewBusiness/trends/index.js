@@ -65,6 +65,17 @@ function Trends({accountSettingStore}) {
       backgroundColor: '#ffffff',
       padding: [0, 0],
       formatter: (ticket) => {
+        let innerList = '';
+        ticket.map((item, index) => {
+          const paddingBottom = index === ticket.length - 1 ? '0px' : '6px';
+          innerList += `
+          <p style="text-align: left; padding-bottom: ${ paddingBottom };">
+            <a style="color: ${ item.color };">
+              <span style="padding-right: 15px">${item.seriesName}</span>
+              <span>${item.value || 0}家</span>
+            </a>
+          </p>`;
+        });
         const str = `
         <div style="box-shadow: 0 0 7px #ddd; padding: 15px 20px; background-color: #fff">
           <p style="text-align: center; padding-bottom: 10px;">
@@ -72,24 +83,7 @@ function Trends({accountSettingStore}) {
               ${ticket[0].name}
             </a>
           </p>
-          <p style="text-align: left; padding-bottom: 6px;">
-            <a style="color:#3483e9;">
-              <span style="padding-right: 15px">${ticket[0].seriesName}</span>
-              <span>${ticket[0].value || 0}家</span>
-            </a>
-          </p>
-          <p style="text-align: left; padding-bottom: 6px;">
-            <a style="color:#e08632;">
-              <span style="padding-right: 15px">${ticket[1].seriesName}</span>
-              <span>${ticket[1].value || 0}家</span>
-            </a>
-          </p>
-          <p style="text-align: left;">
-            <a style="color:#43bf77;">
-              <span style="padding-right: 15px">${ticket[2].seriesName}</span>
-              <span>${ticket[2].value || 0}家</span>
-            </a>
-          </p>
+          ${innerList}
         </div>`;
         return str;
       },
@@ -154,13 +148,13 @@ function Trends({accountSettingStore}) {
         stack: '总量1',
         lineStyle: {
           normal: {
-            color: '#3483e9',
+            color: '#42a5f5',
             width: 3,
           }
         },
         itemStyle: {
           normal: {
-            color: '#3483e9',
+            color: '#42a5f5',
           }
         },
         data: allReportData,
@@ -171,13 +165,13 @@ function Trends({accountSettingStore}) {
         stack: '总量2',
         lineStyle: {
           normal: {
-            color: '#e08632',
+            color: '#ff9800',
             width: 3,
           }
         },
         itemStyle: {
           normal: {
-            color: '#e08632',
+            color: '#ff9800',
           }
         },
         data: allAnalysisReportData,
@@ -188,13 +182,13 @@ function Trends({accountSettingStore}) {
         stack: '总量3',
         lineStyle: {
           normal: {
-            color: '#43bf77',
+            color: '#66bb6a',
             width: 3,
           }
         },
         itemStyle: {
           normal: {
-            color: '#43bf77'
+            color: '#66bb6a'
           }
         },
         data: allMonitorData

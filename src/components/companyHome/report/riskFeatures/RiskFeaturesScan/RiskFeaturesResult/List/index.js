@@ -42,7 +42,7 @@ function List({data}) {
                       <div className={styles.riskNum}>系统预警{val.count}次</div>
                     </div>
                     <div className={`${styles.listContent2} clearfix`}>
-                      <div className={styles.detail}>
+                      <div title={val.description} className={styles.detail}>
                         预警依据：{val.description}
                       </div>
                       <div className={styles.time}>
