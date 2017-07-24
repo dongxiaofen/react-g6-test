@@ -7,8 +7,8 @@ function DetailMain({accountSettingStore, routing}) {
   const getReportType = (reportType) => {
     const reportMatch = {
       basicReportId: '基础报告',
-      analysisReportId: '贷中分析',
-      monitorId: '贷后监控',
+      analysisReportId: '创建分析',
+      monitorId: '加入监控',
       reportId: '高级报告'
     };
     return reportMatch[reportType];
