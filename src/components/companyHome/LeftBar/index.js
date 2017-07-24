@@ -124,7 +124,7 @@ function LeftBar({ leftBarStore, bannerStore, routing, companyHomeStore}) {
     return menuRow;
   };
   const companyName = routing.location.query.companyName;
-  const reportTitle = companyHomeStore.reportInfo.reportId !== '' ? '贷前高级报告' : '贷前基础报告';
+  const reportTitle = companyHomeStore.reportInfo.reportId !== '' ? '高级报告' : '基础报告';
   // 现勘记录路由
   const changeNowRecord = () => {
     runInAction('切换报告二级目录', () => {
@@ -153,7 +153,7 @@ function LeftBar({ leftBarStore, bannerStore, routing, companyHomeStore}) {
       </div>
       <div className={styles.wrap}>
         <div className={`${styles.title} clearfix`}>
-          <p className={styles.reportType}>贷中经营分析</p>
+          <p className={styles.reportType}>经营分析</p>
           {
             companyHomeStore.reportInfo.dimensions.length < 4 ?
             <Button
@@ -167,7 +167,7 @@ function LeftBar({ leftBarStore, bannerStore, routing, companyHomeStore}) {
       </div>
       <div className={styles.wrap}>
         <div className={`${styles.title} clearfix`}>
-          <p className={styles.reportType}>贷后风险监控</p>
+          <p className={styles.reportType}>风险监控</p>
           {
             companyHomeStore.reportInfo.monitorId === '' ?
             <Button

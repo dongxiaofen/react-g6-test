@@ -19,7 +19,7 @@ export default class DownloadPdf extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      reportTypeDict: {monitor: '贷后监控', loan: '贷中分析', report: '贷前高级报告', 'basicReport': '贷前基础报告'},
+      reportTypeDict: {monitor: '监控', loan: '分析', report: '高级报告', 'basicReport': '基础报告'},
       tipInfo: false,
       tipInfoFn: () => {
         const pdfDownloadConfig = this.props.bannerStore.pdfDownloadConfig;
