@@ -68,7 +68,7 @@ function Base({ judgeIsModuleExist, pdfStore }) {
           ?
           <div>
             <PdfTitle module="投资任职" subModule="法人投资任职" />
-            <Investment moduleData = {pathval.getPathValue(pdfStore, 'frData.frOtherPositionList')} />
+            <Investment moduleData = {pathval.getPathValue(pdfStore, 'frData')} />
             <Office moduleData = {pathval.getPathValue(pdfStore, 'frData.frPositionList')} />
           </div>
           :
