@@ -5,9 +5,16 @@ import { loadingComp } from 'components/hoc';
 import Pager from '../../Pager';
 import DetailTable from 'components/common/report/alertAnalysis/DetailTable';
 
-function SimpleTable({meta, module, uiStore}) {
-  const {index, size, totalElements} = uiStore.uiState[meta.dict];
-  const cData = totalElements ? meta.items : meta.items.slice((index - 1) * size, index * size);
+function SimpleTable({meta, module, uiStore, hasPage}) {
+  let cData = meta.items;
+  let index = 1;
+  let size = 10;
+  if (hasPage) {
+    index = uiStore.uiState[meta.dict].index;
+    size = uiStore.uiState[meta.dict].size;
+    const {totalElements} = uiStore.uiState[meta.dict];
+    cData = totalElements ? meta.items : meta.items.slice((index - 1) * size, index * size);
+  }
   return (
     <div className={styles.simpleTable}>
       {
@@ -16,7 +23,9 @@ function SimpleTable({meta, module, uiStore}) {
           return <DetailTable key={module + idx} itemData={data} rowIdx={serialNum} {...meta} />;
         })
       }
-      <Pager module={meta.dict} tData={meta.items} type="small" />
+      {
+        hasPage ? <Pager module={meta.dict} tData={meta.items} type="small" /> : ''
+      }
     </div>
   );
 }
