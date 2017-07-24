@@ -1,10 +1,10 @@
 import {observable, action} from 'mobx';
-import axios from 'axios';
+// import axios from 'axios';
 import pathval from 'pathval';
 import { pdfApi } from '../api/index';
 import messageStore from './message';
 import companyHomeStore from './companyHome';
-// import {pdfDownload} from '../api/pdf';
+import {pdfDownload} from '../api/pdf';
 
 
 class PdfStore {
@@ -58,7 +58,7 @@ class PdfStore {
     });
   }
 
-  @action.bound getOverviewData(id, type, idType) {
+  @action.bound getOverviewData() {
     const types = {
       basicReport: [
         'BANNER_INFO',
@@ -112,10 +112,10 @@ class PdfStore {
         'NEWS',
         'OPERATION_BIDDING',
         'OPERATION_PATENT',
-        'OPERATION_TRADEMARK',
+        // 'OPERATION_TRADEMARK',
         'TEAM_RECRUITMENT_RESUME',
         'RISK_TAXATION',
-        // 'RISK_JUDGEMENT',
+        'RISK_JUDGEMENT',
         'RISK_ANNOUNCEMENT',
         'RISK_NOTICE',
         'RISK_EXECUTE',
@@ -129,15 +129,15 @@ class PdfStore {
         'NETWORK_BLACKLIST',
       ]
     };
-    types[type].forEach((typev) => {
-      axios.get(`/api/pdf/${type}?${idType}=${id}&types=${typev}`);
-    });
-    // pdfDownload('', '/api/pdf/report', {reportId: 1594}, types.report.join(',')).then(action((responseData) => {
-    //   this.getPdfDownData(responseData);
-    //   this.pdfTypesKey = types.report.join(',');
-    // })).catch((err) => {
-    //   console.log(err);
+    // types[type].forEach((typev) => {
+    //   axios.get(`/api/pdf/${type}?${idType}=${id}&types=${typev}`);
     // });
+    pdfDownload('', '/api/pdf/report', {reportId: 1656}, types.report.join(',')).then(action((responseData) => {
+      this.getPdfDownData(responseData);
+      this.pdfTypesKey = types.report.join(',');
+    })).catch((err) => {
+      console.log(err);
+    });
   }
 
   @action.bound getPdfDownData(data) {
