@@ -4,7 +4,7 @@ import styles from './index.less';
 function Title() {
   return (
     <div className={styles.titleCss}>
-      报告
+      报告列表
     </div>
   );
 }
