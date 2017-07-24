@@ -89,7 +89,7 @@ function Trends({accountSettingStore}) {
       },
     },
     legend: {
-      data: ['贷前报告', '贷中分析', '贷后监控'],
+      data: ['报告', '分析', '监控'],
       top: 40,
       left: 20
     },
@@ -143,7 +143,7 @@ function Trends({accountSettingStore}) {
     },
     series: [
       {
-        name: '贷前报告',
+        name: '报告',
         type: 'line',
         stack: '总量1',
         lineStyle: {
@@ -160,7 +160,7 @@ function Trends({accountSettingStore}) {
         data: allReportData,
       },
       {
-        name: '贷中分析',
+        name: '分析',
         type: 'line',
         stack: '总量2',
         lineStyle: {
@@ -177,7 +177,7 @@ function Trends({accountSettingStore}) {
         data: allAnalysisReportData,
       },
       {
-        name: '贷后监控',
+        name: '监控',
         type: 'line',
         stack: '总量3',
         lineStyle: {
