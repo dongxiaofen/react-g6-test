@@ -73,15 +73,15 @@ function ShareHolderInfo({investmentStore, bannerStore}) {
       </div>
       <div className={styles.content}>
         <div className={styles.tableWrap}>
-          <div className={styles.tableName}>对外担任法人代表（{shareHolderPositionFrList.length}）</div>
+          <div className={styles.tableName}>担任法人的企业{shareHolderPositionFrList.length}）</div>
           <SimpleTable meta={frPosdata.meta} module="shPositionList"/>
         </div>
         <div className={styles.tableWrap}>
-          <div className={styles.tableName}>对外投资（{shareHolderInvList.length}）</div>
+          <div className={styles.tableName}>投资企业（{shareHolderInvList.length}）</div>
           <SimpleTable meta={invData.meta} module="shinvList"/>
         </div>
         <div className={styles.tableWrap}>
-          <div className={styles.tableName}>对外任职（{shareHolderPositionList.length}）</div>
+          <div className={styles.tableName}>任职企业（{shareHolderPositionList.length}）</div>
           <SimpleTable meta={posData.meta} module="shPosList"/>
         </div>
       </div>
