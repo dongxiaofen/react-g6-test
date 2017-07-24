@@ -5,7 +5,7 @@ import styles from './index.less';
 function DetailTable({itemData, body, dict, rowIdx, hasNumber, maxCols, linkJumpStore, detailModalStore}) {
   const redirectReport = (companyName)=> {
     detailModalStore.closeAction();
-    linkJumpStore.getNameType(companyName);
+    linkJumpStore.getCompanyExist(companyName, 'self');
   };
   const getValue = (config, value) => {
     let actValue = value;

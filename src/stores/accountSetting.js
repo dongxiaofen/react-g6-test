@@ -345,6 +345,7 @@ class AccountSettingStore {
         this.tabs.business.province = {error: err.response.data, content: []};
         this.tabs.business.industry = {error: err.response.data, content: []};
         this.tabs.business.scale = {error: err.response.data, data: {}};
+        this.tabs.business.dailyDetail = {error: err.response.data, content: []};
         // 业务统计--end
         this.tabs.alertCorp = {error: err.response.data, content: []};
         this.tabs.consume = {error: err.response.data, page: []};

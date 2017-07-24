@@ -1,6 +1,6 @@
 import React, { PropTypes } from 'react';
 import { observer, inject } from 'mobx-react';
-import ErrorText from 'components/common/ErrorText';
+// import ErrorText from 'components/common/ErrorText';
 import styles from './index.less';
 import SimpleTable from 'components/common/report/SimpleTable';
 
@@ -36,7 +36,6 @@ function PosItemInfo({investmentStore, bannerStore}) {
     },
   };
   // 对外投资
-  const managementInvTabels = [];
   const managementInvCount = thisPosIttem.managementInvList.length;
   const invData = {
     meta: {
@@ -84,7 +83,6 @@ function PosItemInfo({investmentStore, bannerStore}) {
         <div className={styles.tableWrap}>
           <div className={styles.tableName}>投资企业（{managementInvCount}）</div>
           <SimpleTable meta={invData.meta} module="maIve"/>
-          {managementInvCount > 0 ? managementInvTabels : <ErrorText error={{message: '暂无信息'}}/>}
         </div>
         <div className={styles.tableWrap}>
           <div className={styles.tableName}>任职企业（{managementPositionCount}）</div>
