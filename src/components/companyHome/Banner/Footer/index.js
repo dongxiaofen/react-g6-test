@@ -3,7 +3,7 @@ import { observer, inject} from 'mobx-react';
 import styles from './index.less';
 
 function Footer({companyHomeStore, routing, bannerStore}) {
-  const reportTypeDict = {monitor: '贷后监控', loan: '贷中分析', report: '高级报告', 'basicReport': '基础报告', 'nowRecord': '现勘记录'};
+  const reportTypeDict = {monitor: '风险监控', loan: '经营分析', report: '高级报告', 'basicReport': '基础报告', 'nowRecord': '现勘记录'};
   const {reportId} = companyHomeStore.reportInfo;
   const {monitorStatus} = bannerStore.monitorRepInfo;
   const getReportType = ()=> {

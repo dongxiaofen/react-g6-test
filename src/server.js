@@ -185,7 +185,7 @@ app.get('/sendEmail', function (req, res) {
       analysisReportId: req.query.analysisReportId,
     };
     reportType = '分析报告';
-    pdfType = '贷中分析';
+    pdfType = '经营分析';
   }
   // 请求PDF下载方法
 
