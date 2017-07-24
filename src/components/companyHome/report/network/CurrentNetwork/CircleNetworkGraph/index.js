@@ -235,13 +235,15 @@ export default class CircleNetworkGraph extends Component {
     // links
     svgEdges = linkG
       .selectAll('line')
-      .data(edgesData, (data) => data.id);
+      .data(edgesData, (data) => {
+        return data.id;
+      });
     svgEdges.exit().remove();
     const linkEnter = svgEdges
       .enter()
       .append('line')
-      .attr('class', styles.links)
-      .attr('marker-end', 'url(#mainArrow)');
+      .attr('class', styles.links);
+      // .attr('marker-end', 'url(#mainArrow)');
     svgEdges = linkEnter.merge(svgEdges);
     // labels
     svgEdgepaths = edgepathsG.selectAll('.edgepath').data(edgesData, (data) => data.id);
@@ -302,9 +304,9 @@ export default class CircleNetworkGraph extends Component {
       .attr('y1', (data) => { return data.source.y; })
       .attr('x2', (data) => { return data.target.x; })
       .attr('y2', (data) => { return data.target.y; })
-      .attr('marker-end', (data)=>{
-        return data.isFocus ? 'url(#mainArrowAct)' : 'url(#mainArrow)';
-      })
+      // .attr('marker-end', (data)=>{
+      //   return data.isFocus ? 'url(#mainArrowAct)' : 'url(#mainArrow)';
+      // })
       .attr('class', (data) => {
         return (data.hide && styles.hide) || (data.isFocus && styles.focusLink) || styles.links;
       });
