@@ -46,8 +46,8 @@ function CheckItem({itemData, routing, relPerCheckStore}) {
         match ?
           <div className={styles.line2}>
           <KeyValue keys="老赖记录" values={itemData.deadbeat} match={match} />
-          <KeyValue keys="被执行人" values={itemData.executed} match={match} />
           <KeyValue keys="失信被执行" values={itemData.dishonesty} match={match} />
+            <KeyValue keys="被执行人" values={itemData.executed} match={match} />
             <span className={styles.checkTime}>核查时间 {itemData.checkDateTime || '无'}</span>
           {/* <KeyValue keys="犯罪记录" values={itemData.criminalRecord} match={match} /> */}
         </div> : <div className={styles.noMatch_text}>
