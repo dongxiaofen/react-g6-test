@@ -26,7 +26,7 @@ class InvestmentStore {
         const frOtherPositionNoData = !resp.data.fr || !resp.data.fr.frOtherPositionList || resp.data.fr.frOtherPositionList.length === 0;
         const frinvListNoData = !resp.data.fr || !resp.data.fr.frinvList || resp.data.fr.frinvList.length === 0;
         const manageDataNoData = !resp.data.managements || resp.data.managements.length === 0;
-        const shareNoData = !resp.data.shareholders || resp.data.managements.length === 0;
+        const shareNoData = !resp.data.shareholders || resp.data.shareholders.length === 0;
 
         this.entData = entNoData ? noData : {content: resp.data.ent.entinvItemList};
         this.frPositionList = frPositionNoData ? noData : {content: resp.data.fr.frPositionList};
