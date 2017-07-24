@@ -1,18 +1,16 @@
 @import "~sc-colors/index.less";
 .box {
   float: left;
-  // width: 50%;
   height: 560px;
 }
 .newBusiness {
   composes: box;
   width: 100%;
-  // padding-right: 10px;
   margin-bottom: 20px;
 }
 .provinceRank {
   composes: box;
-  width: 50%;
+  width: 100%;
   padding-right: 10px;
   margin-bottom: 20px;
 }
@@ -49,7 +47,10 @@
     width: 100%;
     padding: 0;
   }
-  .newBusiness, .industryDist {
+  .newBusiness, .industryDist, .scaleDist {
     margin-bottom: 20px;
+  }
+  .newBusiness {
+    height: auto;
   }
 }

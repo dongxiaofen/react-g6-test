@@ -11,9 +11,10 @@ import LoginRecord from './LoginRecord';
 function AccountTabs(props) {
   const activeIndex = props.accountSettingStore.tree.activeIndex;
   const data = props.accountSettingStore.tree.data.content;
-  const none = !data || data[activeIndex].parentUserId;
+  console.log(data, '====');
+  const none = !data || !data[activeIndex] || data[activeIndex].parentUserId;
   const userEmail = props.clientStore.userInfo.email;
-  const none_ = !data || data[activeIndex].email === userEmail;
+  const none_ = !data || !data[activeIndex] || data[activeIndex].email === userEmail;
   const activeKey = props.accountSettingStore.tabs.activeKey;
   const tabConf = [
     {name: '业务统计', comp: Business, none: false},

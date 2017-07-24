@@ -9,7 +9,7 @@ import PdfSimpleKey from 'components/common/pdf/PdfSimpleKey';
 function TradeMark({moduleData}) {
   const modifyTrademarkImg = (rowData) => {
     return (
-      <div className={styles.img}>
+      <div key={rowData.base64.slice(0, 15)} className={styles.img}>
         <img className={styles.iconImg} src={rowData.base64 ? 'data:image/jpg;base64,' + rowData.base64 : noImg} />
       </div>
     );

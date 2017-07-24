@@ -1,53 +1,96 @@
 import React, {PropTypes} from 'react';
 import { observer } from 'mobx-react';
-import PdfNotFound from 'components/common/pdf/PdfNotFound';
+// import PdfNotFound from 'components/common/pdf/PdfNotFound';
 import styles from './index.less';
 
 function ComprehensiveAnalysis({moduleData}) {
-  if (!moduleData) {
-    return (
-      <div>
-        <div style={{height: '30px'}}></div>
-        <PdfNotFound />
-      </div>
-    );
-  }
   // 综合评分
   let allInfo = '';
   const data = moduleData;
   if (data && data.result && data.result.allInfo) {
+    let scaleText = '';
+    if (data.result.allInfo.comparison <= 10) {
+      scaleText = (
+        <span className={styles.scaleText}>
+          在同行业同地区企业中
+          <span>相对落后</span>
+        </span>
+      );
+    } else if (data.result.allInfo.comparison >= 90) {
+      scaleText = (
+        <span className={styles.scaleText}>
+          在同行业同地区企业中
+          <span>相对领先</span>
+        </span>
+      );
+    } else {
+      scaleText = (
+        <span className={styles.scaleText}>
+          超过同行业同地区<span>{data.result.allInfo.comparison ? data.result.allInfo.comparison : 0}%</span>企业
+        </span>
+      );
+    }
     allInfo = (
       <div className={styles.title}>
         该企业综合评分
         <span className={styles.blueFonts}>
-          { data.result.allInfo.score ? data.result.allInfo.score : '0'}
+          {data.result.allInfo.score ? data.result.allInfo.score : '0'}
         </span>
         分
-        {data.result.influence.comparation ?
-          <span className={styles.data}>超过同行业同地区<span
-            className={styles.blueFonts}>{data.result.influence.comparation}%</span>企业</span> : ''}
+        <span className={styles.data}>
+          {scaleText}
+          {/* 超过同行业同地区
+           <span
+           className={styles.blueFonts}>
+           {data.result.allInfo.comparison ? data.result.allInfo.comparison : 0}%
+           </span>
+           企业 */}
+        </span>
       </div>
     );
   }
   // 经营状况
   let operation = '';
   if (data && data.result && data.result.operation) {
+    let scaleText = '';
+    if (data.result.operation.comparison <= 10) {
+      scaleText = (
+        <span className={styles.scaleText}>
+          在同行业同地区企业中
+          <span>相对落后</span>
+        </span>
+      );
+    } else if (data.result.operation.comparison >= 90) {
+      scaleText = (
+        <span className={styles.scaleText}>
+          在同行业同地区企业中
+          <span>相对领先</span>
+        </span>
+      );
+    } else {
+      scaleText = (
+        <span className={styles.scaleText}>
+          超过同行业同地区<span>{data.result.operation.comparison ? data.result.operation.comparison : 0}%</span>企业
+        </span>
+      );
+    }
     operation = (
       <div className={styles.single}>
         <div className={styles.top}>
           <i className={styles.img1} />
           <span className={styles.type}>
-            { data.result.operation.name}
+            {data.result.operation.name}
           </span>
           <span className={styles.score}>
-            <span>{ data.result.operation.score}</span>
+            <span>{data.result.operation.score}</span>
             分
           </span>
-          {data.result.operation.comparation ?
-            <span className={styles.data}>(超过<span>{data.result.operation.comparation}%</span>企业)</span> : ''}
+          <span className={styles.data}>
+            {scaleText}
+          </span>
         </div>
         <div className={styles.text}>
-          { data.result.operation.description}
+          {data.result.operation.description}
         </div>
       </div>
     );
@@ -55,22 +98,45 @@ function ComprehensiveAnalysis({moduleData}) {
   // 行业相关
   let industry = '';
   if (data && data.result && data.result.industry) {
+    let scaleText = '';
+    if (data.result.industry.comparison <= 10) {
+      scaleText = (
+        <span className={styles.scaleText}>
+          在同行业同地区企业中
+          <span>相对落后</span>
+        </span>
+      );
+    } else if (data.result.industry.comparison >= 90) {
+      scaleText = (
+        <span className={styles.scaleText}>
+          在同行业同地区企业中
+          <span>相对领先</span>
+        </span>
+      );
+    } else {
+      scaleText = (
+        <span className={styles.scaleText}>
+          超过同行业同地区<span>{data.result.industry.comparison ? data.result.industry.comparison : 0}%</span>企业
+        </span>
+      );
+    }
     industry = (
       <div className={styles.single}>
         <div className={styles.top}>
           <i className={styles.img2} />
           <span className={styles.type}>
-            { data.result.industry.name}
+            {data.result.industry.name}
           </span>
           <span className={styles.score}>
-            <span>{ data.result.industry.score}</span>
+            <span>{data.result.industry.score}</span>
             分
           </span>
-          { data.result.industry.comparation ?
-            <span className={styles.data}>(超过<span>{data.result.industry.comparation}%</span>企业)</span> : ''}
+          <span className={styles.data}>
+            {scaleText}
+          </span>
         </div>
         <div className={styles.text}>
-          { data.result.industry.description}
+          {data.result.industry.description}
         </div>
       </div>
     );
@@ -78,22 +144,45 @@ function ComprehensiveAnalysis({moduleData}) {
   // 创新能力
   let creativity = '';
   if (data && data.result && data.result.creativity) {
+    let scaleText = '';
+    if (data.result.creativity.comparison <= 10) {
+      scaleText = (
+        <span className={styles.scaleText}>
+          在同行业同地区企业中
+          <span>相对落后</span>
+        </span>
+      );
+    } else if (data.result.creativity.comparison >= 90) {
+      scaleText = (
+        <span className={styles.scaleText}>
+          在同行业同地区企业中
+          <span>相对领先</span>
+        </span>
+      );
+    } else {
+      scaleText = (
+        <span className={styles.scaleText}>
+          超过同行业同地区<span>{data.result.creativity.comparison ? data.result.creativity.comparison : 0}%</span>企业
+        </span>
+      );
+    }
     creativity = (
       <div className={styles.single}>
         <div className={styles.top}>
           <i className={styles.img3} />
           <span className={styles.type}>
-            { data.result.creativity.name}
+            {data.result.creativity.name}
           </span>
           <span className={styles.score}>
-            <span>{ data.result.creativity.score}</span>
+            <span>{data.result.creativity.score}</span>
             分
           </span>
-          { data.result.creativity.comparation ?
-            <span className={styles.data}>(超过<span>{data.result.creativity.comparation}%</span>企业)</span> : ''}
+          <span className={styles.data}>
+            {scaleText}
+          </span>
         </div>
         <div className={styles.text}>
-          { data.result.creativity.description}
+          {data.result.creativity.description}
         </div>
       </div>
     );
@@ -101,6 +190,28 @@ function ComprehensiveAnalysis({moduleData}) {
   // 法务相关
   let law = '';
   if (data && data.result && data.result.law) {
+    let scaleText = '';
+    if (data.result.law.comparison <= 10) {
+      scaleText = (
+        <span className={styles.scaleText}>
+          在同行业同地区企业中
+          <span>相对落后</span>
+        </span>
+      );
+    } else if (data.result.law.comparison >= 90) {
+      scaleText = (
+        <span className={styles.scaleText}>
+          在同行业同地区企业中
+          <span>相对领先</span>
+        </span>
+      );
+    } else {
+      scaleText = (
+        <span className={styles.scaleText}>
+          超过同行业同地区<span>{data.result.law.comparison ? data.result.law.comparison : 0}%</span>企业
+        </span>
+      );
+    }
     law = (
       <div className={styles.single}>
         <div className={styles.top}>
@@ -110,14 +221,15 @@ function ComprehensiveAnalysis({moduleData}) {
             {/* { data.result.law.name} */}
           </span>
           <span className={styles.score}>
-            <span>{ data.result.law.score}</span>
+            <span>{data.result.law.score}</span>
             分
           </span>
-          { data.result.law.comparation ?
-            <span className={styles.data}>(超过<span>{data.result.law.comparation}%</span>企业)</span> : ''}
+          <span className={styles.data}>
+            {scaleText}
+          </span>
         </div>
         <div className={styles.text}>
-          { data.result.law.description}
+          {data.result.law.description}
         </div>
       </div>
     );
@@ -125,22 +237,45 @@ function ComprehensiveAnalysis({moduleData}) {
   // 团队相关
   let team = '';
   if (data && data.result && data.result.team) {
+    let scaleText = '';
+    if (data.result.team.comparison <= 10) {
+      scaleText = (
+        <span className={styles.scaleText}>
+          在同行业同地区企业中
+          <span>相对落后</span>
+        </span>
+      );
+    } else if (data.result.team.comparison >= 90) {
+      scaleText = (
+        <span className={styles.scaleText}>
+          在同行业同地区企业中
+          <span>相对领先</span>
+        </span>
+      );
+    } else {
+      scaleText = (
+        <span className={styles.scaleText}>
+          超过同行业同地区<span>{data.result.team.comparison ? data.result.team.comparison : 0}%</span>企业
+        </span>
+      );
+    }
     team = (
       <div className={styles.single}>
         <div className={styles.top}>
           <i className={styles.img5} />
           <span className={styles.type}>
-            { data.result.team.name}
+            {data.result.team.name}
           </span>
           <span className={styles.score}>
-            <span>{ data.result.team.score}</span>
+            <span>{data.result.team.score}</span>
             分
           </span>
-          {data.result.team.comparation ?
-            <span className={styles.data}>(超过<span>{data.result.team.comparation}%</span>企业)</span> : ''}
+          <span className={styles.data}>
+            {scaleText}
+          </span>
         </div>
         <div className={styles.text}>
-          { data.result.team.description}
+          {data.result.team.description}
         </div>
       </div>
     );
@@ -148,22 +283,45 @@ function ComprehensiveAnalysis({moduleData}) {
   // 社会影响力
   let influence = '';
   if (data && data.result && data.result.influence) {
+    let scaleText = '';
+    if (data.result.influence.comparison <= 10) {
+      scaleText = (
+        <span className={styles.scaleText}>
+          在同行业同地区企业中
+          <span>相对落后</span>
+        </span>
+      );
+    } else if (data.result.influence.comparison >= 90) {
+      scaleText = (
+        <span className={styles.scaleText}>
+          在同行业同地区企业中
+          <span>相对领先</span>
+        </span>
+      );
+    } else {
+      scaleText = (
+        <span className={styles.scaleText}>
+          超过同行业同地区<span>{data.result.influence.comparison ? data.result.influence.comparison : 0}%</span>企业
+        </span>
+      );
+    }
     influence = (
       <div className={styles.single}>
         <div className={styles.top}>
           <i className={styles.img6} />
           <span className={styles.type}>
-            { data.result.influence.name}
+            {data.result.influence.name}
           </span>
           <span className={styles.score}>
-            <span>{ data.result.influence.score}</span>
+            <span>{data.result.influence.score}</span>
             分
           </span>
-          {data.result.influence.comparation ?
-            <span className={styles.data}>(超过<span>{data.result.influence.comparation}%</span>企业)</span> : ''}
+          <span className={styles.data}>
+            {scaleText}
+          </span>
         </div>
         <div className={styles.text}>
-          { data.result.influence.description}
+          {data.result.influence.description}
         </div>
       </div>
     );
