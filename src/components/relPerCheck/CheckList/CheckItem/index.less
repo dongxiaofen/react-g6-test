@@ -3,8 +3,7 @@
 .wrapper {
   position: relative;
   margin-bottom: 20px;
-  padding: 20px;
-  padding-left: 70px;
+  padding: 18px 20px 18px 20px;
   font-size: 14px;
   background: @mdc-white-darker;
   //border: 1px solid @mdc-grey-200;
@@ -20,25 +19,6 @@
 .wrapper:hover {
   box-shadow: 0 4px 8px 2px rgba(176, 190, 197, 0.8);
 }
-.label {
-  position: absolute;
-  top: 15px;
-  left: -8px;
-  width: 65px;
-  height: 23px;
-  line-height: 23px;
-  text-align: center;
-}
-.labelBlue {
-  composes: label;
-  color: @white1;
-  background-color: @mdc-blue-200;
-}
-.labelGray {
-  composes: label;
-  color: @white1;
-  background-color: @mdc-grey-400;
-}
 .labelArrow {
   position: absolute;
   left: 0;
@@ -48,37 +28,27 @@
   border-bottom: 4px solid transparent;
   border-left: 4px solid transparent;
 }
-.labelArrowGrey {
-  composes: labelArrow;
-  border-top: 4px solid #9e9e9e;
-  border-right: 4px solid #9e9e9e;
-}
-.labelArrowBlue {
-  composes: labelArrow;
-  border-top: 4px solid #42a5f5;
-  border-right: 4px solid #42a5f5;
-}
 .line1 {
   margin-bottom: 20px;
   line-height: 1;
 }
 .perNameBlue {
-  color: @mdc-blue-400;
+  color: #42a5f5;
   margin-right: 10px;
 }
 .perNameBlack {
-  color: @mdc-grey-700;
+  color: @mdc-grey-600;
   margin-right: 10px;
 }
 .relation {
   color: @mdc-grey-500;
   margin-right: 30px;
 }
-.idCardBlue {
-  color: @mdc-blue-400;
-}
 .idCardBlack {
-  color: @mdc-grey-700;
+  color: @mdc-grey-800;
+}
+.idCardGay {
+  color: @mdc-grey-600;
 }
 .line2 {
   line-height: 1;
@@ -96,7 +66,7 @@
   top: 1px;
   display: inline-block;
   width: 19px;
-  height: 12px;
+  height: 14px;
   margin-left: 10px;
   background-position: center;
   background-repeat: no-repeat;
@@ -104,23 +74,32 @@
 }
 .match_show {
   composes: icon;
-  background-image: url(imgs/personCheck/match_show.png);
+  background-image: url(imgs/personCheck/unlock.png);
+  background-size: 10px;
 }
 .match_hide {
   composes: icon;
-  background-image: url(imgs/personCheck/match_hide.png);
+  background-image: url(imgs/personCheck/lock.png);
+  background-size: 10px;
 }
 .noMatch_show {
   composes: icon;
-  background-image: url(imgs/personCheck/noMatch_show.png);
+  background-image: url(imgs/personCheck/unlock.png);
+  background-size: 10px;
 }
 .noMatch_hide {
   composes: icon;
-  background-image: url(imgs/personCheck/noMatch_hide.png);
+  background-image: url(imgs/personCheck/lock.png);
+  background-size: 10px;
 }
 .checkTime {
   float: right;
   font-size: 14px;
   line-height: 1;
   color: @mdc-grey-500;
+  border-left: 1px solid #e0e0e0;
+  padding-left: 15px;
+}
+.noMatch_text{
+ color: #9e9e9e;
 }
