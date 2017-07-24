@@ -9,18 +9,28 @@ function ComprehensiveAnalysis({moduleData}) {
   const data = moduleData;
   if (data && data.result && data.result.allInfo) {
     let scaleText = '';
-    if (data.result.allInfo.comparison <= 10) {
+    if (data.result.allInfo.comparison > 95) {
       scaleText = (
         <span className={styles.scaleText}>
-          在同行业同地区企业中
-          <span>相对落后</span>
+          超过同行业同地区<span>92%</span>企业
         </span>
       );
-    } else if (data.result.allInfo.comparison >= 90) {
+    } else if (data.result.allInfo.comparison >= 90 && data.result.allInfo.comparison <= 95) {
       scaleText = (
         <span className={styles.scaleText}>
-          在同行业同地区企业中
-          <span>相对领先</span>
+          超过同行业同地区<span>90%</span>企业
+        </span>
+      );
+    } else if (data.result.allInfo.comparison > 5 && data.result.allInfo.comparison <= 10) {
+      scaleText = (
+        <span className={styles.scaleText}>
+          超过同行业同地区<span>10%</span>企业
+        </span>
+      );
+    } else if (data.result.allInfo.comparison >= 0 && data.result.allInfo.comparison <= 5) {
+      scaleText = (
+        <span className={styles.scaleText}>
+          超过同行业同地区<span>8%</span>企业
         </span>
       );
     } else {
@@ -53,18 +63,28 @@ function ComprehensiveAnalysis({moduleData}) {
   let operation = '';
   if (data && data.result && data.result.operation) {
     let scaleText = '';
-    if (data.result.operation.comparison <= 10) {
+    if (data.result.operation.comparison > 95) {
       scaleText = (
         <span className={styles.scaleText}>
-          在同行业同地区企业中
-          <span>相对落后</span>
+          超过同行业同地区<span>92%</span>企业
         </span>
       );
-    } else if (data.result.operation.comparison >= 90) {
+    } else if (data.result.operation.comparison >= 90 && data.result.operation.comparison <= 95) {
       scaleText = (
         <span className={styles.scaleText}>
-          在同行业同地区企业中
-          <span>相对领先</span>
+          超过同行业同地区<span>90%</span>企业
+        </span>
+      );
+    } else if (data.result.operation.comparison > 5 && data.result.operation.comparison <= 10) {
+      scaleText = (
+        <span className={styles.scaleText}>
+          超过同行业同地区<span>10%</span>企业
+        </span>
+      );
+    } else if (data.result.operation.comparison >= 0 && data.result.operation.comparison <= 5) {
+      scaleText = (
+        <span className={styles.scaleText}>
+          超过同行业同地区<span>8%</span>企业
         </span>
       );
     } else {
@@ -99,18 +119,28 @@ function ComprehensiveAnalysis({moduleData}) {
   let industry = '';
   if (data && data.result && data.result.industry) {
     let scaleText = '';
-    if (data.result.industry.comparison <= 10) {
+    if (data.result.industry.comparison > 95) {
       scaleText = (
         <span className={styles.scaleText}>
-          在同行业同地区企业中
-          <span>相对落后</span>
+          超过同行业同地区<span>92%</span>企业
         </span>
       );
-    } else if (data.result.industry.comparison >= 90) {
+    } else if (data.result.industry.comparison >= 90 && data.result.industry.comparison <= 95) {
       scaleText = (
         <span className={styles.scaleText}>
-          在同行业同地区企业中
-          <span>相对领先</span>
+          超过同行业同地区<span>90%</span>企业
+        </span>
+      );
+    } else if (data.result.industry.comparison > 5 && data.result.industry.comparison <= 10) {
+      scaleText = (
+        <span className={styles.scaleText}>
+          超过同行业同地区<span>10%</span>企业
+        </span>
+      );
+    } else if (data.result.industry.comparison >= 0 && data.result.industry.comparison <= 5) {
+      scaleText = (
+        <span className={styles.scaleText}>
+          超过同行业同地区<span>8%</span>企业
         </span>
       );
     } else {
@@ -145,18 +175,28 @@ function ComprehensiveAnalysis({moduleData}) {
   let creativity = '';
   if (data && data.result && data.result.creativity) {
     let scaleText = '';
-    if (data.result.creativity.comparison <= 10) {
+    if (data.result.creativity.comparison > 95) {
       scaleText = (
         <span className={styles.scaleText}>
-          在同行业同地区企业中
-          <span>相对落后</span>
+          超过同行业同地区<span>92%</span>企业
         </span>
       );
-    } else if (data.result.creativity.comparison >= 90) {
+    } else if (data.result.creativity.comparison >= 90 && data.result.creativity.comparison <= 95) {
       scaleText = (
         <span className={styles.scaleText}>
-          在同行业同地区企业中
-          <span>相对领先</span>
+          超过同行业同地区<span>90%</span>企业
+        </span>
+      );
+    } else if (data.result.creativity.comparison > 5 && data.result.creativity.comparison <= 10) {
+      scaleText = (
+        <span className={styles.scaleText}>
+          超过同行业同地区<span>10%</span>企业
+        </span>
+      );
+    } else if (data.result.creativity.comparison >= 0 && data.result.creativity.comparison <= 5) {
+      scaleText = (
+        <span className={styles.scaleText}>
+          超过同行业同地区<span>8%</span>企业
         </span>
       );
     } else {
@@ -191,18 +231,28 @@ function ComprehensiveAnalysis({moduleData}) {
   let law = '';
   if (data && data.result && data.result.law) {
     let scaleText = '';
-    if (data.result.law.comparison <= 10) {
+    if (data.result.law.comparison > 95) {
       scaleText = (
         <span className={styles.scaleText}>
-          在同行业同地区企业中
-          <span>相对落后</span>
+          超过同行业同地区<span>92%</span>企业
         </span>
       );
-    } else if (data.result.law.comparison >= 90) {
+    } else if (data.result.law.comparison >= 90 && data.result.law.comparison <= 95) {
       scaleText = (
         <span className={styles.scaleText}>
-          在同行业同地区企业中
-          <span>相对领先</span>
+          超过同行业同地区<span>90%</span>企业
+        </span>
+      );
+    } else if (data.result.law.comparison > 5 && data.result.law.comparison <= 10) {
+      scaleText = (
+        <span className={styles.scaleText}>
+          超过同行业同地区<span>10%</span>企业
+        </span>
+      );
+    } else if (data.result.law.comparison >= 0 && data.result.law.comparison <= 5) {
+      scaleText = (
+        <span className={styles.scaleText}>
+          超过同行业同地区<span>8%</span>企业
         </span>
       );
     } else {
@@ -238,18 +288,28 @@ function ComprehensiveAnalysis({moduleData}) {
   let team = '';
   if (data && data.result && data.result.team) {
     let scaleText = '';
-    if (data.result.team.comparison <= 10) {
+    if (data.result.team.comparison > 95) {
       scaleText = (
         <span className={styles.scaleText}>
-          在同行业同地区企业中
-          <span>相对落后</span>
+          超过同行业同地区<span>92%</span>企业
         </span>
       );
-    } else if (data.result.team.comparison >= 90) {
+    } else if (data.result.team.comparison >= 90 && data.result.team.comparison <= 95) {
       scaleText = (
         <span className={styles.scaleText}>
-          在同行业同地区企业中
-          <span>相对领先</span>
+          超过同行业同地区<span>90%</span>企业
+        </span>
+      );
+    } else if (data.result.team.comparison > 5 && data.result.team.comparison <= 10) {
+      scaleText = (
+        <span className={styles.scaleText}>
+          超过同行业同地区<span>10%</span>企业
+        </span>
+      );
+    } else if (data.result.team.comparison >= 0 && data.result.team.comparison <= 5) {
+      scaleText = (
+        <span className={styles.scaleText}>
+          超过同行业同地区<span>8%</span>企业
         </span>
       );
     } else {
@@ -284,18 +344,28 @@ function ComprehensiveAnalysis({moduleData}) {
   let influence = '';
   if (data && data.result && data.result.influence) {
     let scaleText = '';
-    if (data.result.influence.comparison <= 10) {
+    if (data.result.influence.comparison > 95) {
       scaleText = (
         <span className={styles.scaleText}>
-          在同行业同地区企业中
-          <span>相对落后</span>
+          超过同行业同地区<span>92%</span>企业
         </span>
       );
-    } else if (data.result.influence.comparison >= 90) {
+    } else if (data.result.influence.comparison >= 90 && data.result.influence.comparison <= 95) {
       scaleText = (
         <span className={styles.scaleText}>
-          在同行业同地区企业中
-          <span>相对领先</span>
+          超过同行业同地区<span>90%</span>企业
+        </span>
+      );
+    } else if (data.result.influence.comparison > 5 && data.result.influence.comparison <= 10) {
+      scaleText = (
+        <span className={styles.scaleText}>
+          超过同行业同地区<span>10%</span>企业
+        </span>
+      );
+    } else if (data.result.influence.comparison >= 0 && data.result.influence.comparison <= 5) {
+      scaleText = (
+        <span className={styles.scaleText}>
+          超过同行业同地区<span>8%</span>企业
         </span>
       );
     } else {
