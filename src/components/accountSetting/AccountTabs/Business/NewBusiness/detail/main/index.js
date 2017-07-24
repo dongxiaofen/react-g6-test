@@ -6,9 +6,9 @@ function DetailMain({accountSettingStore, routing}) {
   const detailData = accountSettingStore.tabs.business.dailyDetail.content;
   const getReportType = (reportType) => {
     const reportMatch = {
-      basicReportId: '初级报告',
-      analysisReportId: '贷中分析',
-      monitorId: '贷后监控',
+      basicReportId: '基础报告',
+      analysisReportId: '创建分析',
+      monitorId: '加入监控',
       reportId: '高级报告'
     };
     return reportMatch[reportType];
