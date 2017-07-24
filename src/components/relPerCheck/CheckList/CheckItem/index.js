@@ -36,23 +36,25 @@ function CheckItem({itemData, routing, relPerCheckStore}) {
   };
   return (
     <div className={match ? styles.wrapperMatch : styles.wrapper} onClick={viewDetail}>
-      <div className={match ? styles.labelBlue : styles.labelGray}>
-        <div className={match ? styles.labelArrowBlue : styles.labelArrowGrey}></div>
-        {match ? '匹配' : '不匹配'}
-      </div>
       <div className={styles.line1}>
         <span className={match ? styles.perNameBlue : styles.perNameBlack}>{itemData.name}</span>
         <span className={styles.relation}>{itemData.relationship}</span>
-        <span className={match ? styles.idCardBlue : styles.idCardBlack}>{idCard}</span>
+        <span className={match ? styles.idCardBlack : styles.idCardGay}>身份证号码{idCard}</span>
         <span className={styles[cssStr]} onClick={showIdCard}></span>
-        <span className={styles.checkTime}>核查时间 {itemData.checkDateTime || '无'}</span>
       </div>
-      <div className={styles.line2}>
-        <KeyValue keys="老赖记录" values={itemData.deadbeat} match={match} />
-        <KeyValue keys="被执行人" values={itemData.executed} match={match} />
-        <KeyValue keys="失信被执行" values={itemData.dishonesty} match={match} />
-        {/* <KeyValue keys="犯罪记录" values={itemData.criminalRecord} match={match} /> */}
-      </div>
+      {
+        match ?
+          <div className={styles.line2}>
+          <KeyValue keys="老赖记录" values={itemData.deadbeat} match={match} />
+          <KeyValue keys="失信被执行" values={itemData.dishonesty} match={match} />
+            <KeyValue keys="被执行人" values={itemData.executed} match={match} />
+            <span className={styles.checkTime}>核查时间 {itemData.checkDateTime || '无'}</span>
+          {/* <KeyValue keys="犯罪记录" values={itemData.criminalRecord} match={match} /> */}
+        </div> : <div className={styles.noMatch_text}>
+          <span>身份证号与姓名：匹配失败</span>
+          <span className={styles.checkTime}>核查时间 {itemData.checkDateTime || '无'}</span>
+        </div>
+      }
     </div>
   );
 }
