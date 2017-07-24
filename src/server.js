@@ -171,14 +171,14 @@ app.get('/sendEmail', function (req, res) {
       reportId: req.query.reportId,
     };
     reportType = '高级报告';
-    pdfType = '贷前高级报告';
+    pdfType = '高级报告';
   } else if (req.query.basicReportId) {
     urlPanth = '/api/pdf/basicReport';
     params = {
       basicReportId: req.query.basicReportId,
     };
     reportType = '基础报告';
-    pdfType = '贷前基础报告';
+    pdfType = '基础报告';
   } else if (req.query.analysisReportId) {
     urlPanth = '/api/pdf/analysis';
     params = {
