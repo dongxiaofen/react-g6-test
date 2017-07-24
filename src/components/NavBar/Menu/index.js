@@ -3,10 +3,6 @@ import {observer} from 'mobx-react';
 import {browserHistory} from 'react-router';
 import styles from './index.less';
 
-import imgLoanBefore from 'imgs/navbar/loanBefore.png';
-import imgLoaning from 'imgs/navbar/loaning.png';
-import imgLoanAfter from 'imgs/navbar/loanAfter.png';
-
 function Menu({routing, clientStore}) {
   const config = [
     {parent: {module: '首页', route: 'accountProfile'}},
@@ -31,14 +27,14 @@ function Menu({routing, clientStore}) {
     // },
     // { parent: { module: '头条', route: 'riskHeadlines' } },
     {
-      parent: {module: '报告', tagImg: imgLoanBefore},
+      parent: {module: '报告'},
       children: [
         {module: '基础报告', route: 'reportList?activeKey=basic'},
         {module: '高级报告', route: 'reportList?activeKey=advanced'},
       ]
     },
     {
-      parent: {module: '分析', tagImg: imgLoaning},
+      parent: {module: '分析'},
       children: [
         {module: '多维综合评价', route: 'analysisList?activeKey=multi'},
         {module: '盈利能力分析', route: 'analysisList?activeKey=profit'},
@@ -51,7 +47,7 @@ function Menu({routing, clientStore}) {
       ]
     },
     {
-      parent: {module: '监控', tagImg: imgLoanAfter},
+      parent: {module: '监控'},
       children: [
         {module: '每日头条', route: 'riskHeadlines'},
         {module: '头条统计', route: 'monitorStatistics'},
@@ -182,7 +178,6 @@ function Menu({routing, clientStore}) {
             className={styles.navbarItem}
             onMouseOver={parentItemMouseOver.bind(this, pIdx)}
             onMouseOut={parentItemMouseOut.bind(this, pIdx)}>
-            {parent.tagImg ? <img src={parent.tagImg} className={styles.navbarItemTag}/> : null}
             {parentItemDOM}
             {childrenOutput}
           </div>
@@ -190,7 +185,6 @@ function Menu({routing, clientStore}) {
       } else {
         output.push(
           <div key={`parent${pIdx}`} className={styles.navbarItem}>
-            {parent.tagImg ? <img src={parent.tagImg} className={styles.navbarItemTag}/> : null}
             {parentItemDOM}
           </div>
         );
