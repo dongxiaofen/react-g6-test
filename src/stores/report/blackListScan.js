@@ -14,11 +14,27 @@ class BlackListScanStore {
     networkApi: null,
   };
   apiInterval = null;
+  reportId = '';
+  @observable extend = {
+    main: {
+      ext: true,
+      subExt: true,
+    },
+    related: {
+      ext: true,
+      subExt: true,
+    },
+    network: {
+      ext: true,
+      subExt: true,
+    },
+  };
   @observable data = {
     main: {},
     related: {},
     network: {},
-    ready: false,
+    statusReady: [false, false, false],
+    ready: [false, false, false], // 分别代表三个模块是否扫描完成
   };
   @observable scanStatus = {
     canScan: false,
@@ -32,16 +48,13 @@ class BlackListScanStore {
     this.process = this.process + 1;
   }
   @action.bound getStatus(reportId) {
+    this.reportId = reportId;
     this.isMounted = true;
     const source = CancelToken.source();
     this.apiCancel.statusApi = source.cancel;
     blackListScanApi.getStatus(reportId, source)
       .then(action('getStatus', (resp) => {
         this.scanStatus = resp.data;
-        this.scanStatus = {
-          canScan: true,
-          status: 'FIRST_TIME', // PROCESSING FIRST_TIME FINISH
-        };
         if (resp.data.status === 'PROCESSING') {
           this.apiInterval = setTimeout(() => {
             this.getStatus(reportId);
@@ -54,19 +67,39 @@ class BlackListScanStore {
       }))
       .catch(action('getStatus', err => {
         console.log(err);
-        this.scanStatus = {status: 'FIRST_TIME'};
+        this.scanStatus = {error: err};
       }));
+  }
+  @action.bound statusReady() {
+    if (this.data.statusReady.every(item => item === true)) {
+      this.getStatus(this.reportId);
+      this.data.statusReady = [false, false, false];
+    }
   }
   @action.bound scanMain(reportId) {
     const source = CancelToken.source();
     this.apiCancel.mainApi = source.cancel;
     blackListScanApi.scanMain(reportId, source)
       .then(action('scanMain', resp => {
-        this.main = resp.data;
+        this.data.main = resp.data;
+        if (this.scanStatus.status === 'FINISH') {
+          this.data.ready[0] = true;
+          this.extend.main.ext = resp.data.blacklistNum !== 0 ? true : false;
+          this.extend.main.subExt = resp.data.blacklistNum === 0 ? true : false;
+        } else {
+          this.data.statusReady[0] = true;
+          this.statusReady();
+        }
         this.apiCancel.mainApi = null;
       }))
       .catch(action('scanMain', err => {
-        this.main = err;
+        this.data.main = err;
+        if (this.scanStatus.status === 'FINISH') {
+          this.data.ready[0] = true;
+        } else {
+          this.data.statusReady[0] = true;
+          this.statusReady();
+        }
         this.apiCancel.mainApi = null;
       }));
   }
@@ -75,11 +108,25 @@ class BlackListScanStore {
     this.apiCancel.relatedApi = source.cancel;
     blackListScanApi.scanRelated(reportId, source)
       .then(action('scanRelated', resp => {
-        this.related = resp.data;
+        this.data.related = resp.data;
+        if (this.scanStatus.status === 'FINISH') {
+          this.data.ready[1] = true;
+          this.extend.related.ext = resp.data.blacklistNum !== 0 ? true : false;
+          this.extend.related.subExt = resp.data.blacklistNum === 0 ? true : false;
+        } else {
+          this.data.statusReady[1] = true;
+          this.statusReady();
+        }
         this.apiCancel.relatedApi = null;
       }))
       .catch(action('scanRelated', err => {
-        this.related = err;
+        this.data.related = err;
+        if (this.scanStatus.status === 'FINISH') {
+          this.data.ready[1] = true;
+        } else {
+          this.data.statusReady[1] = true;
+          this.statusReady();
+        }
         this.apiCancel.relatedApi = null;
       }));
   }
@@ -88,11 +135,25 @@ class BlackListScanStore {
     this.apiCancel.networkApi = source.cancel;
     blackListScanApi.scanNetwork(reportId, source)
       .then(action('scanNetwork', resp => {
-        this.network = resp.data;
+        this.data.network = resp.data;
+        if (this.scanStatus.status === 'FINISH') {
+          this.data.ready[2] = true;
+          this.extend.network.ext = resp.data.blacklistNum !== 0 ? true : false;
+          this.extend.network.subExt = resp.data.blacklistNum === 0 ? true : false;
+        } else {
+          this.data.statusReady[2] = true;
+          this.statusReady();
+        }
         this.apiCancel.networkApi = null;
       }))
       .catch(action('scanNetwork', err => {
-        this.network = err;
+        this.data.network = err;
+        if (this.scanStatus.status === 'FINISH') {
+          this.data.ready[2] = true;
+        } else {
+          this.data.statusReady[2] = true;
+          this.statusReady();
+        }
         this.apiCancel.networkApi = null;
       }));
   }
@@ -106,11 +167,27 @@ class BlackListScanStore {
   }
   @action.bound resetStore() {
     this.isMounted = false;
+    this.process = 0;
+    this.extend = {
+      main: {
+        ext: true,
+        subExt: true,
+      },
+      related: {
+        ext: true,
+        subExt: true,
+      },
+      network: {
+        ext: true,
+        subExt: true,
+      },
+    };
     this.data = {
       main: {},
-      relation: {},
+      related: {},
       network: {},
-      ready: false,
+      statusReady: [false, false, false],
+      ready: [false, false, false],
     };
     this.scanStatus = {
       canScan: false,

@@ -9,11 +9,13 @@ function Highlight({itemData, searchParameter}) {
     const searchType = Object.keys(searchParameter)[0];
     const KEYMAP = {'历史名称': '曾用名'};
     itemData.highlight.map((obj, idx)=> {
-      highlight.push(
-        <span key={`${idx}name`}>
-          {KEYMAP[obj.key] || obj.key}：<span dangerouslySetInnerHTML={{__html: obj.value}}></span>
-        </span>
-      );
+      if (idx === 0) {
+        highlight.push(
+          <span key={`${idx}name`}>
+            {KEYMAP[obj.key] || obj.key}：<span dangerouslySetInnerHTML={{__html: obj.value}}></span>
+          </span>
+        );
+      }
       if (searchType !== 'contacts') {
         return true;
       }

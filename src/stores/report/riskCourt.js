@@ -1,4 +1,4 @@
-import { observable, action, computed } from 'mobx';
+import { observable, action, computed, reaction } from 'mobx';
 import axios from 'axios';
 import { companyHomeApi } from 'api';
 import pathval from 'pathval';
@@ -13,6 +13,16 @@ class RiskCourtStore {
       courtAnnouncement: '',
       courtNotice: '',
     };
+    reaction(
+      () => this.courtCheckGroup.judgeDoc,
+      () => {
+        this.getJudgeDocCount({
+          basicReportId: companyHomeStore.reportInfo.basicReportId,
+          reportId: companyHomeStore.reportInfo.reportId,
+          finance: this.courtCheckGroup.judgeDoc,
+        });
+      }
+    );
   }
 
   @observable isMount = false;
@@ -23,6 +33,7 @@ class RiskCourtStore {
     },
   };
 
+  @observable judgeDocCount = 0;
   @observable courtTabAct = 'judgeDoc';
   @observable courtTab = [
     { key: 'judgeDoc', label: '判决文书' },
@@ -129,6 +140,18 @@ class RiskCourtStore {
     return tabAct;
   }
 
+  // 获取判决文书总条数
+  @action.bound getJudgeDocCount(params) {
+    params.finance = this.courtCheckGroup.judgeDoc;
+    companyHomeApi.getJudgeDocCount({...params})
+      .then(action((response) => {
+        this.judgeDocCount = response.data;
+      })).catch(action((err) => {
+        console.log(err.response.data);
+        this.judgeDocCount = 0;
+      }));
+  }
+
   @action.bound getReportModule(params) {
     this.isMount = true;
     this.courtTab.forEach((item) => {
@@ -136,6 +159,7 @@ class RiskCourtStore {
       params.config = { params: { index: 1, size: 10 } };
       this.getRiskCourt(params);
     });
+    this.getJudgeDocCount(params);
   }
   openDetailModal() {
     detailModalStore.openDetailModal((cp) => {

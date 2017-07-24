@@ -21,6 +21,7 @@ function OperationReport({operationDataList}) {
             <td>{data[key] && (data[key].CWFYZB || data[key].CWFYZB === 0) ? data[key].CWFYZB : ''}%</td>
             <td>{data[key] && (data[key].GLFYZB || data[key].GLFYZB === 0) ? data[key].GLFYZB : ''}%</td>
             <td>{data[key] && (data[key].XSFYZB || data[key].XSFYZB === 0) ? data[key].XSFYZB : ''}%</td>
+            <td>{data[key] && (data[key].ZZCYSRB || data[key].ZZCYSRB === 0) ? data[key].ZZCYSRB : ''}%</td>
           </tr>
         );
       }
@@ -43,6 +44,7 @@ function OperationReport({operationDataList}) {
           <th className={styles.two}>财务费用率</th>
           <th className={styles.three}>管理费用率</th>
           <th className={styles.four}>销售费用率</th>
+          <th className={styles.four}>总资产收入率</th>
         </tr>
         </thead>
         <tbody>
@@ -77,6 +79,12 @@ function OperationReport({operationDataList}) {
             <span className={styles.formulaFonts}>销售费用率</span>
           </p>
           <p className={styles.content}>体现企业为取得单位收入所花费的单位销售费用，或者销售费用占据了营业收入的比例，在销售额一定的情况下，销售费用越低，企业效益越好</p>
+          <p className={styles.line}/>
+          <p className={styles.formula}>
+            <span className={styles.point}/>
+            <span className={styles.formulaFonts}>总资产收入率</span>
+          </p>
+          <p className={styles.content}>反映了企业收入与资产占用之间的关系，比率越高，反映企业总资产营运能力就越强，营运效率也越高</p>
         </div>
       </div>
     </div>

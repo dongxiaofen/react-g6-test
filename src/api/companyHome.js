@@ -82,6 +82,17 @@ export const getRiskCourt = ({ basicReportId, reportId, tabAct, config }) => {
   return axios.get(url, config);
 };
 
+export const getJudgeDocCount = ({ basicReportId, reportId, finance}) => {
+  let url = '';
+  if (basicReportId) {
+    url = `/api/basicReport/${basicReportId}/risk/judgeDoc/statistic?finance=${finance}`;
+  }
+  if (reportId) {
+    url = `/api/report/${reportId}/risk/judgeDoc/statistic?finance=${finance}`;
+  }
+  return axios.get(url);
+};
+
 export const getJudgeDetailMonitor = (monitorCompanyId, params) => {
   return axios.get(`/api/monitor/${monitorCompanyId}/risk/judgeDoc`, { params });
 };
@@ -300,4 +311,17 @@ export const getShortestPath = (idParams, params) => {
     return axios.get(`/api/report/${reportId}/network/shortest`, {params});
   }
   return axios.get(`/api/basicReport/${basicReportId}/network/shortest`, {params});
+};
+
+// 历史事件模型-风险特征扫描
+export const getEventAnalysis = (reportId, source) => {
+  return axios.get(`/api/report/${reportId}/scan/eventAnalysis`, { cancelToken: source.token });
+};
+// 历史事件模型-风险特征-具体某事件组
+export const getEventAnalysisList = (reportId, recordIds, source) => {
+  return axios.get(`/api/report/${reportId}/scan/eventAnalysis/list`, {params: {recordIds: recordIds}, cancelToken: source.token });
+};
+// 历史事件模型-风险特征扫描-进度状态
+export const getEventAnalysisStatus = (reportId, source) => {
+  return axios.get(`/api/report/${reportId}/scan/eventAnalysis/status`, { cancelToken: source.token });
 };
