@@ -11,6 +11,7 @@ class ReportAxisStore {
   constructor() {
     this.alertCancel = null;
   }
+  @observable loadingId = -1;
   @observable isMount = false;
   getDetailCancel = null;
   companyId = '';

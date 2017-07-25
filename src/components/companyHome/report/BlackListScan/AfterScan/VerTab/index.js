@@ -4,19 +4,7 @@ import NodeIntro from '../NodeIntro';
 import styles from './index.less';
 
 function VerTab({ blackListScanStore }) {
-  const scanModuleArr = [
-    '行政处罚',
-    '经营异常',
-    '被金融机构起诉',
-    '股权冻结',
-    '失信记录',
-    '税务黑名单',
-    '银联黑名单',
-    '支付黑名单',
-    '老赖清单',
-    '运营商黑名单',
-    '企业主黑名单'
-  ];
+  const scanModuleArr = blackListScanStore.scanModuleArr;
   const nodeDict = {
     closenessCentralityBlack: '网络中心点',
     degreesCentralityBlack: '网络明星点',
@@ -65,14 +53,18 @@ function VerTab({ blackListScanStore }) {
     {name: '网络关系', key: 'network', handleInfo: handleNetwork},
   ];
   const createModule = (itemData) => {
-    return scanModuleArr.map((key, idx) => {
-      if (itemData.matchedBlacklistTypes && itemData.matchedBlacklistTypes.indexOf(key) === -1) {
+    return scanModuleArr.map((item, idx) => {
+      if (itemData.matchedBlacklistTypes && itemData.matchedBlacklistTypes.indexOf(item.title) === -1) {
         return (
-          <div key={key} className={styles.moduleItem}>
+          <div key={item.title} className={styles.moduleItem}>
             <div className={styles.moduleImg + idx}>
-              <p>{key}</p>
+              <p>{item.title}</p>
             </div>
             <p className={styles.scanStatus}>安全</p>
+            <div className={styles.explain}>
+              <h2>{item.title}</h2>
+              <p>{item.explain}</p>
+            </div>
           </div>
         );
       }
@@ -104,7 +96,7 @@ function VerTab({ blackListScanStore }) {
     return list.map((item, idx) => {
       return (
         <div key={idx} className={styles.abnormalItem}>
-          <p className={styles.abnormalType + ' ' + styles.typeImg + scanModuleArr.indexOf(item.blacklistType)}>
+          <p className={styles.abnormalType + ' ' + styles.typeImg + scanModuleArr.findIndex(confItem => confItem.title === item.blacklistType)}>
             <span>{item.blacklistType}</span>
             {itemKey === 'related' && <span className={styles.relationType}>
               {` - ${item.name}（${relationDict[item.relationType]}${/INVEST$/.test(item.relationType) ? `，投资金额${item.relationTypeDetail.investAmount}万` : ''}）`}
