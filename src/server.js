@@ -29,7 +29,7 @@ import {
 } from './helpers/pdfHelper';
 import schedule from 'node-schedule';
 import PdfBody from 'components/pdf/PdfReport';
-
+import PdfStore from './stores/pdf';
 useStaticRendering(true);
 // fundebug.apikey = 'd3c3ad8fd8f470b0bd162e9504c98c1984050474f3f550d47b17c54983633c1e';
 
@@ -192,9 +192,10 @@ app.get('/sendEmail', function (req, res) {
   pdfDownload(config.backendApi, urlPanth, params, types).then((responseData) => {
     console.log('请求完成-----');
     // writeDataToFile('pdf', responseData);
+    allStores.pdfStore = new PdfStore();
     allStores.pdfStore.setTypes(types, reportType);
-    allStores.clientStore.envConfig = config.target;
     allStores.pdfStore.getPdfDownData(responseData);
+    allStores.clientStore.envConfig = config.target;
     const component = (
       <Provider { ...allStores } key="provided">
         <PdfBody />
@@ -209,12 +210,12 @@ app.get('/sendEmail', function (req, res) {
     // const pdfName = username + timestamp + '.pdf';
     writeStrToHtml(htmlName, reportHtml, () => {
       // html2Pdf(htmlName, pdfName, () => {
-        // upFileToQiniu(PDF_DIRNAME + username + timestamp, {
-        //   pdfType,
-        //   companyName,
-        //   mail: req.query.email,
-        //   client: config.target,
-        // });
+      upFileToQiniu(PDF_DIRNAME + username + timestamp, {
+        pdfType,
+        companyName,
+        mail: req.query.email,
+        client: config.target,
+      });
       // });
     });
   });

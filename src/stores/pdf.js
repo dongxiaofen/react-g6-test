@@ -173,4 +173,4 @@ class PdfStore {
     this.profit = pathval.getPathValue(data, 'profit');
   }
 }
-export default new PdfStore();
+export default PdfStore;
