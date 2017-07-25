@@ -7,6 +7,7 @@ import PersonListData from '../Base/Info/PersonListData';
 import FiliationList from '../Base/Info/FiliationList';
 import Enterprise from '../Base/Foreign/Enterprise';
 import Investment from '../Base/Foreign/Investment';
+import LegalPerson from '../Base/Foreign/LegalPerson';
 import Office from '../Base/Foreign/Office';
 import AlterAnalysis from '../Base/Alter/AlterAnalysis';
 import AlterList from '../Base/Alter/AlterList';
@@ -68,8 +69,9 @@ function Base({ judgeIsModuleExist, pdfStore }) {
           ?
           <div>
             <PdfTitle module="投资任职" subModule="法人投资任职" />
+            <LegalPerson moduleData = {pathval.getPathValue(pdfStore, 'frData.frPositionList')} />
             <Investment moduleData = {pathval.getPathValue(pdfStore, 'frData.frinvList')} />
-            <Office moduleData = {pathval.getPathValue(pdfStore, 'frData.frPositionList')} />
+            <Office moduleData = {pathval.getPathValue(pdfStore, 'frData.frOtherPositionList')} />
           </div>
           :
           ''

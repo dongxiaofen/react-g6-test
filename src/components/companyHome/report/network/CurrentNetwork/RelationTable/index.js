@@ -10,6 +10,9 @@ function RelationTable({networkStore}) {
         return item.position.join('、');
       case '股东':
       case '对外投资':
+        if (item.invRatio === -1) {
+          return '--';
+        }
         const invCurrency = item.invCurrency === '' ? '' : `（${item.invCurrency}）`;
         return `投资金额${invCurrency}：${item.invConum}（${item.invRatio}%）`;
       case '共同原告':
@@ -22,7 +25,6 @@ function RelationTable({networkStore}) {
   };
   const createTabel = (moduleKey)=>{
     targetComp['股东'] = targetComp['企业股东'].concat(targetComp['个人股东']);
-    console.log(moduleKey, targetComp[moduleKey], '=====');
     if (targetComp[moduleKey].length < 1) {
       return null;
     }

@@ -419,9 +419,15 @@ class BannerStore {
     this.pdfDownloadConfig.levelOne[key].checked = checked;
     this.pdfDownloadConfig.levelTwo[value].map((item) => {
       if (reportType === 'basicReport') {
-        if (item.value !== 'INV_POS_MANAGEMENT') {
+        if (item.value !== 'INV_POS_MANAGEMENT' && item.value !== 'INV_POS_SHAREHOLDER') {
           item.checked = checked;
         }
+      } else if (reportType === 'loan') {
+        companyHomeStore.reportInfo.dimensions.forEach((val) => {
+          if (val === item.value) {
+            item.checked = checked;
+          }
+        });
       } else {
         item.checked = checked;
       }
@@ -512,7 +518,11 @@ class BannerStore {
       } else if (reportType === 'loan') {
         levelTwo[key].map((item) => {
           if (item.type === 'loan') {
-            item.checked = checked;
+            companyHomeStore.reportInfo.dimensions.forEach((val) => {
+              if (val === item.value) {
+                item.checked = checked;
+              }
+            });
           }
         });
       }

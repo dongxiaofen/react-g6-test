@@ -13,10 +13,14 @@ function CourtNotice({moduleData}) {
     );
   }
   const handleRelevantDepartments = (data) => {
+    let nameArr = [];
     if (!data || data.length === 0) {
       return '无';
     }
-    return data.join(', ');
+    data.forEach((item) => {
+      nameArr = [...nameArr, item.litigantName];
+    });
+    return nameArr.join('；');
   };
   const data = {
     dataConfig: [
@@ -24,8 +28,8 @@ function CourtNotice({moduleData}) {
       {'key': 'caseReason', 'width': '6'},
       {'key': 'judgeTime', 'width': '6', 'handle': this.regTime},
       {'key': 'court', 'width': '6'},
-      {'key': 'relevantDepartments', 'width': '12', 'handle': handleRelevantDepartments},
-      {'key': 'content', 'width': '12'}
+      {'key': 'litigant', 'width': '12', 'handle': handleRelevantDepartments},
+      {'key': 'detail', 'width': '12'}
     ],
     item: moduleData,
     dict: 'courtNotice',

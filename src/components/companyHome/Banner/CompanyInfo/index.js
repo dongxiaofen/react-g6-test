@@ -1,5 +1,5 @@
-import React, { PropTypes } from 'react';
-import { observer, inject } from 'mobx-react';
+import React, {PropTypes} from 'react';
+import {observer, inject} from 'mobx-react';
 import styles from './index.less';
 import HistoryName from './HistoryName';
 import RiskLabel from './RiskLabel';
@@ -7,13 +7,14 @@ import MultiPartyMonitoring from './MultiPartyMonitoring';
 import Industry from './Industry';
 import Contact from './Contact';
 import reportIcon from 'imgs/bannerInfo/report.png';
+import baseReportIcon from 'imgs/bannerInfo/baseReport.png';
 import loanIcon from 'imgs/bannerInfo/loan.png';
 import monitorIcon from 'imgs/bannerInfo/monitor.png';
 import nowRecordIcon from 'imgs/bannerInfo/nowRecord.png';
 
-function CompanyInfo({ bannerStore, routing}) {
+function CompanyInfo({bannerStore, routing, companyHomeStore}) {
   const bannerInfoData = bannerStore.bannerInfoData;
-  const createIcon = ()=> {
+  const createIcon = () => {
     const route = routing.location.pathname.split('/')[2];
     if (/comprehenEval|profitEval|operationEval|growthAbilityEval/.test(route)) {
       return loanIcon;
@@ -21,6 +22,8 @@ function CompanyInfo({ bannerStore, routing}) {
       return monitorIcon;
     } else if (route === 'nowRecord') {
       return nowRecordIcon;
+    } else if (companyHomeStore.reportInfo.basicReportId && !companyHomeStore.reportInfo.reportId) {
+      return baseReportIcon;
     }
     return reportIcon;
   };
@@ -32,11 +35,11 @@ function CompanyInfo({ bannerStore, routing}) {
       <div className={styles.baseInfoBox}>
         <div className="clearfix">
           <p className={styles.companyName}>{bannerInfoData.name}</p>
-           <RiskLabel riskInfo={bannerInfoData.bannerInfo.bannerInfo.riskInfo} />
-           <MultiPartyMonitoring monitorInfo={bannerInfoData.variousMonitored} />
+          <RiskLabel riskInfo={bannerInfoData.bannerInfo.bannerInfo.riskInfo}/>
+          <MultiPartyMonitoring monitorInfo={bannerInfoData.variousMonitored}/>
         </div>
         <div className={`clearfix ${styles.baseInfo}`}>
-          <Industry industryNames={industryType} />
+          <Industry industryNames={industryType}/>
           <Contact {...bannerStore} />
           <HistoryName {...bannerStore} />
         </div>
@@ -48,4 +51,4 @@ function CompanyInfo({ bannerStore, routing}) {
 CompanyInfo.propTypes = {
   bannerStore: PropTypes.object,
 };
-export default inject('bannerStore', 'routing')(observer(CompanyInfo));
+export default inject('bannerStore', 'routing', 'companyHomeStore')(observer(CompanyInfo));

@@ -77,8 +77,9 @@
   float: left;
   width: 180px;
   height: 180px;
+  margin: 35px 15px 0 15px;
   border: 1px solid #e3f2fd;
-  margin: 34px 15px 0 15px;
+  overflow: hidden;
 }
 .moduleImg {
   font-size: 16px;
@@ -104,6 +105,41 @@
     width: 100%;
     font-size: 16px;
     color: #616161;
+  }
+}
+.explain {
+  position: absolute;
+  top: 179px;
+  width: 100%;
+  height: 178px;
+  background: #fff;
+  z-index: 1;
+  transition: all .3s ease;
+  h2 {
+    text-align: center;
+    padding-top: 20px;
+    font-size: 14px;
+    color: #42A5F5;
+    opacity: 0;
+    transition: all .3s ease .2s;
+  }
+  p {
+    padding: 10px;
+    font-size: 13px;
+    color: #9E9E9E;
+    opacity: 0;
+    transition: all .3s ease .3s;
+  }
+}
+.moduleItem:hover {
+  .explain {
+    top: 1px;
+    h2 {
+      opacity: 1;
+    }
+    p {
+      opacity: 1;
+    }
   }
 }
 .moduleImg0 {
@@ -149,6 +185,10 @@
 .moduleImg10 {
   .moduleImg;
   background-image: url(imgs/blackScan/企业主黑名单.png);
+}
+.moduleImg11 {
+  .moduleImg;
+  background-image: url(imgs/blackScan/经营不善.png);
 }
 .scanStatus {
   position: absolute;
