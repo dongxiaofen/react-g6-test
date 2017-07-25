@@ -67,7 +67,7 @@ function ManagementItem({shareHolderData}) {
       {'key': 'entName', 'width': '6'},
       {'key': 'entStatus', 'width': '6'},
       // {'key': 'entType', 'width': '6'},
-      {'key': 'otherPosition', 'width': '6'},
+      {'key': 'position', 'width': '6'},
       // {'key': 'fundedRatio', 'width': '6'},
       {'key': 'regCap', 'width': '6'},
       {'key': 'esDate', 'width': '6'},
@@ -84,7 +84,7 @@ function ManagementItem({shareHolderData}) {
   return (
     <div className={styles.share_holder_management}>
       <SecondTitle module={`${shareHolderData.name}`} />
-      <p>对外担任法人代表（{shareHolderData.shareHolderPositionFrList.length}）</p>
+      <p>担任法人的企业（{shareHolderData.shareHolderPositionFrList.length}）</p>
       <PdfSimpleKey {...shareHolderPositionFrList} />
       <p>对外投资（{shareHolderData.shareHolderInvList.length}）</p>
       <PdfSimpleKey {...shareHolderInvList} />
