@@ -73,7 +73,7 @@ function ShareHolderInfo({investmentStore, bannerStore}) {
       </div>
       <div className={styles.content}>
         <div className={styles.tableWrap}>
-          <div className={styles.tableName}>担任法人的企业{shareHolderPositionFrList.length}）</div>
+          <div className={styles.tableName}>担任法人的企业（{shareHolderPositionFrList.length}）</div>
           <SimpleTable meta={frPosdata.meta} module="shPositionList"/>
         </div>
         <div className={styles.tableWrap}>
