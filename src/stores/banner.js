@@ -419,7 +419,7 @@ class BannerStore {
     this.pdfDownloadConfig.levelOne[key].checked = checked;
     this.pdfDownloadConfig.levelTwo[value].map((item) => {
       if (reportType === 'basicReport') {
-        if (item.value !== 'INV_POS_MANAGEMENT') {
+        if (item.value !== 'INV_POS_MANAGEMENT' && item.value !== 'INV_POS_SHAREHOLDER') {
           item.checked = checked;
         }
       } else if (reportType === 'loan') {
