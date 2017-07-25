@@ -136,7 +136,7 @@ export const pdfDownload = (backendApi, urlPanth, paramString, types) => {
       case 'RISK_NOTICE':
         responseData.courtData.countCount = pathval.getPathValue(data, 'court.countCount');
         responseData.courtData.total = pathval.getPathValue(data, 'court.total');
-        responseData.courtData.courtNotice = pathval.getPathValue(data, 'court.courtNotice');
+        responseData.courtData.courtNoticeDetails = pathval.getPathValue(data, 'court.courtNoticeDetails');
         break;
       case 'RISK_EXECUTE':
         responseData.courtData.countCount = pathval.getPathValue(data, 'court.countCount');

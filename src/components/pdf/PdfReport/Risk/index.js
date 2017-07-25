@@ -34,7 +34,7 @@ function Risk({pdfStore, judgeIsModuleExist}) {
         {judgeIsModuleExist('RISK_NOTICE') ?
           <div>
             <PdfTitle module="法务信息" subModule="开庭公告"/>
-            <CourtNotice moduleData={pathval.getPathValue(pdfStore, 'courtData.courtNotice.data')}/>
+            <CourtNotice moduleData={pathval.getPathValue(pdfStore, 'courtData.courtNoticeDetails')}/>
           </div> : ''}
         {judgeIsModuleExist('RISK_JUDGEMENT') ?
           <div>
