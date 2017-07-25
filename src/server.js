@@ -13,7 +13,7 @@ import http from 'http';
 import fs from 'fs';
 import axios from 'axios';
 import url from 'url';
-import fundebug from 'fundebug-nodejs';
+// import fundebug from 'fundebug-nodejs';
 import logger from 'morgan';
 import {match, RouterContext} from 'react-router';
 import {Provider, useStaticRendering} from 'mobx-react';
@@ -31,7 +31,7 @@ import schedule from 'node-schedule';
 import PdfBody from 'components/pdf/PdfReport';
 
 useStaticRendering(true);
-fundebug.apikey = 'd3c3ad8fd8f470b0bd162e9504c98c1984050474f3f550d47b17c54983633c1e';
+// fundebug.apikey = 'd3c3ad8fd8f470b0bd162e9504c98c1984050474f3f550d47b17c54983633c1e';
 
 // 设置定时删除七牛文件
 schedule.scheduleJob('0 0 0 * * *', () => {

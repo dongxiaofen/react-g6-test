@@ -83,6 +83,7 @@ export default class Html extends Component {
       {this.isFirstLoad() ? '' :
         <script src="../vendors/js/map/china.min.js"></script>
       }
+      <script src="../vendors/js/error.js"></script>
       </body>
       </html>
     );
