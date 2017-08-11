@@ -67,10 +67,6 @@ app.use((req, res) => {
     // hot module replacement is enabled in the development env
     webpackIsomorphicTools.refresh();
   }
-  // agent.set('Content-Type', 'application/json')
-  //   .set('scm-source', config.target === 'dianxin_prod' ? 'TEL_WEB' : 'SC_WEB')
-  //   .set('scm-token', req.cookies['scm-token'] || {});
-
 
   // 检查pdf路径
   const reqPathName = url.parse(req.url).pathname;
@@ -85,7 +81,7 @@ app.use((req, res) => {
     } else if (renderProps) {
       // const reqPathName = url.parse(req.url).pathname;
       console.log('路由被match', url.parse(req.url));
-      if (reqPathName === '/') { // 访问首页
+      if (reqPathName === '/login') { // 访问首页
         allStores.clientStore.userInfo = {};
         // allStores.clientStore.envConfig = config.target;
         // allStores.loginStore.isShowLogin = false;

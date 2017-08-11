@@ -29,13 +29,6 @@ axios.interceptors.request.use((axiosConfig) => {
   axiosConfig.headers['sc-id'] = `web-${Uuid.v4()}`;
   axiosConfig.headers['scm-source'] = getPermissionMeta(allStores.clientStore.envConfig).scmSource;
   axiosConfig.headers['Cache-Control'] = 'no-cache';
-  // if (!axiosConfig.params) {
-  //   axiosConfig.params = {
-  //     timestamp: new Date().getTime()
-  //   };
-  // } else {
-  //   axiosConfig.params.timestamp = new Date().getTime();
-  // }
   return axiosConfig;
 }, (error) => {
   console.log('request error', error);
@@ -78,8 +71,6 @@ axios.interceptors.response.use((response) => {
       confirmAction: callback,
       contentText: '您的账号在其他设备登录，如果这不是您的操作，请及时修改您的密码',
     });
-  } else if (allStores.clientStore.envConfig === 'local' && error.response.status === 502) {
-    allStores.messageStore.openMessage({ type: 'warning', content: '后台正在部署， 请稍后使用', duration: 7000 });
   }
   return Promise.reject(error);
 });
