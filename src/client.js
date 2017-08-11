@@ -17,49 +17,7 @@ import PdfStore from './stores/pdf';
 import {useStrict, runInAction} from 'mobx';
 import {RouterStore, syncHistoryWithStore} from 'mobx-react-router';
 import getPermissionMeta from 'helpers/getPermissionMeta';
-// import { useStrict, spy } from 'mobx';
-// // 全局监听action
-// spy((event) => {
-//   if (event.type === 'action') {
-//     console.log(`event.name ${event.name} with args: ${event.arguments}`, event);
-//   }
-// });
-// if (module.hot) {
-//   module.hot.accept();
-// }
 
-// import ReactUpdates from 'react-dom/lib/ReactUpdates';
-// import ReactDefaultBatchingStrategy from 'react-dom/lib/ReactDefaultBatchingStrategy';
-// let isHandlingError = false;
-// if (process.env.NODE_ENV !== 'production') {
-//   isHandlingError = true;
-// }
-// const ReactTryCatchBatchingStrategy = {
-//   // this is part of the BatchingStrategy API. simply pass along
-//   // what the default batching strategy would do.
-//   get isBatchingUpdates() { return ReactDefaultBatchingStrategy.isBatchingUpdates; },
-
-//   batchedUpdates(...args) {
-//     try {
-//       ReactDefaultBatchingStrategy.batchedUpdates(...args);
-//     } catch (err) {
-//       if (isHandlingError) {
-//         // our error handling code threw an error. just throw now
-//         throw err;
-//       }
-//       isHandlingError = true;
-//       try {
-//         console.warn('js运行时错误!', err.name, err.message);
-//       } finally {
-//         isHandlingError = false;
-//       }
-//     }
-//   },
-// };
-// ReactUpdates.injection.injectBatchingStrategy(ReactTryCatchBatchingStrategy);
-// Needed for onTouchTap
-// fundebug.apikey = 'd3c3ad8fd8f470b0bd162e9504c98c1984050474f3f550d47b17c54983633c1e';
-// fundebug.notify('Test', 'Hello xx Fundebug!');
 const routingStore = new RouterStore();
 combineServerData(allStores, window.__data);
 // const history = useScroll(() => browserHistory)();
@@ -71,13 +29,13 @@ axios.interceptors.request.use((axiosConfig) => {
   axiosConfig.headers['sc-id'] = `web-${Uuid.v4()}`;
   axiosConfig.headers['scm-source'] = getPermissionMeta(allStores.clientStore.envConfig).scmSource;
   axiosConfig.headers['Cache-Control'] = 'no-cache';
-  if (!axiosConfig.params) {
-    axiosConfig.params = {
-      timestamp: new Date().getTime()
-    };
-  } else {
-    axiosConfig.params.timestamp = new Date().getTime();
-  }
+  // if (!axiosConfig.params) {
+  //   axiosConfig.params = {
+  //     timestamp: new Date().getTime()
+  //   };
+  // } else {
+  //   axiosConfig.params.timestamp = new Date().getTime();
+  // }
   return axiosConfig;
 }, (error) => {
   console.log('request error', error);

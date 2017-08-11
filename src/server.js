@@ -21,23 +21,10 @@ import getRoutes from './routes';
 import {RouterStore} from 'mobx-react-router';
 import * as allStores from 'stores';
 import getPermissionMeta from 'helpers/getPermissionMeta';
-import {pdfDownload} from './api/pdf';
-import {
-  upFileToQiniu,
-  checkPDF,
-  deletePdfsOnQiniu
-} from './helpers/pdfHelper';
-import schedule from 'node-schedule';
-import PdfBody from 'components/pdf/PdfReport';
-import PdfStore from './stores/pdf';
+
 useStaticRendering(true);
 // fundebug.apikey = 'd3c3ad8fd8f470b0bd162e9504c98c1984050474f3f550d47b17c54983633c1e';
 
-// 设置定时删除七牛文件
-schedule.scheduleJob('0 0 0 * * *', () => {
-  console.log('启动删除文件---');
-  deletePdfsOnQiniu();
-});
 axios.defaults.headers.common['Content-Type'] = 'application/json';
 axios.defaults.headers.common['scm-source'] = getPermissionMeta(config.target).scmSource;
 
@@ -60,63 +47,7 @@ const getQueryObj = (url) => {
   }
   return theRequest;
 };
-const getStringifyData = (data) => {
-  let cache = [];
-  const output = JSON.stringify(data, function (key, value) {
-    if (typeof value === 'object' && value !== null) {
-      if (cache.indexOf(value) !== -1) {
-        return;
-      }
-      cache.push(value);
-    }
-    return value;
-  });
-  cache = null;
-  return output;
-};
-const writeDataToFile = (id, data) => {
-  fs.writeFile(
-    path.join(__dirname, id + '.json'),
-    getStringifyData(data),
-    (err) => {
-      if (!err) {
-        console.log(' write data to file ok');
-      } else {
-        console.log('err');
-      }
-    }
-  );
-};
 
-const writeStrToHtml = (id, data, callBack, errorCallBack) => {
-  fs.writeFile(
-    PDF_DIRNAME + id,
-    data,
-    (err) => {
-      if (!err) {
-        console.log(' write string to html ok');
-        if (callBack) {
-          callBack();
-        }
-      } else {
-        console.log('write string to html err');
-        if (errorCallBack) {
-          errorCallBack();
-        }
-      }
-    }
-  );
-};
-const html2Pdf = (htmlName, pdfName, callBack) => {
-  const convert = cp.spawn('sh', ['./src/helpers/convert.sh', PDF_DIRNAME + htmlName, PDF_DIRNAME + pdfName]);
-  convert.stdout.on('error', function () {
-    console.log('stdout: pdf转换失败');
-  });
-  convert.stdout.on('end', function () {
-    console.log('stdout: pdf转换成功');
-    callBack();
-  });
-};
 app.use(compression());
 app.use(favicon(path.join(__dirname, '..', 'static', 'favicon1.ico')));
 app.use(Express.static(path.join(__dirname, '..', 'static')));
@@ -127,99 +58,6 @@ app.use(bodyParser.urlencoded({extended: false}));
 app.use(bodyParser.json());
 app.use(logger('dev'));
 
-app.get('/front/refresh/assets', function (req, res) {
-  const assetsPath = path.resolve(__dirname, '../static/dist');
-  const reg = /^(?:main-)(.*)(?:\.js)$/;
-  fs.readdir(assetsPath, function (err, file) {
-    if (!file) {
-      return res.status(404).send({message: 'file not fount'});
-    }
-    const mainFile = file.filter(name => reg.test(name))[0];
-    if (mainFile) {
-      const assetsHash = mainFile.match(reg)[1];
-      return res.status(200).send({assetsHash: assetsHash});
-    } else {
-      return res.status(404).send({message: 'file not fount'});
-    }
-  });
-});
-
-app.get('/sendEmail', function (req, res) {
-  axios.defaults.headers.common['scm-token'] = req.cookies['scm-token'] || {};
-  console.log('req.query.reportId-----' + req.query.reportId);
-  console.log(req.query.email);
-  console.log(req.query.reportId);
-  console.log(req.query.basicReportId);
-  res.status = 200;
-  res.json({
-    message: '提交成功，稍后请注意查收邮件'
-  });
-  // 将PDF发送到邮箱
-  const {types} = req.query;
-
-  const routingStore = new RouterStore();
-  allStores.routing = routingStore;
-  let urlPanth = '';
-  let params = '';
-  let reportType = '';
-  let pdfType = '';
-  // let requestNumber = '';
-  // let responseData = {};
-  if (req.query.reportId) {
-    urlPanth = '/api/pdf/report';
-    params = {
-      reportId: req.query.reportId,
-    };
-    reportType = '高级报告';
-    pdfType = '高级报告';
-  } else if (req.query.basicReportId) {
-    urlPanth = '/api/pdf/basicReport';
-    params = {
-      basicReportId: req.query.basicReportId,
-    };
-    reportType = '基础报告';
-    pdfType = '基础报告';
-  } else if (req.query.analysisReportId) {
-    urlPanth = '/api/pdf/analysis';
-    params = {
-      analysisReportId: req.query.analysisReportId,
-    };
-    reportType = '分析报告';
-    pdfType = '经营分析';
-  }
-  // 请求PDF下载方法
-
-  pdfDownload(config.backendApi, urlPanth, params, types).then((responseData) => {
-    console.log('请求完成-----');
-    // writeDataToFile('pdf', responseData);
-    allStores.pdfStore = new PdfStore();
-    allStores.pdfStore.setTypes(types, reportType);
-    allStores.pdfStore.getPdfDownData(responseData);
-    allStores.clientStore.envConfig = config.target;
-    const component = (
-      <Provider { ...allStores } key="provided">
-        <PdfBody />
-      </Provider>
-    );
-    const reportHtml = ReactDOM.renderToStaticMarkup(<HtmlPdf assets={webpackIsomorphicTools.assets()}
-                                                     component={component} {...allStores} />);
-    const companyName = req.query.companyName;
-    const username = req.query.email;
-    const timestamp = new Date().getTime();
-    const htmlName = username + timestamp + '.html';
-    // const pdfName = username + timestamp + '.pdf';
-    writeStrToHtml(htmlName, reportHtml, () => {
-      // html2Pdf(htmlName, pdfName, () => {
-      upFileToQiniu(PDF_DIRNAME + username + timestamp, {
-        pdfType,
-        companyName,
-        mail: req.query.email,
-        client: config.target,
-      });
-      // });
-    });
-  });
-});
 app.use((req, res) => {
   axios.defaults.headers.common['scm-token'] = req.cookies['scm-token'] || {};
   console.log('node 被访问');
@@ -236,10 +74,7 @@ app.use((req, res) => {
 
   // 检查pdf路径
   const reqPathName = url.parse(req.url).pathname;
-  if (reqPathName === '/pdfCheck') {
-    checkPDF(req, res);
-    return false;
-  }
+
   match({routes: getRoutes('server'), location: req.originalUrl}, (error, redirectLocation, renderProps) => {
     if (redirectLocation) {
       res.redirect(redirectLocation.pathname + redirectLocation.search);
@@ -250,110 +85,11 @@ app.use((req, res) => {
     } else if (renderProps) {
       // const reqPathName = url.parse(req.url).pathname;
       console.log('路由被match', url.parse(req.url));
-      if (reqPathName === '/pdfDown') {
-        const routingStore = new RouterStore();
-        allStores.routing = routingStore;
-        let urlPanth = '';
-        let params = '';
-        let reportType = '';
-        if (req.query.reportId) {
-          urlPanth = '/api/pdf/report';
-          params = {
-            reportId: req.query.reportId,
-          };
-          reportType = '高级报告';
-        } else if (req.query.basicReportId) {
-          urlPanth = '/api/pdf/basicReport';
-          params = {
-            basicReportId: req.query.basicReportId,
-          };
-          reportType = '基础报告';
-        } else if (req.query.analysisReportId) {
-          urlPanth = '/api/pdf/analysis';
-          params = {
-            analysisReportId: req.query.analysisReportId,
-          };
-          reportType = '分析报告';
-        }
-
-        // 下载PDF
-        pdfDownload(config.backendApi, urlPanth, params, req.query.type).then((responseData) => {
-          console.log('请求完成-----');
-          writeDataToFile('pdf', responseData);
-          allStores.pdfStore.setTypes(req.query.type, reportType);
-          allStores.clientStore.envConfig = config.target;
-          allStores.pdfStore.getPdfDownData(responseData);
-          const component = (
-            <Provider { ...allStores } key="provided">
-              <RouterContext {...renderProps} />
-            </Provider>
-          );
-          const reportHtml = ReactDOM.renderToString(<Html assets={webpackIsomorphicTools.assets()}
-                                                           component={component} {...allStores} />);
-          const companyName = responseData.companyName;
-          const username = responseData.email;
-          const timestamp = new Date().getTime();
-          const htmlName = username + timestamp + '.html';
-          const pdfName = username + timestamp + '.pdf';
-          writeStrToHtml(htmlName, reportHtml, () => {
-            html2Pdf(htmlName, pdfName, () => {
-              res.download(PDF_DIRNAME + pdfName, companyName + '.pdf', (err) => {
-                // 删除pdf
-                const del = cp.spawn('sh', ['./src/helpers/delPdf.sh', PDF_DIRNAME + htmlName, PDF_DIRNAME + pdfName]);
-                del.stdout.on('end', function () {
-                  console.log('stdout: pdf删除成功');
-                });
-                // res.download(PDF_DIRNAME + pdfName, companyName + '.pdf', (err) => {
-                //   // 删除pdf
-                //   const del = cp.spawn("sh", ['./src/helpers/delPdf.sh', PDF_DIRNAME + htmlName, PDF_DIRNAME + pdfName]);
-                //   del.stdout.on('end', function () {
-                //     console.log('stdout: pdf删除成功');
-                //   });
-              });
-            });
-          });
-        }).catch((err) => {
-          console.log(err, 'pdfDownload err');
-        });
-        // axios.get(config.backendApi + urlPanth, { params })
-        //   .then((resp) => {
-        //     writeDataToFile('pdf', resp.data);
-        //     allStores.pdfStore.setTypes(params.types, reportType);
-        //     allStores.clientStore.envConfig = config.target;
-        //     allStores.pdfStore.getPdfDownData(resp.data);
-        //     const component = (
-        //       <Provider { ...allStores } key="provided">
-        //         <RouterContext {...renderProps} />
-        //       </Provider>
-        //     );
-        //     const reportHtml = ReactDOM.renderToString(<Html assets={webpackIsomorphicTools.assets()} component={component} {...allStores} />);
-        //     const companyName = resp.data.companyName;
-        //     const username = resp.data.email;
-        //     const timestamp = new Date().getTime();
-        //     const htmlName = username + timestamp + '.html';
-        //     const pdfName = username + timestamp + '.pdf';
-        //     writeStrToHtml(htmlName, reportHtml, () => {
-        //       html2Pdf(htmlName, pdfName, () => {
-        //         res.download(PDF_DIRNAME + pdfName, companyName + '.pdf', (err) => {
-        //           // 删除pdf
-        //           const del = cp.spawn("sh", ['./src/helpers/delPdf.sh', PDF_DIRNAME + htmlName, PDF_DIRNAME + pdfName]);
-        //           del.stdout.on('end', function () {
-        //             console.log('stdout: pdf删除成功');
-        //           });
-        //         });
-        //       });
-        //     });
-        //   })
-        //   .catch((err) => {
-        //     console.log('pdfDown err', err.response.status);
-        //   });
-      } else if (reqPathName === '/') { // 访问首页
+      if (reqPathName === '/') { // 访问首页
         allStores.clientStore.userInfo = {};
-        allStores.clientStore.envConfig = config.target;
-        allStores.loginStore.isShowLogin = false;
-        allStores.leftBarStore.activeItem = '';
-        // console.log(allStores.clientStore.userInfo.email, 'sssssssssssssssssssssssssss');
-        // allStores.clientStore.envConfig = 'cfca_prod';
+        // allStores.clientStore.envConfig = config.target;
+        // allStores.loginStore.isShowLogin = false;
+        // allStores.leftBarStore.activeItem = '';
         /*服务端注入RouterStore*/
         const routingStore = new RouterStore();
         allStores.routing = routingStore;
@@ -382,16 +118,6 @@ app.use((req, res) => {
           .then((resp) => {
             /*获取用户信息*/
             allStores.clientStore.userInfo = resp.data;
-            allStores.clientStore.envConfig = config.target;
-            allStores.loginStore.isShowLogin = false;
-            /*获取报告leftBar高亮*/
-            if (reqPathName.indexOf('companyHome') >= 0) {
-              let reportActiveItem = '';
-              const arr = reqPathName.split('/');
-              reportActiveItem = arr[arr.length - 1];
-              allStores.leftBarStore.activeItem = reportActiveItem;
-            }
-            /*获取报告leftBar高亮*/
             /*服务端注入RouterStore*/
             const routingStore = new RouterStore();
             routingStore.location = {
@@ -421,7 +147,8 @@ app.use((req, res) => {
           })
           .catch((err) => {
             console.log('userInfo err', err.response.data);
-            const noLoginRoute = ['/', '/about', '/solution'];
+            // const noLoginRoute = ['/', '/about', '/solution'];
+            const noLoginRoute = ['/login'];
             if (err.response.data.errorCode === 401007 && noLoginRoute.indexOf(reqPathName) === -1) {
               allStores.loginStore.isShowLogin = true;
             }
