@@ -29,7 +29,7 @@ axios.defaults.headers.common['Content-Type'] = 'application/json';
 axios.defaults.headers.common['scm-source'] = getPermissionMeta(config.target).scmSource;
 
 // const agent = require('superagent-defaults')();
-const BASE_DIRNAME = process.cwd();
+// const BASE_DIRNAME = process.cwd();
 // const PDF_DIRNAME = path.join(BASE_DIRNAME, '/static/pdf/');
 const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');

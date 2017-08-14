@@ -29,9 +29,9 @@ export default class Html extends Component {
     return output;
   }
 
-  isFirstLoad() {
-    return this.props.reqPathName === '/';
-  }
+  // isFirstLoad() {
+  //   return this.props.reqPathName === '/';
+  // }
 
   render() {
     const {assets, component, ...allStore} = this.props;
@@ -76,12 +76,12 @@ export default class Html extends Component {
       <script dangerouslySetInnerHTML={{__html: `window.__data=${JSON.stringify(stores)};`}} charSet="UTF-8"/>
       <script src={assets.javascript['common.js']} charSet="UTF-8"/>
       <script id="mainJs" src={assets.javascript.main} charSet="UTF-8"/>
-      {this.isFirstLoad() ? '' :
+      {/* {this.isFirstLoad() ? '' :
         <script src="../vendors/js/echarts_v3_3_2.min.js"></script>
       }
       {this.isFirstLoad() ? '' :
         <script src="../vendors/js/map/china.min.js"></script>
-      }
+      } */}
       <script src="../vendors/js/error.js"></script>
       </body>
       </html>
