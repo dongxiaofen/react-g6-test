@@ -1,6 +1,6 @@
 import React, { Component, PropTypes } from 'react';
 import { observer } from 'mobx-react';
-// import pathval from 'pathval';
+import Main from './HomeMain';
 
 // let TweenMax;
 
@@ -20,7 +20,7 @@ export default class HomeBody extends Component {
 
   render() {
     return (
-      <div>homePage</div>
+      <Main />
     );
   }
 }

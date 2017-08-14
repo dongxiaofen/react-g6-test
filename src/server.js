@@ -20,13 +20,13 @@ import {Provider, useStaticRendering} from 'mobx-react';
 import getRoutes from './routes';
 import {RouterStore} from 'mobx-react-router';
 import * as allStores from 'stores';
-import getPermissionMeta from 'helpers/getPermissionMeta';
+// import getPermissionMeta from 'helpers/getPermissionMeta';
 
 useStaticRendering(true);
 // fundebug.apikey = 'd3c3ad8fd8f470b0bd162e9504c98c1984050474f3f550d47b17c54983633c1e';
 
 axios.defaults.headers.common['Content-Type'] = 'application/json';
-axios.defaults.headers.common['scm-source'] = getPermissionMeta(config.target).scmSource;
+// axios.defaults.headers.common['scm-source'] = getPermissionMeta(config.target).scmSource;
 
 // const agent = require('superagent-defaults')();
 // const BASE_DIRNAME = process.cwd();
