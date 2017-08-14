@@ -3,7 +3,7 @@ import pathval from 'pathval';
 import md5 from 'crypto-js/md5';
 import encHex from 'crypto-js/enc-hex';
 import { loginApi } from 'api';
-import clientStore from './client';
+// import clientStore from './client';
 
 class LoginStore {
   @observable form = {
@@ -80,7 +80,7 @@ class LoginStore {
           //  返回登录数据
           pathval.setPathValue(this, 'loginResult', response.data);
           //  修改client的值
-          pathval.setPathValue(clientStore, 'userInfo', response.data);
+          // pathval.setPathValue(clientStore, 'userInfo', response.data);
         }))
         .catch(action((error) => {
           const errorData = error.response.data;

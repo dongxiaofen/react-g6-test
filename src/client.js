@@ -13,10 +13,10 @@ import Uuid from 'node-uuid';
 import {Provider} from 'mobx-react';
 import combineServerData from 'helpers/combineServerData';
 import * as allStores from 'stores';
-import PdfStore from './stores/pdf';
+// import PdfStore from './stores/pdf';
 import {useStrict, runInAction} from 'mobx';
 import {RouterStore, syncHistoryWithStore} from 'mobx-react-router';
-import getPermissionMeta from 'helpers/getPermissionMeta';
+// import getPermissionMeta from 'helpers/getPermissionMeta';
 
 const routingStore = new RouterStore();
 combineServerData(allStores, window.__data);
@@ -27,7 +27,7 @@ useStrict(true);
 axios.interceptors.request.use((axiosConfig) => {
   // Do something before request is sent
   axiosConfig.headers['sc-id'] = `web-${Uuid.v4()}`;
-  axiosConfig.headers['scm-source'] = getPermissionMeta(allStores.clientStore.envConfig).scmSource;
+  // axiosConfig.headers['scm-source'] = getPermissionMeta(allStores.clientStore.envConfig).scmSource;
   axiosConfig.headers['Cache-Control'] = 'no-cache';
   return axiosConfig;
 }, (error) => {
@@ -45,7 +45,7 @@ axios.interceptors.response.use((response) => {
   if (error.response.data.errorCode === 401006 || error.response.data.errorCode === 401007) {
     if (error.config.url !== '/api/user/logout') {
       runInAction('显示登录框', () => {
-        allStores.loginStore.isShowLogin = true;
+        // allStores.loginStore.isShowLogin = true;
       });
     } else {
       location.href = '/';
@@ -56,26 +56,26 @@ axios.interceptors.response.use((response) => {
     //   });
     // });
   } else if (error.response.status === 502) {
-    allStores.messageStore.openMessage({type: 'warning', content: '后端正在部署', duration: 5000});
+    // allStores.messageStore.openMessage({type: 'warning', content: '后端正在部署', duration: 5000});
   } else if (error.response.data.errorCode === 403232) {
-    const callback = () => {
-      browserHistory.push('/');
-      runInAction('显示登录框', () => {
-        allStores.loginStore.isShowLogin = true;
-      });
-    };
-    allStores.modalStore.openCompModal({
-      isSingleBtn: true,
-      title: '系统提醒',
-      closeAction: callback,
-      confirmAction: callback,
-      contentText: '您的账号在其他设备登录，如果这不是您的操作，请及时修改您的密码',
-    });
+    // const callback = () => {
+    //   browserHistory.push('/');
+    //   runInAction('显示登录框', () => {
+    //     allStores.loginStore.isShowLogin = true;
+    //   });
+    // };
+    // allStores.modalStore.openCompModal({
+    //   isSingleBtn: true,
+    //   title: '系统提醒',
+    //   closeAction: callback,
+    //   confirmAction: callback,
+    //   contentText: '您的账号在其他设备登录，如果这不是您的操作，请及时修改您的密码',
+    // });
   }
   return Promise.reject(error);
 });
 allStores.routing = routingStore;
-allStores.pdfStore = new PdfStore();
+// allStores.pdfStore = new PdfStore();
 ReactDOM.render(
   <Provider { ...allStores }>
     <Router routes={getRoutes(allStores)} history={history}/>

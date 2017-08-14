@@ -1,1 +1,0 @@
-export DownLoadApp from './DownLoadApp';

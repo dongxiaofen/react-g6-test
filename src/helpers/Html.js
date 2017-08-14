@@ -38,7 +38,6 @@ export default class Html extends Component {
     const stores = this.prepareStore(allStore);
     const content = component ? ReactDOM.renderToString(component) : '';
     const head = Helmet.rewind();
-    const isDx = allStore.clientStore.envConfig === 'cfca_prod';
     return (
       <html lang="en-us">
       <head>
@@ -46,8 +45,8 @@ export default class Html extends Component {
         {head.meta.toComponent()}
         {head.link.toComponent()}
         {head.script.toComponent()}
-        <title>{isDx ? '洞悉-风险管理平台' : '星象-风险管理平台'}</title>
-        {isDx ? '' : <link rel="shortcut icon" href="/favicon3.ico"/>}
+        <title>数据API平台</title>
+        <link rel="shortcut icon" href="/favicon3.ico"/>
         <meta name="viewport" content="width=device-width, initial-scale=1"/>
         <meta httpEquiv="content-type" content="text/html;charset=utf-8"/>
         {/* styles (will be present only in production with webpack extract text plugin) */}

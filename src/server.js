@@ -7,7 +7,7 @@ import favicon from 'serve-favicon';
 import compression from 'compression';
 import path from 'path';
 import Html from './helpers/Html';
-import HtmlPdf from './helpers/HtmlPdf';
+// import HtmlPdf from './helpers/HtmlPdf';
 import PrettyError from 'pretty-error';
 import http from 'http';
 import fs from 'fs';
@@ -30,7 +30,7 @@ axios.defaults.headers.common['scm-source'] = getPermissionMeta(config.target).s
 
 // const agent = require('superagent-defaults')();
 const BASE_DIRNAME = process.cwd();
-const PDF_DIRNAME = path.join(BASE_DIRNAME, '/static/pdf/');
+// const PDF_DIRNAME = path.join(BASE_DIRNAME, '/static/pdf/');
 const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
 const pretty = new PrettyError();
@@ -82,7 +82,7 @@ app.use((req, res) => {
       // const reqPathName = url.parse(req.url).pathname;
       console.log('路由被match', url.parse(req.url));
       if (reqPathName === '/login') { // 访问首页
-        allStores.clientStore.userInfo = {};
+        // allStores.clientStore.userInfo = {};
         // allStores.clientStore.envConfig = config.target;
         // allStores.loginStore.isShowLogin = false;
         // allStores.leftBarStore.activeItem = '';
@@ -113,7 +113,7 @@ app.use((req, res) => {
         axios.get(config.backendApi + '/api/user/info')
           .then((resp) => {
             /*获取用户信息*/
-            allStores.clientStore.userInfo = resp.data;
+            // allStores.clientStore.userInfo = resp.data;
             /*服务端注入RouterStore*/
             const routingStore = new RouterStore();
             routingStore.location = {
@@ -146,7 +146,7 @@ app.use((req, res) => {
             // const noLoginRoute = ['/', '/about', '/solution'];
             const noLoginRoute = ['/login'];
             if (err.response.data.errorCode === 401007 && noLoginRoute.indexOf(reqPathName) === -1) {
-              allStores.loginStore.isShowLogin = true;
+              // allStores.loginStore.isShowLogin = true;
             }
             /*服务端注入RouterStore*/
             const routingStore = new RouterStore();
