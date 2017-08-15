@@ -10,9 +10,9 @@
 // export searchStore from './search';
 // export monitorStatisticsStore from './monitorStatistics';
 // export myHomePageStore from './myHomePage';
-// export clientStore from './client';
+export clientStore from './client';
 // export riskHeadlinesStore from './riskHeadlines';
-// export loginStore from './login';
+export loginStore from './login';
 // export leftBarStore from './leftBar';
 // export detailModalStore from './detailModal';
 // 报告相关store-start

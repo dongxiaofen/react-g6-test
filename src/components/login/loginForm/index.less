@@ -1,0 +1,134 @@
+@import '~sc-colors/index.less';
+
+.login {
+  position: absolute;
+  top:50%;
+  left:50%;
+
+  width: 350px;
+  height: 340px;
+  margin-left: -175px;
+  margin-top: -170px;
+  // transform: translateX(-50%);
+  // transform: translateY(-50%);
+  padding: 20px;
+
+  background-color: @white1;
+}
+.title {
+  padding: 20px 0;
+  line-height: 26px;
+  text-align: center;
+  font-size: 20px;
+}
+
+.loginForm {
+  // float: left;
+  // margin-left: 50px;
+  // margin-top: 40px;
+}
+
+.loginLogoText {
+  color: @black5;
+}
+
+.input {
+  width: 310px;
+  height: 48px;
+  margin-bottom: 10px;
+  padding-left: 60px;
+  line-height: 46px;
+
+  //color: @black4;
+  background: none;
+  border-radius: 0px;
+}
+.btn-box {
+  position: relative;
+  padding-top: 10px;
+}
+.submit {
+  width: 310px;
+  height: 44px;
+  font-size: 16px;
+  color: @white1;
+  border: none;
+
+  // border-radius: 5px;
+  background-color: @mdc-blue-400;
+  &:hover{
+    background-color: @mdc-blue-400;
+  }
+}
+
+.psInput {
+  position: relative;
+}
+.textLine {
+  position: absolute;
+  top: 13px;
+  left: 45px;
+  display: block;
+  width: 1px;
+  height: 21px;
+  background-color: @mdc-blue-grey-100;
+}
+
+.inputIconUser,
+.inputIconLock {
+  position: absolute;
+  color: @black9;
+  z-index: 2;
+}
+
+.inputIconUser {
+  top: 12px;
+  left: 18px;
+}
+
+.inputIconLock {
+  top: 12px;
+  left: 18px;
+}
+
+.errMessage {
+  display: none;
+  position: absolute;
+  top: -14px;
+  left: 0;
+  width: 310px;
+
+  color: @red1;
+  text-align: center;
+}
+
+.isVisible {
+  display: block;
+}
+
+.loginBrowser{
+  display: none;
+  margin-left: 4px;
+  margin-top: 3px;
+}
+
+.loginBrowserErr {
+  float: left;
+  margin-left: 6px;
+  margin-top: 1px;
+  color: @black7;
+}
+
+.browerText {
+  color: @blue2;
+}
+.loginBrowserErrImg {
+  float: left;
+}
+.forget {
+  line-height: 20px;
+  padding-top: 25px;
+  font-size: 14px;
+  text-align: center;
+  color: @black5;
+}

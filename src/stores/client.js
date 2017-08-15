@@ -4,11 +4,11 @@ import { clientApi } from 'api';
 
 class ClientStore {
   @observable userInfo = {};
-  @observable envConfig = 'local';
+  // @observable envConfig = 'local';
 
   @action.bound combineServerData(data) {
     this.userInfo = data.userInfo;
-    this.envConfig = data.envConfig;
+    // this.envConfig = data.envConfig;
   }
 
   @action.bound loginOut(notRouteToHome) {

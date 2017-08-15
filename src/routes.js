@@ -5,12 +5,14 @@ import {Route, IndexRoute} from 'react-router';
 import {
     App,
     HomePage,
+    Login
   } from 'containers';
 
 export default () => {
   return (
     <Route path="/" component={ App }>
       <IndexRoute component={ HomePage } />
+      <Route path="/login" component={ Login } />
     </Route>
   );
 };

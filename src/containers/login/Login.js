@@ -6,9 +6,7 @@ import LoginMain from 'components/login';
 export default class HomePage extends Component {
   render() {
     return (
-        <div>
-          <LoginMain />
-        </div>
+        <LoginMain />
     );
   }
 }

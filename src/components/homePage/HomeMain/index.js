@@ -1,7 +1,7 @@
 import React, {PropTypes} from 'react';
 import { observer } from 'mobx-react';
 
-import HeaderNavBar from 'components/common/HeaderNavBar';
+// import HeaderNavBar from 'components/common/HeaderNavBar';
 import Footer from 'components/common/Footer';
 import styles from './index.less';
 import bannerShape1 from 'imgs/homePage/banner_shape1.png';
@@ -21,10 +21,10 @@ import homeBox2Img4 from 'imgs/homePage/home_box2_4.png';
 import homeLogo from 'imgs/homePage/home_logo.png';
 import bannerArrow from 'imgs/homePage/home_banner_arrow.png';
 
-function HomeMain({isHeaderScroll, arrowOnClick}) {
+function HomeMain({arrowOnClick}) {
   return (
     <div>
-      <HeaderNavBar isHeaderScroll={isHeaderScroll} home="1" />
+      {/* <HeaderNavBar isHeaderScroll={isHeaderScroll} home="1" /> */}
       <div id="home-banner" className={`clearfix ${styles['home-banner']}`}>
         <canvas id="canvas" className={styles.webGL}></canvas>
         <h1 id="home-banner-title">定制化风险决策平台&nbsp;&nbsp;用数据连接管理</h1>

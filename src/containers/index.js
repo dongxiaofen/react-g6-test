@@ -1,8 +1,9 @@
 export App from './app';
+export Login from './login';
+export HomePage from './homePage';
 // export Relation from './relation';
 // export MyHomePage from './myHomePage';
 // export RiskHeadlines from './riskHeadlines';
-export HomePage from './homePage';
 // export ReportList from './reportList';
 // export AnalysisList from './analysisList';
 // export MonitorList from './monitorList';

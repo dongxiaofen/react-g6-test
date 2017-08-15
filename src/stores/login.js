@@ -23,9 +23,9 @@ class LoginStore {
   @observable loginResult = {};
   @observable loading = false;
   @observable isHasEorr = false; // 登录出错
-  @observable isShowLogin = false; // 是否显示login
+  // @observable isShowLogin = false; // 是否显示login
   @observable errText = ''; // 错误提示信息
-  @observable isIE = false; // 判断是否是ie浏览器，只能判断10版本一下
+  // @observable isIE = false; // 判断是否是ie浏览器，只能判断10版本一下
 
   @action.bound resetVlidateStatus(id) {
     const validateStatus = pathval.getPathValue(this.form, `${id}.validateStatus`);
@@ -34,7 +34,7 @@ class LoginStore {
     }
   }
 
-  @action.bound handleSubmit(pathname) {
+  @action.bound handleSubmit() {
     const keys = ['username', 'password'];
     let isSumbit = true;
     pathval.setPathValue(this.form, 'isHasEorr', false);
@@ -53,7 +53,7 @@ class LoginStore {
           email: pathval.getPathValue(this.form, 'username.value'),
           password: encHex.stringify(md5(password))
         },
-        pathname,
+        // pathname,
         // this.props.history
       );
     } else {
@@ -62,20 +62,21 @@ class LoginStore {
     }
   }
 
-  @action.bound checkLogin(params, pathname) {
+  @action.bound checkLogin(params) {
     pathval.setPathValue(this, 'loading', true);
     loginApi.postLogin(params)
         .then(action((response)=> {
           const respData = response.data;
           pathval.setPathValue(this, 'loading', false);
           if (respData.email) {
-            pathval.setPathValue(this, 'isShowLogin', false);
-            const redirectRoute = ['/', '/about', '/solution'];
-            if (redirectRoute.indexOf(pathname) !== -1) {
-              location.href = '/accountProfile';
-            } else {
-              location.reload();
-            }
+            location.href = '/';
+            // pathval.setPathValue(this, 'isShowLogin', false);
+            // const redirectRoute = ['/', '/about', '/solution'];
+            // if (redirectRoute.indexOf(pathname) !== -1) {
+            //   location.href = '/accountProfile';
+            // } else {
+            //   location.reload();
+            // }
           }
           //  返回登录数据
           pathval.setPathValue(this, 'loginResult', response.data);
@@ -96,9 +97,9 @@ class LoginStore {
           pathval.setPathValue(this, 'loginResult', {});
         }));
   }
-  @action combineServerData(data) {
-    this.isShowLogin = data.isShowLogin;
-  }
+  // @action combineServerData(data) {
+  //   this.isShowLogin = data.isShowLogin;
+  // }
 
 }
 export default new LoginStore();
