@@ -82,7 +82,7 @@ app.use((req, res) => {
       // const reqPathName = url.parse(req.url).pathname;
       console.log('路由被match', url.parse(req.url));
       if (reqPathName === '/login') { // 访问首页
-        // allStores.clientStore.userInfo = {};
+        allStores.clientStore.userInfo = {};
         // allStores.clientStore.envConfig = config.target;
         // allStores.loginStore.isShowLogin = false;
         // allStores.leftBarStore.activeItem = '';
@@ -113,7 +113,7 @@ app.use((req, res) => {
         axios.get(config.backendApi + '/api/user/info')
           .then((resp) => {
             /*获取用户信息*/
-            // allStores.clientStore.userInfo = resp.data;
+            allStores.clientStore.userInfo = resp.data;
             /*服务端注入RouterStore*/
             const routingStore = new RouterStore();
             routingStore.location = {

@@ -38,17 +38,27 @@ axios.interceptors.response.use((response) => {
   return response;
 }, (error) => {
   // Do something with request error
-  console.log('error', error);
+  // console.log('error', error);
   if (axios.isCancel(error)) {
     return Promise.reject(error);
   }
-  if (error.response.data.errorCode === 401006 || error.response.data.errorCode === 401007) {
+  // if (error.response.data.errorCode === 401006 || error.response.data.errorCode === 401007) {
+  if (error.response.data.errorCode === 401999) {
     if (error.config.url !== '/api/user/logout') {
-      runInAction('显示登录框', () => {
-        // allStores.loginStore.isShowLogin = true;
+      runInAction('登录提示', () => {
+        const closeAction = allStores.modalStore.closeAction;
+        allStores.modalStore.openCompModal({
+          // isSingleBtn: true,
+          title: '登录超时',
+          contentText: '登录超时，请重新登录',
+          confirmAction: () => {
+            location.href = '/login';
+          },
+          cancelAction: closeAction
+        });
       });
     } else {
-      location.href = '/';
+      location.href = '/login';
     }
     // allStores.modalStore.openAsyncModal((callback) => {
     //   require.ensure([], (require) => {`
@@ -56,21 +66,7 @@ axios.interceptors.response.use((response) => {
     //   });
     // });
   } else if (error.response.status === 502) {
-    // allStores.messageStore.openMessage({type: 'warning', content: '后端正在部署', duration: 5000});
-  } else if (error.response.data.errorCode === 403232) {
-    // const callback = () => {
-    //   browserHistory.push('/');
-    //   runInAction('显示登录框', () => {
-    //     allStores.loginStore.isShowLogin = true;
-    //   });
-    // };
-    // allStores.modalStore.openCompModal({
-    //   isSingleBtn: true,
-    //   title: '系统提醒',
-    //   closeAction: callback,
-    //   confirmAction: callback,
-    //   contentText: '您的账号在其他设备登录，如果这不是您的操作，请及时修改您的密码',
-    // });
+    allStores.messageStore.openMessage({type: 'warning', content: '后端正在部署', duration: 5000});
   }
   return Promise.reject(error);
 });

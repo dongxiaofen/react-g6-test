@@ -1,8 +1,16 @@
+export clientStore from './client';
+export loginStore from './login';
+// export uiStore from './ui';
+export modalStore from './modal';
+// export detailModalStore from './detailModal';
+export messageStore from './message';
+// export entireLoadingStore from './entireLoading';
+export headerStore from './header';
+export accountStore from './account';
+
 // export homeStore from './home';
 // export searchStore from './search';
-// export uiStore from './ui';
 // export relationStore from './relation';
-// export modalStore from './modal';
 // export reportListStore from './reportList';
 // export analysisListStore from './analysisList';
 // export monitorListStore from './monitorList';
@@ -10,11 +18,8 @@
 // export searchStore from './search';
 // export monitorStatisticsStore from './monitorStatistics';
 // export myHomePageStore from './myHomePage';
-export clientStore from './client';
 // export riskHeadlinesStore from './riskHeadlines';
-export loginStore from './login';
 // export leftBarStore from './leftBar';
-// export detailModalStore from './detailModal';
 // 报告相关store-start
 // export companyHomeStore from './companyHome';
 // export bannerStore from './banner';
@@ -43,7 +48,6 @@ export loginStore from './login';
 // 报告相关store-end
 // export addRelationStore from './addRelation';
 // export accountSettingStore from './accountSetting';
-// export messageStore from './message';
 // export payModalStore from './payModal';
 // export ruleStore from './rule';
 // export ruleCompanyStore from './ruleCompany';
@@ -57,7 +61,6 @@ export loginStore from './login';
 // export taxCheckStore from './taxCheck';
 // export assetTransactionStore from './assetTransaction';
 // export linkJumpStore from './linkJump';
-// export entireLoadingStore from './entireLoading';
 // export loaningStore from './loaning';
 // export ruleAddStore from './ruleAdd';
 // export ruleListStore from './ruleList';

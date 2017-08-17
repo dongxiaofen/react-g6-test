@@ -11,14 +11,25 @@ class ClientStore {
     // this.envConfig = data.envConfig;
   }
 
-  @action.bound loginOut(notRouteToHome) {
+  @action.bound loginOut() {
     clientApi.loginOut()
       .then(() => {
-        if (!notRouteToHome) {
-          browserHistory.push('/');
-          window.location.reload();
-        }
+        browserHistory.push('/login');
+        window.location.reload();
       })
+      .catch((err) => {
+        console.log(err.response);
+        browserHistory.push('/login');
+        window.location.reload();
+      });
+  }
+
+  @action.bound getUserInfo() {
+    clientApi.getUserInfo()
+      .then(action('get-userinfo-success', ({data}) => {
+        // console.log(data);
+        this.userInfo = data;
+      }))
       .catch((err) => {
         console.log(err.response);
       });

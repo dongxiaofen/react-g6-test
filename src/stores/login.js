@@ -2,8 +2,9 @@ import { observable, action} from 'mobx';
 import pathval from 'pathval';
 import md5 from 'crypto-js/md5';
 import encHex from 'crypto-js/enc-hex';
+import { browserHistory } from 'react-router';
 import { loginApi } from 'api';
-// import clientStore from './client';
+import clientStore from './client';
 
 class LoginStore {
   @observable form = {
@@ -69,32 +70,29 @@ class LoginStore {
           const respData = response.data;
           pathval.setPathValue(this, 'loading', false);
           if (respData.email) {
-            location.href = '/';
-            // pathval.setPathValue(this, 'isShowLogin', false);
-            // const redirectRoute = ['/', '/about', '/solution'];
-            // if (redirectRoute.indexOf(pathname) !== -1) {
-            //   location.href = '/accountProfile';
-            // } else {
-            //   location.reload();
-            // }
+            // location.href = '/';
+            browserHistory.push('/api');
           }
           //  返回登录数据
           pathval.setPathValue(this, 'loginResult', response.data);
           //  修改client的值
-          // pathval.setPathValue(clientStore, 'userInfo', response.data);
+          pathval.setPathValue(clientStore, 'userInfo', response.data);
         }))
         .catch(action((error) => {
           const errorData = error.response.data;
+          // console.log(error.response, 'errorData');
           pathval.setPathValue(this, 'loading', false);
-          let errText = '用户名或者密码错误';
-          if (errorData.errorCode === 401200 || errorData.errorCode === 401201) {
-            errText = errorData.message;
-          } else if (errorData.errorCode === 401001) {
-            errText = '该用户不存在';
+          if (error.response.status !== 502) {
+            let errText = '用户名或者密码错误';
+            if (errorData.errorCode === 401200 || errorData.errorCode === 401201) {
+              errText = errorData.message;
+            } else if (errorData.errorCode === 401001) {
+              errText = '该用户不存在';
+            }
+            pathval.setPathValue(this, 'isHasEorr', true);
+            pathval.setPathValue(this, 'errText', errText);
+            pathval.setPathValue(this, 'loginResult', {});
           }
-          pathval.setPathValue(this, 'isHasEorr', true);
-          pathval.setPathValue(this, 'errText', errText);
-          pathval.setPathValue(this, 'loginResult', {});
         }));
   }
   // @action combineServerData(data) {

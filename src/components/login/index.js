@@ -6,7 +6,7 @@ import LoginForm from './loginForm';
 import loginBg from 'imgs/login/loginBg.png';
 function Login() {
   return (
-    <div>
+    <div className={styles.login}>
       <div className={styles['login-bg']}>
         <img className={styles['login-img']} src={loginBg} alt=""/>
         <LoginForm />

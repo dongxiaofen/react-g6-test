@@ -1,6 +1,14 @@
 export App from './app';
 export Login from './login';
-export HomePage from './homePage';
+export Api from './api';
+export Introduce from './apiCont/introduce';
+export Test from './apiCont/test';
+export Consume from './consume';
+export Account from './account';
+export Modify from './accountComp/modify';
+export Myapi from './accountComp/myapi';
+
+// export HomePage from './homePage';
 // export Relation from './relation';
 // export MyHomePage from './myHomePage';
 // export RiskHeadlines from './riskHeadlines';
