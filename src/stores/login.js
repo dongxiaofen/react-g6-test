@@ -70,8 +70,11 @@ class LoginStore {
           const respData = response.data;
           pathval.setPathValue(this, 'loading', false);
           if (respData.email) {
-            // location.href = '/';
-            browserHistory.push('/api');
+            let pathname = '/interface';
+            if (localStorage.pathname) {
+              pathname = localStorage.pathname;
+            }
+            browserHistory.push(pathname);
           }
           //  返回登录数据
           pathval.setPathValue(this, 'loginResult', response.data);

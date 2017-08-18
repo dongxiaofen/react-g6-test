@@ -13,9 +13,9 @@ function Header({headerStore, clientStore, routing}) {
   };
   const handleInnerNav = (innerNav, idx) => {
     const ParentIdx = headerStore.navList.findIndex(item => (item.key === headerStore.currentNav));
-    if (headerStore.navList[ParentIdx].children[idx].active) {
-      return;
-    }
+    // if (headerStore.navList[ParentIdx].children[idx].active) {
+    //   return;
+    // }
     headerStore.innerNavChange(innerNav, idx, ParentIdx);
     routing.push({pathname: `/${headerStore.currentNav}/${innerNav}`});
   };

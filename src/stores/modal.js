@@ -97,11 +97,13 @@ class ModalStore {
     if (confirmLoading !== undefined) { this.confirmLoading = confirmLoading; }
     // disable
     if (confirmDisable) { this.confirmDisable = confirmDisable; }
-    loader((comp) => {
-      runInAction(() => {
-        this.compComponent = comp;
+    if (loader) {
+      loader((comp) => {
+        runInAction(() => {
+          this.compComponent = comp;
+        });
       });
-    });
+    }
   }
 }
 export default new ModalStore();

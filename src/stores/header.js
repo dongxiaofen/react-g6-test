@@ -2,11 +2,11 @@ import { observable, action } from 'mobx';
 // import { clientApi } from 'api';
 
 class HeaderStore {
-  @observable currentNav = 'api';
+  @observable currentNav = 'interface';
   // @observable innerCurrentNav = 'introduce';
   @observable navList = [
     {
-      key: 'api',
+      key: 'interface',
       label: '接口中心',
       children: [
         {name: '接口介绍', value: 'introduce', active: true},

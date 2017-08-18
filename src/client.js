@@ -52,6 +52,7 @@ axios.interceptors.response.use((response) => {
           title: '登录超时',
           contentText: '登录超时，请重新登录',
           confirmAction: () => {
+            localStorage.setItem('pathname', location.pathname + location.search);
             location.href = '/login';
           },
           cancelAction: closeAction

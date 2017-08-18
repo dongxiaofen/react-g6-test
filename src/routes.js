@@ -5,7 +5,8 @@ import {Route, IndexRoute} from 'react-router';
 import {
     App,
     Login,
-    Api,
+    Interface,
+    Detail,
     Introduce,
     Test,
     Consume,
@@ -17,11 +18,12 @@ import {
 export default () => {
   return (
     <Route path="/" component={ App }>
-      <IndexRoute component={ Api } />
+      <IndexRoute component={ Interface } />
       <Route path="login" component={ Login } />
-      <Route path="api" component={ Api } >
+      <Route path="interface" component={ Interface } >
         <IndexRoute component={ Introduce } />
         <Route path="introduce" component={ Introduce } />
+        <Route path="detail" component={ Detail } />
         <Route path="test" component={ Test } />
       </Route>
       <Route path="consume" component={ Consume } >

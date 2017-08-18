@@ -1,10 +1,10 @@
 import React, { Component, PropTypes } from 'react';
 import { observer, inject } from 'mobx-react';
-import MainContBox from 'components/common/MainContBox';
+// import MainContBox from 'components/common/MainContBox';
 
 @inject('headerStore', 'routing')
 @observer
-export default class Api extends Component {
+export default class Interface extends Component {
   static propTypes = {
     children: PropTypes.object.isRequired,
     routing: PropTypes.object,
@@ -16,9 +16,9 @@ export default class Api extends Component {
   }
   render() {
     return (
-      <MainContBox>
+      <div>
         {this.props.children}
-      </MainContBox>
+      </div>
     );
   }
 }

@@ -2,7 +2,7 @@ import { observable, action } from 'mobx';
 import pathval from 'pathval';
 import md5 from 'crypto-js/md5';
 import encHex from 'crypto-js/enc-hex';
-// import { browserHistory } from 'react-router';
+// import { accountApi, interfaceApi } from 'api';
 import { accountApi } from 'api';
 import messageStore from './message';
 
@@ -28,6 +28,11 @@ class AccountStore {
     },
   };
   @observable isModifyLoading = false;
+
+  @observable myApi = {
+    interfaceList: {},
+    myInterface: {}
+  };
 
   @action.bound updateValue(changeItem, value) {
     pathval.setPathValue(this, changeItem, value);
@@ -71,5 +76,7 @@ class AccountStore {
         messageStore.openMessage({type: 'warning', content: '密码修改失败', duration: 5000});
       }));
   }
+
+  // @action.bound
 }
 export default new AccountStore();

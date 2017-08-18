@@ -1,6 +1,7 @@
 export * as loginApi from './login';
 export * as clientApi from './client';
 export * as accountApi from './account';
+export * as interfaceApi from './interface';
 
 // export * as searchApi from './search';
 // export * as reportListApi from './reportList';
