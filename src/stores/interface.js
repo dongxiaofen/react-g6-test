@@ -28,6 +28,7 @@ class InterfaceStore {
   }
 
   @action.bound getInterfaceList() {
+    this.interfaceList = {};
     const params = Object.assign({}, uiStore.uiState.interfacePager, this.filterInfo);
     interfaceApi.getInterfaceList(params)
       .then(action('获取接口成功', ({data}) => {

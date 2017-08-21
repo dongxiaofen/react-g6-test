@@ -2,8 +2,8 @@ import { observable, action } from 'mobx';
 import pathval from 'pathval';
 import md5 from 'crypto-js/md5';
 import encHex from 'crypto-js/enc-hex';
-// import { accountApi, interfaceApi } from 'api';
-import { accountApi } from 'api';
+import { accountApi, interfaceApi } from 'api';
+// import { accountApi } from 'api';
 import messageStore from './message';
 
 class AccountStore {
@@ -30,9 +30,11 @@ class AccountStore {
   @observable isModifyLoading = false;
 
   @observable myApi = {
-    interfaceList: {},
-    myInterface: {}
+    myInterface: {},
+    interfaceType: {}, // 接口套餐分类
   };
+
+  @observable safeData = {};
 
   @action.bound updateValue(changeItem, value) {
     pathval.setPathValue(this, changeItem, value);
@@ -63,7 +65,6 @@ class AccountStore {
       });
     }
   }
-
   @action.bound resetPassword(params) {
     this.isModifyLoading = true;
     accountApi.resetPassword(params)
@@ -77,6 +78,27 @@ class AccountStore {
       }));
   }
 
-  // @action.bound
+  @action.bound getMyInterface() {
+    this.myApi.myInterface = {};
+    interfaceApi.getMyInterface()
+      .then(action('myInterface-success', ({data}) => {
+        this.myApi.myInterface = {data};
+      }))
+      .catch(action('myInterface-err', () => {
+        this.myApi.myInterface = {
+          data: {},
+          error: {message: '暂未获取到接口套餐'}
+        };
+      }));
+  }
+  @action.bound getInterfaceType() {
+    interfaceApi.getInterfaceType()
+      .then(action('type-success', ({data}) => {
+        this.myApi.interfaceType = data;
+      }))
+      .catch(action('type-err', () => {
+        this.myApi.interfaceType = {};
+      }));
+  }
 }
 export default new AccountStore();

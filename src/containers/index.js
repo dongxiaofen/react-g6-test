@@ -5,9 +5,12 @@ export Introduce from './interfaceCont/introduce';
 export Detail from './interfaceCont/detail';
 export Test from './interfaceCont/test';
 export Consume from './consume';
+export Consumption from './consumeCont/consumption';
+export Recharge from './consumeCont/recharge';
 export Account from './account';
 export Modify from './accountComp/modify';
 export Myapi from './accountComp/myapi';
+export Safe from './accountComp/safe';
 
 // export HomePage from './homePage';
 // export Relation from './relation';

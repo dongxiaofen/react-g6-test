@@ -83,7 +83,7 @@ export default loadingComp({
   mapDataToProps: props => ({
     loading: props.data.loading,
     error: props.data.error,
-    imgCategory: 10,
+    imgCategory: 13,
     category: 2,
     errCategory: 2,
   }),

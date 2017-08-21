@@ -12,13 +12,12 @@ export default class Consume extends Component {
   };
   componentDidMount() {
     const pathname = this.props.routing.location.pathname;
-    console.log(pathname, 'pathname');
+    // console.log(pathname, 'pathname');
     this.props.headerStore.routeChangeNav(pathname);
   }
   render() {
     return (
       <MainContBox>
-        Consume
         {this.props.children}
       </MainContBox>
     );

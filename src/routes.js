@@ -10,9 +10,12 @@ import {
     Introduce,
     Test,
     Consume,
+    Consumption,
+    Recharge,
     Account,
     Modify,
     Myapi,
+    Safe,
   } from 'containers';
 
 export default () => {
@@ -27,14 +30,15 @@ export default () => {
         <Route path="test" component={ Test } />
       </Route>
       <Route path="consume" component={ Consume } >
-        {/* <IndexRoute component={ Introduce } />
-        <Route path="introduce" component={ Introduce } />
-        <Route path="test" component={ Test } /> */}
+        <IndexRoute component={ Consumption } />
+        <Route path="consumption" component={ Consumption } />
+        <Route path="recharge" component={ Recharge } />
       </Route>
       <Route path="account" component={ Account } >
-         <IndexRoute component={ Modify } />
+        <IndexRoute component={ Modify } />
         <Route path="modify" component={ Modify } />
         <Route path="myapi" component={ Myapi } />
+        <Route path="safe" component={ Safe } />
       </Route>
     </Route>
   );

@@ -46,7 +46,6 @@ function ImgLoading({ imgCategory}) {
     loadingSearchPage,
     loadingShortSearchPage,
   ];
-  console.log(imgCategory, 'imgCategory');
   const imgSrc = imgArray[imgCategory];
   return (
     <div className={styles.box}>
