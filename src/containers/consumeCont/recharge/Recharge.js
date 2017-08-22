@@ -3,7 +3,9 @@ import { observer, inject } from 'mobx-react';
 import RechargeList from 'components/consume/recharge/table';
 import DateFilter from 'components/consume/recharge/dateFilter';
 // import DateFilter from 'components/consume/recharge/dateFilter';
+import { batchNav } from 'components/hoc';
 
+@batchNav()
 @inject('consumeStore')
 @observer
 export default class Recharge extends Component {

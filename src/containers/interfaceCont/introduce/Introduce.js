@@ -3,7 +3,9 @@ import { observer, inject } from 'mobx-react';
 import Filter from 'components/interface/introduce/filter';
 import InterfaceList from 'components/interface/introduce/list';
 import SearchBar from 'components/interface/introduce/searchBar';
+import { batchNav } from 'components/hoc';
 
+@batchNav()
 @inject('interfaceStore')
 @observer
 export default class Introduce extends Component {

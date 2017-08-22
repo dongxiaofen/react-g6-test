@@ -1,7 +1,9 @@
 import React, { Component, PropTypes } from 'react';
 import { observer, inject } from 'mobx-react';
 import MyapiMain from 'components/account/myapi';
+import { batchNav } from 'components/hoc';
 
+@batchNav()
 @inject('accountStore')
 @observer
 export default class MyApi extends Component {

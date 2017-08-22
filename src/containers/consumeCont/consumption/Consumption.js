@@ -2,7 +2,9 @@ import React, { Component, PropTypes } from 'react';
 import { observer, inject } from 'mobx-react';
 import ConsumptionList from 'components/consume/consumption/table';
 import FilterList from 'components/consume/consumption/filterList';
+import { batchNav } from 'components/hoc';
 
+@batchNav()
 @inject('consumeStore')
 @observer
 export default class Consumption extends Component {
