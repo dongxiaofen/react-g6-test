@@ -64,6 +64,7 @@ class InterfaceDetailStore {
     }
     interfaceApi.getInterfaceDoc(urlName)
       .then(action('doc-success', ({data}) => {
+        console.log(data, data);
         this.interfaceDoc = {data};
         this.isDocLoading = false;
       }))

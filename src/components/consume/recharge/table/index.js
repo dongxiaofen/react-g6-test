@@ -10,7 +10,6 @@ import moment from 'moment';
 function RechargeList({consumeStore}) {
   const dataSource = () => {
     const data = consumeStore.recharge.rechargeList.content;
-    console.log(data, 'data');
     if (data) {
       return toJS(data);
     }

@@ -1,7 +1,7 @@
 import React, {PropTypes} from 'react';
 import { observer, inject } from 'mobx-react';
 import styles from './index.less';
-// import iconPolice from 'imgs/footer/icon-police.png';
+import logo from 'imgs/header/logo.png';
 
 function Header({headerStore, clientStore, routing}) {
   const handleLogout = () => {
@@ -56,7 +56,13 @@ function Header({headerStore, clientStore, routing}) {
       </div>
       <div className={styles['header-navbox']}>
         <div className={`clearfix ${styles['header-nav']}`}>
-          <div className={styles.logo}>logo</div>
+          <div className={styles.logo}>
+            <img src={logo} />
+            <div className={styles.name}>
+              <p className={styles['name-cn']}>星象<span className={styles.pots}>.</span>数据平台</p>
+              <p className={styles['name-en']}>star.socalcredits.cn</p>
+            </div>
+          </div>
           <ul className={styles.navList}>
             {createNav()}
           </ul>

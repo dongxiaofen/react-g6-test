@@ -6,7 +6,7 @@ const { RangePicker } = DatePicker;
 import FilterContainer from '../filterContainer';
 // import styles from './index.less';
 
-function DateFliter({consumeStore, type}) {
+function DateFliter({consumeStore, type, handleFilter}) {
   const filterData = consumeStore[type].filter;
   const start = filterData.createdTsBegin ? moment(filterData.createdTsBegin, 'YYYY-MM-DD') : filterData.createdTsBegin;
   const end = filterData.createdTsEnd ? moment(filterData.createdTsEnd, 'YYYY-MM-DD') : filterData.createdTsEnd;
@@ -14,11 +14,14 @@ function DateFliter({consumeStore, type}) {
     // console.log(data, 'data');
     consumeStore.updateValue(`${type}.filter.createdTsBegin`, data[0].format('YYYY-MM-DD'));
     consumeStore.updateValue(`${type}.filter.createdTsEnd`, data[1].format('YYYY-MM-DD'));
+    if (handleFilter) {
+      handleFilter();
+    }
   };
   return (
     <FilterContainer title="订单日期" titleStyle={{paddingLeft: '10px'}}>
       <RangePicker
-        defaultValue={[start, end]}
+        value={[start, end]}
         onChange={handleDateChange}
       />
     </FilterContainer>

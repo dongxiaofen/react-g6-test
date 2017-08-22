@@ -21,7 +21,7 @@ function SelectType({consumeStore}) {
   };
   return (
     <FilterContainer title="接口类别" titleStyle={{paddingLeft: '10px'}}>
-      <Select placeholder="请选择接口类别" style={{ width: 190 }} onChange={handleChange}>
+      <Select placeholder="请选择接口类别" style={{ width: 190 }} onChange={handleChange} value={consumeStore.consumption.filter.permissionClassification ? consumeStore.consumption.filter.permissionClassification : 'all'}>
         {createOption()}
         <Option key="all" value={'all'}>全部</Option>
       </Select>

@@ -1,6 +1,8 @@
 import React, { Component, PropTypes } from 'react';
 import { observer, inject } from 'mobx-react';
 import RechargeList from 'components/consume/recharge/table';
+import DateFilter from 'components/consume/recharge/dateFilter';
+// import DateFilter from 'components/consume/recharge/dateFilter';
 
 @inject('consumeStore')
 @observer
@@ -14,6 +16,7 @@ export default class Recharge extends Component {
   render() {
     return (
       <div>
+        <DateFilter />
         <RechargeList data={{loading: this.props.consumeStore.recharge.rechargeList.content === undefined, error: this.props.consumeStore.recharge.rechargeList.error}}/>
       </div>
     );

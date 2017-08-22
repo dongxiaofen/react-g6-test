@@ -1,16 +1,15 @@
 import React, {PropTypes} from 'react';
 import {observer, inject} from 'mobx-react';
 import { loadingComp } from 'components/hoc';
-import {markdown} from 'markdown';
+// import {markdown} from 'markdown';
 // import Button from 'components/lib/button';
 import styles from './index.less';
 
 function InterfaceFile({interfaceDetailStore}) {
   console.log(interfaceDetailStore);
   return (
-    <div className={styles['file-html']} dangerouslySetInnerHTML={{__html: markdown.toHTML(interfaceDetailStore.interfaceDoc.data)}}>
-      {/* ddddddddddddddddddddddd<br/> */}
-    {/* {markdown.toHTML(interfaceDetailStore.interfaceDoc.data)} */}
+    <div className={styles['file-html']}>
+      {interfaceDetailStore.interfaceDoc.data}
     </div>
   );
 }
