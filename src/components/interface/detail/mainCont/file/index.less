@@ -6,9 +6,45 @@
     color: @black4;
     line-height: 30px;
   }
-  p {
+  p, pre {
     color: @black5;
     font-size: 14px;
-    line-height: 24px;
+    line-height: 30px;
+    padding-left: 10px;
+  }
+  h5 {
+    margin-top: 10px;
+    font-weight: bold;
+    font-size: 16px;
+    line-height: 30px;
+  }
+  ul {
+    padding-left: 10px;
+    li {
+      list-style-type: disc;
+      list-style-position: inside;
+      line-height: 30px;
+    }
+  }
+  table {
+    width: 100%;
+    border: 1px solid #EFEFEF;
+    tr {
+      width: 100%;
+      border-top: 1px solid #EFEFEF;
+      td, th {
+        text-align: center;
+        padding: 0 5px;
+        line-height: 40px;
+      }
+      th {
+        background-color: #F5F5F5;
+        color: #999;
+      }
+      td {
+        border-right: 1px solid #EFEFEF;
+        color: #333;
+      }
+    }
   }
 }

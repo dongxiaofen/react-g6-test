@@ -3,6 +3,7 @@ import {observer, inject} from 'mobx-react';
 import { loadingComp } from 'components/hoc';
 import Pager from 'components/common/Pager';
 import appliedPic from 'imgs/interface/apply.png';
+import noPic from 'imgs/noData/noimg.jpg';
 
 import styles from './index.less';
 
@@ -52,7 +53,7 @@ function InterfaceList({interfaceStore, modalStore, routing}) {
               <span>已申请</span>
             </div> : null
           }
-          <div className={styles.imgs}>img位置</div>
+          <div className={styles.imgs}><img src={noPic} /></div>
           <div className={styles.name}><a onClick={gotoDetail.bind(this, item.id)} title={item.name}>{item.name}</a></div>
           <p className={styles.discript} title={item.description}>{item.description}</p>
           <div className={styles.feeType}>
