@@ -9,6 +9,7 @@ export headerStore from './header';
 export accountStore from './account';
 export interfaceStore from './interface';
 export interfaceDetailStore from './interfaceDetail';
+export interfaceTestStore from './interfaceTest';
 export consumeStore from './consume';
 
 // export homeStore from './home';

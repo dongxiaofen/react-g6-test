@@ -19,3 +19,17 @@ export const getInfoDetail = (id) => {
 export const getInterfaceDoc = (urlName) => {
   return axios.get(`/api/external/client/open/${urlName}`);
 };
+
+// test
+export const getApiKey = () => {
+  return axios.get('/api/external/client/permission/apikey');
+};
+
+export const interfaceTest = (url, method, params, headerConfig) => {
+  return axios({
+    method: method,
+    url: url,
+    params: params,
+    headers: headerConfig
+  });
+};

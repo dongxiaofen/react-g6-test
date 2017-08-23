@@ -1,14 +1,25 @@
-import React, { Component } from 'react';
-import { observer } from 'mobx-react';
+import React, { Component, PropTypes } from 'react';
+import { observer, inject } from 'mobx-react';
 import { batchNav } from 'components/hoc';
-
+import SafeCont from 'components/account/safe';
 @batchNav()
+@inject('accountStore')
 @observer
 export default class Safe extends Component {
+  static propTypes = {
+    accountStore: PropTypes.object,
+  };
+  componentDidMount() {
+    this.props.accountStore.getApiKey();
+  }
   render() {
+    const data = {
+      loading: this.props.accountStore.safeData.data === undefined,
+      error: this.props.accountStore.safeData.error
+    };
     return (
       <div>
-        Safe
+        <SafeCont data={data}/>
       </div>
     );
   }

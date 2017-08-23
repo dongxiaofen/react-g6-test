@@ -64,6 +64,8 @@ function InterfaceInfo({interfaceDetailStore, modalStore, routing}) {
 
 InterfaceInfo.propTypes = {
   interfaceDetailStore: PropTypes.object,
+  modalStore: PropTypes.object,
+  routing: PropTypes.object,
 };
 export default loadingComp({
   mapDataToProps: props => ({

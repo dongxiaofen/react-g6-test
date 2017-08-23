@@ -1,19 +1,8 @@
 import { observable, action } from 'mobx';
 import pathval from 'pathval';
 import { interfaceApi } from 'api';
-// import uiStore from './ui';
-// import messageStore from './message';
 
 class InterfaceDetailStore {
-  // constructor() {
-  //   reaction(
-  //     () => this.filterInfo.type,
-  //     () => {
-  //       document.body.scrollTop = 0;
-  //       this.getInterfaceList();
-  //     }
-  //   );
-  // }
   @observable interfaceInfo = {}; // 接口套餐列表
   @observable interfaceType = {};
   @observable myInterface = {};
@@ -64,7 +53,6 @@ class InterfaceDetailStore {
     }
     interfaceApi.getInterfaceDoc(urlName)
       .then(action('doc-success', ({data}) => {
-        console.log(data, data);
         this.interfaceDoc = {data};
         this.isDocLoading = false;
       }))

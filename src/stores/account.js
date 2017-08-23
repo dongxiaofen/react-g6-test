@@ -35,6 +35,7 @@ class AccountStore {
   };
 
   @observable safeData = {};
+  @observable safeDataOpen = [false, false];
 
   @action.bound updateValue(changeItem, value) {
     pathval.setPathValue(this, changeItem, value);
@@ -98,6 +99,19 @@ class AccountStore {
       }))
       .catch(action('type-err', () => {
         this.myApi.interfaceType = {};
+      }));
+  }
+
+  @action.bound getApiKey() {
+    interfaceApi.getApiKey()
+      .then(action('a-apiKey', ({data}) => {
+        this.safeData = {data};
+      }))
+      .catch(action('a-apiKey-err', () => {
+        this.safeData = {
+          data: {},
+          error: {message: '获取密钥失败'}
+        };
       }));
   }
 }
