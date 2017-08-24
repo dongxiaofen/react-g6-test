@@ -1,12 +1,31 @@
-import { observable, action } from 'mobx';
+import { observable, action, reaction } from 'mobx';
 import pathval from 'pathval';
 import { consumeApi, interfaceApi } from 'api';
 import uiStore from './ui';
-
+import moment from 'moment';
 class ConsumeStore {
+  constructor() {
+    reaction(
+      () => this.consumption.mothFilter,
+      () => {
+        document.body.scrollTop = 0;
+        // interfaceStore.getInterfaceList();
+        this.handleTime('consumption');
+      }
+    );
+    reaction(
+      () => this.recharge.mothFilter,
+      () => {
+        document.body.scrollTop = 0;
+        this.handleTime('recharge');
+        // interfaceStore.getInterfaceList();
+      }
+    );
+  }
   @observable consumption = {
     consumptionList: {},
     selectInputTarget: 'id',
+    mothFilter: '',
     filter: {
       id: '',
       // permissionName: '',
@@ -19,6 +38,7 @@ class ConsumeStore {
 
   @observable recharge = {
     rechargeList: {},
+    mothFilter: '',
     filter: {
       createdTsBegin: '',
       createdTsEnd: ''
@@ -85,6 +105,39 @@ class ConsumeStore {
       .catch(action('type-err', () => {
         this.interfaceType = {};
       }));
+  }
+
+  @action.bound handleTime(type) {
+    const mothFilter = pathval.getPathValue(this, `${type}.mothFilter`);
+    const today = new Date();
+    const end = moment(today).format('YYYY-MM-DD');
+    let start;
+    switch (mothFilter) {
+      case 'year':
+        start = moment(new Date(today.getTime() - 365 * 24 * 3600 * 1000)).format('YYYY-MM-DD');
+        break;
+      case 'six':
+        start = moment(new Date(today.getTime() - 183 * 24 * 3600 * 1000)).format('YYYY-MM-DD');
+        break;
+      case 'three':
+        start = moment(new Date(today.getTime() - 90 * 24 * 3600 * 1000)).format('YYYY-MM-DD');
+        break;
+      case 'two':
+        start = moment(new Date(today.getTime() - 60 * 24 * 3600 * 1000)).format('YYYY-MM-DD');
+        break;
+      case 'one':
+        start = moment(new Date(today.getTime() - 30 * 24 * 3600 * 1000)).format('YYYY-MM-DD');
+        break;
+      default:
+        start = moment(new Date(today.getTime() - 30 * 24 * 3600 * 1000)).format('YYYY-MM-DD');
+    }
+    pathval.setPathValue(this, `${type}.filter.createdTsBegin`, start);
+    pathval.setPathValue(this, `${type}.filter.createdTsEnd`, end);
+    if (type === 'consumption') {
+      this.getConsumptionList();
+    } else {
+      this.getRechargeList();
+    }
   }
 }
 

@@ -14,6 +14,7 @@ function DateFliter({consumeStore, type, handleFilter}) {
     // console.log(data, 'data');
     consumeStore.updateValue(`${type}.filter.createdTsBegin`, data[0].format('YYYY-MM-DD'));
     consumeStore.updateValue(`${type}.filter.createdTsEnd`, data[1].format('YYYY-MM-DD'));
+    consumeStore.updateValue(`${type}.mothFilter`, '');
     if (handleFilter) {
       handleFilter();
     }

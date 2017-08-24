@@ -42,8 +42,8 @@ axios.interceptors.response.use((response) => {
   if (axios.isCancel(error)) {
     return Promise.reject(error);
   }
-  // if (error.response.data.errorCode === 401006 || error.response.data.errorCode === 401007) {
-  if (error.response.data.errorCode === 401999) {
+  if (error.response.data.errorCode === 401006 || error.response.data.errorCode === 401007) {
+  // if (error.response.data.errorCode === 401999) {
     if (error.config.url !== '/api/user/logout') {
       runInAction('登录提示', () => {
         const closeAction = allStores.modalStore.closeAction;

@@ -9,6 +9,7 @@ export default class Select extends Component {
     className: PropTypes.string,
     noIcon: PropTypes.bool,
     children: PropTypes.node,
+    placeholder: PropTypes.string,
   };
   static defaultProps = {
     value: '',
@@ -18,6 +19,7 @@ export default class Select extends Component {
     super(props);
     this.state = {
       isExtend: false,
+      placeholder: props.placeholder,
       value: props.defaultValue || props.value,
       valueConfig: {}
     };
@@ -89,7 +91,7 @@ export default class Select extends Component {
           onMouseDown={this.toggleSelect}
           onBlur={this.blurHandle}>
           <span>
-            {this.state.valueConfig[this.state.value]}
+            {this.state.valueConfig[this.state.value] ? this.state.valueConfig[this.state.value] : this.state.placeholder}
           </span>
           {this.props.noIcon || <i className="fa fa-angle-down"></i>}
         </div>

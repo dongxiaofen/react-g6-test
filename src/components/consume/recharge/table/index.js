@@ -5,6 +5,7 @@ import Table from 'components/common/Table';
 import Pager from 'components/common/Pager';
 import { loadingComp } from 'components/hoc';
 import moment from 'moment';
+import DateSelect from '../../filter/dateSelect';
 // import styles from './index.less';
 
 function RechargeList({consumeStore}) {
@@ -26,7 +27,7 @@ function RechargeList({consumeStore}) {
       key: 'price',
       width: '33.33%',
     }, {
-      title: '订单日期',
+      title: <DateSelect type="recharge" />,
       dataIndex: 'createdTs',
       key: 'createdTs',
       width: '33.33%',

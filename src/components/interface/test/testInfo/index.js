@@ -38,20 +38,22 @@ function TestInfo({interfaceTestStore}) {
 
         <div className={styles.list}>
           <InfoItem title="APIKEY：">
-            {interfaceTestStore.apiKey.apikey ?
-              <span>
-                <span className={styles.apikey}>{interfaceTestStore.isOpenApikey ? interfaceTestStore.apiKey.apikey : shieldInfo(interfaceTestStore.apiKey.apikey)}</span>
-                <span className={styles['key-btn']} onClick={handleShowApikey}>
-                  <img src={openImg} />
-                  {interfaceTestStore.isOpenApikey ? '隐藏key' : '显示key'}
-                </span>
-              </span> : ''}
+            <span>
+              {interfaceTestStore.apiKey.apikey ?
+                <span>
+                  <span className={styles.apikey}>{interfaceTestStore.isOpenApikey ? interfaceTestStore.apiKey.apikey : shieldInfo(interfaceTestStore.apiKey.apikey)}</span>
+                  <span className={styles['key-btn']} onClick={handleShowApikey}>
+                    <img src={openImg} />
+                    {interfaceTestStore.isOpenApikey ? '隐藏key' : '显示key'}
+                  </span>
+                </span> : ''}
+            </span>
           </InfoItem>
         </div>
 
         <div className={styles.list}>
           <InfoItem title="API介绍：">
-            <Link to={`/interface/detail?id=${interfaceTestStore.id}`}>点击查看介绍</Link>
+            <Link className={styles.detail} to={`/interface/detail?id=${interfaceTestStore.id}`}>点击查看介绍</Link>
           </InfoItem>
         </div>
       </div>

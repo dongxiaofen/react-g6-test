@@ -1,7 +1,7 @@
 import React, {PropTypes} from 'react';
 import {observer, inject} from 'mobx-react';
 import FilterContainer from '../filterContainer';
-import { Select } from 'antd';
+import Select from 'components/lib/Select';
 const Option = Select.Option;
 // import styles from './index.less';
 
@@ -15,15 +15,23 @@ function SelectType({consumeStore}) {
   };
   const createOption = () => {
     const data = Object.keys(consumeStore.interfaceType);
-    return data.map((key, idx) => {
-      return <Option key={idx} value={key}>{consumeStore.interfaceType[key]}</Option>;
-    });
+    const output = [];
+    if (data.length > 0) {
+      data.map((key) => {
+        output.push(<Option key={key} value={key}>{consumeStore.interfaceType[key]}</Option>);
+      });
+    }
+    output.push(<Option key="all" value="all">全部</Option>);
+    return output;
   };
   return (
     <FilterContainer title="接口类别" titleStyle={{paddingLeft: '10px'}}>
-      <Select placeholder="请选择接口类别" style={{ width: 190 }} onChange={handleChange} value={consumeStore.consumption.filter.permissionClassification ? consumeStore.consumption.filter.permissionClassification : 'all'}>
+      <Select
+        placeholder="请选择接口类别"
+        width="190px"
+        onChange={handleChange}
+        value={consumeStore.consumption.filter.permissionClassification ? consumeStore.consumption.filter.permissionClassification : 'all'}>
         {createOption()}
-        <Option key="all" value={'all'}>全部</Option>
       </Select>
     </FilterContainer>
   );

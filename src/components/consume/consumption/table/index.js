@@ -5,6 +5,7 @@ import Table from 'components/common/Table';
 import Pager from 'components/common/Pager';
 import { loadingComp } from 'components/hoc';
 import moment from 'moment';
+import DateSelect from '../../filter/dateSelect';
 // import styles from './index.less';
 
 function ConsumptionList({consumeStore}) {
@@ -16,7 +17,7 @@ function ConsumptionList({consumeStore}) {
   };
   const columns = [
     {
-      title: '日期',
+      title: <DateSelect type="consumption" />,
       dataIndex: 'createdTs',
       key: 'createdTs',
       render: (text) => (moment(text).format('YYYY-MM-DD HH:mm:ss'))
