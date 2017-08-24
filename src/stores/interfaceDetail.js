@@ -74,5 +74,13 @@ class InterfaceDetailStore {
         };
       }));
   }
+  @action.bound resetData() {
+    this.interfaceInfo = {};
+    // this.interfaceType = {};
+    // this.myInterface = {};
+    this.interfaceDoc = {};
+    this.isDocLoading = true;
+    // this.errorDoc = {};
+  }
 }
 export default new InterfaceDetailStore();

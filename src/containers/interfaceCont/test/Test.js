@@ -19,6 +19,9 @@ export default class Test extends Component {
     }
     this.props.interfaceTestStore.getApiKey();
   }
+  componentWillUnmount() {
+    this.props.interfaceTestStore.resetData();
+  }
   render() {
     return (
       <div>

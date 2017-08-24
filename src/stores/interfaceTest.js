@@ -6,7 +6,7 @@ const crypto = require('crypto');
 class InterfaceTestStore {
   // 重庆誉存大数据科技有限公司
   @observable id = '';
-  @observable interfaceInfo = {}; // 接口套餐列表
+  @observable interfaceInfo = {};
   @observable interfaceType = {};
   @observable apiKey = {};
   @observable isOpenApikey = false;
@@ -22,14 +22,18 @@ class InterfaceTestStore {
     interfaceApi.getInfoDetail(id)
       .then(action('info-success', ({data}) => {
         this.interfaceInfo = {data};
-        const params = {};
-        data.apiParams.map((key) => {
-          params[key] = '';
-        });
-        this.apiParams = params;
-        // this.getInterfaceDoc(data.docName);
+        if (data.apiParams) {
+          const params = {};
+          data.apiParams.map((key) => {
+            params[key] = '';
+          });
+          this.apiParams = params;
+        } else {
+          this.apiParams = {};
+        }
       }))
-      .catch(action('info-err', () => {
+      .catch(action('info-err', (err) => {
+        console.log(err, 'info-err');
         this.interfaceInfo = {data: {}, error: {message: '未获取到该接口的相关信息'}};
       }));
   }
@@ -99,29 +103,15 @@ class InterfaceTestStore {
     }
     return paramsStr;
   }
-  // @action.bound getMyInterface() {
-  //   interfaceApi.getMyInterface()
-  //     .then(action('myInterface-success', ({data}) => {
-  //       this.myInterface = data;
-  //     }))
-  //     .catch((err) => {
-  //       console.log(err);
-  //       // messageStore.openMessage({type: 'warning', content: '', duration: 5000});
-  //     });
-  // }
-  // @action.bound getInterfaceDoc(urlName) {
-  //   if (!this.isDocLoading) {
-  //     this.isDocLoading = true;
-  //   }
-  //   interfaceApi.getInterfaceDoc(urlName)
-  //     .then(action('doc-success', ({data}) => {
-  //       this.interfaceDoc = {data};
-  //       this.isDocLoading = false;
-  //     }))
-  //     .catch(action('doc-err', () => {
-  //       this.isDocLoading = false;
-  //       this.interfaceDoc = {data: '', error: {message: '未获取到该接口的相关文档'}};
-  //     }));
-  // }
+  @action.bound resetData() {
+    this.id = '';
+    this.interfaceInfo = {};
+    // this.interfaceType = {};
+    // this.apiKey = {};
+    this.isOpenApikey = false;
+    this.apiParams = {};
+    this.testResult = {};
+    this.isResultLoading = false;
+  }
 }
 export default new InterfaceTestStore();

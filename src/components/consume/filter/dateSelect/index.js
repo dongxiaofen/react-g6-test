@@ -17,7 +17,7 @@ function DateSelect({consumeStore, type}) {
       {name: '最近一个月订单', value: 'one'},
     ];
     return timeArr.map(({name, value}) => {
-      return (<Option value={value}>{name}</Option>);
+      return (<Option key={value} value={value}>{name}</Option>);
     });
   };
   return (

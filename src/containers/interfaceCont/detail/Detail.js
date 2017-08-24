@@ -19,6 +19,9 @@ export default class Detail extends Component {
     this.props.interfaceDetailStore.getMyInterface();
     this.props.interfaceDetailStore.getErrorDoc();
   }
+  componentWillUnmount() {
+    this.props.interfaceDetailStore.resetData();
+  }
   render() {
     return (
       <div>

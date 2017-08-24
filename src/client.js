@@ -68,6 +68,8 @@ axios.interceptors.response.use((response) => {
     // });
   } else if (error.response.status === 502) {
     allStores.messageStore.openMessage({type: 'warning', content: '后端正在部署', duration: 5000});
+  } else if (error.response.status === 500) {
+    allStores.messageStore.openMessage({type: 'warning', content: '服务器出错', duration: 5000});
   }
   return Promise.reject(error);
 });

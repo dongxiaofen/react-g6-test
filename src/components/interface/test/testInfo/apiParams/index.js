@@ -27,11 +27,16 @@ function ApiParams({interfaceTestStore}) {
     }
   };
   return (
-    <div className={styles.params}>
-      <p className={styles.title}>API参数</p>
-      <Row>
-        {createParams()}
-      </Row>
+    <div>
+      {
+        interfaceTestStore.interfaceInfo.data.apiParams && interfaceTestStore.interfaceInfo.data.apiParams.length > 0 ?
+        <div className={styles.params}>
+          <p className={styles.title}>API参数</p>
+          <Row>
+            {createParams()}
+          </Row>
+        </div> : null
+      }
     </div>
   );
 }
