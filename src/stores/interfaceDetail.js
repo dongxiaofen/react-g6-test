@@ -8,6 +8,7 @@ class InterfaceDetailStore {
   @observable myInterface = {};
   @observable interfaceDoc = {};
   @observable isDocLoading = true;
+  @observable errorDoc = {};
 
   @action.bound updateValue(changeItem, value) {
     pathval.setPathValue(this, changeItem, value);
@@ -59,6 +60,18 @@ class InterfaceDetailStore {
       .catch(action('doc-err', () => {
         this.isDocLoading = false;
         this.interfaceDoc = {data: '', error: {message: '未获取到该接口的相关文档'}};
+      }));
+  }
+  @action.bound getErrorDoc() {
+    interfaceApi.getErrorDoc()
+      .then(action('errDoc-su', ({data}) => {
+        this.errorDoc = {data};
+      }))
+      .catch(action('errDoc-err', () => {
+        this.errorDoc = {
+          data: {},
+          error: {message: '暂未获取到错误码'}
+        };
       }));
   }
 }

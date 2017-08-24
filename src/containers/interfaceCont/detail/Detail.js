@@ -17,6 +17,7 @@ export default class Detail extends Component {
     this.props.interfaceDetailStore.getInfoDetail(id);
     this.props.interfaceDetailStore.getInterfaceType();
     this.props.interfaceDetailStore.getMyInterface();
+    this.props.interfaceDetailStore.getErrorDoc();
   }
   render() {
     return (

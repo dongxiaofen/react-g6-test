@@ -22,14 +22,16 @@ function DateSelect({consumeStore, type}) {
   };
   return (
     <div className={styles['date-select']}>
-      <Select
-        placeholder="订单日期"
-        value={consumeStore[type].mothFilter}
-        width="130px"
-        onChange={handleSelect}
-        >
-        {createOption()}
-      </Select>
+      <div className={styles['main-cont']}>
+        <Select
+          placeholder="订单日期"
+          value={consumeStore[type].mothFilter}
+          width="130px"
+          onChange={handleSelect}
+          >
+          {createOption()}
+        </Select>
+      </div>
     </div>
   );
 }

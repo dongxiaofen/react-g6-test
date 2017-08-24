@@ -3,6 +3,7 @@ import {observer, inject} from 'mobx-react';
 import { Tabs } from 'antd';
 const TabPane = Tabs.TabPane;
 import InterfaceFile from './file';
+import InterfaceError from './error';
 // import Input from 'components/lib/input';
 import styles from './index.less';
 function MainBody({interfaceDetailStore}) {
@@ -10,6 +11,10 @@ function MainBody({interfaceDetailStore}) {
   const fileData = {
     loading: interfaceDetailStore.interfaceDoc.data === undefined,
     error: interfaceDetailStore.interfaceDoc.error
+  };
+  const errData = {
+    loading: interfaceDetailStore.errorDoc.data === undefined,
+    error: interfaceDetailStore.errorDoc.error
   };
   return (
     <div className={styles['main-cont']}>
@@ -23,7 +28,9 @@ function MainBody({interfaceDetailStore}) {
           <div className={styles['tab-cont']}>资费说明－－待完善</div>
         </TabPane>
         <TabPane tab="错误码" key="error">
-          <div className={styles['tab-cont']}>错误码</div>
+          <div className={styles['tab-cont']}>
+            <InterfaceError data={errData}/>
+          </div>
         </TabPane>
       </Tabs>
     </div>

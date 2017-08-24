@@ -19,6 +19,9 @@ export const getInfoDetail = (id) => {
 export const getInterfaceDoc = (urlName) => {
   return axios.get(`/api/external/client/open/${urlName}`);
 };
+export const getErrorDoc = () => {
+  return axios.get('/api/external/client/error/doc');
+};
 
 // test
 export const getApiKey = () => {
