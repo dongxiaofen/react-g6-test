@@ -23,6 +23,7 @@ function FilterList({consumeStore}) {
     };
     consumeStore.updateValue('consumption.filter', initData);
     consumeStore.updateValue('consumption.selectInputTarget', 'id');
+    consumeStore.getConsumptionList();
   };
   return (
     <Row className={styles['filter-list']}>

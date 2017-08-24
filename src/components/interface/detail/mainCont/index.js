@@ -24,9 +24,9 @@ function MainBody({interfaceDetailStore}) {
             <InterfaceFile data={fileData}/>
           </div>
         </TabPane>
-        <TabPane tab="资费说明" key="cost">
+        {/* <TabPane tab="资费说明" key="cost">
           <div className={styles['tab-cont']}>资费说明－－待完善</div>
-        </TabPane>
+        </TabPane> */}
         <TabPane tab="错误码" key="error">
           <div className={styles['tab-cont']}>
             <InterfaceError data={errData}/>

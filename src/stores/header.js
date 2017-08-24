@@ -10,7 +10,7 @@ class HeaderStore {
       label: '接口中心',
       children: [
         {name: '接口介绍', value: 'introduce', active: true},
-        {name: '接口测试', value: 'test', active: false},
+        // {name: '接口测试', value: 'test', active: false},
       ]
     }, {
       key: 'consume',
