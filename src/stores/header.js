@@ -48,7 +48,8 @@ class HeaderStore {
     this.navList[pIdx].children = newNav;
   }
   @action.bound routeChangeNav(pathname) {
-    const pathArr = pathname.split('/');
+    const path = pathname === '/' ? '/interface' : pathname;
+    const pathArr = path.split('/');
     this.navChange(pathArr[1]);
     this.innerNavChange(pathArr[2]);
   }

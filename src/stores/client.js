@@ -31,7 +31,7 @@ class ClientStore {
         this.userInfo = data;
       }))
       .catch((err) => {
-        console.log(err.response);
+        console.log(err);
       });
   }
 }

@@ -21,7 +21,7 @@ import {
 export default () => {
   return (
     <Route path="/" component={ App }>
-      <IndexRoute component={ Interface } />
+      <IndexRoute component={ Introduce } />
       <Route path="login" component={ Login } />
       <Route path="interface" component={ Interface } >
         <IndexRoute component={ Introduce } />
