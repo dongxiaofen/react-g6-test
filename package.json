@@ -94,7 +94,7 @@
         "target": "local",
         "backendApi": "http://10.173.224.173:8370"
       }
-    },
+    }
   },
   "dependencies": {
     "antd": "2.9.3",

@@ -6,11 +6,8 @@ import styles from './index.less';
 function Result({interfaceTestStore}) {
   return (
     <div className={styles.result}>
-      {/* {interfaceTestStore.testResult.data ? <pre dangerouslySetInnerHTML={{__html: markdown.toHTML(interfaceTestStore.testResult.data)}}></pre> : null} */}
       <pre>
-        <code>
-          {JSON.stringify(interfaceTestStore.testResult.data)}
-        </code>
+        {JSON.stringify(interfaceTestStore.testResult.data, null, 4)}
       </pre>
     </div>
   );
