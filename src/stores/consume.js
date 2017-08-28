@@ -110,9 +110,13 @@ class ConsumeStore {
   @action.bound handleTime(type) {
     const mothFilter = pathval.getPathValue(this, `${type}.mothFilter`);
     const today = new Date();
-    const end = moment(today).format('YYYY-MM-DD');
+    let end = moment(today).format('YYYY-MM-DD');
     let start;
     switch (mothFilter) {
+      case 'all':
+        start = '';
+        end = '';
+        break;
       case 'year':
         start = moment(new Date(today.getTime() - 365 * 24 * 3600 * 1000)).format('YYYY-MM-DD');
         break;

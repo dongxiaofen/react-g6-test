@@ -22,6 +22,7 @@ function FilterList({consumeStore}) {
       createdTsEnd: '',
     };
     consumeStore.updateValue('consumption.filter', initData);
+    consumeStore.updateValue('consumption.mothFilter', '');
     consumeStore.updateValue('consumption.selectInputTarget', 'id');
     consumeStore.getConsumptionList();
   };

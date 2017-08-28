@@ -53,7 +53,7 @@ function InterfaceList({interfaceStore, modalStore, routing}) {
               <span>已申请</span>
             </div> : null
           }
-          <div className={styles.imgs}><img src={noPic} /></div>
+          <div className={styles.imgs}><img src={item.imageData ? item.imageData : noPic} /></div>
           <div className={styles.name}><a onClick={gotoDetail.bind(this, item.id)} title={item.name}>{item.name}</a></div>
           <p className={styles.discript} title={item.description}>{item.description}</p>
           <div className={styles.feeType}>

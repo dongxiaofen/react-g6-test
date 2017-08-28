@@ -63,9 +63,11 @@ class InterfaceTestStore {
     const {apikey, sharedSecret} = this.apiKey;
     const timestamp = new Date().getTime();
     const paramsStr = this.dealParams();
-    const apiToken = method.toLowerCase() + sharedSecret + timestamp + uriReg + paramsStr;
+    // const apiToken = method.toLowerCase() + sharedSecret + timestamp + uriReg + paramsStr;
+    const encodeApiToken = method.toLowerCase() + sharedSecret + timestamp + uriReg + encodeURI(paramsStr);
+    console.log(encodeApiToken, 'encodeApiToken');
     const hashApiToken = crypto.createHash('sha256')
-                          .update(encodeURI(apiToken))
+                          .update(encodeApiToken)
                           .digest('hex');
     const headerConfig = {
       'Content-Type': 'application/json',
@@ -76,7 +78,6 @@ class InterfaceTestStore {
     interfaceApi.interfaceTest(uriReg, method.toLowerCase(), this.apiParams, headerConfig)
       .then(action('result-su', ({data}) => {
         this.testResult = {data};
-        // this.testResult = {data: JSON.stringify(data)};
         this.isResultLoading = false;
       }))
       .catch(action('result-err', (err) => {

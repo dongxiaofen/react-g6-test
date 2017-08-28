@@ -42,7 +42,9 @@ function InterfaceInfo({interfaceDetailStore, modalStore, routing}) {
   };
   return (
     <div className={`clearfix ${styles.info}`}>
-      <div className={styles.infoPic}></div>
+      <div className={styles.infoPic}>
+        <img src={infoData.imageData} />
+      </div>
       <div className={styles.infoDetl}>
         <h2 className={styles.title}>{infoData.name}</h2>
         <p className={styles.description}>{infoData.description}</p>

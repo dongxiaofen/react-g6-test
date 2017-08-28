@@ -10,11 +10,12 @@ function DateSelect({consumeStore, type}) {
   };
   const createOption = () => {
     const timeArr = [
-      {name: '最近一年订单', value: 'year'},
-      {name: '最近六个月订单', value: 'six'},
-      {name: '最近三个月订单', value: 'three'},
-      {name: '最近两个月订单', value: 'two'},
       {name: '最近一个月订单', value: 'one'},
+      {name: '最近两个月订单', value: 'two'},
+      {name: '最近三个月订单', value: 'three'},
+      {name: '最近六个月订单', value: 'six'},
+      {name: '最近一年订单', value: 'year'},
+      {name: '全部', value: 'all'},
     ];
     return timeArr.map(({name, value}) => {
       return (<Option key={value} value={value}>{name}</Option>);
