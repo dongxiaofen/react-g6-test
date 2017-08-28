@@ -76,75 +76,25 @@
       }
     },
     "start-test": {
-      "command": "pm2 start ./bin/server.js --name=xx_local_test",
+      "command": "pm2 start ./bin/server.js --name=data_api_test",
       "env": {
         "NODE_PATH": "./src",
         "NODE_ENV": "production",
-        "PORT": 9123,
+        "PORT": 5130,
         "target": "local_test",
-        "backendApi": "http://192.168.31.116:6060"
+        "backendApi": "http://10.173.224.173:18370"
       }
     },
-    "start-test-pre": {
-      "command": "pm2 start ./bin/server.js --name=xx_local_test_pre",
+    "start-prod": {
+      "command": "pm2 start ./bin/server.js --name=data_api",
       "env": {
         "NODE_PATH": "./src",
         "NODE_ENV": "production",
-        "PORT": 9124,
+        "PORT": 5131,
         "target": "local",
-        "backendApi": "http://192.168.31.116:6060"
+        "backendApi": "http://10.173.224.173:8370"
       }
     },
-    "start-remote-test": {
-      "command": "pm2 start ./bin/server.js --name=xx_remote_test",
-      "env": {
-        "NODE_PATH": "./src",
-        "NODE_ENV": "production",
-        "PORT": 9123,
-        "target": "remote_test",
-        "backendApi": "http://10.168.109.197:18000"
-      }
-    },
-    "start-remote-prod-pre": {
-      "command": "pm2 start ./bin/server.js -i 0 --name=xx_remote_prod_pre",
-      "env": {
-        "NODE_PATH": "./src",
-        "NODE_ENV": "production",
-        "PORT": 9124,
-        "target": "remote_prod",
-        "backendApi": "http://120.27.194.231:9080"
-      }
-    },
-    "start-remote-prod": {
-      "command": "pm2 start ./bin/server.js -i 2 --name=xx_remote_prod",
-      "env": {
-        "NODE_PATH": "./src",
-        "NODE_ENV": "production",
-        "PORT": 9124,
-        "target": "remote_prod",
-        "backendApi": "http://10.117.80.105:8080"
-      }
-    },
-    "start-cfca-prod": {
-      "command": "pm2 start ./bin/server.js --name=xx_cfca_prod",
-      "env": {
-        "NODE_PATH": "./src",
-        "NODE_ENV": "production",
-        "PORT": 9126,
-        "target": "cfca_prod",
-        "backendApi": "http://10.117.80.105:8080"
-      }
-    },
-    "start-cfca-remote": {
-      "command": "pm2 start ./bin/server.js --name=xx_cfca_remote",
-      "env": {
-        "NODE_PATH": "./src",
-        "NODE_ENV": "production",
-        "PORT": 9123,
-        "target": "cfca_prod",
-        "backendApi": "http://127.0.0.1:8080"
-      }
-    }
   },
   "dependencies": {
     "antd": "2.9.3",
