@@ -41,8 +41,8 @@ function FilterList({consumeStore}) {
       </Col>
       <Col className={styles.item} width="6">
         <div className={styles.right}>
-          <Button className={styles['flt-btn']} btnType="primary" onClick={handleSearch}>筛选</Button>
-          <Button className={styles['flt-btn']} btnType="secondary" onClick={resetSearchDate}>清空</Button>
+          <Button className={`${styles['flt-btn']} ${styles.primary}`} btnType="primary" onClick={handleSearch}>筛选</Button>
+          <Button className={`${styles['flt-btn']} ${styles.secondary}`} btnType="secondary" onClick={resetSearchDate}>清空</Button>
         </div>
       </Col>
     </Row>

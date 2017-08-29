@@ -2,6 +2,7 @@ import React, {PropTypes} from 'react';
 import {observer, inject} from 'mobx-react';
 import { loadingComp } from 'components/hoc';
 import Button from 'components/lib/button';
+import noPic from 'imgs/noData/noimg.jpg';
 import styles from './index.less';
 
 function InterfaceInfo({interfaceDetailStore, modalStore, routing}) {
@@ -43,7 +44,7 @@ function InterfaceInfo({interfaceDetailStore, modalStore, routing}) {
   return (
     <div className={`clearfix ${styles.info}`}>
       <div className={styles.infoPic}>
-        <img src={infoData.imageData} />
+        <img src={infoData.imageData ? infoData.imageData : noPic} />
       </div>
       <div className={styles.infoDetl}>
         <h2 className={styles.title}>{infoData.name}</h2>
