@@ -34,8 +34,16 @@ class AccountStore {
     interfaceType: {}, // 接口套餐分类
   };
 
-  @observable safeData = {};
-  @observable safeDataOpen = [false, false];
+  @observable safe = {
+    safeKey: [
+      {key: 'apikey', title: 'APIKEY'},
+      {key: 'sharedSecret', title: '私钥'}
+    ],
+    safeData: {},
+    safeDataOpen: [false, false]
+  };
+  // @observable safeData = {};
+  // @observable safeDataOpen = [false, false];
 
   @action.bound updateValue(changeItem, value) {
     pathval.setPathValue(this, changeItem, value);
@@ -105,10 +113,10 @@ class AccountStore {
   @action.bound getApiKey() {
     interfaceApi.getApiKey()
       .then(action('a-apiKey', ({data}) => {
-        this.safeData = {data};
+        this.safe.safeData = {data};
       }))
       .catch(action('a-apiKey-err', () => {
-        this.safeData = {
+        this.safe.safeData = {
           data: {},
           error: {message: '获取密钥失败'}
         };

@@ -14,8 +14,8 @@ export default class Safe extends Component {
   }
   render() {
     const data = {
-      loading: this.props.accountStore.safeData.data === undefined,
-      error: this.props.accountStore.safeData.error
+      loading: this.props.accountStore.safe.safeData.data === undefined,
+      error: this.props.accountStore.safe.safeData.error
     };
     return (
       <div>

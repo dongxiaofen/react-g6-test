@@ -1,48 +1,69 @@
-import React, {PropTypes} from 'react';
+import React, {Component, PropTypes} from 'react';
 import {observer, inject} from 'mobx-react';
+import Clipboard from 'clipboard';
 import { loadingComp } from 'components/hoc';
 import {shieldInfo} from 'helpers/infoShield';
 import { runInAction } from 'mobx';
 import openPic from 'imgs/open.png';
 import styles from './index.less';
 
-function SafeCont({accountStore}) {
-  const handleKeyShow = (idx) => {
-    const isOpen = !!accountStore.safeDataOpen[idx];
+@inject('accountStore', 'messageStore')
+@observer
+class SafeCont extends Component {
+  static propTypes = {
+    accountStore: PropTypes.object,
+    messageStore: PropTypes.object,
+  };
+  componentDidMount() {
+    const safeKey = this.props.accountStore.safe.safeKey;
+    safeKey.map(({key, title}) => {
+      new Clipboard(`#${key}`).on('success', () => {
+        this.props.messageStore.openMessage({type: 'info', content: `${title}复制成功`, duration: 3000});
+      }).on('error', () => {
+        this.props.messageStore.openMessage({type: 'warning', content: `${title}复制失败`, duration: 3000});
+      });
+    });
+  }
+
+  handleKeyShow = (idx) => {
+    const isOpen = !!this.props.accountStore.safe.safeDataOpen[idx];
     runInAction('open-close', () => {
-      accountStore.safeDataOpen[idx] = !isOpen;
+      this.props.accountStore.safe.safeDataOpen[idx] = !isOpen;
     });
-  };
-  const createSafeCont = () => {
-    const arr = [{key: 'apikey', title: 'APIKEY'}, {key: 'sharedSecret', title: '私钥'}];
-    const data = accountStore.safeData.data;
-    const dataOpen = accountStore.safeDataOpen;
-    return arr.map(({key, title}, idx) => {
-      return (
-        <div key={key} className={styles['safe-info']}>
-          <div className={styles.title}>{title}:</div>
-          <div className={styles['key-box']}>
-            <span>{!!dataOpen[idx] ? data[key] : shieldInfo(data[key])}</span>
-            <span className={styles.copy}>复制</span>
+  }
+
+  createSafeCont = () => {
+    // const arr = [{key: 'apikey', title: 'APIKEY'}, {key: 'sharedSecret', title: '私钥'}];
+    const arr = this.props.accountStore.safe.safeKey;
+    const dataOpen = this.props.accountStore.safe.safeDataOpen;
+    const data = this.props.accountStore.safe.safeData.data;
+    if (data) {
+      return arr.map(({key, title}, idx) => {
+        return (
+          <div key={key} className={styles['safe-info']}>
+            <div className={styles.title}>{title}:</div>
+            <div className={styles['key-box']}>
+              <span>{!!dataOpen[idx] ? data[key] : shieldInfo(data[key])}</span>
+              <span id={key} data-clipboard-text={data[key]} className={styles.copy}>复制</span>
+            </div>
+            <div className={styles['key-handle']} onClick={this.handleKeyShow.bind(this, idx)}>
+              <img src={openPic} />
+              {!!dataOpen[idx] ? '隐藏key' : '显示key'}
+            </div>
           </div>
-          <div className={styles['key-handle']} onClick={handleKeyShow.bind(this, idx)}>
-            <img src={openPic} />
-            {!!dataOpen[idx] ? '隐藏key' : '显示key'}
-          </div>
-        </div>
-      );
-    });
-  };
-  return (
-    <div>
-      {createSafeCont()}
-    </div>
-  );
+        );
+      });
+    }
+  }
+  render() {
+    return (
+      <div>
+        {this.createSafeCont()}
+      </div>
+    );
+  }
 }
 
-SafeCont.propTypes = {
-  accountStore: PropTypes.object,
-};
 export default loadingComp({
   mapDataToProps: props => ({
     loading: props.data.loading,
@@ -52,4 +73,4 @@ export default loadingComp({
     errCategory: 2,
     height: 400
   }),
-})(inject('accountStore')(observer(SafeCont)));
+})(SafeCont);
