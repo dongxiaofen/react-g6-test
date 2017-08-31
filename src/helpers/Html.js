@@ -57,6 +57,7 @@ export default class Html extends Component {
               rel="stylesheet" type="text/css" charSet="UTF-8"/>
         <link href="../vendors/css/preload.css"
               rel="stylesheet" type="text/css" charSet="UTF-8"/>
+        <link href="http://cdn.bootcss.com/highlight.js/8.0/styles/monokai_sublime.min.css" rel="stylesheet"/>
         {
           Object.keys(assets.styles).map((style, key) =>
             <link href={assets.styles[style]} key={key}
@@ -83,6 +84,7 @@ export default class Html extends Component {
         <script src="../vendors/js/map/china.min.js"></script>
       } */}
       <script src="../vendors/js/error.js"></script>
+      <script src="http://cdn.bootcss.com/highlight.js/8.0/highlight.min.js"></script>  
       </body>
       </html>
     );

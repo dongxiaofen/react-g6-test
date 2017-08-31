@@ -4,6 +4,7 @@ import { Tabs } from 'antd';
 const TabPane = Tabs.TabPane;
 import InterfaceFile from './file';
 import InterfaceError from './error';
+import Introduce from './introduce';
 // import Input from 'components/lib/input';
 import styles from './index.less';
 function MainBody({interfaceDetailStore}) {
@@ -30,6 +31,11 @@ function MainBody({interfaceDetailStore}) {
         <TabPane tab="错误码" key="error">
           <div className={styles['tab-cont']}>
             <InterfaceError data={errData}/>
+          </div>
+        </TabPane>
+        <TabPane tab="接入说明" key="introduce">
+          <div className={styles['tab-cont']}>
+            <Introduce />
           </div>
         </TabPane>
       </Tabs>
