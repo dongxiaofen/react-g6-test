@@ -7,7 +7,7 @@ import { javaText, paramsDataSource, paramsColumns, headerDataSource, headerColu
 @observer
 export default class Introduce extends Component {
   componentDidMount() {
-    window.hljs.initHighlightingOnLoad();
+    // window.hljs.initHighlightingOnLoad();
   }
   render() {
     return (
