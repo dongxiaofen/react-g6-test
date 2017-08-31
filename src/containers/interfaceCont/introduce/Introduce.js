@@ -2,7 +2,7 @@ import React, { Component, PropTypes } from 'react';
 import { observer, inject } from 'mobx-react';
 import Filter from 'components/interface/introduce/filter';
 import InterfaceList from 'components/interface/introduce/list';
-import SearchBar from 'components/interface/introduce/searchBar';
+// import SearchBar from 'components/interface/introduce/searchBar';
 import { batchNav } from 'components/hoc';
 
 @batchNav()
@@ -20,7 +20,7 @@ export default class Introduce extends Component {
   render() {
     return (
       <div>
-        <SearchBar />
+        {/* <SearchBar /> */}
         <div style={{margin: '20px 0', backgroundColor: '#fff'}}>
           <Filter data={{loading: this.props.interfaceStore.isTypeLoading, error: this.props.interfaceStore.interfaceType.error}}/>
         </div>

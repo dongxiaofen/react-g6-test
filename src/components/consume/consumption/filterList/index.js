@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { PropTypes } from 'react';
 import {observer, inject} from 'mobx-react';
 import { Col, Row } from 'components/common/layout';
 import Button from 'components/lib/button';
@@ -7,10 +7,14 @@ import SelectType from '../../filter/selectType';
 import DateFilte from '../../filter/dateFilte';
 import styles from './index.less';
 
-function FilterList({consumeStore}) {
+function FilterList({consumeStore, uiStore}) {
   // const typeData = {}
   const handleSearch = () => {
-    consumeStore.getConsumptionList();
+    if (uiStore.uiState.consumptionPager.index === 1) {
+      consumeStore.getConsumptionList();
+    } else {
+      uiStore.updateUiStore('consumptionPager.index', 1);
+    }
   };
   const resetSearchDate = () => {
     const initData = {
@@ -24,7 +28,12 @@ function FilterList({consumeStore}) {
     consumeStore.updateValue('consumption.filter', initData);
     consumeStore.updateValue('consumption.mothFilter', '');
     consumeStore.updateValue('consumption.selectInputTarget', 'id');
-    consumeStore.getConsumptionList();
+    // consumeStore.getConsumptionList();
+    if (uiStore.uiState.consumptionPager.index === 1) {
+      consumeStore.getConsumptionList();
+    } else {
+      uiStore.updateUiStore('consumptionPager.index', 1);
+    }
   };
   return (
     <Row className={styles['filter-list']}>
@@ -49,7 +58,8 @@ function FilterList({consumeStore}) {
   );
 }
 
-// FilterList.propTypes = {
-//   consumeStore: PropTypes.object,
-// };
-export default inject('consumeStore')(observer(FilterList));
+FilterList.propTypes = {
+  consumeStore: PropTypes.object,
+  uiStore: PropTypes.object,
+};
+export default inject('consumeStore', 'uiStore')(observer(FilterList));

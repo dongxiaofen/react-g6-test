@@ -138,9 +138,18 @@ class ConsumeStore {
     pathval.setPathValue(this, `${type}.filter.createdTsBegin`, start);
     pathval.setPathValue(this, `${type}.filter.createdTsEnd`, end);
     if (type === 'consumption') {
-      this.getConsumptionList();
+      // this.getConsumptionList();
+      if (uiStore.uiState.consumptionPager.index === 1) {
+        this.getConsumptionList();
+      } else {
+        uiStore.updateUiStore('consumptionPager.index', 1);
+      }
     } else {
-      this.getRechargeList();
+      if (uiStore.uiState.rechargePager.index === 1) {
+        this.getRechargeList();
+      } else {
+        uiStore.updateUiStore('rechargePager.index', 1);
+      }
     }
   }
 }
