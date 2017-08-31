@@ -62,37 +62,33 @@ class InterfaceTestStore {
   }
   @action.bound interfaceTest() {
     const getParams = this.getParams();
-    // let isSubmit = true;
-    // const testParams = this.getParams(isSubmit);
     if (!getParams.isSubmit) {
       return false;
     }
     this.isResultLoading = true;
     const {method, uriReg} = this.interfaceInfo.data;
-    const {apikey, sharedSecret} = this.apiKey;
-    const timestamp = new Date().getTime();
-    const paramsStr = this.dealParams();
-    const apiToken = method.toLowerCase() + sharedSecret + timestamp + uriReg + paramsStr;
-    console.log(paramsStr, 'paramsStr');
-    console.log(apiToken, 'apiToken');
-    const encodeApiToken = method.toLowerCase() + sharedSecret + timestamp + uriReg + encodeURI(paramsStr);
-    console.log(encodeApiToken, 'encodeApiToken');
-    const hashApiToken = crypto.createHash('sha256')
-                          .update(encodeApiToken)
-                          .digest('hex');
-    const headerConfig = {
-      'Content-Type': 'application/json',
-      'sc-apikey': apikey,
-      'sc-timestamp': timestamp,
-      'sc-api-token': hashApiToken
-    };
+    // const {apikey, sharedSecret} = this.apiKey;
+    // const timestamp = new Date().getTime();
+    // const paramsStr = this.dealParams();
+    // const apiToken = method.toLowerCase() + sharedSecret + timestamp + uriReg + paramsStr;
+    // const encodeApiToken = method.toLowerCase() + sharedSecret + timestamp + uriReg + encodeURI(paramsStr);
+    // const hashApiToken = crypto.createHash('sha256')
+    //                       .update(encodeApiToken)
+    //                       .digest('hex');
+    // const headerConfig = {
+    //   'Content-Type': 'application/json',
+    //   'sc-apikey': apikey,
+    //   'sc-timestamp': timestamp,
+    //   'sc-api-token': hashApiToken
+    // };
+    const headerConfig = this.dealHeaderConfig();
     interfaceApi.interfaceTest(uriReg, method.toLowerCase(), getParams.params, headerConfig)
       .then(action('result-su', ({data}) => {
         this.testResult = {data};
         this.isResultLoading = false;
       }))
       .catch(action('result-err', (err) => {
-        console.log(err.response.data);
+        // console.log(err.response.data);
         this.testResult = {
           data: err.response.data,
           // error: {message: '暂未获取到内容'}
@@ -100,7 +96,23 @@ class InterfaceTestStore {
         this.isResultLoading = false;
       }));
   }
-
+  @action.bound dealHeaderConfig() {
+    const {method, uriReg} = this.interfaceInfo.data;
+    const {apikey, sharedSecret} = this.apiKey;
+    const timestamp = new Date().getTime();
+    const paramsStr = this.dealParams();
+    // const apiToken = method.toLowerCase() + sharedSecret + timestamp + uriReg + paramsStr;
+    const encodeApiToken = method.toLowerCase() + sharedSecret + timestamp + uriReg + encodeURI(paramsStr);
+    const hashApiToken = crypto.createHash('sha256')
+                          .update(encodeApiToken)
+                          .digest('hex');
+    return {
+      'Content-Type': 'application/json',
+      'sc-apikey': apikey,
+      'sc-timestamp': timestamp,
+      'sc-api-token': hashApiToken
+    };
+  }
   @action.bound dealParams() {
     let paramsStr = '';
     const method = this.interfaceInfo.data.method;
