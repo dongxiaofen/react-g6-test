@@ -2,6 +2,8 @@ import { observable, action } from 'mobx';
 import pathval from 'pathval';
 import { interfaceApi } from 'api';
 const crypto = require('crypto');
+import __trim from 'lodash/trim';
+import messageStore from './message';
 
 class InterfaceTestStore {
   // 重庆誉存大数据科技有限公司
@@ -10,7 +12,7 @@ class InterfaceTestStore {
   @observable interfaceType = {};
   @observable apiKey = {};
   @observable isOpenApikey = false;
-  @observable apiParams = {};
+  @observable apiParams = {}; // {[key]: {value: '', attribute: 'required'}}
   @observable testResult = {};
   @observable isResultLoading = false;
 
@@ -25,7 +27,8 @@ class InterfaceTestStore {
         if (data.apiParams) {
           const params = {};
           data.apiParams.map((key) => {
-            params[key] = '';
+            const newCont = key.split(':');
+            params[__trim(newCont[0])] = {value: '', attribute: __trim(newCont[1])};
           });
           this.apiParams = params;
         } else {
@@ -58,12 +61,20 @@ class InterfaceTestStore {
       });
   }
   @action.bound interfaceTest() {
+    const getParams = this.getParams();
+    // let isSubmit = true;
+    // const testParams = this.getParams(isSubmit);
+    if (!getParams.isSubmit) {
+      return false;
+    }
     this.isResultLoading = true;
     const {method, uriReg} = this.interfaceInfo.data;
     const {apikey, sharedSecret} = this.apiKey;
     const timestamp = new Date().getTime();
     const paramsStr = this.dealParams();
-    // const apiToken = method.toLowerCase() + sharedSecret + timestamp + uriReg + paramsStr;
+    const apiToken = method.toLowerCase() + sharedSecret + timestamp + uriReg + paramsStr;
+    console.log(paramsStr, 'paramsStr');
+    console.log(apiToken, 'apiToken');
     const encodeApiToken = method.toLowerCase() + sharedSecret + timestamp + uriReg + encodeURI(paramsStr);
     console.log(encodeApiToken, 'encodeApiToken');
     const hashApiToken = crypto.createHash('sha256')
@@ -75,16 +86,16 @@ class InterfaceTestStore {
       'sc-timestamp': timestamp,
       'sc-api-token': hashApiToken
     };
-    interfaceApi.interfaceTest(uriReg, method.toLowerCase(), this.apiParams, headerConfig)
+    interfaceApi.interfaceTest(uriReg, method.toLowerCase(), getParams.params, headerConfig)
       .then(action('result-su', ({data}) => {
         this.testResult = {data};
         this.isResultLoading = false;
       }))
       .catch(action('result-err', (err) => {
-        console.log(err);
+        console.log(err.response.data);
         this.testResult = {
-          data: {},
-          error: {message: '暂未获取到内容'}
+          data: err.response.data,
+          // error: {message: '暂未获取到内容'}
         };
         this.isResultLoading = false;
       }));
@@ -92,17 +103,37 @@ class InterfaceTestStore {
 
   @action.bound dealParams() {
     let paramsStr = '';
-    const paramsArr = Object.keys(this.apiParams);
-    if (paramsArr.length > 0) {
-      paramsArr.map((item, idx) => {
-        if (idx === 0) {
-          paramsStr += item + '=' + this.apiParams[item];
-        } else {
-          paramsStr += '&' + item + '=' + this.apiParams[item];
-        }
-      });
+    const method = this.interfaceInfo.data.method;
+    if (method === 'GET') {
+      const paramsArr = Object.keys(this.apiParams);
+      if (paramsArr.length > 0) {
+        paramsArr.map((item, idx) => {
+          if (idx === 0) {
+            paramsStr += item + '=' + this.apiParams[item].value;
+          } else {
+            paramsStr += '&' + item + '=' + this.apiParams[item].value;
+          }
+        });
+      }
     }
     return paramsStr;
+  }
+  @action.bound getParams() {
+    let isSubmit = true;
+    const newParams = {};
+    const apiParams = this.apiParams;
+    const arrParams = Object.keys(apiParams);
+    if (arrParams.length > 0) {
+      arrParams.map((item) => {
+        if (apiParams[item].attribute === 'required' && apiParams[item].value === '') {
+          messageStore.openMessage({type: 'warning', content: `${item} 为必填参数`, duration: 3000});
+          isSubmit = false;
+          return {isSubmit};
+        }
+        newParams[item] = apiParams[item].value;
+      });
+      return {params: newParams, isSubmit: isSubmit};
+    }
   }
   @action.bound resetData() {
     this.id = '';

@@ -29,10 +29,23 @@ export const getApiKey = () => {
 };
 
 export const interfaceTest = (url, method, params, headerConfig) => {
-  return axios({
-    method: method,
-    url: url,
-    params: params,
-    headers: headerConfig
-  });
+  let handleAxios;
+  switch (method) {
+    case 'get':
+      handleAxios = axios({
+        method: method,
+        url: url,
+        params: params,
+        headers: headerConfig
+      });
+      break;
+    default:
+      handleAxios = axios({
+        method: method,
+        url: url,
+        data: params,
+        headers: headerConfig
+      });
+  }
+  return handleAxios;
 };

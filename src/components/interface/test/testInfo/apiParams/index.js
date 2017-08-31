@@ -3,24 +3,26 @@ import {observer, inject} from 'mobx-react';
 import InfoItem from '../item';
 import Input from 'components/lib/input';
 import {Row, Col} from 'components/common/layout';
+import __trim from 'lodash/trim';
 import styles from './index.less';
 
 function ApiParams({interfaceTestStore}) {
   const handleInput = (evt) => {
     const id = evt.target.id;
-    const value = evt.target.value;
-    interfaceTestStore.updateValue(`apiParams.${id}`, value);
+    const value = __trim(evt.target.value);
+    interfaceTestStore.updateValue(`apiParams.${id}.value`, value);
   };
   const createParams = () => {
-    const apiParams = interfaceTestStore.interfaceInfo.data.apiParams;
-    if (apiParams) {
-      return apiParams.map((item) => {
-        return (<Col width="6" key={item}><InfoItem title={item + ':'} cssName={styles['params-item']}>
+    const apiParams = interfaceTestStore.apiParams;
+    const paramsArr = Object.keys(apiParams);
+    if (paramsArr.length > 0) {
+      return paramsArr.map((item) => {
+        return (<Col width="6" key={item}><InfoItem required={interfaceTestStore.apiParams[item].attribute === 'required'} title={item + ':'} cssName={styles['params-item']}>
           <Input
             type="text"
             id={item}
             className={styles['param-input']}
-            value={interfaceTestStore.apiParams[item]}
+            value={interfaceTestStore.apiParams[item].value}
             onChange={handleInput}/>
         </InfoItem></Col>);
       });
