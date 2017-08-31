@@ -27,6 +27,7 @@ function SelectInput({consumeStore}) {
       value={selectInputTarget}
       width="80px"
       onChange={handleSelect}
+      className={styles.select}
       >
       <Option value="id">订单编号</Option>
       <Option value="sdkApiRecordParams">查询参数</Option>
@@ -42,6 +43,8 @@ function SelectInput({consumeStore}) {
           onChange={handleInput}
           autoComplete={false}
           className={styles['flt-input']}
+          inputType="singleline"
+          placeholder={`请输入${selectInputTarget === 'id' ? '订单编号' : '查询参数'}`}
           />
       </div>
     </FilterContainer>

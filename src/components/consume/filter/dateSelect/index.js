@@ -29,6 +29,7 @@ function DateSelect({consumeStore, type}) {
           value={consumeStore[type].mothFilter}
           width="130px"
           onChange={handleSelect}
+          className={styles.select}
           >
           {createOption()}
         </Select>

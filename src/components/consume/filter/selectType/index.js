@@ -3,7 +3,7 @@ import {observer, inject} from 'mobx-react';
 import FilterContainer from '../filterContainer';
 import Select from 'components/lib/Select';
 const Option = Select.Option;
-// import styles from './index.less';
+import styles from './index.less';
 
 function SelectType({consumeStore}) {
   const handleChange = (value) => {
@@ -16,12 +16,12 @@ function SelectType({consumeStore}) {
   const createOption = () => {
     const data = Object.keys(consumeStore.interfaceType);
     const output = [];
+    output.push(<Option key="all" value="all">全部</Option>);
     if (data.length > 0) {
       data.map((key) => {
         output.push(<Option key={key} value={key}>{consumeStore.interfaceType[key]}</Option>);
       });
     }
-    output.push(<Option key="all" value="all">全部</Option>);
     return output;
   };
   return (
@@ -30,6 +30,7 @@ function SelectType({consumeStore}) {
         placeholder="请选择接口类别"
         width="190px"
         onChange={handleChange}
+        className={styles.select}
         value={consumeStore.consumption.filter.permissionClassification ? consumeStore.consumption.filter.permissionClassification : 'all'}>
         {createOption()}
       </Select>

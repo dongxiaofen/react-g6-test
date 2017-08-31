@@ -4,7 +4,7 @@ import { DatePicker } from 'antd';
 import moment from 'moment';
 const { RangePicker } = DatePicker;
 import FilterContainer from '../filterContainer';
-// import styles from './index.less';
+import styles from './index.less';
 
 function DateFliter({consumeStore, type, handleFilter}) {
   const filterData = consumeStore[type].filter;
@@ -20,12 +20,14 @@ function DateFliter({consumeStore, type, handleFilter}) {
     }
   };
   return (
-    <FilterContainer title="订单日期" titleStyle={{paddingLeft: '10px'}}>
-      <RangePicker
-        value={[start, end]}
-        onChange={handleDateChange}
-      />
-    </FilterContainer>
+    <div className={styles.dateTime}>
+      <FilterContainer title="订单日期" titleStyle={{paddingLeft: '10px'}}>
+        <RangePicker
+          value={[start, end]}
+          onChange={handleDateChange}
+          />
+      </FilterContainer>
+    </div>
   );
 }
 
