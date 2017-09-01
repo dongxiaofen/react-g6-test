@@ -25,6 +25,7 @@ function DateFliter({consumeStore, type, handleFilter}) {
         <RangePicker
           value={[start, end]}
           onChange={handleDateChange}
+          allowClear={false}
           />
       </FilterContainer>
     </div>
