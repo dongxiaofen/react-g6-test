@@ -1,5 +1,6 @@
 import { observable, action } from 'mobx';
 import pathval from 'pathval';
+import axios from 'axios';
 import { interfaceApi } from 'api';
 const crypto = require('crypto');
 import __trim from 'lodash/trim';
@@ -15,6 +16,7 @@ class InterfaceTestStore {
   @observable apiParams = {}; // {[key]: {value: '', attribute: 'required'}}
   @observable testResult = {};
   @observable isResultLoading = false;
+  @observable interfaceTestCancel = null;
 
   @action.bound updateValue(changeItem, value) {
     pathval.setPathValue(this, changeItem, value);
@@ -61,28 +63,21 @@ class InterfaceTestStore {
       });
   }
   @action.bound interfaceTest() {
+    if (this.interfaceTestCancel) {
+      this.interfaceTestCancel();
+      this.interfaceTestCancel = null;
+    }
+    const source = axios.CancelToken.source();
+    const cancelToken = source.token;
     const getParams = this.getParams();
+    console.log(getParams, 'getParams');
     if (!getParams.isSubmit) {
       return false;
     }
     this.isResultLoading = true;
     const {method, uriReg} = this.interfaceInfo.data;
-    // const {apikey, sharedSecret} = this.apiKey;
-    // const timestamp = new Date().getTime();
-    // const paramsStr = this.dealParams();
-    // const apiToken = method.toLowerCase() + sharedSecret + timestamp + uriReg + paramsStr;
-    // const encodeApiToken = method.toLowerCase() + sharedSecret + timestamp + uriReg + encodeURI(paramsStr);
-    // const hashApiToken = crypto.createHash('sha256')
-    //                       .update(encodeApiToken)
-    //                       .digest('hex');
-    // const headerConfig = {
-    //   'Content-Type': 'application/json',
-    //   'sc-apikey': apikey,
-    //   'sc-timestamp': timestamp,
-    //   'sc-api-token': hashApiToken
-    // };
     const headerConfig = this.dealHeaderConfig();
-    interfaceApi.interfaceTest(uriReg, method.toLowerCase(), getParams.params, headerConfig)
+    interfaceApi.interfaceTest(uriReg, method.toLowerCase(), getParams.params, headerConfig, cancelToken)
       .then(action('result-su', ({data}) => {
         this.testResult = {data};
         this.isResultLoading = false;
@@ -95,6 +90,7 @@ class InterfaceTestStore {
         };
         this.isResultLoading = false;
       }));
+    this.interfaceTestCancel = source.cancel;
   }
   @action.bound dealHeaderConfig() {
     const {method, uriReg} = this.interfaceInfo.data;
@@ -144,8 +140,8 @@ class InterfaceTestStore {
         }
         newParams[item] = apiParams[item].value;
       });
-      return {params: newParams, isSubmit: isSubmit};
     }
+    return {params: newParams, isSubmit: isSubmit};
   }
   @action.bound resetData() {
     this.id = '';
@@ -156,6 +152,10 @@ class InterfaceTestStore {
     this.apiParams = {};
     this.testResult = {};
     this.isResultLoading = false;
+    if (this.interfaceTestCancel) {
+      this.interfaceTestCancel();
+      this.interfaceTestCancel = null;
+    }
   }
 }
 export default new InterfaceTestStore();

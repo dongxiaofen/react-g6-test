@@ -14,13 +14,11 @@ function MyapiMain({accountStore}) {
       Object.keys(originData).map(key => {
         originData[key].map((item) => newData.push(item));
       });
-      console.log(newData, 'newData');
-      // console.log(newData, 'newData');
-      // console.log(__flattenDeep(newData), '__flattenDeep(newData)');
       newData.map((item, idx) => {
         tableData.push({
           key: idx,
           id: item.id,
+          name: item.name,
           price: item.price,
           permissionClassification: accountStore.myApi.interfaceType[item.permissionClassification],
         });

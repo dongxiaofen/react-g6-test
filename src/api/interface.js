@@ -28,7 +28,7 @@ export const getApiKey = () => {
   return axios.get('/api/external/client/permission/apikey');
 };
 
-export const interfaceTest = (url, method, params, headerConfig) => {
+export const interfaceTest = (url, method, params, headerConfig, cancelToken) => {
   let handleAxios;
   switch (method) {
     case 'get':
@@ -36,7 +36,8 @@ export const interfaceTest = (url, method, params, headerConfig) => {
         method: method,
         url: url,
         params: params,
-        headers: headerConfig
+        headers: headerConfig,
+        cancelToken: cancelToken
       });
       break;
     default:
@@ -44,7 +45,8 @@ export const interfaceTest = (url, method, params, headerConfig) => {
         method: method,
         url: url,
         data: params,
-        headers: headerConfig
+        headers: headerConfig,
+        cancelToken: cancelToken
       });
   }
   return handleAxios;
