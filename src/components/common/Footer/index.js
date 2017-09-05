@@ -7,7 +7,7 @@ function Footer() {
   return (
     <div className={styles.footer}>
       <div className={styles['footer-item']}>
-        <span className={styles.name}>黑名单查询平台</span>
+        <span className={styles.name}>星象数据平台</span>
         <span className={styles.text}>Copyright © 2016誉存保留所有权利</span>
       </div>
       <div className={styles['footer-item']}>
