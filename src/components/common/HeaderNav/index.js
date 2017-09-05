@@ -11,6 +11,9 @@ function Header({headerStore, clientStore, routing}) {
     headerStore.navChange(nav);
     routing.push({pathname: `/${nav}`});
   };
+  const gotoHome = () => {
+    routing.push({pathname: `/`});
+  };
   const handleInnerNav = (innerNav, idx) => {
     // if (innerNav === 'test') {
     //   const id = interfaceTestStore.id;
@@ -65,11 +68,11 @@ function Header({headerStore, clientStore, routing}) {
       </div>
       <div className={styles['header-navbox']}>
         <div className={`clearfix ${styles['header-nav']}`}>
-          <div className={styles.logo}>
+          <div className={styles.logo} onClick={gotoHome}>
             <img src={logo} />
             <div className={styles.name}>
               <p className={styles['name-cn']}>星象<span className={styles.pots}>.</span>数据平台</p>
-              <p className={styles['name-en']}>star.socalcredits.cn</p>
+              <p className={styles['name-en']}>business.socialcredits.cn</p>
             </div>
           </div>
           <ul className={styles.navList}>
