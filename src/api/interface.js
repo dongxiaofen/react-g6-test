@@ -2,7 +2,7 @@ import axios from 'axios';
 
 // introduce
 export const getInterfaceList = (params) => {
-  return axios.get('/api/external/client/permission/list', {params});
+  return axios.get('/api/external/client/permission/list', params);
 };
 
 export const getInterfaceType = () => {
@@ -27,7 +27,9 @@ export const getErrorDoc = () => {
 export const getApiKey = () => {
   return axios.get('/api/external/client/permission/apikey');
 };
-
+export const getfiltedApiList = (params) => {
+  return axios.get('/api/external/client/permission/list/byType', params);
+};
 export const interfaceTest = (url, method, params, headerConfig, cancelToken) => {
   let handleAxios;
   switch (method) {

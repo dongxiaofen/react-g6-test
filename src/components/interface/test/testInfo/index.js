@@ -9,7 +9,7 @@ import styles from './index.less';
 import {shieldInfo} from 'helpers/infoShield';
 import openImg from 'imgs/open.png';
 
-function TestInfo({interfaceTestStore}) {
+function TestInfo({interfaceTestStore, pageType}) {
   const infoData = interfaceTestStore.interfaceInfo.data;
   // let isOpenApikey = false;
   const handleShowApikey = () => {
@@ -21,11 +21,14 @@ function TestInfo({interfaceTestStore}) {
   return (
     <div className={styles.info}>
       <div>
-        <div className={styles.list}>
-          <InfoItem title="接口名称：">
-            <span>{infoData.name}</span>
-          </InfoItem>
-        </div>
+        {
+          pageType === 'single' ?
+          <div className={styles.list}>
+            <InfoItem title="接口名称：">
+              <span>{infoData.name}</span>
+            </InfoItem>
+          </div> : null
+        }
 
         <div className={`clearfix ${styles.list}`}>
           <InfoItem title="请求方式：" cssName={styles.method}>

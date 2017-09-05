@@ -1,5 +1,6 @@
 import { observable, action, reaction } from 'mobx';
 import pathval from 'pathval';
+import axios from 'axios';
 import { interfaceApi } from 'api';
 import uiStore from './ui';
 // import messageStore from './message';
@@ -14,7 +15,10 @@ class InterfaceStore {
       }
     );
   }
+
   @observable interfaceList = {}; // 接口套餐列表
+  @observable interfaceListCancel = null;
+
   @observable myInterface = {}; // 已有的套餐列表
   @observable interfaceType = {}; // 接口套餐分类
   @observable isTypeLoading = false; // 接口套餐分类加载中
@@ -30,7 +34,12 @@ class InterfaceStore {
   @action.bound getInterfaceList() {
     this.interfaceList = {};
     const params = Object.assign({}, uiStore.uiState.interfacePager, this.filterInfo);
-    interfaceApi.getInterfaceList(params)
+    if (this.interfaceListCancel) {
+      this.interfaceListCancel();
+      this.interfaceListCancel = null;
+    }
+    const source = axios.CancelToken.source();
+    interfaceApi.getInterfaceList({params: params, cancelToken: source.token})
       .then(action('获取接口成功', ({data}) => {
         if (data.content.length > 0) {
           uiStore.uiState.interfacePager.totalElements = data.totalElements;
@@ -48,6 +57,7 @@ class InterfaceStore {
           error: {message: '暂无接口信息'}
         };
       }));
+    this.interfaceListCancel = source.cancel;
   }
   @action.bound getInterfaceType() {
     if (!this.isTypeLoading) {

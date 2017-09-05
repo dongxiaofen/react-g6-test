@@ -13,9 +13,14 @@ export default class Test extends Component {
   componentDidMount() {
     const id = this.props.routing.location.query.id;
     if (id) {
+      // 单个接口测试
       this.props.interfaceTestStore.updateValue('id', id);
       this.props.interfaceTestStore.getInfoDetail(id);
-      this.props.interfaceTestStore.getInterfaceType(id);
+      this.props.interfaceTestStore.getInterfaceType('single');
+    } else {
+      // 集成接口测试
+      this.props.interfaceTestStore.getfiltedApiList();
+      this.props.interfaceTestStore.getInterfaceType('all');
     }
     this.props.interfaceTestStore.getApiKey();
   }
@@ -23,9 +28,10 @@ export default class Test extends Component {
     this.props.interfaceTestStore.resetData();
   }
   render() {
+    const pageType = this.props.routing.location.query.id ? 'single' : 'all';
     return (
       <div>
-        <TestBody />
+        <TestBody pageType={pageType}/>
       </div>
     );
   }

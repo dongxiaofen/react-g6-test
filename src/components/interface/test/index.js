@@ -4,10 +4,11 @@ import TestInfo from './testInfo';
 import TestDetail from './testDetail';
 import Result from './result';
 import ContBox from './contBox';
+import FilterCont from './filter';
 // import Button from 'components/lib/button';
 import styles from './index.less';
 
-function TestBody({interfaceTestStore}) {
+function TestBody({interfaceTestStore, pageType}) {
   const infoData = {
     loading: interfaceTestStore.interfaceInfo.data === undefined,
     error: interfaceTestStore.interfaceInfo.error,
@@ -19,7 +20,9 @@ function TestBody({interfaceTestStore}) {
   return (
     <div>
       <div className={styles['info-cont']}>
-        <TestInfo data={infoData} />
+        {pageType === 'all' ?
+          <FilterCont /> : null}
+        <TestInfo data={infoData} pageType={pageType} />
       </div>
       <div className={styles.result}>
         <TestDetail data={infoData}/>

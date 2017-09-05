@@ -3,7 +3,7 @@ import { observer, inject } from 'mobx-react';
 import styles from './index.less';
 import logo from 'imgs/header/logo.png';
 
-function Header({headerStore, clientStore, routing, interfaceTestStore}) {
+function Header({headerStore, clientStore, routing}) {
   const handleLogout = () => {
     clientStore.loginOut();
   };
@@ -12,21 +12,21 @@ function Header({headerStore, clientStore, routing, interfaceTestStore}) {
     routing.push({pathname: `/${nav}`});
   };
   const handleInnerNav = (innerNav, idx) => {
-    if (innerNav === 'test') {
-      const id = interfaceTestStore.id;
-      if (id) {
-        const ParentIdx = headerStore.navList.findIndex(item => (item.key === headerStore.currentNav));
-        headerStore.innerNavChange(innerNav, idx, ParentIdx);
-        routing.push({
-          pathname: `/${headerStore.currentNav}/${innerNav}`,
-          query: {id: id}
-        });
-      }
-    } else {
-      const ParentIdx = headerStore.navList.findIndex(item => (item.key === headerStore.currentNav));
-      headerStore.innerNavChange(innerNav, idx, ParentIdx);
-      routing.push({pathname: `/${headerStore.currentNav}/${innerNav}`});
-    }
+    // if (innerNav === 'test') {
+    //   const id = interfaceTestStore.id;
+    //   if (id) {
+    //     const ParentIdx = headerStore.navList.findIndex(item => (item.key === headerStore.currentNav));
+    //     headerStore.innerNavChange(innerNav, idx, ParentIdx);
+    //     routing.push({
+    //       pathname: `/${headerStore.currentNav}/${innerNav}`,
+    //       query: {id: id}
+    //     });
+    //   }
+    // } else {
+    const ParentIdx = headerStore.navList.findIndex(item => (item.key === headerStore.currentNav));
+    headerStore.innerNavChange(innerNav, idx, ParentIdx);
+    routing.push({pathname: `/${headerStore.currentNav}/${innerNav}`});
+    // }
   };
   const createNav = () => {
     return headerStore.navList.map((item, idx) => {
@@ -89,4 +89,4 @@ function Header({headerStore, clientStore, routing, interfaceTestStore}) {
 Header.propTypes = {
   headerStore: PropTypes.object,
 };
-export default inject('headerStore', 'clientStore', 'routing', 'interfaceTestStore')(observer(Header));
+export default inject('headerStore', 'clientStore', 'routing')(observer(Header));
