@@ -15,21 +15,9 @@ function Header({headerStore, clientStore, routing}) {
     routing.push({pathname: `/`});
   };
   const handleInnerNav = (innerNav, idx) => {
-    // if (innerNav === 'test') {
-    //   const id = interfaceTestStore.id;
-    //   if (id) {
-    //     const ParentIdx = headerStore.navList.findIndex(item => (item.key === headerStore.currentNav));
-    //     headerStore.innerNavChange(innerNav, idx, ParentIdx);
-    //     routing.push({
-    //       pathname: `/${headerStore.currentNav}/${innerNav}`,
-    //       query: {id: id}
-    //     });
-    //   }
-    // } else {
     const ParentIdx = headerStore.navList.findIndex(item => (item.key === headerStore.currentNav));
     headerStore.innerNavChange(innerNav, idx, ParentIdx);
     routing.push({pathname: `/${headerStore.currentNav}/${innerNav}`});
-    // }
   };
   const createNav = () => {
     return headerStore.navList.map((item, idx) => {

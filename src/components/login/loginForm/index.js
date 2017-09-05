@@ -97,7 +97,7 @@ function Login({ loginStore }) {
           </Button>
         </div>
       </div>
-      <p className={styles.forget}>忘记密码，请联系客服　400-345-2343</p>
+      <p className={styles.forget}>忘记密码，请联系客服　400-139-1819</p>
     </div>
   );
 }
