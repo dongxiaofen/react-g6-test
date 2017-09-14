@@ -7,16 +7,39 @@ import InfoItem from './item';
 import ApiParams from './apiParams';
 import styles from './index.less';
 import {shieldInfo} from 'helpers/infoShield';
-import openImg from 'imgs/open.png';
+// import openImg from 'imgs/open.png';
 
-function TestInfo({interfaceTestStore, pageType}) {
+function TestInfo({interfaceTestStore, pageType, modalStore}) {
   const infoData = interfaceTestStore.interfaceInfo.data;
   // let isOpenApikey = false;
   const handleShowApikey = () => {
     interfaceTestStore.updateValue('isOpenApikey', !interfaceTestStore.isOpenApikey);
   };
   const handleTest = () => {
-    interfaceTestStore.interfaceTest();
+    if (pageType === 'all') {
+      // console.log('all');
+      let isTest = false;
+      const myInterface = interfaceTestStore.myInterface;
+      Object.keys(myInterface).map((key) => {
+        myInterface[key].map((item) => {
+          if (item.id === interfaceTestStore.id) {
+            isTest = true;
+          }
+        });
+      });
+      if (isTest) {
+        interfaceTestStore.interfaceTest();
+      } else {
+        modalStore.openCompModal({
+          isSingleBtn: true,
+          contentText: '您未开通该接口，请联系商务人员，我们会立即为你办理,联系电话：400-139-1819，邮箱：info@socialcredits.cn',
+          confirmAction: modalStore.closeAction
+          // cancelAction: closeAction
+        });
+      }
+    } else {
+      interfaceTestStore.interfaceTest();
+    }
   };
   return (
     <div className={styles.info}>
@@ -46,7 +69,8 @@ function TestInfo({interfaceTestStore, pageType}) {
                 <span>
                   <span className={styles.apikey}>{interfaceTestStore.isOpenApikey ? interfaceTestStore.apiKey.apikey : shieldInfo(interfaceTestStore.apiKey.apikey)}</span>
                   <span className={styles['key-btn']} onClick={handleShowApikey}>
-                    <img src={openImg} />
+                    {/* <img src={openImg} /> */}
+                    {interfaceTestStore.isOpenApikey ? <i className="fa fa-eye" aria-hidden="true"></i> : <i className="fa fa-eye-slash" aria-hidden="true"></i>}
                     {interfaceTestStore.isOpenApikey ? '隐藏key' : '显示key'}
                   </span>
                 </span> : ''}
@@ -70,6 +94,8 @@ function TestInfo({interfaceTestStore, pageType}) {
 
 TestInfo.propTypes = {
   interfaceTestStore: PropTypes.object,
+  modalStore: PropTypes.object,
+  pageType: PropTypes.string,
 };
 export default loadingComp({
   mapDataToProps: props => ({
@@ -80,4 +106,4 @@ export default loadingComp({
     errCategory: 0,
     height: 400
   }),
-})(inject('interfaceTestStore')(observer(TestInfo)));
+})(inject('interfaceTestStore', 'modalStore')(observer(TestInfo)));

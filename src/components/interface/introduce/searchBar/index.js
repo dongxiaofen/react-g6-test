@@ -1,11 +1,18 @@
-import React from 'react';
+import React, { PropTypes } from 'react';
 import {observer, inject} from 'mobx-react';
 import Input from 'components/lib/input';
 import styles from './index.less';
-function SearchBar({interfaceStore}) {
+function SearchBar({interfaceStore, uiStore}) {
+  const filterInterfaceList = () => {
+    if (uiStore.uiState.interfacePager.index === 1) {
+      interfaceStore.getInterfaceList();
+    } else {
+      uiStore.updateUiStore('interfacePager.index', 1);
+    }
+  };
   const handleSearch = (evt) => {
     if (evt.keyCode === 13) {
-      interfaceStore.getInterfaceList();
+      filterInterfaceList();
     }
   };
   const handleChange = (evt) => {
@@ -21,8 +28,12 @@ function SearchBar({interfaceStore}) {
       value={interfaceStore.filterInfo.name}
       placeholder="输入接口名称进行查询"
     />
-  <span className={styles['search-icon']} onClick={interfaceStore.getInterfaceList}></span>
+  <span className={styles['search-icon']} onClick={filterInterfaceList}></span>
   </div>
   );
 }
-export default inject('interfaceStore')(observer(SearchBar));
+SearchBar.propTypes = {
+  interfaceStore: PropTypes.object,
+  uiStore: PropTypes.object,
+};
+export default inject('interfaceStore', 'uiStore')(observer(SearchBar));

@@ -1,4 +1,4 @@
-import { observable, action, reaction } from 'mobx';
+import { observable, action } from 'mobx';
 import pathval from 'pathval';
 import axios from 'axios';
 import { interfaceApi } from 'api';
@@ -6,15 +6,15 @@ import uiStore from './ui';
 // import messageStore from './message';
 
 class InterfaceStore {
-  constructor() {
-    reaction(
-      () => this.filterInfo.type,
-      () => {
-        document.body.scrollTop = 0;
-        this.getInterfaceList();
-      }
-    );
-  }
+  // constructor() {
+  //   reaction(
+  //     () => this.filterInfo.type,
+  //     () => {
+  //       document.body.scrollTop = 0;
+  //       this.getInterfaceList();
+  //     }
+  //   );
+  // }
 
   @observable interfaceList = {}; // 接口套餐列表
   @observable interfaceListCancel = null;
@@ -89,12 +89,13 @@ class InterfaceStore {
       });
   }
 
-  // @action.bound getInfoDetail(id) {
-  //   interfaceApi.getInfoDetail(id)
-  //     .then(action('info-success', ({data}) => {
-  //
-  //     }))
-  //     .catch();
-  // }
+  @action.bound resetData() {
+    this.interfaceList = {};
+    this.filterInfo = {
+      type: '',
+      name: '',
+    };
+    // this.errorDoc = {};
+  }
 }
 export default new InterfaceStore();

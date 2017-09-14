@@ -11,7 +11,7 @@ function FilterCont({interfaceTestStore}) {
     interfaceTestStore.getfiltedApiList();
   };
   const handleListChange = (value) => {
-    console.log(value, 'id');
+    // console.log(value, 'id');
     interfaceTestStore.changeChosedInfo(value);
   };
 
