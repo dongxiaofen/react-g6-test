@@ -6,7 +6,7 @@ import consumeStore from './consume';
 const initPagerParams = {
   interfacePager: {
     index: 1,
-    size: 10,
+    size: 20,
     totalElements: 0
   },
   consumptionPager: {
@@ -50,27 +50,6 @@ class UiStore {
   updateUiStore(keypath, value) {
     pathval.setPathValue(this.uiState, keypath, value);
   }
-
-  // @action.bound
-  // toggleExpand(module, rowIdx) {
-  //   const value = this.uiState[module].show.get(rowIdx);
-  //   this.uiState[module].show.set(rowIdx, !value);
-  // }
-
-  // @action.bound
-  // resetAccountPager() {
-  //   const template = {
-  //     index: 1,
-  //     size: 10,
-  //     totalElements: 0
-  //   };
-  //   this.uiState.accountAlertCorp = Object.assign({}, template);
-  //   this.uiState.accountConsume = Object.assign({}, template);
-  //   this.uiState.accountRecharge = Object.assign({}, template);
-  //   this.uiState.accountSummary = Object.assign({}, template);
-  //   this.uiState.accountLoginRecord = Object.assign({}, template);
-  //   this.uiState.relPerCheck = Object.assign({}, template);
-  // }
 
   @action.bound
   resetStore() {

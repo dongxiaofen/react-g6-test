@@ -45,7 +45,7 @@ function InterfaceList({interfaceStore, modalStore, routing}) {
     const interfaceData = interfaceStore.interfaceList.content;
     return interfaceData.map((item, idx) => {
       return (
-        <li key={idx} className={`${styles['interface-li']} ${idx > 0 && idx % 4 === 0 ? styles.noMg : ''}`}>
+        <li key={idx} className={`${styles['interface-li']} ${(idx + 1) % 5 === 0 ? styles.noMg : ''}`}>
           {
             isApply(item.id, item.permissionClassification) ?
             <div className={styles.appled}>

@@ -3,10 +3,15 @@ import {observer, inject} from 'mobx-react';
 import { loadingComp } from 'components/hoc';
 import styles from './index.less';
 
-function Filter({interfaceStore}) {
+function Filter({interfaceStore, uiStore}) {
   const handleFilter = (key) => {
     // console.log(key);
     interfaceStore.updateValue('filterInfo.type', key);
+    if (uiStore.uiState.interfacePager.index === 1) {
+      interfaceStore.getInterfaceList();
+    } else {
+      uiStore.updateUiStore('interfacePager.index', 1);
+    }
   };
   const createFilter = () => {
     const filterData = interfaceStore.interfaceType.data;
@@ -32,6 +37,7 @@ function Filter({interfaceStore}) {
 
 Filter.propTypes = {
   interfaceStore: PropTypes.object,
+  uiStore: PropTypes.object,
 };
 // export default observer(Filter);
 export default loadingComp({
@@ -43,4 +49,4 @@ export default loadingComp({
     errCategory: 0,
     height: 100
   }),
-})(inject('interfaceStore')(observer(Filter)));
+})(inject('interfaceStore', 'uiStore')(observer(Filter)));

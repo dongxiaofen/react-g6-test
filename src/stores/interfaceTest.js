@@ -17,6 +17,7 @@ class InterfaceTestStore {
   @observable apiParams = {}; // {[key]: {value: '', attribute: 'required'}}
   @observable testResult = {};
   @observable isResultLoading = false;
+  @observable myInterface = {}; // 已有的套餐列表
 
   @observable filtedApiListCancel = null;
   @observable interfaceTestCancel = null;
@@ -29,7 +30,16 @@ class InterfaceTestStore {
   @action.bound updateValue(changeItem, value) {
     pathval.setPathValue(this, changeItem, value);
   }
-
+  @action.bound getMyInterface() {
+    interfaceApi.getMyInterface()
+      .then(action('myInterface-success', ({data}) => {
+        this.myInterface = data;
+      }))
+      .catch((err) => {
+        console.log(err);
+        // messageStore.openMessage({type: 'warning', content: '', duration: 5000});
+      });
+  }
   @action.bound getInfoDetail(id) {
     interfaceApi.getInfoDetail(id)
       .then(action('info-success', ({data}) => {

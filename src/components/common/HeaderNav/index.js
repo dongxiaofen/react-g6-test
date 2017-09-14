@@ -12,7 +12,8 @@ function Header({headerStore, clientStore, routing}) {
     routing.push({pathname: `/${nav}`});
   };
   const gotoHome = () => {
-    routing.push({pathname: `/`});
+    // routing.push({pathname: `/`});
+    location.href = '/';
   };
   const handleInnerNav = (innerNav, idx) => {
     const ParentIdx = headerStore.navList.findIndex(item => (item.key === headerStore.currentNav));

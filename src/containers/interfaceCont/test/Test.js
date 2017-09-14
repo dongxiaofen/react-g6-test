@@ -20,6 +20,7 @@ export default class Test extends Component {
     } else {
       // 集成接口测试
       this.props.interfaceTestStore.getfiltedApiList();
+      this.props.interfaceTestStore.getMyInterface();
       this.props.interfaceTestStore.getInterfaceType('all');
     }
     this.props.interfaceTestStore.getApiKey();
