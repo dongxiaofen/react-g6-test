@@ -4,7 +4,7 @@ import Clipboard from 'clipboard';
 import { loadingComp } from 'components/hoc';
 import {shieldInfo} from 'helpers/infoShield';
 import { runInAction } from 'mobx';
-import openPic from 'imgs/open.png';
+// import openPic from 'imgs/open.png';
 import styles from './index.less';
 
 @inject('accountStore', 'messageStore')
@@ -47,7 +47,8 @@ class SafeCont extends Component {
               <span id={key} data-clipboard-text={data[key]} className={styles.copy}>复制</span>
             </div>
             <div className={styles['key-handle']} onClick={this.handleKeyShow.bind(this, idx)}>
-              <img src={openPic} />
+              {/* <img src={openPic} /> */}
+              {!!dataOpen[idx] ? <i className="fa fa-eye" aria-hidden="true"></i> : <i className="fa fa-eye-slash" aria-hidden="true"></i>}
               {!!dataOpen[idx] ? '隐藏key' : '显示key'}
             </div>
           </div>
