@@ -1,7 +1,10 @@
 import React, { Component, PropTypes } from 'react';
 import { observer, inject } from 'mobx-react';
+import { reaction } from 'mobx';
 import { batchNav } from 'components/hoc';
 import TestBody from 'components/interface/test';
+
+let hrefReaction;
 @batchNav()
 @inject('routing', 'interfaceTestStore')
 @observer
@@ -11,6 +14,20 @@ export default class Test extends Component {
     interfaceTestStore: PropTypes.object,
   };
   componentDidMount() {
+    this.getPageData();
+    hrefReaction = reaction(
+      () => this.props.routing.location.search,
+      () => {
+        this.getPageData();
+      }
+    );
+    this.props.interfaceTestStore.getApiKey();
+  }
+  componentWillUnmount() {
+    hrefReaction();
+    this.props.interfaceTestStore.resetData();
+  }
+  getPageData = () => {
     const id = this.props.routing.location.query.id;
     if (id) {
       // 单个接口测试
@@ -19,14 +36,11 @@ export default class Test extends Component {
       this.props.interfaceTestStore.getInterfaceType('single');
     } else {
       // 集成接口测试
+      this.props.interfaceTestStore.updateValue('id', '');
       this.props.interfaceTestStore.getfiltedApiList();
       this.props.interfaceTestStore.getMyInterface();
       this.props.interfaceTestStore.getInterfaceType('all');
     }
-    this.props.interfaceTestStore.getApiKey();
-  }
-  componentWillUnmount() {
-    this.props.interfaceTestStore.resetData();
   }
   render() {
     const pageType = this.props.routing.location.query.id ? 'single' : 'all';
