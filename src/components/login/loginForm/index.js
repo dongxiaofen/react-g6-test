@@ -6,6 +6,7 @@ import FormItem from 'components/lib/FormItem';
 import styles from './index.less';
 import { runInAction } from 'mobx';
 import pathval from 'pathval';
+import __trim from 'lodash/trim';
 
 import loginUser from 'imgs/login/loginUser.png';
 import loginPwd from 'imgs/login/loginPwd.png';
@@ -19,7 +20,7 @@ function Login({ loginStore }) {
   };
   const changeValue = (event) => {
     runInAction('输入数据', () => {
-      pathval.setPathValue(loginStore, `form.${event.target.id}.value`, event.target.value);
+      pathval.setPathValue(loginStore, `form.${event.target.id}.value`, __trim(event.target.value));
     });
     loginStore.resetVlidateStatus(event.target.id);
   };

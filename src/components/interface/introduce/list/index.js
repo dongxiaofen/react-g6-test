@@ -19,7 +19,7 @@ function InterfaceList({interfaceStore, modalStore, routing}) {
     modalStore.openCompModal({
       isSingleBtn: true,
       // title: '登录超时',
-      contentText: '您未开通该接口，请联系商务人员，我们会立即为你办理,联系电话：400-139-1819，邮箱：info@socialcredits.cn',
+      contentText: '您未开通该接口，请联系商务人员，我们会立即为你办理，联系电话：400-139-1819，邮箱：info@socialcredits.cn',
       confirmAction: modalStore.closeAction
       // cancelAction: closeAction
     });

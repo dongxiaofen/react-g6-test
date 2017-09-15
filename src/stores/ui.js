@@ -6,7 +6,7 @@ import consumeStore from './consume';
 const initPagerParams = {
   interfacePager: {
     index: 1,
-    size: 20,
+    size: 15,
     totalElements: 0
   },
   consumptionPager: {
