@@ -107,7 +107,7 @@ export const paramsColumns = [
 
 export const headerDataSource = [
   {key: 'Limit', header: 'X-RateLimit-Limit', value: '每小时调用次数限制'},
-  {key: 'Remaining', header: 'sX-RateLimit-Remaining', value: '剩余调用次数限制'},
+  {key: 'Remaining', header: 'X-RateLimit-Remaining', value: '剩余调用次数限制'},
   {key: 'Reset', header: 'X-RateLimit-Reset', value: '次数重置的时间，unix 时间戳'},
 ];
 export const headerColumns = [
