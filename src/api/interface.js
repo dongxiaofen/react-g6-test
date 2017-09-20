@@ -31,7 +31,6 @@ export const getfiltedApiList = (params) => {
   return axios.get('/api/external/client/permission/list/byType', params);
 };
 export const interfaceTest = (url, method, params, headerConfig, cancelToken) => {
-  console.log(url, 'url-----------------');
   let handleAxios;
   switch (method) {
     case 'get':

@@ -93,6 +93,7 @@ class InterfaceTestStore {
       }));
   }
   @action.bound getfiltedApiList() {
+    this.testResult = {};
     if (this.filtedApiListCancel) {
       this.filtedApiListCancel();
       this.filtedApiListCancel = null;
@@ -116,6 +117,7 @@ class InterfaceTestStore {
   }
   @action.bound changeChosedInfo = (id) => {
     this.id = id;
+    this.testResult = {};
     const index = this.filtedApiList.findIndex(item => item.id === id);
     this.handleInfoDetail(this.filtedApiList[index]);
   }
