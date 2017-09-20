@@ -14,6 +14,7 @@ class ClientStore {
   @action.bound loginOut() {
     clientApi.loginOut()
       .then(() => {
+        localStorage.removeItem('pathname');
         browserHistory.push('/login');
         window.location.reload();
       })
