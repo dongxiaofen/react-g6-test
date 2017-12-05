@@ -24,6 +24,8 @@
   ],
   "main": "bin/server.js",
   "scripts": {
+    "start_local": "concurrent --kill-others \"better-npm-run start-local\"",
+    "stop_local": "pm2 delete data_api_local",
     "start_test": "concurrent --kill-others \"better-npm-run start-test\"",
     "stop_test": "pm2 delete data_api_test",
     "reload_test": "pm2 reload data_api_test",
@@ -61,6 +63,16 @@
       "command": "webpack --verbose --colors --display-error-details --config webpack/prod.config.js",
       "env": {
         "NODE_ENV": "production"
+      }
+    },
+    "start-local": {
+      "command": "pm2 start --name 'data_api_local' ./bin/server.js",
+      "env": {
+        "NODE_PATH": "./src",
+        "NODE_ENV": "production",
+        "PORT": 5130,
+        "APIPORT": 3030,
+        "backendApi": "http://192.168.31.116:7390"
       }
     },
     "start-test": {
