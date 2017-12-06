@@ -5,6 +5,8 @@ import encHex from 'crypto-js/enc-hex';
 import { accountApi, interfaceApi } from 'api';
 // import { accountApi } from 'api';
 import messageStore from './message';
+import modalStore from './modal';
+import uiStore from './ui';
 
 class AccountStore {
   @observable modify = {
@@ -40,7 +42,18 @@ class AccountStore {
       {key: 'sharedSecret', title: '私钥'}
     ],
     safeData: {},
-    safeDataOpen: [false, false]
+    safeDataOpen: [false, false],
+    password: {
+      value: '',
+      error: '',
+    },
+    isResetLoading: false, // 重置密钥加载
+    resetList: {
+      result: {},
+      // index: 1,
+      // size: 10,
+      // cancel: null,
+    }
   };
   // @observable safeData = {};
   // @observable safeDataOpen = [false, false];
@@ -121,6 +134,52 @@ class AccountStore {
           error: {message: '获取密钥失败'}
         };
       }));
+  }
+  @action.bound getResetApiList() {
+    this.safe.resetList.result = {};
+    accountApi.getResetApiList(uiStore.uiState.accountSafe)
+      .then(action('resetlist-s', ({data}) => {
+        if (data.content.length > 0) {
+          this.safe.resetList.result = {data};
+          uiStore.uiState.accountSafe.totalElements = data.totalElements;
+        } else {
+          this.safe.resetList.result = {
+            data: {},
+            error: {message: '您暂无重置列表'}
+          };
+        }
+      }))
+      .catch(action('resetlist-err', () => {
+        this.safe.resetList.result = {
+          data: {},
+          error: {message: '您暂无重置列表'}
+        };
+      }));
+  }
+  @action.bound resetApikey() {
+    if (!this.safe.password.value) {
+      this.safe.password.error = '密码不能为空！';
+    } else {
+      this.isResetLoading = true;
+      accountApi.resetApikey({password: this.safe.password.value})
+        .then(action('resetApikey-s', ({data}) => {
+          this.isResetLoading = false;
+          this.safe.safeData = {data};
+          modalStore.closeAction();
+          messageStore.openMessage({type: 'info', content: '密钥重置成功', duration: 3000});
+        }))
+        .catch(action('resetApikey-err', (err) => {
+          this.isResetLoading = false;
+          this.safe.password.value = '';
+          if (err && err.response.data) {
+            if (err.response.data.errorCode === 401201) {
+              this.safe.password.error = '密码输入错误，请重新输入！';
+            } else {
+              this.safe.password.error = err.response.data.message;
+            }
+          }
+        }));
+    }
   }
 }
 export default new AccountStore();

@@ -7,10 +7,11 @@ import { runInAction } from 'mobx';
 // import openPic from 'imgs/open.png';
 import styles from './index.less';
 
-@inject('accountStore', 'messageStore')
+@inject('accountStore', 'messageStore', 'modalStore')
 @observer
 class SafeCont extends Component {
   static propTypes = {
+    modalStore: PropTypes.object,
     accountStore: PropTypes.object,
     messageStore: PropTypes.object,
   };
@@ -24,11 +25,26 @@ class SafeCont extends Component {
       });
     });
   }
-
   handleKeyShow = (idx) => {
     const isOpen = !!this.props.accountStore.safe.safeDataOpen[idx];
     runInAction('open-close', () => {
       this.props.accountStore.safe.safeDataOpen[idx] = !isOpen;
+    });
+  }
+  clearPassword = () => {
+    this.props.accountStore.updateValue('safe.password.value', '');
+    this.props.accountStore.updateValue('safe.password.error', '');
+  };
+  resetApikey = () => {
+    this.props.modalStore.openCompModal({
+      // title: '私密修改',
+      closeAction: this.clearPassword,
+      isCustomize: true,
+      loader: (cb) => {
+        require.ensure([], (require) => {
+          cb(require('./reset'));
+        });
+      }
     });
   }
 
@@ -51,6 +67,7 @@ class SafeCont extends Component {
               {!!dataOpen[idx] ? <i className="fa fa-eye" aria-hidden="true"></i> : <i className="fa fa-eye-slash" aria-hidden="true"></i>}
               {!!dataOpen[idx] ? '隐藏key' : '显示key'}
             </div>
+            {key === 'sharedSecret' ? <div className={styles['key-handle']} onClick={this.resetApikey.bind(this)}>重置密码</div> : null}
           </div>
         );
       });
@@ -72,6 +89,6 @@ export default loadingComp({
     imgCategory: 13,
     category: 0,
     errCategory: 2,
-    height: 400
+    height: 200
   }),
 })(SafeCont);
