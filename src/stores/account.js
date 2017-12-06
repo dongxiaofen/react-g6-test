@@ -164,6 +164,7 @@ class AccountStore {
       accountApi.resetApikey({password: this.safe.password.value})
         .then(action('resetApikey-s', ({data}) => {
           this.isResetLoading = false;
+          this.safe.password.value = '';
           this.safe.safeData = {data};
           modalStore.closeAction();
           messageStore.openMessage({type: 'info', content: '密钥重置成功', duration: 3000});
