@@ -161,7 +161,7 @@ class AccountStore {
       this.safe.password.error = '密码不能为空！';
     } else {
       this.isResetLoading = true;
-      accountApi.resetApikey({password: this.safe.password.value})
+      accountApi.resetApikey({password: encHex.stringify(md5(this.safe.password.value))})
         .then(action('resetApikey-s', ({data}) => {
           this.isResetLoading = false;
           this.safe.password.value = '';
