@@ -82,7 +82,7 @@
         "NODE_ENV": "production",
         "PORT": 5130,
         "target": "local_test",
-        "backendApi": "http://10.173.224.173:18370"
+        "backendApi": "http://127.0.0.1:18370"
       }
     },
     "start-prod": {
@@ -92,7 +92,7 @@
         "NODE_ENV": "production",
         "PORT": 5131,
         "target": "local",
-        "backendApi": "http://10.173.224.173:8370"
+        "backendApi": "http://127.0.0.1:8370"
       }
     }
   },
