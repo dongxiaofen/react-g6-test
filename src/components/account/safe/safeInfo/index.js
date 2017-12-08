@@ -67,7 +67,7 @@ class SafeCont extends Component {
               {!!dataOpen[idx] ? <i className="fa fa-eye" aria-hidden="true"></i> : <i className="fa fa-eye-slash" aria-hidden="true"></i>}
               {!!dataOpen[idx] ? '隐藏key' : '显示key'}
             </div>
-            {key === 'sharedSecret' ? <div className={styles['key-handle']} onClick={this.resetApikey.bind(this)}>重置密码</div> : null}
+            {key === 'sharedSecret' ? <div className={styles['key-handle']} onClick={this.resetApikey.bind(this)}>重置密钥</div> : null}
           </div>
         );
       });
