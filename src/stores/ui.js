@@ -2,6 +2,7 @@ import { observable, action, reaction, extendObservable } from 'mobx';
 import pathval from 'pathval';
 import interfaceStore from './interface';
 import consumeStore from './consume';
+import accountStore from './account';
 
 const initPagerParams = {
   interfacePager: {
@@ -19,6 +20,11 @@ const initPagerParams = {
     size: 10,
     totalElements: 0
   },
+  accountSafe: {
+    index: 1,
+    size: 10,
+    totalElements: 0
+  }
 };
 class UiStore {
   constructor() {
@@ -41,6 +47,13 @@ class UiStore {
       () => {
         document.body.scrollTop = 0;
         consumeStore.getRechargeList();
+      }
+    );
+    reaction(
+      () => this.uiState.accountSafe.index,
+      () => {
+        document.body.scrollTop = 0;
+        accountStore.getResetApiList();
       }
     );
   }
