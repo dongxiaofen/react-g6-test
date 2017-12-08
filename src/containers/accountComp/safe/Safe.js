@@ -1,7 +1,8 @@
 import React, { Component, PropTypes } from 'react';
 import { observer, inject } from 'mobx-react';
 import { batchNav } from 'components/hoc';
-import SafeCont from 'components/account/safe';
+import SafeInfo from 'components/account/safe/safeInfo';
+import SafeList from 'components/account/safe/safeList';
 @batchNav()
 @inject('accountStore')
 @observer
@@ -11,6 +12,7 @@ export default class Safe extends Component {
   };
   componentDidMount() {
     this.props.accountStore.getApiKey();
+    this.props.accountStore.getResetApiList();
   }
   render() {
     const data = {
@@ -19,7 +21,8 @@ export default class Safe extends Component {
     };
     return (
       <div>
-        <SafeCont data={data}/>
+        <SafeInfo data={data}/>
+        <SafeList/>
       </div>
     );
   }
