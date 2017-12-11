@@ -15,7 +15,7 @@ function List({accountStore}) {
         tableData.push({
           key: idx,
           ip: item.ip,
-          email: item.email,
+          email: '操作说明：' + item.email,
           createdTs: item.createdTs ? moment(item.createdTs).format('YYYY-MM-DD HH:mm:ss') : item.createdTs,
         });
       });
