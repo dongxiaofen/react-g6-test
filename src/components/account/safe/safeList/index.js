@@ -12,7 +12,7 @@ function SafeList({accountStore}) {
   };
   return (
     <div className={styles.safeList}>
-      <h3 className={styles.title}>私钥重置记录</h3>
+      <h3 className={styles.title}>密钥重置记录</h3>
       <List data={listData} />
     </div>
   );

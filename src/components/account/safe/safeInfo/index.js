@@ -49,7 +49,7 @@ class SafeCont extends Component {
   }
 
   createSafeCont = () => {
-    // const arr = [{key: 'apikey', title: 'APIKEY'}, {key: 'sharedSecret', title: '私钥'}];
+    // const arr = [{key: 'apikey', title: 'APIKEY'}, {key: 'sharedSecret', title: '密钥'}];
     const arr = this.props.accountStore.safe.safeKey;
     const dataOpen = this.props.accountStore.safe.safeDataOpen;
     const data = this.props.accountStore.safe.safeData.data;

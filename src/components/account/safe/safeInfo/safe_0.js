@@ -19,7 +19,7 @@ function SafeCont({accountStore, messageStore}) {
     messageStore.openMessage({type: 'info', content: '复制成功', duration: 5000});
   };
   const createSafeCont = () => {
-    const arr = [{key: 'apikey', title: 'APIKEY'}, {key: 'sharedSecret', title: '私钥'}];
+    const arr = [{key: 'apikey', title: 'APIKEY'}, {key: 'sharedSecret', title: '密钥'}];
     const data = accountStore.safeData.data;
     const dataOpen = accountStore.safeDataOpen;
     return arr.map(({key, title}, idx) => {

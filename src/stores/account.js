@@ -39,7 +39,7 @@ class AccountStore {
   @observable safe = {
     safeKey: [
       {key: 'apikey', title: 'APIKEY'},
-      {key: 'sharedSecret', title: '私钥'}
+      {key: 'sharedSecret', title: '密钥'}
     ],
     safeData: {},
     safeDataOpen: [false, false],
