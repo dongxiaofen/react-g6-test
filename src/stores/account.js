@@ -168,6 +168,12 @@ class AccountStore {
           this.safe.safeData = {data};
           modalStore.closeAction();
           messageStore.openMessage({type: 'info', content: '密钥重置成功', duration: 3000});
+          // 更新重置列表
+          if (uiStore.uiState.accountSafe.index === 1) {
+            this.getResetApiList();
+          } else {
+            uiStore.uiState.accountSafe.index = 1;
+          }
         }))
         .catch(action('resetApikey-err', (err) => {
           this.isResetLoading = false;
