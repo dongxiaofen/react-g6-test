@@ -13,7 +13,7 @@ function Info({clientStore}) {
       {key: 'contact', label: '联系人'},
       {key: 'phone', label: '联系电话'},
     ];
-    return dataArr.map(({key, label}, idx) => (<Col key={idx} width="4" className={styles['info-item']}><span className={styles.title}>{label ? label + ':' : ''}</span><span className={styles.text}>{key ? clientStore.userInfo[key] : ''}</span></Col>));
+    return dataArr.map(({key, label}, idx) => (<Col key={idx} width="4" className={styles['info-item']}><span className={styles.title}>{label ? label + '：' : ''}</span><span className={styles.text}>{key ? clientStore.userInfo[key] : ''}</span></Col>));
   };
   return (
     <Row className={styles.info}>{createInfo()}</Row>
