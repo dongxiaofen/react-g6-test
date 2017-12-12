@@ -100,7 +100,7 @@ export const javaText = `
                 Map<String, Object> body = new HashMap<>();
                 body.put("idCard", "500223198801014444");
                 body.put("name", "张三");
-                StringEntity se = new StringEntity(JSONObject.valueToString(body));
+                StringEntity se = new StringEntity(new JSONObject(body).toString(), "UTF-8");
                 se.setContentType("text/json");
                 se.setContentEncoding(new BasicHeader("Content-Type", "application/json"));
 
