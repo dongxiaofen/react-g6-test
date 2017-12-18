@@ -40,6 +40,7 @@ function ConsumptionList({consumeStore}) {
       title: '查询参数',
       dataIndex: 'sdkApiRecordParams',
       key: 'sdkApiRecordParams',
+      width: '40%',
     }
   ];
   return (
