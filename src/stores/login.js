@@ -91,6 +91,8 @@ class LoginStore {
               errText = errorData.message;
             } else if (errorData.errorCode === 401001) {
               errText = '该用户不存在';
+            } else if (errorData.errorCode === 403204) {
+              errText = '当前帐户已过期';
             }
             pathval.setPathValue(this, 'isHasEorr', true);
             pathval.setPathValue(this, 'errText', errText);
