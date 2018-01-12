@@ -86,7 +86,7 @@ class LoginStore {
           // console.log(error.response, 'errorData');
           pathval.setPathValue(this, 'loading', false);
           if (error.response.status !== 502) {
-            let errText = '用户名或者密码错误';
+            let errText = errorData.message || '用户名或者密码错误';
             if (errorData.errorCode === 401200 || errorData.errorCode === 401201) {
               errText = errorData.message;
             } else if (errorData.errorCode === 401001) {
