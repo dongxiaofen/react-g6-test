@@ -43,21 +43,24 @@ axios.interceptors.response.use((response) => {
     return Promise.reject(error);
   }
   if (error.response.data.errorCode === 401006 || error.response.data.errorCode === 401007) {
-  // if (error.response.data.errorCode === 401999) {
     if (error.config.url !== '/api/user/logout') {
-      runInAction('登录提示', () => {
-        const closeAction = allStores.modalStore.closeAction;
-        allStores.modalStore.openCompModal({
-          // isSingleBtn: true,
-          title: '登录超时',
-          contentText: '登录超时，请重新登录',
-          confirmAction: () => {
-            localStorage.setItem('pathname', location.pathname + location.search);
-            location.href = '/login';
-          },
-          cancelAction: closeAction
+      if (!allStores.clientStore.userInfo.email && allStores.routing.location.pathname === '/') {
+        allStores.routing.push({pathname: '/login'});
+      } else {
+        runInAction('登录提示', () => {
+          const closeAction = allStores.modalStore.closeAction;
+          allStores.modalStore.openCompModal({
+            // isSingleBtn: true,
+            title: '登录超时',
+            contentText: '登录超时，请重新登录',
+            confirmAction: () => {
+              localStorage.setItem('pathname', location.pathname + location.search);
+              location.href = '/login';
+            },
+            cancelAction: closeAction
+          });
         });
-      });
+      }
     } else {
       location.href = '/login';
     }
