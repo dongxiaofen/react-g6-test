@@ -65,7 +65,7 @@ class SafeCont extends Component {
             <div className={styles['key-handle']} onClick={this.handleKeyShow.bind(this, idx)}>
               {/* <img src={openPic} /> */}
               {!!dataOpen[idx] ? <i className="fa fa-eye" aria-hidden="true"></i> : <i className="fa fa-eye-slash" aria-hidden="true"></i>}
-              {!!dataOpen[idx] ? '隐藏key' : '显示key'}
+              {!!dataOpen[idx] ? `隐藏${title}` : `显示${title}`}
             </div>
             {key === 'sharedSecret' ? <div className={styles['key-handle']} onClick={this.resetApikey.bind(this)}>重置密钥</div> : null}
           </div>
