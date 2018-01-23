@@ -92,7 +92,7 @@ class LoginStore {
             } else if (errorData.errorCode === 401001) {
               errText = '该用户不存在';
             } else if (errorData.errorCode === 403204) {
-              errText = '当前帐户已过期';
+              errText = '您的帐户已过期，请拨打下方客服电话';
             }
             pathval.setPathValue(this, 'isHasEorr', true);
             pathval.setPathValue(this, 'errText', errText);
