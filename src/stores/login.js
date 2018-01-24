@@ -67,15 +67,15 @@ class LoginStore {
     pathval.setPathValue(this, 'loading', true);
     loginApi.postLogin(params)
         .then(action((response)=> {
-          const respData = response.data;
+          // const respData = response.data;
           pathval.setPathValue(this, 'loading', false);
-          if (respData.email) {
-            let pathname = '/interface';
-            if (localStorage.pathname) {
-              pathname = localStorage.pathname;
-            }
-            browserHistory.push(pathname);
+          // if (respData.email) {
+          // }
+          let pathname = '/interface';
+          if (localStorage.pathname) {
+            pathname = localStorage.pathname;
           }
+          browserHistory.push(pathname);
           //  返回登录数据
           pathval.setPathValue(this, 'loginResult', response.data);
           //  修改client的值
