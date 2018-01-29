@@ -1,0 +1,27 @@
+@import '~sc-colors/index.less';
+
+.main-cont {
+  margin-top: 20px;
+  border: 1px solid @black11;
+  background-color: @white1;
+  :global .ant-tabs-bar {
+    background-color: #fcfcfc;
+  }
+  :global .ant-tabs-ink-bar {
+    opacity: 0;
+  }
+  :global .ant-tabs-tab {
+    padding-left: 30px;
+    padding-right: 30px;
+    margin-right: 0;
+    border-top: 2px solid @white1;
+    border-right: 1px solid @black11;
+  }
+  :global .ant-tabs-tab-active {
+    border-top: 2px solid #49a9ee;
+    border-bottom: 2px solid @white1;
+  }
+  .tab-cont {
+    padding: 0 20px 20px;
+  }
+}

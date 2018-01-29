@@ -1,0 +1,45 @@
+@import '~sc-colors/index.less';
+.info {
+  margin-top: 20px;
+  padding: 20px;
+  background-color: @white1;
+  .infoPic {
+    float: left;
+    margin-right: 20px;
+    width: 130px;
+    height: 130px;
+    border: 1px solid @black11;
+    text-align: center;
+    // padding: 5px;
+    padding-top: 30px;
+    img {
+      height: 70px;
+    }
+  }
+  .infoDetl {
+    float: left;
+
+    .title {
+      // font-weight: bold;
+      font-size: 16px;
+      line-height: 30px;
+      color: @black5;
+    }
+    .description, .type {
+      color: @black7;
+      font-size: 14px;
+      line-height: 16px;
+    }
+    .type {
+      margin: 15px 0;
+      span {
+        margin-right: 50px;
+      }
+    }
+    .info-btn {
+      .interface-btn {
+        width: 120px;
+      }
+    }
+  }
+}

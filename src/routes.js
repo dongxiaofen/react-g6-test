@@ -5,14 +5,14 @@ import {Route, IndexRoute} from 'react-router';
 import {
     App,
     Login,
-    Interface,
+    // Interface,
     Detail,
     Introduce,
     Test,
-    Consume,
+    // Consume,
     Consumption,
     Recharge,
-    Account,
+    // Account,
     Modify,
     Myapi,
     Safe,
@@ -23,23 +23,23 @@ export default () => {
     <Route path="/" component={ App }>
       <IndexRoute component={ Introduce } />
       <Route path="login" component={ Login } />
-      <Route path="interface" component={ Interface } >
-        <IndexRoute component={ Introduce } />
-        <Route path="introduce" component={ Introduce } />
-        <Route path="detail" component={ Detail } />
-        <Route path="test" component={ Test } />
-      </Route>
-      <Route path="consume" component={ Consume } >
-        <IndexRoute component={ Consumption } />
-        <Route path="consumption" component={ Consumption } />
-        <Route path="recharge" component={ Recharge } />
-      </Route>
-      <Route path="account" component={ Account } >
-        <IndexRoute component={ Modify } />
-        <Route path="modify" component={ Modify } />
-        <Route path="myapi" component={ Myapi } />
-        <Route path="safe" component={ Safe } />
-      </Route>
+      {/* <Route path="interface" component={ Interface } >
+        <IndexRoute component={ Introduce } /> */}
+        <Route path="interface/introduce" component={ Introduce } />
+        <Route path="interface/detail" component={ Detail } />
+        <Route path="interface/test" component={ Test } />
+      {/* </Route> */}
+      {/* <Route path="consume" component={ Consume } >
+        <IndexRoute component={ Consumption } /> */}
+        <Route path="consume/consumption" component={ Consumption } />
+        <Route path="consume/recharge" component={ Recharge } />
+      {/* </Route> */}
+      {/* <Route path="account" component={ Account } >
+        <IndexRoute component={ Modify } /> */}
+        <Route path="account/modify" component={ Modify } />
+        <Route path="account/myapi" component={ Myapi } />
+        <Route path="account/safe" component={ Safe } />
+      {/* </Route> */}
     </Route>
   );
 };

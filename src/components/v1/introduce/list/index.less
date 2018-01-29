@@ -1,0 +1,114 @@
+@import '~sc-colors/index.less';
+.interface {
+  font-size: 14px;
+  .interface-li {
+    float: left;
+    width: 224px;
+    margin-bottom: 20px;
+    margin-right: 20px;
+    background-color: @white1;
+    position: relative;
+    transition: box-shadow .5s;
+    &:hover {
+      &:extend(.box-shadow-block);
+    }
+    &.noMg {
+      margin-right: 0;
+    }
+    .imgs {
+      height: 130px;
+      padding-top: 40px;
+      text-align: center;
+      img {
+        height: 70px;
+      }
+      // border-bottom: 1px solid #ddd;
+    }
+    .appled {
+      position: absolute;
+      left: 0;
+      top: 20px;
+      // width: 100%;
+      height: 22px;
+      img {
+        height: 100%;
+      }
+      span {
+        color: @white1;
+        width: 100%;
+        left: 10px;
+        line-height: 22px;
+        position: absolute;
+      }
+    }
+    .name {
+      text-align: center;
+      width: 100%;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      padding: 0 20px;
+      line-height: 26px;
+      a {
+        color: @black4;
+        cursor: pointer;
+        &:hover {
+          text-decoration: underline;
+          color: @blue2;
+        }
+      }
+    }
+    .top-cont {
+      cursor: pointer;
+      &:hover {
+        .name a {
+          color: @blue2;
+        }
+      }
+    }
+    .discript {
+      width: 100%;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      padding: 0 5px;
+      color: @black7;
+      text-align: center;
+      line-height: 26px;
+      margin-bottom: 20px;
+    }
+    .feeType {
+      border-top: 1px solid @black11;
+      border-bottom: 1px solid @black11;
+      padding: 10px 0;
+      color: @black7;
+    }
+    .type-tm {
+      display: inline-block;
+      position: relative;
+      top: 3px;
+      width: 50%;
+      text-align: center;
+      line-height: 16px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      padding: 0 5px;
+      &:first-child {
+        // width: 40%;
+        border-right: 1px solid @black11;
+      }
+      // &:last-child {
+      //   width: 60%;
+      // }
+    }
+    .action {
+      line-height: 36px;
+      text-align: center;
+      color: @black5;
+      span {
+        cursor: pointer;
+      }
+    }
+  }
+}

@@ -7,9 +7,9 @@ function Header({headerStore, clientStore, routing}) {
   const handleLogout = () => {
     clientStore.loginOut();
   };
-  const handleNav = (nav) => {
+  const handleNav = (nav, idx) => {
     headerStore.navChange(nav);
-    routing.push({pathname: `/${nav}`});
+    routing.push({pathname: `/${nav}/${headerStore.navList[idx].children[0].value}`});
   };
   const gotoHome = () => {
     // routing.push({pathname: `/`});
@@ -28,7 +28,7 @@ function Header({headerStore, clientStore, routing}) {
           <span className={styles['left-icon']}></span>
           <span className={styles['bottom-icon']}></span>
         </li> :
-        <li key={item.key + idx} className={styles['nav-li']} onClick={handleNav.bind(this, item.key)}>
+        <li key={item.key + idx} className={styles['nav-li']} onClick={handleNav.bind(this, item.key, idx)}>
           <span>{item.label}</span>
         </li>);
     });
