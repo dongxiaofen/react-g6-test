@@ -2,7 +2,7 @@ import { observable, action} from 'mobx';
 import pathval from 'pathval';
 import md5 from 'crypto-js/md5';
 import encHex from 'crypto-js/enc-hex';
-import { browserHistory } from 'react-router';
+// import { browserHistory } from 'react-router';
 import { loginApi } from 'api';
 import clientStore from './client';
 
@@ -67,19 +67,18 @@ class LoginStore {
     pathval.setPathValue(this, 'loading', true);
     loginApi.postLogin(params)
         .then(action((response)=> {
-          // const respData = response.data;
           pathval.setPathValue(this, 'loading', false);
-          // if (respData.email) {
-          // }
-          let pathname = '/interface';
-          if (localStorage.pathname) {
-            pathname = localStorage.pathname;
-          }
-          browserHistory.push(pathname);
           //  返回登录数据
           pathval.setPathValue(this, 'loginResult', response.data);
+
+          // let pathname = '/interface';
+          // if (localStorage.pathname) {
+          //   pathname = localStorage.pathname;
+          // }
+          // browserHistory.push(pathname);
           //  修改client的值
-          pathval.setPathValue(clientStore, 'userInfo', response.data);
+          clientStore.handleLogin(response.data);
+          // pathval.setPathValue(clientStore, 'userInfo', response.data);
         }))
         .catch(action((error) => {
           const errorData = error.response.data;

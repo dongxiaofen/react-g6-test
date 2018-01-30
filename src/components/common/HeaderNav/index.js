@@ -41,6 +41,17 @@ function Header({headerStore, clientStore, routing}) {
       return (<li key ={idx} className={`${styles['inner-item']} ${active ? styles.active : ''}`} onClick={handleInnerNav.bind(this, value, idx)}>{name}</li>);
     });
   };
+  const getVersion = () => {
+    let output = null;
+    if (clientStore.version === 'v1') {
+      output = (<span className={styles.versionBox}>新版本</span>);
+    } else {
+      if (clientStore.isOldClient) {
+        output = (<span className={styles.versionBox}>老版本</span>);
+      }
+    }
+    return output;
+  };
   return (
     <div className={styles.header}>
       <div className={styles.userInfo}>
@@ -48,7 +59,10 @@ function Header({headerStore, clientStore, routing}) {
           {
             clientStore.userInfo.email ?
             <div>
-              <spab className={styles.name}>您好，{clientStore.userInfo.email}</spab>
+              <span className={styles.name}>您好，{clientStore.userInfo.email}</span>
+              {
+                getVersion()
+              }
               <a className={styles.logout} onClick={handleLogout}>退出</a>
             </div> :
             <span>登录</span>
