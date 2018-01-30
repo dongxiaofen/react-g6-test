@@ -48,10 +48,20 @@ class HeaderStore {
     this.navList[pIdx].children = newNav;
   }
   @action.bound routeChangeNav(pathname) {
-    const path = pathname === '/' ? '/interface' : pathname;
+    const path = pathname === '/' ? '/v2/introduce' : pathname;
     const pathArr = path.split('/');
-    this.navChange(pathArr[1]);
-    this.innerNavChange(pathArr[2]);
+    // console.log(pathArr);
+    const innerNavData = pathArr[2];
+    let pNavData;
+    this.navList.map((item) => {
+      item.children.map((child) => {
+        if (child.value === innerNavData) {
+          pNavData = item.key;
+        }
+      });
+    });
+    this.navChange(pNavData);
+    this.innerNavChange(innerNavData);
   }
 }
 export default new HeaderStore();

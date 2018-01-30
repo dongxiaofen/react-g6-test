@@ -1,14 +1,13 @@
 export clientStore from './client';
 export loginStore from './login';
-export uiStore from './ui';
 export modalStore from './modal';
-// export detailModalStore from './detailModal';
 export messageStore from './message';
-// export entireLoadingStore from './entireLoading';
 export headerStore from './header';
-export accountStore from './account';
-export interfaceStore from './interface';
-export interfaceDetailStore from './interfaceDetail';
-export interfaceTestStore from './interfaceTest';
-export consumeStore from './consume';
-
+// export detailModalStore from './detailModal';
+// export entireLoadingStore from './entireLoading';
+export uiStore from './v1/ui';
+export accountStore from './v1/account';
+export interfaceStore from './v1/interface';
+export interfaceDetailStore from './v1/interfaceDetail';
+export interfaceTestStore from './v1/interfaceTest';
+export consumeStore from './v1/consume';

@@ -2,7 +2,7 @@ import React, { Component, PropTypes } from 'react';
 import { observer, inject } from 'mobx-react';
 import { reaction } from 'mobx';
 import { batchNav } from 'components/hoc';
-import TestBody from 'components/interface/test';
+import TestBody from 'components/v1/test';
 
 let hrefReaction;
 @batchNav()

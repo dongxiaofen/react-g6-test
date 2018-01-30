@@ -9,7 +9,7 @@ function Header({headerStore, clientStore, routing}) {
   };
   const handleNav = (nav, idx) => {
     headerStore.navChange(nav);
-    routing.push({pathname: `/${nav}/${headerStore.navList[idx].children[0].value}`});
+    routing.push({pathname: `/${clientStore.version}/${headerStore.navList[idx].children[0].value}`});
   };
   const gotoHome = () => {
     // routing.push({pathname: `/`});
@@ -18,7 +18,7 @@ function Header({headerStore, clientStore, routing}) {
   const handleInnerNav = (innerNav, idx) => {
     const ParentIdx = headerStore.navList.findIndex(item => (item.key === headerStore.currentNav));
     headerStore.innerNavChange(innerNav, idx, ParentIdx);
-    routing.push({pathname: `/${headerStore.currentNav}/${innerNav}`});
+    routing.push({pathname: `/${clientStore.version}/${innerNav}`});
   };
   const createNav = () => {
     return headerStore.navList.map((item, idx) => {
@@ -41,13 +41,18 @@ function Header({headerStore, clientStore, routing}) {
       return (<li key ={idx} className={`${styles['inner-item']} ${active ? styles.active : ''}`} onClick={handleInnerNav.bind(this, value, idx)}>{name}</li>);
     });
   };
+  const gotoVersion = (version) => {
+    const pathname = `/${version}/introduce`;
+    routing.push({pathname: pathname});
+    clientStore.updateValue('version', version);
+  };
   const getVersion = () => {
     let output = null;
     if (clientStore.version === 'v1') {
-      output = (<span className={styles.versionBox}>新版本</span>);
+      output = (<span className={styles.versionBox} onClick={gotoVersion.bind(null, 'v2')}>新版本</span>);
     } else {
       if (clientStore.isOldClient) {
-        output = (<span className={styles.versionBox}>老版本</span>);
+        output = (<span className={styles.versionBox} onClick={gotoVersion.bind(null, 'v1')}>老版本</span>);
       }
     }
     return output;
