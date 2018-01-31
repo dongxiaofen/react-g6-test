@@ -11,7 +11,7 @@ function InterfaceList({interfaceStore, modalStore, routing}) {
   const gotoDetail = (id) => {
     // console.log(id);
     routing.push({
-      pathname: '/interface/detail',
+      pathname: '/v1/detail',
       query: {id: id}
     });
   };
@@ -26,7 +26,7 @@ function InterfaceList({interfaceStore, modalStore, routing}) {
   };
   const gotoTest = (id) => {
     routing.push({
-      pathname: '/interface/test',
+      pathname: '/v1/test',
       query: {id: id}
     });
   };

@@ -11,3 +11,6 @@ export Recharge from './v1/recharge';
 export Modify from './v1/modify';
 export Myapi from './v1/myapi';
 export Safe from './v1/safe';
+
+export IntroduceV2 from './v2/introduce';
+export ApiListDetail from './v2/apiListDetail';

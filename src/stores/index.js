@@ -3,11 +3,17 @@ export loginStore from './login';
 export modalStore from './modal';
 export messageStore from './message';
 export headerStore from './header';
+export uiStore from './ui';
 // export detailModalStore from './detailModal';
 // export entireLoadingStore from './entireLoading';
-export uiStore from './v1/ui';
+
+// v1
 export accountStore from './v1/account';
 export interfaceStore from './v1/interface';
 export interfaceDetailStore from './v1/interfaceDetail';
 export interfaceTestStore from './v1/interfaceTest';
 export consumeStore from './v1/consume';
+
+// v2
+// export uiStore from './v2/ui';
+export introduceStore from './v2/introduce';

@@ -1,7 +1,7 @@
 import { observable, action, reaction } from 'mobx';
 import pathval from 'pathval';
 import { consumeApi, interfaceApi } from 'api';
-import uiStore from './ui';
+import uiStore from '../ui';
 import moment from 'moment';
 class ConsumeStore {
   constructor() {

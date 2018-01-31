@@ -2,7 +2,7 @@ import { observable, action } from 'mobx';
 import pathval from 'pathval';
 import axios from 'axios';
 import { interfaceApi } from 'api';
-import uiStore from './ui';
+import uiStore from '../ui';
 // import messageStore from './message';
 
 class InterfaceStore {

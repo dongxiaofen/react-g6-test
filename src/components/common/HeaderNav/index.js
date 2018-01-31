@@ -13,7 +13,7 @@ function Header({headerStore, clientStore, routing}) {
   };
   const gotoHome = () => {
     // routing.push({pathname: `/`});
-    location.href = '/';
+    location.href = `/${clientStore.version}/introduce`;
   };
   const handleInnerNav = (innerNav, idx) => {
     const ParentIdx = headerStore.navList.findIndex(item => (item.key === headerStore.currentNav));

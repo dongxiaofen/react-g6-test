@@ -6,7 +6,7 @@ import { accountApi, interfaceApi } from 'api';
 // import { accountApi } from 'api';
 import messageStore from '../message';
 import modalStore from '../modal';
-import uiStore from './ui';
+import uiStore from '../ui';
 
 class AccountStore {
   @observable modify = {

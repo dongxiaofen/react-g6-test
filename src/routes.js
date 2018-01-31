@@ -16,12 +16,14 @@ import {
     Modify,
     Myapi,
     Safe,
+    IntroduceV2,
+    ApiListDetail,
   } from 'containers';
 
 export default () => {
   return (
     <Route path="/" component={ App }>
-      <IndexRoute component={ Introduce } />
+      <IndexRoute component={ IntroduceV2 } />
       <Route path="login" component={ Login } />
       {/* <Route path="v1">
         <Route path="interface/introduce" component={ Introduce } />
@@ -34,7 +36,8 @@ export default () => {
       <Route path="v1/modify" component={ Modify } />
       <Route path="v1/myapi" component={ Myapi } />
       <Route path="v1/safe" component={ Safe } />
-      <Route path="v2/introduce" component={ Introduce } />
+      <Route path="v2/introduce" component={ IntroduceV2 } />
+      <Route path="v2/detail" component={ ApiListDetail } />
     </Route>
   );
 };

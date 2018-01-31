@@ -80,7 +80,7 @@ function TestInfo({interfaceTestStore, pageType, modalStore}) {
 
         <div className={styles.list}>
           <InfoItem title="API介绍：">
-            <Link className={styles.detail} to={`/interface/detail?id=${interfaceTestStore.id}`}>点击查看介绍</Link>
+            <Link className={styles.detail} to={`/v1/detail?id=${interfaceTestStore.id}`}>点击查看介绍</Link>
           </InfoItem>
         </div>
       </div>
