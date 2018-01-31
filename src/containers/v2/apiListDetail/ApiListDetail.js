@@ -1,28 +1,29 @@
 import React, { Component, PropTypes } from 'react';
 import { observer, inject } from 'mobx-react';
-// import Assort from 'components/v2/introduce/assort';
+import ListDetail from 'components/v2/apiListDetail';
 import { batchNav } from 'components/hoc';
 // import styles from './Introduce.less';
 @batchNav()
-@inject('introduceStore')
+@inject('apiListDetailStore', 'routing')
 @observer
 export default class ApiListDetail extends Component {
   static propTypes = {
-    introduceStore: PropTypes.object,
+    apiListDetailStore: PropTypes.object,
+    routing: PropTypes.object,
   };
   componentDidMount() {
-    // this.props.introduceStore.getAssortment();
-    // this.props.introduceStore.getAssortmentC2();
+    const id = this.props.routing.location.query.id;
+    const name = this.props.routing.location.query.name;
+    this.props.apiListDetailStore.updateValue('classificationId', id);
+    this.props.apiListDetailStore.updateValue('classificationName', name);
+    this.props.apiListDetailStore.getApiList();
   }
   componentWillUnmount() {
-    // this.props.introduceStore.resetData();
+    this.props.apiListDetailStore.resetData();
   }
   render() {
-    // console.log(this.props.introduceStore.filterInfo.name, 'name');
     return (
-      <div>
-        ApiListDetail
-      </div>
+      <ListDetail />
     );
   }
 }

@@ -3,8 +3,8 @@ import AsyncComponent from 'components/common/AsyncComponent';
 
 const loader = (cb) => {
   require.ensure([], (require) => {
-    cb(require('./ListDetail'));
-  }, 'ListDetail');
+    cb(require('./ApiListDetail'));
+  }, 'ApiListDetail');
 };
 
 export default (props) =>

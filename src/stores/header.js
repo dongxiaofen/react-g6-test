@@ -11,6 +11,7 @@ class HeaderStore {
       children: [
         {name: '接口介绍', value: 'introduce', active: true},
         {name: '接口测试', value: 'test', active: false},
+        // {name: '接口详情', value: 'detail', active: false, hidden: true},
       ]
     }, {
       key: 'consume',
@@ -51,7 +52,7 @@ class HeaderStore {
     const path = pathname === '/' ? '/v2/introduce' : pathname;
     const pathArr = path.split('/');
     // console.log(pathArr);
-    const innerNavData = pathArr[2];
+    const innerNavData = pathArr[2] === 'detail' ? 'introduce' : pathArr[2]; // detail,introduce导航一样
     let pNavData;
     this.navList.map((item) => {
       item.children.map((child) => {

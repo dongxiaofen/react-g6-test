@@ -17,3 +17,4 @@ export consumeStore from './v1/consume';
 // v2
 // export uiStore from './v2/ui';
 export introduceStore from './v2/introduce';
+export apiListDetailStore from './v2/apiListDetail';

@@ -36,9 +36,12 @@ function Header({headerStore, clientStore, routing}) {
   const createInnerNav = () => {
     const parentNav = headerStore.currentNav;
     const index = headerStore.navList.findIndex(item => item.key === parentNav);
+    // console.log(parentNav, 'parentNav', index, 'index');
     const innerNav = headerStore.navList[index].children;
     return innerNav.map(({name, value, active}, idx) => {
       return (<li key ={idx} className={`${styles['inner-item']} ${active ? styles.active : ''}`} onClick={handleInnerNav.bind(this, value, idx)}>{name}</li>);
+      // if (!hidden) {
+      // }
     });
   };
   const gotoVersion = (version) => {

@@ -7,7 +7,10 @@ import styles from './index.less';
 const ListItem = ({data, routing}) => {
   const gotoDocPage = () => {
     // console.log('gotoDocPage');
-    routing.push({pathname: 'v2/detail', query: {id: data.id}});
+    routing.push({
+      pathname: 'v2/detail',
+      query: {id: data.id, name: data.name}
+    });
   };
   return (
     <div className={styles['list-item']}>
