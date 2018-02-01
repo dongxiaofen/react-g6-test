@@ -5,6 +5,7 @@ import styles from './index.less';
 const ApiLi = ({apiListDetailStore}) => {
   const checkeOthers = (idx) => {
     apiListDetailStore.updateValue('activeApiDetail', apiListDetailStore.apiList[idx]);
+    apiListDetailStore.getApiDoc();
   };
   return (
     <ul className={styles.apilist}>

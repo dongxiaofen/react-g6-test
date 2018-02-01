@@ -34,7 +34,8 @@ class IntroduceStore {
       }));
   }
   @action.bound getAssortmentC2() {
-    const params = Object.assign({}, this.filterInfo, uiStore.uiState.introducePager);
+    const {index, size} = uiStore.uiState.introducePager;
+    const params = Object.assign({index, size}, this.filterInfo);
     this.list = {};
     this.isListLoading = true;
     if (this.listCancel) {

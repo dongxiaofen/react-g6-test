@@ -3,8 +3,14 @@ import { observer, inject } from 'mobx-react';
 import Button from 'components/lib/button';
 import { Popover, Icon } from 'antd';
 import styles from './index.less';
-const Info = ({apiListDetailStore}) => {
+const Info = ({apiListDetailStore, routing}) => {
   const activeApiDetail = apiListDetailStore.activeApiDetail;
+  const gotoTest = () => {
+    routing.push({
+      pathname: '/test',
+      query: {id: activeApiDetail.id}
+    });
+  };
   const getChargeType = (type) => {
     const config = {
       BY_CHARGE: '按次收费',
@@ -21,14 +27,12 @@ const Info = ({apiListDetailStore}) => {
           <label className={styles.label}>状态</label>
           <div className={styles['item-cont']}>
             {activeApiDetail.applied > 0 ? '已申请' :
-              <span>
+              <Popover content={popCont}>
                 未申请
                 <span className={styles.popBox}>
-                  <Popover content={popCont}>
-                    <Icon type="question-circle-o" />
-                  </Popover>
+                  <Icon type="question-circle-o" />
                 </span>
-              </span>}
+              </Popover>}
           </div>
         </div>
         <div className={styles['info-item']} style={{width: '180px'}}>
@@ -45,12 +49,13 @@ const Info = ({apiListDetailStore}) => {
         </div>
       </div>
       <div className={styles['btn-wrap']}>
-        <Button btnType="primary" className={styles.btn} >测试接口</Button>
+        <Button btnType="primary" className={styles.btn} disabled={activeApiDetail.applied === 0} onClick={gotoTest}>测试接口</Button>
       </div>
     </div>
   );
 };
 Info.propTypes = {
+  routing: PropTypes.object,
   apiListDetailStore: PropTypes.object,
 };
-export default inject('apiListDetailStore')(observer(Info));
+export default inject('apiListDetailStore', 'routing')(observer(Info));

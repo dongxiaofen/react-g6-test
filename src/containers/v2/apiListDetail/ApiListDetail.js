@@ -17,6 +17,7 @@ export default class ApiListDetail extends Component {
     this.props.apiListDetailStore.updateValue('classificationId', id);
     this.props.apiListDetailStore.updateValue('classificationName', name);
     this.props.apiListDetailStore.getApiList();
+    this.props.apiListDetailStore.getErrorCode();
   }
   componentWillUnmount() {
     this.props.apiListDetailStore.resetData();

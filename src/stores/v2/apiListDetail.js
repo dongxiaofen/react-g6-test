@@ -10,6 +10,7 @@ class ApiListDetailStore {
   @observable activeApiDetail = {}; //当前展示的api
   @observable apiDoc = {};
   @observable isDocLoading = true;
+  @observable errorCode = {};
 
   @action.bound updateValue(changeItem, value) {
     pathval.setPathValue(this, changeItem, value);
@@ -37,7 +38,7 @@ class ApiListDetailStore {
             'classification': '法务',
             'description': '企业工商数据查询,在该接口中，通过企业关键字精确获取详细信息这个方法',
             'id': '56879',
-            'docName': 'getCourtAnnouncementUsingGET',
+            'docName': 'getDxCompanySharesUsingGET',
             'method': 'get',
             'name': '企业判决文书数据查询2',
             'summary': '企业工商数据查询, Basic/Master/Full ，具体差异请查看SDK文档。'
@@ -46,13 +47,15 @@ class ApiListDetailStore {
         this.apiList = list;
         this.activeApiDetail = list[0];
         this.isApiListLoading = false;
+        this.getApiDoc();
       }))
       .catch(action('err', () => {
         this.isApiListLoading = false;
       }));
   }
-  @action.bound getApiDoc(docName) {
+  @action.bound getApiDoc() {
     this.isDocLoading = true;
+    const docName = this.activeApiDetail.docName;
     apiListDetailApi.getApiDoc(docName)
       .then(action('doc', ({data}) => {
         this.apiDoc = {content: data};
@@ -61,6 +64,15 @@ class ApiListDetailStore {
       .catch(action('doc-err', () => {
         this.isDocLoading = false;
         this.apiDoc = {content: null, error: {message: '暂未获取到接口文档'}};
+      }));
+  }
+  @action.bound getErrorCode() {
+    apiListDetailApi.getErrorCode()
+      .then(action('code', ({data}) => {
+        this.errorCode = {content: data};
+      }))
+      .catch(action('code-err', () => {
+        this.errorCode = {error: {message: '暂无错误码列表'}};
       }));
   }
   @action.bound resetData() {
