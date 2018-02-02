@@ -3,8 +3,9 @@ import pathval from 'pathval';
 // import axios from 'axios';
 import { apiListDetailApi } from 'api';
 class ApiListDetailStore {
-  @observable classificationId = ''; // 分类id
-  @observable classificationName = ''; // 分类name
+  @observable c1Name = ''; // 一级分类name
+  @observable classificationId = ''; // 二级分类id
+  @observable classificationName = ''; // 二级分类name
   @observable apiList = [];
   @observable isApiListLoading = true;
   @observable activeApiDetail = {}; //当前展示的api
@@ -19,38 +20,45 @@ class ApiListDetailStore {
     this.isApiListLoading = true;
     apiListDetailApi.getApiList(this.classificationId)
       .then(action('list', ({data}) => {
-        console.log(data);
+        // console.log(data);
         // this.apiList = data;
-        const list = [
-          {
-            'applied': 0,
-            'chargesType': 'BY_CHARGE',
-            'classification': '法务',
-            'description': '企业工商数据查询,在该接口中，通过企业关键字精确获取详细信息这个方法，我们区分了三个等级 Basic/Master/Full ，具体差异请查看SDK文档',
-            'id': '132456',
-            'docName': 'getCourtAnnouncementUsingGET',
-            'method': 'get',
-            'name': '企业判决文书数据查询1',
-            'summary': '企业工商数据查询,在该接口中，通过企业关键字精确获取详细信息这个方法，我们区分了三个等级 Basic/Master/Full ，具体差异请查看SDK文档。'
-          }, {
-            'applied': 2,
-            'chargesType': 'MONTH_CHARGE',
-            'classification': '法务',
-            'description': '企业工商数据查询,在该接口中，通过企业关键字精确获取详细信息这个方法',
-            'id': '56879',
-            'docName': 'getDxCompanySharesUsingGET',
-            'method': 'get',
-            'name': '企业判决文书数据查询2',
-            'summary': '企业工商数据查询, Basic/Master/Full ，具体差异请查看SDK文档。'
-          }
-        ];
-        this.apiList = list;
-        this.activeApiDetail = list[0];
+        // const data = [
+        //   {
+        //     'applied': 0,
+        //     'chargesType': 'BY_CHARGE',
+        //     'classification': '法务',
+        //     'description': '企业工商数据查询,在该接口中，通过企业关键字精确获取详细信息这个方法，我们区分了三个等级 Basic/Master/Full ，具体差异请查看SDK文档',
+        //     'id': '132456',
+        //     'docName': 'getCourtAnnouncementUsingGET',
+        //     'method': 'get',
+        //     'name': '企业判决文书数据查询1',
+        //     'summary': '企业工商数据查询,在该接口中，通过企业关键字精确获取详细信息这个方法，我们区分了三个等级 Basic/Master/Full ，具体差异请查看SDK文档。'
+        //   }, {
+        //     'applied': 2,
+        //     'chargesType': 'MONTH_CHARGE',
+        //     'classification': '法务',
+        //     'description': '企业工商数据查询,在该接口中，通过企业关键字精确获取详细信息这个方法',
+        //     'id': '56879',
+        //     'docName': 'getDxCompanySharesUsingGET',
+        //     'method': 'get',
+        //     'name': '企业判决文书数据查询2',
+        //     'summary': '企业工商数据查询, Basic/Master/Full ，具体差异请查看SDK文档。'
+        //   }
+        // ];
         this.isApiListLoading = false;
-        this.getApiDoc();
+        if (data.length > 0) {
+          this.apiList = data;
+          this.activeApiDetail = data[0];
+          this.getApiDoc();
+        } else {
+          this.isDocLoading = false;
+          this.apiDoc = {content: null, error: {message: '暂无接口文档, 请等待接口完善'}};
+        }
       }))
       .catch(action('err', () => {
         this.isApiListLoading = false;
+        this.isDocLoading = false;
+        this.apiDoc = {content: null, error: {message: '暂无接口文档, 请等待接口完善'}};
       }));
   }
   @action.bound getApiDoc() {
@@ -77,8 +85,13 @@ class ApiListDetailStore {
   }
   @action.bound resetData() {
     this.classificationId = '';
+    this.classificationName = '';
     this.apiList = [];
     this.isApiListLoading = true;
+    this.activeApiDetail = {};
+    this.apiDoc = {};
+    this.isDocLoading = true;
+    this.errorCode = {};
   }
 }
 export default new ApiListDetailStore();

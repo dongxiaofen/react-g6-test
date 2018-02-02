@@ -12,7 +12,7 @@ class IntroduceStore {
   @observable isListLoading = true;
   @observable listCancel = null;
   @observable filterInfo = {
-    id: '',
+    classificationId: '',
     keyword: '',
     applied: 'ALL',
   };

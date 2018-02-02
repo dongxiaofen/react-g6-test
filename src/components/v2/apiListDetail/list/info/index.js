@@ -7,8 +7,12 @@ const Info = ({apiListDetailStore, routing}) => {
   const activeApiDetail = apiListDetailStore.activeApiDetail;
   const gotoTest = () => {
     routing.push({
-      pathname: '/test',
-      query: {id: activeApiDetail.id}
+      pathname: '/v2/test',
+      query: {
+        id: activeApiDetail.id,
+        c2Id: apiListDetailStore.classificationId,
+        c1Name: apiListDetailStore.c1Name
+      }
     });
   };
   const getChargeType = (type) => {

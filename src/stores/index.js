@@ -18,3 +18,4 @@ export consumeStore from './v1/consume';
 // export uiStore from './v2/ui';
 export introduceStore from './v2/introduce';
 export apiListDetailStore from './v2/apiListDetail';
+export apiTestStore from './v2/apiTest';

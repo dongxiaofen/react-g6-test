@@ -6,7 +6,7 @@ import { loadingComp } from 'components/hoc';
 
 const Assort = ({ introduceStore, uiStore }) => {
   const handleFilter = (id) => {
-    introduceStore.updateValue('filterInfo.id', id);
+    introduceStore.updateValue('filterInfo.classificationId', id);
     if (uiStore.uiState.introducePager.index === 1) {
       introduceStore.getAssortmentC2();
     } else {
@@ -18,14 +18,14 @@ const Assort = ({ introduceStore, uiStore }) => {
     const output = [];
     assortment.map((item, idx) => {
       output.push(
-        <li key={idx} className={introduceStore.filterInfo.id === item.id ? styles.active : ''} onClick={handleFilter.bind(null, item.id)}><Icon type="appstore-o" /> {item.name}</li>
+        <li key={idx} className={introduceStore.filterInfo.classificationId === item.id ? styles.active : ''} onClick={handleFilter.bind(null, item.id)}><Icon type="appstore-o" /> {item.name}</li>
       );
     });
     return output;
   };
   return (
     <ul className={styles.filters}>
-      <li key="all" className={introduceStore.filterInfo.id === '' ? styles.active : ''} onClick={handleFilter.bind(null, '')}><Icon type="appstore-o" /> 所有服务</li>
+      <li key="all" className={introduceStore.filterInfo.classificationId === '' ? styles.active : ''} onClick={handleFilter.bind(null, '')}><Icon type="appstore-o" /> 所有服务</li>
       {
         createList()
       }

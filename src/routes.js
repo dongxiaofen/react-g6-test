@@ -18,6 +18,7 @@ import {
     Safe,
     IntroduceV2,
     ApiListDetail,
+    ApiTest,
   } from 'containers';
 
 export default () => {
@@ -37,7 +38,8 @@ export default () => {
       <Route path="v1/myapi" component={ Myapi } />
       <Route path="v1/safe" component={ Safe } />
       <Route path="v2/introduce" component={ IntroduceV2 } />
-      <Route path="v2/detail" component={ ApiListDetail } />
+        <Route path="v2/detail" component={ ApiListDetail } />
+      <Route path="v2/test" component={ ApiTest } />
     </Route>
   );
 };

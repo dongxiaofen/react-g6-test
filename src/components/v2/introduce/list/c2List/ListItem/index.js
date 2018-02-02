@@ -8,8 +8,8 @@ const ListItem = ({data, routing}) => {
   const gotoDocPage = () => {
     // console.log('gotoDocPage');
     routing.push({
-      pathname: 'v2/detail',
-      query: {id: data.id, name: data.name}
+      pathname: '/v2/detail',
+      query: {id: data.id, name: data.name, c1Name: data.classification}
     });
   };
   return (

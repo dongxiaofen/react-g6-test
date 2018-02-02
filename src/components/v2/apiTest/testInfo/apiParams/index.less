@@ -1,0 +1,35 @@
+.params {
+  padding: 15px 15px 0;
+  border: 1px solid #efefef;
+  background-color: #f5f5f5;
+}
+.title {
+  font-weight: bold;
+  font-size: 14px;
+}
+.param-input {
+  // max-width: 400px;
+  height: 30px;
+  line-height: 28px;
+  display: inline-block;
+}
+.params-item {
+  width: 100%;
+  margin-bottom: 15px;
+  overflow: hidden;
+  display: -webkit-flex;
+  display: flex;
+  justify-content: space-between;
+  overflow: hidden;
+  span {
+    float: left;
+  }
+  input {
+    float: right;
+  }
+  span, input {
+    flex-shrink: 1;
+    flex-grow: 0;
+    flex-basis: auto;
+  }
+}
