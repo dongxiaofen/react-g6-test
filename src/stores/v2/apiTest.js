@@ -4,7 +4,7 @@ import { apiTestApi } from 'api';
 import __trim from 'lodash/trim';
 import messageStore from '../message';
 
-class ApiTest {
+class ApiTestStore {
   @observable c1Name = ''; // 一级分类name - from location
   @observable c2Id = ''; // 二级分类id - from location
   @observable classificationId = ''; // 接口id - from location
@@ -161,4 +161,4 @@ class ApiTest {
     this.isResultLoading = false;
   }
 }
-export default new ApiTest();
+export default new ApiTestStore();

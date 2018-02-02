@@ -19,3 +19,5 @@ export consumeStore from './v1/consume';
 export introduceStore from './v2/introduce';
 export apiListDetailStore from './v2/apiListDetail';
 export apiTestStore from './v2/apiTest';
+export consumptionStore from './v2/consumption';
+export rechargeStore from './v2/recharge';

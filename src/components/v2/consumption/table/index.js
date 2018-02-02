@@ -1,0 +1,88 @@
+import React, {PropTypes} from 'react';
+import {observer, inject} from 'mobx-react';
+import { toJS } from 'mobx';
+import Table from 'components/common/Table';
+import Pager from 'components/common/Pager';
+import { loadingComp } from 'components/hoc';
+import moment from 'moment';
+// import DateSelect from 'components/common/DateSelect';
+// import styles from './index.less';
+
+function ConsumptionList({consumptionStore}) {
+  const dataSource = () => {
+    const data = consumptionStore.consumptionList.content;
+    if (data) {
+      return toJS(data);
+    }
+  };
+  const statusConfig = (value) => {
+    const config = {
+      'API_CONSUME_PRE': 'API_CONSUME_PRE',
+      'API_CONSUME_SUCCESS': '成功',
+      'API_CONSUME_FAIL': '失败',
+    };
+    return config[value];
+  };
+  const columns = [
+    {
+      title: '订单编号',
+      dataIndex: 'id',
+      key: 'id',
+      width: '220px'
+    }, {
+      title: '消费点数',
+      dataIndex: 'price',
+      key: 'price',
+      width: '75px'
+    }, {
+      title: '接口名称',
+      dataIndex: 'permissionName',
+      key: 'permissionName',
+      width: '145px'
+    }, {
+      title: '查询参数',
+      dataIndex: 'sdkApiRecordParams',
+      key: 'sdkApiRecordParams',
+      // width: '40%',
+    }, {
+      title: '订单日期',
+      dataIndex: 'createdTs',
+      key: 'createdTs',
+      render: (text) => (moment(text).format('YYYY-MM-DD HH:mm:ss')),
+      width: '155px',
+    }, {
+      title: '状态',
+      dataIndex: 'consumeType',
+      key: 'consumeType',
+      render: (text) => (statusConfig(text)),
+      width: '55px',
+    }, {
+      title: '备注',
+      dataIndex: 'reason',
+      key: 'reason',
+      width: '90px'
+    }
+  ];
+  return (
+    <div>
+      <Table dataSource={dataSource()} columns={columns}/>
+      <div style={{padding: '20px 0', textAlign: 'right'}}>
+        <Pager module="consumptionV2Pager" />
+      </div>
+    </div>
+  );
+}
+
+ConsumptionList.propTypes = {
+  consumptionStore: PropTypes.object,
+};
+
+export default loadingComp({
+  mapDataToProps: props => ({
+    loading: props.data.loading,
+    error: props.data.error,
+    imgCategory: 13,
+    category: 2,
+    errCategory: 2,
+  }),
+})(inject('consumptionStore')(observer(ConsumptionList)));

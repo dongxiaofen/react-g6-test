@@ -15,3 +15,5 @@ export Safe from './v1/safe';
 export IntroduceV2 from './v2/introduce';
 export ApiListDetail from './v2/apiListDetail';
 export ApiTest from './v2/apiTest';
+export ConsumptionV2 from './v2/consumption';
+export RechargeV2 from './v2/recharge';
