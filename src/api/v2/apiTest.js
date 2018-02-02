@@ -23,3 +23,27 @@ export const getApiKey = () => {
 export const getScToken = (params) => {
   return axios.post('/api/v2/sc/token', params);
 };
+
+export const interfaceTest = (url, method, params, headerConfig) => {
+  let handleAxios;
+  switch (method) {
+    case 'get':
+      handleAxios = axios({
+        method: method,
+        url: url,
+        params: params,
+        headers: headerConfig,
+        // cancelToken: cancelToken
+      });
+      break;
+    default:
+      handleAxios = axios({
+        method: method,
+        url: url,
+        data: params,
+        headers: headerConfig,
+        // cancelToken: cancelToken
+      });
+  }
+  return handleAxios;
+};

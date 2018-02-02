@@ -5,7 +5,7 @@ import __trim from 'lodash/trim';
 import messageStore from '../message';
 
 class ApiTest {
-  @observable c1Name=''; // 一级分类name - from location
+  @observable c1Name = ''; // 一级分类name - from location
   @observable c2Id = ''; // 二级分类id - from location
   @observable classificationId = ''; // 接口id - from location
 
@@ -101,21 +101,27 @@ class ApiTest {
   @action.bound getScToken = (params) => {
     apiTestApi.getScToken(params)
       .then(action(({data}) => {
-        console.log(data, 'data--');
         this.scToken = data.data['sc-api-token'];
       }))
       .catch();
   }
   @action.bound handleTestApi() {
-    console.log('test api');
+    if (this.isResultLoading) {
+      return false;
+    }
     const apiParams = this.getParams();
-    // console.log(apiParams, 'sun-----------------');
     if (apiParams.isSubmit) {
-      const allParams = {
-        'sdk-client-token': this.scToken,
-        ...apiParams.params
-      };
-      console.log(allParams, 'allParams');
+      const {method, url} = this.apiInfo;
+      this.isResultLoading = true;
+      apiTestApi.interfaceTest(url, method.toLowerCase(), apiParams.params, {'sc-api-token': this.scToken})
+        .then(action(({data}) => {
+          this.testResult = {data};
+          this.isResultLoading = false;
+        }))
+        .catch(action((err) => {
+          this.testResult = {data: err.response.data};
+          this.isResultLoading = false;
+        }));
     }
   }
   @action.bound getParams() {
@@ -136,7 +142,23 @@ class ApiTest {
     return {params: newParams, isSubmit: isSubmit};
   }
   @action.bound resetData() {
-    console.log('resetData');
+    this.c1Name = '';
+    this.c2Id = '';
+    this.classificationId = '';
+    this.assortmentC1 = [];
+    this.activeC1Id = '';
+    this.assortmentC2 = [];
+    this.activeC2Id = '';
+    this.apiList = [];
+    this.activeApiId = '';
+    this.apiInfo = {};
+    this.isInfoLoading = true;
+    this.apiParams = {};
+    this.apiKey = {};
+    this.isOpenApikey = false;
+    this.scToken = '';
+    this.testResult = {};
+    this.isResultLoading = false;
   }
 }
 export default new ApiTest();

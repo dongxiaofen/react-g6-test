@@ -11,15 +11,18 @@ function FilterCont({apiTestStore}) {
     apiTestStore.updateValue('c1Name', '');
     apiTestStore.updateValue('c2Id', '');
     apiTestStore.updateValue('classificationId', '');
+    apiTestStore.updateValue('testResult', {});
     apiTestStore.getAssortmentC2();
   };
   const handleC2 = (value) => {
     apiTestStore.updateValue('activeC2Id', value);
     apiTestStore.getApiList();
+    apiTestStore.updateValue('testResult', {});
   };
   const handleApiList = (value) => {
     apiTestStore.updateValue('activeApiId', value);
     apiTestStore.getApiInfo();
+    apiTestStore.updateValue('testResult', {});
   };
   return (
     <InfoItem title="接口选择：">

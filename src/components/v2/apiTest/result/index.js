@@ -3,18 +3,18 @@ import {observer, inject} from 'mobx-react';
 import { loadingComp } from 'components/hoc';
 import styles from './index.less';
 
-function Result({interfaceTestStore}) {
+function Result({apiTestStore}) {
   return (
     <div className={styles.result}>
       <pre>
-        {JSON.stringify(interfaceTestStore.testResult.data, null, 4)}
+        {JSON.stringify(apiTestStore.testResult.data, null, 4)}
       </pre>
     </div>
   );
 }
 
 Result.propTypes = {
-  interfaceTestStore: PropTypes.object,
+  apiTestStore: PropTypes.object,
 };
 
 export default loadingComp({
@@ -26,4 +26,4 @@ export default loadingComp({
     errCategory: 0,
     height: 130
   }),
-})(inject('interfaceTestStore')(observer(Result)));
+})(inject('apiTestStore')(observer(Result)));
