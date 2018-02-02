@@ -10,7 +10,7 @@ import moment from 'moment';
 
 function RechargeList({rechargeStore}) {
   const dataSource = () => {
-    const data = rechargeStore.rechargeList.content || [];
+    const data = rechargeStore.rechargeList.content;
     if (data) {
       return toJS(data);
     }
@@ -39,7 +39,7 @@ function RechargeList({rechargeStore}) {
     <div>
       <Table dataSource={dataSource()} columns={columns}/>
       <div style={{padding: '20px 0', textAlign: 'right'}}>
-        <Pager module="rechargePager" />
+        <Pager module="rechargeV2Pager" />
       </div>
     </div>
   );

@@ -94,7 +94,7 @@ class ApiTestStore {
     apiTestApi.getApiKey()
       .then(action(({data}) => {
         this.apiKey = data;
-        this.getScToken({apikey: data.apikey, searedSecret: data.sharedSecret});
+        this.getScToken({apiKey: data.apikey, searedSecret: data.sharedSecret});
       }))
       .catch();
   }

@@ -15,7 +15,9 @@ class ConsumptionStore {
   }
   @action.bound getConsumptionList() {
     this.consumptionList = {};
-    const params = Object.assign({}, uiStore.uiState.consumptionV2Pager, this.filter);
+    const {index, size} = uiStore.uiState.consumptionV2Pager;
+    // const params = Object.assign({index, size}, this.filter);
+    const params = {index, size};
     comsumptionApi.getConsumptionList(params)
       .then(action('consume-success', ({data}) => {
         if (data.content.length > 0) {

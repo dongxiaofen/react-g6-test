@@ -5,8 +5,8 @@ import { rechargeApi } from 'api';
 // import moment from 'moment';
 class RechargeStore {
   @observable filter = {
-    start: '',
-    end: '',
+    createdTsBegin: '',
+    createdTsEnd: '',
   };
   @observable rechargeList = {};
 
@@ -15,7 +15,13 @@ class RechargeStore {
   }
   @action.bound getRechargeList() {
     this.rechargeList = {};
-    const params = Object.assign({}, uiStore.uiState.rechargeV2Pager, this.filter);
+    const {index, size} = uiStore.uiState.rechargeV2Pager;
+    const params = {index, size};
+    Object.keys(this.filter).map(item => {
+      if (this.filter[item]) {
+        params[item] = this.filter[item];
+      }
+    });
     rechargeApi.getRechargeList(params)
       .then(action('consume-success', ({data}) => {
         if (data.content.length > 0) {
@@ -40,6 +46,10 @@ class RechargeStore {
       start: '',
       end: '',
     };
+  }
+  @action.bound resetData() {
+    this.resertFilter();
+    this.rechargeList = {};
   }
 }
 export default new RechargeStore();

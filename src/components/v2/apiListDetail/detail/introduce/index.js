@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import { observer } from 'mobx-react';
 import Highlight from 'react-fast-highlight';
-import Table from 'components/common/Table';
+// import Table from 'components/common/Table';
 import styles from './index.less';
-import { javaText, paramsDataSource, paramsColumns, headerDataSource, headerColumns } from './config';
+import { javaText } from './config';
 @observer
 export default class Introduce extends Component {
   componentDidMount() {
@@ -13,13 +13,24 @@ export default class Introduce extends Component {
     return (
       <div className={styles.introduce}>
         <div>
-          <h1>API 接入说明</h1>
-          <p className={styles.pcontent}>请求域名: <a href="https://business.socialcredits.cn">https://business.socialcredits.cn</a></p>
-          <p className={styles.pcontent}>访问方式: HTTPS</p>
-          <p className={styles.pcontent}>通过在 <code>http header</code> 添加以下参数的方式访问指定的接口：</p>
-          <div style={{width: '50%', marginBottom: '10px'}}>
-            <Table dataSource={paramsDataSource} columns={paramsColumns}/>
+          <div className={styles.box}>
+            <h1>1. API概述</h1>
+            <p className={styles.pcontent}>所有API都是使用https请求调用，请求域名: <a href="https://business.socialcredits.cn">https://business.socialcredits.cn</a></p>
+            <p className={styles.pcontent}>请求调用流程:</p>
+            <ol className={styles.list}>
+              <li>1). 客户端需先调用身份验证令牌(token)的"授权API"</li>
+              <li>2). "授权API"会返回一个身份验证令牌(token)</li>
+              <li>3). 客户端使用获取的身份令牌(token)来调用业务API</li>
+              <li>4). 业务API返回结果</li>
+            </ol>
           </div>
+          <div className={styles.box}>
+            <h1>2. 认证方式</h1>
+            <p className={styles.pcontent}>所有业务API的调用都将使用token验证。一个有效的API调用需要包含一个有效身份验证令牌(token，通过JWT生成)。</p>
+          </div>
+          {/*<div style={{width: '50%', marginBottom: '10px'}}>
+            <Table dataSource={paramsDataSource} columns={paramsColumns}/>
+          </div>*/}
           <p className={styles.pcontent}>sc-api-token生成规则:</p>
           <Highlight
             languages={['javascript']}
@@ -98,9 +109,9 @@ export default class Introduce extends Component {
             `}
           </Highlight>
           <p>Header 信息说明</p>
-          <div style={{width: '50%', marginBottom: '10px'}}>
+          {/*<div style={{width: '50%', marginBottom: '10px'}}>
             <Table dataSource={headerDataSource} columns={headerColumns}/>
-          </div>
+          </div>*/}
         </div>
       </div>
     );

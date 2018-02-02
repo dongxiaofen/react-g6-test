@@ -26,8 +26,8 @@ function ConsumptionList({consumptionStore}) {
   const columns = [
     {
       title: '订单编号',
-      dataIndex: 'id',
-      key: 'id',
+      dataIndex: 'consumeNum',
+      key: 'consumeNum',
       width: '220px'
     }, {
       title: '消费点数',
@@ -36,14 +36,14 @@ function ConsumptionList({consumptionStore}) {
       width: '75px'
     }, {
       title: '接口名称',
-      dataIndex: 'permissionName',
-      key: 'permissionName',
+      dataIndex: 'name',
+      key: 'name',
       width: '145px'
     }, {
       title: '查询参数',
-      dataIndex: 'sdkApiRecordParams',
-      key: 'sdkApiRecordParams',
-      // width: '40%',
+      dataIndex: 'params',
+      key: 'params',
+      width: '419px',
     }, {
       title: '订单日期',
       dataIndex: 'createdTs',
@@ -52,8 +52,8 @@ function ConsumptionList({consumptionStore}) {
       width: '155px',
     }, {
       title: '状态',
-      dataIndex: 'consumeType',
-      key: 'consumeType',
+      dataIndex: 'status',
+      key: 'status',
       render: (text) => (statusConfig(text)),
       width: '55px',
     }, {

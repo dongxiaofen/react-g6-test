@@ -1,32 +1,47 @@
 import React, {PropTypes} from 'react';
 import {observer, inject} from 'mobx-react';
-import DateFilte from 'components/common/ConsumeDateFilter';
+import FilterContainer from 'components/common/FilterContainer';
 import Button from 'components/lib/button';
+import { DatePicker } from 'antd';
+const { RangePicker } = DatePicker;
+import moment from 'moment';
 import styles from './index.less';
 
-function DateFilter({consumeStore, uiStore}) {
+function DateFilter({rechargeStore, uiStore}) {
   const handleFilter = () => {
-    // consumeStore.getRechargeList()
-    if (uiStore.uiState.rechargePager.index === 1) {
-      consumeStore.getRechargeList();
+    if (uiStore.uiState.rechargeV2Pager.index === 1) {
+      rechargeStore.getRechargeList();
     } else {
-      uiStore.updateUiStore('rechargePager.index', 1);
+      uiStore.updateUiStore('rechargeV2Pager.index', 1);
     }
   };
+  const handleDateChange = (data) => {
+    const start = data[0].format('YYYY-MM-DD');
+    const end = data[1].format('YYYY-MM-DD');
+    rechargeStore.updateValue('filter.createdTsBegin', start);
+    rechargeStore.updateValue('filter.createdTsEnd', end);
+    handleFilter();
+  };
   const resetSearchDate = () => {
-    consumeStore.updateValue('recharge.filter.createdTsBegin', '');
-    consumeStore.updateValue('recharge.filter.createdTsEnd', '');
-    if (uiStore.uiState.rechargePager.index === 1 && consumeStore.recharge.mothFilter === '') {
-      consumeStore.getRechargeList();
-    } else {
-      uiStore.updateUiStore('rechargePager.index', 1);
-      consumeStore.updateValue('recharge.mothFilter', '');
-    }
+    rechargeStore.resertFilter();
+    handleFilter();
+  };
+  const getDefaultVal = () => {
+    const {createdTsBegin, createdTsEnd} = rechargeStore.filter;
+    const start = createdTsBegin ? moment(createdTsBegin) : '';
+    const end = createdTsEnd ? moment(createdTsEnd) : '';
+    return [start, end];
   };
   return (
     <div className={styles['filter-list']}>
       <div className={styles.dateFilte}>
-        <DateFilte type="recharge" handleFilter={handleFilter}/>
+        <FilterContainer title="订单日期" titleStyle={{paddingLeft: '10px'}}>
+          <RangePicker
+            value={getDefaultVal()}
+            onChange={handleDateChange}
+            allowClear={false}
+            />
+        </FilterContainer>
       </div>
       <Button className={`${styles['flt-btn']} ${styles.secondary}`} btnType="secondary" onClick={resetSearchDate}>清空</Button>
     </div>
@@ -34,7 +49,7 @@ function DateFilter({consumeStore, uiStore}) {
 }
 
 DateFilter.propTypes = {
-  consumeStore: PropTypes.object,
+  rechargeStore: PropTypes.object,
   uiStore: PropTypes.object,
 };
-export default inject('consumeStore', 'uiStore')(observer(DateFilter));
+export default inject('rechargeStore', 'uiStore')(observer(DateFilter));
