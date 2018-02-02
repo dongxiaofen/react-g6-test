@@ -27,7 +27,7 @@ function InterfaceInfo({interfaceDetailStore, modalStore, routing}) {
   const gotoTest = () => {
     // console.log('ddd');
     routing.push({
-      pathname: '/interface/test',
+      pathname: '/v1/test',
       query: {id: infoData.id}
     });
   };

@@ -11,6 +11,7 @@ class HeaderStore {
       children: [
         {name: '接口介绍', value: 'introduce', active: true},
         {name: '接口测试', value: 'test', active: false},
+        // {name: '接口详情', value: 'detail', active: false, hidden: true},
       ]
     }, {
       key: 'consume',
@@ -48,10 +49,20 @@ class HeaderStore {
     this.navList[pIdx].children = newNav;
   }
   @action.bound routeChangeNav(pathname) {
-    const path = pathname === '/' ? '/interface' : pathname;
+    const path = pathname === '/' ? '/v2/introduce' : pathname;
     const pathArr = path.split('/');
-    this.navChange(pathArr[1]);
-    this.innerNavChange(pathArr[2]);
+    // console.log(pathArr);
+    const innerNavData = pathArr[2] === 'detail' ? 'introduce' : pathArr[2]; // detail,introduce导航一样
+    let pNavData;
+    this.navList.map((item) => {
+      item.children.map((child) => {
+        if (child.value === innerNavData) {
+          pNavData = item.key;
+        }
+      });
+    });
+    this.navChange(pNavData);
+    this.innerNavChange(innerNavData);
   }
 }
 export default new HeaderStore();

@@ -9,16 +9,16 @@ function Header({headerStore, clientStore, routing}) {
   };
   const handleNav = (nav, idx) => {
     headerStore.navChange(nav);
-    routing.push({pathname: `/${nav}/${headerStore.navList[idx].children[0].value}`});
+    routing.push({pathname: `/${clientStore.version}/${headerStore.navList[idx].children[0].value}`});
   };
   const gotoHome = () => {
     // routing.push({pathname: `/`});
-    location.href = '/';
+    location.href = `/${clientStore.version}/introduce`;
   };
   const handleInnerNav = (innerNav, idx) => {
     const ParentIdx = headerStore.navList.findIndex(item => (item.key === headerStore.currentNav));
     headerStore.innerNavChange(innerNav, idx, ParentIdx);
-    routing.push({pathname: `/${headerStore.currentNav}/${innerNav}`});
+    routing.push({pathname: `/${clientStore.version}/${innerNav}`});
   };
   const createNav = () => {
     return headerStore.navList.map((item, idx) => {
@@ -36,10 +36,29 @@ function Header({headerStore, clientStore, routing}) {
   const createInnerNav = () => {
     const parentNav = headerStore.currentNav;
     const index = headerStore.navList.findIndex(item => item.key === parentNav);
+    // console.log(parentNav, 'parentNav', index, 'index');
     const innerNav = headerStore.navList[index].children;
     return innerNav.map(({name, value, active}, idx) => {
       return (<li key ={idx} className={`${styles['inner-item']} ${active ? styles.active : ''}`} onClick={handleInnerNav.bind(this, value, idx)}>{name}</li>);
+      // if (!hidden) {
+      // }
     });
+  };
+  const gotoVersion = (version) => {
+    const pathname = `/${version}/introduce`;
+    routing.push({pathname: pathname});
+    clientStore.updateValue('version', version);
+  };
+  const getVersion = () => {
+    let output = null;
+    if (clientStore.version === 'v1') {
+      output = (<span className={styles.versionBox} onClick={gotoVersion.bind(null, 'v2')}>新版本</span>);
+    } else {
+      if (clientStore.isOldClient) {
+        output = (<span className={styles.versionBox} onClick={gotoVersion.bind(null, 'v1')}>老版本</span>);
+      }
+    }
+    return output;
   };
   return (
     <div className={styles.header}>
@@ -48,7 +67,10 @@ function Header({headerStore, clientStore, routing}) {
           {
             clientStore.userInfo.email ?
             <div>
-              <spab className={styles.name}>您好，{clientStore.userInfo.email}</spab>
+              <span className={styles.name}>您好，{clientStore.userInfo.email}</span>
+              {
+                getVersion()
+              }
               <a className={styles.logout} onClick={handleLogout}>退出</a>
             </div> :
             <span>登录</span>

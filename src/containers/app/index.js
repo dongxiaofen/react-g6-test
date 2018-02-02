@@ -42,9 +42,6 @@ export default class App extends Component {
         <Modal modalStore={this.props.modalStore} />
         <Message messageStore={this.props.messageStore} />
         <BackToTop />
-        {/* <DetailModal detailModalStore={this.props.detailModalStore} />
-        <PayModal payModalStore={this.props.payModalStore} /> */}
-        {/* <EntireLoading entireLoadingStore={this.props.entireLoadingStore} /> */}
         {
           pathname !== '/login' ? <Header /> : null
         }

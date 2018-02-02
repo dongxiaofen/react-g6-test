@@ -16,30 +16,34 @@ import {
     Modify,
     Myapi,
     Safe,
+    IntroduceV2,
+    ApiListDetail,
+    ApiTest,
+    ConsumptionV2,
+    RechargeV2
   } from 'containers';
 
 export default () => {
   return (
     <Route path="/" component={ App }>
-      <IndexRoute component={ Introduce } />
+      <IndexRoute component={ IntroduceV2 } />
       <Route path="login" component={ Login } />
-      {/* <Route path="interface" component={ Interface } >
-        <IndexRoute component={ Introduce } /> */}
+      {/* <Route path="v1">
         <Route path="interface/introduce" component={ Introduce } />
-        <Route path="interface/detail" component={ Detail } />
-        <Route path="interface/test" component={ Test } />
-      {/* </Route> */}
-      {/* <Route path="consume" component={ Consume } >
-        <IndexRoute component={ Consumption } /> */}
-        <Route path="consume/consumption" component={ Consumption } />
-        <Route path="consume/recharge" component={ Recharge } />
-      {/* </Route> */}
-      {/* <Route path="account" component={ Account } >
-        <IndexRoute component={ Modify } /> */}
-        <Route path="account/modify" component={ Modify } />
-        <Route path="account/myapi" component={ Myapi } />
-        <Route path="account/safe" component={ Safe } />
-      {/* </Route> */}
+      </Route> */}
+      <Route path="v1/introduce" component={ Introduce } />
+      <Route path="v1/detail" component={ Detail } />
+      <Route path="v1/test" component={ Test } />
+      <Route path="v1/consumption" component={ Consumption } />
+      <Route path="v1/recharge" component={ Recharge } />
+      <Route path="v1/modify" component={ Modify } />
+      <Route path="v1/myapi" component={ Myapi } />
+      <Route path="v1/safe" component={ Safe } />
+      <Route path="v2/introduce" component={ IntroduceV2 } />
+      <Route path="v2/detail" component={ ApiListDetail } />
+      <Route path="v2/test" component={ ApiTest } />
+      <Route path="v2/consumption" component={ ConsumptionV2 } />
+      <Route path="v2/recharge" component={ RechargeV2 } />
     </Route>
   );
 };
