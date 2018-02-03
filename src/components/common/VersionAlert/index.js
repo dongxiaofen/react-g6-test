@@ -12,13 +12,12 @@ const VersionAlert = ({ routing, modalStore, clientStore }) => {
   return (
     <div className={styles.alert}>
       <h1>更新提示</h1>
-      <p>尊敬的用户，星象-数据API平台目前进行了优化改版和接口迭代，您可以选择体验新版本，也可以继续选择使用老版本，您之前的服务接口依然由老版本进行提供，且在右上角为您提供新旧版本的切换</p>
+      <p>尊敬的用户，为了给您提供更好的服务，星象-数据API平台进行了一次版本升级，您已申请的接口现由老版本持续服务，三个月后服务将停止，在此期间，您需尽快将接口对接到新版本，我们已在平台右上角为您提供新旧版本的切换，给您带来的不便，敬请谅解，誉存将持续为您提供优质服务！</p>
       <p>主要更新内容：</p>
       <ul>
-        <li>界面优化</li>
-        <li>体验优化</li>
-        <li>增加白名单管理</li>
-        <li>接口迭代</li>
+        <li>界面全新优化，提升用户体验</li>
+        <li>API接入方式优化，简化对接流程</li>
+        <li>接口升级，灵活使用接口</li>
       </ul>
       <div className={styles['btn-box']}>
         <Button btnType="primary" className={styles.vsbtn} onClick={handleRoute.bind(null, 'v1')}>老版本</Button>

@@ -1,0 +1,44 @@
+@import '~sc-colors/index.less';
+.form-box {
+  padding-top: 20px;
+  width: 300px;
+
+  .form-item {
+    margin-bottom: 5px;
+    label {
+      font-size: 14px;
+      font-weight: normal;
+    }
+  }
+  .psInput {
+    position: relative;
+    .input {
+      border-radius: 0;
+      &.error {
+        border-color: @red1;
+      }
+    }
+    .errText {
+      width: 100%;
+      position: absolute;
+      left: 100%;
+      top: 0;
+      line-height: 36px;
+      margin-left: 10px;
+      color: @red1;
+      &::before {
+        display: inline;
+        content: '*';
+        line-height: 36px;
+        margin-right: 5px;
+        color: @red1;
+      }
+    }
+  }
+}
+.btn-box {
+  padding-left: 32%;
+  .submit {
+    width: 89%;
+  }
+}

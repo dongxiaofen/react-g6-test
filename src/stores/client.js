@@ -21,24 +21,29 @@ class ClientStore {
     const isNewUser = data.versionNo !== 'V1';
     // 路由跳转
     let pathname = isNewUser ? '/v2/introduce' : '/v1/introduce';
-    if (localStorage.pathname) {
-      pathname = localStorage.pathname;
+    const localPath = localStorage.pathname;
+    if (localPath) {
+      pathname = localPath;
+      localStorage.removeItem('pathname');
     }
     browserHistory.push(pathname);
     // 版本判断
-    this.handleVersion(isNewUser, 'login');
+    this.handleVersion(isNewUser);
+    if (!localPath) {
+      this.openVersionAlert();
+    }
   }
-  @action.bound handleVersion(isNewUser, type) {
+  @action.bound handleVersion(isNewUser) {
     if (isNewUser) {
       this.version = 'v2';
       this.isOldClient = false;
     } else {
       this.version = 'v1';
       this.isOldClient = true;
-      if (type === 'login') {
-        // console.log('请跳转新版本');
-        this.openVersionAlert();
-      }
+      // if (type === 'login') {
+      //   // console.log('请跳转新版本');
+      //   this.openVersionAlert();
+      // }
     }
   }
   @action.bound openVersionAlert() {

@@ -7,3 +7,7 @@ export const loginOut = () => {
 export const getUserInfo = () => {
   return axios.get('/api/v2/external/client/info');
 };
+
+export const resetPassword = (params) => {
+  return axios.put('/api/v2/external/client/password', params);
+};

@@ -28,12 +28,17 @@ function ConsumptionList({consumptionStore}) {
       title: '订单编号',
       dataIndex: 'consumeNum',
       key: 'consumeNum',
-      width: '220px'
+      width: '180px'
     }, {
       title: '消费点数',
       dataIndex: 'price',
       key: 'price',
       width: '75px'
+    }, {
+      title: '接口类别',
+      dataIndex: 'classification',
+      key: 'classification',
+      width: '140px'
     }, {
       title: '接口名称',
       dataIndex: 'name',
@@ -43,7 +48,7 @@ function ConsumptionList({consumptionStore}) {
       title: '查询参数',
       dataIndex: 'params',
       key: 'params',
-      width: '419px',
+      width: '319px',
     }, {
       title: '订单日期',
       dataIndex: 'createdTs',
