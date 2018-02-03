@@ -45,6 +45,11 @@ const initPagerParams = {
     size: 10,
     totalElements: 0
   },
+  safePager: {
+    index: 1,
+    size: 10,
+    totalElements: 0
+  },
 };
 class UiStore {
   constructor() {

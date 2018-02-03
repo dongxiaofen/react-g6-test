@@ -20,7 +20,10 @@ import {
     ApiListDetail,
     ApiTest,
     ConsumptionV2,
-    RechargeV2
+    RechargeV2,
+    ModifyV2,
+    MyapiV2,
+    SafeV2,
   } from 'containers';
 
 export default () => {
@@ -28,9 +31,6 @@ export default () => {
     <Route path="/" component={ App }>
       <IndexRoute component={ IntroduceV2 } />
       <Route path="login" component={ Login } />
-      {/* <Route path="v1">
-        <Route path="interface/introduce" component={ Introduce } />
-      </Route> */}
       <Route path="v1/introduce" component={ Introduce } />
       <Route path="v1/detail" component={ Detail } />
       <Route path="v1/test" component={ Test } />
@@ -44,6 +44,9 @@ export default () => {
       <Route path="v2/test" component={ ApiTest } />
       <Route path="v2/consumption" component={ ConsumptionV2 } />
       <Route path="v2/recharge" component={ RechargeV2 } />
+      <Route path="v2/modify" component={ ModifyV2 } />
+      <Route path="v2/myapi" component={ MyapiV2 } />
+      <Route path="v2/safe" component={ SafeV2 } />
     </Route>
   );
 };

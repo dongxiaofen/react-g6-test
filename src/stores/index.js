@@ -21,3 +21,6 @@ export apiListDetailStore from './v2/apiListDetail';
 export apiTestStore from './v2/apiTest';
 export consumptionStore from './v2/consumption';
 export rechargeStore from './v2/recharge';
+export modifyStore from './v2/modify';
+export myApiStore from './v2/myApi';
+export safeStore from './v2/safe';

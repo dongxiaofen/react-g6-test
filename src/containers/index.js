@@ -17,3 +17,6 @@ export ApiListDetail from './v2/apiListDetail';
 export ApiTest from './v2/apiTest';
 export ConsumptionV2 from './v2/consumption';
 export RechargeV2 from './v2/recharge';
+export ModifyV2 from './v2/modify';
+export MyapiV2 from './v2/myapi';
+export SafeV2 from './v2/safe';
