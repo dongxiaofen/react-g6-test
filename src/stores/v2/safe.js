@@ -95,7 +95,23 @@ class SafeStore {
     }
   }
   @action.bound resetData() {
-
+    this.safeKey = [
+      {key: 'apikey', title: 'APIKEY'},
+      {key: 'sharedSecret', title: '密钥'}
+    ];
+    this.safeData = {};
+    this.safeDataOpen = [false, false];
+    this.password = {
+      value: '',
+      error: '',
+    };
+    this.isResetLoading = false;
+    this.resetList = {
+      result: {},
+      // index: 1,
+      // size: 10,
+      // cancel: null,
+    };
   }
 }
 export default new SafeStore();

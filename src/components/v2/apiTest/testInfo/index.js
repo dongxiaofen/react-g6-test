@@ -65,7 +65,7 @@ function TestInfo({apiTestStore}) {
       </div>
       <ApiParams />
       <div>
-        <Button btnType="primary" loading={apiTestStore.isResultLoading} className={styles['test-btn']} onClick={apiTestStore.handleTestApi}>开始测试</Button>
+        <Button btnType="primary" loading={apiTestStore.isResultLoading} className={styles['test-btn']} onClick={apiTestStore.getScToken}>开始测试</Button>
       </div>
     </div>
   );

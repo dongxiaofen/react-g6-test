@@ -1,14 +1,14 @@
 import { observable, action } from 'mobx';
-import pathval from 'pathval';
+// import pathval from 'pathval';
 // import uiStore from '../ui';
 import { myInterfaceApi } from 'api';
 // import moment from 'moment';
 class MyApiStore {
   @observable myInterface = {};
 
-  @action.bound updateValue(changeItem, value) {
-    pathval.setPathValue(this, changeItem, value);
-  }
+  // @action.bound updateValue(changeItem, value) {
+  //   pathval.setPathValue(this, changeItem, value);
+  // }
   @action.bound getMyInterface() {
     this.myInterface = {};
     myInterfaceApi.getMyInterface()
@@ -23,7 +23,7 @@ class MyApiStore {
       }));
   }
   @action.bound resetData() {
-
+    this.myInterface = {};
   }
 }
 export default new MyApiStore();

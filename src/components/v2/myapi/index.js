@@ -3,34 +3,35 @@ import {observer, inject} from 'mobx-react';
 import Table from 'components/common/Table';
 // import __flattenDeep from 'lodash/flattenDeep';
 import { loadingComp } from 'components/hoc';
+import { toJS } from 'mobx';
 // import styles from './index.less';
 
-function MyapiMain({accountStore}) {
+function MyapiMain({myApiStore}) {
   const dataSource = () => {
-    const tableData = [];
-    const originData = accountStore.myApi.myInterface.data;
-    if (originData) {
-      const newData = [];
-      Object.keys(originData).map(key => {
-        originData[key].map((item) => newData.push(item));
-      });
-      newData.map((item, idx) => {
-        tableData.push({
-          key: idx,
-          id: item.id,
-          name: item.name,
-          price: item.price,
-          permissionClassification: accountStore.myApi.interfaceType[item.permissionClassification],
-        });
-      });
-    }
-    return tableData;
+    // const tableData = [];
+    const originData = myApiStore.myInterface.data;
+    // if (originData) {
+    //   const newData = [];
+    //   Object.keys(originData).map(key => {
+    //     originData[key].map((item) => newData.push(item));
+    //   });
+    //   newData.map((item, idx) => {
+    //     tableData.push({
+    //       key: idx,
+    //       id: item.id,
+    //       name: item.name,
+    //       price: item.price,
+    //       permissionClassification: myApiStore.interfaceType[item.permissionClassification],
+    //     });
+    //   });
+    // }
+    return toJS(originData);
   };
   const columns = [
     {
       title: '接口类别',
-      dataIndex: 'permissionClassification',
-      key: 'permissionClassification',
+      dataIndex: 'classification',
+      key: 'classification',
     }, {
       title: '接口名称',
       dataIndex: 'name',
@@ -39,7 +40,10 @@ function MyapiMain({accountStore}) {
       title: '资费',
       dataIndex: 'price',
       key: 'price',
-      // render: (record, idx) => (<span>{record.price + '-' + idx}</span>),
+    }, {
+      title: '剩余量（条/次）',
+      dataIndex: 'allowance',
+      key: 'allowance',
     }
   ];
   return (
@@ -50,7 +54,7 @@ function MyapiMain({accountStore}) {
 }
 
 MyapiMain.propTypes = {
-  accountStore: PropTypes.object,
+  myApiStore: PropTypes.object,
 };
 
 export default loadingComp({
@@ -61,4 +65,4 @@ export default loadingComp({
     category: 2,
     errCategory: 2,
   }),
-})(inject('accountStore')(observer(MyapiMain)));
+})(inject('myApiStore')(observer(MyapiMain)));
