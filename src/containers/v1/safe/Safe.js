@@ -2,7 +2,7 @@ import React, { Component, PropTypes } from 'react';
 import { observer, inject } from 'mobx-react';
 import { batchNav } from 'components/hoc';
 import SafeInfo from 'components/v1/safe/safeInfo';
-import SafeList from 'components/v1/safe/safeList';
+import TabList from 'components/v1/safe/tabList';
 import MainContBox from 'components/common/MainContBox';
 @batchNav()
 @inject('accountStore')
@@ -14,6 +14,7 @@ export default class Safe extends Component {
   componentDidMount() {
     this.props.accountStore.getApiKey();
     this.props.accountStore.getResetApiList();
+    this.props.accountStore.getWhiteList();
   }
   render() {
     const data = {
@@ -23,7 +24,7 @@ export default class Safe extends Component {
     return (
       <MainContBox>
         <SafeInfo data={data}/>
-        <SafeList/>
+        <TabList/>
       </MainContBox>
     );
   }
