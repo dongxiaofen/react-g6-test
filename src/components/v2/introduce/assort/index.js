@@ -15,7 +15,7 @@ import risk1 from 'imgs/interface/risk_1.png';
 import risk2 from 'imgs/interface/risk_2.png';
 
 const Assort = ({ introduceStore, uiStore }) => {
-  const getActiveImgIcon = (type) => {
+  const getImgIcon = (type) => {
     const config = {
       '所有服务': all1,
       '个人信息': person1,
@@ -25,7 +25,7 @@ const Assort = ({ introduceStore, uiStore }) => {
     };
     return config[type];
   };
-  const getImgIcon = (type) => {
+  const getActiveImgIcon = (type) => {
     const config = {
       '所有服务': all2,
       '个人信息': person2,
@@ -50,12 +50,12 @@ const Assort = ({ introduceStore, uiStore }) => {
       if (introduceStore.filterInfo.classificationId === item.id) {
         output.push(
           <li key={idx} className={styles.active} onClick={handleFilter.bind(null, item.id)}>
-          <span className={styles.imgBox}><img src={getImgIcon(item.name)} alt=""/></span> {item.name}</li>
+          <span className={styles.imgBox}><img src={getActiveImgIcon(item.name)} alt=""/></span> {item.name}</li>
         );
       } else {
         output.push(
           <li key={idx} onClick={handleFilter.bind(null, item.id)}>
-          <span className={styles.imgBox}><img src={getActiveImgIcon(item.name)} alt=""/></span> {item.name}</li>
+          <span className={styles.imgBox}><img src={getImgIcon(item.name)} alt=""/></span> {item.name}</li>
         );
       }
     });

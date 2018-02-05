@@ -1,7 +1,7 @@
 import React, { PropTypes } from 'react';
 import { observer, inject } from 'mobx-react';
 import Button from 'components/lib/button';
-import appliedPic from 'imgs/interface/apply.png';
+// import appliedPic from 'imgs/interface/apply.png';
 import styles from './index.less';
 
 const ListItem = ({data, routing}) => {
@@ -15,7 +15,8 @@ const ListItem = ({data, routing}) => {
   return (
     <div className={styles['list-item']}>
       <div className={data.applied > 0 ? styles.applied : styles.unapplied}>
-        <img src={appliedPic} alt=""/>
+        <div className={styles.imgIcon}></div>
+        {/*<img src={appliedPic} alt=""/>*/}
         <span>{`${data.applied > 0 ? '已' : '未'}申请`}</span>
       </div>
       <div className={styles['left-cont']}>
