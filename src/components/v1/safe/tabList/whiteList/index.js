@@ -9,6 +9,7 @@ import moment from 'moment';
 const WhiteList = ({accountStore}) => {
   const handleDelet = (id) => {
     console.log(id, 'id');
+    accountStore.deleteWhiteList(id);
   };
   const dataSource = () => {
     const originData = accountStore.safe.whiteList.result.data.content;
