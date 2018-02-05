@@ -34,7 +34,7 @@ export const demo = `
       // 1. 获取SSL的client实例
       CloseableHttpClient httpClient = createSSLClientDefault();
       // 2. 创建httpPost实例
-      URI url = new URI(BASE_URL + "api/v2/sc/token");
+      URI url = new URI(BASE_URL + "/api/v2/sc/token");
       HttpPost post = new HttpPost(url);
       try {
           // 3. 设置请求头
