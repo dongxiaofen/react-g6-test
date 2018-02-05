@@ -59,11 +59,10 @@ class AccountStore {
         ip: '',
         remark: '',
       },
+      isAddLoading: false,
       result: {},
     },
   };
-  // @observable safeData = {};
-  // @observable safeDataOpen = [false, false];
 
   @action.bound updateValue(changeItem, value) {
     pathval.setPathValue(this, changeItem, value);
@@ -158,12 +157,53 @@ class AccountStore {
         }
       }))
       .catch(action('resetlist-err', () => {
-        console.log('eeer--------------------');
+        // console.log('eeer--------------------');
         this.safe.whiteList.result = {
           data: {},
           error: {message: '您暂无重置列表'}
         };
       }));
+  }
+  @action.bound createWhiteList() {
+    const params = this.safe.whiteList.form;
+    if (!params.ip) {
+      messageStore.openMessage({type: 'warning', content: '请填写ip地址', duration: 5000});
+      return false;
+    }
+    this.safe.whiteList.isAddLoading = true;
+    accountApi.createWhiteList(params)
+      .then(action(() => {
+        modalStore.closeAction();
+        this.getWhiteList();
+        this.safe.whiteList.isAddLoading = false;
+      }))
+      .catch(action((err) => {
+        this.safe.whiteList.isAddLoading = false;
+        const message = pathval.getPathValue(err, 'response.data.message') || '白名单添加失败';
+        messageStore.openMessage({type: 'warning', content: message, duration: 5000});
+      }));
+  }
+  @action.bound deleteWhiteList(id) {
+    accountApi.deleteWhiteList(id)
+      .then(action(() => {
+        const {index} = uiStore.uiState.accountWhiteListPager;
+        if (this.safe.whiteList.result.data.content.length > 1 || index === 1) {
+          // do delete
+          this.getWhiteList();
+        } else {
+          // index - 1
+          uiStore.uiState.accountWhiteListPager.index = index - 1;
+          // if (index > 1) {
+          // } else {
+          //
+          // }
+        }
+      }))
+      .catch();
+  }
+  @action.bound resetAddForm() {
+    this.safe.whiteList.form.ip = '';
+    this.safe.whiteList.form.remark = '';
   }
 
   @action.bound getResetApiList() {
