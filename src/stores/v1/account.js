@@ -53,7 +53,14 @@ class AccountStore {
       // index: 1,
       // size: 10,
       // cancel: null,
-    }
+    },
+    whiteList: {
+      form: {
+        ip: '',
+        remark: '',
+      },
+      result: {},
+    },
   };
   // @observable safeData = {};
   // @observable safeDataOpen = [false, false];
@@ -135,6 +142,30 @@ class AccountStore {
         };
       }));
   }
+
+  @action.bound getWhiteList() {
+    this.safe.whiteList.result = {};
+    accountApi.getWhiteList(uiStore.uiState.accountWhiteListPager)
+      .then(action('resetlist-s', ({data}) => {
+        if (data.content.length > 0) {
+          this.safe.whiteList.result = {data};
+          uiStore.uiState.accountWhiteListPager.totalElements = data.totalElements;
+        } else {
+          this.safe.whiteList.result = {
+            data: {},
+            error: {message: '您暂无重置列表'}
+          };
+        }
+      }))
+      .catch(action('resetlist-err', () => {
+        console.log('eeer--------------------');
+        this.safe.whiteList.result = {
+          data: {},
+          error: {message: '您暂无重置列表'}
+        };
+      }));
+  }
+
   @action.bound getResetApiList() {
     this.safe.resetList.result = {};
     accountApi.getResetApiList(uiStore.uiState.accountSafe)

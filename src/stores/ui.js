@@ -29,6 +29,11 @@ const initPagerParams = {
     size: 10,
     totalElements: 0
   },
+  accountWhiteListPager: {
+    index: 1,
+    size: 10,
+    totalElements: 0
+  },
   // v2
   introducePager: {
     index: 1,
