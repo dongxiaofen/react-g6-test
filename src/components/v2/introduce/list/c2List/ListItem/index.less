@@ -12,6 +12,11 @@
     left: 0;
     top: 22px;
     height: 22px;
+    .imgIcon {
+      width: 65px;
+      height: 22px;
+      display: inline-block;
+    }
     img {
       height: 100%;
     }
@@ -20,6 +25,31 @@
       color: #fff;
       line-height: 22px;
       left: 10px;
+    }
+  }
+  .applied {
+    .imgIcon {
+      background-image: url('imgs/interface/apply.png');
+      background-position: left center;
+      background-size: 65px 22px;
+    }
+  }
+  .unapplied {
+    .imgIcon {
+      background-color: #9b9b9b;
+      &::after {
+        content: '';
+        position: absolute;
+        right: 0;
+        display: block;
+        width: 0;
+        height: 0;
+        // border: 3px solid #fff;
+        // border-left: none;
+        border-right: 7px solid #fff;
+        border-top: 11px solid transparent;
+        border-bottom: 11px solid transparent;
+      }
     }
   }
   .left-cont {
