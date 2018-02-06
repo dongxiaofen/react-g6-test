@@ -7,12 +7,21 @@ import InfoItem from './item';
 import ApiParams from './apiParams';
 import styles from './index.less';
 import {shieldInfo} from 'helpers/infoShield';
+import __trim from 'lodash/trim';
 // import openImg from 'imgs/open.png';
 
 function TestInfo({apiTestStore}) {
   const infoData = apiTestStore.apiInfo;
   const handleShowApikey = () => {
     apiTestStore.updateValue('isOpenApikey', !apiTestStore.isOpenApikey);
+  };
+  const getDetailPath = () => {
+    const id = apiTestStore.activeC2Id;
+    const apiId = apiTestStore.activeApiId;
+    const classify = apiTestStore.apiInfo.classification.split('>');
+    const c1Name = __trim(classify[0]); // 一级分类
+    const name = __trim(classify[1]); // 二级分类
+    return `/v2/detail?id=${id}&apiId=${apiId}&c1Name=${c1Name}&name=${name}`;
   };
   return (
     <div className={styles.info}>
@@ -59,7 +68,7 @@ function TestInfo({apiTestStore}) {
 
         <div className={styles.list}>
           <InfoItem title="API介绍：">
-            <Link className={styles.detail} to={`/v2/detail?id=${apiTestStore.activeC2Id}&apiId=${apiTestStore.activeApiId}`}>点击查看介绍</Link>
+            <Link className={styles.detail} to={getDetailPath()}>点击查看介绍</Link>
           </InfoItem>
         </div>
       </div>

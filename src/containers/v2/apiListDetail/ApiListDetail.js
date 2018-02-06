@@ -15,10 +15,11 @@ export default class ApiListDetail extends Component {
     const id = this.props.routing.location.query.id;
     const name = this.props.routing.location.query.name;
     const c1Name = this.props.routing.location.query.c1Name;
+    const apiId = this.props.routing.location.query.apiId;
     this.props.apiListDetailStore.updateValue('classificationId', id); // 二级分类id
     this.props.apiListDetailStore.updateValue('classificationName', name); // 二级分类name
     this.props.apiListDetailStore.updateValue('c1Name', c1Name); // 一级分类name
-    this.props.apiListDetailStore.getApiList();
+    this.props.apiListDetailStore.getApiList(apiId);
     this.props.apiListDetailStore.getErrorCode();
   }
   componentWillUnmount() {
