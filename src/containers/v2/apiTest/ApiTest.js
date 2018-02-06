@@ -14,14 +14,13 @@ export default class ApiTest extends Component {
   componentDidMount() {
     const c1Name = this.props.routing.location.query.c1Name || '';
     const c2Id = this.props.routing.location.query.c2Id || '';
-    const classificationId = this.props.routing.location.query.classificationId || '';
-
+    const classificationId = this.props.routing.location.query.id || '';
+    this.props.apiTestStore.updateValue('classificationId', classificationId);
+    this.props.apiTestStore.updateValue('c2Id', c2Id);
+    this.props.apiTestStore.updateValue('c1Name', c1Name);
     this.props.apiTestStore.getAssortmentC1();
     this.props.apiTestStore.getApiKey();
     if (classificationId) {
-      this.props.apiTestStore.updateValue('classificationId', classificationId);
-      this.props.apiTestStore.updateValue('c2Id', c2Id);
-      this.props.apiTestStore.updateValue('c1Name', c1Name);
       this.props.apiTestStore.updateValue('activeC2Id', c2Id);
       this.props.apiTestStore.updateValue('activeApiId', classificationId);
       this.props.apiTestStore.getApiList();

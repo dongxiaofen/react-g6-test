@@ -42,6 +42,7 @@ class ApiTestStore {
         } else {
           activeC1 = data[0];
         }
+        // console.log(activeC1, 'activeC1-----');
         this.activeC1Id = activeC1.id;
         this.getAssortmentC2();
       }))
@@ -55,6 +56,7 @@ class ApiTestStore {
           this.activeC2Id = data[0].id;
           this.getApiList();
         }
+        // console.log(this.activeC2Id, 'activeC2Id------');
       }))
       .catch();
   }
