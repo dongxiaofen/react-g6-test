@@ -16,39 +16,19 @@ class ApiListDetailStore {
   @action.bound updateValue(changeItem, value) {
     pathval.setPathValue(this, changeItem, value);
   }
-  @action.bound getApiList() {
+  @action.bound getApiList(apiId) {
     this.isApiListLoading = true;
     apiListDetailApi.getApiList(this.classificationId)
       .then(action('list', ({data}) => {
-        // console.log(data);
-        // this.apiList = data;
-        // const data = [
-        //   {
-        //     'applied': 0,
-        //     'chargesType': 'BY_CHARGE',
-        //     'classification': '法务',
-        //     'description': '企业工商数据查询,在该接口中，通过企业关键字精确获取详细信息这个方法，我们区分了三个等级 Basic/Master/Full ，具体差异请查看SDK文档',
-        //     'id': '132456',
-        //     'docName': 'getCourtAnnouncementUsingGET',
-        //     'method': 'get',
-        //     'name': '企业判决文书数据查询1',
-        //     'summary': '企业工商数据查询,在该接口中，通过企业关键字精确获取详细信息这个方法，我们区分了三个等级 Basic/Master/Full ，具体差异请查看SDK文档。'
-        //   }, {
-        //     'applied': 2,
-        //     'chargesType': 'MONTH_CHARGE',
-        //     'classification': '法务',
-        //     'description': '企业工商数据查询,在该接口中，通过企业关键字精确获取详细信息这个方法',
-        //     'id': '56879',
-        //     'docName': 'getDxCompanySharesUsingGET',
-        //     'method': 'get',
-        //     'name': '企业判决文书数据查询2',
-        //     'summary': '企业工商数据查询, Basic/Master/Full ，具体差异请查看SDK文档。'
-        //   }
-        // ];
         this.isApiListLoading = false;
         if (data.length > 0) {
           this.apiList = data;
-          this.activeApiDetail = data[0];
+          if (apiId) {
+            const idx = data.findIndex(item => item.id === apiId);
+            this.activeApiDetail = data[idx];
+          } else {
+            this.activeApiDetail = data[0];
+          }
           this.getApiDoc();
         } else {
           this.isDocLoading = false;

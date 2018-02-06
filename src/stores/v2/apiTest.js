@@ -41,6 +41,7 @@ class ApiTestStore {
           });
         } else {
           activeC1 = data[0];
+          this.c1Name = data[0].name;
         }
         // console.log(activeC1, 'activeC1-----');
         this.activeC1Id = activeC1.id;
