@@ -1,23 +1,23 @@
 import axios from 'axios';
 
 export const getAssortmentC1 = () => {
-  return axios.get('/api/v2/external/client/permission/assortment/c1/all');
+  return axios.get('/api/v2/client/permission/assortment/c1/all');
 };
 
 export const getAssortmentC2 = (params) => {
-  return axios.get('/api/v2/external/client/permission/assortment/c2/all', {params});
+  return axios.get('/api/v2/client/permission/assortment/c2/all', {params});
 };
 
 export const getApiList = (classificationId) => {
-  return axios.get(`/api/v2/external/client/permission/${classificationId}/list`);
+  return axios.get(`/api/v2/client/permission/${classificationId}/list`);
 };
 
 export const getApiInfo = (apiId) => {
-  return axios.get(`/api/v2/external/client/permission/${apiId}`);
+  return axios.get(`/api/v2/client/permission/${apiId}`);
 };
 
 export const getApiKey = () => {
-  return axios.get('/api/v2/external/client/permission/apikey');
+  return axios.get('/api/v2/client/permission/apikey');
 };
 
 export const getScToken = (params) => {
