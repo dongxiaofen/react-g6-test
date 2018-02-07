@@ -23,12 +23,16 @@ class ClientStore {
     let pathname = isNewUser ? '/v2/introduce' : '/v1/introduce';
     const localPath = localStorage.pathname;
     if (localPath) {
+      const localVersion = localPath.split('/')[0] || 'v2';
       pathname = localPath;
       localStorage.removeItem('pathname');
+      this.version = localVersion;
+      this.isOldClient = !isNewUser;
+    } else {
+      // 版本判断
+      this.handleVersion(isNewUser);
     }
     browserHistory.push(pathname);
-    // 版本判断
-    this.handleVersion(isNewUser);
     if (!localPath) {
       this.openVersionAlert();
     }
