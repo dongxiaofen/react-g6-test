@@ -83,7 +83,7 @@ class ClientStore {
         // console.log(data);
         this.userInfo = data;
         const isNewUser = data.versionNo !== 'V1';
-        const routeVersion = window.location.pathname.split('/')[1];
+        const routeVersion = window.location.pathname.split('/')[1] || 'v2';
         // console.log(routeVersion, 'routeVersion');
         if (routeVersion === data.versionNo.toLowerCase()) {
           this.handleVersion(isNewUser, 'getUserInfo');

@@ -152,7 +152,7 @@ class AccountStore {
         } else {
           this.safe.whiteList.result = {
             data: {},
-            error: {message: '您暂无重置列表'}
+            error: {message: '您暂无白名单列表'}
           };
         }
       }))
@@ -160,7 +160,7 @@ class AccountStore {
         // console.log('eeer--------------------');
         this.safe.whiteList.result = {
           data: {},
-          error: {message: '您暂无重置列表'}
+          error: {message: '您暂无白名单列表'}
         };
       }));
   }
