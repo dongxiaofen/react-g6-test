@@ -97,12 +97,12 @@ class ApiTestStore {
     apiTestApi.getApiKey()
       .then(action(({data}) => {
         this.apiKey = data;
-        // this.getScToken({apiKey: data.apikey, searedSecret: data.sharedSecret});
+        // this.getScToken({apiKey: data.apikey, sharedSecret: data.sharedSecret});
       }))
       .catch();
   }
   @action.bound getScToken = () => {
-    const params = {apiKey: this.apiKey.apikey, searedSecret: this.apiKey.sharedSecret};
+    const params = {apiKey: this.apiKey.apikey, sharedSecret: this.apiKey.sharedSecret};
     apiTestApi.getScToken(params)
       .then(action(({data}) => {
         this.scToken = data.data['sc-api-token'];

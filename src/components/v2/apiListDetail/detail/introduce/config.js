@@ -43,7 +43,7 @@ export const demo = `
 
           // 4. 将参数设置到entity对象中
           Map<String, Object> body = new HashMap<>();
-          body.put("searedSecret", SHARED_SECRET);
+          body.put("sharedSecret", SHARED_SECRET);
           body.put("apiKey", API_KEY);
           StringEntity se = new StringEntity(new JSONObject(body).toString(), "UTF-8");
           se.setContentType("text/json");
