@@ -13,6 +13,8 @@ function FilterCont({apiTestStore}) {
     apiTestStore.updateValue('classificationId', '');
     apiTestStore.updateValue('testResult', {});
     apiTestStore.getAssortmentC2();
+    apiTestStore.updateValue('activeC2Id', '');
+    apiTestStore.updateValue('activeApiId', '');
   };
   const handleC2 = (value) => {
     apiTestStore.updateValue('activeC2Id', value);

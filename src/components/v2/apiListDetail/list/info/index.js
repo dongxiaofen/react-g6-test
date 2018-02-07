@@ -41,7 +41,7 @@ const Info = ({apiListDetailStore, routing}) => {
         </div>
         <div className={styles['info-item']} style={{width: '180px'}}>
           <label className={styles.label}>资费</label>
-          <div className={styles['item-cont']}>{getChargeType(activeApiDetail.chargesType)}</div>
+          <div className={styles['item-cont']}>{getChargeType(activeApiDetail.chargeType)}</div>
         </div>
         <div className={styles['info-item']} style={{width: '180px'}}>
           <label className={styles.label}>分类</label>
