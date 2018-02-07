@@ -28,11 +28,11 @@ export default class Introduce extends Component {
           <p>所有业务API的调用都将使用token验证。一个有效的API调用需要包含一个有效身份验证令牌(token，通过JWT生成)。</p>
           <h3>2.1. 客户端调用"获取授权API"获取Token的流程</h3>
           <ol className={styles.list}>
-            <li>1). 客户端需要使用用户的[searedSecret]和[apiKey] 调用"获取授权API"获取token</li>
+            <li>1). 客户端需要使用用户的[sharedSecret]和[apiKey] 调用"获取授权API"获取token</li>
             <li>2). API网关收到请求后,后端服务会认证您的apiKey,通过后会生成一个token,并返回给您,您可凭此Token来调用"业务API"</li>
             <li>3). 客户端使用"获取授权API" 得到的Token来调用"业务API"</li>
           </ol>
-          <p>注意: [searedSecret]和[apiKey]在接口平台 个人中心->安全隐私即可查看, token有效时间为5分钟</p>
+          <p>注意: [sharedSecret]和[apiKey]在接口平台 个人中心->安全隐私即可查看, token有效时间为5分钟</p>
           <h3>2.2. 身份验证令牌(token)获取</h3>
           <p>请求方式: POST</p>
           <p>Content-type: application/json;charset=UTF-8</p>
@@ -45,7 +45,7 @@ export default class Introduce extends Component {
             >
             {`
               {
-                "searedSecret":"你的密钥",
+                "sharedSecret":"你的密钥",
                 "apiKey":"你的apiKey"
               }
             `}
