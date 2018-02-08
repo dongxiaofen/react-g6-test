@@ -17,9 +17,9 @@ function ConsumptionList({consumptionStore}) {
   };
   const statusConfig = (value) => {
     const config = {
-      'API_CONSUME_PRE': '失败',
-      'API_CONSUME_SUCCESS': '成功',
-      'API_CONSUME_FAIL': '失败',
+      'API_CONSUME_PRE': 'fou',
+      'API_CONSUME_SUCCESS': '是',
+      'API_CONSUME_FAIL': '否',
     };
     return config[value];
   };
@@ -57,7 +57,7 @@ function ConsumptionList({consumptionStore}) {
       render: (text) => (moment(text).format('YYYY-MM-DD HH:mm:ss')),
       width: '155px',
     }, {
-      title: '状态',
+      title: '扣费状态',
       dataIndex: 'status',
       key: 'status',
       render: (text) => (statusConfig(text)),
