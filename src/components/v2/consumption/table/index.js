@@ -49,19 +49,19 @@ function ConsumptionList({consumptionStore}) {
       title: '查询参数',
       dataIndex: 'params',
       key: 'params',
-      width: '319px',
+      width: '310px',
     }, {
       title: '订单日期',
       dataIndex: 'createdTs',
       key: 'createdTs',
       render: (text) => (moment(text).format('YYYY-MM-DD HH:mm:ss')),
-      width: '155px',
+      width: '145px',
     }, {
       title: '扣费状态',
       dataIndex: 'status',
       key: 'status',
       render: (text) => (statusConfig(text)),
-      width: '55px',
+      width: '74px',
     }, {
       title: '备注',
       dataIndex: 'reason',
