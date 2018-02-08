@@ -17,7 +17,7 @@ function ConsumptionList({consumptionStore}) {
   };
   const statusConfig = (value) => {
     const config = {
-      'API_CONSUME_PRE': 'API_CONSUME_PRE',
+      'API_CONSUME_PRE': '失败',
       'API_CONSUME_SUCCESS': '成功',
       'API_CONSUME_FAIL': '失败',
     };
