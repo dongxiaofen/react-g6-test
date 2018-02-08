@@ -57,7 +57,7 @@ function ConsumptionList({consumptionStore}) {
       render: (text) => (moment(text).format('YYYY-MM-DD HH:mm:ss')),
       width: '145px',
     }, {
-      title: '扣费状态',
+      title: '是否扣费',
       dataIndex: 'status',
       key: 'status',
       render: (text) => (statusConfig(text)),
