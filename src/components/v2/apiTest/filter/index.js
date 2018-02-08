@@ -15,12 +15,14 @@ function FilterCont({apiTestStore}) {
     apiTestStore.getAssortmentC2();
     apiTestStore.updateValue('activeC2Id', '');
     apiTestStore.updateValue('activeApiId', '');
+    apiTestStore.updateValue('isInfoLoading', true);
   };
   const handleC2 = (value) => {
     apiTestStore.updateValue('activeC2Id', value);
     apiTestStore.updateValue('activeApiId', '');
     apiTestStore.getApiList();
     apiTestStore.updateValue('testResult', {});
+    apiTestStore.updateValue('isInfoLoading', true);
   };
   const handleApiList = (value) => {
     apiTestStore.updateValue('activeApiId', value);
