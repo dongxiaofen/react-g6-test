@@ -33,7 +33,7 @@ class ClientStore {
       this.handleVersion(isNewUser);
     }
     browserHistory.push(pathname);
-    if (!localPath) {
+    if (!localPath && !isNewUser) {
       this.openVersionAlert();
     }
   }
