@@ -7,6 +7,7 @@ import ContBox from './contBox';
 import FilterCont from './filter';
 // import Button from 'components/lib/button';
 import styles from './index.less';
+import { loadingComp } from 'components/hoc';
 
 function TestBody({apiTestStore}) {
   const infoData = {
@@ -36,4 +37,14 @@ function TestBody({apiTestStore}) {
 TestBody.propTypes = {
   apiTestStore: PropTypes.object,
 };
-export default inject('apiTestStore')(observer(TestBody));
+// export default inject('apiTestStore')(observer(TestBody));
+export default loadingComp({
+  mapDataToProps: props => ({
+    loading: props.data.loading,
+    error: props.data.error,
+    imgCategory: 13,
+    category: 2,
+    errCategory: 2,
+    // height: 400
+  }),
+})(inject('apiTestStore')(observer(TestBody)));

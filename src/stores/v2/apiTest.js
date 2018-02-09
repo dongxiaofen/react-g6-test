@@ -10,6 +10,7 @@ class ApiTestStore {
   @observable classificationId = ''; // 接口id - from location
 
   @observable assortmentC1 = []; // 一级分类列表
+  @observable isAssortC1Loading = true;
   @observable activeC1Id = '';
   @observable assortmentC2 = []; // 二级分类列表
   @observable activeC2Id = '';
@@ -29,25 +30,33 @@ class ApiTestStore {
     pathval.setPathValue(this, changeItem, value);
   }
   @action.bound getAssortmentC1() {
+    this.isAssortC1Loading = true;
     apiTestApi.getAssortmentC1()
       .then(action(({data}) => {
-        this.assortmentC1 = data;
-        let activeC1;
-        if (this.c1Name) {
-          data.map(item => {
-            if (item.name === this.c1Name) {
-              activeC1 = item;
-            }
-          });
+        if (data.length > 0) {
+          this.assortmentC1 = data;
+          let activeC1;
+          if (this.c1Name) {
+            data.map(item => {
+              if (item.name === this.c1Name) {
+                activeC1 = item;
+              }
+            });
+          } else {
+            activeC1 = data[0];
+            this.c1Name = data[0].name;
+          }
+          // console.log(activeC1, 'activeC1-----');
+          this.activeC1Id = activeC1.id;
+          this.getAssortmentC2();
         } else {
-          activeC1 = data[0];
-          this.c1Name = data[0].name;
+          this.isInfoLoading = false;
         }
-        // console.log(activeC1, 'activeC1-----');
-        this.activeC1Id = activeC1.id;
-        this.getAssortmentC2();
+        this.isAssortC1Loading = false;
       }))
-      .catch();
+      .catch(action(() => {
+        this.isAssortC1Loading = false;
+      }));
   }
   @action.bound getAssortmentC2() {
     apiTestApi.getAssortmentC2({classificationId: this.activeC1Id})
