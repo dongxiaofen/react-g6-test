@@ -15,7 +15,7 @@ function List({safeStore}) {
         tableData.push({
           key: idx,
           ip: item.ip,
-          email: '操作说明：' + item.email,
+          email: '操作账号：' + item.email,
           createdTs: item.createdTs ? moment(item.createdTs).format('YYYY-MM-DD HH:mm:ss') : item.createdTs,
         });
       });
