@@ -15,6 +15,7 @@ import risk1 from 'imgs/interface/risk_1.png';
 import risk2 from 'imgs/interface/risk_2.png';
 
 const Assort = ({ introduceStore, uiStore }) => {
+  // console.log(introduceStore.filterInfo.classificationId, 'introduceStore.filterInfo.classificationId---');
   const getImgIcon = (type) => {
     const config = {
       '所有服务': all1,
@@ -50,12 +51,12 @@ const Assort = ({ introduceStore, uiStore }) => {
       if (introduceStore.filterInfo.classificationId === item.id) {
         output.push(
           <li key={idx} className={styles.active} onClick={handleFilter.bind(null, item.id)}>
-          <span className={styles.imgBox}><img src={getActiveImgIcon(item.name)} alt=""/></span> {item.name}</li>
+          <span className={styles.imgBox}><img src={getActiveImgIcon(item.name)} alt=""/></span>{item.name}</li>
         );
       } else {
         output.push(
           <li key={idx} onClick={handleFilter.bind(null, item.id)}>
-          <span className={styles.imgBox}><img src={getImgIcon(item.name)} alt=""/></span> {item.name}</li>
+          <span className={styles.imgBox}><img src={getImgIcon(item.name)} alt=""/></span>{item.name}</li>
         );
       }
     });
@@ -64,7 +65,7 @@ const Assort = ({ introduceStore, uiStore }) => {
   return (
     <ul className={styles.filters}>
       <li key="all" className={introduceStore.filterInfo.classificationId === '' ? styles.active : ''} onClick={handleFilter.bind(null, '')}>
-      <span className={styles.imgBox}><img src={introduceStore.filterInfo.classificationId === '' ? getActiveImgIcon('所有服务') : getImgIcon('所有服务')} alt=""/></span> 所有服务</li>
+      <span className={styles.imgBox}><img src={introduceStore.filterInfo.classificationId === '' ? getActiveImgIcon('所有服务') : getImgIcon('所有服务')} alt=""/></span>所有服务</li>
       {
         createList()
       }

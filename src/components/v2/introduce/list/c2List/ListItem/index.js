@@ -20,7 +20,7 @@ const ListItem = ({data, routing}) => {
         <span>{`${data.applied > 0 ? '已' : '未'}申请`}</span>
       </div>
       <div className={styles['left-cont']}>
-        <h3>{data.name}</h3>
+        <h3 className={styles.name} onClick={gotoDocPage}>{data.name}</h3>
         <div className={styles.discript} title={data.description}>{data.description}</div>
         <div className={styles.classify}>分类: {data.classification}</div>
       </div>
