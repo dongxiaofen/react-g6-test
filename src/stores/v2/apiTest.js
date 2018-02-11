@@ -73,9 +73,10 @@ class ApiTestStore {
   @action.bound getApiList() {
     apiTestApi.getApiList(this.activeC2Id)
       .then(action(({data}) => {
-        this.apiList = data.filter(item => item.applied > 0);
+        const appliedData = data.filter(item => item.applied > 0);
+        this.apiList = appliedData;
         if (!this.classificationId) {
-          this.activeApiId = data[0].id;
+          this.activeApiId = appliedData[0].id;
           this.getApiInfo();
         }
       }))
