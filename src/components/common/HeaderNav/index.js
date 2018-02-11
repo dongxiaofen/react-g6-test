@@ -52,10 +52,10 @@ function Header({headerStore, clientStore, routing}) {
   const getVersion = () => {
     let output = null;
     if (clientStore.version === 'v1') {
-      output = (<span className={styles.versionBox} onClick={gotoVersion.bind(null, 'v2')}>新版本</span>);
+      output = (<span className={styles.versionBox} onClick={gotoVersion.bind(null, 'v2')}>新版</span>);
     } else {
       if (clientStore.isOldClient) {
-        output = (<span className={styles.versionBox} onClick={gotoVersion.bind(null, 'v1')}>旧版本</span>);
+        output = (<span className={styles.versionBox} onClick={gotoVersion.bind(null, 'v1')}>旧版</span>);
       }
     }
     return output;

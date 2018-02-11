@@ -45,7 +45,7 @@ class ClientStore {
       this.version = 'v1';
       this.isOldClient = true;
       // if (type === 'login') {
-      //   // console.log('请跳转新版本');
+      //   // console.log('请跳转新版');
       //   this.openVersionAlert();
       // }
     }
