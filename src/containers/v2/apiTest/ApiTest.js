@@ -33,7 +33,7 @@ export default class ApiTest extends Component {
   render() {
     const loading = {
       loading: this.props.apiTestStore.isAssortC1Loading,
-      error: this.props.apiTestStore.assortmentC1.length === 0 ? {message: '您暂未有任何接口配置, 请联系管理员经行配置'} : null
+      error: this.props.apiTestStore.assortmentC1.length === 0 ? {message: '您暂未有任何接口配置, 请联系管理员添加配置'} : null
     };
     return (
       <ApiTestCont data={loading}/>

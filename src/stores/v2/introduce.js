@@ -73,7 +73,7 @@ class IntroduceStore {
     this.isListLoading = true;
     this.listCancel = null;
     this.filterInfo = {
-      id: '',
+      classificationId: '',
       keyword: '',
       applied: 'ALL',
     };
