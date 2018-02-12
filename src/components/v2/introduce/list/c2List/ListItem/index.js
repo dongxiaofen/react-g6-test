@@ -16,6 +16,7 @@ import pic10 from 'imgs/interface/法院公告.png';
 import pic11 from 'imgs/interface/失信被执行信息.png';
 import pic12 from 'imgs/interface/裁判文书.png';
 import pic13 from 'imgs/interface/经营指标.png';
+
 const ListItem = ({data, routing}) => {
   const getImg = (name) => {
     const picData = {
@@ -46,7 +47,6 @@ const ListItem = ({data, routing}) => {
     <div className={styles['list-item']}>
       <div className={data.applied > 0 ? styles.applied : styles.unapplied}>
         <div className={styles.imgIcon}></div>
-        {/*<img src={appliedPic} alt=""/>*/}
         <span>{`${data.applied > 0 ? '已' : '未'}申请`}</span>
       </div>
       <div className={styles.picture}>

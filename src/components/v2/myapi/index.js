@@ -40,10 +40,25 @@ function MyapiMain({myApiStore}) {
       title: '资费',
       dataIndex: 'price',
       key: 'price',
+      render: (text, record) => {
+        // console.log(record, 'record---===');
+        const chargeTypeDict = {
+          'BY_CHARGE': '次',
+          'MONTH_CHARGE': '月',
+          'ACCORDE_CHARGE': '条'
+        };
+        return `${text}点/${chargeTypeDict[record.chargeType]}`;
+      }
     }, {
       title: '剩余量（条/次）',
       dataIndex: 'allowance',
       key: 'allowance',
+      render: (text, record) => {
+        if (record.chargeType === 'MONTH_CHARGE') {
+          return '/';
+        }
+        return text === '' ? '不限' : text;
+      }
     }
   ];
   return (
