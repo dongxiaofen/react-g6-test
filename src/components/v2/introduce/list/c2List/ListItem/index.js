@@ -6,11 +6,11 @@ import styles from './index.less';
 import pic1 from 'imgs/interface/被执行信息.png';
 import pic2 from 'imgs/interface/个人身份核验.png';
 import pic3 from 'imgs/interface/企业名查询.png';
-import pic4 from 'imgs/interface/中国企业搜索.png';
-import pic5 from 'imgs/interface/企业对外投资.png';
-import pic6 from 'imgs/interface/法人对外投资任职.png';
-import pic7 from 'imgs/interface/股东对外投资任职.png';
-import pic8 from 'imgs/interface/董监高对外投资任职.png';
+import pic4 from 'imgs/interface/中国-企业搜索.png';
+import pic5 from 'imgs/interface/企业-对外投资.png';
+import pic6 from 'imgs/interface/法人-对外投资任职.png';
+import pic7 from 'imgs/interface/股东-对外投资任职.png';
+import pic8 from 'imgs/interface/董监高-对外投资任职.png';
 import pic9 from 'imgs/interface/开庭公告.png';
 import pic10 from 'imgs/interface/法院公告.png';
 import pic11 from 'imgs/interface/失信被执行信息.png';
@@ -23,11 +23,11 @@ const ListItem = ({data, routing}) => {
       '被执行信息': pic1,
       '个人身份核验': pic2,
       '企业名查询': pic3,
-      '中国企业搜索': pic4,
-      '企业对外投资': pic5,
-      '法人对外投资任职': pic6,
-      '股东对外投资任职': pic7,
-      '董监高对外投资任职': pic8,
+      '中国-企业搜索': pic4,
+      '企业-对外投资': pic5,
+      '法人-对外投资任职': pic6,
+      '股东-对外投资任职': pic7,
+      '董监高-对外投资任职': pic8,
       '开庭公告': pic9,
       '法院公告': pic10,
       '失信被执行信息': pic11,
