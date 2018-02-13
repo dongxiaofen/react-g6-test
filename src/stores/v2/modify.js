@@ -59,7 +59,8 @@ class ModifyStore {
     this.isModifyLoading = true;
     clientApi.resetPassword(params)
       .then(action('修改密码成功', () => {
-        this.isModifyLoading = false;
+        // this.isModifyLoading = false;
+        this.resetData();
         messageStore.openMessage({type: 'info', content: '密码修改成功', duration: 5000});
       }))
       .catch(action('修改密码错误', () => {
@@ -68,7 +69,7 @@ class ModifyStore {
       }));
   }
   @action.bound resetData() {
-    this.modifyForm = {
+    this.modify = {
       originPw: {
         value: '',
         errText: '',
