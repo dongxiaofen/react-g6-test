@@ -6,6 +6,7 @@ import accountStore from './v1/account';
 import introduceStore from './v2/introduce';
 import consumptionStore from './v2/consumption';
 import rechargeStore from './v2/recharge';
+import safeStore from './v2/safe';
 
 const initPagerParams = {
   // v1
@@ -107,6 +108,13 @@ class UiStore {
       () => {
         document.body.scrollTop = 0;
         rechargeStore.getRechargeList();
+      }
+    );
+    reaction(
+      () => this.uiState.safePager.index,
+      () => {
+        document.body.scrollTop = 0;
+        safeStore.getResetApiList();
       }
     );
   }

@@ -41,7 +41,7 @@ function List({safeStore}) {
     <div>
       <Table dataSource={dataSource()} columns={columns}/>
       <div style={{padding: '20px 0', textAlign: 'right'}}>
-        <Pager module="accountSafe" />
+        <Pager module="safePager" />
       </div>
     </div>
   );
