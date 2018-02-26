@@ -43,8 +43,8 @@ class RechargeStore {
   }
   @action.bound resertFilter() {
     this.filter = {
-      start: '',
-      end: '',
+      createdTsBegin: '',
+      createdTsEnd: '',
     };
   }
   @action.bound resetData() {
