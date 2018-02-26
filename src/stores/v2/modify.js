@@ -63,9 +63,13 @@ class ModifyStore {
         this.resetData();
         messageStore.openMessage({type: 'info', content: '密码修改成功', duration: 5000});
       }))
-      .catch(action('修改密码错误', () => {
+      .catch(action('修改密码错误', (err) => {
         this.isModifyLoading = false;
-        messageStore.openMessage({type: 'warning', content: '密码修改失败', duration: 5000});
+        let errorMessage = '密码修改失败';
+        if (err.response.data && err.response.data.message) {
+          errorMessage = err.response.data.message;
+        }
+        messageStore.openMessage({type: 'warning', content: errorMessage, duration: 5000});
       }));
   }
   @action.bound resetData() {
