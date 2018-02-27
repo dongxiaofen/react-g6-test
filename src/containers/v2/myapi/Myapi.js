@@ -20,7 +20,7 @@ export default class MyApi extends Component {
   render() {
     return (
       <MainContBox>
-        <MyapiMain data={{loading: this.props.myApiStore.myInterface.data === undefined, error: this.props.myApiStore.myInterface.error}}/>
+        <MyapiMain data={{loading: this.props.myApiStore.myInterface.list === undefined, error: this.props.myApiStore.myInterface.error}}/>
       </MainContBox>
     );
   }

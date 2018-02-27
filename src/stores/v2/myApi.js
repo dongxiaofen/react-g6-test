@@ -1,6 +1,6 @@
 import { observable, action } from 'mobx';
 // import pathval from 'pathval';
-// import uiStore from '../ui';
+import uiStore from '../ui';
 import { myInterfaceApi } from 'api';
 // import moment from 'moment';
 class MyApiStore {
@@ -11,13 +11,15 @@ class MyApiStore {
   // }
   @action.bound getMyInterface() {
     this.myInterface = {};
-    myInterfaceApi.getMyInterface()
+    const {index, size} = uiStore.uiState.myInterfaceV2Pager;
+    myInterfaceApi.getMyInterface({index, size})
       .then(action('myInterface-success', ({data}) => {
-        this.myInterface = {data};
+        this.myInterface = {list: data.content};
+        uiStore.uiState.myInterfaceV2Pager.totalElements = data.totalElements;
       }))
       .catch(action('myInterface-err', () => {
         this.myInterface = {
-          data: {},
+          list: {},
           error: {message: '暂未获取到接口套餐'}
         };
       }));
