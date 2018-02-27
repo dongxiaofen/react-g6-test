@@ -39,7 +39,7 @@ const initPagerParams = {
   // v2
   introducePager: {
     index: 1,
-    size: 15,
+    size: 10,
     totalElements: 0
   },
   consumptionV2Pager: {
