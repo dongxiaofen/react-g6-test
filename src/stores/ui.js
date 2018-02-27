@@ -7,6 +7,7 @@ import introduceStore from './v2/introduce';
 import consumptionStore from './v2/consumption';
 import rechargeStore from './v2/recharge';
 import safeStore from './v2/safe';
+import myInterfaceStore from './v2/myApi';
 
 const initPagerParams = {
   // v1
@@ -38,7 +39,7 @@ const initPagerParams = {
   // v2
   introducePager: {
     index: 1,
-    size: 15,
+    size: 10,
     totalElements: 0
   },
   consumptionV2Pager: {
@@ -56,6 +57,11 @@ const initPagerParams = {
     size: 10,
     totalElements: 0
   },
+  myInterfaceV2Pager: {
+    index: 1,
+    size: 10,
+    totalElements: 0
+  }
 };
 class UiStore {
   constructor() {
@@ -115,6 +121,13 @@ class UiStore {
       () => {
         document.body.scrollTop = 0;
         safeStore.getResetApiList();
+      }
+    );
+    reaction(
+      () => this.uiState.myInterfaceV2Pager.index,
+      () => {
+        document.body.scrollTop = 0;
+        myInterfaceStore.getMyInterface();
       }
     );
   }

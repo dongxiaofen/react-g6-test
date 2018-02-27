@@ -4,12 +4,12 @@ import Table from 'components/common/Table';
 // import __flattenDeep from 'lodash/flattenDeep';
 import { loadingComp } from 'components/hoc';
 import { toJS } from 'mobx';
-// import styles from './index.less';
+import Pager from 'components/common/Pager';
+import styles from './index.less';
 
 function MyapiMain({myApiStore}) {
   const dataSource = () => {
-    // const tableData = [];
-    const originData = myApiStore.myInterface.data;
+    const originData = myApiStore.myInterface.list;
     // if (originData) {
     //   const newData = [];
     //   Object.keys(originData).map(key => {
@@ -41,7 +41,6 @@ function MyapiMain({myApiStore}) {
       dataIndex: 'price',
       key: 'price',
       render: (text, record) => {
-        // console.log(record, 'record---===');
         const chargeTypeDict = {
           'BY_CHARGE': '次',
           'MONTH_CHARGE': '月',
@@ -64,6 +63,9 @@ function MyapiMain({myApiStore}) {
   return (
     <div>
       <Table dataSource={dataSource()} columns={columns}/>
+      <div className={styles.pagerWrap}>
+        <Pager module="myInterfaceV2Pager" />
+      </div>
     </div>
   );
 }
