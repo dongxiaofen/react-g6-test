@@ -2,6 +2,8 @@ import React, {PropTypes} from 'react';
 import {observer, inject} from 'mobx-react';
 import { DatePicker } from 'antd';
 import moment from 'moment';
+import 'moment/locale/zh-cn';
+moment.locale('zh-cn');
 const { RangePicker } = DatePicker;
 import FilterContainer from '../FilterContainer';
 import styles from './index.less';

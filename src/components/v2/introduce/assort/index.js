@@ -35,16 +35,16 @@ const Assort = ({ introduceStore, uiStore }) => {
   //   };
   //   return config[type];
   // };
-  const getIconName = (type) => {
-    const config = {
-      '所有服务': 'all',
-      '个人信息': 'person',
-      '工商信息': 'business',
-      '风险信息': 'risk',
-      '经营信息': 'manage',
-    };
-    return config[type];
-  };
+  // const getIconName = (type) => {
+  //   const config = {
+  //     '所有服务': 'all',
+  //     '个人信息': 'person',
+  //     '工商信息': 'business',
+  //     '风险信息': 'risk',
+  //     '经营信息': 'manage',
+  //   };
+  //   return config[type];
+  // };
   const handleFilter = (id) => {
     introduceStore.updateValue('filterInfo.classificationId', id);
     if (uiStore.uiState.introducePager.index === 1) {
@@ -60,15 +60,15 @@ const Assort = ({ introduceStore, uiStore }) => {
       if (introduceStore.filterInfo.classificationId === item.id) {
         output.push(
           <li key={idx} className={styles.active} onClick={handleFilter.bind(null, item.id)}>
-          <span className={`${styles.imgBox} ${styles[getIconName(item.name)]}`}>
-            {/*<img src={getActiveImgIcon(item.name)} alt=""/>*/}
+          <span className={`${styles.imgBox}`}>
+            <img src={item.imageData} alt=""/>
           </span>{item.name}</li>
         );
       } else {
         output.push(
           <li key={idx} onClick={handleFilter.bind(null, item.id)}>
-          <span className={`${styles.imgBox} ${styles[getIconName(item.name)]}`}>
-            {/*<img src={getImgIcon(item.name)} alt=""/>*/}
+          <span className={`${styles.imgBox}`}>
+            <img src={item.imageDataGray} alt=""/>
           </span>{item.name}</li>
         );
       }
@@ -78,7 +78,8 @@ const Assort = ({ introduceStore, uiStore }) => {
   return (
     <ul className={styles.filters}>
       <li key="all" className={introduceStore.filterInfo.classificationId === '' ? styles.active : ''} onClick={handleFilter.bind(null, '')}>
-      <span className={`${styles.imgBox} ${styles[getIconName('所有服务')]}`}>
+      {/* <span className={`${styles.imgBox} ${styles[getIconName('所有服务')]}`}> */}
+      <span className={`${styles.imgBox} ${styles.all}`}>
         {/*<img src={introduceStore.filterInfo.classificationId === '' ? getActiveImgIcon('所有服务') : getImgIcon('所有服务')} alt=""/>*/}
       </span>所有服务</li>
       {

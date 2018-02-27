@@ -5,6 +5,8 @@ import Button from 'components/lib/button';
 import { DatePicker } from 'antd';
 const { RangePicker } = DatePicker;
 import moment from 'moment';
+import 'moment/locale/zh-cn';
+moment.locale('zh-cn');
 import styles from './index.less';
 
 function DateFilter({rechargeStore, uiStore}) {

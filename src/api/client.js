@@ -11,3 +11,11 @@ export const getUserInfo = () => {
 export const resetPassword = (params) => {
   return axios.put('/api/v2/client/password', params);
 };
+
+export const getUserStatus = () => {
+  return axios.get('/api/v2/client/user/status', {params: {type: 'NEW_VERSION_PUBLISH'}});
+};
+
+export const changeUserStatus = () => {
+  return axios.put('/api/v2/client/user/status', {type: 'NEW_VERSION_PUBLISH'});
+};

@@ -34,7 +34,7 @@ class ClientStore {
     }
     browserHistory.push(pathname);
     if (!localPath && !isNewUser) {
-      this.openVersionAlert();
+      this.getUserStatus();
     }
   }
   @action.bound handleVersion(isNewUser) {
@@ -49,6 +49,21 @@ class ClientStore {
       //   this.openVersionAlert();
       // }
     }
+  }
+  @action.bound getUserStatus() {
+    clientApi.getUserStatus()
+      .then(action('user-status', ({data}) => {
+        if (!data.status) {
+          this.openVersionAlert();
+          this.changeUserStatus();
+        }
+      }))
+      .catch();
+  }
+  @action.bound changeUserStatus() {
+    clientApi.changeUserStatus()
+      .then()
+      .catch();
   }
   @action.bound openVersionAlert() {
     const data = {
