@@ -65,7 +65,7 @@ function Header({headerStore, clientStore, routing}) {
       <div className={styles.userInfo}>
         <div className={styles['user-content']}>
           {
-            clientStore.version === 'v1' ? <div className={styles['version-alert']}>温馨提示：尊敬的用户，星象-数据API平台将于2018年5月31日停止服务，请您尽快将接口切换到新版，给您带来的不便，尽情谅解！</div> : null
+            clientStore.version === 'v1' ? <div className={styles['version-alert']}>温馨提示：尊敬的用户，星象-数据API平台将于2018年5月31日停止服务，请您尽快将接口切换到新版，给您带来的不便，敬请谅解！</div> : null
           }
           {
             clientStore.userInfo.email ?
