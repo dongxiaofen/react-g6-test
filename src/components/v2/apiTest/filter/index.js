@@ -19,6 +19,8 @@ function FilterCont({apiTestStore}) {
   };
   const handleC2 = (value) => {
     apiTestStore.updateValue('activeC2Id', value);
+    apiTestStore.updateValue('c2Id', '');
+    apiTestStore.updateValue('classificationId', '');
     apiTestStore.updateValue('activeApiId', '');
     apiTestStore.getApiList();
     apiTestStore.updateValue('testResult', {});
