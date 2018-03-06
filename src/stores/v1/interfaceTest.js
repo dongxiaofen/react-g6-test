@@ -94,6 +94,10 @@ class InterfaceTestStore {
   }
   @action.bound getfiltedApiList() {
     this.testResult = {};
+    this.filtedApiList = [];
+    this.id = '';
+    this.interfaceInfo = {};
+    this.apiParams = {};
     if (this.filtedApiListCancel) {
       this.filtedApiListCancel();
       this.filtedApiListCancel = null;
