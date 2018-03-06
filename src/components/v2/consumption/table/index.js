@@ -34,7 +34,7 @@ function ConsumptionList({consumptionStore}) {
       dataIndex: 'price',
       key: 'price',
       width: '75px',
-      render: (text, record) => (record.totalNum * record.price)
+      render: (text, record) => ((record.totalNum * record.price).toFixed(3))
     }, {
       title: '接口类别',
       dataIndex: 'classification',
