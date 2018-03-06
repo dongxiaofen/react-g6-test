@@ -87,7 +87,7 @@ class LoginStore {
           if (error.response.status !== 502) {
             let errText = errorData.message || '用户名或者密码错误';
             if (errorData.errorCode === 401201 || errorData.errorCode === 401203) {
-              errText = '用户名或者密码错误;
+              errText = '用户名或者密码错误';
             } else if (errorData.errorCode === 401202) {
               errText = '该用户不存在';
             } else if (errorData.errorCode === 403201) {
