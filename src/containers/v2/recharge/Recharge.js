@@ -22,7 +22,9 @@ export default class Recharge extends Component {
   render() {
     return (
       <MainContBox>
-        <DateFilter />
+        {
+          this.props.rechargeStore.rechargeList.content === undefined ? null : <DateFilter />
+        }
         <RechargeList data={{loading: this.props.rechargeStore.rechargeList.content === undefined, error: this.props.rechargeStore.rechargeList.error}}/>
       </MainContBox>
     );
