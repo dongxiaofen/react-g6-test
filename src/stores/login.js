@@ -86,11 +86,11 @@ class LoginStore {
           pathval.setPathValue(this, 'loading', false);
           if (error.response.status !== 502) {
             let errText = errorData.message || '用户名或者密码错误';
-            if (errorData.errorCode === 401200 || errorData.errorCode === 401201) {
-              errText = errorData.message;
-            } else if (errorData.errorCode === 401001) {
+            if (errorData.errorCode === 401201 || errorData.errorCode === 401203) {
+              errText = '用户名或者密码错误;
+            } else if (errorData.errorCode === 401202) {
               errText = '该用户不存在';
-            } else if (errorData.errorCode === 403204) {
+            } else if (errorData.errorCode === 403201) {
               errText = '您的帐户已过期，请拨打下方客服电话';
             }
             pathval.setPathValue(this, 'isHasEorr', true);
