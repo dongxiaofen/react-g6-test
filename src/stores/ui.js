@@ -57,6 +57,11 @@ const initPagerParams = {
     size: 10,
     totalElements: 0
   },
+  safeWhiteListPager: {
+    index: 1,
+    size: 10,
+    totalElements: 0
+  },
   myInterfaceV2Pager: {
     index: 1,
     size: 10,
@@ -94,6 +99,13 @@ class UiStore {
         accountStore.getResetApiList();
       }
     );
+    reaction(
+      () => this.uiState.accountWhiteListPager.index,
+      () => {
+        document.body.scrollTop = 0;
+        accountStore.getWhiteList();
+      }
+    );
     // v2
     reaction(
       () => this.uiState.introducePager.index,
@@ -121,6 +133,13 @@ class UiStore {
       () => {
         document.body.scrollTop = 0;
         safeStore.getResetApiList();
+      }
+    );
+    reaction(
+      () => this.uiState.safeWhiteListPager.index,
+      () => {
+        document.body.scrollTop = 0;
+        safeStore.getWhiteList();
       }
     );
     reaction(

@@ -24,6 +24,14 @@ class SafeStore {
     // size: 10,
     // cancel: null,
   };
+  @observable whiteList = {
+    form: {
+      ip: '',
+      remark: '',
+    },
+    isAddLoading: false,
+    result: {},
+  }
 
   @action.bound updateValue(changeItem, value) {
     pathval.setPathValue(this, changeItem, value);
@@ -94,6 +102,71 @@ class SafeStore {
         }));
     }
   }
+
+  @action.bound getWhiteList() {
+    this.whiteList.result = {};
+    safeApi.getWhiteList(uiStore.uiState.safeWhiteListPager)
+      .then(action('resetlist-s', ({data}) => {
+        if (data.content.length > 0) {
+          this.whiteList.result = {data};
+          uiStore.uiState.safeWhiteListPager.totalElements = data.totalElements;
+        } else {
+          this.whiteList.result = {
+            data: {},
+            error: {message: '您暂无白名单列表'}
+          };
+        }
+      }))
+      .catch(action('resetlist-err', () => {
+        // console.log('eeer--------------------');
+        this.whiteList.result = {
+          data: {},
+          error: {message: '您暂无白名单列表'}
+        };
+      }));
+  }
+  @action.bound createWhiteList() {
+    const params = this.whiteList.form;
+    if (!params.ip) {
+      messageStore.openMessage({type: 'warning', content: '请填写ip地址', duration: 5000});
+      return false;
+    }
+    this.whiteList.isAddLoading = true;
+    safeApi.createWhiteList(params)
+      .then(action(() => {
+        modalStore.closeAction();
+        this.getWhiteList();
+        this.whiteList.isAddLoading = false;
+      }))
+      .catch(action((err) => {
+        this.whiteList.isAddLoading = false;
+        const message = pathval.getPathValue(err, 'response.data.message') || '白名单添加失败';
+        messageStore.openMessage({type: 'warning', content: message, duration: 5000});
+      }));
+  }
+  @action.bound deleteWhiteList(id) {
+    safeApi.deleteWhiteList(id)
+      .then(action(() => {
+        const {index} = uiStore.uiState.safeWhiteListPager;
+        if (this.whiteList.result.data.content.length > 1 || index === 1) {
+          // do delete
+          this.getWhiteList();
+        } else {
+          // index - 1
+          uiStore.uiState.safeWhiteListPager.index = index - 1;
+          // if (index > 1) {
+          // } else {
+          //
+          // }
+        }
+      }))
+      .catch();
+  }
+  @action.bound resetAddForm() {
+    this.whiteList.form.ip = '';
+    this.whiteList.form.remark = '';
+  }
+
   @action.bound resetData() {
     this.safeKey = [
       {key: 'apikey', title: 'APIKEY'},
