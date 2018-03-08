@@ -73,7 +73,7 @@ class ConsumptionList extends Component {
         width: '310px',
         render: (text, record) => (
           <div className={styles.paramsBox}>
-              <Popover content={<div className={styles.popCont}>{text}</div>} >
+              <Popover content={<div className={styles.popCont}>{text}</div>} trigger="click">
                 <div className={styles.text}>{text}</div>
               </Popover>
               <div className={styles.btnCopy} id={record.dataId} data-clipboard-text={text}><Button btnType="primary" className={styles.btn}>复制</Button></div>
