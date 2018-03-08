@@ -13,13 +13,13 @@ export const resetApikey = (params) => {
 };
 
 export const getWhiteList = (params) => {
-  return axios.get('/api/external/client/whitelist/list', {params});
+  return axios.get('/api/v2/client/whitelist/list', {params});
 };
 
 export const createWhiteList = (params) => {
-  return axios.post('/api/external/client/whitelist/add', params);
+  return axios.post('/api/v2/client/whitelist/add', params);
 };
 
 export const deleteWhiteList = (id) => {
-  return axios.delete(`/api/external/client/whitelist/${id}`);
+  return axios.delete(`/api/v2/client/whitelist/${id}`);
 };
