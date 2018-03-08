@@ -1,50 +1,47 @@
-// .paramsBox{
-//   max-height: 82px;
-//   overflow: hidden;
-//   cursor: pointer;
-//   transition: all .3s;
-//   &:hover {
-//     color: #4A90E2;
-//     // text-decoration: underline;
-//     // background-color: rgba(52, 131, 233, 0.1);
-//   }
-// }
 .popCont {
   max-width: 500px;
-  // .btn {
-  //   text-align: center;
-  //   padding: 5px;
-  // }
 }
 .paramsBox{
   transition: all .3s;
   // text-align: center;
   position: relative;
   .text {
-    display: inline-block;
-    line-height: 26px;
+    text-align: left;
+    // display: inline-block;
+    // line-height: 26px;
     max-height: 80px;
     overflow: hidden;
     cursor: pointer;
   }
-  .btnCopy {
-    // display: none;
-    // position: absolute;
-    // right: 0;
-    // bottom: 4px;
-    height: 0;
-    overflow: hidden;
-    transition: all .3s;
-    .btn {
-      height: 26px;
-      line-height: 26px;
-    }
+  .copy-btn {
+    display: none;
+    color: #4A90E2;
+    margin-left: 10px;
+    text-decoration: underline;
   }
   &:hover {
-    color: #4A90E2;
-    .btnCopy {
-      // display: inline-block;
-      height: 26px;
+    .copy-btn {
+      display: inline-block;
     }
   }
+  // .btnCopy {
+  //   // display: none;
+  //   // position: absolute;
+  //   // right: 0;
+  //   // bottom: 4px;
+  //   height: 0;
+  //   overflow: hidden;
+  //   transition: all .3s;
+  //   .btn {
+  //     height: 26px;
+  //     line-height: 26px;
+  //   }
+  // }
+  // &:hover {
+  //   color: #4A90E2;
+  //   .btnCopy {
+  //     // display: inline-block;
+  //     height: 26px;
+  //   }
+  // }
 }
