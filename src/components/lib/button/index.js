@@ -6,7 +6,9 @@ function Button({ btnType, className, loading, disabled, children, onClick, widt
     if (loading || disabled) {
       return false;
     }
-    onClick(evt);
+    if (onClick) {
+      onClick(evt);
+    }
   };
   let cssName = styles[btnType];
   if (disabled) {
