@@ -1,24 +1,38 @@
 import React, { Component, PropTypes } from 'react';
 import {observer, inject} from 'mobx-react';
-import { toJS } from 'mobx';
+// import { toJS } from 'mobx';
 import Table from 'components/common/Table';
 import Pager from 'components/common/Pager';
+import Button from 'components/lib/button';
 import { loadingComp } from 'components/hoc';
 import moment from 'moment';
 import { Popover } from 'antd';
 // import DateSelect from 'components/common/DateSelect';
 import styles from './index.less';
+import Clipboard from 'clipboard';
 
 class ConsumptionList extends Component {
   static propTypes = {
     consumptionStore: PropTypes.object,
     messageStore: PropTypes.object,
   };
-
+  componentDidMount() {
+    const data = this.dataSource();
+    data.map(({dataId}) => {
+      new Clipboard(`#${dataId}`).on('success', () => {
+        this.props.messageStore.openMessage({type: 'info', content: `复制成功`, duration: 3000});
+      }).on('error', () => {
+        this.props.messageStore.openMessage({type: 'warning', content: `复制失败`, duration: 3000});
+      });
+    });
+  }
   dataSource = () => {
     const data = this.props.consumptionStore.consumptionList.content;
     if (data) {
-      return toJS(data);
+      // return toJS(data);
+      return data.map((item, idx) => {
+        return {dataId: `table_${idx}`, ...item};
+      });
     }
   }
   statusConfig = (value) => {
@@ -57,12 +71,13 @@ class ConsumptionList extends Component {
         dataIndex: 'params',
         key: 'params',
         width: '310px',
-        render: (text) => (
-          <Popover content={<div className={styles.popCont}>{text}</div>} trigger="click">
-            <div className={styles.paramsBox}>
-              {text}
+        render: (text, record) => (
+          <div className={styles.paramsBox}>
+              <Popover content={<div className={styles.popCont}>{text}</div>} >
+                <div className={styles.text}>{text}</div>
+              </Popover>
+              <div className={styles.btnCopy} id={record.dataId} data-clipboard-text={text}><Button btnType="primary" className={styles.btn}>复制</Button></div>
             </div>
-          </Popover>
         )
       }, {
         title: '订单日期',
