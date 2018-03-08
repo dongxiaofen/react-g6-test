@@ -1,7 +1,7 @@
 import React, { Component, PropTypes } from 'react';
 import { observer, inject } from 'mobx-react';
 import ConsumptionList from 'components/v2/consumption/table';
-// import FilterList from 'components/v2/consumption/filterList';
+import FilterList from 'components/v2/consumption/filterList';
 import MainContBox from 'components/common/MainContBox';
 import { batchNav } from 'components/hoc';
 
@@ -14,11 +14,12 @@ export default class Consumption extends Component {
   };
   componentDidMount() {
     this.props.consumptionStore.getConsumptionList();
+    this.props.consumptionStore.getAssortmentC1();
   }
   render() {
     return (
       <MainContBox>
-        {/*<FilterList />*/}
+        <FilterList />
         <ConsumptionList data={{loading: this.props.consumptionStore.consumptionList.content === undefined, error: this.props.consumptionStore.consumptionList.error}}/>
       </MainContBox>
     );
