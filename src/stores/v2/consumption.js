@@ -9,6 +9,16 @@ class ConsumptionStore {
     end: '',
   };
   @observable consumptionList = {};
+  @observable interfaceType = {
+    c1: {
+      current: '',
+      list: [],
+    },
+    c2: {
+      current: '',
+      list: [],
+    }
+  };
 
   @action.bound updateValue(changeItem, value) {
     pathval.setPathValue(this, changeItem, value);

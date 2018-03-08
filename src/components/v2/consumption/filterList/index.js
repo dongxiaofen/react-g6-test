@@ -3,7 +3,7 @@ import {observer, inject} from 'mobx-react';
 import { Col, Row } from 'components/common/layout';
 import Button from 'components/lib/button';
 // import SelectInput from './filter/selectInput';
-// import SelectType from './filter/selectType';
+import SelectType from './filter/selectType';
 import DateFilte from 'components/common/ConsumeDateFilter';
 import styles from './index.less';
 
@@ -36,18 +36,18 @@ function FilterList({consumptionStore, uiStore}) {
   };
   return (
     <Row className={styles['filter-list']}>
-      {/*<Col className={styles.item} width="6">
+      {/* <Col className={styles.item} width="6">
         <SelectInput />
-      </Col>*/}
+      </Col> */}
+      <Col className={styles.item} width="6">
+        <SelectType />
+      </Col>
       <Col className={styles.item} width="6">
         <div className={styles.right}>
           <DateFilte type="consumption"/>
         </div>
       </Col>
-      {/*<Col className={styles.item} width="6">
-        <SelectType />
-      </Col>*/}
-      <Col className={styles.item} width="6">
+      <Col className={styles.item} width="12">
         <div className={styles.right}>
           <Button className={`${styles['flt-btn']} ${styles.primary}`} btnType="primary" onClick={handleSearch}>搜索</Button>
           <Button className={`${styles['flt-btn']} ${styles.secondary}`} btnType="secondary" onClick={resetSearchDate}>清空</Button>

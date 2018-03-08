@@ -5,7 +5,8 @@ import Select from 'components/lib/Select';
 const Option = Select.Option;
 import styles from './index.less';
 
-function SelectType({consumeStore}) {
+function SelectType({consumeStore, consumptionStore}) {
+  console.log(consumptionStore, '=====consumptionStore=====');
   const handleChange = (value) => {
     if (value === 'all') {
       consumeStore.updateValue('consumption.filter.permissionClassification', '');
@@ -41,4 +42,4 @@ function SelectType({consumeStore}) {
 SelectType.propTypes = {
   consumeStore: PropTypes.object,
 };
-export default inject('consumeStore')(observer(SelectType));
+export default inject('consumeStore', 'consumptionStore')(observer(SelectType));
