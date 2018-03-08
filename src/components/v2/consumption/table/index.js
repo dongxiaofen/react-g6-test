@@ -3,7 +3,7 @@ import {observer, inject} from 'mobx-react';
 // import { toJS } from 'mobx';
 import Table from 'components/common/Table';
 import Pager from 'components/common/Pager';
-import Button from 'components/lib/button';
+// import Button from 'components/lib/button';
 import { loadingComp } from 'components/hoc';
 import moment from 'moment';
 import { Popover } from 'antd';
@@ -73,10 +73,13 @@ class ConsumptionList extends Component {
         width: '310px',
         render: (text, record) => (
           <div className={styles.paramsBox}>
-              <Popover content={<div className={styles.popCont}>{text}</div>} >
-                <div className={styles.text}>{text}</div>
-              </Popover>
-              <div className={styles.btnCopy} id={record.dataId} data-clipboard-text={text}><Button btnType="primary" className={styles.btn}>复制</Button></div>
+              {
+                text.length > 95 ?
+                <Popover content={<div className={styles.popCont}>{text}</div>}>
+                  <div className={styles.text}>{text.substr(0, 95)}... <span className={styles['copy-btn']} id={record.dataId} data-clipboard-text={text}>复制</span></div>
+                </Popover> :
+                <div className={styles.text}>{text}<span className={styles['copy-btn']} id={record.dataId} data-clipboard-text={text}>复制</span></div>
+              }
             </div>
         )
       }, {

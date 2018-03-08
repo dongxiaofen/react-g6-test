@@ -6,10 +6,17 @@ import { loadingComp } from 'components/hoc';
 import { toJS } from 'mobx';
 // import Button from 'components/lib/button';
 import moment from 'moment';
-const WhiteList = ({safeStore}) => {
+const WhiteList = ({safeStore, modalStore}) => {
   const handleDelet = (id) => {
-    console.log(id, 'id');
-    safeStore.deleteWhiteList(id);
+    modalStore.openCompModal({
+      title: '删除白名单',
+      contentText: '温馨提示：一经删除，该IP地址下的接口将无法调用，请谨慎操作！',
+      confirmAction: () => {
+        safeStore.deleteWhiteList(id);
+        modalStore.closeAction();
+      },
+      cancelAction: modalStore.closeAction
+    });
   };
   const dataSource = () => {
     const originData = safeStore.whiteList.result.data.content;
@@ -42,14 +49,6 @@ const WhiteList = ({safeStore}) => {
   ];
   return (
     <div>
-      {/*<div>
-        <Button
-          btnType="primary"
-          onClick={safeStore.handleSubmit}
-          className={`fs5 ${styles.submit}`}>
-          添加白名单
-        </Button>
-      </div>*/}
       <Table dataSource={dataSource()} columns={columns}/>
       <div style={{padding: '20px 0', textAlign: 'right'}}>
         <Pager module="safeWhiteListPager" />
@@ -67,4 +66,4 @@ export default loadingComp({
     errCategory: 2,
     height: 400
   }),
-})(inject('safeStore')(observer(WhiteList)));
+})(inject('safeStore', 'modalStore')(observer(WhiteList)));
