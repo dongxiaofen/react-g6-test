@@ -5,35 +5,52 @@ import Select from 'components/lib/Select';
 const Option = Select.Option;
 import styles from './index.less';
 
-function SelectType({consumeStore, consumptionStore}) {
-  console.log(consumptionStore, '=====consumptionStore=====');
-  const handleChange = (value) => {
+function SelectType({consumptionStore}) {
+  const handleC1Change = (value) => {
     if (value === 'all') {
-      consumeStore.updateValue('consumption.filter.permissionClassification', '');
+      consumptionStore.updateValue('interfaceType.c1.current', '');
     } else {
-      consumeStore.updateValue('consumption.filter.permissionClassification', value);
+      consumptionStore.updateValue('interfaceType.c1.current', value);
+      consumptionStore.getAssortmentC2(value);
+    }
+    consumptionStore.updateValue('interfaceType.c2.current', '');
+  };
+  const handleC2Change = (value) => {
+    if (value === 'all') {
+      consumptionStore.updateValue('interfaceType.c2.current', '');
+    } else {
+      consumptionStore.updateValue('interfaceType.c2.current', value);
     }
   };
-  const createOption = () => {
-    const data = Object.keys(consumeStore.interfaceType);
+  const createOption = (listData) => {
+    // const assortmentC1 = consumptionStore.interfaceType.c1.list;
     const output = [];
     output.push(<Option key="all" value="all">全部</Option>);
-    if (data.length > 0) {
-      data.map((key) => {
-        output.push(<Option key={key} value={key}>{consumeStore.interfaceType[key]}</Option>);
+    if (listData.length > 0) {
+      listData.map((item, idx) => {
+        output.push(<Option key={idx} value={item.id}>{item.name}</Option>);
       });
     }
     return output;
   };
+  const assortmentC1 = consumptionStore.interfaceType.c1;
+  const assortmentC2 = consumptionStore.interfaceType.c2;
   return (
     <FilterContainer title="接口类别" titleStyle={{paddingLeft: '10px'}}>
       <Select
         placeholder="请选择接口类别"
-        width="190px"
-        onChange={handleChange}
+        width="150px"
+        onChange={handleC1Change}
         className={styles.select}
-        value={consumeStore.consumption.filter.permissionClassification ? consumeStore.consumption.filter.permissionClassification : 'all'}>
-        {createOption()}
+        value={assortmentC1.current ? assortmentC1.current : 'all'}>
+        {createOption(assortmentC1.list)}
+      </Select> <Select
+        placeholder="请选择接口类别"
+        width="150px"
+        onChange={handleC2Change}
+        className={styles.select}
+        value={assortmentC2.current ? assortmentC2.current : 'all'}>
+        {createOption(assortmentC2.list)}
       </Select>
     </FilterContainer>
   );
@@ -42,4 +59,4 @@ function SelectType({consumeStore, consumptionStore}) {
 SelectType.propTypes = {
   consumeStore: PropTypes.object,
 };
-export default inject('consumeStore', 'consumptionStore')(observer(SelectType));
+export default inject('consumptionStore')(observer(SelectType));

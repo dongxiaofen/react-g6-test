@@ -14,6 +14,7 @@ export default class Consumption extends Component {
   };
   componentDidMount() {
     this.props.consumptionStore.getConsumptionList();
+    this.props.consumptionStore.getAssortmentC1();
   }
   render() {
     return (
