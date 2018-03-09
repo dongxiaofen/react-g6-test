@@ -43,12 +43,12 @@ function SelectDate({consumptionStore}) {
       <FilterContainer title="订单日期" titleStyle={{paddingLeft: '10px'}}>
         <span style={{ marginRight: 20 }}>
           <Select defaultValue={filterData.type} onChange={handleTypeChange} style={{ width: 100 }}>
-            <Option value="month">选择月</Option>
-            <Option value="time">选择区间</Option>
+            <Option value="month">选择月份</Option>
+            <Option value="date">选择区间</Option>
           </Select>
         </span>
         {
-          filterData.type === 'time' ?
+          filterData.type === 'date' ?
           <RangePicker
             allowClear={false}
             value={[start, end]}
@@ -58,6 +58,7 @@ function SelectDate({consumptionStore}) {
               allowClear={false}
               onChange={handleMonthChange}
               placeholder="选择月份" />
+            {filterData.begin ? <span className={styles.selectDate}>已选日期：{filterData.begin} ~ {filterData.end}</span> : ''}
           </span>
         }
       </FilterContainer>

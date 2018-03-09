@@ -17,16 +17,6 @@ function FilterList({consumptionStore, uiStore}) {
     }
   };
   const resetSearchDate = () => {
-    // const initData = {
-    //   id: '',
-    //   permissionClassification: '',
-    //   sdkApiRecordParams: '',
-    //   createdTsBegin: '',
-    //   createdTsEnd: '',
-    // };
-    // consumptionStore.updateValue('consumption.filter', initData);
-    // consumptionStore.updateValue('consumption.mothFilter', '');
-    // consumptionStore.updateValue('consumption.selectInputTarget', 'id');
     consumptionStore.resertFilter();
     if (uiStore.uiState.consumptionPager.index === 1) {
       consumptionStore.getConsumptionList();
@@ -39,7 +29,7 @@ function FilterList({consumptionStore, uiStore}) {
       <Col className={styles.item} width="5">
         <SelectType />
       </Col>
-      <Col className={styles.item} width="6">
+      <Col className={styles.item} width="7">
         <div>
           <SelectDate />
         </div>
