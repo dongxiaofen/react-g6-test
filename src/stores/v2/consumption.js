@@ -22,7 +22,7 @@ class ConsumptionStore {
     }
   };
   @observable filterData = {
-    type: 'month',
+    type: 'date',
     begin: '',
     end: ''
   }
@@ -95,10 +95,13 @@ class ConsumptionStore {
       }));
   }
   @action.bound resertFilter() {
-    this.filter = {
-      start: '',
-      end: '',
+    this.filterData = {
+      type: 'date',
+      begin: '',
+      end: ''
     };
+    this.interfaceType.c1.current = '';
+    this.interfaceType.c2.current = '';
   }
 }
 export default new ConsumptionStore();
