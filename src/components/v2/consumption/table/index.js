@@ -73,14 +73,14 @@ class ConsumptionList extends Component {
         width: '310px',
         render: (text, record) => (
           <div className={styles.paramsBox}>
-              {
-                text.length > 95 ?
-                <Popover content={<div className={styles.popCont}>{text}</div>}>
-                  <div className={styles.text}>{text.substr(0, 95)}... <span className={styles['copy-btn']} id={record.dataId} data-clipboard-text={text}>复制</span></div>
-                </Popover> :
-                <div className={styles.text}>{text}<span className={styles['copy-btn']} id={record.dataId} data-clipboard-text={text}>复制</span></div>
-              }
-            </div>
+            {
+              text.length > 95 ?
+              <Popover content={<div className={styles.popCont}>{text}</div>}>
+                <div className={styles.text}>{text.substr(0, 95)}... <span className={styles['copy-btn']} id={record.dataId} data-clipboard-text={text}>复制</span></div>
+              </Popover> :
+              <div className={styles.text}>{text}<span className={styles['copy-btn']} id={record.dataId} data-clipboard-text={text}>复制</span></div>
+            }
+          </div>
         )
       }, {
         title: '订单日期',

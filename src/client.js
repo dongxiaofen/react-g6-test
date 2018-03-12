@@ -46,7 +46,7 @@ axios.interceptors.response.use((response) => {
     if (error.config.url !== '/api/user/logout') {
       if (!allStores.clientStore.userInfo.email && allStores.routing.location.pathname === '/') {
         allStores.routing.push({pathname: '/login'});
-      } else {
+      } else if (allStores.routing.location.pathname !== '/login') {
         runInAction('登录提示', () => {
           const closeAction = allStores.modalStore.closeAction;
           allStores.modalStore.openCompModal({
