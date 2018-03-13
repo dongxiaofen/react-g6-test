@@ -14,6 +14,7 @@ function SelectType({consumptionStore}) {
       consumptionStore.getAssortmentC2(value);
     }
     consumptionStore.updateValue('interfaceType.c2.current', '');
+    consumptionStore.updateValue('interfaceType.c2.list', []);
   };
   const handleC2Change = (value) => {
     if (value === 'all') {
@@ -25,10 +26,10 @@ function SelectType({consumptionStore}) {
   const createOption = (listData) => {
     // const assortmentC1 = consumptionStore.interfaceType.c1.list;
     const output = [];
-    output.push(<Option key="all" value="all">全部</Option>);
+    output.push(<Option key="全部" value="all">全部</Option>);
     if (listData.length > 0) {
-      listData.map((item, idx) => {
-        output.push(<Option key={idx} value={item.id}>{item.name}</Option>);
+      listData.map((item) => {
+        output.push(<Option key={item.id} value={item.id}>{item.name}</Option>);
       });
     }
     return output;
@@ -37,21 +38,21 @@ function SelectType({consumptionStore}) {
   const assortmentC2 = consumptionStore.interfaceType.c2;
   return (
     <FilterContainer title="接口类别" titleStyle={{paddingLeft: '10px'}}>
-      <Select
-        placeholder="请选择接口类别"
-        width="150px"
-        onChange={handleC1Change}
-        className={styles.select}
-        value={assortmentC1.current ? assortmentC1.current : 'all'}>
-        {createOption(assortmentC1.list)}
-      </Select> <Select
-        placeholder="请选择接口类别"
-        width="150px"
-        onChange={handleC2Change}
-        className={styles.select}
-        value={assortmentC2.current ? assortmentC2.current : 'all'}>
-        {createOption(assortmentC2.list)}
-      </Select>
+      <div>
+        <Select
+          width="150px"
+          onChange={handleC1Change}
+          className={styles.select}
+          value={assortmentC1.current ? assortmentC1.current : 'all'}>
+          {createOption(assortmentC1.list)}
+        </Select> <Select
+          width="190px"
+          onChange={handleC2Change}
+          className={styles.select}
+          value={assortmentC2.current ? assortmentC2.current : 'all'}>
+          {createOption(assortmentC2.list)}
+        </Select>
+      </div>
     </FilterContainer>
   );
 }
