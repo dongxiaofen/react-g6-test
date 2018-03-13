@@ -41,6 +41,7 @@ function SelectDate({consumptionStore}) {
   return (
     <div className={styles.dateTime}>
       <FilterContainer title="订单日期" titleStyle={{paddingLeft: '10px'}}>
+        <div>
         <span style={{ marginRight: 20 }}>
           <Select defaultValue={filterData.type} onChange={handleTypeChange} style={{ width: 100 }}>
             <Option value="month">选择月份</Option>
@@ -61,6 +62,7 @@ function SelectDate({consumptionStore}) {
             {filterData.begin ? <span className={styles.selectDate}>已选日期：{filterData.begin} ~ {filterData.end}</span> : ''}
           </span>
         }
+        </div>
       </FilterContainer>
     </div>
   );
