@@ -29,12 +29,12 @@ function FilterList({consumptionStore, uiStore}) {
       <Col className={styles.item} width="5">
         <SelectType />
       </Col>
-      <Col className={styles.item} width="7">
+      <Col className={styles.item} width="5">
         <div>
           <SelectDate />
         </div>
       </Col>
-      <Col className={styles.item} width="12">
+      <Col className={styles.item} width="2">
         <div className={styles.right}>
           <Button className={`${styles['flt-btn']} ${styles.primary}`} btnType="primary" onClick={handleSearch}>搜索</Button>
           <Button className={`${styles['flt-btn']} ${styles.secondary}`} btnType="secondary" onClick={resetSearchDate}>清空</Button>

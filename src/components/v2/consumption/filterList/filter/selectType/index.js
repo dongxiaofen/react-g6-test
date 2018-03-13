@@ -37,7 +37,7 @@ function SelectType({consumptionStore}) {
   const assortmentC1 = consumptionStore.interfaceType.c1;
   const assortmentC2 = consumptionStore.interfaceType.c2;
   return (
-    <FilterContainer title="接口类别" titleStyle={{paddingLeft: '10px'}}>
+    <FilterContainer title="接口类别">
       <div>
         <Select
           width="150px"
