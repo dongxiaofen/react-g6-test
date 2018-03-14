@@ -11,8 +11,8 @@ import styles from './index.less';
 
 function SelectDate({consumptionStore}) {
   const filterData = consumptionStore.filterData;
-  const start = filterData.begin ? moment(filterData.begin, 'YYYY-MM-DD') : '';
-  const end = filterData.end ? moment(filterData.end, 'YYYY-MM-DD') : '';
+  const start = filterData.begin ? moment(filterData.begin, 'YYYY-MM-DD') : null;
+  const end = filterData.end ? moment(filterData.end, 'YYYY-MM-DD') : null;
   const handleDateChange = (data) => {
     consumptionStore.updateValue('filterData.begin', moment(data[0]).format('YYYY-MM-DD'));
     consumptionStore.updateValue('filterData.end', moment(data[1]).format('YYYY-MM-DD'));

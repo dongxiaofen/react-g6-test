@@ -27,7 +27,7 @@ const Info = ({apiListDetailStore, routing}) => {
   return (
     <div className={styles.infoCont}>
       <div className={styles.info}>
-        <div className={styles['info-item']} style={{width: '180px'}}>
+        <div className={styles['info-item']} style={{minWidth: '180px'}}>
           <label className={styles.label}>状态</label>
           <div className={styles['item-cont']}>
             {activeApiDetail.applied > 0 ? '已申请' :
@@ -39,11 +39,11 @@ const Info = ({apiListDetailStore, routing}) => {
               </Popover>}
           </div>
         </div>
-        <div className={styles['info-item']} style={{width: '180px'}}>
+        <div className={styles['info-item']} style={{minWidth: '180px'}}>
           <label className={styles.label}>资费</label>
           <div className={styles['item-cont']}>{getChargeType(activeApiDetail.chargeType)}</div>
         </div>
-        <div className={styles['info-item']} style={{width: '180px'}}>
+        <div className={styles['info-item']} style={{minWidth: '180px'}}>
           <label className={styles.label}>分类</label>
           <div className={styles['item-cont']}>{activeApiDetail.classification}</div>
         </div>
