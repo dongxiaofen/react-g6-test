@@ -14,7 +14,7 @@ function selectItem({value, data, handleFunc}) {
   };
   return (
     <div style={{display: 'inline-block', marginRight: '20px'}}>
-      <Select value={value} size="large" style={{ width: 260 }} onChange={handleFunc}>
+      <Select value={value} style={{ width: 260, fontSize: '13px' }} onChange={handleFunc}>
         {createOption()}
       </Select>
     </div>
