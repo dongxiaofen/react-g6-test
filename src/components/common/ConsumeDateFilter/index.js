@@ -10,8 +10,8 @@ import styles from './index.less';
 
 function DateFliter({consumeStore, type, handleFilter}) {
   const filterData = consumeStore[type].filter;
-  const start = filterData.createdTsBegin ? moment(filterData.createdTsBegin, 'YYYY-MM-DD') : filterData.createdTsBegin;
-  const end = filterData.createdTsEnd ? moment(filterData.createdTsEnd, 'YYYY-MM-DD') : filterData.createdTsEnd;
+  const start = filterData.createdTsBegin ? moment(filterData.createdTsBegin, 'YYYY-MM-DD') : null;
+  const end = filterData.createdTsEnd ? moment(filterData.createdTsEnd, 'YYYY-MM-DD') : null;
   const handleDateChange = (data) => {
     // console.log(data, 'data');
     consumeStore.updateValue(`${type}.filter.createdTsBegin`, data[0].format('YYYY-MM-DD'));

@@ -97,7 +97,7 @@
     }
   },
   "dependencies": {
-    "antd": "2.9.3",
+    "antd": "3.3.0",
     "axios": "0.15.3",
     "babel-core": "6.10.4",
     "babel-loader": "6.2.1",
