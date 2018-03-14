@@ -26,10 +26,10 @@ function FilterList({consumptionStore, uiStore}) {
   };
   return (
     <Row className={styles['filter-list']}>
-      <Col className={styles.item} width="5">
+      <Col className={styles.item} width="4">
         <SelectType />
       </Col>
-      <Col className={styles.item} width="5">
+      <Col className={styles.item} width="6">
         <div>
           <SelectDate />
         </div>

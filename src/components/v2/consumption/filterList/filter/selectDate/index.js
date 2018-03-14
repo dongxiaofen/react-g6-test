@@ -42,28 +42,32 @@ function SelectDate({consumptionStore}) {
     <div className={styles.dateTime}>
       <FilterContainer title="订单日期" titleStyle={{paddingLeft: '10px'}}>
         <div>
-        <span style={{ marginRight: 20 }}>
-          <Select defaultValue={filterData.type} onChange={handleTypeChange} style={{ width: '85px' }}>
-            <Option value="month">月份选择</Option>
-            <Option value="date">区间选择</Option>
-          </Select>
-        </span>
-        {
-          filterData.type === 'date' ?
-          <RangePicker
-            style={{width: '200px'}}
-            allowClear={false}
-            value={[start, end]}
-            onChange={handleDateChange}/> :
-          <span>
-            <MonthPicker
-              style={{width: '90px'}}
-              allowClear={false}
-              onChange={handleMonthChange}
-              placeholder="选择月份" />
-            {filterData.begin ? <span className={styles.selectDate}>已选日期：{filterData.begin} ~ {filterData.end}</span> : ''}
+          <span style={{ marginRight: 20 }}>
+            <Select
+              defaultValue={filterData.type}
+              onChange={handleTypeChange}
+              size="small"
+              style={{ width: '90px' }}>
+              <Option value="month">月份选择</Option>
+              <Option value="date">区间选择</Option>
+            </Select>
           </span>
-        }
+          {
+            filterData.type === 'date' ?
+            <RangePicker
+              style={{width: '200px'}}
+              allowClear={false}
+              value={[start, end]}
+              onChange={handleDateChange}/> :
+            <span>
+              <MonthPicker
+                style={{width: '90px'}}
+                allowClear={false}
+                onChange={handleMonthChange}
+                placeholder="选择月份" />
+              {filterData.begin ? <span className={styles.selectDate}>已选日期：{filterData.begin} ~ {filterData.end}</span> : ''}
+            </span>
+          }
         </div>
       </FilterContainer>
     </div>
