@@ -39,16 +39,22 @@ function FilterCont({apiTestStore}) {
           data={toJS(apiTestStore.assortmentC1)}
           handleFunc={handleC1}
           placeholder="一级类别"/>
-        <SelectItem
-          value={apiTestStore.activeC2Id}
-          data={toJS(apiTestStore.assortmentC2)}
-          handleFunc={handleC2}
-          placeholder="二级类别"/>
-        <SelectItem
-          value={apiTestStore.activeApiId}
-          data={toJS(apiTestStore.apiList)}
-          handleFunc={handleApiList}
-          placeholder="接口名称"/>
+        {
+          apiTestStore.assortmentC2.length > 0 ?
+          <SelectItem
+            value={apiTestStore.activeC2Id}
+            data={toJS(apiTestStore.assortmentC2)}
+            handleFunc={handleC2}
+            placeholder="二级类别"/> : null
+        }
+        {
+          apiTestStore.apiList.length > 0 ?
+          <SelectItem
+            value={apiTestStore.activeApiId}
+            data={toJS(apiTestStore.apiList)}
+            handleFunc={handleApiList}
+            placeholder="接口名称"/> : null
+        }
       </div>
     </InfoItem>
   );
