@@ -3,6 +3,7 @@ import {observer, inject} from 'mobx-react';
 import { toJS } from 'mobx';
 import InfoItem from '../testInfo/item';
 import SelectItem from './select';
+import { Icon } from 'antd';
 // import styles from './index.less';
 
 function FilterCont({apiTestStore}) {
@@ -45,7 +46,7 @@ function FilterCont({apiTestStore}) {
             value={apiTestStore.activeC2Id}
             data={toJS(apiTestStore.assortmentC2)}
             handleFunc={handleC2}
-            placeholder="二级类别"/> : null
+            placeholder="二级类别"/> : <span style={{marginRight: '20px'}}><Icon type="loading" /></span>
         }
         {
           apiTestStore.apiList.length > 0 ?
@@ -53,7 +54,7 @@ function FilterCont({apiTestStore}) {
             value={apiTestStore.activeApiId}
             data={toJS(apiTestStore.apiList)}
             handleFunc={handleApiList}
-            placeholder="接口名称"/> : null
+            placeholder="接口名称"/> : <span style={{marginRight: '20px'}}><Icon type="loading" /></span>
         }
       </div>
     </InfoItem>
