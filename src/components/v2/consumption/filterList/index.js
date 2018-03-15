@@ -8,28 +8,27 @@ import SelectDate from './filter/selectDate';
 import styles from './index.less';
 
 function FilterList({consumptionStore, uiStore}) {
-  // const typeData = {}
   const handleSearch = () => {
-    if (uiStore.uiState.consumptionPager.index === 1) {
+    if (uiStore.uiState.consumptionV2Pager.index === 1) {
       consumptionStore.getConsumptionList();
     } else {
-      uiStore.updateUiStore('consumptionPager.index', 1);
+      uiStore.updateUiStore('consumptionV2Pager.index', 1);
     }
   };
   const resetSearchDate = () => {
     consumptionStore.resertFilter();
-    if (uiStore.uiState.consumptionPager.index === 1) {
+    if (uiStore.uiState.consumptionV2Pager.index === 1) {
       consumptionStore.getConsumptionList();
     } else {
-      uiStore.updateUiStore('consumptionPager.index', 1);
+      uiStore.updateUiStore('consumptionV2Pager.index', 1);
     }
   };
   return (
     <Row className={styles['filter-list']}>
-      <Col className={styles.item} width="5">
+      <Col className={styles.item} width="4">
         <SelectType />
       </Col>
-      <Col className={styles.item} width="5">
+      <Col className={styles.item} width="6">
         <div>
           <SelectDate />
         </div>

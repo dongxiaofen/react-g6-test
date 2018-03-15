@@ -40,13 +40,13 @@ function SelectType({consumptionStore}) {
     <FilterContainer title="接口类别">
       <div>
         <Select
-          width="150px"
+          width="100px"
           onChange={handleC1Change}
           className={styles.select}
           value={assortmentC1.current ? assortmentC1.current : 'all'}>
           {createOption(assortmentC1.list)}
         </Select> <Select
-          width="190px"
+          width="180px"
           onChange={handleC2Change}
           className={styles.select}
           value={assortmentC2.current ? assortmentC2.current : 'all'}>
