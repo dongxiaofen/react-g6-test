@@ -47,16 +47,6 @@ class InterfaceFile extends Component {
     );
   }
 }
-// function InterfaceFile({apiListDetailStore}) {
-//   return (
-//     <div className={styles['file-html']} dangerouslySetInnerHTML={{__html: apiListDetailStore.apiDoc.content}}>
-//     </div>
-//   );
-// }
-//
-// InterfaceFile.propTypes = {
-//   apiListDetailStore: PropTypes.object,
-// };
 
 export default loadingComp({
   mapDataToProps: props => ({

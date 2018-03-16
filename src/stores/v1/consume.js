@@ -133,7 +133,8 @@ class ConsumeStore {
         start = moment(new Date(today.getTime() - 30 * 24 * 3600 * 1000)).format('YYYY-MM-DD');
         break;
       default:
-        start = moment(new Date(today.getTime() - 30 * 24 * 3600 * 1000)).format('YYYY-MM-DD');
+        start = '';
+        end = '';
     }
     pathval.setPathValue(this, `${type}.filter.createdTsBegin`, start);
     pathval.setPathValue(this, `${type}.filter.createdTsEnd`, end);
