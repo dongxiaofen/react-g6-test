@@ -49,7 +49,8 @@ class ApiListDetailStore {
         this.apiDoc = {content: data};
         this.isDocLoading = false;
       }))
-      .catch(action('doc-err', () => {
+      .catch(action('doc-err', (err) => {
+        console.log(err, 'err-获取文档');
         this.isDocLoading = false;
         this.apiDoc = {content: null, error: {message: '暂未获取到接口文档'}};
       }));

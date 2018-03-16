@@ -5,6 +5,8 @@ import Button from 'components/lib/button';
 import styles from './index.less';
 
 function DateFilter({consumeStore, uiStore}) {
+  console.log(consumeStore.recharge.filter, 'filter---react');
+
   const handleFilter = () => {
     // consumeStore.getRechargeList()
     if (uiStore.uiState.rechargePager.index === 1) {
@@ -16,10 +18,14 @@ function DateFilter({consumeStore, uiStore}) {
   const resetSearchDate = () => {
     consumeStore.updateValue('recharge.filter.createdTsBegin', '');
     consumeStore.updateValue('recharge.filter.createdTsEnd', '');
-    if (uiStore.uiState.rechargePager.index === 1 && consumeStore.recharge.mothFilter === '') {
-      consumeStore.getRechargeList();
+    console.log(consumeStore.recharge.filter, 'filter---');
+    if (consumeStore.recharge.mothFilter === '') {
+      if (uiStore.uiState.rechargePager.index === 1) {
+        consumeStore.getRechargeList();
+      } else {
+        uiStore.updateUiStore('rechargePager.index', 1);
+      }
     } else {
-      uiStore.updateUiStore('rechargePager.index', 1);
       consumeStore.updateValue('recharge.mothFilter', '');
     }
   };
