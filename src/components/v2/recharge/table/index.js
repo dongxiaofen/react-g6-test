@@ -18,8 +18,8 @@ function RechargeList({rechargeStore}) {
   const columns = [
     {
       title: '订单编号',
-      dataIndex: 'rechagreNum',
-      key: 'rechagreNum',
+      dataIndex: 'rechargeNum',
+      key: 'rechargeNum',
       width: '33.33%',
     }, {
       title: '充值点数',
